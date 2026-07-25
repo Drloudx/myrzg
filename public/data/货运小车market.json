@@ -1,0 +1,626 @@
+{
+    "tip":"basePrice后面想办法同步，补货的基础时间是半小时，不够的可以超过半小时。日回/数量先根据品质分4档：1档_5/100，2档：2/50，3档：1~2/30~20,4档：1/10",
+    "goods":
+    {
+        "item_10001":
+        {
+            "addNum": 5,
+            "addTime": 1800,
+            "basePrice": 9,
+            "buyIn": true,
+            "itemTypeId": "item_10001",
+            "maxNum": 100,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1木柴"
+        },
+        "item_10002":
+        {
+            "addNum": 5,
+            "addTime": 1800,
+            "basePrice": 9,
+            "buyIn": true,
+            "itemTypeId": "item_10002",
+            "maxNum": 100,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1石料"
+        },
+        "item_10003":
+        {
+            "addNum": 2,
+            "addTime": 1800,
+            "basePrice": 13,
+            "buyIn": true,
+            "itemTypeId": "item_10003",
+            "maxNum": 50,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1铜矿石"
+        },
+        "item_10004":
+        {
+            "addNum": 2,
+            "addTime": 1800,
+            "basePrice": 55,
+            "buyIn": false,
+            "itemTypeId": "item_10004",
+            "maxNum": 30,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1铜锭"
+        },
+        "item_10006":
+        {
+            "addNum": 2,
+            "addTime": 1800,
+            "basePrice": 14,
+            "buyIn": true,
+            "itemTypeId": "item_10006",
+            "maxNum": 50,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1兽肉"
+        },
+        "item_10016":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 49,
+            "buyIn": true,
+            "itemTypeId": "item_10016",
+            "maxNum": 25,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1猪腿骨"
+        },
+        "item_10019":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 86,
+            "buyIn": false,
+            "itemTypeId": "item_10019",
+            "maxNum": 20,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1钉子"
+        },
+        "item_10021":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 64,
+            "buyIn": false,
+            "itemTypeId": "item_10021",
+            "maxNum": 20,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1粘合剂"
+        },
+        "item_10023":
+        {
+            "addNum": 2,
+            "addTime": 1800,
+            "basePrice": 15,
+            "buyIn": true,
+            "itemTypeId": "item_10023",
+            "maxNum": 50,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1小麦"
+        },
+        "item_10024":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 102,
+            "buyIn": false,
+            "itemTypeId": "item_10024",
+            "maxNum": 20,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1面粉"
+        },
+        "item_10043":
+        {
+            "addNum": 2,
+            "addTime": 1800,
+            "basePrice": 14,
+            "buyIn": true,
+            "itemTypeId": "item_10043",
+            "maxNum": 50,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1蛛丝"
+        },
+        "item_10044":
+        {
+            "addNum": 2,
+            "addTime": 1800,
+            "basePrice": 17,
+            "buyIn": true,
+            "itemTypeId": "item_10044",
+            "maxNum": 50,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1古代齿轮"
+        },
+        "item_10052":
+        {
+            "addNum": 5,
+            "addTime": 1800,
+            "basePrice": 12,
+            "buyIn": true,
+            "itemTypeId": "item_10052",
+            "maxNum": 100,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1药浆草"
+        },
+        "item_10053":
+        {
+            "addNum": 2,
+            "addTime": 1800,
+            "basePrice": 48,
+            "buyIn": true,
+            "itemTypeId": "item_10053",
+            "maxNum": 50,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1活血草"
+        },
+        "item_10055":
+        {
+            "addNum": 2,
+            "addTime": 1800,
+            "basePrice": 11,
+            "buyIn": true,
+            "itemTypeId": "item_10055",
+            "maxNum": 50,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1浆果"
+        },
+        "item_10056":
+        {
+            "addNum": 2,
+            "addTime": 1800,
+            "basePrice": 12,
+            "buyIn": true,
+            "itemTypeId": "item_10056",
+            "maxNum": 50,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1野菜"
+        },
+        "item_10057":
+        {
+            "addNum": 2,
+            "addTime": 1800,
+            "basePrice": 13,
+            "buyIn": true,
+            "itemTypeId": "item_10057",
+            "maxNum": 50,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1地菇"
+        },
+        "item_10058":
+        {
+            "addNum": 2,
+            "addTime": 1800,
+            "basePrice": 45,
+            "buyIn": true,
+            "itemTypeId": "item_10058",
+            "maxNum": 50,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1蓝露草"
+        },
+        "item_10079":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 30,
+            "buyIn": false,
+            "itemTypeId": "item_10079",
+            "maxNum": 20,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1木板"
+        },
+        "item_10080":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 21,
+            "buyIn": false,
+            "itemTypeId": "item_10080",
+            "maxNum": 20,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1石砖"
+        },
+        "item_10082":
+        {
+            "addNum": 2,
+            "addTime": 1800,
+            "basePrice": 19,
+            "buyIn": true,
+            "itemTypeId": "item_10082",
+            "maxNum": 50,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1亚麻"
+        },
+        "item_10083":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 23,
+            "buyIn": false,
+            "itemTypeId": "item_10083",
+            "maxNum": 20,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1木炭"
+        },
+        "item_10084":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 32,
+            "buyIn": false,
+            "itemTypeId": "item_10084",
+            "maxNum": 20,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1玻璃"
+        },
+        "item_10085":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 56,
+            "buyIn": false,
+            "itemTypeId": "item_10085",
+            "maxNum": 20,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1坚韧丝线"
+        },
+        "item_10086":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 49,
+            "buyIn": true,
+            "itemTypeId": "item_10086",
+            "maxNum": 30,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1硫磺"
+        },
+        "item_10087":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 47,
+            "buyIn": true,
+            "itemTypeId": "item_10087",
+            "maxNum": 30,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1魔能结晶"
+        },
+        "item_10088":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 43,
+            "buyIn": true,
+            "itemTypeId": "item_10088",
+            "maxNum": 30,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1岩盐"
+        },
+        "item_10089":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 46,
+            "buyIn": false,
+            "itemTypeId": "item_10089",
+            "maxNum": 20,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1风干肉"
+        },
+        "item_10090":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 29,
+            "buyIn": false,
+            "itemTypeId": "item_10090",
+            "maxNum": 20,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1果酱"
+        },
+        "item_10091":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 46,
+            "buyIn": false,
+            "itemTypeId": "item_10091",
+            "maxNum": 20,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1腌菜"
+        },
+        "item_10092":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 82,
+            "buyIn": false,
+            "itemTypeId": "item_10092",
+            "maxNum": 20,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1止血粉"
+        },
+        "item_10093":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 79,
+            "buyIn": false,
+            "itemTypeId": "item_10093",
+            "maxNum": 20,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1醒神粉"
+        },
+        "item_10096":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 65,
+            "buyIn": false,
+            "itemTypeId": "item_10096",
+            "maxNum": 20,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1粗布"
+        },
+        "item_10097":
+        {
+            "addNum": 2,
+            "addTime": 1800,
+            "basePrice": 10,
+            "buyIn": true,
+            "itemTypeId": "item_10097",
+            "maxNum": 50,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1黏液"
+        },
+        "item_10072":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 876,
+            "buyIn": false,
+            "itemTypeId": "item_10072",
+            "maxNum": 10,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1金肉"
+        },
+        "item_10073":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 812,
+            "buyIn": false,
+            "itemTypeId": "item_10073",
+            "maxNum": 10,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1金叶"
+        },
+        "item_10095":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 917,
+            "buyIn": false,
+            "itemTypeId": "item_10095",
+            "maxNum": 10,
+            "sellOut": true,
+            "taskTypeId": "",
+            "tip": "c1金矿"
+        },
+        "item_10046":
+        {
+            "addNum": 2,
+            "addTime": 1800,
+            "basePrice": 18,
+            "buyIn": true,
+            "itemTypeId": "item_10046",
+            "maxNum": 50,
+            "sellOut": true,
+            "taskTypeId": "m_2_1",
+            "tip": "c2粗韧兽皮"
+        },
+        "item_10098":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 54,
+            "buyIn": false,
+            "itemTypeId": "item_10098",
+            "maxNum": 20,
+            "sellOut": true,
+            "taskTypeId": "m_2_1",
+            "tip": "c2普通皮革"
+        },
+        "item_10048":
+        {
+            "addNum": 2,
+            "addTime": 1800,
+            "basePrice": 16,
+            "buyIn": true,
+            "itemTypeId": "item_10048",
+            "maxNum": 50,
+            "sellOut": true,
+            "taskTypeId": "m_2_1",
+            "tip": "c2鸟羽"
+        },
+        "item_10042":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 43,
+            "buyIn": true,
+            "itemTypeId": "item_10048",
+            "maxNum": 20,
+            "sellOut": true,
+            "taskTypeId": "m_2_1",
+            "tip": "c2赤剑草"
+        },
+        "item_10022":
+        {
+            "addNum": 1,
+            "addTime": 3600,
+            "basePrice": 300,
+            "buyIn": true,
+            "itemTypeId": "item_10022",
+            "maxNum": 10,
+            "sellOut": true,
+            "taskTypeId": "m_2_1",
+            "tip": "c2金铃草"
+        },
+        "item_10102":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 53,
+            "buyIn": true,
+            "itemTypeId": "item_10102",
+            "maxNum": 30,
+            "sellOut": true,
+            "taskTypeId": "m_3_1",
+            "tip": "c3魔水凝晶"
+        },
+        "item_10104":
+        {
+            "addNum": 2,
+            "addTime": 1800,
+            "basePrice": 16,
+            "buyIn": true,
+            "itemTypeId": "item_10104",
+            "maxNum": 50,
+            "sellOut": true,
+            "taskTypeId": "m_3_1",
+            "tip": "c3粗糙鳞片"
+        },
+        "item_10103":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 49,
+            "buyIn": true,
+            "itemTypeId": "item_10103",
+            "maxNum": 30,
+            "sellOut": true,
+            "taskTypeId": "m_3_1",
+            "tip": "c3水纹花"
+        },
+        "item_10100":
+        {
+            "addNum": 2,
+            "addTime": 1800,
+            "basePrice": 51,
+            "buyIn": true,
+            "itemTypeId": "item_10100",
+            "maxNum": 50,
+            "sellOut": true,
+            "taskTypeId": "m_3_1",
+            "tip": "c3水露果"
+        },
+        "item_10101":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 49,
+            "buyIn": true,
+            "itemTypeId": "item_10101",
+            "maxNum": 30,
+            "sellOut": true,
+            "taskTypeId": "m_3_1",
+            "tip": "c3魔爪贝"
+        },
+        "item_10111":
+        {
+            "addNum": 15,
+            "addTime": 1800,
+            "basePrice": 53,
+            "buyIn": true,
+            "itemTypeId": "item_10111",
+            "maxNum": 30,
+            "sellOut": true,
+            "taskTypeId": "m_4_1",
+            "tip": "c4黑森林松茸"
+        },
+        "item_10112":
+        {
+            "addNum": 1,
+            "addTime": 1800,
+            "basePrice": 108,
+            "buyIn": false,
+            "itemTypeId": "item_10112",
+            "maxNum": 20,
+            "sellOut": true,
+            "taskTypeId": "m_4_1",
+            "tip": "c4黑森林松茸干"
+        },
+        "item_10107":
+        {
+            "addNum": 2,
+            "addTime": 1800,
+            "basePrice": 17,
+            "buyIn": true,
+            "itemTypeId": "item_10107",
+            "maxNum": 50,
+            "sellOut": true,
+            "taskTypeId": "m_4_1",
+            "tip": "c4蕈人孢子簇"
+        },
+        "item_10109":
+        {
+            "addNum": 2,
+            "addTime": 1800,
+            "basePrice": 18,
+            "buyIn": true,
+            "itemTypeId": "item_10109",
+            "maxNum": 50,
+            "sellOut": true,
+            "taskTypeId": "m_4_1",
+            "tip": "c4魔花花瓣"
+        }
+    },
+    "priceInterval": 1800,
+    "priceMax": 1.4,
+    "priceMin": 0.6,
+    "priceOverScale": 0.5,
+    "priceRandomArea": 0.45,
+    "priceRandomMaxChange": 0.1,
+    "desc": "价格描述 显示在商品右侧那个问号 点击后的UI上  策划注意配置一下 不支持变色 需要变色得跟程序说下",
+    "weightDesc":"载重描述 显示在 载重右侧那个问号上"
+}

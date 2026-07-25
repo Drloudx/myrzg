@@ -1,0 +1,738 @@
+{
+	"priceTip":"价格提示：300+道具成本*倍率，其中倍率分为 常规 ~ 中等难度 ~ 高难度 = 2 ~ 2.5 ~ 3，有些单价过低的需求，倍率也最好稍微提高一点。",
+	"goods": {
+		"buildingMaterial": {
+			"orderTypeId": "buildingMaterial",
+			"chance": 1,
+			"items": [
+				{
+					"num": 3,
+					"typeId": "item_10079"
+				},
+				{
+					"num": 5,
+					"typeId": "item_10080"
+				}
+			],
+			"name": "货仓修补",
+			"baseValue":300,
+			"orderValue": 2,
+			"taskTypeId": "",
+			"charaText":"破损的货仓一定要即时修补！",
+			"charaImg":"cart_at_npc_006",
+			"tip": "lv1，比绍，木板+石砖"
+		},
+		"c1_1": {
+			"orderTypeId": "c1_1",
+			"chance": 1,
+			"items": [
+				{
+					"num": 3,
+					"typeId": "item_10079"
+				},
+				{
+					"num": 2,
+					"typeId": "item_10019"
+				}
+			],
+			"name": "维护材料",
+			"baseValue":300,
+			"orderValue": 2,
+			"taskTypeId": "",
+			"charaText":"一些桌椅又需要一些维护了……",
+			"charaImg":"cart_at_npc_003",
+			"tip": "菲尔德蕾，木板+铜钉"
+		},
+		"c1_2": {
+			"orderTypeId": "c1_2",
+			"chance": 1,
+			"items": [
+				{
+					"num": 3,
+					"typeId": "item_30012"
+				}
+			],
+			"name": "药水补给",
+			"baseValue":300,
+			"orderValue": 2.2,
+			"taskTypeId": "",
+			"charaText":"地窖的守卫需要一些药水补给……",
+			"charaImg":"cart_at_npc_004",
+			"tip": "艾尔莎，生命药水"
+		},
+		"c1_3": {
+			"orderTypeId": "c1_3",
+			"chance": 1,
+			"items": [
+				{
+					"num": 2,
+					"typeId": "item_30001"
+				},
+				{
+					"num": 2,
+					"typeId": "item_30003"
+				}
+			],
+			"name": "新的配方",
+			"baseValue":300,
+			"orderValue": 2.5,
+			"taskTypeId": "",
+			"charaText":"有了这些就能尝试新的配方了……",
+			"charaImg":"cart_at_npc_lzd",
+			"tip": "药剂师琳扎德，粗制生命药水，法力药水原液"
+		},
+		"c1_4": {
+			"orderTypeId": "c1_4",
+			"chance": 1,
+			"items": [
+				{
+					"num": 2,
+					"typeId": "item_10021"
+				}
+			],
+			"name": "粘合材料",
+			"baseValue":300,
+			"orderValue": 2,
+			"taskTypeId": "",
+			"charaText":"为了修复圣典急需粘合剂……",
+			"charaImg":"cart_at_npc_bel",
+			"tip": "副主教巴尔德，粘合剂"
+		},
+		"c1_5": {
+			"orderTypeId": "c1_5",
+			"chance": 1,
+			"items": [
+				{
+					"num": 4,
+					"typeId": "item_10084"
+				}
+			],
+			"name": "修补材料",
+			"baseValue":300,
+			"orderValue": 2,
+			"taskTypeId": "",
+			"charaText":"怎么窗户又被客人打破了！",
+			"charaImg":"cart_at_npc_003",
+			"tip": "菲尔德蕾，玻璃"
+		},
+		"c1_6": {
+			"orderTypeId": "c1_6",
+			"chance": 1,
+			"items": [
+				{
+					"num": 5,
+					"typeId": "item_10006"
+				}
+			],
+			"name": "厨房的补货",
+			"baseValue":300,
+			"orderValue": 2.1,
+			"taskTypeId": "",
+			"charaText":"厨房的肉储不够了……",
+			"charaImg":"cart_at_npc_005",
+			"tip": "茜塔，兽肉"
+		},
+		"c1_7": {
+			"orderTypeId": "c1_7",
+			"chance": 1,
+			"items": [
+				{
+					"num": 3,
+					"typeId": "item_10090"
+				}
+			],
+			"name": "制作甜品",
+			"baseValue":300,
+			"orderValue": 2.5,
+			"taskTypeId": "",
+			"charaText":"想给辛苦的妈妈制作一些甜品……",
+			"charaImg":"cart_at_npc_011",
+			"tip": "缇莎，果酱"
+		},
+		"c1_8": {
+			"orderTypeId": "c1_8",
+			"chance": 1,
+			"items": [
+				{
+					"num": 2,
+					"typeId": "item_10089"
+				}
+			],
+			"name": "想吃风干肉",
+			"baseValue":300,
+			"orderValue": 2.5,
+			"taskTypeId": "",
+			"charaText":"突然回想起家乡的肉干味道了……",
+			"charaImg":"cart_at_npc_008",
+			"tip": "夏库塔拉，风干肉"
+		},
+		"c1_9": {
+			"orderTypeId": "c1_9",
+			"chance": 1,
+			"items": [
+				{
+					"num": 1,
+					"typeId": "item_10024"
+				}
+			],
+			"name": "偶尔馋嘴",
+			"baseValue":300,
+			"orderValue": 2.2,
+			"taskTypeId": "",
+			"charaText":"可可娜偶尔也想吃点烤面包……",
+			"charaImg":"cart_at_npc_009",
+			"tip": "可可娜，面粉"
+		},
+		"c1_10": {
+			"orderTypeId": "c1_10",
+			"chance": 1,
+			"items": [
+				{
+					"num": 3,
+					"typeId": "item_10096"
+				}
+			],
+			"name": "缝补娃娃",
+			"baseValue":300,
+			"orderValue": 2.1,
+			"taskTypeId": "",
+			"charaText":"想要给那个女孩再缝一个娃娃……",
+			"charaImg":"cart_at_npc_nl",
+			"tip": "卫兵尼尔，粗布"
+		},
+		"c1_11": {
+			"orderTypeId": "c1_11",
+			"chance": 1,
+			"items": [
+				{
+					"num": 3,
+					"typeId": "item_10085"
+				}
+			],
+			"name": "修补衣物",
+			"baseValue":300,
+			"orderValue": 2.1,
+			"taskTypeId": "",
+			"charaText":"衣服破了……我不想它再破了……",
+			"charaImg":"cart_at_npc_ws",
+			"tip": "侍者维丝，坚韧丝线"
+		},
+		"c1_12": {
+			"orderTypeId": "c1_12",
+			"chance": 1,
+			"items": [
+				{
+					"num": 2,
+					"typeId": "item_30015"
+				}
+			],
+			"name": "法力补充",
+			"baseValue":300,
+			"orderValue": 2.4,
+			"taskTypeId": "",
+			"charaText":"事情太多了，总感觉有些疲惫…",
+			"charaImg":"cart_at_npc_010",
+			"tip": "莉拉，法力药水"
+		},
+		"c1_13": {
+			"orderTypeId": "c1_13",
+			"chance": 1,
+			"items": [
+				{
+					"num": 6,
+					"typeId": "item_10083"
+				}
+			],
+			"name": "优质燃料",
+			"baseValue":300,
+			"orderValue": 2.1,
+			"taskTypeId": "",
+			"charaText":"熔炼需要稳定燃烧源……",
+			"charaImg":"cart_at_npc_wsk",
+			"tip": "高炉工乌斯克，木炭"
+		},
+		"c1_14": {
+			"orderTypeId": "c1_14",
+			"chance": 1,
+			"items": [
+				{
+					"num": 2,
+					"typeId": "item_10091"
+				}
+			],
+			"name": "厨房的补货",
+			"baseValue":300,
+			"orderValue": 2.1,
+			"taskTypeId": "",
+			"charaText":"厨房的腌菜也不够了……",
+			"charaImg":"cart_at_npc_005",
+			"tip": "茜塔，腌菜"
+		},
+		"c1_15": {
+			"orderTypeId": "c1_15",
+			"chance": 1,
+			"items": [
+				{
+					"num": 2,
+					"typeId": "item_31001"
+				}
+			],
+			"name": "防御村庄",
+			"baseValue":300,
+			"orderValue": 2.5,
+			"taskTypeId": "",
+			"charaText":"为了防御村庄还需要更多的路障……",
+			"charaImg":"cart_at_npc_ac",
+			"tip": "民兵阿茶，简易路障"
+		},
+		"c1_16": {
+			"orderTypeId": "c1_16",
+			"chance": 1,
+			"items": [
+				{
+					"num": 4,
+					"typeId": "item_10004"
+				}
+			],
+			"name": "铜器锻造",
+			"baseValue":300,
+			"orderValue": 2.2,
+			"taskTypeId": "",
+			"charaText":"新武器需要精炼铜锭……",
+			"charaImg":"cart_at_npc_slt",
+			"tip": "武具匠瑟尔妲，铜锭"
+		},
+		"c1_17": {
+			"orderTypeId": "c1_17",
+			"chance": 1,
+			"items": [
+				{
+					"num": 5,
+					"typeId": "item_10057"
+				},
+				{
+					"num": 5,
+					"typeId": "item_10056"
+				}
+			],
+			"name": "犒劳舞娘",
+			"baseValue":300,
+			"orderValue": 2,
+			"taskTypeId": "",
+			"charaText":"想用丰盛的料理犒劳努力的大家……",
+			"charaImg":"cart_at_npc_007",
+			"tip": "拉碧丝，地菇，野菜"
+		},
+		"c1_18": {
+			"orderTypeId": "c1_18",
+			"chance": 1,
+			"items": [
+				{
+					"num": 8,
+					"typeId": "item_10055"
+				}
+			],
+			"name": "浆果特饮",
+			"baseValue":300,
+			"orderValue": 2,
+			"taskTypeId": "",
+			"charaText":"新饮品需要酸甜口感……",
+			"charaImg":"cart_at_npc_028",
+			"tip": "格薇勒，浆果"
+		},
+		"c1_19": {
+			"orderTypeId": "c1_19",
+			"chance": 1,
+			"items": [
+				{
+					"num": 3,
+					"typeId": "item_10092"
+				}
+			],
+			"name": "药物研究",
+			"baseValue":300,
+			"orderValue": 2.15,
+			"taskTypeId": "",
+			"charaText":"如果把止血粉加入药物中……",
+			"charaImg":"cart_at_npc_015",
+			"tip": "芭杜尔，止血粉"
+		},
+		"c1_20": {
+			"orderTypeId": "c1_20",
+			"chance": 1,
+			"items": [
+				{
+					"num": 3,
+					"typeId": "item_10093"
+				}
+			],
+			"name": "药物研究",
+			"baseValue":300,
+			"orderValue": 2.15,
+			"taskTypeId": "",
+			"charaText":"醒神粉应该还有别的妙用……",
+			"charaImg":"cart_at_npc_015",
+			"tip": "芭杜尔，醒神粉"
+		},
+		"c1_21": {
+			"orderTypeId": "c1_21",
+			"chance": 1,
+			"items": [
+				{
+					"num": 1,
+					"typeId": "item_10028"
+				}
+			],
+			"name": "强化装备",
+			"baseValue":300,
+			"orderValue": 2.2,
+			"taskTypeId": "",
+			"charaText":"需要材料来强化契约者的装备……",
+			"charaImg":"cart_at_npc_004",
+			"tip": "艾尔莎，特化的丝腺"
+		},
+		"c1_22": {
+			"orderTypeId": "c1_22",
+			"chance": 1,
+			"items": [
+				{
+					"num": 3,
+					"typeId": "item_10086"
+				}
+			],
+			"name": "需求硫磺",
+			"baseValue":300,
+			"orderValue": 2.15,
+			"taskTypeId": "",
+			"charaText":"需要更多硫磺来加工材料……",
+			"charaImg":"cart_at_npc_kls",
+			"tip": "掌炉者库尔斯，硫磺"
+		},
+		"c1_23": {
+			"orderTypeId": "c1_23",
+			"chance": 1,
+			"items": [
+				{
+					"num": 2,
+					"typeId": "item_10044"
+				},
+				{
+					"num": 2,
+					"typeId": "item_10086"
+				}
+			],
+			"name": "魔法与齿轮",
+			"baseValue":300,
+			"orderValue": 2.15,
+			"taskTypeId": "",
+			"charaText":"教团需要研究更多先时素材……",
+			"charaImg":"cart_at_npc_010",
+			"tip": "莉拉，古代齿轮，魔能结晶"
+		},
+		"c1_24": {
+			"orderTypeId": "c1_24",
+			"chance": 1,
+			"items": [
+				{
+					"num": 1,
+					"typeId": "item_10045"
+				}
+			],
+			"name": "遗迹的证据",
+			"baseValue":300,
+			"orderValue": 2.2,
+			"taskTypeId": "",
+			"charaText":"请提供先时遗迹中的素材以供研究！",
+			"charaImg":"cart_at_npc_038",
+			"tip": "瓦菲诺，能量核心"
+		},
+		"c1_25": {
+			"orderTypeId": "c1_25",
+			"chance": 1,
+			"items": [
+				{
+					"num": 5,
+					"typeId": "item_10036"
+				}
+			],
+			"name": "稀有食材",
+			"baseValue":300,
+			"orderValue": 2.1,
+			"taskTypeId": "",
+			"charaText":"尝试用新的稀有食材创新料理……",
+			"charaImg":"cart_at_npc_dlkz",
+			"tip": "旅行厨师德拉卡斯，绿榛菇"
+		},
+		"c2_1": {
+			"orderTypeId": "c2_1",
+			"chance": 1.5,
+			"items": [
+				{
+					"num": 5,
+					"typeId": "item_10048"
+				}
+			],
+			"name": "羽毛收集",
+			"baseValue":300,
+			"orderValue": 2,
+			"taskTypeId": "m_2_1",
+			"charaText":"制作新的箭矢需要轻盈羽毛……",
+			"charaImg":"cart_at_npc_049",
+			"tip": "菲莉娜，鸟羽"
+		},
+		"c2_2": {
+			"orderTypeId": "c2_2",
+			"chance": 1.5,
+			"items": [
+				{
+					"num": 3,
+					"typeId": "item_10098"
+				}
+			],
+			"name": "修补道服",
+			"baseValue":300,
+			"orderValue": 2.3,
+			"taskTypeId": "m_2_1",
+			"charaText":"与哈比争斗，衣服豁了好几个口……",
+			"charaImg":"cart_at_npc_037",
+			"tip": "剋，普通皮革"
+		},
+		"c2_3": {
+			"orderTypeId": "c2_3",
+			"chance": 1.5,
+			"items": [
+				{
+					"num": 5,
+					"typeId": "item_10042"
+				}
+
+			],
+			"name": "赤剑于心",
+			"baseValue":300,
+			"orderValue": 2.1,
+			"taskTypeId": "m_2_1",
+			"charaText":"听说这种草能强化大家的力量……",
+			"charaImg":"cart_at_npc_050",
+			"tip": "米拉贝尔，赤剑草"
+		},
+		"c2_4": {
+			"orderTypeId": "c2_4",
+			"chance": 1.5,
+			"items": [
+				{
+					"num": 1,
+					"typeId": "item_30004"
+				}
+			],
+			"name": "更大力",
+			"baseValue":300,
+			"orderValue": 2.3,
+			"taskTypeId": "m_2_1",
+			"charaText":"我要变得更劲呀——！",
+			"charaImg":"cart_at_npc_023",
+			"tip": "卡夫，大力丸"
+		},
+		"c2_5": {
+			"orderTypeId": "c2_5",
+			"chance": 1.5,
+			"items": [
+				{
+					"num": 3,
+					"typeId": "item_10088"
+				}
+			],
+			"name": "岩盐开采",
+			"baseValue":300,
+			"orderValue": 2.1,
+			"taskTypeId": "m_2_1",
+			"charaText":"腌制食物急需岩盐……",
+			"charaImg":"cart_at_npc_fs",
+			"tip": "“双刃”费萨，岩盐"
+		},
+		"c2_6": {
+			"orderTypeId": "c2_6",
+			"chance": 1.5,
+			"items": [
+				{
+					"num": 1,
+					"typeId": "item_10047"
+				}
+			],
+			"name": "素材提取",
+			"baseValue":300,
+			"orderValue": 2.2,
+			"taskTypeId": "m_2_1",
+			"charaText":"魔物素材的提取物可以强化装备……",
+			"charaImg":"cart_at_npc_014",
+			"tip": "皮塔，蟾蜍之瞳"
+		},
+		"c2_7": {
+			"orderTypeId": "c2_7",
+			"chance": 1.5,
+			"items": [
+				{
+					"num": 1,
+					"typeId": "item_10049"
+				}
+			],
+			"name": "融合的证据",
+			"baseValue":300,
+			"orderValue": 2.2,
+			"taskTypeId": "m_2_1",
+			"charaText":"请提供先时遗迹中的素材以供研究！",
+			"charaImg":"cart_at_npc_038",
+			"tip": "瓦菲诺，蟾兽的水晶尾"
+		},
+		"c2_8": {
+			"orderTypeId": "c2_8",
+			"chance": 1.5,
+			"items": [
+				{
+					"num": 5,
+					"typeId": "item_10046"
+				}
+			],
+			"name": "兽皮处理",
+			"baseValue":300,
+			"orderValue": 2.1,
+			"taskTypeId": "m_2_1",
+			"charaText":"给自卫团制作的皮甲需要原料……",
+			"charaImg":"cart_at_npc_ad",
+			"tip": "“皮匠”埃达，粗韧兽皮"
+		},
+		"c2_9": {
+			"orderTypeId": "c2_9",
+			"chance": 1.5,
+			"items": [
+				{
+					"num": 3,
+					"typeId": "item_10022"
+				}
+			],
+			"name": "金铃草交易",
+			"baseValue":300,
+			"orderValue": 2.25,
+			"taskTypeId": "m_2_1",
+			"charaText":"大量收新地区特产药草！",
+			"charaImg":"cart_at_npc_043",
+			"tip": "阿娜洛洁，金铃草"
+		},
+		"c3_1": {
+			"orderTypeId": "c3_1",
+			"chance": 2,
+			"items": [
+				{
+					"num": 1,
+					"typeId": "item_31010"
+				}
+			],
+			"name": "守备器材",
+			"baseValue":300,
+			"orderValue": 2.5,
+			"taskTypeId": "m_3_1",
+			"charaText":"一些地点需要补充一些防御装置",
+			"charaImg":"cart_at_npc_029",
+			"tip": "贝尔卡，便携魔法炮塔"
+		},
+		"c3_2": {
+			"orderTypeId": "c3_2",
+			"chance": 2,
+			"items": [
+				{
+					"num": 1,
+					"typeId": "item_30045"
+				}
+			],
+			"name": "更像姐姐",
+			"baseValue":300,
+			"orderValue": 2.4,
+			"taskTypeId": "m_3_1",
+			"charaText":"为了更像个姐姐，我要变得更强！",
+			"charaImg":"cart_at_npc_033",
+			"tip": "露帕·萝特，魔力丸"
+		},
+		"c3_3": {
+			"orderTypeId": "c3_3",
+			"chance": 2,
+			"items": [
+				{
+					"num": 5,
+					"typeId": "item_10104"
+				}
+			],
+			"name": "修补鳞甲",
+			"baseValue":300,
+			"orderValue": 2.1,
+			"taskTypeId": "m_3_1",
+			"charaText":"需要材料修补治安队的护甲……",
+			"charaImg":"cart_at_npc_041",
+			"tip": "埃迪蒂，粗糙鳞片"
+		},
+		"c3_4": {
+			"orderTypeId": "c3_4",
+			"chance": 2,
+			"items": [
+				{
+					"num": 5,
+					"typeId": "item_10100"
+				}
+			],
+			"name": "口渴了。",
+			"baseValue":300,
+			"orderValue": 2.35,
+			"taskTypeId": "m_3_1",
+			"charaText":"想睡觉。但是又想喝果汁。谢谢。",
+			"charaImg":"cart_at_npc_034",
+			"tip": "露帕，水露果"
+		},
+		"c3_4": {
+			"orderTypeId": "c3_4",
+			"chance": 2,
+			"items": [
+				{
+					"num": 5,
+					"typeId": "item_10102"
+				}
+			],
+			"name": "治疗顽疾",
+			"baseValue":300,
+			"orderValue": 2.2,
+			"taskTypeId": "m_3_1",
+			"charaText":"为了根治富魔病，需要更多研究……",
+			"charaImg":"cart_at_npc_036",
+			"tip": "贝尔卡，魔水凝晶"
+		},
+		"c3_5": {
+			"orderTypeId": "c3_5",
+			"chance": 2,
+			"items": [
+				{
+					"num": 5,
+					"typeId": "item_10101"
+				}
+			],
+			"name": "进货啦！",
+			"baseValue":300,
+			"orderValue": 2.2,
+			"taskTypeId": "m_3_1",
+			"charaText":"大市集女仆餐厅想要进货～！",
+			"charaImg":"cart_at_npc_ldl",
+			"tip": "女仆莱蒂拉，魔爪贝"
+		}
+
+
+
+
+	},
+	"orderDailyTarget_tip": "每日完成订单奖励，num从载货量改为订单数量，格式不变，暂定位只有一档",
+	"orderDailyTarget": {
+		"1": {
+			"num": 3,
+			"reward": "carriage01"
+		}
+	},
+	"orderNumMax_tip": "最大可存储的订单数量",
+	"orderNumMax": 9,
+	"orderTimeSeconds_tip": "订单刷新时间 30分钟",
+	"orderTimeSeconds": 1800
+}
