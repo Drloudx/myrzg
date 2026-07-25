@@ -379,7 +379,7 @@ onMounted(() => {
   gap: 10px;
   padding: 10px 14px;
   cursor: pointer;
-  //border-bottom: 1px solid var(--border-color);
+/* border-bottom: 1px solid var(--border-color); */
   transition: background-color 0.15s ease;
 }
 
