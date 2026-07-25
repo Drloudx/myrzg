@@ -10,26 +10,6 @@
         <div class="nav-section-title">核心功能</div>
         <div class="nav-grid">
           <router-link
-            to="/role"
-            class="nav-item"
-            :class="{ active: currentRoute === '/role' }"
-            @click="$emit('close')"
-          >
-<!--            <div class="icon-box">👤</div>-->
-            <span>角色图鉴</span>
-          </router-link>
-
-          <router-link
-            to="/equip"
-            class="nav-item"
-            :class="{ active: currentRoute === '/equip' }"
-            @click="$emit('close')"
-          >
-<!--            <div class="icon-box">🛡️</div>-->
-            <span>装备图鉴</span>
-          </router-link>
-
-          <router-link
             to="/monsterseggs"
             class="nav-item"
             :class="{ active: currentRoute === '/monsterseggs' }"
