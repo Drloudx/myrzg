@@ -1,0 +1,8 @@
+{
+	"appId": "com.myrzg.assistant",
+	"appName": "深歌小助手",
+	"webDir": "dist",
+	"server": {
+		"androidScheme": "https"
+	}
+}
