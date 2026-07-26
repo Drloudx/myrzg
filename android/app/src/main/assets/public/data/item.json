@@ -28900,7 +28900,7 @@
                 323
             ],
             "quality":3,
-            "name":"珍菇翡翠白玉汤",
+            "name":"珍菇翡翠白玉",
             "typeId":"item_30034",
             "desc":"你不知道厨师是以什么样的心态做出了这道菜——看上去只是将手所能及的材料一股脑丢进锅里煮烂，但各种食材的味道与口感既没有失去层次感，又仿佛浑然一体。所有人在入口之后都会为身处这深渊之中，还可以品尝到如此料理而感慨。",
             "numSplit":99,
@@ -28912,7 +28912,7 @@
             "sellPrice":5,
             "priceRate":0,
             "useable2":true,
-            "img":"item_30006",
+            "img":"pet_072",
             "useAction2":"addBuff",
             "sellExp":0,
             "useAction":"none",

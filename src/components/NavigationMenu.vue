@@ -16,7 +16,7 @@
             @click="$emit('close')"
           >
             <div class="icon-box">
-              <img src="/pet/eggs/pet_079.png" class="nav-egg-img" alt="魔物收益" />
+              <img src="/images/pet/eggs/pet_079.png" class="nav-egg-img" alt="魔物收益" />
             </div>
             <span>魔物收益</span>
           </router-link>
@@ -28,7 +28,7 @@
             @click="$emit('close')"
           >
             <div class="icon-box">
-              <img src="/AchievementPanel/achv_icon_adv.png" class="nav-achv-img" alt="成就查询" />
+              <img src="/images/AchievementPanel/achv_icon_adv.png" class="nav-achv-img" alt="成就查询" />
             </div>
             <span>成就查询</span>
           </router-link>
@@ -40,7 +40,7 @@
             @click="$emit('close')"
           >
             <div class="icon-box">
-              <img src="/Common_ItemIcon/item_30047.png" class="nav-recipe-img" alt="菜谱查询" />
+              <img src="/images/Common_ItemIcon/item_30047.png" class="nav-recipe-img" alt="菜谱查询" />
             </div>
             <span>菜谱查询</span>
           </router-link>
