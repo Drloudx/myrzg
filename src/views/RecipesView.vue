@@ -16,7 +16,7 @@
         </div>
 
         <div class="recipes-counter">
-          包含食谱（测试） <span class="count-num">{{ filteredRecipes.length }}</span> / {{ recipes.length }}
+          包含食谱2<span class="count-num">{{ filteredRecipes.length }}</span> / {{ recipes.length }}
         </div>
       </div>
 
