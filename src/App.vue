@@ -113,6 +113,9 @@
 
     <!-- Navigation Drawer -->
     <NavigationMenu :is-open="isNavOpen" @close="isNavOpen = false" />
+
+    <!-- Hot Update Modal -->
+    <UpdateModal />
   </div>
 </template>
 
@@ -122,6 +125,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { Capacitor } from '@capacitor/core'
 import { StatusBar, Style } from '@capacitor/status-bar'
 import NavigationMenu from './components/NavigationMenu.vue'
+import UpdateModal from './components/UpdateModal.vue'
 
 import { isBlacklisted } from './config/blacklist.js'
 

@@ -1,39 +1,35 @@
 <template>
   <div class="page-view-container">
-    <!-- Top Filter Header -->
+    <!-- Top Filter Header (2-Row Segmented Pill Layout matching AchievementView) -->
     <div class="filter-sticky-bar pet-filter-sticky">
-      <!-- Action & Pool Filter Row: Single row on Desktop, 2 rows on Mobile -->
-      <div class="recommend-filter-row">
-        <!-- Left: Action & Star Filter Tags (3星, 4星, 5星) -->
-        <div class="tag-group">
-          <span
-            v-for="tag in ['全部', '卖', '喂', '按需选择', '3星', '4星', '5星']"
-            :key="tag"
-            :class="['action-filter-tag', { active: activeTagFilter === tag }]"
-            @click="activeTagFilter = tag"
+      <!-- Row 1: Full-Width Pool & Star Filter Bar (全部, 金币池, 氪金池, 3星, 4星, 5星) -->
+      <div class="control-row-1">
+        <div class="segmented-pill-container pool-star-segmented">
+          <div
+            v-for="item in row1Options"
+            :key="item.key"
+            :class="['segmented-pill-item', { active: activeRow1Filter === item.key }]"
+            @click="activeRow1Filter = item.key"
           >
-            {{ tag }}
-          </span>
+            {{ item.label }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Action Segmented Bar (全部, 卖, 喂, 按需选择) + Reset Button -->
+      <div class="control-row-2">
+        <div class="segmented-pill-container action-segmented">
+          <div
+            v-for="item in row2Options"
+            :key="item.key"
+            :class="['segmented-pill-item', { active: activeRow2Filter === item.key }]"
+            @click="activeRow2Filter = item.key"
+          >
+            {{ item.label }}
+          </div>
         </div>
 
-        <!-- Right / Bottom: Pool Switcher & Reset Button -->
-        <div class="right-action-group">
-          <div class="pool-segmented-btn">
-            <button
-              :class="['pool-btn', { active: activePool === 'gold' }]"
-              @click="togglePool('gold')"
-            >
-              金币池
-            </button>
-            <button
-              :class="['pool-btn', { active: activePool === 'premium' }]"
-              @click="togglePool('premium')"
-            >
-              氪金池
-            </button>
-          </div>
-          <button class="reset-btn" @click="resetFilters">重置</button>
-        </div>
+        <button class="reset-btn" @click="resetFilters">重置</button>
       </div>
 
       <!-- Display Field Control Collapsible Panel -->
@@ -256,9 +252,38 @@ const premiumPoolNames = [
   '绿色史莱姆', '格莉姆', '冰棱妖精', '抛雪芙洛波', '布丁史莱姆'
 ]
 
-// Filter & Control States ('all' | 'gold' | 'premium')
-const activePool = ref(route.query.pool || 'all')
-const activeTagFilter = ref(route.query.tag || '全部')
+// Filter options definitions
+const row1Options = [
+  { key: '全部', label: '全部' },
+  { key: '金币池', label: '金币池' },
+  { key: '氪金池', label: '氪金池' },
+  { key: '3星', label: '3星' },
+  { key: '4星', label: '4星' },
+  { key: '5星', label: '5星' }
+]
+
+const row2Options = [
+  { key: '全部', label: '全部' },
+  { key: '卖', label: '卖' },
+  { key: '喂', label: '喂' },
+  { key: '按需选择', label: '按需选择' }
+]
+
+// Filter & Control States
+const getInitialRow1 = () => {
+  if (route.query.pool === 'gold') return '金币池'
+  if (route.query.pool === 'premium') return '氪金池'
+  if (['3星', '4星', '5星'].includes(route.query.tag)) return route.query.tag
+  return '全部'
+}
+
+const getInitialRow2 = () => {
+  if (['卖', '喂', '按需选择'].includes(route.query.tag)) return route.query.tag
+  return '全部'
+}
+
+const activeRow1Filter = ref(getInitialRow1())
+const activeRow2Filter = ref(getInitialRow2())
 const isFieldPanelOpen = ref(false)
 
 // Display Field Control Panel Checkboxes Order Definitions
@@ -303,17 +328,9 @@ const getFieldLabel = (key) => {
   return match ? match.label : key
 }
 
-const togglePool = (pool) => {
-  if (activePool.value === pool) {
-    activePool.value = 'all' // Clicking active pool deselects it to show all pets
-  } else {
-    activePool.value = pool
-  }
-}
-
 const resetFilters = () => {
-  activePool.value = 'all'
-  activeTagFilter.value = '全部'
+  activeRow1Filter.value = '全部'
+  activeRow2Filter.value = '全部'
   selectedFields.value = ['sellPrice', 'exp', 'recommend']
   sortState.value = { field: 'star', dir: 'desc' }
 }
@@ -404,10 +421,14 @@ onMounted(async () => {
 })
 
 // Bidirectional URL Query State Sync
-watch([activePool, activeTagFilter], () => {
+watch([activeRow1Filter, activeRow2Filter], () => {
   const query = {}
-  if (activePool.value !== 'all') query.pool = activePool.value
-  if (activeTagFilter.value !== '全部') query.tag = activeTagFilter.value
+  if (activeRow1Filter.value === '金币池') query.pool = 'gold'
+  else if (activeRow1Filter.value === '氪金池') query.pool = 'premium'
+  else if (activeRow1Filter.value !== '全部') query.tag = activeRow1Filter.value
+
+  if (activeRow2Filter.value !== '全部') query.tag = activeRow2Filter.value
+
   if (detailModal.value.visible && detailModal.value.pet?.id) {
     query.id = detailModal.value.pet.id
   }
@@ -425,18 +446,18 @@ watch(() => route.query, (newQuery) => {
 const filteredPets = computed(() => {
   const result = pets.value.filter(pet => {
     if (isBlacklisted(pet)) return false
-    // 1. Pool filter
-    if (activePool.value === 'gold' && !goldPoolNames.includes(pet.name)) return false
-    if (activePool.value === 'premium' && !premiumPoolNames.includes(pet.name)) return false
 
-    // 2. Action or Star tag filter ('全部' | '卖' | '喂' | '按需选择' | '3星' | '4星' | '5星')
-    if (activeTagFilter.value !== '全部') {
-      if (['卖', '喂', '按需选择'].includes(activeTagFilter.value)) {
-        if (pet.recommendationText !== activeTagFilter.value) return false
-      } else if (['3星', '4星', '5星'].includes(activeTagFilter.value)) {
-        const targetStar = parseInt(activeTagFilter.value)
-        if (pet.displayStar !== targetStar) return false
-      }
+    // 1. Row 1 filter (全部 | 金币池 | 氪金池 | 3星 | 4星 | 5星)
+    if (activeRow1Filter.value === '金币池' && !goldPoolNames.includes(pet.name)) return false
+    if (activeRow1Filter.value === '氪金池' && !premiumPoolNames.includes(pet.name)) return false
+    if (['3星', '4星', '5星'].includes(activeRow1Filter.value)) {
+      const targetStar = parseInt(activeRow1Filter.value)
+      if (pet.displayStar !== targetStar) return false
+    }
+
+    // 2. Row 2 filter (全部 | 卖 | 喂 | 按需选择)
+    if (activeRow2Filter.value !== '全部') {
+      if (pet.recommendationText !== activeRow2Filter.value) return false
     }
 
     return true
@@ -492,89 +513,88 @@ const closeDetail = () => {
   padding: 10px 16px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
-/* Action & Pool Filter Row - Single row on Desktop (>=768px), Stacked on Mobile (<768px) */
-.recommend-filter-row {
+/* Control Row 1: Full Width 6-Column Segmented Bar */
+.control-row-1 {
+  width: 100%;
+}
+
+.pool-star-segmented {
+  display: flex;
+  width: 100%;
+}
+
+.pool-star-segmented .segmented-pill-item {
+  flex: 1;
+}
+
+/* Control Row 2: Compact Content-Width Segmented Bar + Right Reset Button */
+.control-row-2 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 12px;
+  width: 100%;
 }
 
-.tag-group {
-  display: flex;
+.action-segmented {
+  display: inline-flex;
+  width: auto;
+}
+
+/* Segmented Pill Track Base */
+.segmented-pill-container {
   align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.action-filter-tag {
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 13px;
-  background: var(--card-bg, #ffffff);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 600;
-}
-
-.action-filter-tag.active {
-  background: var(--primary);
-  color: #ffffff;
-  border-color: var(--primary);
-  font-weight: 700;
-}
-
-.right-action-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: auto;
-}
-
-/* Responsive Media Query for Mobile Devices (< 768px) */
-@media (max-width: 767px) {
-  .recommend-filter-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  .right-action-group {
-    margin-left: 0;
-    width: 100%;
-    justify-content: flex-start;
-  }
-}
-
-.pool-segmented-btn {
-  display: flex;
-  background: var(--input-bg, #f1f5f9);
   padding: 3px;
-  border-radius: 20px;
+  background: var(--input-bg, #f1f5f9);
   border: 1px solid var(--border-color);
+  border-radius: 14px;
+  box-sizing: border-box;
 }
 
-.pool-btn {
-  padding: 4px 14px;
-  border-radius: 16px;
-  border: none;
-  background: transparent;
+/* Segmented Pill Item Base */
+.segmented-pill-item {
+  text-align: center;
+  padding: 6px 14px;
+  border-radius: 10px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
+  color: var(--text-sub);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  white-space: nowrap;
+}
+
+.segmented-pill-item:hover {
+  color: var(--text-main);
+}
+
+.segmented-pill-item.active {
+  background: var(--card-bg, #ffffff);
+  color: var(--primary);
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.reset-btn {
+  padding: 6px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg, #ffffff);
+  font-size: 13px;
+  font-weight: 500;
   color: var(--text-sub);
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
 }
 
-.pool-btn.active {
-  background: var(--card-bg, #ffffff);
-  color: var(--primary);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+.reset-btn:hover {
+  background: var(--hover-bg);
+  color: var(--text-main);
 }
 
 .reset-btn {
@@ -665,6 +685,13 @@ const closeDetail = () => {
   cursor: pointer;
   user-select: none;
   transition: all 0.15s ease;
+}
+
+/* 手机端屏幕小于768px时字体改为10px */
+@media screen and (max-width: 768px) {
+  .field-checkbox-item {
+    font-size: 10px;
+  }
 }
 
 .field-checkbox-item input {

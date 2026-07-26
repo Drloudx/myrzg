@@ -203,51 +203,53 @@
 
 ### 6. 魔物收益与孵化处置推荐 (Route: /monsterseggs)
 - 视图页面：[src/views/MonstersEggsView.vue](file:///e:/Desktop/html/myrzg/vue-myrzg/src/views/MonstersEggsView.vue)
-- 侧边栏导航：名称更名为 **魔物收益**，路由路径映射为 `/monsterseggs`，图标使用 `public/pet/eggs/pet_079.png`。
-- 顶部 Header 结构：响应式 Media Query 适配（电脑端 >=768px 保持原始单行布局，手机端 <768px 展为双行：第一行 Logo+标题+功能按键，第二行全宽搜索框，配备 24x24px Search 图标）。
-- 静态数据：`public/data/pet.json` (32种魔物蛋数据)
-- 蛋图标匹配：`public/pet/eggs/${pet.eggImg}.png`
-- 界面特性与排版：
-  - 表格内容与表头单元格全线垂直居中 (`align-items: center; justify-content: center;`)；
-  - 标签过滤响应式排版：电脑端为原始单行，手机端 (<768px) 展为双行（第二行独立居左摆放“金币池 | 氪金池”与“重置”按键）；
-  - 动态“显示字段控制”复选框（严格保持 时间 -> 金币 -> 经验 -> 金币/分 -> 经验/分 -> 金效 -> 经效 -> 优先级 列顺序）；
-  - 默认排序改为按品级/星级降序（高星在最前，即 5星 -> 4星 -> 3星）；点击“名称”表头可切换升降序。
-  - 全局搜索下拉框文案统一更名为“魔物蛋”，且彻底移除了类似 `80分` 的分数值显示。
+- 侧边栏导航：名称为 **魔物收益**，路由路径映射为 `/monsterseggs`，图标使用 `public/pet/eggs/pet_079.png`。
+- 关联数据源：`public/data/pet.json` (32种魔物蛋数据)，蛋图标路径规则为 `public/pet/eggs/${pet.eggImg}.png`。
+- 顶部双行分段控制器布局 (Segmented Pill Track matching RecipesView & AchievementView)：
+  - 第一行自适应分段栏：`【全部 | 金币池 | 氪金池 | 3星 | 4星 | 5星】` (`display: inline-flex; width: auto;`)
+  - 第二行自适应分段栏 + 重置按钮：`【全部 | 卖 | 喂 | 按需选择】` (`display: inline-flex; width: auto;` 紧凑包裹，右侧对齐 `重置` 按钮)。
+  - 分段控件采用灰底圆角轨道 (`.segmented-pill-container`) + 浮起卡片与主题蓝 (`var(--primary)`) 字体，标准字号 13px，内边距 `padding: 6px 14px` 与菜谱查询页完全保持一致。
+- 表格与列说明：
+  - 内容与表头单元格全线垂直居中对齐；
+  - 显示字段控制：按 时间 $\rightarrow$ 金币 $\rightarrow$ 经验 $\rightarrow$ 金币/分 $\rightarrow$ 经验/分 $\rightarrow$ 金效 $\rightarrow$ 经效 $\rightarrow$ 优先级 顺序排布；
+  - 默认排序：按星级/品级降序（5星 $\rightarrow$ 4星 $\rightarrow$ 3星）；点击名称表头可切换升降序。
 - 处置推荐规则 (Decision Logic)：
   - 售价与经验比值 $R = \text{sellPrice} / \text{exp}$：
-    - $R > 3.0$：标记为 **卖** (售出收益显著高于经验价值)；
-    - $R < 2.2$：标记为 **喂** (喂养经验价值显著高于售出金币)；
+    - $R > 3.0$：标记为 **卖** (售出收益高于经验价值)；
+    - $R < 2.2$：标记为 **喂** (喂养经验价值高于售出金币)；
     - $2.2 \le R \le 3.0$：标记为 **按需选择** (金币与经验收益均衡)。
 
 ### 7. 成就查询模块 (Route: /achievement)
 - 视图页面：[src/views/AchievementView.vue](file:///e:/Desktop/html/myrzg/vue-myrzg/src/views/AchievementView.vue)
 - 侧边栏导航：名称为 **成就查询**，路由映射为 `/achievement`，导航图标使用 `/public/AchievementPanel/achv_icon_adv.png`。
 - 关联数据源：`achievement.json`（成就基础数据）、`reward.json`（奖励配置）、`item.json`（道具信息）。
-- 异步拼装规则：
+- 奖励拼装与展示规则：
   - 银币 `money` $\rightarrow$ 固定使用图标 `/Common_ItemIcon/item_00001.png`；
   - 氪金 `ke` $\rightarrow$ 固定使用图标 `/Common_ItemIcon/item_00002.png`；
   - 道具 `items` $\rightarrow$ 动态图标路径 `/Common_ItemIcon/{typeId}.png`；
-  - 隐藏名称提取：通过 `typeId` 去 `item.json` 查得道具名称存入 `rewardItemNames`，供内部及全局搜索匹配，不展示在卡片 UI 界面上。
-  - 顶部三行胶囊分段布局：第一行【全部/冒险/探索/生活/隐藏】全宽胶囊分段栏（参照图1）；第二行【全部/已收集/未收集】自适应紧凑分段栏（参照图2）+ 右侧【已收集 XX / XX】计数；第三行全宽搜索栏。分段按钮采用灰底轨道框架 + 浮起白底/暗底圆角选中卡片与主题蓝 (var(--primary)) 字体；
-  - 搜索图标与深浅色滤镜规范：项目中所有搜索框（Header 全局搜索与成就站内搜索）统一使用 `/public/ui/search.svg` SVG 矢量图标，并严格应用全局配色滤镜 `filter: var(--icon-filter)`，实现浅色下黑灰色调、深色下白灰色调的自动完美适配；
-  - 全局搜索定位响应：已为 [AchievementView.vue](file:///e:/Desktop/html/myrzg/vue-myrzg/src/views/AchievementView.vue) 添加 `watch(() => route.query)` 监听与 `handleLocateAchievement` 函数。当用户在已处于成就页面下再次通过 Header 搜索框点击任何成就时，系统能即刻响应，自动重置冲突的分类/状态过滤限制，并将页面平滑滚动定位至目标成就卡片居中位置，同时触发 `.card-highlight-pulse` 蓝色发光波纹动画；
-  - 回到顶部按键 ([BackToTop.vue](file:///e:/Desktop/html/myrzg/vue-myrzg/src/components/BackToTop.vue))：圆圈按钮定制尺寸为 38px × 38px，专属背景色 `#628fb8`，内部图标为纯白色并叠加 `transform: scaleY(-1)` 垂直翻转；
-  - 精致紧凑卡片排版：成就卡片高度与内边距缩减为 `padding: 8px 14px`，图标等比缩小至 36x36px，Switch 开关微调为 44x24px 紧凑比例，使得整页列表高度更加精致轻盈；
-  - 代码层防剧透屏蔽黑名单：成就屏蔽位于代码层配置（[AchievementView.vue](file:///e:/Desktop/html/myrzg/vue-myrzg/src/views/AchievementView.vue) 中的 `BLACKLIST_ACHIEVEMENT_NAMES` 数组），防止未发布成就剧透；开发者可直接在代码数组中追加成就标题关键字（默认包含 `'章节宝箱'`, `'通关'`）；
-  - 移除 UI 标记：已彻底删除了成就卡片标题旁原有的紫色“隐藏” Badge 标签；
-  - 自定义 Switch 开关：关闭为灰色带 `✕`，开启为绿色带 `✓`，与 Pinia `collectedAchievementIds` 状态持久化双向绑定。
-  - 奖励展示：Flex 弹性横排仅渲染图标与 `× 数量`，隐藏道具名称。
+  - 隐藏名称提取：通过 `typeId` 去 `item.json` 查得道具名称存入 `rewardItemNames`，供内部及全局搜索匹配。
+- 顶部分段与搜索规范：
+  - 第一行【全部/冒险/探索/生活/隐藏】全宽胶囊分段栏；
+  - 第二行【全部/已收集/未收集】分段栏 + 右侧【已收集 XX / XX】计数；
+  - 第三行全宽搜索栏，使用 `/public/ui/search.svg` SVG 矢量图标并匹配全局配色滤镜 `filter: var(--icon-filter)`。
+- 全局搜索定位响应：
+  - [AchievementView.vue](file:///e:/Desktop/html/myrzg/vue-myrzg/src/views/AchievementView.vue) 监听 `route.query`，当从 Header 搜索结果点击成就时，重置过滤限制并滚动定位至目标成就卡片，触发 `.card-highlight-pulse` 高亮动画。
+- 组件与界面规范：
+  - 回到顶部按键 ([BackToTop.vue](file:///e:/Desktop/html/myrzg/vue-myrzg/src/components/BackToTop.vue))：38px × 38px，专属背景色 `#628fb8`，白色图标叠加 `transform: scaleY(-1)`；
+  - 成就卡片内边距 `padding: 8px 14px`，图标尺寸 36x36px；
+  - 代码层防剧透黑名单：配置于 [AchievementView.vue](file:///e:/Desktop/html/myrzg/vue-myrzg/src/views/AchievementView.vue) 的 `BLACKLIST_ACHIEVEMENT_NAMES` 数组；
+  - 自定义 Switch 开关：44x24px 紧凑比例，关闭为灰色带 `✕`，开启为绿色带 `✓`，与 Pinia `collectedAchievementIds` 状态持久化双向绑定。
 
 ### 8. 菜谱查询模块 (Route: /recipes)
 - 视图页面：[src/views/RecipesView.vue](file:///e:/Desktop/html/myrzg/vue-myrzg/src/views/RecipesView.vue)
 - 侧边栏导航：名称为 **菜谱查询**，路由映射为 `/recipes`，导航图标使用 `/Common_ItemIcon/item_30047.png`。
 - 关联数据源与跨 JSON 拼装架构：
-  - `gameSetting.json` (`public/data/gameSetting.json`)：递归解析 `data.typeSetting.item_type` 分类编码映射（如 `3` $\rightarrow$ `消耗`，`32` $\rightarrow$ `料理`，`321` $\rightarrow$ `恢复类`，`322` $\rightarrow$ `强化类`，`323` $\rightarrow$ `抗性类`）；
-  - `item.json` (`public/data/item.json`)：通过食谱或食材 `typeId` 提取真实名称，从其 `"img"` 字段进行图标文件匹配（如浆果 `item_10055` 使用 `"img": "item_10009"` 对应路径 `/Common_ItemIcon/item_10009.png`）；分类数组 `category`（如 `[3, 32, 323]`）在解析后自动过滤掉无意义的 `"消耗"` 和 `"料理"` 标签，仅精准展现具体的子分类标签（如 `["抗性类"]`、`["强化类"]`、`["恢复类"]`）；
-  - `menu.json` (`public/data/menu.json`)：获取食谱 `typeId`（如 `item_30035`）、包含的配方食材 `food` 数组或 `foodType` 数组；制作大图预览仍严格使用料理的 ID 进行 `/menu_prev/{typeId}_prev.png` 路径匹配；
-  - `buff.json` (`public/data/buff.json`)：通过 `buffId` 提取料理效果描述文案 `buffDes`（清洗大括号占位符）。
+  - `gameSetting.json` (`public/data/gameSetting.json`)：解析 `data.typeSetting.item_type` 分类编码映射（`3` $\rightarrow$ `消耗`，`32` $\rightarrow$ `料理`，`321` $\rightarrow$ `恢复类`，`322` $\rightarrow$ `强化类`，`323` $\rightarrow$ `抗性类`）；
+  - `item.json` (`public/data/item.json`)：通过食谱或食材 `typeId` 提取真实名称，根据 `"img"` 字段进行图标文件匹配（如浆果 `item_10055` $\rightarrow$ `"img": "item_10009"` $\rightarrow$ `/Common_ItemIcon/item_10009.png`）；食谱分类数组解析后过滤通用分类，在卡片标题旁仅展现具体的子分类标签（如 `["抗性类"]`、`["强化类"]`、`["恢复类"]`）；全局搜索下拉框保持原样展示子分类标签；
+  - `menu.json` (`public/data/menu.json`)：获取食谱 `typeId`、包含的配方食材 `food` 数组或 `foodType` 数组；制作大图预览使用料理 ID 匹配 `/menu_prev/{typeId}_prev.png` 路径；
+  - `buff.json` (`public/data/buff.json`)：通过 `buffId` 提取料理效果描述文案 `buffDes`。
 - 全局分类标签规范 (.category-tag-pill)：
-  - 项目所有分类标签（搜索下拉菜单、食谱卡片标题旁）统一使用强类型蓝调浮起标签样式：
+  - 搜索下拉菜单及食谱卡片标题旁统一使用强类型蓝调浮起标签样式：
     `color: var(--primary); background: #3b82f614; border: 1px solid #3b82f62e; border-radius: 4px; padding: 3px 10px; font-size: 11px; font-weight: 700; box-shadow: 0 1px 2px #00000005;`
 - 食材 ID 与名称静态强绑定映射表 (`INGREDIENT_NAME_MAP`)：
   - `item_10006`: 兽肉 / `item_10016`: 猪腿骨 / `item_10024`: 面粉 / `item_10036`: 绿榛菇
@@ -255,14 +257,41 @@
   - `item_10089`: 风干肉 / `item_10090`: 果酱 / `item_10091`: 腌菜 / `item_10100`: 水露果
   - `item_10101`: 魔爪贝 / `item_10111`: 黑森林松茸 / `item_10112`: 黑森林松茸干 / `item_10118`: 冰莲
 - 通用食材分类映射 (`GENERIC_FOOD_TYPE_MAP`)：`1` $\rightarrow$ 兽肉(`item_10006`)，`2` $\rightarrow$ 野菜(`item_10056`)，`3` $\rightarrow$ 浆果(`item_10055`)，`4` $\rightarrow$ 地菇(`item_10057`)。
-- 精简界面排版规则：
-  - 移除等级筛选与 UI 标签：已移除顶部第一行等级 Segmented 筛选栏，并删除了食谱卡片标题旁原有的蓝色 `Lv.X` 标签，仅在内部数据保留 `item.level`；
-  - 放大料理图标：料理图标尺寸扩大至 `54px × 54px`（`.recipe-icon-wrapper`），呈现更加清晰醒目；
-  - 移除编号并嵌入配方：删除了原有的 `item_sub_id`（如 `item_30022`）编号文本，将食材配方芯片列表直接上移填补至食谱标题与分类标签下方；
-  - 隐藏弹窗食谱 ID：制作图预览弹窗底部已彻底隐藏 `食谱 ID: item_XXXXX` 文本展示；
-  - 灰色圆圈预览按钮：使用 32px × 32px 灰色圆圈背景按钮（`.circle-grey-btn`），内嵌 SVG 矢量图标（应用 `var(--icon-filter)` 滤镜）。页面使用 Vite `import.meta.glob('/public/menu_prev/*.png')` 动态扫描图片目录，只要在 `public/menu_prev/` 中添加 `{typeId}_prev.png` 文件，即可自动识别并渲染对应食谱的预览按钮；
-  - Buff 区域极简呈现：删除了原有的左侧蓝条、`[强化]` 标签与 `料理效果` 标题，仅保留纯粹的 `buffDes` 描述文本。
+- 界面组件规范：
+  - 料理图标：尺寸 `54px × 54px`（`.recipe-icon-wrapper`）；
+  - 配方展示：食材芯片列表位于标题与分类标签下方；
+  - 预览按钮：32px × 32px 灰色圆圈背景按钮（`.circle-grey-btn`），内嵌 SVG 矢量图标（应用 `var(--icon-filter)` 滤镜），动态匹配 `/public/menu_prev/{typeId}_prev.png`；
+  - Buff 展现：呈现纯文本 `buffDes` 描述。
 - 获取途径与任务详情弹窗 (`RECIPE_SOURCE_CONFIG` & `handleNavigateSource`)：
-  - 路由跳转类型（`targetType: 'achievement'`）：如 `item_30035` $\rightarrow$ 点击带 query 参数跳转至成就查询页并自动滚动高亮；
-  - 任务弹窗类型（`targetType: 'task_modal'`）：如 `item_30041`（香炸酥肉）与 `item_30034`（珍菇翡翠白玉汤）$\rightarrow$ 点击展开任务详情弹窗 (`taskModal`)；`rewards` 配置无需手动填写 `icon` 或中文名称，只需在 `rewards` 数组中写入 `typeId: 'item_XXXXX'` 或 `id: 'item_XXXXX'`，弹窗打开时将自动联动 `item.json` 匹配道具真实名称与图片路径（如 `item_30034` $\rightarrow$ 珍菇翡翠白玉汤 / `/Common_ItemIcon/item_30006.png`）。
+  - 任务弹窗类型（`targetType: 'task_modal'`）：展开任务详情弹窗 (`taskModal`)；`rewards` 配置使用 `typeId` / `id` / `name`，自动联动 `item.json` 匹配真实名称与图片路径。
 
+---
+
+## 六、 双轨分离与纯原生热更闭环架构 (Hot Update & Dual-Track)
+
+本系统采用 **“本地前端内核 + 云端动态素材”** 的双轨制分离架构，结合 `@capgo/capacitor-updater` 官方插件实现零 Java 侵入的高性能热更新闭环。
+
+### 1. 架构目标与策略
+- **轨道 A (核心代码，走原生持久化热更)**：包含打包后的 HTML/JS/CSS（即 `dist` 产物）。由 Capgo Updater 接管，下载极小的单一 Zip 增量包，直接通过 C++ / Java 原生底层解压至私有沙盒目录挂载，彻底摆脱旧版本中 JS 与 Java 传 Base64 导致的 OOM 问题。
+- **轨道 B (海量素材，走云端 CDN 临时缓存)**：几千张图鉴图片和巨型 JSON 表格。在 Android 端，所有图片请求由 `src/utils/env.js` 内的 `getResourceBaseUrl()` 自动劫持向云端拉取，依赖 WebView 原生的 Cache 机制托管，大大减轻核心热更包体积（通常小于 2MB）。
+
+### 2. 断网离线兜底 (Offline Fallback)
+由于图片与数据表格通过 CDN 拉取，如果用户断网，`src/utils/request.js` 中封装的智能 Fetch 会自动捕获异常，将请求降级 (Fallback) 回 `assets/public_dynamic/` 路径，读取打包进 APK 的静态资源进行硬核兜底。
+
+### 3. 服务端配置与发版规范 (热更必读)
+因为全面使用了 Capgo Updater 原生引擎，我们**不需要，也严禁再使用文件分卷 (分券)**！
+插件底层只接受完整的标准 Zip 压缩包，打包极其简单。
+
+**打包发布流程**：
+1. 本地执行 `npm run build`。
+2. 将生成的 `dist` 目录下的所有文件（**确保 `index.html` 在压缩包的第一层根目录下**）打包为 `dist-1.0.1.zip`（根据当前版本号命名）。
+3. 将该 Zip 文件上传至 CDN / 服务端。
+4. 在服务端更新 `hotupdate.json` 清单，结构如下：
+   ```json
+   {
+     "version": "1.0.1",
+     "downloadUrl": "https://myrzg.yxzmy.top/update/dist-1.0.1.zip",
+     "body": "1. 修复图鉴显示错误\n2. 优化深色模式体验"
+   }
+   ```
+5. App 启动时，`src/utils/hotupdate.js` 会自动比对版本并唤起 `UpdateModal.vue` 进行原生极速下载与重启覆盖。

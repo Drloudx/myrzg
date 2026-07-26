@@ -1,0 +1,21 @@
+# 依赖缓存
+node\_modules/
+node\_modules/\*\*/build/
+node\_modules/.vite/
+
+# 前端打包产物
+dist/
+
+# Android原生编译缓存
+android/\*\*/build/
+android/.gradle/
+android/gradle/wrapper/
+android/app/build/
+
+# 备份、临时文件
+android\_backup/
+\*.log
+.DS\_Store
+
+# Vite缓存
+.vite/
