@@ -27,12 +27,8 @@
 
       <div class="update-footer">
         <button class="btn btn-secondary" @click="close" :disabled="isDownloading">暂不更新</button>
-        
-        <button v-if="updateInfo?._needsApkUpdate" class="btn btn-primary" @click="openGiteeReleases">
-          浏览器下载新版
-        </button>
-        <button v-else class="btn btn-primary" @click="startUpdate" :disabled="isDownloading">
-          {{ isDownloading ? '更新中...' : '立即更新' }}
+        <button class="btn btn-primary" @click="startUpdate" :disabled="isDownloading">
+          {{ isDownloading ? '更新中...' : (updateInfo?._needsApkUpdate ? '立即下载并安装' : '立即更新') }}
         </button>
       </div>
     </div>
@@ -41,7 +37,8 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { Browser } from '@capacitor/browser';
+import { Filesystem, Directory } from '@capacitor/filesystem';
+import { FileOpener } from '@capawesome-team/capacitor-file-opener';
 import { checkHotUpdate, applyHotUpdate } from '@/utils/hotupdate';
 
 const visible = ref(false);
@@ -68,24 +65,52 @@ const startUpdate = async () => {
   isDownloading.value = true;
   errorMsg.value = '';
   
-  try {
-    await applyHotUpdate(updateInfo.value, (pct) => {
-      progress.value = pct;
-    });
-    // 更新完成后 Capgo 会自动重载，这行可能不一定能执行到
-    visible.value = false;
-  } catch (err) {
-    errorMsg.value = err.message || '下载解压时出错';
-    isDownloading.value = false;
-  }
-};
-
-const openGiteeReleases = async () => {
-  try {
-    await Browser.open({ url: 'https://gitee.com/ccyconner/myrzg/releases' });
-  } catch (err) {
-    console.warn('Browser plugin fail, fallback to window.open', err);
-    window.open('https://gitee.com/ccyconner/myrzg/releases', '_system');
+  if (updateInfo.value._needsApkUpdate) {
+    // 1. APK 大版本更新：下载并唤起安装
+    try {
+      const downloadUrl = updateInfo.value.downloadUrl;
+      if (!downloadUrl) throw new Error('未找到下载链接');
+      
+      const fileName = `update-${updateInfo.value.version}.apk`;
+      
+      const listener = await Filesystem.addListener('progress', (event) => {
+        if (event.contentLength > 0) {
+          progress.value = Math.round((event.bytes / event.contentLength) * 100);
+        }
+      });
+      
+      console.log('[UpdateModal] 开始下载 APK:', downloadUrl);
+      const result = await Filesystem.downloadFile({
+        url: downloadUrl,
+        path: fileName,
+        directory: Directory.Cache, // 使用 Cache 目录，FileOpener 会通过 FileProvider 共享给安装器
+        progress: true,
+      });
+      
+      listener.remove();
+      console.log('[UpdateModal] 下载完成:', result.path);
+      
+      await FileOpener.openFile({ 
+        path: result.path,
+        mimeType: 'application/vnd.android.package-archive'
+      });
+      isDownloading.value = false;
+    } catch (err) {
+      console.error(err);
+      errorMsg.value = err.message || '下载或安装APK失败';
+      isDownloading.value = false;
+    }
+  } else {
+    // 2. 小版本热更新：直接应用热更包
+    try {
+      await applyHotUpdate(updateInfo.value, (pct) => {
+        progress.value = pct;
+      });
+      visible.value = false;
+    } catch (err) {
+      errorMsg.value = err.message || '下载解压时出错';
+      isDownloading.value = false;
+    }
   }
 };
 

@@ -128,6 +128,7 @@ import NavigationMenu from './components/NavigationMenu.vue'
 import UpdateModal from './components/UpdateModal.vue'
 
 import { isBlacklisted } from './config/blacklist.js'
+import { fetchWithFallback } from './utils/request.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -150,7 +151,7 @@ const pageTitle = computed(() => {
 const fetchSearchIndex = async () => {
   if (isIndexLoaded.value) return
   try {
-    const res = await fetch('/data/search-index.json')
+    const res = await fetchWithFallback('data/search-index.json')
     searchIndex.value = await res.json()
     isIndexLoaded.value = true
   } catch (err) {

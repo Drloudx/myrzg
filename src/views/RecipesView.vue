@@ -226,21 +226,21 @@ import { useRoute, useRouter } from 'vue-router'
 import BaseModal from '../components/BaseModal.vue'
 import BackToTop from '../components/BackToTop.vue'
 import { isBlacklisted } from '../config/blacklist.js'
+import { fetchWithFallback } from '../utils/request.js'
 
 const route = useRoute()
 const router = useRouter()
 
 /**
- * 动态识别 public/menu_prev/*.png 目录下全量制作大图 (根据料理 typeId 匹配)
- * 只要放入 public/menu_prev/{typeId}_prev.png 即可自动识别展示预览按钮
+ * 食谱大图预览可用列表 (硬编码替换 import.meta.glob 防止图片被 Vite 错误打包到 dist/assets 中)
  */
-const previewGlob = import.meta.glob('/public/menu_prev/*.png')
-const PREVIEW_AVAILABLE_IDS = new Set(
-  Object.keys(previewGlob).map(path => {
-    const match = path.match(/item_\d+/)
-    return match ? match[0] : null
-  }).filter(Boolean)
-)
+const PREVIEW_AVAILABLE_IDS = new Set([
+  'item_30022', 'item_30023', 'item_30024', 'item_30025', 'item_30026', 'item_30027', 
+  'item_30028', 'item_30029', 'item_30030', 'item_30031', 'item_30032', 'item_30033',
+  'item_30034', 'item_30035', 'item_30036', 'item_30037', 'item_30038', 'item_30039',
+  'item_30040', 'item_30041', 'item_30042', 'item_30043', 'item_30044', 'item_30046',
+  'item_30047', 'item_30048'
+])
 
 /**
  * 食材与 ID 强绑定静态映射表 (写于页面内部，防匹配错乱)
@@ -308,7 +308,7 @@ const RECIPE_SOURCE_CONFIG = {
     }
   },
   'item_30034': {
-    text: '完成任务“稀缺的食材（测试）”获取配方',
+    text: '完成任务“稀缺的食材（测试2）”获取配方',
     targetType: 'task_modal',
     taskData: {
       name: '稀缺的食材',
@@ -513,17 +513,12 @@ const handleLocateRecipe = (targetId, queryQ) => {
 
 onMounted(async () => {
   try {
-    const [menuRes, itemRes, buffRes, gsRes] = await Promise.all([
-      fetch('/data/menu.json'),
-      fetch('/data/item.json'),
-      fetch('/data/buff.json'),
-      fetch('/data/gameSetting.json')
+    const [menuJson, itemJson, buffJson, gsJson] = await Promise.all([
+      fetchWithFallback('data/menu.json'),
+      fetchWithFallback('data/item.json'),
+      fetchWithFallback('data/buff.json'),
+      fetchWithFallback('data/gameSetting.json')
     ])
-
-    const menuJson = await menuRes.json()
-    const itemJson = await itemRes.json()
-    const buffJson = await buffRes.json()
-    const gsJson = await gsRes.json()
 
     const menuDict = menuJson.datas || {}
     const itemDict = itemJson.datas || {}

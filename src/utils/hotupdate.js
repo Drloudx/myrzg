@@ -1,4 +1,5 @@
 import { CapacitorUpdater } from '@capgo/capacitor-updater';
+import { App } from '@capacitor/app';
 import { isNative } from './env';
 
 // 游戏前端内核的热更 manifest (以 JSON 形式托管在云端)
@@ -30,30 +31,51 @@ export const checkHotUpdate = async () => {
     // 强制每次冷启动时先通知插件加载完成，防止插件在后台被杀死后无法重置状态
     await CapacitorUpdater.notifyAppReady();
     
-    // 获取当前本地版本
-    const currentVer = localStorage.getItem('local_web_version') || '1.0.0';
-    console.log('[HotUpdate] 本地生效的 Web 版本:', currentVer);
+    // 1. 先检查 Gitee API 是否有底包 (APK) 大更新
+    try {
+      const appInfo = await App.getInfo();
+      const nativeVersion = appInfo.version || '1.0.0';
+      console.log('[HotUpdate] 本地原生 APK 版本:', nativeVersion);
 
-    // 请求云端更新清单
+      const giteeUrl = 'https://gitee.com/api/v5/repos/ccyconner/myrzg/releases/latest';
+      const giteeResp = await fetch(`${giteeUrl}?t=${Date.now()}`);
+      
+      if (giteeResp.ok) {
+        const giteeData = await giteeResp.json();
+        const giteeVersion = giteeData.tag_name || '';
+        
+        if (giteeVersion && compareVersions(giteeVersion, nativeVersion) > 0) {
+          const apkAsset = giteeData.assets?.find(a => a.browser_download_url?.endsWith('.apk'));
+          if (apkAsset) {
+            console.log('[HotUpdate] 发现新版 APK:', giteeVersion);
+            return {
+              version: giteeVersion,
+              _needsApkUpdate: true,
+              downloadUrl: apkAsset.browser_download_url,
+              body: giteeData.body || '包含底层引擎的重大更新，建议立即下载。',
+              _currentVer: nativeVersion
+            };
+          }
+        }
+      }
+    } catch (giteeErr) {
+      console.warn('[HotUpdate] Gitee 检查失败:', giteeErr);
+    }
+
+    // 2. 如果没有底包更新，检查云端 hotupdate.json 看是否有热更新小包
+    const currentWebVer = localStorage.getItem('local_web_version') || '1.0.0';
+    console.log('[HotUpdate] 本地生效的 Web 版本:', currentWebVer);
+
     const resp = await fetch(`${HOTUPDATE_MANIFEST_URL}?t=${Date.now()}`);
     if (!resp.ok) throw new Error(`HTTP error! status: ${resp.status}`);
     const manifest = await resp.json();
     
-    console.log('[HotUpdate] 远程最新版本:', manifest.version);
+    console.log('[HotUpdate] 远程最新热更版本:', manifest.version);
 
-    if (compareVersions(manifest.version, currentVer) > 0) {
-      console.log('[HotUpdate] 发现新版本:', manifest.version);
-      manifest._currentVer = currentVer;
-
-      const p = (v) => (v || '').replace('v', '').split('.').map(Number);
-      const curParts = p(currentVer);
-      const newParts = p(manifest.version);
-      while (curParts.length < 4) curParts.push(0);
-      while (newParts.length < 4) newParts.push(0);
-
-      const baseMatch = curParts[0] === newParts[0] && curParts[1] === newParts[1] && curParts[2] === newParts[2];
-      manifest._needsApkUpdate = !baseMatch;
-
+    if (compareVersions(manifest.version, currentWebVer) > 0) {
+      console.log('[HotUpdate] 发现热更新:', manifest.version);
+      manifest._currentVer = currentWebVer;
+      manifest._needsApkUpdate = false;
       return manifest;
     }
     

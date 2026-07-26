@@ -137,7 +137,9 @@ import { ref, computed, watch, onMounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAppStateStore } from '../stores/appState'
 import BackToTop from '../components/BackToTop.vue'
+import BaseModal from '../components/BaseModal.vue'
 import { isBlacklisted } from '../config/blacklist.js'
+import { fetchWithFallback } from '../utils/request.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -233,14 +235,14 @@ const handleLocateAchievement = (targetId, queryQ) => {
 onMounted(async () => {
   try {
     const [achRes, rewRes, itemRes] = await Promise.all([
-      fetch('/data/achievement.json'),
-      fetch('/data/reward.json'),
-      fetch('/data/item.json')
+      fetchWithFallback('data/achievement.json'),
+      fetchWithFallback('data/reward.json'),
+      fetchWithFallback('data/item.json')
     ])
 
-    const achJson = await achRes.json()
-    const rewJson = await rewRes.json()
-    const itemJson = await itemRes.json()
+    const achJson = achRes
+    const rewJson = rewRes
+    const itemJson = itemRes
 
     const rawAchList = Object.values(achJson.achievement || {})
     const rewardMap = rewJson.datas || {}
