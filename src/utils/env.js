@@ -16,3 +16,17 @@ export function getResourceBaseUrl() {
   // 当拦截器检测到断网时，也可以通过修改内部状态来返回本地 assets 目录路径
   return isNative ? CLOUD_URL : ''; 
 }
+
+/**
+ * 获取图片资源全路径
+ * @param {string} path 图片相对路径 (如 /Common_ItemIcon/123.png)
+ * @returns {string}
+ */
+export function getImageUrl(path) {
+  const baseUrl = getResourceBaseUrl();
+  if (!baseUrl) return path;
+  
+  // 确保路径拼接正确
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  return `${baseUrl}${normalizedPath}`;
+}

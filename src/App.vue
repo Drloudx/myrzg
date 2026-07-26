@@ -152,7 +152,7 @@ const fetchSearchIndex = async () => {
   if (isIndexLoaded.value) return
   try {
     const res = await fetchWithFallback('data/search-index.json')
-    searchIndex.value = await res.json()
+    searchIndex.value = res
     isIndexLoaded.value = true
   } catch (err) {
     console.error('Fetch search-index.json error:', err)
@@ -167,7 +167,13 @@ const handleSearchFocus = () => {
 const filteredSearchIndex = computed(() => {
   if (!globalQuery.value.trim()) return []
   const q = globalQuery.value.trim().toLowerCase()
-  return searchIndex.value.filter(item => !isBlacklisted(item) && item.keywords && item.keywords.includes(q))
+  const validTypes = ['recipe', 'achievement', 'pet']
+  return searchIndex.value.filter(item => 
+    validTypes.includes(item.type) && 
+    !isBlacklisted(item) && 
+    item.keywords && 
+    item.keywords.includes(q)
+  )
 })
 
 const handleSelectSearchResult = (item) => {
