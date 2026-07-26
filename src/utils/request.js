@@ -30,8 +30,16 @@ export async function fetchWithFallback(relativePath) {
       }
       
       try {
-        // App 本地打包兜底路径，从根目录请求
-        const fallbackUrl = relativePath.startsWith('/') ? relativePath : `/${relativePath}`;
+        // 动态计算基于当前 index.html 的绝对相对路径，防止 Capacitor 深层路由丢失
+        let base = window.location.href.split('#')[0].split('?')[0];
+        if (base.endsWith('.html')) {
+          base = base.substring(0, base.lastIndexOf('/'));
+        }
+        if (!base.endsWith('/')) {
+          base += '/';
+        }
+        const cleanPath = relativePath.startsWith('/') ? relativePath.substring(1) : relativePath;
+        const fallbackUrl = base + cleanPath;
         const fallbackResponse = await fetch(fallbackUrl);
         if (!fallbackResponse.ok) {
           throw new Error('Fallback read failed');

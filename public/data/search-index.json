@@ -1628,6 +1628,19 @@
     "keywords": "浆果沙拉 食谱 配方 料理 强化类 提升单位 2% 魔法攻击和 2% 物理攻击，3% 生命恢复。"
   },
   {
+    "id": "item_99028",
+    "type": "recipe",
+    "name": "测测测测测试测测",
+    "rarity": "稀有",
+    "rarityLevel": "A",
+    "category": "料理",
+    "categoryTags": [
+      "抗性类"
+    ],
+    "subTag": "1",
+    "keywords": "测测测测测试测测 食谱 配方 料理 抗性类 提升单位 5% 物理防御，3% 生命恢复力。"
+  },
+  {
     "id": "item_30028",
     "type": "recipe",
     "name": "果酱鲜蘑焗饭",
