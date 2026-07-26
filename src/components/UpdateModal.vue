@@ -7,7 +7,7 @@
       
       <div class="update-body">
         <div class="update-desc" v-if="updateInfo?._needsApkUpdate" style="color: #ef4444; font-weight: bold; margin-bottom: 8px;">
-          【重要】本次包含底层引擎大版本更新，需前往浏览器下载最新版安装包。
+          【重要】本次包含底层更新，请选择更新。
         </div>
         <div class="update-desc" v-if="updateInfo?.body">
           {{ updateInfo.body }}
@@ -119,6 +119,13 @@ const close = () => {
     visible.value = false;
   }
 };
+const startUpdateWithInfo = (info) => {
+  updateInfo.value = info;
+  visible.value = true;
+  startUpdate();
+};
+
+defineExpose({ startUpdateWithInfo });
 </script>
 
 <style scoped>

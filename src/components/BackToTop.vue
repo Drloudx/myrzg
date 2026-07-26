@@ -59,9 +59,9 @@ onUnmounted(() => {
 .back-to-top-btn {
   position: fixed;
   right: 20px;
-  bottom: calc(80px + var(--safe-bottom));
-  width: 38px;
-  height: 38px;
+  bottom: calc(20px + var(--safe-bottom));
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   background: #628fb8;
   border: none;
@@ -76,8 +76,8 @@ onUnmounted(() => {
 }
 
 .back-to-top-icon {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   object-fit: contain;
   filter: brightness(0) invert(1);
   transform: scaleY(-1);

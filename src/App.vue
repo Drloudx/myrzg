@@ -51,15 +51,51 @@
           <div class="header-right">
             <button class="icon-btn" @click="toggleDarkMode" :title="isDarkMode ? '切换浅色模式' : '切换暗色模式'">
               <img
-                :src="isDarkMode ? '/ui/theme-light.svg' : '/ui/theme-dark.svg'"
+                :src="isDarkMode ? getImageUrl('/ui/theme-light.svg') : getImageUrl('/ui/theme-dark.svg')"
                 class="theme-icon-img"
                 alt="主题切换"
                 loading="lazy"
               />
             </button>
-            <button class="icon-btn" @click="isNavOpen = true" title="菜单">
-              ☰
-            </button>
+            <div class="settings-container">
+              <button class="icon-btn" @click.stop="toggleSettings" title="设置">
+                <img :src="getImageUrl('/ui/setting.svg')" alt="设置" class="setting-icon-img" />
+              </button>
+
+              <!-- 点击外部关闭的透明遮罩 -->
+              <div v-if="isSettingsOpen" class="settings-mask" @click.stop="isSettingsOpen = false"></div>
+
+              <div v-if="isSettingsOpen" class="settings-dropdown">
+                <div class="dropdown-item" :class="{ 'mobile-only': !isNative }" @click="showMenuModeModal = true; isSettingsOpen = false">
+                  <img :src="getImageUrl('/ui/menu.svg')" class="item-icon" />
+                  <span>切换菜单模式</span>
+                </div>
+                <div class="dropdown-item" @click="showNoticeModal = true; isSettingsOpen = false">
+                  <img :src="getImageUrl('/ui/announcement.svg')" class="item-icon" />
+                  <span>公告</span>
+                </div>
+<!--                 <div class="dropdown-item" v-if="isNative" @click="showVersionCheckModal = true; isSettingsOpen = false">-->
+<!--                  <img :src="getImageUrl('/ui/update.svg')" class="item-icon" />-->
+<!--                  <span>版本检查</span>-->
+<!--                </div>-->
+                <div class="dropdown-item" @click="showVersionCheckModal = true; isSettingsOpen = false">
+                  <img :src="getImageUrl('/ui/update.svg')" class="item-icon" />
+                  <span>版本检查</span>
+                </div>
+                <div class="dropdown-item" @click="showAboutModal = true; isSettingsOpen = false">
+                  <img :src="getImageUrl('/ui/we.svg')" class="item-icon" />
+                  <span>关于我们</span>
+                </div>
+                <div class="dropdown-item" @click="handleExportData(); isSettingsOpen = false">
+                  <img :src="getImageUrl('/ui/export .svg')" class="item-icon" />
+                  <span>导出数据</span>
+                </div>
+                <div class="dropdown-item" @click="triggerUniversalImport(); isSettingsOpen = false">
+                  <img :src="getImageUrl('/ui/output.svg')" class="item-icon" />
+                  <span>导入数据</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -107,15 +143,57 @@
     </header>
 
     <!-- Main Router View Area -->
-    <main class="app-main" @click="isSearchOpen = false">
-      <router-view />
-    </main>
+    <div class="main-layout-row">
+      <!-- 电脑端侧边栏 (原版组件，仅在宽屏显示) -->
+      <div v-if="!isNative" class="desktop-sidebar-container desktop-only">
+        <NavigationMenu :is-desktop="true" menu-mode="side" />
+      </div>
 
-    <!-- Navigation Drawer -->
-    <NavigationMenu :is-open="isNavOpen" @close="isNavOpen = false" />
+      <main class="app-main" @click="isSearchOpen = false">
+        <router-view />
+      </main>
+
+      <!-- 右侧空白占位，保证 app-main 完美居中 -->
+      <div v-if="!isNative" class="desktop-right-spacer desktop-only"></div>
+    </div>
+
+    <!-- Navigation (FAB Button) -->
+    <div class="nav-fab-btn" :class="{ 'mobile-only': !isNative }" @click.stop="isNavOpen = !isNavOpen" title="功能导航">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- 侧边导航栏 -->
+    <NavigationMenu :class="{ 'mobile-only': !isNative }" :is-open="isNavOpen" :menu-mode="menuMode" @close="isNavOpen = false" />
 
     <!-- Hot Update Modal -->
-    <UpdateModal />
+    <UpdateModal ref="updateModalRef" />
+    <MenuModeModal v-model="showMenuModeModal" v-model:mode="menuMode" />
+    <NoticeModal v-model="showNoticeModal" />
+    <VersionCheckModal v-model="showVersionCheckModal" @request-update="handleRequestUpdate" />
+    <AboutModal v-model="showAboutModal" />
+    
+    <BaseModal 
+      :visible="showMessageModal" 
+      :title="messageTitle" 
+      @close="onMessageModalClose(false)"
+    >
+      <div class="message-content" style="text-align: center; padding: 10px 0; font-size: 14px; color: var(--text-main);">
+        {{ messageText }}
+      </div>
+      <template #footer>
+        <button class="modal-btn-confirm" @click="onMessageModalClose(false)">确定</button>
+      </template>
+    </BaseModal>
+    
+    <input
+      type="file"
+      ref="universalFileInput"
+      style="display: none"
+      accept=".json"
+      @change="handleUniversalImport"
+    />
   </div>
 </template>
 
@@ -123,22 +201,154 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Capacitor } from '@capacitor/core'
+import { App as CapApp } from '@capacitor/app'
 import { StatusBar, Style } from '@capacitor/status-bar'
 import NavigationMenu from './components/NavigationMenu.vue'
 import UpdateModal from './components/UpdateModal.vue'
+import MenuModeModal from './components/MenuModeModal.vue'
+import NoticeModal from './components/NoticeModal.vue'
+import VersionCheckModal from './components/VersionCheckModal.vue'
+import AboutModal from './components/AboutModal.vue'
+import BaseModal from './components/BaseModal.vue'
 
 import { isBlacklisted } from './config/blacklist.js'
 import { fetchWithFallback } from './utils/request.js'
-import { getImageUrl } from './utils/env.js'
+import { Share } from '@capacitor/share'
+import { Filesystem, Directory, Encoding } from '@capacitor/filesystem'
+import { getImageUrl, isNative } from './utils/env.js'
 
 const route = useRoute()
 const router = useRouter()
+
+const currentRoute = computed(() => route.path)
+const handleNavigate = (path) => {
+  if (currentRoute.value !== path) {
+    router.push(path)
+  }
+}
 
 const isNavOpen = ref(false)
 const isDarkMode = ref(false)
 const globalQuery = ref('')
 const isSearchOpen = ref(false)
 const searchIndex = ref([])
+
+// 新增设置菜单和弹窗状态
+const isSettingsOpen = ref(false)
+const showMenuModeModal = ref(false)
+const showNoticeModal = ref(false)
+const showVersionCheckModal = ref(false)
+const showAboutModal = ref(false)
+const showMessageModal = ref(false)
+const messageTitle = ref('提示')
+const messageText = ref('')
+const messageCallback = ref(null)
+
+const menuMode = ref(localStorage.getItem('menuMode') || 'side')
+const universalFileInput = ref(null)
+
+const showMessage = (text, title = '提示', callback = null) => {
+  messageTitle.value = title
+  messageText.value = text
+  messageCallback.value = callback
+  showMessageModal.value = true
+}
+
+const onMessageModalClose = () => {
+  showMessageModal.value = false
+  if (messageCallback.value) {
+    messageCallback.value()
+    messageCallback.value = null
+  }
+}
+
+const toggleSettings = () => {
+  isSettingsOpen.value = !isSettingsOpen.value
+}
+
+const handleExportData = async () => {
+  try {
+    const appState = JSON.parse(localStorage.getItem('appState') || '{}')
+    
+    const data = {
+      timestamp: Date.now(),
+      version: '1.0',
+      type: 'myrzg_backup',
+      data: {
+        appState
+      }
+    }
+    const jsonStr = JSON.stringify(data)
+    const fileName = `myrzg_backup_${new Date().getTime()}.json`
+
+    if (isNative) {
+      const result = await Filesystem.writeFile({
+        path: fileName,
+        data: jsonStr,
+        directory: Directory.Cache,
+        encoding: Encoding.UTF8
+      })
+      await Share.share({
+        title: '导出深渊之歌数据',
+        url: result.uri,
+        dialogTitle: '保存或分享数据备份'
+      })
+    } else {
+      const blob = new Blob([jsonStr], { type: 'application/json' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = fileName
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+    }
+  } catch (error) {
+    console.error('导出失败:', error)
+    showMessage('导出失败: ' + error.message, '错误')
+  }
+}
+
+const triggerUniversalImport = () => {
+  if (universalFileInput.value) {
+    universalFileInput.value.click()
+  }
+}
+
+const handleUniversalImport = (event) => {
+  const file = event.target.files[0]
+  if (!file) return
+
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    try {
+      const parsed = JSON.parse(e.target.result)
+      if (parsed.type !== 'myrzg_backup') {
+        throw new Error('无效的备份文件')
+      }
+      if (parsed.data && parsed.data.appState) {
+        localStorage.setItem('appState', JSON.stringify(parsed.data.appState))
+      }
+      showMessage('数据导入成功，即将刷新页面', '成功', () => {
+        location.reload()
+      })
+    } catch (err) {
+      showMessage('导入失败: ' + err.message, '错误')
+    }
+  }
+  reader.readAsText(file)
+  event.target.value = '' // reset input
+}
+
+const updateModalRef = ref(null)
+
+const handleRequestUpdate = (info) => {
+  if (updateModalRef.value) {
+    updateModalRef.value.startUpdateWithInfo(info)
+  }
+}
+
 const isIndexLoaded = ref(false)
 
 const pageTitle = computed(() => {
@@ -225,10 +435,169 @@ onMounted(() => {
     document.documentElement.classList.remove('dark-mode')
   }
   syncNativeStatusBar(isDarkMode.value)
+
+  // 处理原生 Android 物理返回键/侧滑返回
+  if (Capacitor.isNativePlatform()) {
+    CapApp.addListener('backButton', ({ canGoBack }) => {
+      // 1. 如果菜单开着，先关菜单
+      if (isNavOpen.value) {
+        isNavOpen.value = false
+        return
+      }
+      // 2. 如果搜索栏开着，清空搜索栏
+      if (isSearchOpen.value && globalQuery.value) {
+        globalQuery.value = ''
+        return
+      }
+      
+      // 3. 如果在首页（无论是默认的还是明确在 / 路径），则退出软件
+      if (route.path === '/' || route.path === '/recipes' || !canGoBack) {
+        CapApp.exitApp()
+      } else {
+        // 否则返回上一页
+        router.back()
+      }
+    })
+  }
 })
 </script>
 
 <style scoped>
+/* 顶部设置与下拉菜单 */
+.settings-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.settings-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+
+.settings-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  width: 160px;
+  z-index: 1001;
+  background: var(--bg-color, #ffffff);
+  border-radius: 12px;
+  border: 1px solid var(--border-color, #e0e0e0);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.2s ease-out;
+  overflow: hidden;
+}
+
+.dark-mode .settings-dropdown {
+  background: #1e1e1e;
+  border-color: #333;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 12px 16px;
+  cursor: pointer;
+  color: var(--text-color, #333);
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.dark-mode .dropdown-item {
+  color: #fff;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.dark-mode .dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-item .item-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  margin-left: 0;
+  filter: var(--icon-filter, none);
+}
+
+.setting-icon-img {
+  width: 20px;
+  height: 20px;
+  filter: var(--icon-filter, none);
+  transition: transform 0.2s;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nav-fab-btn {
+  position: fixed;
+  right: 20px;
+  bottom: calc(80px + var(--safe-bottom));
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--bg-color, rgba(255, 255, 255, 0.85));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  z-index: 990;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 4px 16px #00000026;
+}
+
+.dark-mode .nav-fab-btn {
+  background: var(--card-bg, #ffffff);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-fab-btn span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background-color: var(--text-color, #333);
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.dark-mode .nav-fab-btn span {
+  background-color: #fff;
+}
+
+.nav-fab-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.nav-fab-btn:active {
+  transform: translateY(-2px);
+  filter: brightness(0.9);
+}
+
 .app-container {
   display: flex;
   flex-direction: column;
@@ -275,7 +644,7 @@ onMounted(() => {
 }
 
 .app-logo {
-  height: 32px;
+  height: 42px;
   width: auto;
   object-fit: contain;
 }
@@ -436,7 +805,7 @@ onMounted(() => {
 }
 
 .item-name {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   flex: 1;
 }
@@ -465,9 +834,46 @@ onMounted(() => {
 }
 
 .app-main {
-  flex: 1;
+  flex: 0 1 800px;
+  width: 100%;
+  max-width: 800px;
   overflow: hidden;
   position: relative;
+}
+
+/* 桌面端/移动端显示控制 (仅用于 Web 端的响应式降级) */
+@media (min-width: 769px) {
+  .mobile-only {
+    display: none !important;
+  }
+}
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+}
+
+/* 整体排版行 (3列布局保证中间内容完美居中) */
+.main-layout-row {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 桌面端左侧容器 */
+.desktop-sidebar-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end; /* 使侧边栏贴靠在中间内容的左侧 */
+  padding-right: 0px;
+  overflow-y: auto;
+}
+
+/* 桌面端右侧空白占位 */
+.desktop-right-spacer {
+  flex: 1;
 }
 
 .header-right {

@@ -29,7 +29,7 @@
           </div>
         </div>
 
-        <div class="collection-counter">
+        <div class="collection-counter" style="margin-left: auto;">
           已收集 <span class="count-num">{{ collectedCount }}</span> / {{ achievements.length }}
         </div>
       </div>
@@ -449,6 +449,7 @@ const filteredAchievements = computed(() => {
   font-weight: 600;
   color: var(--text-sub);
   white-space: nowrap;
+  padding: 0px 12px 0px 12px;
 }
 
 .count-num {

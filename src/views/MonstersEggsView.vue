@@ -143,7 +143,7 @@
     </div>
 
     <!-- Detail Modal -->
-    <BaseModal :visible="detailModal.visible" :title="`${detailModal.pet.name || ''} 详情`" @close="closeDetail">
+    <BaseModal :visible="detailModal.visible" :title="`${detailModal.pet.name || ''} `" @close="closeDetail">
       <div class="detail-top">
         <div class="detail-egg-icon">
           <img
