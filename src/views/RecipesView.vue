@@ -15,8 +15,8 @@
           </div>
         </div>
 
-        <div class="recipes-counter">
-          包含包食谱<span class="count-num">{{ filteredRecipes.length }}</span> / {{ recipes.length }}
+        <div class="recipes-counter" style="margin-left: auto;">
+          数量：<span class="count-num">{{ filteredRecipes.length }}</span> / {{ recipes.length }}
         </div>
       </div>
 
@@ -132,7 +132,7 @@
     <!-- Preview Modal (Always uses recipe.id for menu_prev大图匹配) -->
     <BaseModal
       :visible="previewModal.visible"
-      :title="`${previewModal.recipe.name || ''} 制作图`"
+      :title="`${previewModal.recipe.name || ''} 详细制作`"
       @close="closePreviewModal"
     >
       <div class="preview-modal-body">
@@ -745,7 +745,7 @@ const filteredRecipes = computed(() => {
   font-weight: 600;
   color: var(--text-sub);
   white-space: nowrap;
-  margin-left: 4px; 
+  padding: 0px 12px 0px 12px;
 }
 
 .count-num {
@@ -950,7 +950,6 @@ const filteredRecipes = computed(() => {
 .preview-icon-img {
   width: 18px;
   height: 18px;
-  filter: var(--icon-filter);
 }
 
 /* Ingredients Flex Chips (Directly under Title) */

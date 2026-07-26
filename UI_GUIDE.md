@@ -20,6 +20,7 @@
 | `--text-sub` | `#64748b` | `#94a3b8` | 次要文本/辅助说明颜色 |
 | `--border-color` | `#e2e8f0` | `rgba(255, 255, 255, 0.1)` | 全局边框分割线颜色 |
 | `--hover-bg` | `#f1f5f9` | `rgba(255, 255, 255, 0.05)` | 悬浮点击态背景 |
+| `--icon-filter` | `brightness(0)...` | `invert(91%)...` | 动态主题图标过滤器，实现图标统一色彩变色（注：独立配色的组件除外如回到顶部） |
 
 ### 2. 品质等级配色 Token (Rarity Tokens)
 
@@ -61,6 +62,14 @@
   <!-- 页面内容 -->
 </div>
 ```
+
+### 1.5. 全局悬浮按钮 (`.nav-fab-btn` / `.back-to-top-btn`)
+
+全局右下角的悬浮按钮（功能导航、回到顶部）需统一大小与位置：
+- 大小：统一为 `48px` 宽高。
+- 垂直居中对齐：`right: 20px`。
+- 垂直排列位置：功能导航按钮在上方，设置 `bottom: calc(80px + var(--safe-bottom))`；回到顶部按钮在下方，设置 `bottom: calc(20px + var(--safe-bottom))`。
+- 图标色彩：功能导航遵循全站统一的主题自动适应（受 `--icon-filter` 控制），但回到顶部由于独立带有专属深色圆形底板，因此其内部图标保持原生色彩，不受该滤镜影响。
 
 ### 2. 顶部检索与吸顶筛选栏 (`.filter-sticky-bar`)
 
@@ -179,7 +188,7 @@
 
 ---
 
-## 五、 数据管线与底层基建架构
+## 四、 数据管线与底层基建架构
 
 ### 1. 数据预处理管线 (Data Pipeline)
 - 预处理脚本：[scripts/clean-data.js](file:///e:/Desktop/html/myrzg/vue-myrzg/scripts/clean-data.js)
@@ -201,7 +210,7 @@
 - 位于 [src/stores/appState.js](file:///e:/Desktop/html/myrzg/vue-myrzg/src/stores/appState.js)，使用 `pinia-plugin-persistedstate` 插件进行 LocalStorage 持久化。
 - 支持角色/装备收藏（`favoriteRoleIds`, `favoriteEquipIds`）、历史搜索记录（`recentSearches`）持久化存储。
 
-### 6. 魔物收益与孵化处置推荐 (Route: /monsterseggs)
+### 5. 魔物收益与孵化处置推荐 (Route: /monsterseggs)
 - 视图页面：[src/views/MonstersEggsView.vue](file:///e:/Desktop/html/myrzg/vue-myrzg/src/views/MonstersEggsView.vue)
 - 侧边栏导航：名称为 **魔物收益**，路由路径映射为 `/monsterseggs`，图标使用 `public/pet/eggs/pet_079.png`。
 - 关联数据源：`public/data/pet.json` (32种魔物蛋数据)，蛋图标路径规则为 `public/pet/eggs/${pet.eggImg}.png`。
@@ -219,7 +228,7 @@
     - $R < 2.2$：标记为 **喂** (喂养经验价值高于售出金币)；
     - $2.2 \le R \le 3.0$：标记为 **按需选择** (金币与经验收益均衡)。
 
-### 7. 成就查询模块 (Route: /achievement)
+### 6. 成就查询模块 (Route: /achievement)
 - 视图页面：[src/views/AchievementView.vue](file:///e:/Desktop/html/myrzg/vue-myrzg/src/views/AchievementView.vue)
 - 侧边栏导航：名称为 **成就查询**，路由映射为 `/achievement`，导航图标使用 `/public/AchievementPanel/achv_icon_adv.png`。
 - 关联数据源：`achievement.json`（成就基础数据）、`reward.json`（奖励配置）、`item.json`（道具信息）。
@@ -240,7 +249,7 @@
   - 代码层防剧透黑名单：配置于 [AchievementView.vue](file:///e:/Desktop/html/myrzg/vue-myrzg/src/views/AchievementView.vue) 的 `BLACKLIST_ACHIEVEMENT_NAMES` 数组；
   - 自定义 Switch 开关：44x24px 紧凑比例，关闭为灰色带 `✕`，开启为绿色带 `✓`，与 Pinia `collectedAchievementIds` 状态持久化双向绑定。
 
-### 8. 菜谱查询模块 (Route: /recipes)
+### 7. 菜谱查询模块 (Route: /recipes)
 - 视图页面：[src/views/RecipesView.vue](file:///e:/Desktop/html/myrzg/vue-myrzg/src/views/RecipesView.vue)
 - 侧边栏导航：名称为 **菜谱查询**，路由映射为 `/recipes`，导航图标使用 `/Common_ItemIcon/item_30047.png`。
 - 关联数据源与跨 JSON 拼装架构：
@@ -267,7 +276,7 @@
 
 ---
 
-## 六、 双轨分离与纯原生热更闭环架构 (Hot Update & Dual-Track)
+## 五、 双轨分离与纯原生热更闭环架构 (Hot Update & Dual-Track)
 
 本系统采用 **“本地前端内核 + 云端动态素材”** 的双轨制分离架构，结合 `@capgo/capacitor-updater` 官方插件实现零 Java 侵入的高性能热更新闭环。
 

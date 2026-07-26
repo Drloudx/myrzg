@@ -52,7 +52,7 @@ export const checkHotUpdate = async () => {
               version: giteeVersion,
               _needsApkUpdate: true,
               downloadUrl: apkAsset.browser_download_url,
-              body: giteeData.body || '包含底层引擎的重大更新，建议立即下载。',
+              body: giteeData.body || '包含底层的更新，建议立即更新。',
               _currentVer: nativeVersion
             };
           }

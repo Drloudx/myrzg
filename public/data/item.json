@@ -28900,7 +28900,7 @@
                 323
             ],
             "quality":3,
-            "name":"珍菇翡翠白玉测试",
+            "name":"珍菇翡翠白玉汤",
             "typeId":"item_30034",
             "desc":"你不知道厨师是以什么样的心态做出了这道菜——看上去只是将手所能及的材料一股脑丢进锅里煮烂，但各种食材的味道与口感既没有失去层次感，又仿佛浑然一体。所有人在入口之后都会为身处这深渊之中，还可以品尝到如此料理而感慨。",
             "numSplit":99,
@@ -40442,61 +40442,6 @@
             "useable":true,
             "autoUse":true,
             "noWeight":true
-        },
- "item_99028":{
-            "origin":[
-                {
-                    "value":"料理台",
-                    "type":"text"
-                }
-            ],
-            "foodType":"",
-            "equip":{
-
-            },
-            "category":[
-                3,
-                32,
-                323
-            ],
-            "quality":1,
-            "name":"测测测测测试测测",
-            "typeId":"item_99028",
-            "desc":"不只是浓郁的鲜香与清爽的甘甜，连分量也十分让人满足。",
-            "numSplit":99,
-            "getTip":"",
-            "itemType":1,
-            "hide":false,
-            "sellable":false,
-            "dropable":true,
-            "sellPrice":5,
-            "priceRate":0,
-            "useable2":true,
-            "img":"item_30028",
-            "useAction2":"addBuff",
-            "sellExp":0,
-            "useAction":"none",
-            "useActionPara2":{
-                "buff":"cook_30028"
-            },
-            "useActionPara":{
-
-            },
-            "use2Info":{
-                "target":1,
-                "area":0,
-                "poison":0,
-                "cdName":"food",
-                "distance":0,
-                "cd":0
-            },
-            "maxNum":99,
-            "favValue":1,
-            "useDes":"提升伙伴 {5%} 魔法防御力，过图恢复 {3%} 生命值。",
-            "favOpen":false,
-            "useable":true,
-            "autoUse":false,
-            "noWeight":false
         },
         "item_30028":{
             "origin":[

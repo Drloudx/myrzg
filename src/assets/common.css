@@ -46,13 +46,15 @@ html, body {
   overflow-y: auto !important;
 }
 
-/* 滚动列表底栏安全留白 (排除 Modal 内部组件) */
+/* 先保留，不要删除
+滚动列表底栏安全留白 (排除 Modal 内部组件)
+
 .data-grid-scroll,
 [class*="-grid-scroll"],
 [class*="-list"] {
   padding-bottom: calc(80px + var(--safe-bottom));
 }
-
+*/
 .modal-body [class*="-list"] {
   padding-bottom: 0 !important;
 }
@@ -75,8 +77,8 @@ html, body {
   --border-color: #e2e8f0;
   --hover-bg: #f1f5f9;
 
-  /* UI SVG 图标亮色模式滤镜 */
-  --icon-filter: brightness(0) saturate(100%) invert(13%) sepia(13%) saturate(3665%) hue-rotate(189deg) brightness(91%) contrast(92%);
+  /* UI SVG 图标亮色模式滤镜 (将白色图标反转为黑色) */
+  --icon-filter: invert(1);
   
   --modal-bg: #ffffff;
   --modal-text: #0f172a;
@@ -99,22 +101,23 @@ html, body {
   --primary-hover: #3b82f6;
   --bg: #0f172a;
   --card-bg: #1e293b;
-  --text-main: #f8fafc;
-  --text-sub: #94a3b8;
-  --border-color: rgba(255, 255, 255, 0.1);
-  --hover-bg: rgba(255, 255, 255, 0.05);
+  --text-main: #cbd5e1;
+  --text-sub: #b8c6dd;
+  --border-color: #334155;
+  --hover-bg: #334155;
   
   --modal-bg: #1e293b;
-  --modal-text: #f8fafc;
-  --modal-header-border: rgba(255, 255, 255, 0.1);
-  --modal-close-color: #64748b;
+  --modal-text: #cbd5e1;
+  --modal-header-border: #334155;
+  --modal-close-color: #94a3b8;
   --input-bg: rgba(0, 0, 0, 0.2);
-  --input-border: rgba(255, 255, 255, 0.1);
+  --input-border: #334155;
   --input-border-focus: #60a5fa;
   --input-text: #f8fafc;
+  --modal-overlay: rgba(0, 0, 0, 0.6);
 
-  /* UI SVG 图标暗色模式滤镜 */
-  --icon-filter: brightness(0) saturate(100%) invert(91%) sepia(5%) saturate(542%) hue-rotate(181deg) brightness(96%) contrast(87%);
+  /* UI SVG 图标暗色模式滤镜 (保持白色图标原样) */
+  --icon-filter: none;
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -282,7 +285,7 @@ h1, h2, h3, h4, h5, h6,
 .data-grid-scroll {
   flex: 1;
   overflow-y: auto;
-  padding: 0 16px 80px 16px;
+  padding: 0 16px 12px 16px;
 }
 
 .data-grid-container {
@@ -440,8 +443,9 @@ h1, h2, h3, h4, h5, h6,
   padding: 16px 20px;
   border-bottom: 1px solid var(--modal-header-border);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .modal-title {
@@ -449,9 +453,12 @@ h1, h2, h3, h4, h5, h6,
   font-size: 16px;
   font-weight: 600;
   color: var(--modal-text);
+  text-align: center;
 }
 
 .modal-close-btn {
+  position: absolute;
+  right: 16px;
   background: transparent;
   border: none;
   font-size: 18px;
@@ -465,6 +472,32 @@ h1, h2, h3, h4, h5, h6,
 .modal-close-btn:hover {
   background: var(--hover-bg);
   color: var(--modal-text);
+}
+
+.modal-footer {
+  padding: 16px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-btn-confirm {
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin: 0 auto;
+  display: block;
+}
+
+.modal-btn-confirm:hover {
+  background-color: var(--primary-hover);
 }
 
 .modal-body {
@@ -502,4 +535,21 @@ h1, h2, h3, h4, h5, h6,
   to {
     transform: rotate(360deg);
   }
+}
+
+/* ====== 10. 滚动条样式 ====== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-sub);
 }
