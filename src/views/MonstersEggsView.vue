@@ -233,6 +233,7 @@ import { useRoute, useRouter } from 'vue-router'
 import BaseModal from '../components/BaseModal.vue'
 import BackToTop from '../components/BackToTop.vue'
 import { isBlacklisted } from '../config/blacklist.js'
+import { fetchWithFallback } from '../utils/request.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -367,8 +368,8 @@ const calcRecommendation = (sellPrice, exp) => {
 
 onMounted(async () => {
   try {
-    const res = await fetch('/data/pet.json')
-    const json = await res.json()
+    const res = await fetchWithFallback('data/pet.json')
+    const json = res
     const rawList = Object.values(json.datas || {})
 
     const processed = rawList.map(p => {

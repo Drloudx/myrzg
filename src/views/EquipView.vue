@@ -160,6 +160,7 @@ import { useAppStateStore } from '../stores/appState'
 import BaseModal from '../components/BaseModal.vue'
 import BackToTop from '../components/BackToTop.vue'
 import { isBlacklisted } from '../config/blacklist.js'
+import { fetchWithFallback } from '../utils/request.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -181,8 +182,8 @@ const isFavorite = (id) => appStore.favoriteEquipIds.includes(id)
 // Fetch data asynchronously from public/data/equips.json
 onMounted(async () => {
   try {
-    const res = await fetch('/data/equips.json')
-    equips.value = await res.json()
+    const res = await fetchWithFallback('data/equips.json')
+    equips.value = res
   } catch (err) {
     console.error('Fetch /data/equips.json error:', err)
   } finally {
