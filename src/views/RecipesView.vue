@@ -16,14 +16,14 @@
         </div>
 
         <div class="recipes-counter">
-          包含食谱（测测试测） <span class="count-num">{{ filteredRecipes.length }}</span> / {{ recipes.length }}
+          包含食谱（测试） <span class="count-num">{{ filteredRecipes.length }}</span> / {{ recipes.length }}
         </div>
       </div>
 
       <!-- Row 2: Full-Width Search Input using /ui/search.svg -->
       <div class="control-row-2">
         <div class="search-input-wrapper-full">
-          <img src="/ui/search.svg" class="search-icon-img" alt="搜索" />
+          <img :src="getImageUrl('/ui/search.svg')" class="search-icon-img" alt="搜索" />
           <input
             type="text"
             v-model="searchQuery"
@@ -105,7 +105,7 @@
               @click="openPreviewModal(item)"
               title="查看制作图"
             >
-              <img src="/ui/visibility1.svg" class="preview-icon-img" alt="查看" />
+              <img :src="getImageUrl('/ui/visibility1.svg')" class="preview-icon-img" alt="查看" />
             </button>
           </div>
 
@@ -227,6 +227,7 @@ import BaseModal from '../components/BaseModal.vue'
 import BackToTop from '../components/BackToTop.vue'
 import { isBlacklisted } from '../config/blacklist.js'
 import { fetchWithFallback } from '../utils/request.js'
+import { getImageUrl } from '../utils/env.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -421,7 +422,7 @@ const openTaskModal = (taskData) => {
 
     const name = itemEntry.name || r.name || idKey
     const imgKey = itemEntry.img || idKey
-    const icon = r.icon || `/Common_ItemIcon/${imgKey}.png`
+    const icon = r.icon || getImageUrl(`/Common_ItemIcon/${imgKey}.png`)
 
     return {
       typeId: idKey,
@@ -459,7 +460,7 @@ const openPreviewModal = (recipe) => {
   previewModal.value = {
     visible: true,
     recipe,
-    imgUrl: `/menu_prev/${recipe.id}_prev.png`
+    imgUrl: getImageUrl(`/menu_prev/${recipe.id}_prev.png`)
   }
 }
 
@@ -548,7 +549,7 @@ onMounted(async () => {
       // 1. Resolve Recipe Icon & Name using itemEntry.img (e.g. item_30035 -> img: item_30009)
       const recipeName = itemEntry.name || menuEntry.name || '未知食谱'
       const recipeImgKey = itemEntry.img || typeId
-      const recipeIcon = `/Common_ItemIcon/${recipeImgKey}.png`
+      const recipeIcon = getImageUrl(`/Common_ItemIcon/${recipeImgKey}.png`)
       const recipeLevel = menuEntry.level || 1
       const hasPreview = PREVIEW_AVAILABLE_IDS.has(typeId)
 
@@ -573,7 +574,7 @@ onMounted(async () => {
             typeId: ingId,
             name: ingName,
             count,
-            icon: `/Common_ItemIcon/${ingImgKey}.png`
+            icon: getImageUrl(`/Common_ItemIcon/${ingImgKey}.png`)
           })
         })
       } else if (menuEntry.foodType && Array.isArray(menuEntry.foodType) && menuEntry.foodType.length > 0) {
@@ -587,7 +588,7 @@ onMounted(async () => {
             typeId: genInfo.typeId,
             name: genInfo.name,
             count,
-            icon: `/Common_ItemIcon/${ingImgKey}.png`
+            icon: getImageUrl(`/Common_ItemIcon/${ingImgKey}.png`)
           })
         })
       }

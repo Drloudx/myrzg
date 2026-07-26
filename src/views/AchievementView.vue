@@ -37,7 +37,7 @@
       <!-- Row 3: Full-Width In-Page Search Bar using /ui/search.svg -->
       <div class="control-row-3">
         <div class="search-input-wrapper-full">
-          <img src="/ui/search.svg" class="search-icon-img" alt="搜索" />
+          <img :src="getImageUrl('/ui/search.svg')" class="search-icon-img" alt="搜索" />
           <input
             type="text"
             v-model="searchQuery"
@@ -140,6 +140,7 @@ import BackToTop from '../components/BackToTop.vue'
 import BaseModal from '../components/BaseModal.vue'
 import { isBlacklisted } from '../config/blacklist.js'
 import { fetchWithFallback } from '../utils/request.js'
+import { getImageUrl } from '../utils/env.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -172,12 +173,12 @@ const isDataReady = ref(false)
 // Map category to icons in /AchievementPanel/
 const getCategoryIcon = (cat) => {
   const iconMap = {
-    adv: '/AchievementPanel/achv_icon_adv.png',
-    exp: '/AchievementPanel/achv_icon_exp.png',
-    hide: '/AchievementPanel/achv_icon_hide.png',
-    live: '/AchievementPanel/achv_icon_live.png'
+    adv: getImageUrl('/AchievementPanel/achv_icon_adv.png'),
+    exp: getImageUrl('/AchievementPanel/achv_icon_exp.png'),
+    hide: getImageUrl('/AchievementPanel/achv_icon_hide.png'),
+    live: getImageUrl('/AchievementPanel/achv_icon_live.png')
   }
-  return iconMap[cat] || '/AchievementPanel/achv_icon_adv.png'
+  return iconMap[cat] || getImageUrl('/AchievementPanel/achv_icon_adv.png')
 }
 
 const isCollected = (id) => {
@@ -259,7 +260,7 @@ onMounted(async () => {
       // Money (银币) -> /Common_ItemIcon/item_00001.png
       if (rewardObj.money && rewardObj.money > 0) {
         rewards.push({
-          icon: '/Common_ItemIcon/item_00001.png',
+          icon: getImageUrl('/Common_ItemIcon/item_00001.png'),
           count: rewardObj.money,
           name: '银币'
         })
@@ -268,7 +269,7 @@ onMounted(async () => {
       // Ke (氪金) -> /Common_ItemIcon/item_00002.png
       if (rewardObj.ke && rewardObj.ke > 0) {
         rewards.push({
-          icon: '/Common_ItemIcon/item_00002.png',
+          icon: getImageUrl('/Common_ItemIcon/item_00002.png'),
           count: rewardObj.ke,
           name: '氪金'
         })
@@ -284,7 +285,7 @@ onMounted(async () => {
               if (rule.typeId) {
                 const count = rule.min || rule.max || it.num || 1
                 rewards.push({
-                  icon: `/Common_ItemIcon/${rule.typeId}.png`,
+                  icon: getImageUrl(`/Common_ItemIcon/${rule.typeId}.png`),
                   count,
                   typeId: rule.typeId
                 })

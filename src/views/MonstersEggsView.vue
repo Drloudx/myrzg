@@ -95,7 +95,7 @@
           <div class="td-cell td-name">
             <div class="egg-icon-wrapper">
               <img
-                :src="`/pet/eggs/${pet.eggImg}.png`"
+                :src="getImageUrl(`/pet/eggs/${pet.eggImg}.png`)"
                 :alt="pet.name"
                 class="egg-img"
                 loading="lazy"
@@ -148,7 +148,7 @@
         <div class="detail-egg-icon">
           <img
             v-if="detailModal.pet.eggImg"
-            :src="`/pet/eggs/${detailModal.pet.eggImg}.png`"
+            :src="getImageUrl(`/pet/eggs/${detailModal.pet.eggImg}.png`)"
             :alt="detailModal.pet.name"
             class="detail-egg-img"
             loading="lazy"
@@ -234,6 +234,7 @@ import BaseModal from '../components/BaseModal.vue'
 import BackToTop from '../components/BackToTop.vue'
 import { isBlacklisted } from '../config/blacklist.js'
 import { fetchWithFallback } from '../utils/request.js'
+import { getImageUrl } from '../utils/env.js'
 
 const route = useRoute()
 const router = useRouter()

@@ -30,8 +30,8 @@ export async function fetchWithFallback(relativePath) {
       }
       
       try {
-        // App 本地打包兜底路径
-        const fallbackUrl = `assets/public_dynamic/${relativePath}`;
+        // App 本地打包兜底路径，直接请求相对路径，WebView 本地服务器会从包内返回数据
+        const fallbackUrl = relativePath;
         const fallbackResponse = await fetch(fallbackUrl);
         if (!fallbackResponse.ok) {
           throw new Error('Fallback read failed');
