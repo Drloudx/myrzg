@@ -19,9 +19,9 @@ echo ==============================================
 echo.
 
 :: 定义需要保留的文件夹列表（空格分隔）
-set "KEEP_DIRS=assets fonts"
+set "KEEP_DIRS=assets fonts ui"
 :: 定义需要保留的文件列表（空格分隔）
-set "KEEP_FILES=_redirects down-top.svg index.html logo.png theme-dark.svg theme-light.svg"
+set "KEEP_FILES=_redirects index.html"
 
 :: 遍历dist下所有一级子文件夹，不在保留列表则删除
 echo [1/2] 清理多余文件夹...

@@ -23,7 +23,7 @@
       <!-- Row 2: Full-Width Search Input using /ui/search.svg -->
       <div class="control-row-2">
         <div class="search-input-wrapper-full">
-          <img :src="getImageUrl('/ui/search.svg')" class="search-icon-img" alt="搜索" />
+          <img src="/ui/search.svg" class="search-icon-img" alt="搜索" />
           <input
             type="text"
             v-model="searchQuery"
@@ -105,7 +105,7 @@
               @click="openPreviewModal(item)"
               title="查看制作图"
             >
-              <img :src="getImageUrl('/ui/visibility1.svg')" class="preview-icon-img" alt="查看" />
+              <img src="/ui/visibility1.svg" class="preview-icon-img" alt="查看" />
             </button>
           </div>
 

@@ -129,6 +129,7 @@ import UpdateModal from './components/UpdateModal.vue'
 
 import { isBlacklisted } from './config/blacklist.js'
 import { fetchWithFallback } from './utils/request.js'
+import { getImageUrl } from './utils/env.js'
 
 const route = useRoute()
 const router = useRouter()

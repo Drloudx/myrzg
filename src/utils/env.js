@@ -23,10 +23,19 @@ export function getResourceBaseUrl() {
  * @returns {string}
  */
 export function getImageUrl(path) {
+  // UI icons are small and bundled locally in the hot update. Do not hit CDN.
+  if (path.startsWith('/ui/') || path.startsWith('ui/')) {
+    return path.startsWith('/') ? path : `/${path}`;
+  }
+
+  // Other large assets were moved to /images by the user
+  let imgPath = path.startsWith('/') ? path : `/${path}`;
+  if (!imgPath.startsWith('/images/')) {
+    imgPath = `/images${imgPath}`;
+  }
+
   const baseUrl = getResourceBaseUrl();
-  if (!baseUrl) return path;
+  if (!baseUrl) return imgPath;
   
-  // 确保路径拼接正确
-  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-  return `${baseUrl}${normalizedPath}`;
+  return `${baseUrl}${imgPath}`;
 }

@@ -37,7 +37,7 @@
       <!-- Row 3: Full-Width In-Page Search Bar using /ui/search.svg -->
       <div class="control-row-3">
         <div class="search-input-wrapper-full">
-          <img :src="getImageUrl('/ui/search.svg')" class="search-icon-img" alt="搜索" />
+          <img src="/ui/search.svg" class="search-icon-img" alt="搜索" />
           <input
             type="text"
             v-model="searchQuery"
