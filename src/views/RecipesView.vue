@@ -308,7 +308,7 @@ const RECIPE_SOURCE_CONFIG = {
     }
   },
   'item_30034': {
-    text: '完成任务“稀缺的食材”获取配方',
+    text: '完成任务“稀缺的食材（测试）”获取配方',
     targetType: 'task_modal',
     taskData: {
       name: '稀缺的食材',
@@ -713,6 +713,7 @@ const filteredRecipes = computed(() => {
   box-sizing: border-box;
 }
 
+
 .tag-segmented {
   display: inline-flex;
   width: auto;
@@ -748,6 +749,7 @@ const filteredRecipes = computed(() => {
   font-weight: 600;
   color: var(--text-sub);
   white-space: nowrap;
+  margin-left: 4px; 
 }
 
 .count-num {
