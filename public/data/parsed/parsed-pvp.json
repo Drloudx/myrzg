@@ -1,0 +1,1147 @@
+{
+  "exchange": {
+    "s1": [
+      {
+        "id": "pvpExchange001",
+        "sort": 0,
+        "limitCondition": {
+          "num": 10,
+          "exchangeType": "global"
+        },
+        "rewardItems": [
+          {
+            "rules": [
+              {
+                "mode": "item",
+                "min": 1,
+                "chance": 1,
+                "typeId": "item_20004",
+                "max": 1
+              }
+            ],
+            "rate": 1,
+            "num": 1
+          }
+        ],
+        "consumeItems": [
+          {
+            "typeId": "item_27012",
+            "num": 45
+          }
+        ]
+      },
+      {
+        "id": "pvpExchange011",
+        "sort": 2,
+        "limitCondition": {
+          "num": 15,
+          "exchangeType": "global"
+        },
+        "rewardItems": [
+          {
+            "rules": [
+              {
+                "mode": "item",
+                "min": 1,
+                "chance": 1,
+                "typeId": "item_20023",
+                "max": 1
+              }
+            ],
+            "rate": 1,
+            "num": 1
+          }
+        ],
+        "consumeItems": [
+          {
+            "typeId": "item_27012",
+            "num": 30
+          }
+        ]
+      },
+      {
+        "id": "pvpExchange002",
+        "sort": 3,
+        "limitCondition": {
+          "num": 10,
+          "exchangeType": "global"
+        },
+        "rewardItems": [
+          {
+            "rules": [
+              {
+                "mode": "item",
+                "min": 1,
+                "chance": 1,
+                "typeId": "item_20003",
+                "max": 1
+              }
+            ],
+            "rate": 1,
+            "num": 1
+          }
+        ],
+        "consumeItems": [
+          {
+            "typeId": "item_27012",
+            "num": 30
+          }
+        ]
+      },
+      {
+        "id": "pvpExchange003",
+        "sort": 4,
+        "limitCondition": {
+          "num": 99,
+          "exchangeType": "global"
+        },
+        "rewardItems": [
+          {
+            "rules": [
+              {
+                "mode": "item",
+                "min": 1,
+                "chance": 1,
+                "typeId": "item_20018",
+                "max": 1
+              }
+            ],
+            "rate": 1,
+            "num": 1
+          }
+        ],
+        "consumeItems": [
+          {
+            "typeId": "item_27012",
+            "num": 10
+          }
+        ]
+      },
+      {
+        "id": "pvpExchange004",
+        "sort": 5,
+        "limitCondition": {
+          "num": 99,
+          "exchangeType": "global"
+        },
+        "rewardItems": [
+          {
+            "rules": [
+              {
+                "mode": "item",
+                "min": 1,
+                "chance": 1,
+                "typeId": "item_19209",
+                "max": 1
+              }
+            ],
+            "rate": 1,
+            "num": 1
+          }
+        ],
+        "consumeItems": [
+          {
+            "typeId": "item_27012",
+            "num": 10
+          }
+        ]
+      },
+      {
+        "id": "pvpExchange005",
+        "sort": 6,
+        "limitCondition": {
+          "num": 10,
+          "exchangeType": "global"
+        },
+        "rewardItems": [
+          {
+            "rules": [
+              {
+                "mode": "item",
+                "min": 1,
+                "chance": 1,
+                "typeId": "item_27005",
+                "max": 1
+              }
+            ],
+            "rate": 1,
+            "num": 1
+          }
+        ],
+        "consumeItems": [
+          {
+            "typeId": "item_27012",
+            "num": 20
+          }
+        ]
+      },
+      {
+        "id": "pvpExchange007",
+        "sort": 7,
+        "limitCondition": {
+          "num": 10,
+          "exchangeType": "global"
+        },
+        "rewardItems": [
+          {
+            "rules": [
+              {
+                "mode": "item",
+                "min": 1,
+                "chance": 1,
+                "typeId": "item_27011",
+                "max": 1
+              }
+            ],
+            "rate": 1,
+            "num": 1
+          }
+        ],
+        "consumeItems": [
+          {
+            "typeId": "item_27012",
+            "num": 20
+          }
+        ]
+      },
+      {
+        "id": "pvpExchange006",
+        "sort": 8,
+        "limitCondition": {
+          "num": 10,
+          "exchangeType": "global"
+        },
+        "rewardItems": [
+          {
+            "rules": [
+              {
+                "mode": "item",
+                "min": 1,
+                "chance": 1,
+                "typeId": "item_27008",
+                "max": 1
+              }
+            ],
+            "rate": 1,
+            "num": 1
+          }
+        ],
+        "consumeItems": [
+          {
+            "typeId": "item_27012",
+            "num": 20
+          }
+        ]
+      },
+      {
+        "id": "pvpExchange008",
+        "sort": 9,
+        "limitCondition": {
+          "num": 20,
+          "exchangeType": "global"
+        },
+        "rewardItems": [
+          {
+            "rules": [
+              {
+                "mode": "item",
+                "min": 1,
+                "chance": 1,
+                "typeId": "item_27004",
+                "max": 1
+              }
+            ],
+            "rate": 1,
+            "num": 1
+          }
+        ],
+        "consumeItems": [
+          {
+            "typeId": "item_27012",
+            "num": 10
+          }
+        ]
+      },
+      {
+        "id": "pvpExchange010",
+        "sort": 10,
+        "limitCondition": {
+          "num": 20,
+          "exchangeType": "global"
+        },
+        "rewardItems": [
+          {
+            "rules": [
+              {
+                "mode": "item",
+                "min": 1,
+                "chance": 1,
+                "typeId": "item_27010",
+                "max": 1
+              }
+            ],
+            "rate": 1,
+            "num": 1
+          }
+        ],
+        "consumeItems": [
+          {
+            "typeId": "item_27012",
+            "num": 10
+          }
+        ]
+      },
+      {
+        "id": "pvpExchange009",
+        "sort": 11,
+        "limitCondition": {
+          "num": 20,
+          "exchangeType": "global"
+        },
+        "rewardItems": [
+          {
+            "rules": [
+              {
+                "mode": "item",
+                "min": 1,
+                "chance": 1,
+                "typeId": "item_27007",
+                "max": 1
+              }
+            ],
+            "rate": 1,
+            "num": 1
+          }
+        ],
+        "consumeItems": [
+          {
+            "typeId": "item_27012",
+            "num": 10
+          }
+        ]
+      }
+    ]
+  },
+  "tier": [
+    {
+      "id": "1",
+      "name": "灰羽Ⅰ",
+      "typeOrder": 1,
+      "rewardItems": []
+    },
+    {
+      "id": "2",
+      "name": "灰羽Ⅱ",
+      "typeOrder": 2,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "灰羽Ⅲ",
+      "typeOrder": 3,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "灰羽Ⅳ",
+      "typeOrder": 4,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 200
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 1,
+              "chance": 1,
+              "typeId": "item_20004",
+              "max": 1
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "name": "黑羽Ⅰ",
+      "typeOrder": 5,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "name": "黑羽Ⅱ",
+      "typeOrder": 6,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 200
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 1,
+              "chance": 1,
+              "typeId": "item_20023",
+              "max": 1
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "name": "黑羽Ⅲ",
+      "typeOrder": 7,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "name": "黑羽Ⅳ",
+      "typeOrder": 8,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 200
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 1,
+              "chance": 1,
+              "typeId": "item_20004",
+              "max": 1
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "name": "青翎Ⅰ",
+      "typeOrder": 9,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 150
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "name": "青翎Ⅱ",
+      "typeOrder": 10,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 300
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 1,
+              "chance": 1,
+              "typeId": "item_20023",
+              "max": 1
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "name": "青翎Ⅲ",
+      "typeOrder": 11,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 150
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "name": "青翎Ⅳ",
+      "typeOrder": 12,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 300
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 1,
+              "chance": 1,
+              "typeId": "item_20004",
+              "max": 1
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "name": "蓝翎Ⅰ",
+      "typeOrder": 13,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 150
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "name": "蓝翎Ⅱ",
+      "typeOrder": 14,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 300
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 1,
+              "chance": 1,
+              "typeId": "item_20023",
+              "max": 1
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    },
+    {
+      "id": "15",
+      "name": "蓝翎Ⅲ",
+      "typeOrder": 15,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 150
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "16",
+      "name": "蓝翎Ⅳ",
+      "typeOrder": 16,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 300
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 1,
+              "chance": 1,
+              "typeId": "item_20004",
+              "max": 1
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    },
+    {
+      "id": "17",
+      "name": "赤翎Ⅰ",
+      "typeOrder": 17,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 200
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 1,
+              "chance": 1,
+              "typeId": "item_20023",
+              "max": 1
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    },
+    {
+      "id": "18",
+      "name": "赤翎Ⅱ",
+      "typeOrder": 18,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 400
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 1,
+              "chance": 1,
+              "typeId": "item_20004",
+              "max": 1
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    },
+    {
+      "id": "19",
+      "name": "赤翎Ⅲ",
+      "typeOrder": 19,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 200
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 1,
+              "chance": 1,
+              "typeId": "item_20023",
+              "max": 1
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    },
+    {
+      "id": "20",
+      "name": "赤翎Ⅳ",
+      "typeOrder": 20,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 400
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 1,
+              "chance": 1,
+              "typeId": "item_20004",
+              "max": 1
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    },
+    {
+      "id": "21",
+      "name": "白翼",
+      "typeOrder": 21,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 600
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 3,
+              "chance": 1,
+              "typeId": "item_20004",
+              "max": 3
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    }
+  ],
+  "rank": [
+    {
+      "start": 1,
+      "end": 10,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 1400
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 14,
+              "chance": 1,
+              "typeId": "item_20004",
+              "max": 14
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 14,
+              "chance": 1,
+              "typeId": "item_20023",
+              "max": 14
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    },
+    {
+      "start": 11,
+      "end": 50,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 1200
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 10,
+              "chance": 1,
+              "typeId": "item_20004",
+              "max": 10
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 10,
+              "chance": 1,
+              "typeId": "item_20023",
+              "max": 10
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    },
+    {
+      "start": 51,
+      "end": 200,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 1000
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 8,
+              "chance": 1,
+              "typeId": "item_20004",
+              "max": 8
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 8,
+              "chance": 1,
+              "typeId": "item_20023",
+              "max": 8
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    },
+    {
+      "start": 201,
+      "end": 500,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 800
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 6,
+              "chance": 1,
+              "typeId": "item_20004",
+              "max": 6
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 6,
+              "chance": 1,
+              "typeId": "item_20023",
+              "max": 6
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    },
+    {
+      "start": 501,
+      "end": 1000,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 800
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 4,
+              "chance": 1,
+              "typeId": "item_20004",
+              "max": 4
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 4,
+              "chance": 1,
+              "typeId": "item_20023",
+              "max": 4
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    },
+    {
+      "start": 1001,
+      "end": 3000,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 800
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 2,
+              "chance": 1,
+              "typeId": "item_20004",
+              "max": 2
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 2,
+              "chance": 1,
+              "typeId": "item_20023",
+              "max": 2
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    },
+    {
+      "start": 3001,
+      "end": 6000,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 600
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 2,
+              "chance": 1,
+              "typeId": "item_20004",
+              "max": 2
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 2,
+              "chance": 1,
+              "typeId": "item_20023",
+              "max": 2
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    },
+    {
+      "start": 6001,
+      "end": -1,
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "typeId": "item_00002",
+              "num": 600
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 1,
+              "chance": 1,
+              "typeId": "item_20004",
+              "max": 1
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        },
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 1,
+              "chance": 1,
+              "typeId": "item_20023",
+              "max": 1
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    }
+  ],
+  "battle": {
+    "win": {
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 5,
+              "chance": 1,
+              "typeId": "item_27012",
+              "max": 5
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    },
+    "fail": {
+      "rewardItems": [
+        {
+          "rules": [
+            {
+              "mode": "item",
+              "min": 3,
+              "chance": 1,
+              "typeId": "item_27012",
+              "max": 3
+            }
+          ],
+          "rate": 1,
+          "num": 1
+        }
+      ]
+    }
+  }
+}

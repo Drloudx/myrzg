@@ -1,0 +1,1875 @@
+{
+	"datas": {
+		"tree001": {
+			"typeId": "tree001",
+			"name": "通用树木，无cd",
+			"collectTypeId": "tree"
+		},
+		"stone001": {
+			"typeId": "stone001",
+			"name": "通用石头，无cd",
+			"collectTypeId": "stone"
+		},
+		"tks001": {
+			"typeId": "tks001",
+			"name": "通用铁铜矿石，无cd",
+			"collectTypeId": "tks"
+		},
+		"collect_cy": {
+			"typeId": "collect_cy",
+			"name": "通用草药，无cd",
+			"collectTypeId": "cy"
+		},
+		"collect_jg": {
+			"typeId": "collect_jg",
+			"name": "通用浆果，无cd",
+			"collectTypeId": "jg"
+		},
+		"collect_mg": {
+			"typeId": "collect_mg",
+			"name": "通用蘑菇，无cd",
+			"collectTypeId": "mg"
+		},
+		"collect_xm": {
+			"typeId": "collect_xm",
+			"name": "通用小麦，无cd",
+			"collectTypeId": "xm"
+		},
+		"collect_ym": {
+			"typeId": "collect_ym",
+			"name": "通用亚麻，无cd",
+			"collectTypeId": "ym"
+		},
+		"collect_lh": {
+			"typeId": "collect_lh",
+			"name": "通用硫磺，无cd",
+			"collectTypeId": "lh"
+		},
+		"collect_lh_101": {
+			"typeId": "collect_lh_101",
+			"name": "1图硫磺，1day",
+			"collectTypeId": "collect_lh_101"
+		},
+		"collect_lh_102": {
+			"typeId": "collect_lh_102",
+			"name": "1图硫磺，1day",
+			"collectTypeId": "collect_lh_101"
+		},
+		"collect_lh_103": {
+			"typeId": "collect_lh_103",
+			"name": "1图硫磺，1day",
+			"collectTypeId": "collect_lh_101"
+		},
+		"collect_lh_104": {
+			"typeId": "collect_lh_104",
+			"name": "1图硫磺，1day",
+			"collectTypeId": "collect_lh_101"
+		},
+		"collect_lh_105": {
+			"typeId": "collect_lh_105",
+			"name": "1图硫磺，1day",
+			"collectTypeId": "collect_lh_101"
+		},
+		"collect_lh_106": {
+			"typeId": "collect_lh_106",
+			"name": "1图硫磺，1day",
+			"collectTypeId": "collect_lh_101"
+		},
+		"collect_lh_107": {
+			"typeId": "collect_lh_107",
+			"name": "1图硫磺，1day",
+			"collectTypeId": "collect_lh_101"
+		},
+		"collect_lh_108": {
+			"typeId": "collect_lh_108",
+			"name": "1图硫磺，1day",
+			"collectTypeId": "collect_lh_101"
+		},
+		"collect_lh_109": {
+			"typeId": "collect_lh_109",
+			"name": "1图硫磺，1day",
+			"collectTypeId": "collect_lh_101"
+		},
+		"collect_lh_201": {
+			"typeId": "collect_lh_201",
+			"name": "1图硫磺，1day",
+			"collectTypeId": "collect_lh_101"
+		},
+		"collect_lh_202": {
+			"typeId": "collect_lh_202",
+			"name": "1图硫磺，1day",
+			"collectTypeId": "collect_lh_101"
+		},
+		"collect_lh_501": {
+			"typeId": "collect_lh_501",
+			"name": "5图硫磺，1day",
+			"collectTypeId": "collect_lh_101"
+		},
+		"collect_lh_502": {
+			"typeId": "collect_lh_502",
+			"name": "5图硫磺，1day",
+			"collectTypeId": "collect_lh_101"
+		},
+		"collect_lh_503": {
+			"typeId": "collect_lh_503",
+			"name": "5图硫磺，1day",
+			"collectTypeId": "collect_lh_101"
+		},
+		"collect_lh_504": {
+			"typeId": "collect_lh_504",
+			"name": "5图硫磺，1day",
+			"collectTypeId": "collect_lh_101"
+		},
+		"collect_mnjj_101": {
+			"typeId": "collect_mnjj_101",
+			"name": "1图魔能结晶，1day",
+			"collectTypeId": "collect_mnjj_101"
+		},
+		"collect_mnjj_102": {
+			"typeId": "collect_mnjj_102",
+			"name": "1图魔能结晶，1day",
+			"collectTypeId": "collect_mnjj_101"
+		},
+		"collect_yy": {
+			"typeId": "collect_yy",
+			"name": "通用岩盐，无cd",
+			"collectTypeId": "yy"
+		},
+		"collect_yy_101": {
+			"typeId": "collect_yy_101",
+			"name": "1图岩盐，1day",
+			"collectTypeId": "collect_yy_101"
+		},
+		"collect_yy_102": {
+			"typeId": "collect_yy_102",
+			"name": "1图岩盐，1day",
+			"collectTypeId": "collect_yy_101"
+		},
+		"collect_yy_103": {
+			"typeId": "collect_yy_103",
+			"name": "1图岩盐，1day",
+			"collectTypeId": "collect_yy_101"
+		},
+		"collect_yy_201": {
+			"typeId": "collect_yy_201",
+			"name": "2图岩盐，1day",
+			"collectTypeId": "collect_yy_101"
+		},
+		"collect_yy_202": {
+			"typeId": "collect_yy_202",
+			"name": "2图岩盐，1day",
+			"collectTypeId": "collect_yy_101"
+		},
+		"collect_yy_501": {
+			"typeId": "collect_yy_501",
+			"name": "5图岩盐，1day",
+			"collectTypeId": "collect_yy_101"
+		},
+		"collect_yy_502": {
+			"typeId": "collect_yy_502",
+			"name": "5图岩盐，1day",
+			"collectTypeId": "collect_yy_101"
+		},
+		"collect_mg01": {
+			"typeId": "collect_mg01",
+			"name": "1图通用蘑菇，无cd",
+			"collectTypeId": "mg01"
+		},
+		"collect_yc": {
+			"typeId": "collect_yc",
+			"name": "通用野菜，无cd",
+			"collectTypeId": "yc"
+		},
+		"collect_swh_001": {
+			"typeId": "collect_swh_001",
+			"name": "水纹花，1day",
+			"collectTypeId": "collect_swh03_001"
+		},
+		"collect_swh_002": {
+			"typeId": "collect_swh_002",
+			"name": "水纹花，1day",
+			"collectTypeId": "collect_swh03_001"
+		},
+		"collect_swh_003": {
+			"typeId": "collect_swh_003",
+			"name": "水纹花，1day",
+			"collectTypeId": "collect_swh03_001"
+		},
+		"collect_swh_004": {
+			"typeId": "collect_swh_004",
+			"name": "水纹花，1day",
+			"collectTypeId": "collect_swh03_001"
+		},
+		"collect_mzb03_001": {
+			"typeId": "collect_mzb03_001",
+			"name": "魔抓贝，1day",
+			"collectTypeId": "collect_mzb03_001"
+		},
+		"collect_mzb03_301": {
+			"typeId": "collect_mzb03_301",
+			"name": "魔抓贝，1day",
+			"collectTypeId": "collect_mzb03_001"
+		},
+		"collect_mzb03_302": {
+			"typeId": "collect_mzb03_302",
+			"name": "魔抓贝，1day",
+			"collectTypeId": "collect_mzb03_001"
+		},
+		"collect_slg03_001": {
+			"typeId": "collect_slg03_001",
+			"name": "水露果，1day",
+			"collectTypeId": "collect_slg03_001"
+		},
+		"collect_slg03_301": {
+			"typeId": "collect_slg03_301",
+			"name": "水露果，1day",
+			"collectTypeId": "collect_slg03_001"
+		},
+		"collect_slg03_302": {
+			"typeId": "collect_slg03_302",
+			"name": "水露果，1day",
+			"collectTypeId": "collect_slg03_001"
+		},
+		"collect_swh03": {
+			"typeId": "collect_swh03",
+			"name": "水纹花",
+			"collectTypeId": "collect_swh03"
+		},
+		"collect_mzb03": {
+			"typeId": "collect_mzb03",
+			"name": "魔抓贝",
+			"collectTypeId": "collect_mzb03"
+		},
+		"collect_slg03": {
+			"typeId": "collect_slg03",
+			"name": "水露果",
+			"collectTypeId": "collect_slg03"
+		},
+		"collect_msnj03": {
+			"typeId": "collect_msnj03",
+			"name": "魔水凝晶",
+			"collectTypeId": "collect_msnj03"
+		},
+		"collect_msnj03_001": {
+			"typeId": "collect_msnj03_001",
+			"name": "魔水凝晶,消耗0体，副本使用",
+			"collectTypeId": "collect_msnj03_001"
+		},
+		"collect_hp": {
+			"typeId": "collect_hp",
+			"name": "通用hp，活血，无cd",
+			"collectTypeId": "collect_hp"
+		},
+		"collect_hp_001": {
+			"typeId": "collect_hp_001",
+			"name": "通用hp，活血，1day",
+			"collectTypeId": "collect_hp_001"
+		},
+		"collect_hp_002": {
+			"typeId": "collect_hp_002",
+			"name": "通用hp，活血，1day",
+			"collectTypeId": "collect_hp_001"
+		},
+		"collect_hp_003": {
+			"typeId": "collect_hp_003",
+			"name": "通用hp，活血，1day",
+			"collectTypeId": "collect_hp_001"
+		},
+		"collect_hp_004": {
+			"typeId": "collect_hp_004",
+			"name": "通用hp，活血，1day",
+			"collectTypeId": "collect_hp_001"
+		},
+		"collect_hp_005": {
+			"typeId": "collect_hp_005",
+			"name": "通用hp，活血，1day",
+			"collectTypeId": "collect_hp_001"
+		},
+		"collect_hp_006": {
+			"typeId": "collect_hp_006",
+			"name": "通用hp，活血，1day",
+			"collectTypeId": "collect_hp_001"
+		},
+		"collect_hp_101": {
+			"typeId": "collect_hp_101",
+			"name": "通用hp，活血，1day",
+			"collectTypeId": "collect_hp_001"
+		},
+		"collect_hp_102": {
+			"typeId": "collect_hp_102",
+			"name": "通用hp，活血，1day",
+			"collectTypeId": "collect_hp_001"
+		},
+		"collect_hp_103": {
+			"typeId": "collect_hp_103",
+			"name": "2图通用hp，活血，1day",
+			"collectTypeId": "collect_hp_001"
+		},
+		"collect_hp_201": {
+			"typeId": "collect_hp_201",
+			"name": "通用hp，活血，1day",
+			"collectTypeId": "collect_hp_001"
+		},
+		"collect_hp_202": {
+			"typeId": "collect_hp_202",
+			"name": "2图通用hp，活血，1day",
+			"collectTypeId": "collect_hp_001"
+		},
+		"collect_hp_203": {
+			"typeId": "collect_hp_203",
+			"name": "2图通用hp，活血，1day",
+			"collectTypeId": "collect_hp_001"
+		},
+		"collect_hp_301": {
+			"typeId": "collect_hp_301",
+			"name": "1图通用hp，活血，1day",
+			"collectTypeId": "collect_hp_001"
+		},
+		"collect_hp_302": {
+			"typeId": "collect_hp_302",
+			"name": "1图通用hp，活血，1day",
+			"collectTypeId": "collect_hp_001"
+		},
+		"collect_hp_401": {
+			"typeId": "collect_hp_401",
+			"name": "1图通用hp，活血，1day",
+			"collectTypeId": "collect_hp_001"
+		},
+		"collect_hp_402": {
+			"typeId": "collect_hp_402",
+			"name": "1图通用hp，活血，1day",
+			"collectTypeId": "collect_hp_001"
+		},
+		"collect_mp": {
+			"typeId": "collect_mp",
+			"name": "通用mp，蓝路，无cd",
+			"collectTypeId": "collect_mp"
+		},
+		"collect_mp_001": {
+			"typeId": "collect_mp_001",
+			"name": "通用mp，蓝路，1day",
+			"collectTypeId": "collect_mp_001"
+		},
+		"collect_mp_002": {
+			"typeId": "collect_mp_002",
+			"name": "通用mp，蓝路，1day",
+			"collectTypeId": "collect_mp_001"
+		},
+		"collect_mp_003": {
+			"typeId": "collect_mp_003",
+			"name": "通用mp，蓝路，1day",
+			"collectTypeId": "collect_mp_001"
+		},
+		"collect_mp_004": {
+			"typeId": "collect_mp_004",
+			"name": "通用mp，蓝路，1day",
+			"collectTypeId": "collect_mp_001"
+		},
+		"collect_mp_005": {
+			"typeId": "collect_mp_005",
+			"name": "通用mp，蓝路，1day",
+			"collectTypeId": "collect_mp_001"
+		},
+		"collect_mp_006": {
+			"typeId": "collect_mp_006",
+			"name": "通用mp，蓝路，1day",
+			"collectTypeId": "collect_mp_001"
+		},
+		"collect_mp_101": {
+			"typeId": "collect_mp_101",
+			"name": "通用mp，蓝路，1day",
+			"collectTypeId": "collect_mp_001"
+		},
+		"collect_mp_102": {
+			"typeId": "collect_mp_102",
+			"name": "通用mp，蓝路，1day",
+			"collectTypeId": "collect_mp_001"
+		},
+		"collect_mp_103": {
+			"typeId": "collect_mp_103",
+			"name": "通用mp，蓝路，1day",
+			"collectTypeId": "collect_mp_001"
+		},
+		"collect_mp_201": {
+			"typeId": "collect_mp_201",
+			"name": "2图mp，蓝路，1day",
+			"collectTypeId": "collect_mp_001"
+		},
+		"collect_mp_202": {
+			"typeId": "collect_mp_202",
+			"name": "2图mp，蓝路，1day",
+			"collectTypeId": "collect_mp_001"
+		},
+		"collect_mp_301": {
+			"typeId": "collect_mp_301",
+			"name": "3图mp，蓝路，1day",
+			"collectTypeId": "collect_mp_001"
+		},
+		"collect_mp_302": {
+			"typeId": "collect_mp_302",
+			"name": "3图mp，蓝路，1day",
+			"collectTypeId": "collect_mp_001"
+		},
+		"collect_mp_401": {
+			"typeId": "collect_mp_401",
+			"name": "3图mp，蓝路，1day",
+			"collectTypeId": "collect_mp_001"
+		},
+		"collect_mp_402": {
+			"typeId": "collect_mp_402",
+			"name": "3图mp，蓝路，1day",
+			"collectTypeId": "collect_mp_001"
+		},
+		"collect_hslsr04": {
+			"typeId": "collect_hslsr04",
+			"name": "4图松茸，蓝路，无cd",
+			"collectTypeId": "collect_hslsr04"
+		},
+		"collect_hslsr04_401": {
+			"typeId": "collect_hslsr04_401",
+			"name": "4图松茸，蓝路，1day",
+			"collectTypeId": "collect_hslsr04_001"
+		},
+		"collect_hslsr04_402": {
+			"typeId": "collect_hslsr04_402",
+			"name": "4图松茸，蓝路，1day",
+			"collectTypeId": "collect_hslsr04_001"
+		},
+		"collect_hslsr04_403": {
+			"typeId": "collect_hslsr04_403",
+			"name": "4图松茸，蓝路，1day",
+			"collectTypeId": "collect_hslsr04_001"
+		},
+		"collect_hslsr04_404": {
+			"typeId": "collect_hslsr04_404",
+			"name": "4图松茸，蓝路，1day",
+			"collectTypeId": "collect_hslsr04_001"
+		},
+		"collect_bl05": {
+			"typeId": "collect_bl05",
+			"name": "5图冰莲，无cd",
+			"collectTypeId": "collect_bl05"
+		},
+		"collect_bl05_501": {
+			"typeId": "collect_bl05_501",
+			"name": "5图冰莲，1day",
+			"collectTypeId": "collect_bl05_001"
+		},
+		"collect_bl05_502": {
+			"typeId": "collect_bl05_502",
+			"name": "5图冰莲，1day",
+			"collectTypeId": "collect_bl05_001"
+		},
+		"collect_bl05_503": {
+			"typeId": "collect_bl05_503",
+			"name": "5图冰莲，1day",
+			"collectTypeId": "collect_bl05_001"
+		},
+		"collect_bl05_504": {
+			"typeId": "collect_bl05_504",
+			"name": "5图冰莲，1day",
+			"collectTypeId": "collect_bl05_001"
+		},
+		"collect_jlc_201": {
+			"typeId": "collect_jlc_201",
+			"name": "2图金铃草，1day",
+			"collectTypeId": "collect_jlc"
+		},
+		"collect_jlc_202": {
+			"typeId": "collect_jlc_202",
+			"name": "2图金铃草，1day",
+			"collectTypeId": "collect_jlc"
+		},
+		"collect_jlc_301": {
+			"typeId": "collect_jlc_301",
+			"name": "3图金铃草，1day",
+			"collectTypeId": "collect_jlc"
+		},
+		"collect_jlc_302": {
+			"typeId": "collect_jlc_302",
+			"name": "3图金铃草，1day",
+			"collectTypeId": "collect_jlc"
+		},
+		"collect_jlc_401": {
+			"typeId": "collect_jlc_401",
+			"name": "3图金铃草，1day",
+			"collectTypeId": "collect_jlc"
+		},
+		"collect_jlc_402": {
+			"typeId": "collect_jlc_402",
+			"name": "3图金铃草，1day",
+			"collectTypeId": "collect_jlc"
+		},
+		"collect_cjc02": {
+			"typeId": "collect_cjc02",
+			"name": "2图赤剑草，无day",
+			"collectTypeId": "collect_cjc02"
+		},
+		"collect_cjc02_201": {
+			"typeId": "collect_cjc02_201",
+			"name": "2图赤剑草，1day",
+			"collectTypeId": "collect_cjc02_201"
+		},
+		"collect_cjc02_202": {
+			"typeId": "collect_cjc02_202",
+			"name": "2图赤剑草，1day",
+			"collectTypeId": "collect_cjc02_201"
+		},
+		"collect_cjc02_203": {
+			"typeId": "collect_cjc02_203",
+			"name": "2图赤剑草，1day",
+			"collectTypeId": "collect_cjc02_201"
+		},
+		"collect_cjc02_204": {
+			"typeId": "collect_cjc02_204",
+			"name": "2图赤剑草，1day",
+			"collectTypeId": "collect_cjc02_201"
+		},
+		"collect_cjc02_401": {
+			"typeId": "collect_cjc02_401",
+			"name": "4图赤剑草，1day",
+			"collectTypeId": "collect_cjc02_201"
+		},
+		"collect_cjc02_402": {
+			"typeId": "collect_cjc02_402",
+			"name": "4图赤剑草，1day",
+			"collectTypeId": "collect_cjc02_201"
+		},
+		"collect_lzg01": {
+			"typeId": "collect_lzg01",
+			"name": "绿蘑菇图一特产，无cd",
+			"collectTypeId": "collect_lzg01"
+		},
+		"collect_lzg01_001": {
+			"typeId": "collect_lzg01_001",
+			"name": "绿蘑菇图一特产，1day",
+			"collectTypeId": "collect_lzg01_001"
+		},
+		"collect_lzg01_002": {
+			"typeId": "collect_lzg01_002",
+			"name": "绿蘑菇图一特产，1day",
+			"collectTypeId": "collect_lzg01_001"
+		},
+		"collect_lzg01_003": {
+			"typeId": "collect_lzg01_003",
+			"name": "绿蘑菇图一特产，1day",
+			"collectTypeId": "collect_lzg01_001"
+		},
+		"collect_lzg01_101": {
+			"typeId": "collect_lzg01_101",
+			"name": "绿蘑菇图一特产，1day",
+			"collectTypeId": "collect_lzg01_001"
+		},
+		"collect_lzg01_102": {
+			"typeId": "collect_lzg01_102",
+			"name": "绿蘑菇图一特产，1day",
+			"collectTypeId": "collect_lzg01_001"
+		},
+		"collect_lzg01_4": {
+			"typeId": "collect_lzg01_4",
+			"name": "绿蘑菇图一特产，20H",
+			"collectTypeId": "collect_lzg01_001"
+		},
+		"collect_lzg01_401": {
+			"typeId": "collect_lzg01_401",
+			"name": "绿蘑菇图一特产，1day",
+			"collectTypeId": "collect_lzg01_001"
+		},
+		"collect_lzg01_402": {
+			"typeId": "collect_lzg01_402",
+			"name": "绿蘑菇图一特产，1day",
+			"collectTypeId": "collect_lzg01_001"
+		},
+		"collect_sr": {
+			"typeId": "collect_sr",
+			"name": "通用兽肉，无cd",
+			"collectTypeId": "collect_sr"
+		},
+		"collect_slm": {
+			"typeId": "collect_slm",
+			"name": "通用史莱木，无cd",
+			"collectTypeId": "collect_slm"
+		},
+		"collect_ztr": {
+			"typeId": "collect_ztr",
+			"name": "通用角猪腿，无cd",
+			"collectTypeId": "collect_ztr"
+		},
+		"ydcy001": {
+			"typeId": "ydcy001",
+			"name": "营地珍惜草药，20H",
+			"collectTypeId": "ydcy001"
+		},
+		"ydcy002": {
+			"typeId": "ydcy002",
+			"name": "营地珍惜草药，20H",
+			"collectTypeId": "ydcy002"
+		},
+		"ydcy003": {
+			"typeId": "ydcy003",
+			"name": "营地珍惜草药，20H",
+			"collectTypeId": "ydcy003"
+		},
+		"yjc001": {
+			"typeId": "yjc001",
+			"name": "通用药浆草，无cd",
+			"collectTypeId": "yjc"
+		},
+		"sg001": {
+			"typeId": "sg001",
+			"name": "通用树菇，无cd",
+			"collectTypeId": "sg"
+		},
+		"ydzb_hsxg01": {
+			"typeId": "ydzb_hsxg01",
+			"name": "营地周边,黑伞香菇，一号",
+			"collectTypeId": "hsxg"
+		},
+		"zhuxian_lzg01": {
+			"typeId": "zhuxian_lzg01",
+			"name": "主线main_0_02，绿榛菇采集",
+			"collectTypeId": "lzg"
+		},
+		"ydzb_lzg01": {
+			"typeId": "ydzb_lzg01",
+			"name": "营地周边，绿榛菇1号",
+			"collectTypeId": "lzg"
+		},
+		"ydzb_lzg02": {
+			"typeId": "ydzb_lzg02",
+			"name": "营地周边，绿榛菇2号",
+			"collectTypeId": "lzg"
+		},
+		"ydzb_lzg03": {
+			"typeId": "ydzb_lzg03",
+			"name": "营地周边，绿榛菇3号",
+			"collectTypeId": "lzg"
+		},
+		"yzdq_lzg01": {
+			"typeId": "yzdq_lzg01",
+			"name": "驿站地区，绿榛菇1号",
+			"collectTypeId": "lzg"
+		},
+		"yzdq_lzg02": {
+			"typeId": "yzdq_lzg02",
+			"name": "驿站地区，绿榛菇2号",
+			"collectTypeId": "lzg"
+		},
+		"yzdq_cylh01": {
+			"typeId": "yzdq_cylh01",
+			"name": "驿站地区，翠叶芦荟，一号",
+			"collectTypeId": "cylh"
+		},
+		"yzdq_cylh02": {
+			"typeId": "yzdq_cylh02",
+			"name": "驿站地区，翠叶芦荟，二号",
+			"collectTypeId": "cylh"
+		},
+		"yzdq_cylh03": {
+			"typeId": "yzdq_cylh03",
+			"name": "驿站地区，翠叶芦荟，三号",
+			"collectTypeId": "cylh"
+		},
+		"yzdq_cylh04": {
+			"typeId": "yzdq_cylh04",
+			"name": "驿站地区，翠叶芦荟，四号",
+			"collectTypeId": "cylh"
+		},
+		"ydzb_yc_cylh01": {
+			"typeId": "ydzb_yc_cylh01",
+			"name": "营地周边，翠叶芦荟，隐藏支线1号",
+			"collectTypeId": "cylh"
+		},
+		"ydzb_yc_cylh02": {
+			"typeId": "ydzb_yc_cylh02",
+			"name": "营地周边，翠叶芦荟，隐藏支线2号",
+			"collectTypeId": "cylh"
+		},
+		"ydzb_yc_cylh03": {
+			"typeId": "ydzb_yc_cylh03",
+			"name": "营地周边，翠叶芦荟，隐藏支线3号",
+			"collectTypeId": "cylh"
+		},
+		"ydzb_yc_cylh04": {
+			"typeId": "ydzb_yc_cylh04",
+			"name": "营地周边，翠叶芦荟，隐藏支线4号",
+			"collectTypeId": "cylh"
+		},
+		"yzdq_jdc01": {
+			"typeId": "yzdq_jdc01",
+			"name": "驿站地区，解毒草，一号",
+			"collectTypeId": "jdc"
+		},
+		"yzdq_jdc02": {
+			"typeId": "yzdq_jdc02",
+			"name": "驿站地区，解毒草，二号",
+			"collectTypeId": "jdc"
+		},
+		"zhuxian_llc01": {
+			"typeId": "zhuxian_llc01",
+			"name": "主线main_0_06，蓝露草5株",
+			"collectTypeId": "llc"
+		},
+		"zhuxian_llc02": {
+			"typeId": "zhuxian_llc02",
+			"name": "主线main_0_06，蓝露草5株",
+			"collectTypeId": "llc"
+		},
+		"zhuxian_llc03": {
+			"typeId": "zhuxian_llc03",
+			"name": "主线main_0_06，蓝露草5株",
+			"collectTypeId": "llc"
+		},
+		"zhuxian_llc04": {
+			"typeId": "zhuxian_llc04",
+			"name": "主线main_0_06，蓝露草5株",
+			"collectTypeId": "llc"
+		},
+		"zhuxian_llc05": {
+			"typeId": "zhuxian_llc05",
+			"name": "主线main_0_06，蓝露草5株",
+			"collectTypeId": "llc"
+		},
+		"yzdq_llc01": {
+			"typeId": "yzdq_llc01",
+			"name": "驿站地区，蓝露草1号",
+			"collectTypeId": "llc"
+		},
+		"yzdq_llc02": {
+			"typeId": "yzdq_llc02",
+			"name": "驿站地区，蓝露草2号",
+			"collectTypeId": "llc"
+		},
+		"yzdq_llc03": {
+			"typeId": "yzdq_llc03",
+			"name": "驿站地区，蓝露草3号，妖精花园",
+			"collectTypeId": "llc"
+		},
+		"yzdq_llc04": {
+			"typeId": "yzdq_llc04",
+			"name": "驿站地区，蓝露草4号，妖精花园",
+			"collectTypeId": "llc"
+		},
+		"yzdq_tks01": {
+			"typeId": "yzdq_tks01",
+			"name": "驿站地区，铁矿石1",
+			"collectTypeId": "tks"
+		},
+		"yzdq_tks02": {
+			"typeId": "yzdq_tks02",
+			"name": "驿站地区，铁矿石2",
+			"collectTypeId": "tks"
+		},
+		"mon_035": {
+			"typeId": "mon_035",
+			"name": "角猪击杀掉落",
+			"collectTypeId": "collect_mon_035"
+		},
+		"sfkk_1_shui": {
+			"typeId": "sfkk_1_shui",
+			"name": "水碎片3",
+			"collectTypeId": "sfkk_1_shui"
+		},
+		"sfkk_1_huo": {
+			"typeId": "sfkk_1_huo",
+			"name": "火碎片3",
+			"collectTypeId": "sfkk_1_huo"
+		},
+		"sfkk_1_feng": {
+			"typeId": "sfkk_1_feng",
+			"name": "地碎片3",
+			"collectTypeId": "sfkk_1_feng"
+		},
+		"sfkk_1_di": {
+			"typeId": "sfkk_1_di",
+			"name": "风碎片3",
+			"collectTypeId": "sfkk_1_di"
+		},
+		"map1101": {
+			"typeId": "map1101",
+			"name": "蜘蛛",
+			"collectTypeId": "map1101"
+		},
+		"collect_zzs": {
+			"typeId": "collect_zzs",
+			"name": "蜘蛛",
+			"collectTypeId": "collect_zzs"
+		},
+		"map1102": {
+			"typeId": "map1102",
+			"name": "boss蜘蛛丝",
+			"collectTypeId": "map1102"
+		},
+		"map1103": {
+			"typeId": "map1103",
+			"name": "蜘蛛腺体",
+			"collectTypeId": "map1103"
+		},
+		"map1201": {
+			"typeId": "map1201",
+			"name": "齿轮",
+			"collectTypeId": "map1201"
+		},
+		"map1202": {
+			"typeId": "map1202",
+			"name": "齿轮+",
+			"collectTypeId": "map1202"
+		},
+		"map1203": {
+			"typeId": "map1203",
+			"name": "齿轮+核心",
+			"collectTypeId": "map1203"
+		},
+		"map2101": {
+			"typeId": "map2101",
+			"name": "蟾蜍皮",
+			"collectTypeId": "map2101"
+		},
+		"map2102": {
+			"typeId": "map2102",
+			"name": "蟾蜍皮+",
+			"collectTypeId": "map2102"
+		},
+		"map2103": {
+			"typeId": "map2103",
+			"name": "蟾蜍皮+眼睛",
+			"collectTypeId": "map2103"
+		},
+		"map2201": {
+			"typeId": "map2201",
+			"name": "毛",
+			"collectTypeId": "map2201"
+		},
+		"map2201_1": {
+			"typeId": "map2201_1",
+			"name": "毛_巢穴",
+			"collectTypeId": "map2201_1"
+		},
+		"map2202": {
+			"typeId": "map2202",
+			"name": "毛+",
+			"collectTypeId": "map2202"
+		},
+		"map2203": {
+			"typeId": "map2203",
+			"name": "毛+尾巴",
+			"collectTypeId": "map2203"
+		},
+		"map3101": {
+			"typeId": "map3101",
+			"name": "结晶",
+			"collectTypeId": "map3101"
+		},
+		"map3102": {
+			"typeId": "map3102",
+			"name": "BOSS材料+结晶",
+			"collectTypeId": "map3102"
+		},
+		"map3201": {
+			"typeId": "map3201",
+			"name": "蛇皮",
+			"collectTypeId": "map3201"
+		},
+		"map3202": {
+			"typeId": "map3202",
+			"name": "BOSS材料+蛇皮",
+			"collectTypeId": "map3202"
+		},
+		"map4101": {
+			"typeId": "map4101",
+			"name": "孢子",
+			"collectTypeId": "map4101"
+		},
+		"map4102": {
+			"typeId": "map4102",
+			"name": "BOSS材料+孢子",
+			"collectTypeId": "map4102"
+		},
+		"map4201": {
+			"typeId": "map4201",
+			"name": "魔花",
+			"collectTypeId": "map4201"
+		},
+		"map4202": {
+			"typeId": "map4202",
+			"name": "BOSS材料+魔花",
+			"collectTypeId": "map4202"
+		},
+		"map5101": {
+			"typeId": "map5101",
+			"name": "冰晶",
+			"collectTypeId": "map5101"
+		},
+		"map5102": {
+			"typeId": "map5102",
+			"name": "BOSS材料+冰晶",
+			"collectTypeId": "map5102"
+		},
+		"map5201": {
+			"typeId": "map5201",
+			"name": "熔火",
+			"collectTypeId": "map5201"
+		},
+		"map5202": {
+			"typeId": "map5202",
+			"name": "BOSS材料+熔火",
+			"collectTypeId": "map5202"
+		},
+		"yzdj_cj": {
+			"typeId": "yzdj_cj",
+			"name": "驿站地窖宝箱",
+			"collectTypeId": "yzdj_cj"
+		},
+		"baoxiang110": {
+			"typeId": "baoxiang110",
+			"name": "1-1精英",
+			"collectTypeId": "baoxiang110"
+		},
+		"baoxiang111": {
+			"typeId": "baoxiang111",
+			"name": "铜宝箱",
+			"collectTypeId": "baoxiang111"
+		},
+		"baoxiang112": {
+			"typeId": "baoxiang112",
+			"name": "银宝箱",
+			"collectTypeId": "baoxiang112"
+		},
+		"baoxiang113": {
+			"typeId": "baoxiang113",
+			"name": "金宝箱",
+			"collectTypeId": "baoxiang113"
+		},
+		"baoxiang120": {
+			"typeId": "baoxiang120",
+			"name": "1-2精英",
+			"collectTypeId": "baoxiang120"
+		},
+		"baoxiang121": {
+			"typeId": "baoxiang121",
+			"name": "铜宝箱",
+			"collectTypeId": "baoxiang121"
+		},
+		"baoxiang122": {
+			"typeId": "baoxiang122",
+			"name": "银宝箱",
+			"collectTypeId": "baoxiang122"
+		},
+		"baoxiang123": {
+			"typeId": "baoxiang123",
+			"name": "金宝箱",
+			"collectTypeId": "baoxiang123"
+		},
+		"baoxiang210": {
+			"typeId": "baoxiang210",
+			"name": "2-1精英",
+			"collectTypeId": "baoxiang210"
+		},
+		"baoxiang211": {
+			"typeId": "baoxiang211",
+			"name": "2-1铜宝箱",
+			"collectTypeId": "baoxiang211"
+		},
+		"baoxiang212": {
+			"typeId": "baoxiang212",
+			"name": "2-1银宝箱",
+			"collectTypeId": "baoxiang212"
+		},
+		"baoxiang213": {
+			"typeId": "baoxiang213",
+			"name": "2-1金宝箱",
+			"collectTypeId": "baoxiang213"
+		},
+		"baoxiang220": {
+			"typeId": "baoxiang220",
+			"name": "2-2精英",
+			"collectTypeId": "baoxiang220"
+		},
+		"baoxiang221": {
+			"typeId": "baoxiang221",
+			"name": "2-2铜宝箱",
+			"collectTypeId": "baoxiang221"
+		},
+		"baoxiang222": {
+			"typeId": "baoxiang222",
+			"name": "2-2银宝箱",
+			"collectTypeId": "baoxiang222"
+		},
+		"baoxiang223": {
+			"typeId": "baoxiang223",
+			"name": "2-2金宝箱",
+			"collectTypeId": "baoxiang223"
+		},
+		"baoxiang310": {
+			"typeId": "baoxiang310",
+			"name": "3-1精英",
+			"collectTypeId": "baoxiang310"
+		},
+		"baoxiang311": {
+			"typeId": "baoxiang311",
+			"name": "3-1铜宝箱",
+			"collectTypeId": "baoxiang311"
+		},
+		"baoxiang312": {
+			"typeId": "baoxiang312",
+			"name": "3-1银宝箱",
+			"collectTypeId": "baoxiang312"
+		},
+		"baoxiang313": {
+			"typeId": "baoxiang313",
+			"name": "3-1金宝箱",
+			"collectTypeId": "baoxiang313"
+		},
+		"baoxiang320": {
+			"typeId": "baoxiang320",
+			"name": "3-2精英",
+			"collectTypeId": "baoxiang320"
+		},
+		"baoxiang321": {
+			"typeId": "baoxiang321",
+			"name": "3-2铜宝箱",
+			"collectTypeId": "baoxiang321"
+		},
+		"baoxiang322": {
+			"typeId": "baoxiang322",
+			"name": "3-2银宝箱",
+			"collectTypeId": "baoxiang322"
+		},
+		"baoxiang323": {
+			"typeId": "baoxiang323",
+			"name": "3-2金宝箱",
+			"collectTypeId": "baoxiang323"
+		},
+		"baoxiang411": {
+			"typeId": "baoxiang411",
+			"name": "4-1铜宝箱",
+			"collectTypeId": "baoxiang411"
+		},
+		"baoxiang412": {
+			"typeId": "baoxiang412",
+			"name": "4-1银宝箱",
+			"collectTypeId": "baoxiang412"
+		},
+		"baoxiang413": {
+			"typeId": "baoxiang413",
+			"name": "4-1金宝箱",
+			"collectTypeId": "baoxiang413"
+		},
+		"baoxiang421": {
+			"typeId": "baoxiang421",
+			"name": "4-2铜宝箱",
+			"collectTypeId": "baoxiang421"
+		},
+		"baoxiang422": {
+			"typeId": "baoxiang422",
+			"name": "4-2银宝箱",
+			"collectTypeId": "baoxiang422"
+		},
+		"baoxiang423": {
+			"typeId": "baoxiang423",
+			"name": "4-2金宝箱",
+			"collectTypeId": "baoxiang423"
+		},
+		"baoxiang511": {
+			"typeId": "baoxiang511",
+			"name": "5-1铜宝箱",
+			"collectTypeId": "baoxiang511"
+		},
+		"baoxiang512": {
+			"typeId": "baoxiang512",
+			"name": "5-1银宝箱",
+			"collectTypeId": "baoxiang512"
+		},
+		"baoxiang513": {
+			"typeId": "baoxiang513",
+			"name": "5-1金宝箱",
+			"collectTypeId": "baoxiang513"
+		},
+		"baoxiang521": {
+			"typeId": "baoxiang521",
+			"name": "5-2铜宝箱",
+			"collectTypeId": "baoxiang521"
+		},
+		"baoxiang522": {
+			"typeId": "baoxiang522",
+			"name": "5-2银宝箱",
+			"collectTypeId": "baoxiang522"
+		},
+		"baoxiang523": {
+			"typeId": "baoxiang523",
+			"name": "5-2金宝箱",
+			"collectTypeId": "baoxiang523"
+		},
+		"level10002": {
+			"typeId": "level10002",
+			"name": "1精英",
+			"collectTypeId": "level10002"
+		},
+		"level20001": {
+			"typeId": "level20001",
+			"name": "2精英",
+			"collectTypeId": "level20001"
+		},
+		"level30001": {
+			"typeId": "level30001",
+			"name": "3野外精英",
+			"collectTypeId": "level30001"
+		},
+		"level40001": {
+			"typeId": "level40001",
+			"name": "4野外精英",
+			"collectTypeId": "level40001"
+		},
+		"level50001": {
+			"typeId": "level50001",
+			"name": "5野外精英",
+			"collectTypeId": "level50001"
+		},
+		"chufang001": {
+			"typeId": "chufang001",
+			"name": "1图废弃的厨房工具",
+			"collectTypeId": "chufang001"
+		},
+		"lianjin001": {
+			"typeId": "lianjin001",
+			"name": "1图废弃的炼金工具",
+			"collectTypeId": "lianjin001"
+		},
+		"zhizhuxiang001": {
+			"typeId": "zhizhuxiang001",
+			"name": "1图蜘蛛箱",
+			"collectTypeId": "zhizhuxiang001"
+		},
+		"lingjian001": {
+			"typeId": "lingjian001",
+			"name": "1图废弃的零件",
+			"collectTypeId": "lingjian001"
+		},
+		"xingxiangshiban001": {
+			"typeId": "xingxiangshiban001",
+			"name": "1和2图星象石板",
+			"collectTypeId": "xingxiangshiban001"
+		},
+		"collect_lh_c2": {
+			"typeId": "collect_lh_c2",
+			"name": "1和2图星象石板",
+			"collectTypeId": "collect_lh_c2"
+		},
+		"caoyao001": {
+			"typeId": "caoyao001",
+			"name": "2图草药",
+			"collectTypeId": "caoyao001"
+		},
+		"kuangshi001": {
+			"typeId": "kuangshi001",
+			"name": "2图矿石",
+			"collectTypeId": "kuangshi001"
+		},
+		"chaoxue001": {
+			"typeId": "chaoxue001",
+			"name": "2图哈比巢穴",
+			"collectTypeId": "chaoxue001"
+		},
+		"bocai001": {
+			"typeId": "bocai001",
+			"name": "1博彩小",
+			"collectTypeId": "bocai001"
+		},
+		"bocai002": {
+			"typeId": "bocai002",
+			"name": "1博彩中",
+			"collectTypeId": "bocai002"
+		},
+		"bocai003": {
+			"typeId": "bocai003",
+			"name": "1博彩大",
+			"collectTypeId": "bocai003"
+		},
+		"bocai201": {
+			"typeId": "bocai201",
+			"name": "2博彩小",
+			"collectTypeId": "bocai201"
+		},
+		"bocai202": {
+			"typeId": "bocai202",
+			"name": "2博彩中",
+			"collectTypeId": "bocai202"
+		},
+		"bocai203": {
+			"typeId": "bocai203",
+			"name": "2博彩大",
+			"collectTypeId": "bocai203"
+		},
+		"bocai301": {
+			"typeId": "bocai301",
+			"name": "2博彩小",
+			"collectTypeId": "bocai301"
+		},
+		"bocai302": {
+			"typeId": "bocai302",
+			"name": "3博彩中",
+			"collectTypeId": "bocai302"
+		},
+		"bocai303": {
+			"typeId": "bocai303",
+			"name": "3博彩大",
+			"collectTypeId": "bocai303"
+		},
+		"bocai401": {
+			"typeId": "bocai401",
+			"name": "4博彩小",
+			"collectTypeId": "bocai401"
+		},
+		"bocai402": {
+			"typeId": "bocai402",
+			"name": "4博彩中",
+			"collectTypeId": "bocai402"
+		},
+		"bocai403": {
+			"typeId": "bocai403",
+			"name": "4博彩大",
+			"collectTypeId": "bocai403"
+		},
+		"bocai501": {
+			"typeId": "bocai501",
+			"name": "5博彩小",
+			"collectTypeId": "bocai501"
+		},
+		"bocai502": {
+			"typeId": "bocai502",
+			"name": "5博彩中",
+			"collectTypeId": "bocai502"
+		},
+		"bocai503": {
+			"typeId": "bocai503",
+			"name": "5博彩大",
+			"collectTypeId": "bocai503"
+		},
+		
+		"main10001_boss": {
+			"typeId": "main10001_boss",
+			"name": "1boos小",
+			"collectTypeId": "main10001_boss"
+		},
+		"main10001_bossmain": {
+			"typeId": "main10001_bossmain",
+			"name": "1boos小",
+			"collectTypeId": "main10001_bossmain"
+		},
+		"main10002_boss": {
+			"typeId": "main10002_boss",
+			"name": "1boos小",
+			"collectTypeId": "main10002_boss"
+		},
+		"main10005_boss": {
+			"typeId": "main10005_boss",
+			"name": "1boos大",
+			"collectTypeId": "main10005_boss"
+		},
+		"main10005_boss_1": {
+			"typeId": "main10005_boss_1",
+			"name": "1boos大",
+			"collectTypeId": "main10005_boss_1"
+		},
+		"main10005_boss_2": {
+			"typeId": "main10005_boss_2",
+			"name": "1boos大",
+			"collectTypeId": "main10005_boss_2"
+		},
+		"main11003_boss": {
+			"typeId": "main11003_boss",
+			"name": "1boos小",
+			"collectTypeId": "main11003_boss"
+		},
+		"main11004_boss": {
+			"typeId": "main11004_boss",
+			"name": "1boos小",
+			"collectTypeId": "main11004_boss"
+		},
+		"main11005_boss": {
+			"typeId": "main11005_boss",
+			"name": "1boos大",
+			"collectTypeId": "main11005_boss"
+		},
+		"main11005_boss_1": {
+			"typeId": "main11005_boss_1",
+			"name": "1boos大",
+			"collectTypeId": "main11005_boss_1"
+		},
+		"main11005_boss_2": {
+			"typeId": "main11005_boss_2",
+			"name": "1boos大",
+			"collectTypeId": "main11005_boss_2"
+		},
+		
+		"main20001_boss": {
+			"typeId": "main20001_boss",
+			"name": "2boos小",
+			"collectTypeId": "main20001_boss"
+		},
+		"main20002_boss": {
+			"typeId": "main20002_boss",
+			"name": "2boos小",
+			"collectTypeId": "main20002_boss"
+		},
+		"main20005_boss": {
+			"typeId": "main20005_boss",
+			"name": "2boos大",
+			"collectTypeId": "main20005_boss"
+		},
+		"main20005_boss_1": {
+			"typeId": "main20005_boss_1",
+			"name": "2boos大",
+			"collectTypeId": "main20005_boss_1"
+		},
+		"main20005_boss_2": {
+			"typeId": "main20005_boss_2",
+			"name": "2boos大",
+			"collectTypeId": "main20005_boss_2"
+		},
+		"main21003_boss": {
+			"typeId": "main21003_boss",
+			"name": "2boos小",
+			"collectTypeId": "main21003_boss"
+		},
+		"main21004_boss": {
+			"typeId": "main21004_boss",
+			"name": "2boos小",
+			"collectTypeId": "main21004_boss"
+		},
+		"main21005_boss": {
+			"typeId": "main21005_boss",
+			"name": "2boos大",
+			"collectTypeId": "main21005_boss"
+		},
+		"main21005_boss_1": {
+			"typeId": "main21005_boss_1",
+			"name": "2boos大",
+			"collectTypeId": "main21005_boss_1"
+		},
+		"main21005_boss_2": {
+			"typeId": "main21005_boss_2",
+			"name": "2boos大",
+			"collectTypeId": "main21005_boss_2"
+		},
+		
+		"main30001_boss": {
+			"typeId": "main30001_boss",
+			"name": "3boos小",
+			"collectTypeId": "main30001_boss"
+		},
+		"main30002_boss": {
+			"typeId": "main30002_boss",
+			"name": "3boos小",
+			"collectTypeId": "main30002_boss"
+		},
+		"main30005_boss": {
+			"typeId": "main30005_boss",
+			"name": "3boos大",
+			"collectTypeId": "main30005_boss"
+		},
+		"main30005_boss_1": {
+			"typeId": "main30005_boss_1",
+			"name": "3boos大",
+			"collectTypeId": "main30005_boss_1"
+		},
+		"main30005_boss_2": {
+			"typeId": "main30005_boss_2",
+			"name": "3boos大",
+			"collectTypeId": "main30005_boss_2"
+		},
+		"main31003_boss": {
+			"typeId": "main31003_boss",
+			"name": "3boos小",
+			"collectTypeId": "main31003_boss"
+		},
+		"main31004_boss": {
+			"typeId": "main31004_boss",
+			"name": "3boos小",
+			"collectTypeId": "main31004_boss"
+		},
+		"main31005_boss": {
+			"typeId": "main31005_boss",
+			"name": "3boos大",
+			"collectTypeId": "main31005_boss"
+		},
+		"main31005_boss_1": {
+			"typeId": "main31005_boss_1",
+			"name": "3boos大",
+			"collectTypeId": "main31005_boss_1"
+		},
+		"main31005_boss_2": {
+			"typeId": "main31005_boss_2",
+			"name": "3boos大",
+			"collectTypeId": "main31005_boss_2"
+		},
+		
+		"main40001_boss": {
+			"typeId": "main40001_boss",
+			"name": "4boos小",
+			"collectTypeId": "main40001_boss"
+		},
+		"main40002_boss": {
+			"typeId": "main40002_boss",
+			"name": "4boos大",
+			"collectTypeId": "main40002_boss"
+		},
+		"main40002_boss_1": {
+			"typeId": "main40002_boss_1",
+			"name": "4boos大",
+			"collectTypeId": "main40002_boss_1"
+		},
+		"main40002_boss_2": {
+			"typeId": "main40002_boss_2",
+			"name": "4boos大",
+			"collectTypeId": "main40002_boss_2"
+		},
+		"main41001_boss": {
+			"typeId": "main41001_boss",
+			"name": "4boos小",
+			"collectTypeId": "main41001_boss"
+		},
+		"main41002_boss": {
+			"typeId": "main41002_boss",
+			"name": "4boos大",
+			"collectTypeId": "main41002_boss"
+		},
+		"main41002_boss_1": {
+			"typeId": "main41002_boss_1",
+			"name": "4boos大",
+			"collectTypeId": "main41002_boss_1"
+		},
+		"main41002_boss_2": {
+			"typeId": "main41002_boss_2",
+			"name": "4boos大",
+			"collectTypeId": "main41002_boss_2"
+		},
+		
+		"main50001_boss": {
+			"typeId": "main50001_boss",
+			"name": "5boos小",
+			"collectTypeId": "main50001_boss"
+		},
+		"main50002_boss": {
+			"typeId": "main50002_boss",
+			"name": "5boos大",
+			"collectTypeId": "main50002_boss"
+		},
+		"main50002_boss_1": {
+			"typeId": "main50002_boss_1",
+			"name": "5boos大",
+			"collectTypeId": "main50002_boss_1"
+		},
+		"main50002_boss_2": {
+			"typeId": "main50002_boss_2",
+			"name": "5boos大",
+			"collectTypeId": "main50002_boss_2"
+		},
+		"main51001_boss": {
+			"typeId": "main51001_boss",
+			"name": "5boos小",
+			"collectTypeId": "main51001_boss"
+		},
+		"main51002_boss": {
+			"typeId": "main51002_boss",
+			"name": "5boos大",
+			"collectTypeId": "main51002_boss"
+		},
+		"main51002_boss_1": {
+			"typeId": "main51002_boss_1",
+			"name": "5boos大",
+			"collectTypeId": "main51002_boss_1"
+		},
+		"main51002_boss_2": {
+			"typeId": "main51002_boss_2",
+			"name": "5boos大",
+			"collectTypeId": "main51002_boss_2"
+		},
+		
+		
+		
+		
+		"c1yeWaiPet01": {
+			"typeId": "c1yeWaiPet01",
+			"name": "魔物蛋巢",
+			"collectTypeId": "yeWaiPet_c1"
+		},
+		"c1yeWaiPet02": {
+			"typeId": "c1yeWaiPet02",
+			"name": "魔物蛋巢",
+			"collectTypeId": "yeWaiPet_c1"
+		},
+		"c1yeWaiPet03": {
+			"typeId": "c1yeWaiPet03",
+			"name": "魔物蛋巢",
+			"collectTypeId": "yeWaiPet_c1"
+		},
+		"c1yeWaiPet04": {
+			"typeId": "c1yeWaiPet04",
+			"name": "魔物蛋巢",
+			"collectTypeId": "yeWaiPet_c1"
+		},
+
+		"c2yeWaiPet01": {
+			"typeId": "c2yeWaiPet01",
+			"name": "魔物蛋巢",
+			"collectTypeId": "yeWaiPet_c2"
+		},
+		"c2yeWaiPet02": {
+			"typeId": "c2yeWaiPet02",
+			"name": "魔物蛋巢",
+			"collectTypeId": "yeWaiPet_c2"
+		},
+		"c2yeWaiPet03": {
+			"typeId": "c2yeWaiPet03",
+			"name": "魔物蛋巢",
+			"collectTypeId": "yeWaiPet_c2"
+		},
+
+		"c3yeWaiPet01": {
+			"typeId": "c3yeWaiPet01",
+			"name": "魔物蛋巢",
+			"collectTypeId": "yeWaiPet_c3"
+		},
+		"c3yeWaiPet02": {
+			"typeId": "c3yeWaiPet02",
+			"name": "魔物蛋巢",
+			"collectTypeId": "yeWaiPet_c3"
+		},
+		"c3yeWaiPet03": {
+			"typeId": "c3yeWaiPet03",
+			"name": "魔物蛋巢",
+			"collectTypeId": "yeWaiPet_c3"
+		},
+
+		"c4yeWaiPet01": {
+			"typeId": "c4yeWaiPet01",
+			"name": "魔物蛋巢",
+			"collectTypeId": "yeWaiPet_c4"
+		},
+		"c4yeWaiPet02": {
+			"typeId": "c4yeWaiPet02",
+			"name": "魔物蛋巢",
+			"collectTypeId": "yeWaiPet_c4"
+		},
+		"c4yeWaiPet03": {
+			"typeId": "c4yeWaiPet03",
+			"name": "魔物蛋巢",
+			"collectTypeId": "yeWaiPet_c4"
+		},
+
+		
+		"dungeonEgg_c1": {
+			"typeId": "dungeonEgg_c1",
+			"name": "魔物蛋巢",
+			"collectTypeId": "dungeonEgg_c1"
+		},
+		
+		"dungeonEgg_c2": {
+			"typeId": "dungeonEgg_c2",
+			"name": "魔物蛋巢",
+			"collectTypeId": "dungeonEgg_c2"
+		},
+		
+		"dungeonEgg_c3": {
+			"typeId": "dungeonEgg_c3",
+			"name": "魔物蛋巢",
+			"collectTypeId": "dungeonEgg_c3"
+		},
+		
+		"dungeonEgg_c4": {
+			"typeId": "dungeonEgg_c4",
+			"name": "魔物蛋巢",
+			"collectTypeId": "dungeonEgg_c4"
+		},
+
+		
+		"c1changJing01": {
+			"typeId": "c1changJing01",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c1changJing01"
+		},
+		"c1jinBookHsl03": {
+			"typeId": "c1jinBookHsl03",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c1jinBookHsl03"
+		},
+		"c1jinBookHsl06": {
+			"typeId": "c1jinBookHsl06",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c1jinBookHsl06"
+		},
+		"c1changJing02": {
+			"typeId": "c1changJing02",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c1changJing01"
+		},
+		"c1yinBookHsl05": {
+			"typeId": "c1yinBookHsl05",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c1yinBookHsl05"
+		},
+		"c1changJingHsl07": {
+			"typeId": "c1changJingHsl07",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c1changJingHsl07"
+		},
+		"c1yinBookHsl08": {
+			"typeId": "c1yinBookHsl08",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c1yinBookHsl08"
+		},
+
+		"c2changJing01": {
+			"typeId": "c2changJing01",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c2changJing01"
+		},
+		"c2changJing02": {
+			"typeId": "c2changJing02",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c2changJing01"
+		},
+		"c2changJing03": {
+			"typeId": "c2changJing03",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c2changJing01"
+		},
+		"c2changJing04": {
+			"typeId": "c2changJing04",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c2changJing01"
+		},
+		"c2changJing05": {
+			"typeId": "c2changJing05",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c2changJing01"
+		},
+		"c2changJing06": {
+			"typeId": "c2changJing06",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c2changJing01"
+		},
+		"c2changJing07": {
+			"typeId": "c2changJing07",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c2changJing01"
+		},
+		"c2changJing08": {
+			"typeId": "c2changJing08",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c2changJing01"
+		},
+
+		"c3changJing01": {
+			"typeId": "c3changJing01",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c3changJing01"
+		},
+		"c3changJing02": {
+			"typeId": "c3changJing02",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c3changJing01"
+		},
+		"c3changJing03": {
+			"typeId": "c3changJing03",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c3changJing01"
+		},
+		"c3changJing04": {
+			"typeId": "c3changJing04",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c3changJing01"
+		},
+		"c3changJing05": {
+			"typeId": "c3changJing05",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c3changJing01"
+		},
+		"c3changJing06": {
+			"typeId": "c3changJing06",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c3changJing01"
+		},
+		"c3changJing07": {
+			"typeId": "c3changJing07",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c3changJing01"
+		},
+		
+
+		"c4changJing01": {
+			"typeId": "c4changJing01",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c4changJing01"
+		},
+		"c4changJing02": {
+			"typeId": "c4changJing02",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c4changJing01"
+		},
+		"c4changJing03": {
+			"typeId": "c4changJing03",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c4changJing01"
+		},
+		"c4changJing04": {
+			"typeId": "c4changJing04",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c4changJing01"
+		},
+		"c4changJing05": {
+			"typeId": "c4changJing05",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c4changJing01"
+		},
+		"c4changJing06": {
+			"typeId": "c4changJing06",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c4changJing01"
+		},
+		"c4changJing07": {
+			"typeId": "c4changJing07",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c4changJing01"
+		},
+
+
+
+		"c5changJing01": {
+			"typeId": "c5changJing01",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c5changJing01"
+		},
+		"c5changJing02": {
+			"typeId": "c5changJing02",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c5changJing01"
+		},
+		"c5changJing03": {
+			"typeId": "c5changJing03",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c5changJing01"
+		},
+		"c5changJing04": {
+			"typeId": "c5changJing04",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c5changJing01"
+		},
+		"c5changJing05": {
+			"typeId": "c5changJing05",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c5changJing01"
+		},
+		"c5changJing06": {
+			"typeId": "c5changJing06",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c5changJing01"
+		},
+		"c5changJing07": {
+			"typeId": "c5changJing07",
+			"name": "被隐藏的物品",
+			"collectTypeId": "c5changJing01"
+		},
+
+
+		"c1yinCang": {
+			"typeId": "c1yinCang",
+			"name": "？？？",
+			"collectTypeId": "c1yinCang"
+		},
+		"c1jinBookHsl02": {
+			"typeId": "c1jinBookHsl02",
+			"name": "？？？",
+			"collectTypeId": "c1jinBookHsl02"
+		},
+		"c1tongBookHsl01": {
+			"typeId": "c1tongBookHsl01",
+			"name": "？？？",
+			"collectTypeId": "c1tongBookHsl01"
+		},
+		"c1yinCangHsl04": {
+			"typeId": "c1yinCangHsl04",
+			"name": "？？？",
+			"collectTypeId": "c1yinCangHsl04"
+		},
+		"c1yinCangHsl09": {
+			"typeId": "c1yinCangHsl09",
+			"name": "？？？",
+			"collectTypeId": "c1yinCangHsl09"
+		},
+		"c2yinCang": {
+			"typeId": "c2yinCang",
+			"name": "？？？",
+			"collectTypeId": "c2yinCang"
+		},
+		"c2yinCang02": {
+			"typeId": "c2yinCang02",
+			"name": "？？？",
+			"collectTypeId": "c2yinCang"
+		},
+		"c2yinCang03": {
+			"typeId": "c2yinCang03",
+			"name": "？？？",
+			"collectTypeId": "c2yinCang"
+		},
+		"c3yinCang": {
+			"typeId": "c3yinCang",
+			"name": "？？？",
+			"collectTypeId": "c3yinCang"
+		},
+		"c3yinCang02": {
+			"typeId": "c3yinCang02",
+			"name": "？？？",
+			"collectTypeId": "c3yinCang"
+		},
+		"c3yinCang03": {
+			"typeId": "c3yinCang03",
+			"name": "？？？",
+			"collectTypeId": "c3yinCang"
+		},
+
+
+		"c4yinCang01": {
+			"typeId": "c4yinCang01",
+			"name": "？？？",
+			"collectTypeId": "c4yinCang"
+		},
+		"c4yinCang02": {
+			"typeId": "c4yinCang02",
+			"name": "？？？",
+			"collectTypeId": "c4yinCang"
+		},
+		"c4yinCang03": {
+			"typeId": "c4yinCang03",
+			"name": "？？？",
+			"collectTypeId": "c4yinCang"
+		},
+
+		"c5yinCang01": {
+			"typeId": "c5yinCang01",
+			"name": "？？？",
+			"collectTypeId": "c5yinCang"
+		},
+		"c5yinCang02": {
+			"typeId": "c5yinCang02",
+			"name": "？？？",
+			"collectTypeId": "c5yinCang"
+		},
+		"c5yinCang03": {
+			"typeId": "c5yinCang03",
+			"name": "？？？",
+			"collectTypeId": "c5yinCang"
+		},
+		"c5yinCang04": {
+			"typeId": "c5yinCang04",
+			"name": "？？？",
+			"collectTypeId": "c5yinCang"
+		},
+		"c5yinCang05": {
+			"typeId": "c5yinCang05",
+			"name": "？？？",
+			"collectTypeId": "c5yinCang"
+		}
+	}
+}

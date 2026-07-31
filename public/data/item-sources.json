@@ -1,0 +1,4768 @@
+{
+  "item_20004": [
+    {
+      "type": "achievement",
+      "id": "10201",
+      "name": "小有面子",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "10902",
+      "name": "心有灵犀的伙伴",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20107",
+      "name": "工匠的使命",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20111",
+      "name": "逆流山河之人",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20115",
+      "name": "继承信念之人",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20119",
+      "name": "制裁魔女之人",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20123",
+      "name": "否定使命之人",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20301",
+      "name": "酒香也怕地窖深",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20302",
+      "name": "圣歌不再回响",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20303",
+      "name": "无言的岩蟾蜍",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20304",
+      "name": "踏破逆流天河",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20305",
+      "name": "这里的湖底静悄悄",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20306",
+      "name": "不提供搓澡服务",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20307",
+      "name": "蓝伞伞，躺板板",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20308",
+      "name": "献出心脏",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20309",
+      "name": "你甚至不愿意叫我一声老大",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20310",
+      "name": "超绝最可爱天界格莉姆",
+      "des": "成就奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_2_11",
+      "name": "索利德的未来",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_8",
+      "name": "乌龙学徒",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_8",
+      "name": "来自深处的威胁1",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "sub_0_11",
+      "name": "挖掘结晶",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_10",
+      "name": "共鸣",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_2_2",
+      "name": "长期研究人才征募计划！",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_2_6",
+      "name": "蔓晶采石场",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_1_07",
+      "name": "旅途刚刚开始",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_0_03",
+      "name": "深入探索",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_2_12",
+      "name": "融合的真相",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_5_10",
+      "name": "熔火洞窟，哈玛塔坎遗迹",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_12",
+      "name": "出逃的妖精舞女",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_7_3",
+      "name": "契约者挑战赛",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_4_10",
+      "name": "鹿灵艾伦瑟",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_9",
+      "name": "来自深处的威胁2",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_3_14",
+      "name": "契约者挑战赛",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_7",
+      "name": "变强的方法",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_3_10",
+      "name": "原罪之涧",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_8_2",
+      "name": "契约者探索队",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_0_04",
+      "name": "前往驿站",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_0_04_q",
+      "name": "前往驿站",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_10",
+      "name": "地窖深处的秘密3",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "sub_1_gddj2",
+      "name": "来自深处的威胁2",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_3_5",
+      "name": "湖中空洞，辛瓦特遗迹",
+      "des": "任务奖励"
+    },
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    },
+    {
+      "type": "pvp",
+      "id": "tier",
+      "name": "段位奖励",
+      "des": "挑战赛"
+    },
+    {
+      "type": "pvp",
+      "id": "rank",
+      "name": "排名奖励",
+      "des": "挑战赛"
+    }
+  ],
+  "item_10071": [
+    {
+      "type": "achievement",
+      "id": "10301",
+      "name": "小试身手",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "10303",
+      "name": "赏金猎人",
+      "des": "成就奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_2",
+      "name": "精进契约之道",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50086": [
+    {
+      "type": "achievement",
+      "id": "10302",
+      "name": "契约者新星",
+      "des": "成就奖励"
+    }
+  ],
+  "item_50085": [
+    {
+      "type": "achievement",
+      "id": "10801",
+      "name": "想致富先撸树",
+      "des": "成就奖励"
+    }
+  ],
+  "item_27011": [
+    {
+      "type": "achievement",
+      "id": "10901",
+      "name": "最初的伙伴",
+      "des": "成就奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_4_6",
+      "name": "神秘的占卜魔力",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_22",
+      "name": "工匠装置的魅力其三",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_5_6",
+      "name": "霜烬平原的怪异调查",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_2_8",
+      "name": "禅武同如一，虎啸除心魔",
+      "des": "任务奖励"
+    },
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    }
+  ],
+  "item_27008": [
+    {
+      "type": "achievement",
+      "id": "10903",
+      "name": "心心相印的伙伴",
+      "des": "成就奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_5_10",
+      "name": "熔火中的调研",
+      "des": "任务奖励"
+    },
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    }
+  ],
+  "item_20023": [
+    {
+      "type": "achievement",
+      "id": "20109",
+      "name": "知识就是力量",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20113",
+      "name": "失之交臂",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20117",
+      "name": "菌毯清洁大师",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20121",
+      "name": "扫黑除恶",
+      "des": "成就奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_2_11",
+      "name": "索利德的未来",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_10",
+      "name": "共鸣",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_28",
+      "name": "铸甲匠的心病",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_3_1",
+      "name": "艾茵的感谢",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_2_12",
+      "name": "融合的真相",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_24",
+      "name": "大事业的第一步",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_3_10",
+      "name": "原罪之涧",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_4_14",
+      "name": "最盛大的宴席",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_3_3",
+      "name": "雷鸣下的试炼",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_26",
+      "name": "精进委托契约",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_5_11",
+      "name": "雪原的未来",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_25",
+      "name": "大事业的后续",
+      "des": "任务奖励"
+    },
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    },
+    {
+      "type": "pvp",
+      "id": "tier",
+      "name": "段位奖励",
+      "des": "挑战赛"
+    },
+    {
+      "type": "pvp",
+      "id": "rank",
+      "name": "排名奖励",
+      "des": "挑战赛"
+    }
+  ],
+  "item_20025": [
+    {
+      "type": "achievement",
+      "id": "20201",
+      "name": "求生者草原探索者",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20202",
+      "name": "秋日荒野探索者",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20203",
+      "name": "索利德山地探索者",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20204",
+      "name": "魔爪湖畔探索者",
+      "des": "成就奖励"
+    },
+    {
+      "type": "achievement",
+      "id": "20205",
+      "name": "黑森林探索者",
+      "des": "成就奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_5_12",
+      "name": "寒冬中的熔火之苗",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_24",
+      "name": "大事业的第一步",
+      "des": "任务奖励"
+    }
+  ],
+  "item_20017": [
+    {
+      "type": "achievement",
+      "id": "30101",
+      "name": "死里逃生",
+      "des": "成就奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_3_9",
+      "name": "迫近的真相",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_2_13",
+      "name": "解明！神匠之塔的秘密",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_2_1",
+      "name": "哈比之王",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_3_1",
+      "name": "艾茵的感谢",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_5_9",
+      "name": "真相之门",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_4_3",
+      "name": "森民聚落，金弦之厅",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_5_4",
+      "name": "奥格的温泉村",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_13",
+      "name": "格薇勒与秘密基地",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_5_1",
+      "name": "霜烬平原的召唤",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_4_1",
+      "name": "旅店的骚乱",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_4_4",
+      "name": "蕈人的庄园",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_4_9",
+      "name": "魔女的居所",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_3_3",
+      "name": "雷鸣下的试炼",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_4",
+      "name": "契约者探索队",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_3_4",
+      "name": "朝拜水神的圣路",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_10",
+      "name": "地窖深处的秘密3",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_3_1",
+      "name": "远道而来的求助者",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_12",
+      "name": "往日的阴影",
+      "des": "任务奖励"
+    }
+  ],
+  "item_30004": [
+    {
+      "type": "achievement",
+      "id": "30102",
+      "name": "孤狼",
+      "des": "成就奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_2_5_2",
+      "name": "决意的彼端",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_7_2",
+      "name": "斩草除根2",
+      "des": "任务奖励"
+    }
+  ],
+  "item_54002": [
+    {
+      "type": "achievement",
+      "id": "30103",
+      "name": "战场美食家",
+      "des": "成就奖励"
+    }
+  ],
+  "item_29102": [
+    {
+      "type": "task",
+      "id": "wt_c2_09",
+      "name": "紧急契约：蔓晶采石场",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c2_04",
+      "name": "我的研究员们去了哪里？",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c2_06",
+      "name": "为了重现矿工们的英姿",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c2_01",
+      "name": "盘踞在巴诺姆村旁的祸害",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c2_10",
+      "name": "紧急契约：阿娜希塔遗迹",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c2_02",
+      "name": "蛙肉却如此滑嫩……",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c2_08",
+      "name": "重金求得的药方",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c2_07",
+      "name": "“石头”的请求",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c2_03",
+      "name": "珍贵的装饰鸟羽！",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c2_05",
+      "name": "变强，变强，我要变强！",
+      "des": "任务奖励"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area1_8",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 巴诺姆村 - 菲莉娜的契约台",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area4_3",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 山神之殒 - 安娜的勘测地",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area1_2",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 巴诺姆村 - 工头小屋",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area1_6",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 巴诺姆村 - 山腰道路",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area1_3",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 巴诺姆村 - 矿山道",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area2_1",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 灾害研究所 - 灾害研究所（外部）",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area2_5",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 灾害研究所 - 外围山崖",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area3_1",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 破败古院 - 破败古院",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area3_2",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 破败古院 - 古院后院",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area2_3",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 灾害研究所 - 研究所外围",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area4_4",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 山神之殒 - 山神之殒外围",
+      "bigMapId": "c2_map"
+    }
+  ],
+  "item_10097": [
+    {
+      "type": "task",
+      "id": "wt_c2_09",
+      "name": "紧急契约：蔓晶采石场",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_2_7",
+      "name": "荒院遇禅宗",
+      "des": "任务奖励"
+    }
+  ],
+  "item_29101": [
+    {
+      "type": "task",
+      "id": "s_1_2",
+      "name": "精进契约之道",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yz_06",
+      "name": "深黑铁骨",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yd_02",
+      "name": "绿……绿……绿榛菇！",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yz_07",
+      "name": "野猪，吵闹又美味的野猪",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yz_07_close",
+      "name": "蘑菇，吵闹又美味的蘑菇",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yz_10",
+      "name": "散落的谷物与我的牛",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yd_04",
+      "name": "浮躁的年轻人",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yz_03",
+      "name": "铸甲匠的尊严",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yz_05",
+      "name": "为商路守军提供活血草",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yd_06",
+      "name": "草原黏怪和绿色草地",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yd_05",
+      "name": "馋涎欲滴调味粉",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yz_01",
+      "name": "驿站的安防工作",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yz_09",
+      "name": "紧急契约：驿站地窖",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yz_02_close",
+      "name": "怒火来自妖精",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yd_03",
+      "name": "地菇的独特香味",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yz_04",
+      "name": "秋日荒野的营养补品",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yz_02",
+      "name": "怒火来自地鼠",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yd_01",
+      "name": "万药之本药浆草",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yd_07",
+      "name": "紧急契约：角布林盘踞地",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yz_08",
+      "name": "护养肌肤的面霜",
+      "des": "任务奖励"
+    },
+    {
+      "type": "hidden",
+      "id": "c0_area1_6",
+      "name": "场景宝箱",
+      "des": "求生者草原 - 营地周边 - 隐居者的药田",
+      "bigMapId": "c0_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c1_area4_4",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 旧日修行所 - 碎石小径",
+      "bigMapId": "c1_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c1_area1_10",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 驿站住民区 - 驿站地窖",
+      "bigMapId": "c1_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c1_area2_6",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 风车平野 - 民居",
+      "bigMapId": "c1_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c1_area1_9",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 驿站住民区 - 枯草小径",
+      "bigMapId": "c1_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c1_area5_3",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 观星高地 - 观星高地外围",
+      "bigMapId": "c1_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c1_area1_7",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 驿站住民区 - 枯草小径",
+      "bigMapId": "c1_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c1_area2_1",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 风车平野 - 风车小镇",
+      "bigMapId": "c1_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c1_area3_6",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 黑铁锻炉 - 维丝的秘密基地",
+      "bigMapId": "c1_map"
+    }
+  ],
+  "item_27007": [
+    {
+      "type": "task",
+      "id": "s_5_1",
+      "name": "开始吧！魔宠对决",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_4_1",
+      "name": "携手共鸣，双生残响",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_2_10",
+      "name": "逆流天河，阿娜希塔遗迹",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_4_2",
+      "name": "笼罩宴席的心之影",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_4_9",
+      "name": "危险的客人",
+      "des": "任务奖励"
+    },
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    }
+  ],
+  "item_40011": [
+    {
+      "type": "task",
+      "id": "demo_1002",
+      "name": " 深渊与驿站",
+      "des": "任务奖励"
+    }
+  ],
+  "item_40006": [
+    {
+      "type": "task",
+      "id": "demo_1002",
+      "name": " 深渊与驿站",
+      "des": "任务奖励"
+    }
+  ],
+  "item_20002": [
+    {
+      "type": "task",
+      "id": "demo_1002",
+      "name": " 深渊与驿站",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "demo_1004",
+      "name": "妖精与药剂",
+      "des": "任务奖励"
+    }
+  ],
+  "item_40010": [
+    {
+      "type": "task",
+      "id": "demo_1002",
+      "name": " 深渊与驿站",
+      "des": "任务奖励"
+    }
+  ],
+  "item_19207": [
+    {
+      "type": "task",
+      "id": "wt_yz_06",
+      "name": "深黑铁骨",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_1",
+      "name": "契约者",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "sub_0_07",
+      "name": "装备强化法",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_1",
+      "name": "变废为宝",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_2_8",
+      "name": "禅武同如一，虎啸除心魔",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_2_1",
+      "name": "破损的营地",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_6",
+      "name": "来自侍者的经验谈",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_6",
+      "name": "黑铁煅炉",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_12",
+      "name": "往日的阴影",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_7_2",
+      "name": "斩草除根2",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yd_07",
+      "name": "紧急契约：角布林盘踞地",
+      "des": "任务奖励"
+    }
+  ],
+  "item_30014": [
+    {
+      "type": "task",
+      "id": "s_3_8",
+      "name": "不曾远离的伙伴",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_27",
+      "name": "更高级的药水",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c4_04",
+      "name": "笨拙的请求",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_13",
+      "name": "格薇勒与秘密基地",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_2_8",
+      "name": "皮塔与卡夫",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_2_9",
+      "name": "决意的尖角",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_9",
+      "name": "观星·观潮",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_2_5",
+      "name": "低垂的耳根",
+      "des": "任务奖励"
+    }
+  ],
+  "item_20016": [
+    {
+      "type": "task",
+      "id": "main_1_04",
+      "name": "蛇腹矿坑的异变",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_1",
+      "name": "契约者",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "sub_0_07",
+      "name": "装备强化法",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_0_05",
+      "name": "地窖之乱",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_1_02",
+      "name": "旧日修行所",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_0_02",
+      "name": "生存之道",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_8",
+      "name": "来自深处的威胁1",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yz_07_close",
+      "name": "蘑菇，吵闹又美味的蘑菇",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_0_08",
+      "name": "斩草除根",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_2_2",
+      "name": "长期研究人才征募计划！",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_1_01",
+      "name": "新的旅程",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_2_4",
+      "name": "巴诺姆之变",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_5",
+      "name": "明星",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_0_07",
+      "name": "追痕索迹",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_1_04_q",
+      "name": "工欲善其事……",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_0_08_q",
+      "name": "短暂歇息",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_0_06",
+      "name": "隐者与强盗",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_1_03",
+      "name": "荒野中的工房",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_7_3",
+      "name": "契约者挑战赛",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_1_10_q",
+      "name": "工匠的使命",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_9",
+      "name": "来自深处的威胁2",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_9",
+      "name": "观星·观潮",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_1_05",
+      "name": "历史与繁星之间",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_2_1",
+      "name": "破损的营地",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yz_01",
+      "name": "驿站的安防工作",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "sub_0_10",
+      "name": "突破瓶颈的方法",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_4",
+      "name": "契约者探索队",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_0_07_q",
+      "name": "独狼与偷猎者",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yz_02_close",
+      "name": "怒火来自妖精",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_0_06_q",
+      "name": "隐者与强盗",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_15",
+      "name": "明星的烦恼·其一",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "sub_1_gddj2",
+      "name": "来自深处的威胁2",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_5",
+      "name": "失败是成功之母",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_0_09",
+      "name": "角布林盘踞地",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yz_08",
+      "name": "护养肌肤的面霜",
+      "des": "任务奖励"
+    }
+  ],
+  "item_30048": [
+    {
+      "type": "task",
+      "id": "s_4_12",
+      "name": "慕名而来的食客",
+      "des": "任务奖励"
+    },
+    {
+      "type": "recipe",
+      "id": "item_30048",
+      "name": "松茸*1+菌类*2",
+      "des": "配方制作"
+    }
+  ],
+  "item_29104": [
+    {
+      "type": "task",
+      "id": "wt_c4_09",
+      "name": "紧急契约：垂死菌林",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c4_07",
+      "name": "烧尽怨魂的爆炎",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c4_05",
+      "name": "花儿各有别，何必问出处",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c4_10",
+      "name": "绝密契约：赫尔娜遗迹",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c4_04",
+      "name": "笨拙的请求",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c4_08",
+      "name": "为了友谊传递的鲜香",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c4_06",
+      "name": "宴席上的美味",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c4_03",
+      "name": "信任的第一步",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c4_01",
+      "name": "意外的麻烦",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c4_02",
+      "name": "那些蓝色的混账噗！",
+      "des": "任务奖励"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area2_4",
+      "name": "场景宝箱",
+      "des": "黑森林 - 布拉格乌尔庄园 - 庄园外围",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area4_3",
+      "name": "场景宝箱",
+      "des": "黑森林 - 阴魂禁林 - 寂静林野",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area5_2",
+      "name": "场景宝箱",
+      "des": "黑森林 - 巨木之口 - 巨木之口",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area1_6",
+      "name": "场景宝箱",
+      "des": "黑森林 - 金弦之厅 - 艾薇杜尔的故居",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area1_4",
+      "name": "场景宝箱",
+      "des": "黑森林 - 金弦之厅 - 住民区2",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area1_7",
+      "name": "场景宝箱",
+      "des": "黑森林 - 金弦之厅 - 金弦宴堂",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area2_1",
+      "name": "场景宝箱",
+      "des": "黑森林 - 布拉格乌尔庄园 - 布拉格乌尔庄园",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area5_3",
+      "name": "场景宝箱",
+      "des": "黑森林 - 巨木之口 - 巨木之影",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area3_2",
+      "name": "场景宝箱",
+      "des": "黑森林 - 西部猎场 - 北部猎场",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area4_1",
+      "name": "场景宝箱",
+      "des": "黑森林 - 阴魂禁林 - 艾伦瑟的故居",
+      "bigMapId": "c4_map"
+    }
+  ],
+  "item_15020": [
+    {
+      "type": "task",
+      "id": "wt_c4_09",
+      "name": "紧急契约：垂死菌林",
+      "des": "任务奖励"
+    }
+  ],
+  "item_421014": [
+    {
+      "type": "task",
+      "id": "m_4_5",
+      "name": "宴席之道",
+      "des": "任务奖励"
+    }
+  ],
+  "item_19208": [
+    {
+      "type": "task",
+      "id": "m_4_5",
+      "name": "宴席之道",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_2_1",
+      "name": "哈比之王",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_5_8",
+      "name": "逆袭火龙之峰",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_4_1",
+      "name": "旅店的骚乱",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_5_5",
+      "name": "雪原中的阴影",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_5_2",
+      "name": "向那皑皑雪原",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_4_5",
+      "name": "凶貌下的本心",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_4_2",
+      "name": "无妄之灾",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_3_1",
+      "name": "远道而来的求助者",
+      "des": "任务奖励"
+    }
+  ],
+  "item_422012": [
+    {
+      "type": "task",
+      "id": "m_3_9",
+      "name": "迫近的真相",
+      "des": "任务奖励"
+    }
+  ],
+  "item_27004": [
+    {
+      "type": "task",
+      "id": "s_1_19",
+      "name": "侍者队的新菜谱",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_2_3",
+      "name": "赤血剑姬，贝拉多娜",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_2_10",
+      "name": "逆流天河，阿娜希塔遗迹",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_5_11",
+      "name": "白雪下的经商之道",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c4_08",
+      "name": "为了友谊传递的鲜香",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_5_13",
+      "name": "漂流而来的小麦",
+      "des": "任务奖励"
+    },
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    }
+  ],
+  "item_50022": [
+    {
+      "type": "task",
+      "id": "s_3_5",
+      "name": "献给大市集的鲜花",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50070": [
+    {
+      "type": "task",
+      "id": "s_4_7",
+      "name": "独一无二的森林家具",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50078": [
+    {
+      "type": "task",
+      "id": "s_4_7",
+      "name": "独一无二的森林家具",
+      "des": "任务奖励"
+    }
+  ],
+  "item_30015": [
+    {
+      "type": "task",
+      "id": "m_1_1",
+      "name": "契约者",
+      "des": "任务奖励"
+    }
+  ],
+  "item_40001": [
+    {
+      "type": "task",
+      "id": "demo_1001",
+      "name": "序幕",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "demo_1005",
+      "name": "修行者与便捷路口",
+      "des": "任务奖励"
+    }
+  ],
+  "item_40002": [
+    {
+      "type": "task",
+      "id": "demo_1001",
+      "name": "序幕",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "demo_1006",
+      "name": "菲尔德蕾，驿站的老板",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "demo_1004",
+      "name": "妖精与药剂",
+      "des": "任务奖励"
+    }
+  ],
+  "item_40007": [
+    {
+      "type": "task",
+      "id": "demo_1001",
+      "name": "序幕",
+      "des": "任务奖励"
+    }
+  ],
+  "item_20001": [
+    {
+      "type": "task",
+      "id": "demo_1001",
+      "name": "序幕",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "demo_1006",
+      "name": "菲尔德蕾，驿站的老板",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "demo_1005",
+      "name": "修行者与便捷路口",
+      "des": "任务奖励"
+    }
+  ],
+  "item_444444": [
+    {
+      "type": "task",
+      "id": "demo_1001",
+      "name": "序幕",
+      "des": "任务奖励"
+    }
+  ],
+  "item_31003": [
+    {
+      "type": "task",
+      "id": "m_1_8",
+      "name": "乌龙学徒",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_7",
+      "name": "迦南",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_7_1",
+      "name": "斩草除根1",
+      "des": "任务奖励"
+    }
+  ],
+  "item_15009": [
+    {
+      "type": "task",
+      "id": "wt_yd_02",
+      "name": "绿……绿……绿榛菇！",
+      "des": "任务奖励"
+    }
+  ],
+  "item_27003": [
+    {
+      "type": "task",
+      "id": "wt_yz_07",
+      "name": "野猪，吵闹又美味的野猪",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_5_13",
+      "name": "漂流而来的小麦",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_3_10",
+      "name": "埃迪蒂！我的偶像！",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10100": [
+    {
+      "type": "task",
+      "id": "m_3_11",
+      "name": "那片蔚蓝图景",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_3_3",
+      "name": "仪式的准备",
+      "des": "任务奖励"
+    }
+  ],
+  "item_422016": [
+    {
+      "type": "task",
+      "id": "m_4_11",
+      "name": "灵魂之道",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10103": [
+    {
+      "type": "task",
+      "id": "m_4_11",
+      "name": "灵魂之道",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c3_04",
+      "name": "改良净水仪式",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c3_07",
+      "name": "提神醒脑魔力丸",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_3_6",
+      "name": "繁荣之地",
+      "des": "任务奖励"
+    }
+  ],
+  "item_15011": [
+    {
+      "type": "task",
+      "id": "s_1_27",
+      "name": "更高级的药水",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yd_06",
+      "name": "草原黏怪和绿色草地",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_3",
+      "name": "生根发芽之道",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yd_01",
+      "name": "万药之本药浆草",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_0_3",
+      "name": "隐者与药田",
+      "des": "任务奖励"
+    }
+  ],
+  "item_15012": [
+    {
+      "type": "task",
+      "id": "s_1_27",
+      "name": "更高级的药水",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_4",
+      "name": "种子",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yz_05",
+      "name": "为商路守军提供活血草",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_3",
+      "name": "生根发芽之道",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_0_3",
+      "name": "隐者与药田",
+      "des": "任务奖励"
+    }
+  ],
+  "item_15013": [
+    {
+      "type": "task",
+      "id": "s_1_27",
+      "name": "更高级的药水",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_3",
+      "name": "生根发芽之道",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_0_3",
+      "name": "隐者与药田",
+      "des": "任务奖励"
+    }
+  ],
+  "item_30013": [
+    {
+      "type": "task",
+      "id": "s_1_8",
+      "name": "来自深处的威胁1",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_9",
+      "name": "来自深处的威胁2",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_2",
+      "name": "深渊",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_10",
+      "name": "地窖深处的秘密3",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "sub_1_gddj2",
+      "name": "来自深处的威胁2",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50115": [
+    {
+      "type": "task",
+      "id": "s_2_1",
+      "name": "哈比之王",
+      "des": "任务奖励"
+    }
+  ],
+  "item_27006": [
+    {
+      "type": "task",
+      "id": "wt_c4_07",
+      "name": "烧尽怨魂的爆炎",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_18",
+      "name": "送给她的礼物",
+      "des": "任务奖励"
+    }
+  ],
+  "item_29103": [
+    {
+      "type": "task",
+      "id": "wt_c3_04",
+      "name": "改良净水仪式",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c3_08",
+      "name": "美味的湖风料理",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c3_05",
+      "name": "保卫村庄",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c3_03",
+      "name": "黑暗中的蛇影",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c3_02",
+      "name": "噗嗤噗嗤大水草",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c3_09",
+      "name": "紧急契约：辛瓦特遗迹",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c3_07",
+      "name": "提神醒脑魔力丸",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c3_10",
+      "name": "紧急契约：黑涧浴池",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c3_01",
+      "name": "讨厌的鱼布林",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c3_06",
+      "name": "新队员的防具",
+      "des": "任务奖励"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area1_4",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 尾指村 - 尾指村居民区",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area1_5",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 尾指村 - 尾指村居民区",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area4_2",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 贫民街 - 柏莉尔的家",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area4_4",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 贫民街 - 贫民街·民居",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area2_2",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 献水圣坛 - 水纹花海",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area3_3",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 大市集 - 大市集居民区2",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area5_2",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 蒸馏工厂废墟 - 蒸馏工厂内部",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area4_3",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 贫民街 - 贫民街·二街道",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area1_3",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 尾指村 - 长老小屋内",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area3_6",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 大市集 - 赛弗的藏身处",
+      "bigMapId": "c3_map"
+    }
+  ],
+  "item_30050": [
+    {
+      "type": "task",
+      "id": "wt_c4_05",
+      "name": "花儿各有别，何必问出处",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_4_8",
+      "name": "守护之道",
+      "des": "任务奖励"
+    },
+    {
+      "type": "recipe",
+      "id": "item_30050",
+      "name": "魔力松茸干*1+面粉*1+肉类*2",
+      "des": "配方制作"
+    }
+  ],
+  "item_421016": [
+    {
+      "type": "task",
+      "id": "m_4_7",
+      "name": "来自西部的麻烦",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10111": [
+    {
+      "type": "task",
+      "id": "m_4_7",
+      "name": "来自西部的麻烦",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_4_11",
+      "name": "被嫌弃的蕈人的半生",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_4_10",
+      "name": "炸掉那群坏家伙",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10062": [
+    {
+      "type": "task",
+      "id": "wt_c4_10",
+      "name": "绝密契约：赫尔娜遗迹",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c2_10",
+      "name": "紧急契约：阿娜希塔遗迹",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10074": [
+    {
+      "type": "task",
+      "id": "wt_yz_10",
+      "name": "散落的谷物与我的牛",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_7_1",
+      "name": "斩草除根1",
+      "des": "任务奖励"
+    }
+  ],
+  "item_29105": [
+    {
+      "type": "task",
+      "id": "wt_c5_02",
+      "name": "阻止那群坏雪鼠",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c5_06",
+      "name": "漂亮的冰晶",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c5_04",
+      "name": "莲花与药锅",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c5_01",
+      "name": "喜爱恶作剧的坏家伙",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c5_07",
+      "name": "护卫队的荣耀护盾",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c5_03",
+      "name": "熔火元素的威胁",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c5_08",
+      "name": "远行前的准备",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c5_10",
+      "name": "绝密契约：哈玛塔坎遗迹",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c5_09",
+      "name": "紧急契约：伊菲卡温泉谷",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c5_05",
+      "name": "熔火元素的奥秘",
+      "des": "任务奖励"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area1_7",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 大书院 - 大书院·西口",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area1_3",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 大书院 - 本院·大厅",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area2_2",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 沉星冰湖 - 冰湖东部",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area3_2",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 奥格的温泉村 - 你的包间",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area5_2",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 霜燃之扉 - 达卡拉狭路",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area1_2",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 大书院 - 大书院·旧街",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area1_5",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 大书院 - 本院·审议室",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area1_6",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 大书院 - 本院·院长室",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area2_1",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 沉星冰湖 - 沉星冰湖",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area3_3",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 奥格的温泉村 - 露天温泉",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area4_1",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 火龙山径 - 扎营点",
+      "bigMapId": "c5_map"
+    }
+  ],
+  "item_10118": [
+    {
+      "type": "task",
+      "id": "wt_c5_02",
+      "name": "阻止那群坏雪鼠",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_5_6",
+      "name": "大书院的交锋",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_5_7",
+      "name": "琦莉可的忧郁",
+      "des": "任务奖励"
+    }
+  ],
+  "item_15019": [
+    {
+      "type": "task",
+      "id": "m_5_8",
+      "name": "逆袭火龙之峰",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10046": [
+    {
+      "type": "task",
+      "id": "wt_c2_01",
+      "name": "盘踞在巴诺姆村旁的祸害",
+      "des": "任务奖励"
+    }
+  ],
+  "item_416005": [
+    {
+      "type": "task",
+      "id": "m_5_3",
+      "name": "沉星冰湖",
+      "des": "任务奖励"
+    }
+  ],
+  "item_15002": [
+    {
+      "type": "task",
+      "id": "m_5_3",
+      "name": "沉星冰湖",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_0_5",
+      "name": "营地周边的宝地",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_2_4",
+      "name": "金光闪闪的药草",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50116": [
+    {
+      "type": "task",
+      "id": "s_2_2",
+      "name": "长期研究人才征募计划！",
+      "des": "任务奖励"
+    }
+  ],
+  "item_20003": [
+    {
+      "type": "task",
+      "id": "s_2_3",
+      "name": "赤血剑姬，贝拉多娜",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_3_9",
+      "name": "旧日神与塞瓦",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_14",
+      "name": "满载的货车",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_2_6",
+      "name": "流浪的守护者",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_8_2",
+      "name": "契约者探索队",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_4",
+      "name": "契约者探索队",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_3_11",
+      "name": "深渊中的虚像",
+      "des": "任务奖励"
+    },
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    }
+  ],
+  "item_19012": [
+    {
+      "type": "task",
+      "id": "s_2_3",
+      "name": "赤血剑姬，贝拉多娜",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_7",
+      "name": "迦南",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "sub_0_09",
+      "name": "难以突破的瓶颈",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50117": [
+    {
+      "type": "task",
+      "id": "s_2_3",
+      "name": "赤血剑姬，贝拉多娜",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50118": [
+    {
+      "type": "task",
+      "id": "s_2_3",
+      "name": "赤血剑姬，贝拉多娜",
+      "des": "任务奖励"
+    }
+  ],
+  "item_31013": [
+    {
+      "type": "task",
+      "id": "wt_c5_06",
+      "name": "漂亮的冰晶",
+      "des": "任务奖励"
+    }
+  ],
+  "item_15021": [
+    {
+      "type": "task",
+      "id": "wt_c5_04",
+      "name": "莲花与药锅",
+      "des": "任务奖励"
+    }
+  ],
+  "item_5900103": [
+    {
+      "type": "task",
+      "id": "m_2_6",
+      "name": "蔓晶采石场",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_3_12",
+      "name": "魔爪湖的未来",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_2_12",
+      "name": "融合的真相",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_11",
+      "name": "家园",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_3_5",
+      "name": "湖中空洞，辛瓦特遗迹",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_7_2",
+      "name": "斩草除根2",
+      "des": "任务奖励"
+    }
+  ],
+  "item_27010": [
+    {
+      "type": "task",
+      "id": "m_2_10",
+      "name": "逆流天河，阿娜希塔遗迹",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_2_8",
+      "name": "皮塔与卡夫",
+      "des": "任务奖励"
+    },
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    }
+  ],
+  "item_30012": [
+    {
+      "type": "task",
+      "id": "m_1_7",
+      "name": "迦南",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_14",
+      "name": "满载的货车",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "sub_0_02",
+      "name": "是药三分毒",
+      "des": "任务奖励"
+    }
+  ],
+  "item_421020": [
+    {
+      "type": "task",
+      "id": "m_5_7",
+      "name": "反击的号角",
+      "des": "任务奖励"
+    }
+  ],
+  "item_19219": [
+    {
+      "type": "task",
+      "id": "m_5_7",
+      "name": "反击的号角",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_4_12",
+      "name": "集结号令",
+      "des": "任务奖励"
+    }
+  ],
+  "item_19209": [
+    {
+      "type": "task",
+      "id": "s_1_28",
+      "name": "铸甲匠的心病",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_3_11",
+      "name": "深渊中的虚像",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c5_09",
+      "name": "紧急契约：伊菲卡温泉谷",
+      "des": "任务奖励"
+    },
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    }
+  ],
+  "item_422013": [
+    {
+      "type": "task",
+      "id": "m_4_8",
+      "name": "守护之道",
+      "des": "任务奖励"
+    }
+  ],
+  "item_30001": [
+    {
+      "type": "task",
+      "id": "demo_1101",
+      "name": "薪柴问题",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_0_1",
+      "name": "入夜之前",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_0_00",
+      "name": "奇妙的邂逅",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_0_01",
+      "name": "整修营地",
+      "des": "任务奖励"
+    }
+  ],
+  "item_30003": [
+    {
+      "type": "task",
+      "id": "demo_1101",
+      "name": "薪柴问题",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_0_00",
+      "name": "奇妙的邂逅",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_0_01",
+      "name": "整修营地",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10113": [
+    {
+      "type": "task",
+      "id": "wt_c5_01",
+      "name": "喜爱恶作剧的坏家伙",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_5_5",
+      "name": "雪雾迷踪，伊菲卡温泉谷",
+      "des": "任务奖励"
+    }
+  ],
+  "item_40018": [
+    {
+      "type": "task",
+      "id": "demo_1003",
+      "name": "契约主",
+      "des": "任务奖励"
+    }
+  ],
+  "item_40017": [
+    {
+      "type": "task",
+      "id": "demo_1003",
+      "name": "契约主",
+      "des": "任务奖励"
+    }
+  ],
+  "item_40016": [
+    {
+      "type": "task",
+      "id": "demo_1003",
+      "name": "契约主",
+      "des": "任务奖励"
+    }
+  ],
+  "item_421018": [
+    {
+      "type": "task",
+      "id": "m_5_5",
+      "name": "雪雾迷踪，伊菲卡温泉谷",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10086": [
+    {
+      "type": "task",
+      "id": "wt_yz_03",
+      "name": "铸甲匠的尊严",
+      "des": "任务奖励"
+    }
+  ],
+  "item_30052": [
+    {
+      "type": "task",
+      "id": "wt_c5_07",
+      "name": "护卫队的荣耀护盾",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_5_11",
+      "name": "白雪下的经商之道",
+      "des": "任务奖励"
+    },
+    {
+      "type": "recipe",
+      "id": "item_30052",
+      "name": "2面粉+1冰莲+1肉",
+      "des": "配方制作"
+    }
+  ],
+  "item_10001": [
+    {
+      "type": "task",
+      "id": "s_1_23",
+      "name": "营地的小屋",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_2_6",
+      "name": "流浪的守护者",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c4_01",
+      "name": "意外的麻烦",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10002": [
+    {
+      "type": "task",
+      "id": "s_1_23",
+      "name": "营地的小屋",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_2_6",
+      "name": "流浪的守护者",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10003": [
+    {
+      "type": "task",
+      "id": "s_1_23",
+      "name": "营地的小屋",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c2_07",
+      "name": "“石头”的请求",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yz_02",
+      "name": "怒火来自地鼠",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10102": [
+    {
+      "type": "task",
+      "id": "s_3_6",
+      "name": "有侍者自远方来",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c3_05",
+      "name": "保卫村庄",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c3_02",
+      "name": "噗嗤噗嗤大水草",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c3_01",
+      "name": "讨厌的鱼布林",
+      "des": "任务奖励"
+    }
+  ],
+  "item_27009": [
+    {
+      "type": "task",
+      "id": "s_3_6",
+      "name": "有侍者自远方来",
+      "des": "任务奖励"
+    }
+  ],
+  "item_423009": [
+    {
+      "type": "task",
+      "id": "m_3_2",
+      "name": "水占师的村落",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10022": [
+    {
+      "type": "task",
+      "id": "m_3_2",
+      "name": "水占师的村落",
+      "des": "任务奖励"
+    }
+  ],
+  "item_15010": [
+    {
+      "type": "task",
+      "id": "m_5_9",
+      "name": "真相之门",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_2_7",
+      "name": "荒院遇禅宗",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_2_4",
+      "name": "金光闪闪的药草",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c2_05",
+      "name": "变强，变强，我要变强！",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50020": [
+    {
+      "type": "task",
+      "id": "s_2_5",
+      "name": "黑夜中的巴诺姆",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50019": [
+    {
+      "type": "task",
+      "id": "s_2_5",
+      "name": "黑夜中的巴诺姆",
+      "des": "任务奖励"
+    }
+  ],
+  "item_421006": [
+    {
+      "type": "task",
+      "id": "m_2_4",
+      "name": "巴诺姆之变",
+      "des": "任务奖励"
+    }
+  ],
+  "item_31002": [
+    {
+      "type": "task",
+      "id": "m_1_5",
+      "name": "明星",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_7_2",
+      "name": "斩草除根2",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50077": [
+    {
+      "type": "task",
+      "id": "s_4_8",
+      "name": "布宴者的礼物",
+      "des": "任务奖励"
+    }
+  ],
+  "item_416004": [
+    {
+      "type": "task",
+      "id": "m_4_3",
+      "name": "森民聚落，金弦之厅",
+      "des": "任务奖励"
+    }
+  ],
+  "item_30025": [
+    {
+      "type": "task",
+      "id": "m_0_1",
+      "name": "入夜之前",
+      "des": "任务奖励"
+    },
+    {
+      "type": "recipe",
+      "id": "item_30025",
+      "name": "肉+蘑菇",
+      "des": "配方制作"
+    }
+  ],
+  "item_421015": [
+    {
+      "type": "task",
+      "id": "m_4_6",
+      "name": "垂死菌林，布斯波乌尔的巢穴",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10042": [
+    {
+      "type": "task",
+      "id": "m_4_6",
+      "name": "垂死菌林，布斯波乌尔的巢穴",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c2_08",
+      "name": "重金求得的药方",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10006": [
+    {
+      "type": "task",
+      "id": "wt_c2_02",
+      "name": "蛙肉却如此滑嫩……",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_0_4",
+      "name": "荒野客与猎人",
+      "des": "任务奖励"
+    }
+  ],
+  "item_421017": [
+    {
+      "type": "task",
+      "id": "m_5_4",
+      "name": "奥格的温泉村",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10115": [
+    {
+      "type": "task",
+      "id": "s_5_9",
+      "name": "火龙山径的迁徙",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c5_03",
+      "name": "熔火元素的威胁",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50112": [
+    {
+      "type": "task",
+      "id": "s_1_13",
+      "name": "格薇勒与秘密基地",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10101": [
+    {
+      "type": "task",
+      "id": "m_3_12",
+      "name": "魔爪湖的未来",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_3_8",
+      "name": "贫民街的阴霾",
+      "des": "任务奖励"
+    }
+  ],
+  "item_40009": [
+    {
+      "type": "task",
+      "id": "demo_1006",
+      "name": "菲尔德蕾，驿站的老板",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "demo_1004",
+      "name": "妖精与药剂",
+      "des": "任务奖励"
+    }
+  ],
+  "item_51001": [
+    {
+      "type": "task",
+      "id": "main_1_03",
+      "name": "荒野中的工房",
+      "des": "任务奖励"
+    }
+  ],
+  "item_40014": [
+    {
+      "type": "task",
+      "id": "demo_1004",
+      "name": "妖精与药剂",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50021": [
+    {
+      "type": "task",
+      "id": "s_2_11",
+      "name": "童年的摇篮",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50111": [
+    {
+      "type": "task",
+      "id": "s_1_12",
+      "name": "出逃的妖精舞女",
+      "des": "任务奖励"
+    }
+  ],
+  "item_421019": [
+    {
+      "type": "task",
+      "id": "m_5_6",
+      "name": "大书院的交锋",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10079": [
+    {
+      "type": "task",
+      "id": "m_1_4",
+      "name": "种子",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10052": [
+    {
+      "type": "task",
+      "id": "m_1_4",
+      "name": "种子",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_0_1",
+      "name": "更好的配方",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10080": [
+    {
+      "type": "task",
+      "id": "m_1_4",
+      "name": "种子",
+      "des": "任务奖励"
+    }
+  ],
+  "item_55002": [
+    {
+      "type": "task",
+      "id": "s_0_1",
+      "name": "更好的配方",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "sub_0_02",
+      "name": "是药三分毒",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10053": [
+    {
+      "type": "task",
+      "id": "s_0_1",
+      "name": "更好的配方",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_4_1",
+      "name": "比绍的生意",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10058": [
+    {
+      "type": "task",
+      "id": "s_0_1",
+      "name": "更好的配方",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_4_1",
+      "name": "比绍的生意",
+      "des": "任务奖励"
+    }
+  ],
+  "item_31007": [
+    {
+      "type": "task",
+      "id": "m_2_9",
+      "name": "决意的尖角",
+      "des": "任务奖励"
+    }
+  ],
+  "item_30049": [
+    {
+      "type": "task",
+      "id": "wt_c4_06",
+      "name": "宴席上的美味",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_4_13",
+      "name": "禁林中的喧闹",
+      "des": "任务奖励"
+    },
+    {
+      "type": "recipe",
+      "id": "item_30049",
+      "name": "魔力松茸干*1+肉*1+菜类*1",
+      "des": "配方制作"
+    }
+  ],
+  "item_412006": [
+    {
+      "type": "task",
+      "id": "m_5_1",
+      "name": "霜烬平原的召唤",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10104": [
+    {
+      "type": "task",
+      "id": "wt_c3_03",
+      "name": "黑暗中的蛇影",
+      "des": "任务奖励"
+    }
+  ],
+  "item_422015": [
+    {
+      "type": "task",
+      "id": "m_4_10",
+      "name": "鹿灵艾伦瑟",
+      "des": "任务奖励"
+    }
+  ],
+  "item_422011": [
+    {
+      "type": "task",
+      "id": "m_3_8",
+      "name": "贫民街的阴霾",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50018": [
+    {
+      "type": "task",
+      "id": "s_2_9",
+      "name": "吟游诗人的鲜花",
+      "des": "任务奖励"
+    }
+  ],
+  "item_30016": [
+    {
+      "type": "task",
+      "id": "s_1_9",
+      "name": "来自深处的威胁2",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_10",
+      "name": "地窖深处的秘密3",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "sub_1_gddj2",
+      "name": "来自深处的威胁2",
+      "des": "任务奖励"
+    }
+  ],
+  "item_30017": [
+    {
+      "type": "task",
+      "id": "m_1_9",
+      "name": "观星·观潮",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_5_5",
+      "name": "雪原中的阴影",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_yz_04",
+      "name": "秋日荒野的营养补品",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "m_1_6",
+      "name": "黑铁煅炉",
+      "des": "任务奖励"
+    }
+  ],
+  "item_31004": [
+    {
+      "type": "task",
+      "id": "m_1_9",
+      "name": "观星·观潮",
+      "des": "任务奖励"
+    }
+  ],
+  "item_421007": [
+    {
+      "type": "task",
+      "id": "m_2_5",
+      "name": "低垂的耳根",
+      "des": "任务奖励"
+    }
+  ],
+  "item_20018": [
+    {
+      "type": "task",
+      "id": "m_3_14",
+      "name": "契约者挑战赛",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "wt_c5_10",
+      "name": "绝密契约：哈玛塔坎遗迹",
+      "des": "任务奖励"
+    },
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    }
+  ],
+  "item_54005": [
+    {
+      "type": "task",
+      "id": "s_2_10",
+      "name": "香甜美食在哪里",
+      "des": "任务奖励"
+    }
+  ],
+  "item_20004_Y": [
+    {
+      "type": "task",
+      "id": "m_0_2",
+      "name": "暴风般的复仇",
+      "des": "任务奖励"
+    }
+  ],
+  "item_422010": [
+    {
+      "type": "task",
+      "id": "m_3_7",
+      "name": "调查行动",
+      "des": "任务奖励"
+    }
+  ],
+  "item_31009": [
+    {
+      "type": "task",
+      "id": "m_3_7",
+      "name": "调查行动",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_3_7",
+      "name": "贫民街的蛇影",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10016": [
+    {
+      "type": "task",
+      "id": "wt_yd_05",
+      "name": "馋涎欲滴调味粉",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "sub_0_01",
+      "name": "稀缺的食材",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_0_4",
+      "name": "荒野客与猎人",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50083": [
+    {
+      "type": "task",
+      "id": "s_5_4",
+      "name": "冰原猎人的烦恼",
+      "des": "任务奖励"
+    }
+  ],
+  "item_27005": [
+    {
+      "type": "task",
+      "id": "s_5_13",
+      "name": "漂流而来的小麦",
+      "des": "任务奖励"
+    },
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    }
+  ],
+  "item_54003": [
+    {
+      "type": "task",
+      "id": "m_2_8",
+      "name": "禅武同如一，虎啸除心魔",
+      "des": "任务奖励"
+    }
+  ],
+  "item_54004": [
+    {
+      "type": "task",
+      "id": "s_2_7",
+      "name": "修行者的佐餐小菜",
+      "des": "任务奖励"
+    }
+  ],
+  "item_30051": [
+    {
+      "type": "task",
+      "id": "wt_c5_08",
+      "name": "远行前的准备",
+      "des": "任务奖励"
+    },
+    {
+      "type": "recipe",
+      "id": "item_30051",
+      "name": "1风干肉+1盐+1冰莲",
+      "des": "配方制作"
+    }
+  ],
+  "item_30034": [
+    {
+      "type": "task",
+      "id": "sub_0_01",
+      "name": "稀缺的食材",
+      "des": "任务奖励"
+    },
+    {
+      "type": "recipe",
+      "id": "item_30034",
+      "name": "猪骨+肉类+蘑菇+菜",
+      "des": "配方制作"
+    }
+  ],
+  "item_54001": [
+    {
+      "type": "task",
+      "id": "sub_0_01",
+      "name": "稀缺的食材",
+      "des": "任务奖励"
+    }
+  ],
+  "item_19213": [
+    {
+      "type": "task",
+      "id": "m_4_12",
+      "name": "集结号令",
+      "des": "任务奖励"
+    }
+  ],
+  "item_412005": [
+    {
+      "type": "task",
+      "id": "m_4_1",
+      "name": "旅店的骚乱",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10109": [
+    {
+      "type": "task",
+      "id": "wt_c4_03",
+      "name": "信任的第一步",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10044": [
+    {
+      "type": "task",
+      "id": "m_1_7_1",
+      "name": "斩草除根1",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "s_1_11",
+      "name": "安瑟恩之谜",
+      "des": "任务奖励"
+    }
+  ],
+  "item_423004": [
+    {
+      "type": "task",
+      "id": "m_1_7_1",
+      "name": "斩草除根1",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10096": [
+    {
+      "type": "task",
+      "id": "m_1_7_1",
+      "name": "斩草除根1",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10004": [
+    {
+      "type": "task",
+      "id": "m_1_7_1",
+      "name": "斩草除根1",
+      "des": "任务奖励"
+    }
+  ],
+  "item_40005": [
+    {
+      "type": "task",
+      "id": "demo_1005",
+      "name": "修行者与便捷路口",
+      "des": "任务奖励"
+    }
+  ],
+  "item_421013": [
+    {
+      "type": "task",
+      "id": "m_4_4",
+      "name": "蕈人的庄园",
+      "des": "任务奖励"
+    }
+  ],
+  "item_422014": [
+    {
+      "type": "task",
+      "id": "m_4_9",
+      "name": "魔女的居所",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10043": [
+    {
+      "type": "task",
+      "id": "wt_yz_09",
+      "name": "紧急契约：驿站地窖",
+      "des": "任务奖励"
+    }
+  ],
+  "item_55001": [
+    {
+      "type": "task",
+      "id": "sub_0_02",
+      "name": "是药三分毒",
+      "des": "任务奖励"
+    }
+  ],
+  "item_31006": [
+    {
+      "type": "task",
+      "id": "m_2_2",
+      "name": "狂野的白兔",
+      "des": "任务奖励"
+    }
+  ],
+  "item_421005": [
+    {
+      "type": "task",
+      "id": "m_2_2",
+      "name": "狂野的白兔",
+      "des": "任务奖励"
+    }
+  ],
+  "item_31001": [
+    {
+      "type": "task",
+      "id": "m_1_2",
+      "name": "深渊",
+      "des": "任务奖励"
+    }
+  ],
+  "item_423010": [
+    {
+      "type": "task",
+      "id": "m_3_3",
+      "name": "仪式的准备",
+      "des": "任务奖励"
+    }
+  ],
+  "item_30020": [
+    {
+      "type": "task",
+      "id": "main_0_04",
+      "name": "前往驿站",
+      "des": "任务奖励"
+    },
+    {
+      "type": "task",
+      "id": "main_0_04_q",
+      "name": "前往驿站",
+      "des": "任务奖励"
+    }
+  ],
+  "item_30022": [
+    {
+      "type": "task",
+      "id": "s_0_4",
+      "name": "荒野客与猎人",
+      "des": "任务奖励"
+    },
+    {
+      "type": "recipe",
+      "id": "item_30022",
+      "name": "肉+肉",
+      "des": "配方制作"
+    }
+  ],
+  "item_422009": [
+    {
+      "type": "task",
+      "id": "m_3_6",
+      "name": "繁荣之地",
+      "des": "任务奖励"
+    }
+  ],
+  "item_423011": [
+    {
+      "type": "task",
+      "id": "m_3_4",
+      "name": "朝拜水神的圣路",
+      "des": "任务奖励"
+    }
+  ],
+  "item_415006": [
+    {
+      "type": "task",
+      "id": "m_5_2",
+      "name": "向那皑皑雪原",
+      "des": "任务奖励"
+    }
+  ],
+  "item_421008": [
+    {
+      "type": "task",
+      "id": "m_2_5_2",
+      "name": "决意的彼端",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50107": [
+    {
+      "type": "task",
+      "id": "s_1_3",
+      "name": "生根发芽之道",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50108": [
+    {
+      "type": "task",
+      "id": "s_1_3",
+      "name": "生根发芽之道",
+      "des": "任务奖励"
+    }
+  ],
+  "item_15016": [
+    {
+      "type": "task",
+      "id": "wt_yd_03",
+      "name": "地菇的独特香味",
+      "des": "任务奖励"
+    }
+  ],
+  "item_31012": [
+    {
+      "type": "task",
+      "id": "wt_c5_05",
+      "name": "熔火元素的奥秘",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10107": [
+    {
+      "type": "task",
+      "id": "wt_c4_02",
+      "name": "那些蓝色的混账噗！",
+      "des": "任务奖励"
+    }
+  ],
+  "item_415005": [
+    {
+      "type": "task",
+      "id": "m_4_2",
+      "name": "无妄之灾",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10048": [
+    {
+      "type": "task",
+      "id": "wt_c2_03",
+      "name": "珍贵的装饰鸟羽！",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50113": [
+    {
+      "type": "task",
+      "id": "s_1_15",
+      "name": "明星的烦恼·其一",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50114": [
+    {
+      "type": "task",
+      "id": "s_1_15",
+      "name": "明星的烦恼·其一",
+      "des": "任务奖励"
+    }
+  ],
+  "item_412004": [
+    {
+      "type": "task",
+      "id": "m_3_1",
+      "name": "远道而来的求助者",
+      "des": "任务奖励"
+    }
+  ],
+  "item_411002": [
+    {
+      "type": "task",
+      "id": "m_1_12",
+      "name": "往日的阴影",
+      "des": "任务奖励"
+    }
+  ],
+  "item_416001": [
+    {
+      "type": "task",
+      "id": "m_1_12",
+      "name": "往日的阴影",
+      "des": "任务奖励"
+    }
+  ],
+  "item_19218": [
+    {
+      "type": "task",
+      "id": "m_3_5",
+      "name": "湖中空洞，辛瓦特遗迹",
+      "des": "任务奖励"
+    }
+  ],
+  "item_10045": [
+    {
+      "type": "task",
+      "id": "s_1_11",
+      "name": "安瑟恩之谜",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50109": [
+    {
+      "type": "task",
+      "id": "s_1_11",
+      "name": "安瑟恩之谜",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50110": [
+    {
+      "type": "task",
+      "id": "s_1_11",
+      "name": "安瑟恩之谜",
+      "des": "任务奖励"
+    }
+  ],
+  "item_30045": [
+    {
+      "type": "task",
+      "id": "s_3_10",
+      "name": "埃迪蒂！我的偶像！",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50005": [
+    {
+      "type": "task",
+      "id": "s_0_2",
+      "name": "工作从工作台开始",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50006": [
+    {
+      "type": "task",
+      "id": "s_0_2",
+      "name": "工作从工作台开始",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50007": [
+    {
+      "type": "task",
+      "id": "s_0_2",
+      "name": "工作从工作台开始",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50008": [
+    {
+      "type": "task",
+      "id": "s_0_2",
+      "name": "工作从工作台开始",
+      "des": "任务奖励"
+    }
+  ],
+  "item_50023": [
+    {
+      "type": "task",
+      "id": "s_3_12",
+      "name": "早起的鱼儿变咸鱼",
+      "des": "任务奖励"
+    }
+  ],
+  "item_30023": [
+    {
+      "type": "recipe",
+      "id": "item_30023",
+      "name": "肉+浆果",
+      "des": "配方制作"
+    }
+  ],
+  "item_30024": [
+    {
+      "type": "recipe",
+      "id": "item_30024",
+      "name": "肉+野菜",
+      "des": "配方制作"
+    }
+  ],
+  "item_30026": [
+    {
+      "type": "recipe",
+      "id": "item_30026",
+      "name": "浆果+浆果",
+      "des": "配方制作"
+    }
+  ],
+  "item_30027": [
+    {
+      "type": "recipe",
+      "id": "item_30027",
+      "name": "浆果+野菜",
+      "des": "配方制作"
+    }
+  ],
+  "item_30028": [
+    {
+      "type": "recipe",
+      "id": "item_30028",
+      "name": "浆果+蘑菇",
+      "des": "配方制作"
+    }
+  ],
+  "item_30029": [
+    {
+      "type": "recipe",
+      "id": "item_30029",
+      "name": "野菜+野菜",
+      "des": "配方制作"
+    }
+  ],
+  "item_30030": [
+    {
+      "type": "recipe",
+      "id": "item_30030",
+      "name": "野菜+蘑菇",
+      "des": "配方制作"
+    }
+  ],
+  "item_30031": [
+    {
+      "type": "recipe",
+      "id": "item_30031",
+      "name": "蘑菇+蘑菇",
+      "des": "配方制作"
+    }
+  ],
+  "item_30032": [
+    {
+      "type": "recipe",
+      "id": "item_30032",
+      "name": "猪腿骨+肉",
+      "des": "配方制作"
+    }
+  ],
+  "item_30033": [
+    {
+      "type": "recipe",
+      "id": "item_30033",
+      "name": "绿蘑菇+蘑菇",
+      "des": "配方制作"
+    }
+  ],
+  "item_30035": [
+    {
+      "type": "recipe",
+      "id": "item_30035",
+      "name": "肉+蘑菇+菜+浆果",
+      "des": "配方制作"
+    }
+  ],
+  "item_30036": [
+    {
+      "type": "recipe",
+      "id": "item_30036",
+      "name": "1面粉+1肉类+1蔬菜类",
+      "des": "配方制作"
+    }
+  ],
+  "item_30037": [
+    {
+      "type": "recipe",
+      "id": "item_30037",
+      "name": "1风干肉+1菌菇类",
+      "des": "配方制作"
+    }
+  ],
+  "item_30038": [
+    {
+      "type": "recipe",
+      "id": "item_30038",
+      "name": "1面粉+1果酱",
+      "des": "配方制作"
+    }
+  ],
+  "item_30039": [
+    {
+      "type": "recipe",
+      "id": "item_30039",
+      "name": "1腌菜+1菌菇类",
+      "des": "配方制作"
+    }
+  ],
+  "item_30040": [
+    {
+      "type": "recipe",
+      "id": "item_30040",
+      "name": "1风干+1肉+1菌菇类",
+      "des": "配方制作"
+    }
+  ],
+  "item_30041": [
+    {
+      "type": "recipe",
+      "id": "item_30041",
+      "name": "1风干+1肉+1菌菇类",
+      "des": "配方制作"
+    }
+  ],
+  "item_30042": [
+    {
+      "type": "recipe",
+      "id": "item_30042",
+      "name": "1风干+1浆果+1面粉",
+      "des": "配方制作"
+    }
+  ],
+  "item_30043": [
+    {
+      "type": "recipe",
+      "id": "item_30043",
+      "name": "水露果+果酱+1肉",
+      "des": "配方制作"
+    }
+  ],
+  "item_30044": [
+    {
+      "type": "recipe",
+      "id": "item_30044",
+      "name": "魔爪贝+面粉+1菜",
+      "des": "配方制作"
+    }
+  ],
+  "item_30046": [
+    {
+      "type": "recipe",
+      "id": "item_30046",
+      "name": "魔爪贝+1菇",
+      "des": "配方制作"
+    }
+  ],
+  "item_30047": [
+    {
+      "type": "recipe",
+      "id": "item_30047",
+      "name": "水露果+1果",
+      "des": "配方制作"
+    }
+  ],
+  "item_00002": [
+    {
+      "type": "pvp",
+      "id": "tier",
+      "name": "段位奖励",
+      "des": "挑战赛"
+    },
+    {
+      "type": "pvp",
+      "id": "rank",
+      "name": "排名奖励",
+      "des": "挑战赛"
+    }
+  ],
+  "item_27012": [
+    {
+      "type": "pvp",
+      "id": "battle",
+      "name": "战斗胜负",
+      "des": "战斗结算"
+    }
+  ],
+  "item_20012": [
+    {
+      "type": "hidden",
+      "id": "c4_area2_4",
+      "name": "场景宝箱",
+      "des": "黑森林 - 布拉格乌尔庄园 - 庄园外围",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area4_3",
+      "name": "场景宝箱",
+      "des": "黑森林 - 阴魂禁林 - 寂静林野",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area5_2",
+      "name": "场景宝箱",
+      "des": "黑森林 - 巨木之口 - 巨木之口",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c0_area1_6",
+      "name": "场景宝箱",
+      "des": "求生者草原 - 营地周边 - 隐居者的药田",
+      "bigMapId": "c0_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c1_area1_10",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 驿站住民区 - 驿站地窖",
+      "bigMapId": "c1_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c1_area2_6",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 风车平野 - 民居",
+      "bigMapId": "c1_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c1_area1_9",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 驿站住民区 - 枯草小径",
+      "bigMapId": "c1_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c1_area5_3",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 观星高地 - 观星高地外围",
+      "bigMapId": "c1_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area3_2",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 破败古院 - 古院后院",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area2_3",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 灾害研究所 - 研究所外围",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area4_4",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 山神之殒 - 山神之殒外围",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area4_3",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 贫民街 - 贫民街·二街道",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area1_3",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 尾指村 - 长老小屋内",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area3_6",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 大市集 - 赛弗的藏身处",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c1_area3_6",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 黑铁锻炉 - 维丝的秘密基地",
+      "bigMapId": "c1_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area1_7",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 大书院 - 大书院·西口",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area1_3",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 大书院 - 本院·大厅",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area2_2",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 沉星冰湖 - 冰湖东部",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area3_2",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 奥格的温泉村 - 你的包间",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area5_2",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 霜燃之扉 - 达卡拉狭路",
+      "bigMapId": "c5_map"
+    }
+  ],
+  "item_57002": [
+    {
+      "type": "hidden",
+      "id": "c0_area1_6",
+      "name": "场景宝箱",
+      "des": "求生者草原 - 营地周边 - 隐居者的药田",
+      "bigMapId": "c0_map"
+    }
+  ],
+  "item_20011": [
+    {
+      "type": "hidden",
+      "id": "c1_area4_4",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 旧日修行所 - 碎石小径",
+      "bigMapId": "c1_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c1_area1_10",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 驿站住民区 - 驿站地窖",
+      "bigMapId": "c1_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area1_8",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 巴诺姆村 - 菲莉娜的契约台",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area4_3",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 山神之殒 - 安娜的勘测地",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area1_2",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 巴诺姆村 - 工头小屋",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area1_6",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 巴诺姆村 - 山腰道路",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area1_3",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 巴诺姆村 - 矿山道",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area2_1",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 灾害研究所 - 灾害研究所（外部）",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area2_5",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 灾害研究所 - 外围山崖",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area3_1",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 破败古院 - 破败古院",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area1_6",
+      "name": "场景宝箱",
+      "des": "黑森林 - 金弦之厅 - 艾薇杜尔的故居",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area1_4",
+      "name": "场景宝箱",
+      "des": "黑森林 - 金弦之厅 - 住民区2",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area1_7",
+      "name": "场景宝箱",
+      "des": "黑森林 - 金弦之厅 - 金弦宴堂",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area2_1",
+      "name": "场景宝箱",
+      "des": "黑森林 - 布拉格乌尔庄园 - 布拉格乌尔庄园",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area5_3",
+      "name": "场景宝箱",
+      "des": "黑森林 - 巨木之口 - 巨木之影",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area3_2",
+      "name": "场景宝箱",
+      "des": "黑森林 - 西部猎场 - 北部猎场",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area4_1",
+      "name": "场景宝箱",
+      "des": "黑森林 - 阴魂禁林 - 艾伦瑟的故居",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area1_4",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 尾指村 - 尾指村居民区",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area1_5",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 尾指村 - 尾指村居民区",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area4_2",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 贫民街 - 柏莉尔的家",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area4_4",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 贫民街 - 贫民街·民居",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area2_2",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 献水圣坛 - 水纹花海",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area3_3",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 大市集 - 大市集居民区2",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area5_2",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 蒸馏工厂废墟 - 蒸馏工厂内部",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c1_area1_2",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 驿站住民区 - 驿站地窖",
+      "bigMapId": "c1_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c1_area1_7",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 驿站住民区 - 枯草小径",
+      "bigMapId": "c1_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c1_area2_1",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 风车平野 - 风车小镇",
+      "bigMapId": "c1_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area1_2",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 大书院 - 大书院·旧街",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area1_5",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 大书院 - 本院·审议室",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area1_6",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 大书院 - 本院·院长室",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area2_1",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 沉星冰湖 - 沉星冰湖",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area3_3",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 奥格的温泉村 - 露天温泉",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area4_1",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 火龙山径 - 扎营点",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area5_2",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 霜燃之扉 - 达卡拉狭路",
+      "bigMapId": "c5_map"
+    }
+  ],
+  "item_20010": [
+    {
+      "type": "hidden",
+      "id": "c1_area4_4",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 旧日修行所 - 碎石小径",
+      "bigMapId": "c1_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area1_8",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 巴诺姆村 - 菲莉娜的契约台",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area4_3",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 山神之殒 - 安娜的勘测地",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area1_2",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 巴诺姆村 - 工头小屋",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area1_6",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 巴诺姆村 - 山腰道路",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area1_3",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 巴诺姆村 - 矿山道",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area2_1",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 灾害研究所 - 灾害研究所（外部）",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area2_5",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 灾害研究所 - 外围山崖",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c2_area3_1",
+      "name": "场景宝箱",
+      "des": "索利德山地 - 破败古院 - 破败古院",
+      "bigMapId": "c2_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area1_6",
+      "name": "场景宝箱",
+      "des": "黑森林 - 金弦之厅 - 艾薇杜尔的故居",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area1_4",
+      "name": "场景宝箱",
+      "des": "黑森林 - 金弦之厅 - 住民区2",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area1_7",
+      "name": "场景宝箱",
+      "des": "黑森林 - 金弦之厅 - 金弦宴堂",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area2_1",
+      "name": "场景宝箱",
+      "des": "黑森林 - 布拉格乌尔庄园 - 布拉格乌尔庄园",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area5_3",
+      "name": "场景宝箱",
+      "des": "黑森林 - 巨木之口 - 巨木之影",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area3_2",
+      "name": "场景宝箱",
+      "des": "黑森林 - 西部猎场 - 北部猎场",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c4_area4_1",
+      "name": "场景宝箱",
+      "des": "黑森林 - 阴魂禁林 - 艾伦瑟的故居",
+      "bigMapId": "c4_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area1_4",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 尾指村 - 尾指村居民区",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area1_5",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 尾指村 - 尾指村居民区",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area4_2",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 贫民街 - 柏莉尔的家",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area4_4",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 贫民街 - 贫民街·民居",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area2_2",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 献水圣坛 - 水纹花海",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area3_3",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 大市集 - 大市集居民区2",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c3_area5_2",
+      "name": "场景宝箱",
+      "des": "魔爪湖畔 - 蒸馏工厂废墟 - 蒸馏工厂内部",
+      "bigMapId": "c3_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c1_area1_7",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 驿站住民区 - 枯草小径",
+      "bigMapId": "c1_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c1_area2_1",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 风车平野 - 风车小镇",
+      "bigMapId": "c1_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c0_area1_1",
+      "name": "场景宝箱",
+      "des": "求生者草原 - 营地周边 - 三岔路口",
+      "bigMapId": "c0_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area1_2",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 大书院 - 大书院·旧街",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area1_5",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 大书院 - 本院·审议室",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area1_6",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 大书院 - 本院·院长室",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area2_1",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 沉星冰湖 - 沉星冰湖",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area3_3",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 奥格的温泉村 - 露天温泉",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area4_1",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 火龙山径 - 扎营点",
+      "bigMapId": "c5_map"
+    },
+    {
+      "type": "hidden",
+      "id": "c5_area5_2",
+      "name": "场景宝箱",
+      "des": "霜烬平原 - 霜燃之扉 - 达卡拉狭路",
+      "bigMapId": "c5_map"
+    }
+  ],
+  "item_57011": [
+    {
+      "type": "hidden",
+      "id": "c1_area4_4",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 旧日修行所 - 碎石小径",
+      "bigMapId": "c1_map"
+    }
+  ],
+  "item_57003": [
+    {
+      "type": "hidden",
+      "id": "c1_area1_10",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 驿站住民区 - 驿站地窖",
+      "bigMapId": "c1_map"
+    }
+  ],
+  "item_57004": [
+    {
+      "type": "hidden",
+      "id": "c1_area1_10",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 驿站住民区 - 驿站地窖",
+      "bigMapId": "c1_map"
+    }
+  ],
+  "item_57006": [
+    {
+      "type": "hidden",
+      "id": "c1_area1_10",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 驿站住民区 - 驿站地窖",
+      "bigMapId": "c1_map"
+    }
+  ],
+  "item_57012": [
+    {
+      "type": "hidden",
+      "id": "c1_area5_3",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 观星高地 - 观星高地外围",
+      "bigMapId": "c1_map"
+    }
+  ],
+  "item_57005": [
+    {
+      "type": "hidden",
+      "id": "c1_area1_2",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 驿站住民区 - 驿站地窖",
+      "bigMapId": "c1_map"
+    }
+  ],
+  "item_57007": [
+    {
+      "type": "hidden",
+      "id": "c1_area2_6",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 风车平野 - 民居",
+      "bigMapId": "c1_map"
+    }
+  ],
+  "item_57008": [
+    {
+      "type": "hidden",
+      "id": "c1_area2_6",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 风车平野 - 民居",
+      "bigMapId": "c1_map"
+    }
+  ],
+  "item_57001": [
+    {
+      "type": "hidden",
+      "id": "c0_area1_1",
+      "name": "场景宝箱",
+      "des": "求生者草原 - 营地周边 - 三岔路口",
+      "bigMapId": "c0_map"
+    }
+  ],
+  "item_57009": [
+    {
+      "type": "hidden",
+      "id": "c1_area3_6",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 黑铁锻炉 - 维丝的秘密基地",
+      "bigMapId": "c1_map"
+    }
+  ],
+  "item_57010": [
+    {
+      "type": "hidden",
+      "id": "c1_area3_6",
+      "name": "场景宝箱",
+      "des": "秋日荒野 - 黑铁锻炉 - 维丝的秘密基地",
+      "bigMapId": "c1_map"
+    }
+  ]
+}

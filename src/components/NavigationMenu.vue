@@ -17,8 +17,8 @@
             
             <div
               class="side-item"
-              :class="{ active: currentRoute === '/monsterseggs' }"
-              @click="handleNavigate('/monsterseggs')"
+              :class="{ active: currentRoute === '/petseggs' }"
+              @click="handleNavigate('/petseggs')"
             >
               <img :src="getImageUrl('/ui/pet_079.png')" class="icon-img game-sprite" />
               <span class="item-name">魔物收益</span>
@@ -45,6 +45,8 @@
               <span class="arrow">›</span>
             </div>
 
+
+
           </div>
         </div>
       </Transition>
@@ -66,8 +68,8 @@
               <div class="tools-grid">
                 <div
                   class="grid-item"
-                  :class="{ active: currentRoute === '/monsterseggs' }"
-                  @click="handleNavigate('/monsterseggs')"
+                  :class="{ active: currentRoute === '/petseggs' }"
+                  @click="handleNavigate('/petseggs')"
                 >
                   <img :src="getImageUrl('/ui/pet_079.png')" class="icon-img game-sprite" />
                   <span class="grid-item-name">魔物收益</span>
@@ -88,6 +90,7 @@
                   <img :src="getImageUrl('/ui/item_30047.png')" class="icon-img game-sprite" />
                   <span class="grid-item-name">菜谱查询</span>
                 </div>
+
               </div>
             </div>
           </div>
@@ -105,8 +108,8 @@
               <div class="tools-grid">
                 <div
                   class="grid-item"
-                  :class="{ active: currentRoute === '/monsterseggs' }"
-                  @click="handleNavigate('/monsterseggs')"
+                  :class="{ active: currentRoute === '/petseggs' }"
+                  @click="handleNavigate('/petseggs')"
                 >
                   <img :src="getImageUrl('/ui/pet_079.png')" class="icon-img game-sprite" />
                   <span class="grid-item-name">魔物收益</span>
@@ -127,6 +130,7 @@
                   <img :src="getImageUrl('/ui/item_30047.png')" class="icon-img game-sprite" />
                   <span class="grid-item-name">菜谱查询</span>
                 </div>
+
               </div>
             </div>
           </div>
