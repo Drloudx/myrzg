@@ -1,0 +1,976 @@
+{
+	"datas": {
+		
+		"item_19310": {
+			"typeId": "item_19310",
+			"tips": "生命附魔石I",
+			"position": [2,
+			5],
+			"skillTriggerId": "enchant_10001",
+			"skillTriggerLevel": 1
+		},
+		"item_19311": {
+			"typeId": "item_19311",
+			"tips": "生命附魔石II",
+			"position": [2,
+			5],
+			"skillTriggerId": "enchant_10001",
+			"skillTriggerLevel": 2
+		},
+		"item_19312": {
+			"typeId": "item_19312",
+			"tips": "生命附魔石III",
+			"position": [2,
+			5],
+			"skillTriggerId": "enchant_10001",
+			"skillTriggerLevel": 3
+		},
+		"item_19313": {
+			"typeId": "item_19313",
+			"tips": "生命附魔石IV",
+			"position": [2,
+			5],
+			"skillTriggerId": "enchant_10001",
+			"skillTriggerLevel": 4
+		},
+		"item_19314": {
+			"typeId": "item_19314",
+			"tips": "生命附魔石V",
+			"position": [2,
+			5],
+			"skillTriggerId": "enchant_10001",
+			"skillTriggerLevel": 5
+		},
+		"item_19315": {
+			"typeId": "item_19315",
+			"tips": "生命附魔石VI",
+			"position": [2,
+			5],
+			"skillTriggerId": "enchant_10001",
+			"skillTriggerLevel": 6
+		},
+		"item_19320": {
+			"typeId": "item_19320",
+			"tips": "强击附魔石I",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10002",
+			"skillTriggerLevel": 1
+		},
+		"item_19321": {
+			"typeId": "item_19321",
+			"tips": "强击附魔石II",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10002",
+			"skillTriggerLevel": 2
+		},
+		"item_19322": {
+			"typeId": "item_19322",
+			"tips": "强击附魔石III",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10002",
+			"skillTriggerLevel": 3
+		},
+		"item_19323": {
+			"typeId": "item_19323",
+			"tips": "强击附魔石IV",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10002",
+			"skillTriggerLevel": 4
+		},
+		"item_19324": {
+			"typeId": "item_19324",
+			"tips": "强击附魔石V",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10002",
+			"skillTriggerLevel": 5
+		},
+		"item_19325": {
+			"typeId": "item_19325",
+			"tips": "强击附魔石VI",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10002",
+			"skillTriggerLevel": 6
+		},
+		"item_19330": {
+			"typeId": "item_19330",
+			"tips": "睿智附魔石I",
+			"position": [1,
+			2],
+			"skillTriggerId": "enchant_10003",
+			"skillTriggerLevel": 1
+		},
+		"item_19331": {
+			"typeId": "item_19331",
+			"tips": "睿智附魔石II",
+			"position": [1,
+			2],
+			"skillTriggerId": "enchant_10003",
+			"skillTriggerLevel": 2
+		},
+		"item_19332": {
+			"typeId": "item_19332",
+			"tips": "睿智附魔石III",
+			"position": [1,
+			2],
+			"skillTriggerId": "enchant_10003",
+			"skillTriggerLevel": 3
+		},
+		"item_19333": {
+			"typeId": "item_19333",
+			"tips": "睿智附魔石IV",
+			"position": [1,
+			2],
+			"skillTriggerId": "enchant_10003",
+			"skillTriggerLevel": 4
+		},
+		"item_19334": {
+			"typeId": "item_19334",
+			"tips": "睿智附魔石V",
+			"position": [1,
+			2],
+			"skillTriggerId": "enchant_10003",
+			"skillTriggerLevel": 5
+		},
+		"item_19335": {
+			"typeId": "item_19335",
+			"tips": "睿智附魔石VI",
+			"position": [1,
+			2],
+			"skillTriggerId": "enchant_10003",
+			"skillTriggerLevel": 6
+		},
+		"item_19340": {
+			"typeId": "item_19340",
+			"tips": "坚壁附魔石I",
+			"position": [3,
+			5],
+			"skillTriggerId": "enchant_10004",
+			"skillTriggerLevel": 1
+		},
+		"item_19341": {
+			"typeId": "item_19341",
+			"tips": "坚壁附魔石II",
+			"position": [3,
+			5],
+			"skillTriggerId": "enchant_10004",
+			"skillTriggerLevel": 2
+		},
+		"item_19342": {
+			"typeId": "item_19342",
+			"tips": "坚壁附魔石III",
+			"position": [3,
+			5],
+			"skillTriggerId": "enchant_10004",
+			"skillTriggerLevel": 3
+		},
+		"item_19343": {
+			"typeId": "item_19343",
+			"tips": "坚壁附魔石IV",
+			"position": [3,
+			5],
+			"skillTriggerId": "enchant_10004",
+			"skillTriggerLevel": 4
+		},
+		"item_19344": {
+			"typeId": "item_19344",
+			"tips": "坚壁附魔石V",
+			"position": [3,
+			5],
+			"skillTriggerId": "enchant_10004",
+			"skillTriggerLevel": 5
+		},
+		"item_19345": {
+			"typeId": "item_19345",
+			"tips": "坚壁附魔石VI",
+			"position": [3,
+			5],
+			"skillTriggerId": "enchant_10004",
+			"skillTriggerLevel": 6
+		},
+		"item_19350": {
+			"typeId": "item_19350",
+			"tips": "灵护附魔石I",
+			"position": [3,
+			4],
+			"skillTriggerId": "enchant_10005",
+			"skillTriggerLevel": 1
+		},
+		"item_19351": {
+			"typeId": "item_19351",
+			"tips": "灵护附魔石II",
+			"position": [3,
+			4],
+			"skillTriggerId": "enchant_10005",
+			"skillTriggerLevel": 2
+		},
+		"item_19352": {
+			"typeId": "item_19352",
+			"tips": "灵护附魔石III",
+			"position": [3,
+			4],
+			"skillTriggerId": "enchant_10005",
+			"skillTriggerLevel": 3
+		},
+		"item_19353": {
+			"typeId": "item_19353",
+			"tips": "灵护附魔石IV",
+			"position": [3,
+			4],
+			"skillTriggerId": "enchant_10005",
+			"skillTriggerLevel": 4
+		},
+		"item_19354": {
+			"typeId": "item_19354",
+			"tips": "灵护附魔石V",
+			"position": [3,
+			4],
+			"skillTriggerId": "enchant_10005",
+			"skillTriggerLevel": 5
+		},
+		"item_19355": {
+			"typeId": "item_19355",
+			"tips": "灵护附魔石VI",
+			"position": [3,
+			4],
+			"skillTriggerId": "enchant_10005",
+			"skillTriggerLevel": 6
+		},
+		"item_19360": {
+			"typeId": "item_19360",
+			"tips": "致命附魔石I",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10006",
+			"skillTriggerLevel": 1
+		},
+		"item_19361": {
+			"typeId": "item_19361",
+			"tips": "致命附魔石II",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10006",
+			"skillTriggerLevel": 2
+		},
+		"item_19362": {
+			"typeId": "item_19362",
+			"tips": "致命附魔石III",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10006",
+			"skillTriggerLevel": 3
+		},
+		"item_19363": {
+			"typeId": "item_19363",
+			"tips": "致命附魔石IV",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10006",
+			"skillTriggerLevel": 4
+		},
+		"item_19364": {
+			"typeId": "item_19364",
+			"tips": "致命附魔石V",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10006",
+			"skillTriggerLevel": 5
+		},
+		"item_19365": {
+			"typeId": "item_19365",
+			"tips": "致命附魔石VI",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10006",
+			"skillTriggerLevel": 6
+		},
+		"item_19370": {
+			"typeId": "item_19370",
+			"tips": "狂暴附魔石I",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10007",
+			"skillTriggerLevel": 1
+		},
+		"item_19371": {
+			"typeId": "item_19371",
+			"tips": "狂暴附魔石II",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10007",
+			"skillTriggerLevel": 2
+		},
+		"item_19372": {
+			"typeId": "item_19372",
+			"tips": "狂暴附魔石III",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10007",
+			"skillTriggerLevel": 3
+		},
+		"item_19373": {
+			"typeId": "item_19373",
+			"tips": "狂暴附魔石IV",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10007",
+			"skillTriggerLevel": 4
+		},
+		"item_19374": {
+			"typeId": "item_19374",
+			"tips": "狂暴附魔石V",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10007",
+			"skillTriggerLevel": 5
+		},
+		"item_19375": {
+			"typeId": "item_19375",
+			"tips": "狂暴附魔石VI",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10007",
+			"skillTriggerLevel": 6
+		},
+		"item_19380": {
+			"typeId": "item_19380",
+			"tips": "韧性附魔石I",
+			"position": [3,
+			5],
+			"skillTriggerId": "enchant_10008",
+			"skillTriggerLevel": 1
+		},
+		"item_19381": {
+			"typeId": "item_19381",
+			"tips": "韧性附魔石II",
+			"position": [3,
+			5],
+			"skillTriggerId": "enchant_10008",
+			"skillTriggerLevel": 2
+		},
+		"item_19382": {
+			"typeId": "item_19382",
+			"tips": "韧性附魔石III",
+			"position": [3,
+			5],
+			"skillTriggerId": "enchant_10008",
+			"skillTriggerLevel": 3
+		},
+		"item_19383": {
+			"typeId": "item_19383",
+			"tips": "韧性附魔石IV",
+			"position": [3,
+			5],
+			"skillTriggerId": "enchant_10008",
+			"skillTriggerLevel": 4
+		},
+		"item_19384": {
+			"typeId": "item_19384",
+			"tips": "韧性附魔石V",
+			"position": [3,
+			5],
+			"skillTriggerId": "enchant_10008",
+			"skillTriggerLevel": 5
+		},
+		"item_19385": {
+			"typeId": "item_19385",
+			"tips": "韧性附魔石VI",
+			"position": [3,
+			5],
+			"skillTriggerId": "enchant_10008",
+			"skillTriggerLevel": 6
+		},
+		"item_19390": {
+			"typeId": "item_19390",
+			"tips": "迅捷附魔石I",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10009",
+			"skillTriggerLevel": 1
+		},
+		"item_19391": {
+			"typeId": "item_19391",
+			"tips": "迅捷附魔石II",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10009",
+			"skillTriggerLevel": 2
+		},
+		"item_19392": {
+			"typeId": "item_19392",
+			"tips": "迅捷附魔石III",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10009",
+			"skillTriggerLevel": 3
+		},
+		"item_19393": {
+			"typeId": "item_19393",
+			"tips": "迅捷附魔石IV",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10009",
+			"skillTriggerLevel": 4
+		},
+		"item_19394": {
+			"typeId": "item_19394",
+			"tips": "迅捷附魔石V",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10009",
+			"skillTriggerLevel": 5
+		},
+		"item_19395": {
+			"typeId": "item_19395",
+			"tips": "迅捷附魔石VI",
+			"position": [1,
+			4],
+			"skillTriggerId": "enchant_10009",
+			"skillTriggerLevel": 6
+		},
+		"item_19400": {
+			"typeId": "item_19400",
+			"tips": "神行附魔石I",
+			"position": [5],
+			"skillTriggerId": "enchant_10010",
+			"skillTriggerLevel": 1
+		},
+		"item_19401": {
+			"typeId": "item_19401",
+			"tips": "神行附魔石II",
+			"position": [5],
+			"skillTriggerId": "enchant_10010",
+			"skillTriggerLevel": 2
+		},
+		"item_19402": {
+			"typeId": "item_19402",
+			"tips": "神行附魔石III",
+			"position": [5],
+			"skillTriggerId": "enchant_10010",
+			"skillTriggerLevel": 3
+		},
+		"item_19403": {
+			"typeId": "item_19403",
+			"tips": "神行附魔石IV",
+			"position": [5],
+			"skillTriggerId": "enchant_10010",
+			"skillTriggerLevel": 4
+		},
+		"item_19404": {
+			"typeId": "item_19404",
+			"tips": "神行附魔石V",
+			"position": [5],
+			"skillTriggerId": "enchant_10010",
+			"skillTriggerLevel": 5
+		},
+		"item_19405": {
+			"typeId": "item_19405",
+			"tips": "神行附魔石VI",
+			"position": [5],
+			"skillTriggerId": "enchant_10010",
+			"skillTriggerLevel": 6
+		},
+		
+		"item_19410": {
+			"typeId": "item_19410",
+			"tips": "冥想附魔石I",
+			"position": [2,1],
+			"skillTriggerId": "enchant_10011",
+			"skillTriggerLevel": 1
+		},
+		"item_19411": {
+			"typeId": "item_19411",
+			"tips": "冥想附魔石II",
+			"position": [2,1],
+			"skillTriggerId": "enchant_10011",
+			"skillTriggerLevel": 2
+		},
+		"item_19412": {
+			"typeId": "item_19412",
+			"tips": "冥想附魔石III",
+			"position": [2,1],
+			"skillTriggerId": "enchant_10011",
+			"skillTriggerLevel": 3
+		},
+		"item_19413": {
+			"typeId": "item_19413",
+			"tips": "冥想附魔石IV",
+			"position": [2,1],
+			"skillTriggerId": "enchant_10011",
+			"skillTriggerLevel": 4
+		},
+		"item_19414": {
+			"typeId": "item_19414",
+			"tips": "冥想附魔石V",
+			"position": [2,1],
+			"skillTriggerId": "enchant_10011",
+			"skillTriggerLevel": 5
+		},
+		"item_19415": {
+			"typeId": "item_19415",
+			"tips": "冥想附魔石VI",
+			"position": [2,1],
+			"skillTriggerId": "enchant_10011",
+			"skillTriggerLevel": 6
+		},
+		
+		"item_19420": {
+			"typeId": "item_19420",
+			"tips": "守护附魔石I",
+			"position": [2,5],
+			"skillTriggerId": "enchant_10012",
+			"skillTriggerLevel": 1
+		},
+		"item_19421": {
+			"typeId": "item_19421",
+			"tips": "守护附魔石II",
+			"position": [2,5],
+			"skillTriggerId": "enchant_10012",
+			"skillTriggerLevel": 2
+		},
+		"item_19422": {
+			"typeId": "item_19422",
+			"tips": "守护附魔石III",
+			"position": [2,5],
+			"skillTriggerId": "enchant_10012",
+			"skillTriggerLevel": 3
+		},
+		"item_19423": {
+			"typeId": "item_19423",
+			"tips": "守护附魔石IV",
+			"position": [2,5],
+			"skillTriggerId": "enchant_10012",
+			"skillTriggerLevel": 4
+		},
+		"item_19424": {
+			"typeId": "item_19424",
+			"tips": "守护附魔石V",
+			"position": [2,5],
+			"skillTriggerId": "enchant_10012",
+			"skillTriggerLevel": 5
+		},
+		"item_19425": {
+			"typeId": "item_19425",
+			"tips": "守护附魔石VI",
+			"position": [2,5],
+			"skillTriggerId": "enchant_10012",
+			"skillTriggerLevel": 6
+		},
+		"item_19430": {
+			"typeId": "item_19430",
+			"tips": "结界附魔石I",
+			"position": [2,5],
+			"skillTriggerId": "enchant_10013",
+			"skillTriggerLevel": 1
+		},
+		"item_19431": {
+			"typeId": "item_19431",
+			"tips": "结界附魔石II",
+			"position": [2,5],
+			"skillTriggerId": "enchant_10013",
+			"skillTriggerLevel": 2
+		},
+		"item_19432": {
+			"typeId": "item_19432",
+			"tips": "结界附魔石III",
+			"position": [2,5],
+			"skillTriggerId": "enchant_10013",
+			"skillTriggerLevel": 3
+		},
+		"item_19433": {
+			"typeId": "item_19433",
+			"tips": "结界附魔石IV",
+			"position": [2,5],
+			"skillTriggerId": "enchant_10013",
+			"skillTriggerLevel": 4
+		},
+		"item_19434": {
+			"typeId": "item_19434",
+			"tips": "结界附魔石V",
+			"position": [2,5],
+			"skillTriggerId": "enchant_10013",
+			"skillTriggerLevel": 5
+		},
+		"item_19435": {
+			"typeId": "item_19435",
+			"tips": "结界附魔石VI",
+			"position": [2,5],
+			"skillTriggerId": "enchant_10013",
+			"skillTriggerLevel": 6
+		},
+		
+		
+		
+		
+		
+		
+		
+	
+		"item_19440": {
+			"typeId": "item_19440",
+			"tips": "流水附魔石I",
+			"position": [1],
+			"skillTriggerId": "enchant_10014",
+			"skillTriggerLevel": 1
+		},
+		"item_19441": {
+			"typeId": "item_19441",
+			"tips": "流水附魔石II",
+			"position": [1],
+			"skillTriggerId": "enchant_10014",
+			"skillTriggerLevel": 2
+		},
+		"item_19442": {
+			"typeId": "item_19442",
+			"tips": "流水附魔石III",
+			"position": [1],
+			"skillTriggerId": "enchant_10014",
+			"skillTriggerLevel": 3
+		},
+		"item_19443": {
+			"typeId": "item_19443",
+			"tips": "流水附魔石IV",
+			"position": [1],
+			"skillTriggerId": "enchant_10014",
+			"skillTriggerLevel": 4
+		},
+		"item_19444": {
+			"typeId": "item_19444",
+			"tips": "流水附魔石V",
+			"position": [1],
+			"skillTriggerId": "enchant_10014",
+			"skillTriggerLevel": 5
+		},
+		"item_19445": {
+			"typeId": "item_19445",
+			"tips": "流水附魔石VI",
+			"position": [1],
+			"skillTriggerId": "enchant_10014",
+			"skillTriggerLevel": 6
+		},
+		"item_19450": {
+			"typeId": "item_19450",
+			"tips": "烈火附魔石I",
+			"position": [1],
+			"skillTriggerId": "enchant_10015",
+			"skillTriggerLevel": 1
+		},
+		"item_19451": {
+			"typeId": "item_19451",
+			"tips": "烈火附魔石II",
+			"position": [1],
+			"skillTriggerId": "enchant_10015",
+			"skillTriggerLevel": 2
+		},
+		"item_19452": {
+			"typeId": "item_19452",
+			"tips": "烈火附魔石III",
+			"position": [1],
+			"skillTriggerId": "enchant_10015",
+			"skillTriggerLevel": 3
+		},
+		"item_19453": {
+			"typeId": "item_19453",
+			"tips": "烈火附魔石IV",
+			"position": [1],
+			"skillTriggerId": "enchant_10015",
+			"skillTriggerLevel": 4
+		},
+		"item_19454": {
+			"typeId": "item_19454",
+			"tips": "烈火附魔石V",
+			"position": [1],
+			"skillTriggerId": "enchant_10015",
+			"skillTriggerLevel": 5
+		},
+		"item_19455": {
+			"typeId": "item_19455",
+			"tips": "烈火附魔石VI",
+			"position": [1],
+			"skillTriggerId": "enchant_10015",
+			"skillTriggerLevel": 6
+		},
+		"item_19460": {
+			"typeId": "item_19460",
+			"tips": "狂风附魔石I",
+			"position": [1],
+			"skillTriggerId": "enchant_10016",
+			"skillTriggerLevel": 1
+		},
+		"item_19461": {
+			"typeId": "item_19461",
+			"tips": "狂风附魔石II",
+			"position": [1],
+			"skillTriggerId": "enchant_10016",
+			"skillTriggerLevel": 2
+		},
+		"item_19462": {
+			"typeId": "item_19462",
+			"tips": "狂风附魔石III",
+			"position": [1],
+			"skillTriggerId": "enchant_10016",
+			"skillTriggerLevel": 3
+		},
+		"item_19463": {
+			"typeId": "item_19463",
+			"tips": "狂风附魔石IV",
+			"position": [1],
+			"skillTriggerId": "enchant_10016",
+			"skillTriggerLevel": 4
+		},
+		"item_19464": {
+			"typeId": "item_19464",
+			"tips": "狂风附魔石V",
+			"position": [1],
+			"skillTriggerId": "enchant_10016",
+			"skillTriggerLevel": 5
+		},
+		"item_19465": {
+			"typeId": "item_19465",
+			"tips": "狂风附魔石VI",
+			"position": [1],
+			"skillTriggerId": "enchant_10016",
+			"skillTriggerLevel": 6
+		},
+		"item_19470": {
+			"typeId": "item_19470",
+			"tips": "裂地附魔石I",
+			"position": [1],
+			"skillTriggerId": "enchant_10017",
+			"skillTriggerLevel": 1
+		},
+		"item_19471": {
+			"typeId": "item_19471",
+			"tips": "裂地附魔石II",
+			"position": [1],
+			"skillTriggerId": "enchant_10017",
+			"skillTriggerLevel": 2
+		},
+		"item_19472": {
+			"typeId": "item_19472",
+			"tips": "裂地附魔石III",
+			"position": [1],
+			"skillTriggerId": "enchant_10017",
+			"skillTriggerLevel": 3
+		},
+		"item_19473": {
+			"typeId": "item_19473",
+			"tips": "裂地附魔石IV",
+			"position": [1],
+			"skillTriggerId": "enchant_10017",
+			"skillTriggerLevel": 4
+		},
+		"item_19474": {
+			"typeId": "item_19474",
+			"tips": "裂地附魔石V",
+			"position": [1],
+			"skillTriggerId": "enchant_10017",
+			"skillTriggerLevel": 5
+		},
+		"item_19475": {
+			"typeId": "item_19475",
+			"tips": "裂地附魔石VI",
+			"position": [1],
+			"skillTriggerId": "enchant_10017",
+			"skillTriggerLevel": 6
+		},
+		"item_19480": {
+			"typeId": "item_19480",
+			"tips": "御水附魔石I",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10018",
+			"skillTriggerLevel": 1
+		},
+		"item_19481": {
+			"typeId": "item_19481",
+			"tips": "御水附魔石II",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10018",
+			"skillTriggerLevel": 2
+		},
+		"item_19482": {
+			"typeId": "item_19482",
+			"tips": "御水附魔石III",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10018",
+			"skillTriggerLevel": 3
+		},
+		"item_19483": {
+			"typeId": "item_19483",
+			"tips": "御水附魔石IV",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10018",
+			"skillTriggerLevel": 4
+		},
+		"item_19484": {
+			"typeId": "item_19484",
+			"tips": "御水附魔石V",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10018",
+			"skillTriggerLevel": 5
+		},
+		"item_19485": {
+			"typeId": "item_19485",
+			"tips": "御水附魔石VI",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10018",
+			"skillTriggerLevel": 6
+		},
+		"item_19490": {
+			"typeId": "item_19490",
+			"tips": "御火附魔石I",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10019",
+			"skillTriggerLevel": 1
+		},
+		"item_19491": {
+			"typeId": "item_19491",
+			"tips": "御火附魔石II",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10019",
+			"skillTriggerLevel": 2
+		},
+		"item_19492": {
+			"typeId": "item_19492",
+			"tips": "御火附魔石III",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10019",
+			"skillTriggerLevel": 3
+		},
+		"item_19493": {
+			"typeId": "item_19493",
+			"tips": "御火附魔石IV",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10019",
+			"skillTriggerLevel": 4
+		},
+		"item_19494": {
+			"typeId": "item_19494",
+			"tips": "御火附魔石V",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10019",
+			"skillTriggerLevel": 5
+		},
+		"item_19495": {
+			"typeId": "item_19495",
+			"tips": "御火附魔石VI",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10019",
+			"skillTriggerLevel": 6
+		},
+		"item_19500": {
+			"typeId": "item_19500",
+			"tips": "御风附魔石I",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10020",
+			"skillTriggerLevel": 1
+		},
+		"item_19501": {
+			"typeId": "item_19501",
+			"tips": "御风附魔石II",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10020",
+			"skillTriggerLevel": 2
+		},
+		"item_19502": {
+			"typeId": "item_19502",
+			"tips": "御风附魔石III",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10020",
+			"skillTriggerLevel": 3
+		},
+		"item_19503": {
+			"typeId": "item_19503",
+			"tips": "御风附魔石IV",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10020",
+			"skillTriggerLevel": 4
+		},
+		"item_19504": {
+			"typeId": "item_19504",
+			"tips": "御风附魔石V",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10020",
+			"skillTriggerLevel": 5
+		},
+		"item_19505": {
+			"typeId": "item_19505",
+			"tips": "御风附魔石VI",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10020",
+			"skillTriggerLevel": 6
+		},
+		"item_19510": {
+			"typeId": "item_19510",
+			"tips": "御地附魔石I",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10021",
+			"skillTriggerLevel": 1
+		},
+		"item_19511": {
+			"typeId": "item_19511",
+			"tips": "御地附魔石II",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10021",
+			"skillTriggerLevel": 2
+		},
+		"item_19512": {
+			"typeId": "item_19512",
+			"tips": "御地附魔石III",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10021",
+			"skillTriggerLevel": 3
+		},
+		"item_19513": {
+			"typeId": "item_19513",
+			"tips": "御地附魔石IV",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10021",
+			"skillTriggerLevel": 4
+		},
+		"item_19514": {
+			"typeId": "item_19514",
+			"tips": "御地附魔石V",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10021",
+			"skillTriggerLevel": 5
+		},
+		"item_19515": {
+			"typeId": "item_19515",
+			"tips": "御地附魔石VI",
+			"position": [2,
+			3],
+			"skillTriggerId": "enchant_10021",
+			"skillTriggerLevel": 6
+		}
+	},
+	"consume": "equipEnchant"
+}

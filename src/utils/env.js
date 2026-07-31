@@ -12,9 +12,11 @@ export const isNative = Capacitor.isNativePlatform();
  */
 export function getResourceBaseUrl() {
   // Web 端：相对路径读取同域云端资源或本地 dev server
-  // Android 端：路由全面劫持，强制跨域请求云端 (以便触发 WebView 独立缓存和 304 机制)
-  // 当拦截器检测到断网时，也可以通过修改内部状态来返回本地 assets 目录路径
-  return isNative ? CLOUD_URL : ''; 
+  // Android 端：如果有网则请求云端 CDN (触发 WebView 独立缓存)，如果断网则 fallback 到本地 assets
+  if (isNative) {
+    return navigator.onLine ? CLOUD_URL : ''; 
+  }
+  return '';
 }
 
 /**
@@ -23,6 +25,7 @@ export function getResourceBaseUrl() {
  * @returns {string}
  */
 export function getImageUrl(path) {
+  if (!path) return '';
   // UI icons are small and bundled locally in the hot update. Do not hit CDN.
   if (path.startsWith('/ui/') || path.startsWith('ui/')) {
     return path.startsWith('/') ? path : `/${path}`;

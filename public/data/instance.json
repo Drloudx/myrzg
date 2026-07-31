@@ -1,0 +1,791 @@
+{
+	"datas": {
+		"dungeonA": {
+			"name": "旅店地窖",
+			"des": "驿站旅店地下被人遗忘的古代地窖。",
+			"icon": "map_fb_yzdj",
+			"openCondition": "",
+			"view": {
+				"bgImg": "fb_bg_c5_d2"
+			},
+			"battles": [
+				{
+					"name": "测试c2_ex6",
+					"level": 1,
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "c2_ex6"
+				},
+				{
+					"name": "爬塔测试",
+					"level": 1,
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "pata"
+				},
+				{
+					"name": "dps测试",
+					"level": 1,
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "dpsTest"
+				},
+				{
+					"name": "ehp测试",
+					"level": 1,
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "ehpTest"
+				},
+				{
+					"name": "BOSS测试",
+					"level": 1,
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "test_BOSS"
+				},
+				{
+					"name": "BOSS房集合",
+					"level": 1,
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "test_allBoss"
+				},
+				{
+					"name": "DPS对比副本：20级",
+					"level": 1,
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "text_dpstest"
+				}
+				,
+				{
+					"name": "测试npctest",
+					"level": 1,
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "npctest"
+				},
+				{
+					"name": "C4回忆空间1",
+					"level": 1,
+					"bossImg":"",
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "c4_ex2"
+				},
+				{
+					"name": "C4回忆空间2",
+					"level": 1,
+					"bossImg":"",
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "c4_ex4"
+				},
+				{
+					"name": "c1前",
+					"level": 1,
+					"bossImg":"",
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "yzdj_6_d"
+				},
+				{
+					"name": "c1后",
+					"level": 1,
+					"bossImg":"",
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "aseyj_main_03_d"
+				},
+				{
+					"name": "c2前",
+					"level": 1,
+					"bossImg":"",
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "c2_d2_d"
+				},
+				{
+					"name": "c2后",
+					"level": 1,
+					"bossImg":"",
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "c2_d4_d"
+				},
+				{
+					"name": "c3前",
+					"level": 1,
+					"bossImg":"",
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "c3_d1_3_d"
+				},
+				{
+					"name": "c3后",
+					"level": 1,
+					"bossImg":"",
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "c3_d2_3_d"
+				},
+				{
+					"name": "c4前",
+					"level": 1,
+					"bossImg":"",
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "c4_d1_3_d"
+				},
+				{
+					"name": "c4后",
+					"level": 1,
+					"bossImg":"",
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "c4_d2_3_d"
+				},
+				{
+					"name": "c5前",
+					"level": 1,
+					"bossImg":"",
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "c5_d1_3_d"
+				},
+				{
+					"name": "c5后",
+					"level": 1,
+					"bossImg":"",
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "c5_d2_3_d"
+				}
+			]
+		},
+		"dungeonB": {
+			"name": "旅店地窖",
+			"chapter": "c1",
+			"des": "驿站旅店的地窖，不知为何其规模远远超过了储物所需的空间。",
+			"icon": "map_fb_yzdj",
+			"openCondition": "stage_yznb_3_obj118_act119_1",
+			"view": {
+				"bgImg": "fb_bg_yzdj"
+			},
+			"battles": [
+			{
+					"name": "地窖·噩梦",
+					"level": 10,
+					"bossImg":"fb_mon_003",
+					"buttonType":1,
+					"des": "",
+					"showCondition": "gddj4to6",
+					"unlockCondition": "yzdj_3_d",
+					"dungeonBattle": "yzdj_6_d"
+				},
+				{
+					"name": "地窖·深层",
+					"level": 10,
+					"bossImg":"fb_mon_003",
+					"des": "",
+					"showCondition": "gddj4to6",
+					"unlockCondition": "yzdj_3",
+					"dungeonBattle": "yzdj_6"
+				},
+				{
+					"name": "地窖·中层",
+					"level": 9,
+					"des": "",
+					"showCondition": "gddj1to3",
+					"unlockCondition": "yzdj_2",
+					"dungeonBattle": "yzdj_3"
+				},
+				{
+					"name": "地窖·表层",
+					"level": 8,
+					"des": "",
+					"showCondition": "gddj1to3",
+					"unlockCondition": "yzdj_1",
+					"dungeonBattle": "yzdj_2"
+				},
+				{
+					"name": "地窖·大扫除",
+					"level": 3,
+					"des": "",
+					"showCondition": "stage_yznb_3_obj118_act119",
+					"unlockCondition": "stage_yznb_3_obj118_act119",
+					"dungeonBattle": "yzdj_main"
+				}
+			]
+		},
+		"dungeonC": {
+			"name": "角布林巢穴",
+			"chapter": "c0",
+			"des": "角布林的聚集地",
+			"icon": "map_fb_ydsl",
+			"openCondition": "stage_ydzb_15_obj100_act101",
+			"view": {
+				"bgImg": "fb_bg_ydsl"
+			},
+			"battles": [
+				{
+					"name": "角布林巢穴",
+					"level": 4,
+					"showCondition": "stage_ydzb_15_obj100_act101",
+					"unlockCondition": "stage_ydzb_15_obj100_act101",
+					"dungeonBattle": "main_zy4"
+				}
+			]
+		},
+		"dungeonD": {
+			"name": "蛇腹矿坑",
+			"chapter": "c1",
+			"des": "蕴含着神秘力量的矿坑",
+			"icon": "map_fb_dk",
+			"openCondition": "kuangkeng",
+			"view": {
+				"bgImg": "fb_bg_dk"
+			},
+			"battles": [
+				{
+					"name": "蛇腹矿坑",
+					"level": 9,
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "sfkk_1_zhuxian"
+				},
+				{
+					"name": "第一层",
+					"level": 9,
+					"showCondition": "stage_yzdq_20_obj69_act70",
+					"unlockCondition": "stage_yzdq_20_obj69_act70",
+					"dungeonBattle": "sfkk_1_shuihuo"
+				},
+				{
+					"name": "第二层",
+					"level": 9,
+					"showCondition": "stage_yzdq_20_obj69_act70",
+					"unlockCondition": "stage_yzdq_20_obj69_act70",
+					"dungeonBattle": "sfkk_1_fengdi"
+				}
+			]
+		},
+		"dungeonaseyj": {
+			"name": "安瑟恩遗迹",
+			"chapter": "c1",
+			"des": "坐落于观星高地星晷下的先时遗迹，其名有圣歌的含义。",
+			"icon": "map_fb_aseyj",
+			"openCondition": "anseen_zhuxian1",
+			"view": {
+				"bgImg": "fb_bg_aseyj"
+			},
+			"battles": [
+			{
+					"name": "遗迹·噩梦",
+					"level": 10,
+					"bossImg":"fb_mon_042",
+					"buttonType":1,
+					"showCondition": "anseen_zhuxian3_d",
+					"unlockCondition": "anseen_zhuxian3_d",
+					"dungeonBattle": "aseyj_main_03_d"
+				},
+				{
+					"name": "遗迹·核心部",
+					"level": 10,
+					"bossImg":"fb_mon_042",
+					"showCondition": "anseen_zhuxian3",
+					"unlockCondition": "anseen_zhuxian3",
+					"dungeonBattle": "aseyj_main_03"
+				},
+				{
+					"name": "遗迹·构装部",
+					"level": 10,
+					"showCondition": "anseen_zhuxian2",
+					"unlockCondition": "anseen_zhuxian2",
+					"dungeonBattle": "aseyj_main_02"
+				},
+				{
+					"name": "遗迹·入口部",
+					"level": 9,
+					"showCondition": "anseen_zhuxian1",
+					"unlockCondition": "anseen_zhuxian1",
+					"dungeonBattle": "aseyj_main_01"
+				}
+			]
+		},
+		"dungeoncsc": {
+			"name": "采石场",
+			"chapter": "c2",
+			"des": "住着蛤的采石场",
+			"icon": "map_fb_csc",
+			"openCondition": "sldsd_csc_zhuxian",
+			"view": {
+				"bgImg": "fb_bg_csc"
+			},
+			"battles": [
+				{
+					"name": "采石场一层",
+					"level": 13,
+					"showCondition": "sldsd_csc_zhuxian",
+					"unlockCondition": "sldsd_csc_zhuxian",
+					"dungeonBattle": "sldsd_csc_1"
+				},
+				{
+					"name": "采石场二层",
+					"level": 14,
+					"showCondition": "sldsd_csc_c2",
+					"unlockCondition": "sldsd_csc_c2",
+					"dungeonBattle": "sldsd_csc_2"
+				},
+				{
+					"name": "采石场三层",
+					"level": 16,
+					"showCondition": "sldsd_csc_c3",
+					"unlockCondition": "sldsd_csc_c3",
+					"dungeonBattle": "sldsd_csc_3"
+				},
+				{
+					"name": "采石场四层",
+					"level": 18,
+					"showCondition": "sldsd_csc_c3",
+					"unlockCondition": "sldsd_csc_c3",
+					"dungeonBattle": "sldsd_csc_4"
+				},
+				{
+					"name": "采石场五层",
+					"level": 19,
+					"showCondition": "sldsd_csc_c3",
+					"unlockCondition": "sldsd_csc_c3",
+					"dungeonBattle": "sldsd_csc_5"
+				},
+				{
+					"name": "采石场六层",
+					"level": 20,
+					"showCondition": "sldsd_csc_c3",
+					"unlockCondition": "sldsd_csc_c3",
+					"dungeonBattle": "sldsd_csc_6"
+				}
+			]
+		},
+		"dungeonmjcsc": {
+			"name": "蔓晶采石场",
+			"chapter": "c2",
+			"des": "出产魔岩矿的采石场，在异变之后，已经沦为了魔物们的乐园。",
+			"icon": "map_fb_aseyj",
+			"openCondition": "dungeonmjcsc",
+			"view": {
+				"bgImg": "fb_bg_csc"
+			},
+			"battles": [
+			{
+					"name": "采石场·噩梦",
+					"level": 15,
+					"bossImg":"fb_mon_052",
+					"buttonType":1,
+					"showCondition": "dungeonmjcsc",
+					"unlockCondition": "c2_d2_d",
+					"dungeonBattle": "c2_d2_d"
+				},
+				{
+					"name": "采石场·采掘部",
+					"level": 15,
+					"bossImg":"fb_mon_052",
+					"showCondition": "dungeonmjcsc",
+					"unlockCondition": "c2_d2",
+					"dungeonBattle": "c2_d2"
+				},
+				{
+					"name": "采石场·输送部",
+					"level": 14,
+					"bossImg":"",
+					"showCondition": "dungeonmjcsc",
+					"unlockCondition": "c2_d1_2",
+					"dungeonBattle": "c2_d1_2"
+				},
+				{
+					"name": "采石场·坑道部",
+					"level": 14,
+					"bossImg":"",
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "c2_d1"
+				}
+			]
+		},
+		"dungeonanxtyj": {
+			"name": "阿娜希塔遗迹",
+			"chapter": "c2",
+			"des": "坐落在索利德山巅的先时遗迹，其名有圣泉的含义。",
+			"icon": "map_fb_anxtyj",
+			"openCondition": "dungeonanxtyj",
+			"view": {
+				"bgImg": "fb_bg_anxtyj"
+			},
+			"battles": [
+				{
+					"name": "阿娜希塔遗迹六层",
+					"level": 24,
+					"showCondition": "sldsd_anxtyj_zhuxian03",
+					"unlockCondition": "sldsd_anxtyj_zhuxian03",
+					"dungeonBattle": "sldsd_anxtyj_6"
+				},
+				{
+					"name": "阿娜希塔遗迹五层",
+					"level": 23,
+					"showCondition": "sldsd_anxtyj_zhuxian03",
+					"unlockCondition": "sldsd_anxtyj_zhuxian03",
+					"dungeonBattle": "sldsd_anxtyj_5"
+				},
+				{
+					"name": "阿娜希塔遗迹四层",
+					"level": 22,
+					"showCondition": "sldsd_anxtyj_zhuxian03",
+					"unlockCondition": "sldsd_anxtyj_zhuxian03",
+					"dungeonBattle": "sldsd_anxtyj_4"
+				},
+				{
+					"name": "阿娜希塔遗迹三层",
+					"level": 20,
+					"showCondition": "sldsd_anxtyj_zhuxian03",
+					"unlockCondition": "sldsd_anxtyj_zhuxian03",
+					"dungeonBattle": "sldsd_anxtyj_3"
+				},
+				{
+					"name": "阿娜希塔遗迹二层",
+					"level": 18,
+					"showCondition": "sldsd_anxtyj_zhuxian02",
+					"unlockCondition": "sldsd_anxtyj_zhuxian02",
+					"dungeonBattle": "sldsd_anxtyj_2"
+				},
+				{
+					"name": "阿娜希塔遗迹一层",
+					"level": 17,
+					"showCondition": "sldsd_anxtyj_zhuxian01",
+					"unlockCondition": "sldsd_anxtyj_zhuxian01",
+					"dungeonBattle": "sldsd_anxtyj_1"
+				},
+				{
+					"name": "遗迹·噩梦",
+					"level": 20,
+					"bossImg":"fb_mon_055",
+					"buttonType":1,
+					"showCondition": "dungeonanxtyj",
+					"unlockCondition": "c2_d4_d",
+					"dungeonBattle": "c2_d4_d"
+				},
+				{
+					"name": "遗迹·中枢部",
+					"level": 20,
+					"bossImg":"fb_mon_055",
+					"showCondition": "dungeonanxtyj",
+					"unlockCondition": "c2_d4",
+					"dungeonBattle": "c2_d4"
+				},
+				{
+					"name": "遗迹·功能部",
+					"level": 19,
+					"bossImg":"",
+					"showCondition": "dungeonanxtyj",
+					"unlockCondition": "c2_d3_2",
+					"dungeonBattle": "c2_d3_2"
+				},
+				{
+					"name": "遗迹·上层部",
+					"level": 19,
+					"bossImg":"",
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "c2_d3"
+				}
+			]
+		},
+		"dungeonxwtyj": {
+			"name": "辛瓦特遗迹",
+			"chapter": "c3",
+			"des": "位于魔爪湖的先时遗迹，传说这里曾是向水神塞瓦进献的场所。",
+			"icon": "map_w1_c3_d1",
+			"openCondition": "dungeonxwtyj",
+			"view": {
+				"bgImg": "fb_bg_c3_d1"
+			},
+			"battles": [
+			{
+					"name": "遗迹·噩梦",
+					"level": 26,
+					"bossImg":"fb_mon_060",
+					"buttonType":1,
+					"showCondition": "dungeonxwtyj",
+					"unlockCondition": "c3_d1_3_d",
+					"dungeonBattle": "c3_d1_3_d"
+				},
+				{
+					"name": "遗迹·底栖带",
+					"level": 26,
+					"bossImg":"fb_mon_060",
+					"showCondition": "dungeonxwtyj",
+					"unlockCondition": "c3_d1_3",
+					"dungeonBattle": "c3_d1_3"
+				},
+				{
+					"name": "遗迹·深水带",
+					"level": 25,
+					"bossImg":"",
+					"showCondition": "dungeonxwtyj",
+					"unlockCondition": "c3_d1_2",
+					"dungeonBattle": "c3_d1_2"
+				},
+				{
+					"name": "遗迹·浅水带",
+					"level": 25,
+					"bossImg":"",
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "c3_d1_1"
+				}
+			]
+		},
+		"dungeonhjyc": {
+			"name": "黑涧浴池",
+			"chapter": "c3",
+			"des": "蒸馏工厂地下的巨大空间，这里似乎在进行着秘密的实验……",
+			"icon": "map_w1_c3_d2",
+			"openCondition": "dungeonhjyc",
+			"view": {
+				"bgImg": "fb_bg_c3_d2"
+			},
+			"battles": [
+			{
+					"name": "浴池·噩梦",
+					"level": 30,
+					"bossImg":"fb_mon_069",
+					"buttonType":1,
+					"showCondition": "dungeonhjyc",
+					"unlockCondition": "c3_d2_3_d",
+					"dungeonBattle": "c3_d2_3_d"
+				},
+				{
+					"name": "浴池·转化部",
+					"level": 30,
+					"bossImg":"fb_mon_069",
+					"showCondition": "dungeonhjyc",
+					"unlockCondition": "c3_d2_3",
+					"dungeonBattle": "c3_d2_3"
+				},
+				{
+					"name": "浴池·净化部",
+					"level": 29,
+					"bossImg":"",
+					"showCondition": "dungeonhjyc",
+					"unlockCondition": "c3_d2_2",
+					"dungeonBattle": "c3_d2_2"
+				},
+				{
+					"name": "浴池·溶洞部",
+					"level": 28,
+					"bossImg":"",
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "c3_d2_1"
+				}
+			]
+		},
+		"dungeoncsjl": {
+			"name": "垂死菌林",
+			"chapter": "c4",
+			"des": "昔日的酿造大师布斯波乌尔向魔女效忠，引领他的子民陷入无尽的枯萎中。",
+			"icon": "map_w1_c4_d1",
+			"openCondition": "dungeoncsjl",
+			"view": {
+				"bgImg": "fb_bg_c4_d1"
+			},
+			"battles": [
+			{
+					"name": "菌林·噩梦",
+					"level": 35,
+					"bossImg":"fb_mon_023",
+					"buttonType":1,
+					"showCondition": "dungeoncsjl",
+					"unlockCondition": "c4_d1_3_d",
+					"dungeonBattle": "c4_d1_3_d"
+				},
+				{
+					"name": "菌林·癫狂之缘",
+					"level": 35,
+					"bossImg":"fb_mon_023",
+					"showCondition": "dungeoncsjl",
+					"unlockCondition": "c4_d1_3",
+					"dungeonBattle": "c4_d1_3"
+				},
+				{
+					"name": "菌林·秘密窖藏",
+					"level": 35,
+					"bossImg":"",
+					"showCondition": "dungeoncsjl",
+					"unlockCondition": "c4_d1_2",
+					"dungeonBattle": "c4_d1_2"
+				},
+				{
+					"name": "菌林·枯萎边境",
+					"level": 36,
+					"bossImg":"",
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "c4_d1_1"
+				}
+			]
+		},
+		"dungeonhenyj": {
+			"name": "赫尔娜遗迹",
+			"chapter": "c4",
+			"des": "神圣的巨木内部竟别有洞天。从中满溢而出的究竟是祝福，还是灾祸？",
+			"icon": "map_w1_c4_d2",
+			"openCondition": "dungeonhenyj",
+			"view": {
+				"bgImg": "fb_bg_c4_d2"
+			},
+			"battles": [
+			{
+					"name": "赫尔娜遗迹·噩梦",
+					"level": 40,
+					"bossImg":"fb_mon_080",
+					"buttonType":1,
+					"showCondition": "dungeonhenyj",
+					"unlockCondition": "c4_d2_3_d",
+					"dungeonBattle": "c4_d2_3_d"
+				},
+				{
+					"name": "赫尔娜遗迹·心之圣所",
+					"level": 40,
+					"bossImg":"fb_mon_080",
+					"showCondition": "dungeonhenyj",
+					"unlockCondition": "c4_d2_3",
+					"dungeonBattle": "c4_d2_3"
+				},
+				{
+					"name": "赫尔娜遗迹·根系部",
+					"level": 40,
+					"bossImg":"",
+					"showCondition": "dungeonhenyj",
+					"unlockCondition": "c4_d2_2",
+					"dungeonBattle": "c4_d2_2"
+				},
+				{
+					"name": "赫尔娜遗迹·枝干部",
+					"level": 41,
+					"bossImg":"",
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "c4_d2_1"
+				}
+			]
+		},
+		"dungeonyfkwqg": {
+			"name": "伊菲卡温泉谷",
+			"chapter": "c5",
+			"des": "大书院投资建设的温泉谷深处，冒出了妄图强占此地的芙洛波一族！为了避免项目彻底破产，拯救温泉谷！",
+			"icon": "map_w1_c5_d1",
+			"openCondition": "dungeonyfkwqg",
+			"view": {
+				"bgImg": "fb_bg_c5_d1"
+			},
+			"battles": [
+			
+				{
+					"name": "温泉谷·雾中碑林",
+					"level": 45,
+					"bossImg":"",
+					"showCondition": "c5_d1_ex",
+					"unlockCondition": "c5_d1_ex",
+					"dungeonBattle": "c5_d1_ex"
+				},
+				{
+					"name": "温泉谷·噩梦",
+					"level": 45,
+					"bossImg":"fb_mon_090",
+					"buttonType":1,
+					"showCondition": "dungeonyfkwqg",
+					"unlockCondition": "c5_d1_3_d",
+					"dungeonBattle": "c5_d1_3_d"
+				},
+				{
+					"name": "温泉谷·度假区",
+					"level": 45,
+					"bossImg":"fb_mon_090",
+					"showCondition": "dungeonyfkwqg",
+					"unlockCondition": "c5_d1_3",
+					"dungeonBattle": "c5_d1_3"
+				},
+				{
+					"name": "温泉谷·养生区",
+					"level": 45,
+					"bossImg":"",
+					"showCondition": "dungeonyfkwqg",
+					"unlockCondition": "c5_d1_2",
+					"dungeonBattle": "c5_d1_2"
+				},
+				{
+					"name": "温泉谷·迎宾区",
+					"level": 44,
+					"bossImg":"",
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "c5_d1_1"
+				}
+			]
+		},
+		"dungeonhmtkyj": {
+			"name": "哈玛塔坎遗迹",
+			"chapter": "c5",
+			"des": "火山的内部，竟是一座遗迹！倘若不阻止希拉尔德的疯狂计划，整座雪原将被滚烫岩浆与熊熊烈焰所吞噬！",
+			"icon": "map_w1_c5_d2",
+			"openCondition": "dungeonhmtkyj",
+			"view": {
+				"bgImg": "fb_bg_c5_d2"
+			},
+			"battles": [
+				{
+					"name": "遗迹·匠器之间",
+					"level": 50,
+					"bossImg":"",
+					"showCondition": "c5_d2_ex",
+					"unlockCondition": "c5_d2_ex",
+					"dungeonBattle": "c5_d2_ex"
+				},
+				{
+					"name": "遗迹·噩梦",
+					"level": 50,
+					"bossImg":"fb_mon_091",
+					"buttonType":1,
+					"showCondition": "dungeonhmtkyj",
+					"unlockCondition": "c5_d2_3_d",
+					"dungeonBattle": "c5_d2_3_d"
+				},
+				{
+					"name": "遗迹·地核层",
+					"level": 50,
+					"bossImg":"fb_mon_091",
+					"showCondition": "dungeonhmtkyj",
+					"unlockCondition": "c5_d2_3",
+					"dungeonBattle": "c5_d2_3"
+				},
+				{
+					"name": "遗迹·熔结层",
+					"level": 50,
+					"bossImg":"",
+					"showCondition": "dungeonhmtkyj",
+					"unlockCondition": "c5_d2_2",
+					"dungeonBattle": "c5_d2_2"
+				},
+				{
+					"name": "遗迹·岩壳层",
+					"level": 49,
+					"bossImg":"",
+					"showCondition": "",
+					"unlockCondition": "",
+					"dungeonBattle": "c5_d2_1"
+				}
+			]
+		}
+	}
+}

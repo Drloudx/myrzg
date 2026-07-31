@@ -1,0 +1,456 @@
+{
+  "data": [
+    {
+      "name": "nihao",
+      "desc_cn": "你好",
+      "desc_en": "hello",
+      "desc_jp": "さようなら"
+    },
+    {
+      "name": "zaijian",
+      "desc_cn": "再见",
+      "desc_en": "bye",
+      "desc_jp": "さようなら "
+    },
+    {
+      "name": "heroPieceName",
+      "desc_cn": "{heroName}的回忆拼图",
+      "desc_en": "hello",
+      "desc_jp": "さようなら"
+    },
+    {
+      "name": "roleBagSortCondition",
+      "desc_cn": "等级1,星级,好感度,稀有度,获取时间",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "roleBagSortList",
+      "desc_cn": "降序,升序",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "level",
+      "desc_cn": "玩家等级达到{0}",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "timestamp",
+      "desc_cn": "开放日期:{0}到{1}",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "week",
+      "desc_cn": "每周的星期{0}",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "time",
+      "desc_cn": "开放时间:{0}-{1}",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "passStage",
+      "desc_cn": "通过关卡:{0}",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "petFavDes",
+      "desc_cn": "与魔物交互、一同战斗可提升魔物的好感度，每日最高可获得 {15} 点。",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "passBattle",
+      "desc_cn": "通关副本:{0}",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "passTask",
+      "desc_cn": "完成任务:{0}",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "beforeTask",
+      "desc_cn": "未完成任务:{0}",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "phyAtk",
+      "desc_cn": "物理攻击",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "phyAtkPct",
+      "desc_cn": "物理攻击加成",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "magicAtk",
+      "desc_cn": "魔法攻击",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "magicAtkPct",
+      "desc_cn": "魔法攻击加成",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "phyDef",
+      "desc_cn": "物理防御",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+     {
+      "name": "phyDefPct",
+      "desc_cn": "物理防御加成",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "magicDef",
+      "desc_cn": "魔法防御",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "magicDefPct",
+      "desc_cn": "魔法防御加成",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "maxHp",
+      "desc_cn": "生命值",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "maxHpPct",
+      "desc_cn": "生命值加成",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "atkSpeed",
+      "desc_cn": "攻速加成",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "restoreHp",
+      "desc_cn": "生命恢复",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "restoreSp",
+      "desc_cn": "法力恢复",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "noFinishTask",
+      "desc_cn": "未完成任务",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "crit",
+      "desc_cn": "暴击率",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "critRes",
+      "desc_cn": "暴击抗性",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "critDam",
+      "desc_cn": "暴击伤害",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "atkRange",
+      "desc_cn": "攻击距离",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "atkFloatMin",
+      "desc_cn": "伤害浮动下限",
+      "desc_en": "",
+      "desc_jp": ""
+    }, 
+    {
+      "name": "atkFloatMax",
+      "desc_cn": "伤害浮动上限",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "walkSpeed",
+      "desc_cn": "行走速度",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "runSpeed",
+      "desc_cn": "移动速度加成",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "repelRes",
+      "desc_cn": "击退抵抗",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "phyAtkPen",
+      "desc_cn": "物理穿透",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "magicAtkPen",
+      "desc_cn": "魔法穿透",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "coolDown",
+      "desc_cn": "冷却缩减",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "rebDam",
+      "desc_cn": "反伤率",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "vampire",
+      "desc_cn": "吸血率",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "cureAdd",
+      "desc_cn": "受治疗加成",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "skillCool",
+      "desc_cn": "冷却缩减",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "damAtkAddTypes",
+      "desc_cn": "普攻附加伤害",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "damAddTypes",
+      "desc_cn": "伤害加成",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "damResTypes",
+      "desc_cn": "受到指定类型伤害抗性",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "damKeyTypes",
+      "desc_cn": "指定敌人类型伤害加成",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "buffChangeTypes",
+      "desc_cn": "BUFF影响",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "repelRes",
+      "desc_cn": "击退抵抗",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "spType",
+      "desc_cn": "消耗类型",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "maxSp",
+      "desc_cn": "法力值",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "addSp",
+      "desc_cn": "sp恢复，减免",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "tags",
+      "desc_cn": "关键字类型",
+      "desc_en": "",
+      "desc_jp": ""
+    },
+    {
+      "name": "homeType",
+      "desc_cn": "家具,地毯,摆设,挂件,植株,战利品,设施,户外",
+      "desc_en": "hello",
+      "desc_jp": "さようなら"
+    },
+    {
+      "name": "homeType1",
+      "desc_cn": "桌子,椅子,柜子,装置",
+      "desc_en": "hello",
+      "desc_jp": "さようなら"
+    },
+    {
+      "name": "homeType2",
+      "desc_cn": "地毯1,地毯2,地毯3",
+      "desc_en": "hello",
+      "desc_jp": "さようなら"
+    },
+    {
+      "name": "homeType4",
+      "desc_cn": "地毯1,地毯2,地毯3",
+      "desc_en": "hello",
+      "desc_jp": "さようなら"
+    },
+    {
+      "name": "battleItemType",
+      "desc_cn": "材料_31,料理_32,道具_33",
+      "desc_en": "hello",
+      "desc_jp": "さようなら"
+    },
+    {
+      "name": "battleItemType31",
+      "desc_cn": "全部,恢复类_311,强化类_312,抗性类_313",
+      "desc_en": "hello",
+      "desc_jp": "さようなら"
+    },
+    {
+      "name": "battleItemType32",
+      "desc_cn": "全部,恢复类_321,强化类_322,抗性类_323",
+      "desc_en": "hello",
+      "desc_jp": "さようなら"
+    },
+    {
+      "name": "battleItemType33",
+      "desc_cn": "全部,投掷_331,装置_332,陷阱_333,卷轴_334",
+      "desc_en": "hello",
+      "desc_jp": "さようなら"
+    },
+    {
+      "name": "hero_page",
+      "desc_cn": "属性,装备,技能,星阶,潜能,档案"
+    },
+    {
+      "name": "hero_job",
+      "desc_cn": "全部,近卫,守护,秘术,射手,突袭,支援"
+    },
+     {
+      "name": "equip_qual",
+      "desc_cn": "普通,稀少,珍贵,罕见,传说"
+    },
+     {
+      "name": "petSkill_attr",
+      "desc_cn": "全部属性,生命值,物理攻击,魔法攻击,物理防御,魔法防御"
+    },
+    {
+      "name": "petTpDes",
+      "desc_cn": "选择同种类魔物作为强化材料时，可获得突破经验，提升突破等级。提升突破等级可以依次提升魔物的技能、天赋等级。"
+    },
+    {
+      "name": "petCultDes",
+      "desc_cn": "孵化同种类魔物达到一定次数后，会获得该类魔物的精细化培育次数。消耗精细化培育次数，可提升魔物属性值保底等级。"
+    },
+    {
+      "name": "qiangHuaDes",
+      "desc_cn": "锻造台的等级决定装备强化的等级上限，但最高无法超过营地等级。"
+    },
+    {
+      "name": "xiLianDes",
+      "desc_cn": "将材料装备上的一条词条覆盖洗炼至当前装备的一条词条上。洗炼结束后材料装备会被消耗，且同一件装备无法同时存在相同种类的词条。"
+    },
+    {
+      "name": "fuMoDes",
+      "desc_cn": "将符石镶嵌至装备上，可赋予装备相应的属性词条。低级符石可通过熔炼合成更高等级的符石。"
+    },
+    {
+      "name": "zhuanHuanDes",
+      "desc_cn": "通过转换，可将两件同部位装备的强化等级、随机词条互相交换。"
+    },
+     {
+      "name": "fenJieDes",
+      "desc_cn": "将选定的装备全部分解。"
+    },
+    {
+      "name": "makeQueueMax",
+      "desc_cn": "制作队列已满"
+    },
+    {
+      "name": "heroLevelUpMaxTo",
+      "desc_cn": "等级上限提高最多至"
+    },
+    {
+      "name": "pressCardToShowInfo",
+      "desc_cn": "长按【卡面】可查看【角色详情】"
+    },
+    {
+      "name": "每日凌晨4点刷新委托任务次数，当日未完成的委托任务会在刷新时自动移除。",
+      "desc_cn": "委托提示配置。"
+    },
+    {
+      "name": "marketUpdateDesc",
+      "desc_cn": "市场商品的买入和卖出价格会随时间而变化，通过价签可以了解到商品当前价格的位置。"
+    },
+    {
+      "name": "marketWeightDesc",
+      "desc_cn": "货运总时间由运出时间和运回时间构成，当购买的商品、或者卖出的商品超重时，会增加对应的运输时间。"
+    },
+    {
+      "name": "market_load_status_err",
+      "desc_cn": "现在还无法装货"
+    },
+    {
+      "name": "pvpRefreshDesc",
+      "desc_cn": "每日凌晨4点刷新挑战次数。"
+    },
+    {
+      "name": "pvpLockAreaBtnDesc",
+      "desc_cn": "其他赛区尚未开启。"
+    }
+  ]
+}

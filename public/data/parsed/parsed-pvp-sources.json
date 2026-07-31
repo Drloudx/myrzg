@@ -1,0 +1,136 @@
+{
+  "item_20004": [
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    },
+    {
+      "type": "pvp",
+      "id": "tier",
+      "name": "段位奖励",
+      "des": "挑战赛"
+    },
+    {
+      "type": "pvp",
+      "id": "rank",
+      "name": "排名奖励",
+      "des": "挑战赛"
+    }
+  ],
+  "item_27011": [
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    }
+  ],
+  "item_27007": [
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    }
+  ],
+  "item_20023": [
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    },
+    {
+      "type": "pvp",
+      "id": "tier",
+      "name": "段位奖励",
+      "des": "挑战赛"
+    },
+    {
+      "type": "pvp",
+      "id": "rank",
+      "name": "排名奖励",
+      "des": "挑战赛"
+    }
+  ],
+  "item_27004": [
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    }
+  ],
+  "item_27008": [
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    }
+  ],
+  "item_20018": [
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    }
+  ],
+  "item_20003": [
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    }
+  ],
+  "item_27010": [
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    }
+  ],
+  "item_19209": [
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    }
+  ],
+  "item_27005": [
+    {
+      "type": "pvp",
+      "id": "exchange",
+      "name": "s1兑换",
+      "des": "兑换奖励"
+    }
+  ],
+  "item_00002": [
+    {
+      "type": "pvp",
+      "id": "tier",
+      "name": "段位奖励",
+      "des": "挑战赛"
+    },
+    {
+      "type": "pvp",
+      "id": "rank",
+      "name": "排名奖励",
+      "des": "挑战赛"
+    }
+  ],
+  "item_27012": [
+    {
+      "type": "pvp",
+      "id": "battle",
+      "name": "战斗胜负",
+      "des": "战斗结算"
+    }
+  ]
+}

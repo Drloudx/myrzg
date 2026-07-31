@@ -244,28 +244,6 @@ const PREVIEW_AVAILABLE_IDS = new Set([
 ])
 
 /**
- * 食材与 ID 强绑定静态映射表 (写于页面内部，防匹配错乱)
- */
-const INGREDIENT_NAME_MAP = {
-  'item_10006': '兽肉',
-  'item_10016': '猪腿骨',
-  'item_10024': '面粉',
-  'item_10036': '绿榛菇',
-  'item_10055': '浆果',
-  'item_10056': '野菜',
-  'item_10057': '地菇',
-  'item_10088': '岩盐',
-  'item_10089': '风干肉',
-  'item_10090': '果酱',
-  'item_10091': '腌菜',
-  'item_10100': '水露果',
-  'item_10101': '魔爪贝',
-  'item_10111': '黑森林松茸',
-  'item_10112': '黑森林松茸干',
-  'item_10118': '冰莲'
-}
-
-/**
  * 通用食材类型 ID 转换关系 (foodType: 1->兽肉, 2->野菜, 3->浆果, 4->地菇)
  */
 const GENERIC_FOOD_TYPE_MAP = {
@@ -565,9 +543,8 @@ onMounted(async () => {
         menuEntry.food.forEach(f => {
           const ingId = f.typeId
           const count = f.num || 1
-          const staticName = INGREDIENT_NAME_MAP[ingId]
           const matchedItem = itemDict[ingId] || {}
-          const ingName = staticName || matchedItem.name || ingId
+          const ingName = matchedItem.name || ingId
           const ingImgKey = matchedItem.img || ingId
 
           ingredients.push({
@@ -577,7 +554,9 @@ onMounted(async () => {
             icon: getImageUrl(`/Common_ItemIcon/${ingImgKey}.png`)
           })
         })
-      } else if (menuEntry.foodType && Array.isArray(menuEntry.foodType) && menuEntry.foodType.length > 0) {
+      }
+      
+      if (menuEntry.foodType && Array.isArray(menuEntry.foodType) && menuEntry.foodType.length > 0) {
         menuEntry.foodType.forEach(ft => {
           const genInfo = GENERIC_FOOD_TYPE_MAP[ft.type] || { typeId: 'item_10006', name: '兽肉' }
           const count = ft.num || 1
@@ -950,6 +929,7 @@ const filteredRecipes = computed(() => {
 .preview-icon-img {
   width: 18px;
   height: 18px;
+  filter: var(--icon-filter1);
 }
 
 /* Ingredients Flex Chips (Directly under Title) */

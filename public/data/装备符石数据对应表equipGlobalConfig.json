@@ -1,0 +1,619 @@
+{
+	"smithyCfgDesc": "铁匠铺配置（attUp为强化装备的百分比数值）",
+	"smithyCfg": {
+		"1": {
+			"blacksmithLevel": 1,
+			"levelMax": 10,
+			"playerLevel": 0,
+			"consume": "",
+			"attUp": 0.05,
+			"extraExpPer": 1,
+			"equipExp": 200
+		},
+		"2": {
+			"blacksmithLevel": 2,
+			"levelMax": 15,
+			"playerLevel": 0,
+			"consume": "",
+			"attUp": 0.05,
+			"extraExpPer": 1,
+			"equipExp": 250
+		},
+		"3": {
+			"blacksmithLevel": 3,
+			"levelMax": 20,
+			"playerLevel": 0,
+			"consume": "",
+			"attUp": 0.05,
+			"extraExpPer": 1,
+			"equipExp": 300
+		},
+		"4": {
+			"blacksmithLevel": 4,
+			"levelMax": 25,
+			"playerLevel": 0,
+			"consume": "consume_001",
+			"attUp": 0.05,
+			"extraExpPer": 1,
+			"equipExp": 400
+		},
+		"5": {
+			"blacksmithLevel": 5,
+			"levelMax": 30,
+			"playerLevel": 0,
+			"consume": "consume_001",
+			"attUp": 0.05,
+			"extraExpPer": 1,
+			"equipExp": 450,
+			"tip": "目前等级,下面要关注equipExp和levelMax的关系,表在heroexp+equipExp里面"
+		},
+		"6": {
+			"blacksmithLevel": 6,
+			"levelMax": 35,
+			"playerLevel": 0,
+			"consume": "consume_001",
+			"attUp": 0.05,
+			"extraExpPer": 1,
+			"equipExp": 500,
+			"tip": "目前等级,下面要关注equipExp和levelMax的关系,表在heroexp+equipExp里面"
+		},
+		"7": {
+			"blacksmithLevel": 7,
+			"levelMax": 40,
+			"playerLevel": 0,
+			"consume": "consume_001",
+			"attUp": 0.05,
+			"extraExpPer": 1,
+			"equipExp": 550,
+			"tip": "目前等级,下面要关注equipExp和levelMax的关系,表在heroexp+equipExp里面"
+		},
+		"8": {
+			"blacksmithLevel": 8,
+			"levelMax": 45,
+			"playerLevel": 0,
+			"consume": "consume_001",
+			"attUp": 0.05,
+			"extraExpPer": 1,
+			"equipExp": 600,
+			"tip": "目前等级,下面要关注equipExp和levelMax的关系,表在heroexp+equipExp里面"
+		},
+		"9": {
+			"blacksmithLevel": 9,
+			"levelMax": 50,
+			"playerLevel": 0,
+			"consume": "consume_001",
+			"attUp": 0.05,
+			"extraExpPer": 1,
+			"equipExp": 650,
+			"tip": "目前等级,下面要关注equipExp和levelMax的关系,表在heroexp+equipExp里面"
+		},
+		
+		
+		
+		
+		
+		"10": {
+			"blacksmithLevel": 10,
+			"levelMax": 55,
+			"playerLevel": 0,
+			"consume": "consume_001",
+			"attUp": 0.05,
+			"extraExpPer": 1,
+			"equipExp": 700,
+			"tip": "目前等级,下面要关注equipExp和levelMax的关系,表在heroexp+equipExp里面"
+		},
+		"11": {
+			"blacksmithLevel": 11,
+			"levelMax": 60,
+			"playerLevel": 0,
+			"consume": "consume_001",
+			"attUp": 0.05,
+			"extraExpPer": 1,
+			"equipExp": 750,
+			"tip": "目前等级,下面要关注equipExp和levelMax的关系,表在heroexp+equipExp里面"
+		},
+		"12": {
+			"blacksmithLevel": 12,
+			"levelMax": 65,
+			"playerLevel": 0,
+			"consume": "consume_001",
+			"attUp": 0.05,
+			"extraExpPer": 1,
+			"equipExp": 800,
+			"tip": "目前等级,下面要关注equipExp和levelMax的关系,表在heroexp+equipExp里面"
+		},
+		"990": {
+			"blacksmithLevel": 990,
+			"levelMax": 30,
+			"playerLevel": 15,
+			"consume": "consume_001",
+			"attUp": 0.05,
+			"extraExpPer": 1,
+			"equipExp": 530
+		},
+		"991": {
+			"blacksmithLevel": 991,
+			"levelMax": 40,
+			"playerLevel": 20,
+			"consume": "consume_001",
+			"attUp": 0.05,
+			"extraExpPer": 1,
+			"equipExp": 700
+		},
+		"992": {
+			"blacksmithLevel": 992,
+			"levelMax": 50,
+			"playerLevel": 25,
+			"consume": "consume_001",
+			"attUp": 0.05,
+			"extraExpPer": 1,
+			"equipExp": 950
+		},
+		"993": {
+			"blacksmithLevel": 993,
+			"levelMax": 60,
+			"playerLevel": 30,
+			"consume": "consume_001",
+			"attUp": 0.05,
+			"extraExpPer": 1,
+			"equipExp": 1400
+		},
+		"994": {
+			"blacksmithLevel": 994,
+			"levelMax": 70,
+			"playerLevel": 30,
+			"consume": "consume_001",
+			"attUp": 0.05,
+			"extraExpPer": 1,
+			"equipExp": 1600
+		},
+		"995": {
+			"blacksmithLevel": 995,
+			"levelMax": 80,
+			"playerLevel": 30,
+			"consume": "consume_001",
+			"attUp": 0.05,
+			"extraExpPer": 1,
+			"equipExp": 2000
+		}
+	},
+	"prefixPoolDesc": "装备前缀池配置,根据skillTriggerId去client/skillTrigger表中查找加成",
+	"prefixPool": {
+		"equip_001": {
+			"skillTriggerId": "equip_001",
+			"level": "1",
+			"name": "弱毒"
+		},
+		"equip_002": {
+			"skillTriggerId": "equip_002",
+			"level": "1",
+			"name": "精准"
+		},
+		"equip_003": {
+			"skillTriggerId": "equip_003",
+			"level": "1",
+			"name": "灵动"
+		},
+		"equip_004": {
+			"skillTriggerId": "equip_004",
+			"level": "1",
+			"name": "残暴"
+		},
+		"equip_005": {
+			"skillTriggerId": "equip_005",
+			"level": "1",
+			"name": "追击"
+		},
+		"equip_006": {
+			"skillTriggerId": "equip_006",
+			"level": "1",
+			"name": "育母"
+		},
+		"equip_007": {
+			"skillTriggerId": "equip_007",
+			"level": "1",
+			"name": "闪电"
+		},
+		"equip_008": {
+			"skillTriggerId": "equip_008",
+			"level": "1",
+			"name": "镭射"
+		},
+		"equip_009": {
+			"skillTriggerId": "equip_009",
+			"level": "1",
+			"name": "重击"
+		},
+		"equip_010": {
+			"skillTriggerId": "equip_010",
+			"level": "1",
+			"name": "渊博"
+		},
+		"equip_011": {
+			"skillTriggerId": "equip_011",
+			"level": "1",
+			"name": "水刃"
+		},
+		"equip_012": {
+			"skillTriggerId": "equip_012",
+			"level": "1",
+			"name": "重伤"
+		},
+		"equip_013": {
+			"skillTriggerId": "equip_013",
+			"level": "1",
+			"name": "破甲"
+		},
+		"equip_014": {
+			"skillTriggerId": "equip_014",
+			"level": "1",
+			"name": "地之灵"
+		},
+		"equip_015": {
+			"skillTriggerId": "equip_015",
+			"level": "1",
+			"name": "疾影"
+		},
+		"equip_301": {
+			"skillTriggerId": "equip_301",
+			"level": "1",
+			"name": "荆棘"
+		},
+		"equip_302": {
+			"skillTriggerId": "equip_302",
+			"level": "1",
+			"name": "溃敌"
+		},
+		"equip_303": {
+			"skillTriggerId": "equip_303",
+			"level": "1",
+			"name": "再生"
+		},
+		"equip_304": {
+			"skillTriggerId": "equip_304",
+			"level": "1",
+			"name": "泼溅"
+		},
+		"equip_305": {
+			"skillTriggerId": "equip_305",
+			"level": "1",
+			"name": "魔爪"
+		},
+		"equip_401": {
+			"skillTriggerId": "equip_401",
+			"level": "1",
+			"name": "激励"
+		},
+		"equip_402": {
+			"skillTriggerId": "equip_402",
+			"level": "1",
+			"name": "炎刃"
+		},
+		"equip_403": {
+			"skillTriggerId": "equip_403",
+			"level": "1",
+			"name": "集中"
+		},
+		"equip_404": {
+			"skillTriggerId": "equip_404",
+			"level": "1",
+			"name": "刃御"
+		},
+		"equip_405": {
+			"skillTriggerId": "equip_405",
+			"level": "1",
+			"name": "诅咒"
+		},
+		"equip_501": {
+			"skillTriggerId": "equip_501",
+			"level": "1",
+			"name": "霜寒"
+		},
+		"equip_502": {
+			"skillTriggerId": "equip_502",
+			"level": "1",
+			"name": "反击"
+		},
+		"equip_503": {
+			"skillTriggerId": "equip_503",
+			"level": "1",
+			"name": "冷锋"
+		},
+		"equip_504": {
+			"skillTriggerId": "equip_504",
+			"level": "1",
+			"name": "寒潮"
+		},
+		"equip_505": {
+			"skillTriggerId": "equip_505",
+			"level": "1",
+			"name": "熔霜"
+		}
+	},
+	"gachaNumControlDes": "装备装等对应随机词条个数",
+	"gachaNumControl": {
+		"1": 1,
+		"2": 1,
+		"3": 2,
+		"4": 3,
+		"5": 3,
+		"6": 3
+	},
+	"equipAttrPoolDesc": "全局装备随机属性池配置",
+	"equipAttrPool": {
+		"phyAtk": {
+			"name": "物理攻击力",
+			"base": 12.51,
+			"max": 1,
+			"levelAddPool": "poolA"
+		},
+		"magicAtk": {
+			"name": "魔法攻击力",
+			"base": 9.32,
+			"max": 1,
+			"levelAddPool": "poolA"
+		},
+		"phyDef": {
+			"name": "物理防御力",
+			"base": 10.56,
+			"max": 1,
+			"levelAddPool": "poolA"
+		},
+		"magicDef": {
+			"name": "魔法防御力",
+			"base": 5.23,
+			"max": 1,
+			"levelAddPool": "poolA"
+		},
+		"maxHp": {
+			"name": "体力上限",
+			"base": 57.57,
+			"max": 1,
+			"levelAddPool": "poolA"
+		},
+		"crit": {
+			"name": "暴击率",
+			"base": 2,
+			"max": 1.25,
+			"levelAddPool": "poolB"
+		},
+		"critDam": {
+			"name": "暴击伤害",
+			"base": 4,
+			"max": 1,
+			"levelAddPool": "poolB"
+		},
+		"critRes": {
+			"name": "暴击抵抗",
+			"base": 2,
+			"max": 1.25,
+			"levelAddPool": "poolC"
+		},
+		"phyAtkPen": {
+			"name": "物理穿透",
+			"base": 3.5,
+			"max": 1.25,
+			"levelAddPool": "poolE"
+		},
+		"magicAtkPen": {
+			"name": "魔法穿透",
+			"base": 3,
+			"max": 1.25,
+			"levelAddPool": "poolE"
+		},
+		"rebDam": {
+			"name": "反伤",
+			"base": 1.25,
+			"max": 1,
+			"levelAddPool": "poolF"
+		},
+		"cureAdd": {
+			"name": "治疗加成",
+			"base": 1,
+			"max": 1,
+			"levelAddPool": "poolF"
+		},
+		"skillCool": {
+			"name": "冷却缩减",
+			"base": 1,
+			"max": 1,
+			"levelAddPool": "poolF"
+		},
+		"maxSp": {
+			"name": "魔法上限",
+			"base": 12,
+			"max": 1,
+			"levelAddPool": "poolG"
+		}
+	},
+	"attrAddPoolDes": "计算的调整系数",
+	"attrAddPool": {
+		"poolA": {
+			"1": 1.5,
+			"2": 2,
+			"3": 3,
+			"4": 4,
+			"5": 5,
+			"6": 6,
+			"7": 7,
+			"8": 8,
+			"9": 9,
+			"10": 10
+		},
+		"poolB": {
+			"1": 0.5,
+			"2": 0.6,
+			"3": 0.7,
+			"4": 0.7,
+			"5": 0.9,
+			"6": 1,
+			"7": 1.1,
+			"8": 1.2,
+			"9": 1.3,
+			"10": 1.4
+		},
+		"poolC": {
+			"1": 1.1,
+			"2": 1.2,
+			"3": 1.3,
+			"4": 1.4,
+			"5": 1.5,
+			"6": 1.6,
+			"7": 1.7,
+			"8": 1.8,
+			"9": 1.9,
+			"10": 2
+		},
+		"poolD": {
+			"1": 0.1,
+			"2": 0.2,
+			"3": 0.3,
+			"4": 0.4,
+			"5": 0.5,
+			"6": 0.6,
+			"7": 0.7,
+			"8": 0.8,
+			"9": 0.9,
+			"10": 1
+		},
+		"poolE": {
+			"1": 0.45,
+			"2": 0.5,
+			"3": 0.55,
+			"4": 0.6,
+			"5": 0.65,
+			"6": 0.7,
+			"7": 0.75,
+			"8": 0.8,
+			"9": 0.85,
+			"10": 0.9
+		},
+		"poolF": {
+			"1": 1.05,
+			"2": 1.1,
+			"3": 1.15,
+			"4": 1.2,
+			"5": 1.25,
+			"6": 1.3,
+			"7": 1.35,
+			"8": 1.4,
+			"9": 1.45,
+			"10": 1.5
+		},
+		"poolG": {
+			"1": 1.2,
+			"2": 1.4,
+			"3": 1.6,
+			"4": 1.8,
+			"5": 2,
+			"6": 2.2,
+			"7": 2.4,
+			"8": 2.6,
+			"9": 2.8,
+			"10": 3
+		}
+	},
+	"gachaExchangeChanceDesc": "随机词条交换概率配置",
+	"gachaExchangeChance": {
+		"1": 100,
+		"2": 100,
+		"3": 100,
+		"4": 100,
+		"5": 100,
+		"6": 100
+	},
+	"refineCostDesc": "装备洗练消耗",
+	"refineCost": {
+		"1": {
+			"equipLevel": 1,
+			"consume": "consume_money_001"
+		},
+		"2": {
+			"equipLevel": 2,
+			"consume": "consume_money_001"
+		},
+		"3": {
+			"equipLevel": 3,
+			"consume": "consume_money_001"
+		},
+		"4": {
+			"equipLevel": 4,
+			"consume": "consume_money_001"
+		},
+		"5": {
+			"equipLevel": 5,
+			"consume": "consume_money_001"
+		},
+		"6": {
+			"equipLevel": 5,
+			"consume": "consume_money_001"
+		}
+	},
+	"qualityAdditionDesc": "装备品质加成系数",
+	"qualityAddition": {
+		"1": {
+			"quality": 1,
+			"permin": 0.9,
+			"permax": 0.95
+		},
+		"2": {
+			"quality": 2,
+			"permin": 0.95,
+			"permax": 1.0
+		},
+		"3": {
+			"quality": 3,
+			"permin": 1.0,
+			"permax": 1.1
+		},
+		"4": {
+			"quality": 4,
+			"permin": 1.1,
+			"permax": 1.2
+		},
+		"5": {
+			"quality": 5,
+			"permin": 1.3,
+			"permax": 1.35
+		},
+		"6": {
+			"quality": 6,
+			"permin": 1.45,
+			"permax": 1.45
+		}
+	},
+	"equipLevelAdditionDesc": "装备等级属性加成系数",
+	"equipLevelAddition": {
+		"1": {
+			"equipLevel": 1,
+			"per": 1.0
+		},
+		"2": {
+			"equipLevel": 2,
+			"per": 1.25
+		},
+		"3": {
+			"equipLevel": 3,
+			"per": 1.5
+		},
+		"4": {
+			"equipLevel": 4,
+			"per": 1.75
+		},
+		"5": {
+			"equipLevel": 5,
+			"per": 2
+		}
+	},
+	"equipQualityRandomCoefficientDesc": "random数乘的装备系数",
+	"equipQualityRandomCoefficient": {
+		"1": 0.6,
+		"2": 0.6,
+		"3": 0.7,
+		"4": 0.9,
+		"5": 1,
+		"6": 1
+	},
+	"equipChangeConsumeDes": "装备转换消耗",
+	"equipChangeConsume": "equipChangeConsume001"
+}

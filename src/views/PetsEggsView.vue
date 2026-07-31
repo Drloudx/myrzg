@@ -102,7 +102,7 @@
                 @error="handleImgError"
               />
             </div>
-            <span class="pet-name" :class="`rarity-text-${pet.rarityLevel}`">{{ pet.name }}</span>
+            <span class="pet-name" :class="`quality-text-${pet.quality}`">{{ pet.name }}</span>
           </div>
 
           <!-- Dynamic Metric Cells in Strict Standard Field Order -->
@@ -156,7 +156,7 @@
         </div>
         <div class="detail-basic">
           <div class="detail-title-row">
-            <span class="detail-title" :class="`rarity-text-${detailModal.pet.rarityLevel}`">
+            <span class="detail-title" :class="`quality-text-${detailModal.pet.quality}`">
               {{ detailModal.pet.name }}
             </span>
             <span :class="['rec-badge', `rec-${detailModal.pet.recommendationKey}`]">
@@ -164,7 +164,7 @@
             </span>
           </div>
           <div class="detail-labels">
-            <span class="rarity-badge" :class="`badge-${detailModal.pet.rarityLevel}`">{{ detailModal.pet.displayStar }}星</span>
+            <span class="rarity-badge" :class="`badge-${detailModal.pet.quality}`">{{ detailModal.pet.displayStar }}星</span>
             <span class="mini-tag tag-time">孵化时长：{{ detailModal.pet.formattedTime }}</span>
           </div>
         </div>
@@ -176,7 +176,7 @@
         <div class="metrics-table">
           <div class="table-row">
             <span class="row-k">孵化时长</span>
-            <span class="row-v">{{ detailModal.pet.eggTimeMin }} 分钟 ({{ detailModal.pet.formattedTime }})</span>
+            <span class="row-v">{{ detailModal.pet.formattedTime }}</span>
           </div>
           <div class="table-row">
             <span class="row-k">出售金币</span>
@@ -205,22 +205,7 @@
         </div>
       </div>
 
-      <!-- Base Attributes -->
-      <div class="detail-section" v-if="detailModal.pet.hp">
-        <div class="section-title">基础属性</div>
-        <div class="attr-grid">
-          <div class="attr-cell"><span class="attr-k">生命</span><span class="attr-v">{{ detailModal.pet.hp }}</span></div>
-          <div class="attr-cell"><span class="attr-k">攻击</span><span class="attr-v">{{ detailModal.pet.atk }}</span></div>
-          <div class="attr-cell"><span class="attr-k">防御</span><span class="attr-v">{{ detailModal.pet.def }}</span></div>
-          <div class="attr-cell"><span class="attr-k">敏捷</span><span class="attr-v">{{ detailModal.pet.dex }}</span></div>
-        </div>
-      </div>
 
-      <!-- Description -->
-      <div class="detail-section">
-        <div class="section-title">图鉴描述</div>
-        <div class="section-content">{{ detailModal.pet.des }}</div>
-      </div>
     </BaseModal>
 
     <BackToTop scroll-container="#petTableGrid" />
@@ -316,13 +301,10 @@ const isDataReady = ref(false)
 const detailModal = ref({ visible: false, pet: {} })
 
 const formatEggTime = (seconds) => {
-  const totalMin = Math.round(seconds / 60)
-  if (totalMin < 60) {
-    return `${totalMin}分钟`
-  }
-  const hrs = Math.floor(totalMin / 60)
-  const mins = totalMin % 60
-  return mins > 0 ? `${hrs}小时${mins}分` : `${hrs}小时`
+  const mins = Math.floor(seconds / 60)
+  const secs = Math.floor(seconds % 60)
+  if (mins === 0) return `${secs}秒`
+  return secs > 0 ? `${mins}分钟${secs}秒` : `${mins}分钟`
 }
 
 const getFieldLabel = (key) => {
@@ -390,7 +372,7 @@ onMounted(async () => {
         name: p.name,
         star: p.star,
         displayStar,
-        rarityLevel: displayStar >= 5 ? 'SS' : (displayStar === 4 ? 'S' : 'A'),
+        quality: displayStar >= 5 ? 5 : (displayStar === 4 ? 4 : 3),
         des: p.des,
         eggTime: p.eggTime,
         eggTimeMin: Math.round(eggTimeMin * 10) / 10,

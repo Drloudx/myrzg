@@ -79,6 +79,7 @@ html, body {
 
   /* UI SVG 图标亮色模式滤镜 (将白色图标反转为黑色) */
   --icon-filter: invert(1);
+  --icon-filter1: none;
   
   --modal-bg: #ffffff;
   --modal-text: #0f172a;
@@ -94,6 +95,12 @@ html, body {
   --rarity-epic: #a855f7;
   --rarity-rare: #3b82f6;
   --rarity-common: #10b981;
+
+  /* 别名映射 (修复组件内未定义的警告) */
+  --bg-card: var(--card-bg);
+  --bg-color: var(--bg);
+  --bg-hover: var(--hover-bg);
+  --text-color: var(--text-main);
 }
 
 .dark-mode {
@@ -118,6 +125,7 @@ html, body {
 
   /* UI SVG 图标暗色模式滤镜 (保持白色图标原样) */
   --icon-filter: none;
+  --icon-filter1: invert(1);
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -375,20 +383,23 @@ h1, h2, h3, h4, h5, h6,
   color: #ffffff;
 }
 
-.badge-SS { background: var(--rarity-legend); }
-.badge-S { background: var(--rarity-epic); }
-.badge-A { background: var(--rarity-rare); }
-.badge-B { background: var(--rarity-common); }
+.badge-5 { background: #bd6a15; }
+.badge-4 { background: #8b2bba; }
+.badge-3 { background: #1a6da1; }
+.badge-2 { background: #2b8a2b; }
+.badge-1 { background: #666; }
 
-.rarity-bg-SS { background: var(--rarity-legend); }
-.rarity-bg-S { background: var(--rarity-epic); }
-.rarity-bg-A { background: var(--rarity-rare); }
-.rarity-bg-B { background: var(--rarity-common); }
+.rarity-bg-5 { background: #bd6a15; }
+.rarity-bg-4 { background: #8b2bba; }
+.rarity-bg-3 { background: #1a6da1; }
+.rarity-bg-2 { background: #2b8a2b; }
+.rarity-bg-1 { background: #666; }
 
-.rarity-text-SS { color: var(--rarity-legend); }
-.rarity-text-S { color: var(--rarity-epic); }
-.rarity-text-A { color: var(--rarity-rare); }
-.rarity-text-B { color: var(--rarity-common); }
+.quality-text-5 { color: #bd6a15 !important; }
+.quality-text-4 { color: #8b2bba !important; }
+.quality-text-3 { color: #1a6da1 !important; }
+.quality-text-2 { color: #2b8a2b !important; }
+.quality-text-1 { color: #666666 !important; }
 
 .mini-tag {
   padding: 1px 6px;

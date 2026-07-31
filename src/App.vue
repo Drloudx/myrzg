@@ -30,15 +30,15 @@
               </div>
               <div v-else class="search-result-list">
                 <div
-                  v-for="item in filteredSearchIndex.slice(0, 8)"
+                  v-for="item in filteredSearchIndex.slice(0, 15)"
                   :key="`${item.type}-${item.id}`"
                   class="search-result-item"
                   @click="handleSelectSearchResult(item)"
                 >
                   <span class="item-type-badge" :class="item.type">
-                    {{ item.type === 'role' ? '角色' : (item.type === 'equip' ? '装备' : (item.type === 'achievement' ? '成就' : (item.type === 'recipe' ? '料理' : '魔物蛋'))) }}
+                    {{ item.type === 'role' ? '角色' : (item.type === 'equip' ? '装备' : (item.type === 'achievement' ? '成就' : (item.type === 'recipe' ? '料理' : (item.type === 'item' ? '物品' : (item.type === 'pet' ? '魔物蛋' : (item.type === 'monster' ? '怪物' : '未知')))))) }}
                   </span>
-                  <span class="item-name" :class="`rarity-text-${item.rarityLevel}`">{{ item.name }}</span>
+                  <span class="item-name" :class="`quality-text-${item.quality}`">{{ item.name }}</span>
                   <div class="item-tags-flex" v-if="item.categoryTags && item.categoryTags.length">
                     <span v-for="tag in item.categoryTags" :key="tag" class="category-tag-pill">{{ tag }}</span>
                   </div>
@@ -121,15 +121,15 @@
               </div>
               <div v-else class="search-result-list">
                 <div
-                  v-for="item in filteredSearchIndex.slice(0, 8)"
+                  v-for="item in filteredSearchIndex.slice(0, 15)"
                   :key="`${item.type}-${item.id}`"
                   class="search-result-item"
                   @click="handleSelectSearchResult(item)"
                 >
                   <span class="item-type-badge" :class="item.type">
-                    {{ item.type === 'role' ? '角色' : (item.type === 'equip' ? '装备' : (item.type === 'achievement' ? '成就' : (item.type === 'recipe' ? '料理' : '魔物蛋'))) }}
+                    {{ item.type === 'role' ? '角色' : (item.type === 'equip' ? '装备' : (item.type === 'achievement' ? '成就' : (item.type === 'recipe' ? '料理' : (item.type === 'item' ? '物品' : (item.type === 'pet' ? '魔物蛋' : (item.type === 'monster' ? '怪物' : '未知')))))) }}
                   </span>
-                  <span class="item-name" :class="`rarity-text-${item.rarityLevel}`">{{ item.name }}</span>
+                  <span class="item-name" :class="`quality-text-${item.quality}`">{{ item.name }}</span>
                   <div class="item-tags-flex" v-if="item.categoryTags && item.categoryTags.length">
                     <span v-for="tag in item.categoryTags" :key="tag" class="category-tag-pill">{{ tag }}</span>
                   </div>
@@ -150,6 +150,12 @@
       </div>
 
       <main class="app-main" @click="isSearchOpen = false">
+        <!-- Global Item Detail Modal -->
+        <ItemDetailModal 
+          v-model:visible="itemModalState.visible" 
+          :item="itemModalState.item"
+          :categoryTree="itemModalState.categoryTree" 
+        />
         <router-view />
       </main>
 
@@ -166,7 +172,7 @@
 
     <!-- 侧边导航栏 -->
     <NavigationMenu :class="{ 'mobile-only': !isNative }" :is-open="isNavOpen" :menu-mode="menuMode" @close="isNavOpen = false" />
-
+      
     <!-- Hot Update Modal -->
     <UpdateModal ref="updateModalRef" />
     <MenuModeModal v-model="showMenuModeModal" v-model:mode="menuMode" />
@@ -198,7 +204,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Capacitor } from '@capacitor/core'
 import { App as CapApp } from '@capacitor/app'
@@ -210,6 +216,9 @@ import NoticeModal from './components/NoticeModal.vue'
 import VersionCheckModal from './components/VersionCheckModal.vue'
 import AboutModal from './components/AboutModal.vue'
 import BaseModal from './components/BaseModal.vue'
+import ItemDetailModal from './components/ItemDetailModal.vue'
+import { itemModalState, openItemDetail } from './utils/itemModalState'
+import { fetchItemData } from './utils/itemParser'
 
 import { isBlacklisted } from './config/blacklist.js'
 import { fetchWithFallback } from './utils/request.js'
@@ -353,10 +362,17 @@ const isIndexLoaded = ref(false)
 
 const pageTitle = computed(() => {
   if (route.path === '/equip') return '装备图鉴'
-  if (route.path === '/monsterseggs') return '魔物收益'
+  if (route.path === '/petseggs') return '魔物收益'
   if (route.path === '/achievement') return '成就查询'
   if (route.path === '/recipes') return '菜谱查询'
-  return '角色图鉴'
+  if (route.path === '/items') return '物品图鉴'
+  if (route.path === '/monsters') return '怪物图鉴'
+  if (route.path === '/rewards') return '奖励'
+
+
+
+
+  return '未知页面'
 })
 
 const fetchSearchIndex = async () => {
@@ -378,27 +394,64 @@ const handleSearchFocus = () => {
 const filteredSearchIndex = computed(() => {
   if (!globalQuery.value.trim()) return []
   const q = globalQuery.value.trim().toLowerCase()
-  const validTypes = ['recipe', 'achievement', 'pet']
-  return searchIndex.value.filter(item => 
+  const validTypes = ['recipe', 'achievement', 'pet', 'item', 'role', 'equip', 'monster']
+  const results = searchIndex.value.filter(item => 
     validTypes.includes(item.type) && 
     !isBlacklisted(item) && 
     item.keywords && 
     item.keywords.includes(q)
   )
+
+  // Sort results to prioritize exact matches and prefix matches
+  results.sort((a, b) => {
+    const aName = (a.name || '').toLowerCase()
+    const bName = (b.name || '').toLowerCase()
+    
+    const aExact = aName === q ? 1 : 0
+    const bExact = bName === q ? 1 : 0
+    if (aExact !== bExact) return bExact - aExact
+    
+    const aStarts = aName.startsWith(q) ? 1 : 0
+    const bStarts = bName.startsWith(q) ? 1 : 0
+    if (aStarts !== bStarts) return bStarts - aStarts
+    
+    const aContains = aName.includes(q) ? 1 : 0
+    const bContains = bName.includes(q) ? 1 : 0
+    if (aContains !== bContains) return bContains - aContains
+    
+    return 0
+  })
+
+  return results
 })
 
-const handleSelectSearchResult = (item) => {
+const handleSelectSearchResult = async (item) => {
   isSearchOpen.value = false
-  let targetPath = '/role'
-  if (item.type === 'equip') targetPath = '/equip'
-  else if (item.type === 'pet') targetPath = '/monsterseggs'
-  else if (item.type === 'achievement') targetPath = '/achievement'
-  else if (item.type === 'recipe') targetPath = '/recipes'
-  router.push({
-    path: targetPath,
-    query: { id: item.id, q: item.name }
-  })
-  globalQuery.value = ''
+  
+  // Force close any open modals by clearing query
+  await router.push({ path: route.path, query: {} })
+  
+  // Wait a short delay for closing animation, then open the new one
+  setTimeout(() => {
+    if (item.type === 'item') {
+      // If it's an item, add itemId to query while maintaining the current path
+      router.push({ query: { itemId: item.id } })
+      globalQuery.value = ''
+      return
+    }
+
+    let targetPath = '/'
+    if (item.type === 'pet') targetPath = '/petseggs'
+    else if (item.type === 'achievement') targetPath = '/achievement'
+    else if (item.type === 'recipe') targetPath = '/recipes'
+    else if (item.type === 'monster') targetPath = '/monsters'
+    
+    router.push({
+      path: targetPath,
+      query: { id: item.id, q: item.name }
+    })
+    globalQuery.value = ''
+  }, 150)
 }
 
 const syncNativeStatusBar = async (isDark) => {
@@ -460,6 +513,21 @@ onMounted(() => {
     })
   }
 })
+
+// 全局唤起监听
+watch(() => route.query.itemId, async (newId) => {
+  if (newId) {
+    try {
+      const { items, categoryTree } = await fetchItemData()
+      const item = items.find(i => i.typeId === newId)
+      if (item) {
+        openItemDetail(item, categoryTree)
+      }
+    } catch (e) {
+      console.error('Failed to global invoke item:', e)
+    }
+  }
+}, { immediate: true })
 </script>
 
 <style scoped>
@@ -613,7 +681,7 @@ onMounted(() => {
   flex-shrink: 0;
   background: var(--card-bg);
   border-bottom: 1px solid var(--border-color);
-  z-index: 800;
+  z-index: 10000;
   padding-top: var(--safe-top);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
@@ -737,7 +805,7 @@ onMounted(() => {
   border: 1px solid var(--border-color);
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  z-index: 1000;
+  z-index: 9000;
   max-height: 320px;
   overflow-y: auto;
 }
@@ -777,6 +845,8 @@ onMounted(() => {
   border-radius: 4px;
   font-size: 10px;
   font-weight: 700;
+  background: rgba(156, 163, 175, 0.12);
+  color: #6b7280;
 }
 
 .item-type-badge.role {
@@ -787,6 +857,11 @@ onMounted(() => {
 .item-type-badge.equip {
   background: rgba(147, 51, 234, 0.12);
   color: #9333ea;
+}
+
+.item-type-badge.item {
+  background: rgba(99, 102, 241, 0.12);
+  color: #6366f1;
 }
 
 .item-type-badge.pet {
@@ -802,6 +877,11 @@ onMounted(() => {
 .item-type-badge.recipe {
   background: rgba(245, 158, 11, 0.12);
   color: #f59e0b;
+}
+
+.item-type-badge.monster {
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
 }
 
 .item-name {

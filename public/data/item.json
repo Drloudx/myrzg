@@ -4751,7 +4751,7 @@
                     ],
                     "magicAtk":0,
                     "magicAtkPen":0,
-                    "cirtDam":0,
+                    "critDam":0,
                     "atkFloatMin":0,
                     "vampire":0,
                     "damAtkAddTypes":[
@@ -6078,7 +6078,7 @@
                 "position":1,
                 "unitData":{
                     "phyAtk":178,
-                    "cirtDam":4
+                    "critDam":4
                 },
                 "suitTypeId":""
             },
@@ -9340,7 +9340,7 @@
                 "equipLevel":5,
                 "position":3,
                 "unitData":{
-                    "cirtDam":4,
+                    "critDam":4,
                     "maxHp":522
                 },
                 "suitTypeId":"suit_510"
@@ -17737,7 +17737,7 @@
                     ],
                     "magicAtk":0,
                     "magicAtkPen":0,
-                    "cirtDam":0,
+                    "critDam":0,
                     "atkFloatMin":0,
                     "vampire":0,
                     "damAtkAddTypes":[
@@ -19238,7 +19238,7 @@
                 "equipLevel":2,
                 "position":3,
                 "unitData":{
-                    "cirtDam":4,
+                    "critDam":4,
                     "maxHp":522
                 },
                 "suitTypeId":"suit_210"
@@ -19871,7 +19871,7 @@
                     ],
                     "magicAtk":0,
                     "magicAtkPen":0,
-                    "cirtDam":0,
+                    "critDam":0,
                     "atkFloatMin":0,
                     "vampire":0,
                     "damAtkAddTypes":[
@@ -21469,7 +21469,7 @@
                     ],
                     "magicAtk":0,
                     "magicAtkPen":0,
-                    "cirtDam":0,
+                    "critDam":0,
                     "atkFloatMin":0,
                     "vampire":0,
                     "damAtkAddTypes":[
@@ -34120,7 +34120,7 @@
                 "position":1,
                 "unitData":{
                     "phyAtk":189,
-                    "cirtDam":5
+                    "critDam":5
                 },
                 "suitTypeId":""
             },
@@ -36119,7 +36119,7 @@
                     ],
                     "magicAtk":0,
                     "magicAtkPen":0,
-                    "cirtDam":0,
+                    "critDam":0,
                     "atkFloatMin":0,
                     "vampire":0,
                     "damAtkAddTypes":[
@@ -37743,7 +37743,7 @@
                 "equipLevel":1,
                 "position":3,
                 "unitData":{
-                    "cirtDam":5,
+                    "critDam":5,
                     "maxHp":598
                 },
                 "suitTypeId":"suit_110"
@@ -40234,7 +40234,7 @@
                     ],
                     "magicAtk":0,
                     "magicAtkPen":0,
-                    "cirtDam":0,
+                    "critDam":0,
                     "atkFloatMin":0,
                     "vampire":0,
                     "damAtkAddTypes":[

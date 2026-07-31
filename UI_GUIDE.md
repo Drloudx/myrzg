@@ -1,4 +1,4 @@
-# 🏰 秘境领主助手 UI 字典与 DRY 设计规范
+# 深歌小助手 UI 字典与 DRY 设计规范
 
 本指南旨在归纳项目中的全局通用 CSS 类名、CSS 变量 Token 字典以及基础 UI 组件规范，确保后续开发严格遵循 **DRY（Don't Repeat Yourself）** 原则，维护全站视觉体验的统一性与闭环。
 
@@ -210,9 +210,9 @@
 - 位于 [src/stores/appState.js](file:///e:/Desktop/html/myrzg/vue-myrzg/src/stores/appState.js)，使用 `pinia-plugin-persistedstate` 插件进行 LocalStorage 持久化。
 - 支持角色/装备收藏（`favoriteRoleIds`, `favoriteEquipIds`）、历史搜索记录（`recentSearches`）持久化存储。
 
-### 5. 魔物收益与孵化处置推荐 (Route: /monsterseggs)
-- 视图页面：[src/views/MonstersEggsView.vue](file:///e:/Desktop/html/myrzg/vue-myrzg/src/views/MonstersEggsView.vue)
-- 侧边栏导航：名称为 **魔物收益**，路由路径映射为 `/monsterseggs`，图标使用 `public/pet/eggs/pet_079.png`。
+### 5. 魔物收益与孵化处置推荐 (Route: /petseggs)
+- 视图页面：[src/views/petsEggsView.vue](file:///e:/Desktop/html/myrzg/vue-myrzg/src/views/petsEggsView.vue)
+- 侧边栏导航：名称为 **魔物收益**，路由路径映射为 `/petseggs`，图标使用 `public/pet/eggs/pet_079.png`。
 - 关联数据源：`public/data/pet.json` (32种魔物蛋数据)，蛋图标路径规则为 `public/pet/eggs/${pet.eggImg}.png`。
 - 顶部双行分段控制器布局 (Segmented Pill Track matching RecipesView & AchievementView)：
   - 第一行自适应分段栏：`【全部 | 金币池 | 氪金池 | 3星 | 4星 | 5星】` (`display: inline-flex; width: auto;`)
@@ -238,8 +238,6 @@
   - 道具 `items` $\rightarrow$ 动态图标路径 `/Common_ItemIcon/{typeId}.png`；
   - 隐藏名称提取：通过 `typeId` 去 `item.json` 查得道具名称存入 `rewardItemNames`，供内部及全局搜索匹配。
 - 顶部分段与搜索规范：
-  - 第一行【全部/冒险/探索/生活/隐藏】全宽胶囊分段栏；
-  - 第二行【全部/已收集/未收集】分段栏 + 右侧【已收集 XX / XX】计数；
   - 第三行全宽搜索栏，使用 `/public/ui/search.svg` SVG 矢量图标并匹配全局配色滤镜 `filter: var(--icon-filter)`。
 - 全局搜索定位响应：
   - [AchievementView.vue](file:///e:/Desktop/html/myrzg/vue-myrzg/src/views/AchievementView.vue) 监听 `route.query`，当从 Header 搜索结果点击成就时，重置过滤限制并滚动定位至目标成就卡片，触发 `.card-highlight-pulse` 高亮动画。
@@ -260,11 +258,6 @@
 - 全局分类标签规范 (.category-tag-pill)：
   - 搜索下拉菜单及食谱卡片标题旁统一使用强类型蓝调浮起标签样式：
     `color: var(--primary); background: #3b82f614; border: 1px solid #3b82f62e; border-radius: 4px; padding: 3px 10px; font-size: 11px; font-weight: 700; box-shadow: 0 1px 2px #00000005;`
-- 食材 ID 与名称静态强绑定映射表 (`INGREDIENT_NAME_MAP`)：
-  - `item_10006`: 兽肉 / `item_10016`: 猪腿骨 / `item_10024`: 面粉 / `item_10036`: 绿榛菇
-  - `item_10055`: 浆果 / `item_10056`: 野菜 / `item_10057`: 地菇 / `item_10088`: 岩盐
-  - `item_10089`: 风干肉 / `item_10090`: 果酱 / `item_10091`: 腌菜 / `item_10100`: 水露果
-  - `item_10101`: 魔爪贝 / `item_10111`: 黑森林松茸 / `item_10112`: 黑森林松茸干 / `item_10118`: 冰莲
 - 通用食材分类映射 (`GENERIC_FOOD_TYPE_MAP`)：`1` $\rightarrow$ 兽肉(`item_10006`)，`2` $\rightarrow$ 野菜(`item_10056`)，`3` $\rightarrow$ 浆果(`item_10055`)，`4` $\rightarrow$ 地菇(`item_10057`)。
 - 界面组件规范：
   - 料理图标：尺寸 `54px × 54px`（`.recipe-icon-wrapper`）；
@@ -304,3 +297,56 @@
    }
    ```
 5. App 启动时，`src/utils/hotupdate.js` 会自动比对版本并唤起 `UpdateModal.vue` 进行原生极速下载与重启覆盖。
+
+---
+
+## 八、 全局逻辑与组件规范 (New)
+
+### 1. 路由唤起与全局弹窗 (Global Modals via URL Query)
+为满足“外部组件/页面全局唤起详情页”的统一性，系统中涉及到图鉴详情（如物品、魔物）的交互，均采用 **URL Query 参数监听 + 全局/顶层弹窗** 的方案，避免路由直接跳转导致的页面状态丢失。
+- **参数标准**：
+  - 物品详情（全局通用）：使用 `?itemId=xxx` 作为关键字，由 `App.vue` 全局监听并弹出 `ItemDetailModal.vue`，彻底与其他页面的查询参数隔离。
+  - 其他独立模块（如成就、菜谱、魔物）：使用 `?id=xxx` 作为关键字，由各自对应的路由视图负责监听与定位。
+- **组件结构**：物品详情弹窗 `ItemDetailModal.vue` 放置在 `App.vue` 的 `<main class="app-main">` 核心内容区内部，保证它不会遮挡左侧全局侧边栏（电脑端）和顶部搜索栏，表现为仅占据右侧内容区的全屏覆盖形式。
+- **双向同步**：
+  1. 在列表视图（如 `ItemsView.vue`）中点击卡片时，使用 `router.push({ query: { ...route.query, itemId: item.id } })` 同步更新 URL，而不是直接去操作 Modal 的 `visible`。
+  2. 弹窗内的关闭按钮 (`handleClose`) 必须负责清除 URL 中的 `itemId` 参数 (`router.replace({ query: newQuery })`)，从而触发 Watcher 自动隐藏弹窗。
+  3. 顶层 Watcher（如 `App.vue` 中的 `watch(() => route.query.itemId)`）统一监听 `itemId` 变化，自动获取数据源并控制对应 Modal 的打开。
+
+### 2. 全局黑名单系统 (Global Blacklist)
+为了应对废弃数据和剧透内容，系统通过 `src/config/blacklist.js` 提供了全局黑名单过滤系统。
+- **支持规则**：支持通过物品/成就的 **ID 精确匹配**，或者 **名称关键词模糊匹配** 隐藏项目。
+- **生效范围**：打包脚本 `clean-data.js` 会自动在构建时过滤搜索索引；在前端列表页（如 `ItemsView.vue`）中，也应该将 `isBlacklisted(item)` 接入 `computed` 的过滤逻辑，保证数据列表层的彻底隐藏。
+
+### 3. 弹窗关闭按钮 UI (Close Button)
+为了与系统的原生感和简洁感保持统一，各种自定义 Modal 的右上角关闭按钮需遵循以下设计，不再使用圆形深色背景：
+```css
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: var(--text-sub, #64748b);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+}
+.close-btn:hover {
+  color: var(--primary, #3b82f6);
+  background-color: var(--bg-hover, rgba(0,0,0,0.05));
+}
+```
+HTML 字符统一使用较细的乘号 `✕` (U+2715) 而不是常规的 `×` (U+00D7)，并配合 `:hover` 进行主色提亮交互。
+
+pvp（挑战赛模块）核心关联路径,匹配与提取逻辑摘要
+兑换奖励,itemExchange ➔ consume & reward ➔ item,"匹配 category (pvp, s1 或 兑换) ➔ 提取 sort 及限购次数 ➔ 查 consume 获取消耗要求 ➔ 查 reward 获取奖励池。"
+段位奖励,reward ➔ pvp ➔ item,匹配 category (灰羽/黑羽等) ➔ 凭 Reward ID 查 pvp.json 获取段位名与排序(type) ➔ 查 reward 提取 ke 与 items。
+排名奖励,pvp ➔ reward ➔ item,遍历 pvp.json ➔ 提取名次区间 (start-end) ➔ 凭 reward 字段去 reward.json 提取具体掉落及概率。
+战斗胜负,reward ➔ item,强匹配固定 ID (pvpWin / pvpFailure) ➔ 直接解析 items 规则提取必掉/概率掉落物品及数量。

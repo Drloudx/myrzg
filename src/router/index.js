@@ -1,18 +1,18 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import MonstersEggsView from '../views/MonstersEggsView.vue'
+import PetsEggsView from '../views/PetsEggsView.vue'
 import AchievementView from '../views/AchievementView.vue'
 import RecipesView from '../views/RecipesView.vue'
-
+// Static import removed to allow dynamic import
 const routes = [
   {
     path: '/',
-    redirect: '/recipes'
+    redirect: '/items'
   },
 
   {
-    path: '/monsterseggs',
-    name: 'MonstersEggsView',
-    component: MonstersEggsView
+    path: '/petseggs',
+    name: 'PetsEggsView',
+    component: PetsEggsView
   },
   {
     path: '/achievement',
@@ -23,6 +23,21 @@ const routes = [
     path: '/recipes',
     name: 'RecipesView',
     component: RecipesView
+  },
+  {
+    path: '/items',
+    name: 'items',
+    component: () => import('../views/ItemsView.vue')
+  },
+  {
+    path: '/monsters',
+    name: 'monsters',
+    component: () => import('../views/MonstersView.vue')
+  },
+  {
+    path: '/rewards',
+    name: 'RewardsView',
+    component: () => import('../views/RewardsView.vue')
   }
 ]
 
