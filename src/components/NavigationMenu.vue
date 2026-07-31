@@ -45,7 +45,35 @@
               <span class="arrow">›</span>
             </div>
 
+            <div
+              class="side-item"
+              :class="{ active: currentRoute === '/items' }"
+              @click="handleNavigate('/items')"
+            >
+              <img :src="getImageUrl('/ui/item_00002.png')" class="icon-img game-sprite" />
+              <span class="item-name">物品图鉴</span>
+              <span class="arrow">›</span>
+            </div>
 
+            <div
+              class="side-item"
+              :class="{ active: currentRoute === '/monsters' }"
+              @click="handleNavigate('/monsters')"
+            >
+              <img :src="getImageUrl('/images/PicHandBookPanel/colect_mon_059.png')" class="icon-img game-sprite" />
+              <span class="item-name">怪物图鉴</span>
+              <span class="arrow">›</span>
+            </div>
+
+            <div
+              class="side-item"
+              :class="{ active: currentRoute === '/rewards' }"
+              @click="handleNavigate('/rewards')"
+            >
+              <img :src="getImageUrl('/ui/item_00002.png')" class="icon-img game-sprite" />
+              <span class="item-name">奖励</span>
+              <span class="arrow">›</span>
+            </div>
 
           </div>
         </div>
@@ -90,7 +118,32 @@
                   <img :src="getImageUrl('/ui/item_30047.png')" class="icon-img game-sprite" />
                   <span class="grid-item-name">菜谱查询</span>
                 </div>
+                <div
+                  class="grid-item"
+                  :class="{ active: currentRoute === '/items' }"
+                  @click="handleNavigate('/items')"
+                >
+                  <img :src="getImageUrl('/ui/item_00002.png')" class="icon-img game-sprite" />
+                  <span class="item-name">物品图鉴</span>
+                </div>
 
+                <div
+                  class="grid-item"
+                  :class="{ active: currentRoute === '/monsters' }"
+                  @click="handleNavigate('/monsters')"
+                >
+                  <img :src="getImageUrl('/images/PicHandBookPanel/colect_mon_059.png')" class="icon-img game-sprite" />
+                  <span class="item-name">怪物图鉴</span>
+                </div>
+
+                <div
+                  class="grid-item"
+                  :class="{ active: currentRoute === '/rewards' }"
+                  @click="handleNavigate('/rewards')"
+                >
+                  <img :src="getImageUrl('/ui/item_00002.png')" class="icon-img game-sprite" />
+                  <span class="item-name">奖励</span>
+                </div>
               </div>
             </div>
           </div>
@@ -130,7 +183,32 @@
                   <img :src="getImageUrl('/ui/item_30047.png')" class="icon-img game-sprite" />
                   <span class="grid-item-name">菜谱查询</span>
                 </div>
+                <div
+              class="grid-item"
+              :class="{ active: currentRoute === '/items' }"
+              @click="handleNavigate('/items')"
+            >
+              <img :src="getImageUrl('/ui/item_00002.png')" class="icon-img game-sprite" />
+              <span class="item-name">物品图鉴</span>
+            </div>
 
+            <div
+              class="grid-item"
+              :class="{ active: currentRoute === '/monsters' }"
+              @click="handleNavigate('/monsters')"
+            >
+              <img :src="getImageUrl('/images/PicHandBookPanel/colect_mon_059.png')" class="icon-img game-sprite" />
+              <span class="item-name">怪物图鉴</span>
+            </div>
+
+            <div
+              class="grid-item"
+              :class="{ active: currentRoute === '/rewards' }"
+              @click="handleNavigate('/rewards')"
+            >
+              <img :src="getImageUrl('/ui/item_00002.png')" class="icon-img game-sprite" />
+              <span class="item-name">奖励</span>
+            </div>
               </div>
             </div>
           </div>

@@ -76,7 +76,6 @@
                   <span class="ing-count">× {{ ing.count }}</span>
                 </div>
               </div>
-              <button class="go-recipe-btn" @click="goRecipeSearch">跳转食谱页面</button>
             </div>
             
             <!-- Preview Image -->
@@ -403,7 +402,10 @@ const handleSourceClick = (src) => {
     
     if (src.type === 'monster') targetPath = '/monsters'
     else if (src.type === 'achievement') targetPath = '/achievements'
-    else if (src.type === 'recipe') targetPath = '/items'
+    else if (src.type === 'recipe') {
+      targetPath = '/recipes'
+      targetQuery = { id: src.id || '' }
+    }
     else if (src.type === 'pvp') {
       targetPath = '/rewards'
       targetQuery = { id: src.id || '' }

@@ -6,7 +6,7 @@ import RecipesView from '../views/RecipesView.vue'
 const routes = [
   {
     path: '/',
-    redirect: '/items'
+    redirect: '/recipes'
   },
 
   {
