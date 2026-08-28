@@ -1,0 +1,9210 @@
+{
+  "datas": {
+    "fav_hero_009_3": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_050_5": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_009_4": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "驿站旅店"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_37": {
+      "name": "神匠之塔 37层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 37 层"
+            }
+          ]
+        }
+      ]
+    },
+    "s_1_failTask": {
+      "name": "驿站训练场",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_exp_2": {
+      "name": "战斗训练2",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "古院训练场"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_4_a": {
+      "name": "3-4 塞瓦圣路",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "湿地通路"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_49": {
+      "name": "神匠之塔 49层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 49 层"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_carriage_1": {
+      "name": "护送马车",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "崎岖山路"
+            }
+          ]
+        }
+      ]
+    },
+    "c0_1_a": {
+      "name": "邂逅",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_39": {
+      "name": "神匠之塔 39层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 39 层"
+            }
+          ]
+        }
+      ]
+    },
+    "sp1_10_a": {
+      "name": "sp1_10 城主的研究室",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "城主的研究室"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_ex2": {
+      "name": "圣女的决意",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "圣女的决意"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_29": {
+      "name": "神匠之塔 29层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 29 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_2_b": {
+      "name": "3-2 仪式准备",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "渔场野路"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_ex4": {
+      "name": "艾茵的报答",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "艾茵的报答"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_1_c": {
+      "name": "3-1 溢水商路",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "尾指村外围"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_exp_5": {
+      "name": "战斗训练5",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "霜烬平原训练场"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_002_5": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_049_4": {
+      "name": "我有预感……！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "索利德山地·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_7": {
+      "name": "神匠之塔 7层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 7 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_025_2": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_d2_d": {
+      "name": "采石场·噩梦",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "采石场·噩梦"
+            },
+            {
+              "name": "采石场·噩梦"
+            },
+            {
+              "name": "采石场·噩梦"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_064_5": {
+      "name": "真的帮大忙啦！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_6_b": {
+      "name": "2-6 被囚禁的学者",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "采石场通路"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_015_1": {
+      "name": "希望你能欢迎我",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_d3_2": {
+      "name": "遗迹·功能部",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "遗迹·功能部"
+            },
+            {
+              "name": "遗迹·功能部"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_68": {
+      "name": "神匠之塔 68层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 68 层"
+            }
+          ]
+        }
+      ]
+    },
+    "aseyj_6": {
+      "name": "安瑟恩遗迹六层（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第6层"
+            },
+            {
+              "name": "第6层"
+            },
+            {
+              "name": "第6层"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_1_b": {
+      "name": "2-1 狂野的白兔",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "登山营地"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_2_a": {
+      "name": "3-2 仪式准备",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "渔场野路"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_3_a": {
+      "name": "1-3 比试",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_033_2": {
+      "name": "委托训练计划",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "求生者草原·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_062_2": {
+      "name": "马上过来的说！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_73": {
+      "name": "神匠之塔 73层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 73 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_11_a": {
+      "name": "2-11 逆流天河",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "升降梯"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_064_3": {
+      "name": "我迫不及待啦！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "求生者草原·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_14_a": {
+      "name": "1-14 观星高地",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "红石道途"
+            }
+          ]
+        }
+      ]
+    },
+    "sldsd_anxtyj": {
+      "name": "阿娜希塔遗迹（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_63": {
+      "name": "神匠之塔 63层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 63 层"
+            }
+          ]
+        }
+      ]
+    },
+    "main_zy3": {
+      "name": "营地周边",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地突围战"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_8_c": {
+      "name": "2-8 破败古院",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "山路"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_d4_d": {
+      "name": "遗迹·噩梦",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "遗迹·噩梦"
+            },
+            {
+              "name": "遗迹·噩梦"
+            },
+            {
+              "name": "遗迹·噩梦"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_023_2": {
+      "name": "过往的阴霾",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_007_1": {
+      "name": "难以解决的困扰",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "驿站旅店"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_mine_1_2": {
+      "name": "水火结晶一层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_food_2": {
+      "name": "山野觅食2",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "岩壁山路"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_ex4": {
+      "name": "融合的真相",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "融合的真相"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_1_b": {
+      "name": "1-1 阻击",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "农庄小道"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_064_1": {
+      "name": "马上就到你那！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "求生者草原·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "sp2_d_2": {
+      "name": "sp2_d_2 阿莎·瓦希什塔的秘境·王城区",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_60": {
+      "name": "神匠之塔 60层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 60 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_029_2": {
+      "name": "在想了在想了！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "灾害研究所"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_033_1": {
+      "name": "背上的角猪",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "sp2_d_3": {
+      "name": "sp2_d_3 阿莎·瓦希什塔的秘境·中枢区",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_019_3": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_051_3": {
+      "name": "你真是位天才！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_4_a": {
+      "name": "4-4 菌菇小径",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_011_5": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_031_2": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_1_c": {
+      "name": "1-1 阻击",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "农庄小道"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_007_3": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "拉碧丝的宿舍"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_10_c": {
+      "name": "1-10 蛇腹矿坑",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "矿洞内部"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_011_4": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_ex0": {
+      "name": "村外的喧嚣声",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "村外的喧嚣声"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_027_4": {
+      "name": "你的专属侍者",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "魔爪湖畔·大市集"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_045_5": {
+      "name": "过往的影子",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "驿站旅店"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_9_a": {
+      "name": "3-9 魔爪蛇窟",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "郊外野地"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_019_4": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_15": {
+      "name": "神匠之塔 15层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 15 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_d2_1": {
+      "name": "遗迹·岩壳层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "遗迹·岩壳层"
+            },
+            {
+              "name": "遗迹·岩壳层"
+            }
+          ]
+        }
+      ]
+    },
+    "test_tower1": {
+      "name": "普通爬塔",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_5_c": {
+      "name": "1-5 秘径",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "角布林营地外围"
+            }
+          ]
+        }
+      ]
+    },
+    "sp1_3_a": {
+      "name": "sp1_3 隐秘暗道",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "隐秘暗道"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_ex6": {
+      "name": "雷之试炼",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "雷之试炼"
+            }
+          ]
+        }
+      ]
+    },
+    "yzdj_2": {
+      "name": "地窖·表层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "地窖·表层"
+            },
+            {
+              "name": "地窖·表层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_049_3": {
+      "name": "棘手的问题",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "索利德山地·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_027_5": {
+      "name": "成为侍者的原因",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "驿站旅店"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_d1_ex": {
+      "name": "伊菲卡温泉谷·雾中碑林",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_5_b": {
+      "name": "1-5 秘径",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "角布林营地外围"
+            }
+          ]
+        }
+      ]
+    },
+    "sp2_1_a": {
+      "name": "sp2_1 营地外野",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_053_3": {
+      "name": "得想些别的办法",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "魔爪湖畔·大市集"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_d1_2": {
+      "name": "采石场·输送部",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "采石场·输送部"
+            },
+            {
+              "name": "采石场·输送部"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_005_3": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_55": {
+      "name": "神匠之塔 55层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 55 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_045_2": {
+      "name": "好吃的蘑菇",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "yzdj_1_new": {
+      "name": "地窖深处一层（弃）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第一层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_045_3": {
+      "name": "天降雷电",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_9_b": {
+      "name": "2-9 禅心林",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "禅心林"
+            }
+          ]
+        },
+        {
+          "layerDatas": [
+            {
+              "name": "古院后山"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_70": {
+      "name": "神匠之塔 70层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 70 层"
+            }
+          ]
+        }
+      ]
+    },
+    "sldsd_csc_1": {
+      "name": "采石场一层（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            },
+            {
+              "name": "第1层"
+            },
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c00_0": {
+      "name": "驿站地窖深处",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "aseyj_5": {
+      "name": "安瑟恩遗迹五层（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第5层"
+            },
+            {
+              "name": "第5层"
+            },
+            {
+              "name": "第5层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_012_3": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_051_5": {
+      "name": "太感谢你了！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_ex4": {
+      "name": "玛姬救援战",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "玛姬救援战"
+            }
+          ]
+        }
+      ]
+    },
+    "towerBattleTestBoss2b": {
+      "name": "测试爬塔3_boss血量",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_11_a": {
+      "name": "3-11 市政厅强攻战",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "藏身处"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_036_5": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_055_5": {
+      "name": "明星的过往",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "秋日荒野·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_019_5": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_ex1": {
+      "name": "剑拔弩张",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "剑拔弩张"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_055_3": {
+      "name": "诅咒之魔剑",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地中心·工坊"
+            }
+          ]
+        }
+      ]
+    },
+    "sfkk_1_shuihuo": {
+      "name": "蛇腹矿坑1层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            },
+            {
+              "name": "第1层"
+            },
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_026_1": {
+      "name": "家族振兴计划",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_10": {
+      "name": "神匠之塔 10层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 10 层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_59": {
+      "name": "神匠之塔 59层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 59 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_6_a": {
+      "name": "4-6 腐臭林地",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_carriage_2": {
+      "name": "护送马车",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "湿地通路"
+            }
+          ]
+        }
+      ]
+    },
+    "sldsd_anxtyj_1": {
+      "name": "阿娜希塔遗迹一层（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            },
+            {
+              "name": "第1层"
+            },
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c0_6_a": {
+      "name": "0-5 回忆",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "神秘空间"
+            }
+          ]
+        },
+        {
+          "layerDatas": [
+            {
+              "name": "角布林巢穴"
+            }
+          ]
+        }
+      ]
+    },
+    "sldsd_csc_2": {
+      "name": "采石场二层（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第2层"
+            },
+            {
+              "name": "第2层"
+            },
+            {
+              "name": "第2层"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_8_a": {
+      "name": "1-8 磨牙溪谷",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "溪谷小径"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_58": {
+      "name": "神匠之塔 58层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 58 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_007_5": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "驿站旅店"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_14_a": {
+      "name": "5-14 灰烬荒野",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_ex5": {
+      "name": "新的哈比繁育地",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "新的哈比繁育地"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_005_4": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_d2_2": {
+      "name": "遗迹·熔结层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "遗迹·熔结层"
+            },
+            {
+              "name": "遗迹·熔结层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_062_1": {
+      "name": "大危机的说！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "pata": {
+      "name": "爬塔测试",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_023_5": {
+      "name": "完美的料理课",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "test_allBoss": {
+      "name": "BOSS房间集合",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_1_a": {
+      "name": "5-1 巴诺姆南郊",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_d1_3": {
+      "name": "遗迹·底栖带",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "遗迹·底栖带"
+            },
+            {
+              "name": "遗迹·底栖带"
+            },
+            {
+              "name": "遗迹·底栖带"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_26": {
+      "name": "神匠之塔 26层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 26 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_5_a": {
+      "name": "2-5 岩蟾蜍洞窟",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "岩蟾蜍洞窟"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_8_a": {
+      "name": "4-8 一路向西",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_065_5": {
+      "name": "阿姨拜托了……",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "驿站旅店"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_009_5": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_041_4": {
+      "name": "难解的误会",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "魔爪湖畔·大市集"
+            }
+          ]
+        },
+        {
+          "layerDatas": [
+            {
+              "name": "魔爪湖畔·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "yzdj_1": {
+      "name": "地窖深处一层（弃）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第一层"
+            },
+            {
+              "name": "第一层"
+            },
+            {
+              "name": "第一层"
+            }
+          ]
+        },
+        {
+          "layerDatas": []
+        },
+        {
+          "layerDatas": []
+        }
+      ]
+    },
+    "c2_7_b": {
+      "name": "2-7 天梯之下",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "山路"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_18": {
+      "name": "神匠之塔 18层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 18 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_d4": {
+      "name": "遗迹·中枢部",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "遗迹·中枢部"
+            },
+            {
+              "name": "遗迹·中枢部"
+            },
+            {
+              "name": "遗迹·中枢部"
+            }
+          ]
+        }
+      ]
+    },
+    "yzdj_3": {
+      "name": "地窖·中层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "地窖·中层"
+            },
+            {
+              "name": "地窖·中层"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_4_a": {
+      "name": "5-4 箴言冰路",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_1_a": {
+      "name": "2-1 狂野的白兔",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "登山营地"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_2_a": {
+      "name": "5-2 书香雪径",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_5_a": {
+      "name": "1-5 秘径",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "角布林营地外围"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_d2_2": {
+      "name": "遗迹·根系部",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "遗迹·根系部"
+            },
+            {
+              "name": "遗迹·根系部"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_014_2": {
+      "name": "抓住那些老伙伴",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "索利德山地·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "main_zy7": {
+      "name": "封闭采石场",
+      "para": {
+        "movieMode": false
+      },
+      "layers": []
+    },
+    "c3_7_b": {
+      "name": "3-7 繁荣之下",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "大市集巷弄"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_ex3": {
+      "name": "翻涌的暗流",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "翻涌的暗流"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_d2_3_d": {
+      "name": "浴池·噩梦",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "浴池·噩梦"
+            },
+            {
+              "name": "浴池·噩梦"
+            },
+            {
+              "name": "浴池·噩梦"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_14": {
+      "name": "神匠之塔 14层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 14 层"
+            }
+          ]
+        }
+      ]
+    },
+    "yzdj_battle1_SpBattle": {
+      "name": "地窖的清洁工作",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "地窖一层"
+            }
+          ]
+        },
+        {
+          "layerDatas": [
+            {
+              "name": "地窖二层"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_5_a": {
+      "name": "3-5 献水圣坛保卫战",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "献水圣坛前"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_48": {
+      "name": "神匠之塔 48层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 48 层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_12": {
+      "name": "神匠之塔 12层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 12 层"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_equipExp_2": {
+      "name": "铸晶石开采二层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_ex5": {
+      "name": "商人追捕作战",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "商人追捕作战"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_046_4": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_food_3": {
+      "name": "山野觅食3",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "湿地湖边"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_3_b": {
+      "name": "2-3 崖边的金鹿",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "上山之路"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_65": {
+      "name": "神匠之塔 65层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 65 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_10_a": {
+      "name": "5-10 冻雾岭",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_ex2": {
+      "name": "悲怆之丘",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        },
+        {
+          "layerDatas": [
+            {
+              "name": "第2层"
+            }
+          ]
+        },
+        {
+          "layerDatas": [
+            {
+              "name": "第3层"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_5_c": {
+      "name": "2-5 岩蟾蜍洞窟",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "岩蟾蜍洞窟"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_51": {
+      "name": "神匠之塔 51层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 51 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_023_3": {
+      "name": "被逆转的身份",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "索利德山地·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_36": {
+      "name": "神匠之塔 36层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 36 层"
+            }
+          ]
+        }
+      ]
+    },
+    "sldsd_csc_5": {
+      "name": "采石场五层（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第5层"
+            },
+            {
+              "name": "第5层"
+            },
+            {
+              "name": "第5层"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_1_c": {
+      "name": "2-1 狂野的白兔",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "登山营地"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_029_5": {
+      "name": "真的太激动了！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_mine_1_1": {
+      "name": "风地结晶一层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_8_c": {
+      "name": "1-8 磨牙溪谷",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "溪谷小径"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_24": {
+      "name": "神匠之塔 24层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 24 层"
+            }
+          ]
+        }
+      ]
+    },
+    "aseyj_3": {
+      "name": "遗迹深处三层（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第3层"
+            },
+            {
+              "name": "第3层"
+            },
+            {
+              "name": "第3层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_015_4": {
+      "name": "如果你喜欢的话",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_3_b": {
+      "name": "1-3 比试",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_d2_3": {
+      "name": "遗迹·心之圣所",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "遗迹·心之圣所"
+            },
+            {
+              "name": "遗迹·心之圣所"
+            },
+            {
+              "name": "遗迹·心之圣所"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_4_a": {
+      "name": "2-4 背叛者的结局",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "裂口山路"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_71": {
+      "name": "神匠之塔 71层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 71 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_4_c": {
+      "name": "3-4 塞瓦圣路",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "湿地通路"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_herb_2": {
+      "name": "巡山采药2",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "药草矿洞"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_17": {
+      "name": "神匠之塔 17层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 17 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_015_2": {
+      "name": "想给我看什么呢",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "隐居者的药田"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_065_4": {
+      "name": "大事不好了！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地小屋"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_011_3": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_012_2": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_mine_3_2": {
+      "name": "水火结晶三层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_7_a": {
+      "name": "2-7 天梯之下",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "山路"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_d2": {
+      "name": "采石场·采掘部",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "采石场·采掘部"
+            },
+            {
+              "name": "采石场·采掘部"
+            },
+            {
+              "name": "采石场·采掘部"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_mine_2_1": {
+      "name": "风地结晶二层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_064_2": {
+      "name": "已经等不及啦！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "sldsd_csc_4": {
+      "name": "采石场四层（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第4层"
+            },
+            {
+              "name": "第4层"
+            },
+            {
+              "name": "第4层"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_3_a": {
+      "name": "5-3 学识之道",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_3_c": {
+      "name": "3-3 三指木桥",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "三指木桥周边"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_6_a": {
+      "name": "1-6 夹击",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "角布林营地"
+            }
+          ]
+        }
+      ]
+    },
+    "sldsd_anxtyj_5": {
+      "name": "阿娜希塔遗迹五层（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第5层"
+            },
+            {
+              "name": "第5层"
+            },
+            {
+              "name": "第5层"
+            }
+          ]
+        }
+      ]
+    },
+    "main_start_bak": {
+      "name": "营地防卫战（备份）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "角布林巢穴"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_041_5": {
+      "name": "篝火前的誓言",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_7_a": {
+      "name": "4-7 凋朽幽谷",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "yzdj_sc1": {
+      "name": "古代地窖深层-1（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_12_b": {
+      "name": "3-12 通往真相之路",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "郊外野地"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_16": {
+      "name": "神匠之塔 16层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 16 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_033_4": {
+      "name": "心境训练",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地小屋"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_4_b": {
+      "name": "1-4 种子",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "村庄外围"
+            }
+          ]
+        }
+      ]
+    },
+    "dpsTest": {
+      "name": "dps测试",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_mine_3_1": {
+      "name": "风地结晶三层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_13": {
+      "name": "神匠之塔 13层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 13 层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_78": {
+      "name": "神匠之塔 78层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 78 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_027_2": {
+      "name": "驿站打工记",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "驿站旅店"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_76": {
+      "name": "神匠之塔 76层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 76 层"
+            }
+          ]
+        }
+      ]
+    },
+    "sp1_11_a": {
+      "name": "sp1_11 最后的觐见回廊",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "觐见回廊"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_008_3": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "求生者草原·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_026_2": {
+      "name": "采购！采购！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_047_2": {
+      "name": "消灭那头大角猪",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "求生者草原·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_034_3": {
+      "name": "神奇的睡眠魔法",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地小屋"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_1_a": {
+      "name": "3-1 溢水商路",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "尾指村外围"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_8": {
+      "name": "神匠之塔 8层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 8 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_7_a": {
+      "name": "5-7 霜岩平原",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_026_4": {
+      "name": "失败的宣传",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "求生者草原·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_12_a": {
+      "name": "5-12 石火通路",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "yzdj_5": {
+      "name": "地窖深处三层（弃）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第三层"
+            },
+            {
+              "name": "第三层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_037_2": {
+      "name": "共涤心魔",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "索利德山地·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_22": {
+      "name": "神匠之塔 22层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 22 层"
+            }
+          ]
+        }
+      ]
+    },
+    "aseyj_3_zhuxianEnd": {
+      "name": "安瑟恩遗迹：匠器之间（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_38": {
+      "name": "神匠之塔 38层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 38 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_6_a": {
+      "name": "3-6 四指湖岸",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "三指木桥"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_12_b": {
+      "name": "1-12 大修行所",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "修行所"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_047_3": {
+      "name": "哈比蛋来了",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_050_3": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_10_a": {
+      "name": "2-10 哈比繁育地",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "红晶山林"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_043_5": {
+      "name": "无法摆脱的印记",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_10_c": {
+      "name": "3-10 昨日之敌",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "郊外野地"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_5_b": {
+      "name": "3-5 献水圣坛保卫战",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "献水圣坛前"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_036_4": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "sp1_1_a": {
+      "name": "sp1_1 垂暮泥地",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "魔爪湖畔"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_10_c": {
+      "name": "2-10 哈比繁育地",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "红晶山林"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_12_a": {
+      "name": "1-12 大修行所",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "修行所"
+            }
+          ]
+        }
+      ]
+    },
+    "main_zy6": {
+      "name": "叛徒的下场",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_79": {
+      "name": "神匠之塔 79层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 79 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_046_1": {
+      "name": "糊涂的矿工",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_3": {
+      "name": "神匠之塔 3层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 3 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_026_3": {
+      "name": "大小姐的种田课",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_2_a": {
+      "name": "2-2 自卫团",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "山腰道路"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_9": {
+      "name": "神匠之塔 9层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 9 层"
+            }
+          ]
+        }
+      ]
+    },
+    "sldsd_csc_6": {
+      "name": "采石场六层（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第6层"
+            },
+            {
+              "name": "第6层"
+            },
+            {
+              "name": "第6层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_055_2": {
+      "name": "后辈的成长",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        },
+        {
+          "layerDatas": [
+            {
+              "name": "秋日荒野·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_d1_2": {
+      "name": "遗迹·深水带",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "遗迹·深水带"
+            },
+            {
+              "name": "遗迹·深水带"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_herb_1": {
+      "name": "巡山采药",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "药草山林"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_015_5": {
+      "name": "托付给你的东西",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "隐居者的药田"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_4_a": {
+      "name": "1-4 种子",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "村庄外围"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_050_4": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_4_c": {
+      "name": "2-4 背叛者的结局",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "裂口山路"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_2_c": {
+      "name": "1-2 人情味",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "荒野郊外"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_75": {
+      "name": "神匠之塔 75层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 75 层"
+            }
+          ]
+        }
+      ]
+    },
+    "sp2_4_a": {
+      "name": "sp2_4 深夜中的阴谋",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "towerBattleTestBoss1": {
+      "name": "测试爬塔2_boss击杀数量",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_9_b": {
+      "name": "3-9 魔爪蛇窟",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "郊外野地"
+            }
+          ]
+        }
+      ]
+    },
+    "test_tower4": {
+      "name": "破坏爬塔",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_20": {
+      "name": "神匠之塔 20层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 20 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_15_c": {
+      "name": "1-15 兽潮",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "观星高地外围"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_80": {
+      "name": "神匠之塔 80层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 80 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_065_1": {
+      "name": "畅饮之旅",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "驿站旅店"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_d2_3": {
+      "name": "遗迹·地核层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "遗迹·地核层"
+            },
+            {
+              "name": "遗迹·地核层"
+            },
+            {
+              "name": "遗迹·地核层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_026_5": {
+      "name": "为了复兴而前行",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_066_5": {
+      "name": "这次是认真的！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_d3": {
+      "name": "遗迹·上层部",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "遗迹·上层部"
+            },
+            {
+              "name": "遗迹·上层部"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_8_b": {
+      "name": "2-8 破败古院",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "山路"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_014_1": {
+      "name": "善良的陷阱",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_mine_1": {
+      "name": "元素石采集",
+      "para": {
+        "movieMode": false
+      },
+      "layers": []
+    },
+    "fav_hero_034_5": {
+      "name": "露帕的宝藏",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "魔爪湖畔·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_11_a": {
+      "name": "5-11 寒霜山道",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "sldsd_anxtyj_4": {
+      "name": "阿娜希塔遗迹四层（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第4层"
+            },
+            {
+              "name": "第4层"
+            },
+            {
+              "name": "第4层"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_d1_1": {
+      "name": "遗迹·浅水带",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "遗迹·浅水带"
+            },
+            {
+              "name": "遗迹·浅水带"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_exp_4": {
+      "name": "战斗训练4",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "黑森林训练场"
+            }
+          ]
+        }
+      ]
+    },
+    "sp2_3_a": {
+      "name": "sp2_3 黏滑溪谷·外围",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_8_a": {
+      "name": "2-8 破败古院",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "山路"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_d2_3": {
+      "name": "浴池·转化部",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "浴池·转化部"
+            },
+            {
+              "name": "浴池·转化部"
+            },
+            {
+              "name": "浴池·转化部"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_6_b": {
+      "name": "3-6 四指湖岸",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "三指木桥"
+            }
+          ]
+        }
+      ]
+    },
+    "aseyj_main_01": {
+      "name": "遗迹·入口部",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "遗迹·入口部"
+            },
+            {
+              "name": "遗迹·入口部"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_9_b": {
+      "name": "1-9 追痕索迹",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "荒野之路"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_72": {
+      "name": "神匠之塔 72层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 72 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_025_5": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_050_1": {
+      "name": "来自山上的朋友",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_041_3": {
+      "name": "剑侠之梦",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "魔爪湖畔·贫民街"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_005_1": {
+      "name": "忙碌的侍者",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "驿站旅店"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_d2_3_d": {
+      "name": "遗迹·噩梦",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "遗迹·噩梦"
+            },
+            {
+              "name": "遗迹·噩梦"
+            },
+            {
+              "name": "遗迹·噩梦"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_9_c": {
+      "name": "1-9 追痕索迹",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "荒野之路"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_6_c": {
+      "name": "1-6 夹击",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "角布林营地"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_7_c": {
+      "name": "1-7 中央锻炉",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "锻炉外围"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_2_b": {
+      "name": "1-2 人情味",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "荒野郊外"
+            }
+          ]
+        }
+      ]
+    },
+    "c0_3_a": {
+      "name": "0-2 追索",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "追索之路"
+            }
+          ]
+        }
+      ]
+    },
+    "sp1_9_a": {
+      "name": "sp1_9 岁月沉淀的画廊",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "岁月沉淀的画廊"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_30": {
+      "name": "神匠之塔 30层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 30 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_10_b": {
+      "name": "3-10 昨日之敌",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "郊外野地"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_ex3": {
+      "name": "最盛大的宴席",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_043_3": {
+      "name": "摘寻野外药草",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "求生者草原·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_ex1": {
+      "name": "贫民街的暴行",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "贫民街的暴行"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_11": {
+      "name": "神匠之塔 11层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 11 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_066_3": {
+      "name": "会不会成功呢？",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "魔爪湖畔·尾指村"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_049_5": {
+      "name": "尘埃落定了……",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_055_1": {
+      "name": "狂热的崇拜者",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_11_c": {
+      "name": "3-11 市政厅强攻战",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "藏身处"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_62": {
+      "name": "神匠之塔 62层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 62 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_012_4": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_019_1": {
+      "name": "逃家者的新住所",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_062_3": {
+      "name": "有进展了的说？",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "秋日荒野·风车小镇"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_011_1": {
+      "name": "迷糊小笨蛋",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "求生者草原·野外"
+            }
+          ]
+        },
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_8_c": {
+      "name": "3-8 逃亡之旅",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "大市集郊外"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_015_3": {
+      "name": "为了报答你",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "隐居者的药田"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_69": {
+      "name": "神匠之塔 69层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 69 层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_47": {
+      "name": "神匠之塔 47层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 47 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_12_a": {
+      "name": "3-12 通往真相之路",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "郊外野地"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_d1_2": {
+      "name": "温泉谷·养生区",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "温泉谷·养生区"
+            },
+            {
+              "name": "温泉谷·养生区"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_6_a": {
+      "name": "2-6 被囚禁的学者",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "采石场通路"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_025_3": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "sldsd_anxtyj_zhuxianend": {
+      "name": "阿娜希塔遗迹匠器之间（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_34": {
+      "name": "神匠之塔 34层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 34 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_15_b": {
+      "name": "1-15 兽潮",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "观星高地外围"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_066_1": {
+      "name": "营地的奇妙之处",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_051_2": {
+      "name": "谢谢你的关心！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_6_a": {
+      "name": "5-6 冰棱台地",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_002_4": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_029_3": {
+      "name": "真没有在催你！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地小屋"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_2_b": {
+      "name": "2-2 自卫团",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "山腰道路"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_049_2": {
+      "name": "狩猎即将开始",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "索利德山地·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_10_b": {
+      "name": "1-10 蛇腹矿坑",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "矿洞内部"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_014_4": {
+      "name": "改过自新的旧友",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_43": {
+      "name": "神匠之塔 43层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 43 层"
+            }
+          ]
+        }
+      ]
+    },
+    "towerBattleTestNormal": {
+      "name": "测试爬塔1_普通关卡",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_5_c": {
+      "name": "3-5 献水圣坛保卫战",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "献水圣坛前"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_029_4": {
+      "name": "祝福一切顺利！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地小屋"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_033_3": {
+      "name": "洞穴遇险",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "求生者草原·野外"
+            }
+          ]
+        },
+        {
+          "layerDatas": [
+            {
+              "name": "求生者草原·洞窟"
+            }
+          ]
+        },
+        {
+          "layerDatas": [
+            {
+              "name": "求生者草原·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_d1_1": {
+      "name": "菌林·枯萎边境",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "菌林·枯萎边境"
+            },
+            {
+              "name": "菌林·枯萎边境"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_12_b": {
+      "name": "2-12 山神之路",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "山顶"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_11_b": {
+      "name": "3-11 市政厅强攻战",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "藏身处"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_4": {
+      "name": "神匠之塔 4层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 4 层"
+            }
+          ]
+        }
+      ]
+    },
+    "yzdj_4": {
+      "name": "地窖深处第四层（弃）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第四层"
+            },
+            {
+              "name": "第四层"
+            },
+            {
+              "name": "第四层"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_ex2": {
+      "name": "遗迹开拓部",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "遗迹开拓部"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_herb_3": {
+      "name": "巡山采药3",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "藤蔓雨林"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_3_a": {
+      "name": "4-3 金弦门庭",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_67": {
+      "name": "神匠之塔 67层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 67 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_9_a": {
+      "name": "1-9 追痕索迹",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "荒野之路"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_12_c": {
+      "name": "3-12 通往真相之路",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "郊外野地"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_2": {
+      "name": "神匠之塔 2层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 2 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_11_b": {
+      "name": "2-11 逆流天河",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "升降梯"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_023_4": {
+      "name": "阻止那群强者",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "索利德山地·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "text_dpstest": {
+      "name": "dps对比战役",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_034_4": {
+      "name": "变强的意志",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "求生者草原·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_036_3": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_ex4": {
+      "name": "开始吧！魔宠对决",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_1": {
+      "name": "神匠之塔 1层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 1 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_031_1": {
+      "name": "贵族的工具",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_14_c": {
+      "name": "1-14 观星高地",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "红石道途"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_ex1": {
+      "name": "魔女的居所",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "sp1_8_a": {
+      "name": "sp1_8 沉寂的会客大厅",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "会客大厅"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_5_a": {
+      "name": "4-5 庄园保卫战",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_equipExp_1": {
+      "name": "铸晶石开采一层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_065_3": {
+      "name": "来帮阿姨个忙？",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "旧日修行所·入口"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_3_b": {
+      "name": "3-3 三指木桥",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "三指木桥周边"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_5_a": {
+      "name": "5-5 凛冽溪谷",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_ex1": {
+      "name": "雪夜中的寒芒",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        },
+        {
+          "layerDatas": [
+            {
+              "name": "第2层"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_4_c": {
+      "name": "1-4 种子",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "村庄外围"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_7_a": {
+      "name": "3-7 繁荣之下",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "大市集巷弄"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_3_a": {
+      "name": "2-3 崖边的金鹿",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "上山之路"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_2_a": {
+      "name": "1-2 人情味",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "荒野郊外"
+            }
+          ]
+        }
+      ]
+    },
+    "ehpTest": {
+      "name": "ehp测试",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c0_4_a": {
+      "name": "0-3 狂乱",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "巢穴外围"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_ex1": {
+      "name": "往日的阴影",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "往日的阴影"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_3_a": {
+      "name": "3-3 三指木桥",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "三指木桥周边"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_009_1": {
+      "name": "紧、紧急求助！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_051_4": {
+      "name": "有点担心你……",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地小屋"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_66": {
+      "name": "神匠之塔 66层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 66 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_046_3": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_40": {
+      "name": "神匠之塔 40层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 40 层"
+            }
+          ]
+        }
+      ]
+    },
+    "npctest": {
+      "name": "临时测试npc外观动画",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_15_a": {
+      "name": "5-15 达卡拉狭路",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_046_5": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_064_4": {
+      "name": "是什么方案呢？",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地中心·工坊"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_12_c": {
+      "name": "1-12 大修行所",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "修行所"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_54": {
+      "name": "神匠之塔 54层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 54 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_008_2": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "求生者草原·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_4_b": {
+      "name": "3-4 塞瓦圣路",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "湿地通路"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_2_c": {
+      "name": "2-2 自卫团",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "山腰道路"
+            }
+          ]
+        }
+      ]
+    },
+    "aseyj_main_03": {
+      "name": "遗迹·核心部",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "遗迹·核心部"
+            },
+            {
+              "name": "遗迹·核心部"
+            },
+            {
+              "name": "遗迹·核心部"
+            }
+          ]
+        }
+      ]
+    },
+    "sfkk_1": {
+      "name": "蛇腹矿坑1层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_053_1": {
+      "name": "不知如何开口……",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_7_a": {
+      "name": "1-7 中央锻炉",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "锻炉外围"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_19": {
+      "name": "神匠之塔 19层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 19 层"
+            }
+          ]
+        }
+      ]
+    },
+    "sp1_5_a": {
+      "name": "sp1_5 垂直通路",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "垂直通路"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_d1_3": {
+      "name": "温泉谷·度假区",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "温泉谷·度假区"
+            },
+            {
+              "name": "温泉谷·度假区"
+            },
+            {
+              "name": "温泉谷·度假区"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_9_a": {
+      "name": "2-9 禅心林",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "禅心林"
+            }
+          ]
+        },
+        {
+          "layerDatas": [
+            {
+              "name": "古院后山"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_d2_1": {
+      "name": "遗迹·枝干部",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "遗迹·枝干部"
+            },
+            {
+              "name": "遗迹·枝干部"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_exp_3": {
+      "name": "战斗训练3",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "尾指村训练场"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_5": {
+      "name": "神匠之塔 5层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 5 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_014_5": {
+      "name": "信任的火焰",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "索利德山地·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_043_1": {
+      "name": "交流制药经验",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_037_1": {
+      "name": "炼气士的到访",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_029_1": {
+      "name": "救命啊救命啊！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c00_0_a": {
+      "name": "遗迹深处",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_d1_3_d": {
+      "name": "遗迹·噩梦",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "遗迹·噩梦"
+            },
+            {
+              "name": "遗迹·噩梦"
+            },
+            {
+              "name": "遗迹·噩梦"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_6": {
+      "name": "神匠之塔 6层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 6 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_043_2": {
+      "name": "驿站的生意",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "驿站旅店"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_009_2": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "驿站旅店"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_d1_2": {
+      "name": "菌林·秘藏酒场",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "菌林·秘藏酒场"
+            },
+            {
+              "name": "菌林·秘藏酒场"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_74": {
+      "name": "神匠之塔 74层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 74 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_012_5": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_008_1": {
+      "name": "不能错过的机会",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_9_a": {
+      "name": "4-9 荆棘前庭",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "sldsd_csc_3": {
+      "name": "采石场三层（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第3层"
+            },
+            {
+              "name": "第3层"
+            },
+            {
+              "name": "第3层"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_10_a": {
+      "name": "1-10 蛇腹矿坑",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "矿洞内部"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_10_a": {
+      "name": "4-10 辛普拉的花圃",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_007_4": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "驿站旅店"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_3_c": {
+      "name": "1-3 比试",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_066_4": {
+      "name": "怎么会这样呢？",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地小屋"
+            }
+          ]
+        }
+      ]
+    },
+    "sp1_6_a": {
+      "name": "sp1_6 古堡中庭",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "古堡中庭"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_047_4": {
+      "name": "与哈比蛋告别",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "索利德山地·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "yzdj_main": {
+      "name": "地窖·大扫除",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "地窖·大扫除"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_066_2": {
+      "name": "第一站去哪里！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "驿站旅店"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_002_2": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_33": {
+      "name": "神匠之塔 33层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 33 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_14_a": {
+      "name": "4-14 禁林深处",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_062_4": {
+      "name": "要输了的说！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "灾害研究所"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_d1_3": {
+      "name": "菌林·癫狂之缘",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "菌林·癫狂之缘"
+            },
+            {
+              "name": "菌林·癫狂之缘"
+            },
+            {
+              "name": "菌林·癫狂之缘"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_1_a": {
+      "name": "1-1 阻击",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "农庄小道"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_14_b": {
+      "name": "1-14 观星高地",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "红石道途"
+            }
+          ]
+        }
+      ]
+    },
+    "aseyj_main_03_d": {
+      "name": "遗迹·噩梦",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "遗迹·噩梦"
+            },
+            {
+              "name": "遗迹·噩梦"
+            },
+            {
+              "name": "遗迹·噩梦"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_3_c": {
+      "name": "2-3 崖边的金鹿",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "上山之路"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_57": {
+      "name": "神匠之塔 57层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 57 层"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_food_4": {
+      "name": "山野觅食4",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "黑森林"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_6_c": {
+      "name": "3-6 四指湖岸",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "三指木桥"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_1_a": {
+      "name": "4-1 森林边缘",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c0_2_a": {
+      "name": "0-1 食材准备",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "求生者小道"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_ex2": {
+      "name": "两人的心意",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        },
+        {
+          "layerDatas": [
+            {
+              "name": "第2层"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_13_a": {
+      "name": "1-13 迷途",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "修行所北"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_13_c": {
+      "name": "1-13 迷途",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "修行所北"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_31": {
+      "name": "神匠之塔 31层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 31 层"
+            }
+          ]
+        }
+      ]
+    },
+    "sp1_2_a": {
+      "name": "sp1_2 古堡前庭",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "古堡前庭"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_014_3": {
+      "name": "激情的灰霾岁月",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "sp2_2_a": {
+      "name": "sp2_2 黏滑溪谷·丘陵",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "sfkk_1_zhuxian": {
+      "name": "蛇腹矿坑1层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_045_1": {
+      "name": "被小鸟缠上了",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_d2_3_d": {
+      "name": "遗迹·噩梦",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "遗迹·噩梦"
+            },
+            {
+              "name": "遗迹·噩梦"
+            },
+            {
+              "name": "遗迹·噩梦"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_25": {
+      "name": "神匠之塔 25层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 25 层"
+            }
+          ]
+        }
+      ]
+    },
+    "test_tower2": {
+      "name": "保护爬塔",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_53": {
+      "name": "神匠之塔 53层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 53 层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_23": {
+      "name": "神匠之塔 23层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 23 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_d2_2": {
+      "name": "浴池·净化部",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "浴池·净化部"
+            },
+            {
+              "name": "浴池·净化部"
+            }
+          ]
+        }
+      ]
+    },
+    "sldsd_anxtyj_3": {
+      "name": "阿娜希塔遗迹三层（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第3层"
+            },
+            {
+              "name": "第3层"
+            },
+            {
+              "name": "第3层"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_11_a": {
+      "name": "1-11 冒失的学徒",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "白树坡地"
+            }
+          ]
+        }
+      ]
+    },
+    "aseyj_1": {
+      "name": "遗迹深处一层（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            },
+            {
+              "name": "第1层"
+            },
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "sldsd_anxtyj_2": {
+      "name": "阿娜希塔遗迹二层（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第2层"
+            },
+            {
+              "name": "第2层"
+            },
+            {
+              "name": "第2层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_28": {
+      "name": "神匠之塔 28层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 28 层"
+            }
+          ]
+        }
+      ]
+    },
+    "main_start_beifen": {
+      "name": "神秘遗迹",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "神秘遗迹"
+            }
+          ]
+        },
+        {
+          "layerDatas": [
+            {
+              "name": "求生者草原"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_12_a": {
+      "name": "4-12 礼颂之道",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "sfkk_1_fengdi": {
+      "name": "蛇腹矿坑2层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第2层"
+            },
+            {
+              "name": "第2层"
+            },
+            {
+              "name": "第2层"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_food_1": {
+      "name": "山野觅食",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "林地猎场"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_52": {
+      "name": "神匠之塔 52层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 52 层"
+            }
+          ]
+        }
+      ]
+    },
+    "main_zy5": {
+      "name": "废村惊魂夜",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_041_2": {
+      "name": "休息时间",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "魔爪湖畔·大市集"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_041_1": {
+      "name": "遇到了瓶颈",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "魔爪湖畔·大市集"
+            }
+          ]
+        }
+      ]
+    },
+    "main_zy4": {
+      "name": "角布林盘踞地",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "角布林巢穴"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_9_c": {
+      "name": "2-9 禅心林",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "禅心林"
+            }
+          ]
+        },
+        {
+          "layerDatas": [
+            {
+              "name": "古院后山"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_61": {
+      "name": "神匠之塔 61层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 61 层"
+            }
+          ]
+        }
+      ]
+    },
+    "aseyj_2": {
+      "name": "遗迹深处二层（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第2层"
+            },
+            {
+              "name": "第2层"
+            },
+            {
+              "name": "第2层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_019_2": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_56": {
+      "name": "神匠之塔 56层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 56 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_027_3": {
+      "name": "驿站的厨艺比赛",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "驿站旅店"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_27": {
+      "name": "神匠之塔 27层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 27 层"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_equipExp_4": {
+      "name": "铸晶石开采四层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_046_2": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_036_2": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_carriage_3": {
+      "name": "护送马车",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "黑森林通路"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_062_5": {
+      "name": "成功了的说！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_ex7": {
+      "name": "追上贝拉多娜",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "追上贝拉多娜"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_13_b": {
+      "name": "1-13 迷途",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "修行所北"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_043_4": {
+      "name": "制药师的施舍",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "秋日荒野·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_002_1": {
+      "name": "我在草原捡垃圾",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "求生者草原·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_ex3": {
+      "name": "大书院旅舍房间",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_8_b": {
+      "name": "3-8 逃亡之旅",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "大市集郊外"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_12_a": {
+      "name": "2-12 山神之路",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "山顶"
+            }
+          ]
+        }
+      ]
+    },
+    "towerBattleTestBoss2a": {
+      "name": "测试爬塔3_boss血量",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "sp2_5_a": {
+      "name": "sp2_5 追寻德莉",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_11_c": {
+      "name": "2-11 逆流天河",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "升降梯"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_031_3": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c00_1": {
+      "name": "邂逅",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "求生者草原"
+            }
+          ]
+        }
+      ]
+    },
+    "sfkk_2": {
+      "name": "蛇腹矿坑2层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第2层"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_13_a": {
+      "name": "4-13 魂灵圣域",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_11_c": {
+      "name": "1-11 冒失的学徒",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "白树坡地"
+            }
+          ]
+        }
+      ]
+    },
+    "sp1_4_a": {
+      "name": "sp1_4 阴森地牢",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "阴森地牢"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_ex6": {
+      "name": "洞穴勘测",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "洞穴勘测"
+            }
+          ]
+        },
+        {
+          "layerDatas": [
+            {
+              "name": "洞穴深处"
+            }
+          ]
+        }
+      ]
+    },
+    "test_tower3": {
+      "name": "修复爬塔",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "yzdj_battle1": {
+      "name": "地窖的清洁工作",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "地窖一层"
+            }
+          ]
+        },
+        {
+          "layerDatas": [
+            {
+              "name": "地窖二层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_053_4": {
+      "name": "或许我们还可以",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "大市集·民居"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_d2_ex": {
+      "name": "哈玛塔坎遗迹·匠器之间",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_002_3": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_32": {
+      "name": "神匠之塔 32层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 32 层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_45": {
+      "name": "神匠之塔 45层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 45 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_9_a": {
+      "name": "5-9 南部冰原",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_exp_1": {
+      "name": "战斗训练",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "角布林斗技场"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_031_5": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_049_1": {
+      "name": "难以启齿的请求",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_5_b": {
+      "name": "2-5 岩蟾蜍洞窟",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "岩蟾蜍洞窟"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_055_4": {
+      "name": "对决魔剑！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "秋日荒野·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_mine_2_2": {
+      "name": "水火结晶二层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_053_2": {
+      "name": "请给我一些勇气",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "艾伦瑟的故居"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_8_b": {
+      "name": "1-8 磨牙溪谷",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "溪谷小径"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_15_a": {
+      "name": "4-15 巨木之口",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "sldsd_csc": {
+      "name": "采石场（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "yzdj_6_d": {
+      "name": "地窖·噩梦",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "地窖·噩梦"
+            },
+            {
+              "name": "地窖·噩梦"
+            },
+            {
+              "name": "地窖·噩梦"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_025_1": {
+      "name": "深渊之旅第一站",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_d1_1": {
+      "name": "温泉谷·迎宾区",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "温泉谷·迎宾区"
+            },
+            {
+              "name": "温泉谷·迎宾区"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_35": {
+      "name": "神匠之塔 35层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 35 层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_77": {
+      "name": "神匠之塔 77层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 77 层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_025_4": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_023_1": {
+      "name": "心不在焉的料理",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_10_b": {
+      "name": "2-10 哈比繁育地",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "红晶山林"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_008_4": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "驿站旅店"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_047_5": {
+      "name": "哈比的报恩",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_011_2": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_034_2": {
+      "name": "甜品审核员",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "main_zy8": {
+      "name": "哈比繁育地",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_005_2": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_012_1": {
+      "name": "第一次共同狩猎",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "求生者草原·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "sub_c1_failTask": {
+      "name": "战斗训练场",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "驿站训练场"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_034_1": {
+      "name": "休息的地方",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地小屋"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_9_c": {
+      "name": "3-9 魔爪蛇窟",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "郊外野地"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_1_b": {
+      "name": "3-1 溢水商路",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "尾指村外围"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_d1_3_d": {
+      "name": "温泉谷·噩梦",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "温泉谷·噩梦"
+            },
+            {
+              "name": "温泉谷·噩梦"
+            },
+            {
+              "name": "温泉谷·噩梦"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_053_5": {
+      "name": "可以依靠你吗？",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "sldsd_anxtyj_6": {
+      "name": "阿娜希塔遗迹六层（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第6层"
+            },
+            {
+              "name": "第6层"
+            },
+            {
+              "name": "第6层"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_13_a": {
+      "name": "5-13 火龙峰顶",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_ex3": {
+      "name": "维丝的秘密基地",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "维丝的秘密基地"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_42": {
+      "name": "神匠之塔 42层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 42 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c5_8_a": {
+      "name": "5-8 涌泉客道",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "sp1_12_a": {
+      "name": "sp1_12 幽夜大君之间",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "幽夜大君之间"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_050_2": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_065_2": {
+      "name": "真是失态……",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地小屋"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_d1_3_d": {
+      "name": "菌林·噩梦",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "菌林·噩梦"
+            },
+            {
+              "name": "菌林·噩梦"
+            },
+            {
+              "name": "菌林·噩梦"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_2_a": {
+      "name": "4-2 樵夫之憩",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        },
+        {
+          "layerDatas": [
+            {
+              "name": "第2层"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_10_a": {
+      "name": "3-10 昨日之敌",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "郊外野地"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_027_1": {
+      "name": "侍者领班来营地",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c0_5_a": {
+      "name": "0-4 连结",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "角布林巢穴"
+            }
+          ]
+        }
+      ]
+    },
+    "sp1_7_a": {
+      "name": "sp1_7 门厅连廊",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "门厅连廊"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_031_4": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_carriage_4": {
+      "name": "护送马车",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "霜烬平原通路"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_2_c": {
+      "name": "3-2 仪式准备",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "渔场野路"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_7_b": {
+      "name": "1-7 中央锻炉",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "锻炉外围"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_007_2": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "求生者草原·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_4_b": {
+      "name": "2-4 背叛者的结局",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "裂口山路"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_033_5": {
+      "name": "随溪水而去",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "求生者草原·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "aseyj_4": {
+      "name": "安瑟恩遗迹四层（停用）",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第4层"
+            },
+            {
+              "name": "第4层"
+            },
+            {
+              "name": "第4层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_051_1": {
+      "name": "实在太忙了……",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_7_c": {
+      "name": "3-7 繁荣之下",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "大市集巷弄"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_equipExp_3": {
+      "name": "铸晶石开采三层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_008_5": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_11_b": {
+      "name": "1-11 冒失的学徒",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "白树坡地"
+            }
+          ]
+        }
+      ]
+    },
+    "sp2_6_a": {
+      "name": "sp2_6 祖基尼追击战",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_037_4": {
+      "name": "了此一端",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "观星高地"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_21": {
+      "name": "神匠之塔 21层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 21 层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_44": {
+      "name": "神匠之塔 44层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 44 层"
+            }
+          ]
+        }
+      ]
+    },
+    "yzdj_6": {
+      "name": "地窖·深层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "地窖·深层"
+            },
+            {
+              "name": "地窖·深层"
+            },
+            {
+              "name": "地窖·深层"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_6_b": {
+      "name": "1-6 夹击",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "角布林营地"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_ex3": {
+      "name": "巴诺姆村口",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "巴诺姆村口"
+            }
+          ]
+        }
+      ]
+    },
+    "aseyj_main_02": {
+      "name": "遗迹·构装部",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "遗迹·构装部"
+            },
+            {
+              "name": "遗迹·构装部"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_ex4": {
+      "name": "悲怆之丘",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "sp2_d_1": {
+      "name": "sp2_d_1 阿莎·瓦希什塔的秘境·外环区",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_ex5": {
+      "name": "警告芭杜尔",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_047_1": {
+      "name": "小鬼的对决",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_045_4": {
+      "name": "暴雨下的相谈",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "求生者草原·野外"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_037_3": {
+      "name": "镇魔之期",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "魔爪湖畔·大市集"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_8_a": {
+      "name": "3-8 逃亡之旅",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "大市集郊外"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_64": {
+      "name": "神匠之塔 64层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 64 层"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_41": {
+      "name": "神匠之塔 41层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 41 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_ex2": {
+      "name": "破败古院",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "破败古院"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_6_c": {
+      "name": "2-6 被囚禁的学者",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "采石场通路"
+            }
+          ]
+        }
+      ]
+    },
+    "test_BOSS": {
+      "name": "test_BOSS",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_036_1": {
+      "name": "终于有时间啦！",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_12_c": {
+      "name": "2-12 山神之路",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "山顶"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_46": {
+      "name": "神匠之塔 46层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 46 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c3_d2_1": {
+      "name": "浴池·溶洞部",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "浴池·溶洞部"
+            },
+            {
+              "name": "浴池·溶洞部"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_7_c": {
+      "name": "2-7 天梯之下_c",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "山路"
+            }
+          ]
+        }
+      ]
+    },
+    "main_start": {
+      "name": "邂逅",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "求生者草原"
+            }
+          ]
+        }
+      ]
+    },
+    "c2_d1": {
+      "name": "采石场·坑道部",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "采石场·坑道部"
+            },
+            {
+              "name": "采石场·坑道部"
+            }
+          ]
+        }
+      ]
+    },
+    "tower1_50": {
+      "name": "神匠之塔 50层",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第 50 层"
+            }
+          ]
+        }
+      ]
+    },
+    "c1_15_a": {
+      "name": "1-15 兽潮",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "观星高地外围"
+            }
+          ]
+        }
+      ]
+    },
+    "c4_11_a": {
+      "name": "4-11 巨枭栖木",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_005_5": {
+      "name": "待修改",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "第1层"
+            }
+          ]
+        }
+      ]
+    },
+    "daily_food_5": {
+      "name": "山野觅食5",
+      "para": {
+        "movieMode": false
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "霜烬平原"
+            }
+          ]
+        }
+      ]
+    },
+    "fav_hero_037_5": {
+      "name": "近况如何？",
+      "para": {
+        "movieMode": true
+      },
+      "layers": [
+        {
+          "layerDatas": [
+            {
+              "name": "营地门前"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

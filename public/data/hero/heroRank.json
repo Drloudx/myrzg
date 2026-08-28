@@ -1,0 +1,304 @@
+{
+	"heroRank": {
+		"0": {
+			"heroMaxLevel": 10,
+			"rank": 0,
+			"rankDesc": "品阶零",
+			"favlimit": 100,
+			"upgradeConsume": {
+				"1": {
+					"1": "heroRand031",
+					"2": "heroRand032",
+					"3": "heroRand033",
+					"4": "heroRand034",
+					"5": "heroRand035",
+					"6": "heroRand036"
+				},
+				"2": {
+					"1": "heroRand031",
+					"2": "heroRand032",
+					"3": "heroRand033",
+					"4": "heroRand034",
+					"5": "heroRand035",
+					"6": "heroRand036"
+				},
+				"3": {
+					"1": "heroRand031",
+					"2": "heroRand032",
+					"3": "heroRand033",
+					"4": "heroRand034",
+					"5": "heroRand035",
+					"6": "heroRand036"
+				},
+				"4": {
+					"1": "heroRand041",
+					"2": "heroRand042",
+					"3": "heroRand043",
+					"4": "heroRand044",
+					"5": "heroRand045",
+					"6": "heroRand046"
+				},
+				"5": {
+					"1": "heroRand051",
+					"2": "heroRand052",
+					"3": "heroRand053",
+					"4": "heroRand054",
+					"5": "heroRand055",
+					"6": "heroRand056"
+				}
+			},
+			"upgradePlayerLevel": 10,
+			"attUp": 0.15
+		},
+		"1": {
+			"rank": 1,
+			"heroMaxLevel": 20,
+			"rankDesc": "品阶一",
+			"favlimit": 200,
+			"upgradeConsume": {
+				"1": {
+					"1": "heroRand131",
+					"2": "heroRand132",
+					"3": "heroRand133",
+					"4": "heroRand134",
+					"5": "heroRand135",
+					"6": "heroRand136"
+				},
+				"2": {
+					"1": "heroRand131",
+					"2": "heroRand132",
+					"3": "heroRand133",
+					"4": "heroRand134",
+					"5": "heroRand135",
+					"6": "heroRand136"
+				},
+				"3": {
+					"1": "heroRand131",
+					"2": "heroRand132",
+					"3": "heroRand133",
+					"4": "heroRand134",
+					"5": "heroRand135",
+					"6": "heroRand136"
+				},
+				"4": {
+					"1": "heroRand141",
+					"2": "heroRand142",
+					"3": "heroRand143",
+					"4": "heroRand144",
+					"5": "heroRand145",
+					"6": "heroRand146"
+				},
+				"5": {
+					"1": "heroRand151",
+					"2": "heroRand152",
+					"3": "heroRand153",
+					"4": "heroRand154",
+					"5": "heroRand155",
+					"6": "heroRand156"
+				}
+			},
+			"upgradePlayerLevel": 20,
+			"attUp": 0.15
+		},
+		"2": {
+			"rank": 2,
+			"heroMaxLevel": 30,
+			"rankDesc": "品阶二",
+			"favlimit": 300,
+			"upgradeConsume": {
+				"1": {
+					"1": "heroRand231",
+					"2": "heroRand232",
+					"3": "heroRand233",
+					"4": "heroRand234",
+					"5": "heroRand235",
+					"6": "heroRand236"
+				},
+				"2": {
+					"1": "heroRand231",
+					"2": "heroRand232",
+					"3": "heroRand233",
+					"4": "heroRand234",
+					"5": "heroRand235",
+					"6": "heroRand236"
+				},
+				"3": {
+					"1": "heroRand231",
+					"2": "heroRand232",
+					"3": "heroRand233",
+					"4": "heroRand234",
+					"5": "heroRand235",
+					"6": "heroRand236"
+				},
+				"4": {
+					"1": "heroRand241",
+					"2": "heroRand242",
+					"3": "heroRand243",
+					"4": "heroRand244",
+					"5": "heroRand245",
+					"6": "heroRand246"
+				},
+				"5": {
+					"1": "heroRand251",
+					"2": "heroRand252",
+					"3": "heroRand253",
+					"4": "heroRand254",
+					"5": "heroRand255",
+					"6": "heroRand256"
+				}
+			},
+			"upgradePlayerLevel": 30,
+			"attUp": 0.15
+		},
+		"3": {
+			"rank": 3,
+			"heroMaxLevel": 40,
+			"rankDesc": "品阶3",
+			"favlimit": 300,
+			"upgradeConsume": {
+				"1": {
+					"1": "heroRand231",
+					"2": "heroRand232",
+					"3": "heroRand233",
+					"4": "heroRand234",
+					"5": "heroRand235",
+					"6": "heroRand236"
+				},
+				"2": {
+					"1": "heroRand231",
+					"2": "heroRand232",
+					"3": "heroRand233",
+					"4": "heroRand234",
+					"5": "heroRand235",
+					"6": "heroRand236"
+				},
+				"3": {
+					"1": "heroRand231",
+					"2": "heroRand232",
+					"3": "heroRand233",
+					"4": "heroRand234",
+					"5": "heroRand235",
+					"6": "heroRand236"
+				},
+				"4": {
+					"1": "heroRand241",
+					"2": "heroRand242",
+					"3": "heroRand243",
+					"4": "heroRand244",
+					"5": "heroRand245",
+					"6": "heroRand246"
+				},
+				"5": {
+					"1": "heroRand251",
+					"2": "heroRand252",
+					"3": "heroRand253",
+					"4": "heroRand254",
+					"5": "heroRand255",
+					"6": "heroRand256"
+				}
+			},
+			"upgradePlayerLevel": 40,
+			"attUp": 0.15
+		},
+		"4": {
+			"rank": 4,
+			"heroMaxLevel": 50,
+			"rankDesc": "品阶4",
+			"favlimit": 300,
+			"upgradeConsume": {
+				"1": {
+					"1": "heroRand231",
+					"2": "heroRand232",
+					"3": "heroRand233",
+					"4": "heroRand234",
+					"5": "heroRand235",
+					"6": "heroRand236"
+				},
+				"2": {
+					"1": "heroRand231",
+					"2": "heroRand232",
+					"3": "heroRand233",
+					"4": "heroRand234",
+					"5": "heroRand235",
+					"6": "heroRand236"
+				},
+				"3": {
+					"1": "heroRand231",
+					"2": "heroRand232",
+					"3": "heroRand233",
+					"4": "heroRand234",
+					"5": "heroRand235",
+					"6": "heroRand236"
+				},
+				"4": {
+					"1": "heroRand241",
+					"2": "heroRand242",
+					"3": "heroRand243",
+					"4": "heroRand244",
+					"5": "heroRand245",
+					"6": "heroRand246"
+				},
+				"5": {
+					"1": "heroRand251",
+					"2": "heroRand252",
+					"3": "heroRand253",
+					"4": "heroRand254",
+					"5": "heroRand255",
+					"6": "heroRand256"
+				}
+			},
+			"upgradePlayerLevel": 50,
+			"attUp": 0.15
+		},
+		"5": {
+			"rank": 5,
+			"heroMaxLevel": 60,
+			"rankDesc": "品阶5",
+			"favlimit": 300,
+			"upgradeConsume": {
+				"1": {
+					"1": "heroRand231",
+					"2": "heroRand232",
+					"3": "heroRand233",
+					"4": "heroRand234",
+					"5": "heroRand235",
+					"6": "heroRand236"
+				},
+				"2": {
+					"1": "heroRand231",
+					"2": "heroRand232",
+					"3": "heroRand233",
+					"4": "heroRand234",
+					"5": "heroRand235",
+					"6": "heroRand236"
+				},
+				"3": {
+					"1": "heroRand231",
+					"2": "heroRand232",
+					"3": "heroRand233",
+					"4": "heroRand234",
+					"5": "heroRand235",
+					"6": "heroRand236"
+				},
+				"4": {
+					"1": "heroRand241",
+					"2": "heroRand242",
+					"3": "heroRand243",
+					"4": "heroRand244",
+					"5": "heroRand245",
+					"6": "heroRand246"
+				},
+				"5": {
+					"1": "heroRand251",
+					"2": "heroRand252",
+					"3": "heroRand253",
+					"4": "heroRand254",
+					"5": "heroRand255",
+					"6": "heroRand256"
+				}
+			},
+			"upgradePlayerLevel": 60,
+			"attUp": 0.15
+		}
+	}
+}

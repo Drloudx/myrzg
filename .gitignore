@@ -1,21 +1,34 @@
 # 依赖缓存
-node\_modules/
-node\_modules/\*\*/build/
-node\_modules/.vite/
+node_modules/
+node_modules/**/build/
+node_modules/.vite/
 
 # 前端打包产物
 dist/
 
 # Android原生编译缓存
-android/\*\*/build/
+android/**/build/
 android/.gradle/
 android/gradle/wrapper/
 android/app/build/
 
 # 备份、临时文件
-android\_backup/
-\*.log
-.DS\_Store
+android_backup/
+*.log
+.DS_Store
 
 # Vite缓存
 .vite/
+
+# Python相关
+# 所有__pycache__编译缓存文件夹（各个子目录包括测试工具里面的都忽略）
+__pycache__/
+# pyc/pyo/pyd 编译字节码文件
+*.py[cod]
+*$py.class
+# Python虚拟环境
+.venv/
+venv/
+# pytest等工具缓存
+.pytest_cache/
+.coverage

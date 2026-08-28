@@ -1250,86 +1250,6 @@
     "keywords": "继承信念之人 成就 攻略黑涧浴池后，目睹圣女的伟大牺牲。 契约书"
   },
   {
-    "id": "20116",
-    "type": "achievement",
-    "name": "坐牢模拟器",
-    "rarity": "普通",
-    "rarityLevel": "B",
-    "category": "冒险",
-    "subTag": "在黑森林边境被护林人逮捕入狱。",
-    "keywords": "坐牢模拟器 成就 在黑森林边境被护林人逮捕入狱。 "
-  },
-  {
-    "id": "20117",
-    "type": "achievement",
-    "name": "菌毯清洁大师",
-    "rarity": "普通",
-    "rarityLevel": "B",
-    "category": "冒险",
-    "subTag": "深入垂死菌林，阻止蕈人散播腐化魔法。",
-    "keywords": "菌毯清洁大师 成就 深入垂死菌林，阻止蕈人散播腐化魔法。 特别招待券"
-  },
-  {
-    "id": "20118",
-    "type": "achievement",
-    "name": "来吧！灵魂森友会",
-    "rarity": "普通",
-    "rarityLevel": "B",
-    "category": "冒险",
-    "subTag": "陪伴艾薇杜尔成为真正的灵魂先知。",
-    "keywords": "来吧！灵魂森友会 成就 陪伴艾薇杜尔成为真正的灵魂先知。 "
-  },
-  {
-    "id": "20119",
-    "type": "achievement",
-    "name": "制裁魔女之人",
-    "rarity": "普通",
-    "rarityLevel": "B",
-    "category": "冒险",
-    "subTag": "深入赫尔娜遗迹，终结罗姆洛敏的计划。",
-    "keywords": "制裁魔女之人 成就 深入赫尔娜遗迹，终结罗姆洛敏的计划。 契约书"
-  },
-  {
-    "id": "20120",
-    "type": "achievement",
-    "name": "冰原老司机",
-    "rarity": "普通",
-    "rarityLevel": "B",
-    "category": "冒险",
-    "subTag": "与奇瓦一起来到霜烬平原，进入大书院。",
-    "keywords": "冰原老司机 成就 与奇瓦一起来到霜烬平原，进入大书院。 "
-  },
-  {
-    "id": "20121",
-    "type": "achievement",
-    "name": "扫黑除恶",
-    "rarity": "普通",
-    "rarityLevel": "B",
-    "category": "冒险",
-    "subTag": "踏遍伊菲卡温泉谷，扫清捣乱的芙洛波。",
-    "keywords": "扫黑除恶 成就 踏遍伊菲卡温泉谷，扫清捣乱的芙洛波。 特别招待券"
-  },
-  {
-    "id": "20122",
-    "type": "achievement",
-    "name": "赫淮斯托斯",
-    "rarity": "普通",
-    "rarityLevel": "B",
-    "category": "冒险",
-    "subTag": "展示自己的匠技，得到大书院的支持。",
-    "keywords": "赫淮斯托斯 成就 展示自己的匠技，得到大书院的支持。 "
-  },
-  {
-    "id": "20123",
-    "type": "achievement",
-    "name": "否定使命之人",
-    "rarity": "普通",
-    "rarityLevel": "B",
-    "category": "冒险",
-    "subTag": "深入哈玛塔坎遗迹，击败巨大先时兵器。",
-    "keywords": "否定使命之人 成就 深入哈玛塔坎遗迹，击败巨大先时兵器。 契约书"
-  },
-  {
     "id": "20201",
     "type": "achievement",
     "name": "求生者草原探索者",
@@ -1368,26 +1288,6 @@
     "category": "探索",
     "subTag": "通关魔爪湖畔的关卡，收集 12 个星星。",
     "keywords": "魔爪湖畔探索者 成就 通关魔爪湖畔的关卡，收集 12 个星星。 普通招待券"
-  },
-  {
-    "id": "20205",
-    "type": "achievement",
-    "name": "黑森林探索者",
-    "rarity": "普通",
-    "rarityLevel": "B",
-    "category": "探索",
-    "subTag": "通关黑森林的关卡，收集 15 个星星。",
-    "keywords": "黑森林探索者 成就 通关黑森林的关卡，收集 15 个星星。 普通招待券"
-  },
-  {
-    "id": "20206",
-    "type": "achievement",
-    "name": "霜烬平原探索者",
-    "rarity": "普通",
-    "rarityLevel": "B",
-    "category": "探索",
-    "subTag": "通关霜烬平原的关卡，收集 15 个星星。",
-    "keywords": "霜烬平原探索者 成就 通关霜烬平原的关卡，收集 15 个星星。 "
   },
   {
     "id": "20301",
@@ -1448,46 +1348,6 @@
     "category": "冒险",
     "subTag": "在 240 秒内通关黑涧浴池·转化部。",
     "keywords": "不提供搓澡服务 成就 在 240 秒内通关黑涧浴池·转化部。 契约书"
-  },
-  {
-    "id": "20307",
-    "type": "achievement",
-    "name": "蓝伞伞，躺板板",
-    "rarity": "普通",
-    "rarityLevel": "B",
-    "category": "冒险",
-    "subTag": "在 240 秒内通关垂死菌林·癫狂之缘。",
-    "keywords": "蓝伞伞，躺板板 成就 在 240 秒内通关垂死菌林·癫狂之缘。 契约书"
-  },
-  {
-    "id": "20308",
-    "type": "achievement",
-    "name": "献出心脏",
-    "rarity": "普通",
-    "rarityLevel": "B",
-    "category": "冒险",
-    "subTag": "在 240 秒内通关赫尔娜遗迹·心之圣所。",
-    "keywords": "献出心脏 成就 在 240 秒内通关赫尔娜遗迹·心之圣所。 契约书"
-  },
-  {
-    "id": "20309",
-    "type": "achievement",
-    "name": "你甚至不愿意叫我一声老大",
-    "rarity": "普通",
-    "rarityLevel": "B",
-    "category": "冒险",
-    "subTag": "在 240 秒内通关伊菲卡温泉谷·度假区。",
-    "keywords": "你甚至不愿意叫我一声老大 成就 在 240 秒内通关伊菲卡温泉谷·度假区。 契约书"
-  },
-  {
-    "id": "20310",
-    "type": "achievement",
-    "name": "超绝最可爱天界格莉姆",
-    "rarity": "普通",
-    "rarityLevel": "B",
-    "category": "冒险",
-    "subTag": "在 240 秒内通关哈玛塔坎遗迹·地核层。",
-    "keywords": "超绝最可爱天界格莉姆 成就 在 240 秒内通关哈玛塔坎遗迹·地核层。 契约书"
   },
   {
     "id": "20401",
@@ -1708,7 +1568,7 @@
   {
     "id": "item_30034",
     "type": "recipe",
-    "name": "珍菇翡翠白玉",
+    "name": "珍菇翡翠白玉汤",
     "rarity": "传说",
     "rarityLevel": "SS",
     "category": "料理",
@@ -1716,7 +1576,7 @@
       "抗性类"
     ],
     "subTag": "3",
-    "keywords": "珍菇翡翠白玉 食谱 配方 料理 抗性类 提升单位 7% 魔法攻击和 4% 的血量上限，7% 生命恢复力，5% 法力恢复力。"
+    "keywords": "珍菇翡翠白玉汤 食谱 配方 料理 抗性类 提升单位 7% 魔法攻击和 4% 的血量上限，7% 生命恢复力，5% 法力恢复力。"
   },
   {
     "id": "item_30035",

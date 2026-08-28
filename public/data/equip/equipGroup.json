@@ -1,0 +1,1526 @@
+{
+	"qualityGroupsTip": "装备品质概率分数，由于后面会固定使用几套概率来生成装备的品质，所以提出来单独做一个组，先随品质，后随数值范围，每个品质会在对应档位的0.2范围内随机。",
+	"qualityGroups": {
+		"quality_01": [
+			{
+				"quality": 3,
+				"chance": 1
+			}
+		],
+		"quality_02": [
+			{
+				"quality": 5,
+				"chance": 1
+			}
+		],
+		"quality_0": [
+			{
+				"quality": 4,
+				"chance": 1
+			}
+		],
+		"quality_1": [
+			{
+				"quality": 1,
+				"chance": 4
+			},
+			{
+				"quality": 2,
+				"chance": 1
+			}
+		],
+		"quality_2": [
+			{
+				"quality": 1,
+				"chance": 2
+			},
+			{
+				"quality": 2,
+				"chance": 3
+			},
+			{
+				"quality": 3,
+				"chance": 1
+			}
+		],
+		"quality_3": [
+			{
+				"quality": 2,
+				"chance": 3
+			},
+			{
+				"quality": 3,
+				"chance": 2
+			}
+		],
+		"quality_4": [
+			{
+				"quality": 2,
+				"chance": 3
+			},
+			{
+				"quality": 3,
+				"chance": 4
+			},
+			{
+				"quality": 4,
+				"chance": 1
+			}
+		],
+		"quality_5": [
+			{
+				"quality": 3,
+				"chance": 5
+			},
+			{
+				"quality": 4,
+				"chance": 1
+			}
+		],
+		"quality_explore01": [
+			{
+				"quality": 2,
+				"chance": 2
+			},
+			{
+				"quality": 3,
+				"chance": 1
+			},
+			{
+				"quality": 4,
+				"chance": 1
+			}
+		],
+		"quality_explore02": [
+			{
+				"quality": 3,
+				"chance": 2
+			},
+			{
+				"quality": 4,
+				"chance": 1
+			}
+		],
+		"quality_equip5": [
+			{
+				"quality": 4,
+				"chance": 7
+			},
+			{
+				"quality": 5,
+				"chance": 1
+			}
+		],
+		"quality_main": [
+			{
+				"quality": 3,
+				"chance": 1
+			}
+		]
+	},
+	"equipGroupsTip": "决定随机装备的词缀和种类，可以实现给一个副本不同难度设置同样的掉落，然后通过品质分组改变品质掉率，通过equipLevel改变装等。",
+	"equipGroups": {
+		"equip11001": {
+			"tip": "生锈短剑，镶石短杖+【弱毒】【精准】【灵动】，1图关卡副本",
+			"showItemTypeId": "show_01wq",
+			"prefix": [
+				{
+					"prefix": "equip_001",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_002",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_003",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_411001",
+					"chance": 1
+				},
+				{
+					"typeId": "item_413001",
+					"chance": 1
+				}
+			]
+		},
+		"equip11002": {
+			"tip": "生锈短剑，镶石短杖+【育母】【闪电】【弱毒】【精准】，1图关卡副本",
+			"showItemTypeId": "show_01wq",
+			"prefix": [
+				{
+					"prefix": "equip_006",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_007",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_001",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_002",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_411001",
+					"chance": 1
+				},
+				{
+					"typeId": "item_413001",
+					"chance": 1
+				}
+			]
+		},
+		"equip11003": {
+			"tip": "生锈短剑，镶石短杖+【育母】【闪电】，1图关卡副本",
+			"showItemTypeId": "show_01wq",
+			"prefix": [
+				{
+					"prefix": "equip_006",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_007",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_411001",
+					"chance": 1
+				},
+				{
+					"typeId": "item_413001",
+					"chance": 1
+				}
+			]
+		},
+		"equip11004": {
+			"tip": "镶石短杖+【弱毒】【精准】【灵动】，1图打造",
+			"prefix": [
+				{
+					"prefix": "equip_001",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_002",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_003",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_413001",
+					"chance": 1
+				}
+			]
+		},
+		"equip11005": {
+			"tip": "生锈短剑+【弱毒】【精准】【灵动】，1图打造",
+			"prefix": [
+				{
+					"prefix": "equip_001",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_002",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_003",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_411001",
+					"chance": 1
+				}
+			]
+		},
+		"equip12001": {
+			"tip": "1阶防具，1图副本",
+			"showItemTypeId": "show_01fj",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_423001",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423002",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423003",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423004",
+					"chance": 1
+				},
+				{
+					"typeId": "item_421001",
+					"chance": 1
+				},
+				{
+					"typeId": "item_421002",
+					"chance": 1
+				},
+				{
+					"typeId": "item_421003",
+					"chance": 1
+				},
+				{
+					"typeId": "item_421004",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422001",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422002",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422003",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422004",
+					"chance": 1
+				}
+			]
+		},
+		"equip12002": {
+			"tip": "1阶头防具，1图关卡",
+			"showItemTypeId": "show_01head",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_423001",
+					"chance": 1
+				},
+				{
+					"typeId": "item_421001",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422001",
+					"chance": 1
+				}
+			]
+		},
+		"equip12003": {
+			"tip": "1阶胸防具，1图关卡",
+			"showItemTypeId": "show_01body",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_423002",
+					"chance": 1
+				},
+				{
+					"typeId": "item_421002",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422002",
+					"chance": 1
+				}
+			]
+		},
+		"equip12004": {
+			"tip": "1阶胸防具，1图关卡",
+			"showItemTypeId": "show_01foot",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_423003",
+					"chance": 1
+				},
+				{
+					"typeId": "item_421003",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422003",
+					"chance": 1
+				}
+			]
+		},
+		"equip12005": {
+			"tip": "1阶防具，1图关卡",
+			"showItemTypeId": "show_01hand",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_423004",
+					"chance": 1
+				},
+				{
+					"typeId": "item_421004",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422004",
+					"chance": 1
+				}
+			]
+		},
+		"equip13001": {
+			"tip": "水晶戒指，摆锤项坠",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_431001",
+					"chance": 1
+				},
+				{
+					"typeId": "item_432001",
+					"chance": 1
+				}
+			]
+		},
+		"equip21001": {
+			"tip": "蟾兽晶锤，蟾兽晶牙匕，蟾兽晶杵+水刃，重伤，破甲",
+			"showItemTypeId": "show_02wq",
+			"prefix": [
+				{
+					"prefix": "equip_011",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_012",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_013",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_412003",
+					"chance": 1
+				},
+				{
+					"typeId": "item_415003",
+					"chance": 1
+				},
+				{
+					"typeId": "item_416002",
+					"chance": 1
+				}
+			]
+		},
+		"equip21002": {
+			"tip": "蟾兽晶锤，蟾兽晶牙匕，蟾兽晶杵+【育母】",
+			"prefix": [
+				{
+					"prefix": "equip_006",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_412003",
+					"chance": 1
+				},
+				{
+					"typeId": "item_415003",
+					"chance": 1
+				},
+				{
+					"typeId": "item_416002",
+					"chance": 1
+				}
+			]
+		},
+		"equip21003": {
+			"tip": "蟾兽晶锤，蟾兽晶牙匕，蟾兽晶杵+【育母】【闪电】",
+			"prefix": [
+				{
+					"prefix": "equip_006",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_007",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_412003",
+					"chance": 1
+				},
+				{
+					"typeId": "item_415003",
+					"chance": 1
+				},
+				{
+					"typeId": "item_416002",
+					"chance": 1
+				}
+			]
+		},
+		"equip21004": {
+			"tip": "蟾兽晶锤+水刃，重伤，破甲 打造",
+			"prefix": [
+				{
+					"prefix": "equip_011",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_012",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_013",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_412003",
+					"chance": 1
+				}
+			]
+		},
+		"equip21005": {
+			"tip": "蟾兽晶牙匕，+水刃，重伤，破甲 打造",
+			"prefix": [
+				{
+					"prefix": "equip_011",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_012",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_013",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_415003",
+					"chance": 1
+				}
+			]
+		},
+		"equip21006": {
+			"tip": "蟾兽晶杵+水刃，重伤，破甲 打造",
+			"prefix": [
+				{
+					"prefix": "equip_011",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_012",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_013",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_416002",
+					"chance": 1
+				}
+			]
+		},
+		"equip22001": {
+			"tip": "所有二阶防具",
+			"showItemTypeId": "show_02fj",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_421005",
+					"chance": 1
+				},
+				{
+					"typeId": "item_421006",
+					"chance": 1
+				},
+				{
+					"typeId": "item_421007",
+					"chance": 1
+				},
+				{
+					"typeId": "item_421008",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422005",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422006",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422007",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422008",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423005",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423006",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423007",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423008",
+					"chance": 1
+				}
+			]
+		},
+		"equip22002": {
+			"tip": "二阶头部防具，蟾兽晶兜氂，岩蟾皮风帽，恐羽巾冠",
+			"showItemTypeId": "show_02head",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_421005",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422005",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423005",
+					"chance": 1
+				}
+			]
+		},
+		"equip22003": {
+			"tip": "二阶身体防具，蟾兽晶胴铠，岩蟾皮坎肩，恐羽短袍",
+			"showItemTypeId": "show_02body",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_421006",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422006",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423006",
+					"chance": 1
+				}
+			]
+		},
+		"equip22004": {
+			"tip": "二阶脚部防具：蟾兽晶足具，岩蟾皮靴，恐羽鞋",
+			"showItemTypeId": "show_02foot",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_421007",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422007",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423007",
+					"chance": 1
+				}
+			]
+		},
+		"equip22005": {
+			"tip": "2阶手部防具：蟾兽晶笼手，岩蟾皮手套，恐羽手筒",
+			"showItemTypeId": "show_02hand",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_421008",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422008",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423008",
+					"chance": 1
+				}
+			]
+		},
+		"equip23001": {
+			"tip": "瞳石戒指",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_431003",
+					"chance": 1
+				},
+				{
+					"typeId": "item_43203",
+					"chance": 1
+				}
+			]
+		},
+		"equip31001": {
+			"tip": "湖刀，湖匕，湖杖+荆棘，溃敌，再生 打造",
+			"showItemTypeId": "show_03wq",
+			"prefix": [
+				{
+					"prefix": "equip_301",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_302",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_303",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_412004",
+					"chance": 1
+				},
+				{
+					"typeId": "item_415004",
+					"chance": 1
+				},
+				{
+					"typeId": "item_416003",
+					"chance": 1
+				}
+			]
+		},
+		"equip31002": {
+			"tip": "湖刀+荆棘，溃敌，再生 打造",
+			"prefix": [
+				{
+					"prefix": "equip_301",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_302",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_303",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_412004",
+					"chance": 1
+				}
+			]
+		},
+		"equip31003": {
+			"tip": "湖匕首+荆棘，溃敌，再生 打造",
+			"prefix": [
+				{
+					"prefix": "equip_301",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_302",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_303",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_415004",
+					"chance": 1
+				}
+			]
+		},
+		"equip31004": {
+			"tip": "湖杖+荆棘，溃敌，再生 打造",
+			"prefix": [
+				{
+					"prefix": "equip_301",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_302",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_303",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_416003",
+					"chance": 1
+				}
+			]
+		},
+		"equip32001": {
+			"tip": "所有3阶防具",
+			"showItemTypeId": "show_03fj",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_421009",
+					"chance": 1
+				},
+				{
+					"typeId": "item_421010",
+					"chance": 1
+				},
+				{
+					"typeId": "item_421011",
+					"chance": 1
+				},
+				{
+					"typeId": "item_421012",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422009",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422010",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422011",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422012",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423009",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423010",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423011",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423012",
+					"chance": 1
+				}
+			]
+		},
+		"equip32002": {
+			"tip": "3阶头部防具：魔爪头，治安头，水占师头",
+			"showItemTypeId": "show_03head",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_421009",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422009",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423009",
+					"chance": 1
+				}
+			]
+		},
+		"equip32003": {
+			"tip": "3阶身部防具：魔爪身，治安身，水占师身",
+			"showItemTypeId": "show_03body",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_421010",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422010",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423010",
+					"chance": 1
+				}
+			]
+		},
+		"equip32004": {
+			"tip": "3阶手部防具：魔爪脚，治安脚，水占师脚",
+			"showItemTypeId": "show_03foot",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_421011",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422011",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423011",
+					"chance": 1
+				}
+			]
+		},
+		"equip32005": {
+			"tip": "3阶手部防具：魔爪手，治安手，水占师手",
+			"showItemTypeId": "show_03hand",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_421012",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422012",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423012",
+					"chance": 1
+				}
+			]
+		},
+		"equip41001": {
+			"tip": "4武器大混池",
+			"showItemTypeId": "show_04wq",
+			"prefix": [
+				{
+					"prefix": "equip_401",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_402",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_403",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_412005",
+					"chance": 1
+				},
+				{
+					"typeId": "item_415005",
+					"chance": 1
+				},
+				{
+					"typeId": "item_416004",
+					"chance": 1
+				}
+			]
+		},
+		"equip41002": {
+			"tip": "4刀 打造",
+			"prefix": [
+				{
+					"prefix": "equip_401",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_402",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_403",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_412005",
+					"chance": 1
+				}
+			]
+		},
+		"equip41003": {
+			"tip": "4匕首 打造",
+			"prefix": [
+				{
+					"prefix": "equip_401",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_402",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_403",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_415005",
+					"chance": 1
+				}
+			]
+		},
+		"equip41004": {
+			"tip": "4杖 打造",
+			"prefix": [
+				{
+					"prefix": "equip_401",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_402",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_403",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_416004",
+					"chance": 1
+				}
+			]
+		},
+		"equip42001": {
+			"tip": "所有4阶防具",
+			"showItemTypeId": "show_04fj",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_421013",
+					"chance": 1
+				},
+				{
+					"typeId": "item_421014",
+					"chance": 1
+				},
+				{
+					"typeId": "item_421015",
+					"chance": 1
+				},
+				{
+					"typeId": "item_421016",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422013",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422014",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422015",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422016",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423013",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423014",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423015",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423016",
+					"chance": 1
+				}
+			]
+		},
+		"equip42002": {
+			"tip": "4阶头部防具",
+			"showItemTypeId": "show_04head",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_421013",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422013",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423013",
+					"chance": 1
+				}
+			]
+		},
+		"equip42003": {
+			"tip": "4阶身部防具",
+			"showItemTypeId": "show_04body",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_421014",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422014",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423014",
+					"chance": 1
+				}
+			]
+		},
+		"equip42004": {
+			"tip": "4阶脚部防具",
+			"showItemTypeId": "show_04foot",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_421015",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422015",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423015",
+					"chance": 1
+				}
+			]
+		},
+		"equip42005": {
+			"tip": "4阶手部防具",
+			"showItemTypeId": "show_04hand",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_421016",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422016",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423016",
+					"chance": 1
+				}
+			]
+		},
+		"equip51001": {
+			"tip": "5武器大混池",
+			"showItemTypeId": "show_05wq",
+			"prefix": [
+				{
+					"prefix": "equip_501",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_502",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_503",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_412006",
+					"chance": 1
+				},
+				{
+					"typeId": "item_415006",
+					"chance": 1
+				},
+				{
+					"typeId": "item_416005",
+					"chance": 1
+				}
+			]
+		},
+		"equip51002": {
+			"tip": "5刀 打造",
+			"prefix": [
+				{
+					"prefix": "equip_501",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_502",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_503",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_412006",
+					"chance": 1
+				}
+			]
+		},
+		"equip51003": {
+			"tip": "5匕首 打造",
+			"prefix": [
+				{
+					"prefix": "equip_501",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_502",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_503",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_415006",
+					"chance": 1
+				}
+			]
+		},
+		"equip51004": {
+			"tip": "5杖 打造",
+			"prefix": [
+				{
+					"prefix": "equip_501",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_502",
+					"chance": 1
+				},
+				{
+					"prefix": "equip_503",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_416005",
+					"chance": 1
+				}
+			]
+		},
+		"equip52001": {
+			"tip": "所有5阶防具",
+			"showItemTypeId": "show_05fj",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_421017",
+					"chance": 1
+				},
+				{
+					"typeId": "item_421018",
+					"chance": 1
+				},
+				{
+					"typeId": "item_421019",
+					"chance": 1
+				},
+				{
+					"typeId": "item_421020",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422017",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422018",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422019",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422020",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423017",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423018",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423019",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423020",
+					"chance": 1
+				}
+			]
+		},
+		"equip52002": {
+			"tip": "5阶头部防具",
+			"showItemTypeId": "show_05head",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_421017",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422017",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423017",
+					"chance": 1
+				}
+			]
+		},
+		"equip52003": {
+			"tip": "5阶身部防具",
+			"showItemTypeId": "show_05body",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_421018",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422018",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423018",
+					"chance": 1
+				}
+			]
+		},
+		"equip52004": {
+			"tip": "5阶脚部防具",
+			"showItemTypeId": "show_05foot",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_421019",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422019",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423019",
+					"chance": 1
+				}
+			]
+		},
+		"equip52005": {
+			"tip": "5阶手部防具",
+			"showItemTypeId": "show_05hand",
+			"prefix": [
+				{
+					"prefix": "",
+					"chance": 1
+				}
+			],
+			"type": [
+				{
+					"typeId": "item_421020",
+					"chance": 1
+				},
+				{
+					"typeId": "item_422020",
+					"chance": 1
+				},
+				{
+					"typeId": "item_423020",
+					"chance": 1
+				}
+			]
+		}
+	}
+}

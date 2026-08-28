@@ -1,0 +1,624 @@
+{
+	"dataDesc": "data表示随机事件数据配置",
+	"data": {
+		"c1_map": [
+			{
+				"group": "rare1",
+				"events": [
+					{
+						"typeId": "e_1",
+						"pos": [
+							"c1_w1",
+							"c1_w2",
+							"c1_w3",
+							"c1_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_2",
+						"pos": [
+							"c1_w1",
+							"c1_w2",
+							"c1_w3",
+							"c1_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_3",
+						"pos": [
+							"c1_w1",
+							"c1_w3"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_4",
+						"pos": [
+							"c1_w2"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_5",
+						"pos": [
+							"c1_w3"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_6",
+						"pos": [
+							"c1_w1",
+							"c1_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_7",
+						"pos": [
+							"c1_w1",
+							"c1_w2",
+							"c1_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_8",
+						"pos": [
+							"c1_w1",
+							"c1_w2"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_9",
+						"pos": [
+							"c1_w1",
+							"c1_w2",
+							"c1_w3",
+							"c1_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_10",
+						"pos": [
+							"c1_w1",
+							"c1_w3"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_c1_1",
+						"pos": [
+							"c1_w3",
+							"c1_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_12",
+						"pos": [
+							"c1_w3",
+							"c1_w4"
+						],
+						"chance": 10
+					}
+				]
+			},
+			{
+				"group": "rare2",
+				"events": [
+					{
+						"typeId": "e_sp1",
+						"pos": [
+							"c1_w2",
+							"c1_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "c_sp2",
+						"pos": [
+							"c1_w1",
+							"c1_w2",
+							"c1_w4"
+						],
+						"chance": 10
+					}
+				]
+			}
+		],
+		"c2_map": [
+			{
+				"group": "rare1",
+				"events": [
+					{
+						"typeId": "e_1",
+						"pos": [
+							"c2_w1",
+							"c2_w2",
+							"c2_w3",
+							"c2_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_2",
+						"pos": [
+							"c2_w1",
+							"c2_w2",
+							"c2_w3",
+							"c2_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_3",
+						"pos": [
+							"c2_w2",
+							"c2_w3",
+							"c2_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_5",
+						"pos": [
+							"c2_w1",
+							"c2_w3",
+							"c2_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_6",
+						"pos": [
+							"c2_w1",
+							"c2_w2"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_9",
+						"pos": [
+							"c2_w1",
+							"c2_w2",
+							"c2_w3",
+							"c2_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_10",
+						"pos": [
+							"c2_w1",
+							"c2_w3"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_11",
+						"pos": [
+							"c2_w1",
+							"c2_w2",
+							"c2_w3",
+							"c2_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_c2_1",
+						"pos": [
+							"c2_w3",
+							"c2_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_12",
+						"pos": [
+							"c2_w1",
+							"c2_w2",
+							"c2_w3",
+							"c2_w4"
+						],
+						"chance": 10
+					}
+				]
+			},
+			{
+				"group": "rare2",
+				"events": [
+					{
+						"typeId": "e_sp1",
+						"pos": [
+							"c2_w1",
+							"c2_w3",
+							"c2_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "c_sp2",
+						"pos": [
+							"c2_w1",
+							"c2_w4"
+						],
+						"chance": 10
+					}
+				]
+			}
+		],
+		"c3_map": [
+			{
+				"group": "rare1",
+				"events": [
+					{
+						"typeId": "e_1",
+						"pos": [
+							"c3_w1",
+							"c3_w2",
+							"c3_w3",
+							"c3_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_2",
+						"pos": [
+							"c3_w1",
+							"c3_w2",
+							"c3_w3",
+							"c3_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_3",
+						"pos": [
+							"c3_w1"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_4",
+						"pos": [
+							"c3_w3"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_6",
+						"pos": [
+							"c3_w1",
+							"c3_w2",
+							"c3_w3",
+							"c3_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_7",
+						"pos": [
+							"c3_w2",
+							"c3_w3"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_8",
+						"pos": [
+							"c3_w1",
+							"c3_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_11",
+						"pos": [
+							"c3_w1",
+							"c3_w2",
+							"c3_w3",
+							"c3_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_c3_1",
+						"pos": [
+							"c3_w1",
+							"c3_w2",
+							"c3_w3",
+							"c3_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_13",
+						"pos": [
+							"c3_w1",
+							"c3_w2",
+							"c3_w3",
+							"c3_w4"
+						],
+						"chance": 10
+					}
+				]
+			},
+			{
+				"group": "rare2",
+				"events": [
+					{
+						"typeId": "e_sp1",
+						"pos": [
+							"c3_w1",
+							"c3_w2",
+							"c3_w3",
+							"c3_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "c_sp2",
+						"pos": [
+							"c3_w2",
+							"c3_w3"
+						],
+						"chance": 10
+					}
+				]
+			}
+		],
+		"c4_map": [
+			{
+				"group": "rare1",
+				"events": [
+					{
+						"typeId": "e_1",
+						"pos": [
+							"c4_w1",
+							"c4_w2",
+							"c4_w3",
+							"c4_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_2",
+						"pos": [
+							"c4_w1",
+							"c4_w2",
+							"c4_w3",
+							"c4_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_3",
+						"pos": [
+							"c4_w1"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_4",
+						"pos": [
+							"c4_w3"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_7",
+						"pos": [
+							"c4_w2",
+							"c4_w3"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_8",
+						"pos": [
+							"c4_w1",
+							"c4_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_9",
+						"pos": [
+							"c4_w1",
+							"c4_w2",
+							"c4_w3",
+							"c4_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_11",
+						"pos": [
+							"c4_w1",
+							"c4_w2",
+							"c4_w3",
+							"c4_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_c4_1",
+						"pos": [
+							"c4_w1",
+							"c4_w2",
+							"c4_w3",
+							"c4_w4"
+						],
+						"chance": 15
+					},
+					{
+						"typeId": "e_13",
+						"pos": [
+							"c4_w1",
+							"c4_w2",
+							"c4_w3",
+							"c4_w4"
+						],
+						"chance": 10
+					}
+				]
+			},
+			{
+				"group": "rare2",
+				"events": [
+					{
+						"typeId": "e_sp1",
+						"pos": [
+							"c4_w1",
+							"c4_w2",
+							"c4_w3",
+							"c4_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "c_sp2",
+						"pos": [
+							"c4_w2",
+							"c4_w3"
+						],
+						"chance": 10
+					}
+				]
+			}
+		],
+		"c5_map": [
+			{
+				"group": "rare1",
+				"events": [
+					{
+						"typeId": "e_1",
+						"pos": [
+							"c5_w1",
+							"c5_w2",
+							"c5_w3",
+							"c5_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_2",
+						"pos": [
+							"c5_w1",
+							"c5_w2",
+							"c5_w3",
+							"c5_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_3",
+						"pos": [
+							"c5_w1"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_4",
+						"pos": [
+							"c5_w3"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_7",
+						"pos": [
+							"c5_w2",
+							"c5_w3"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_8",
+						"pos": [
+							"c5_w1",
+							"c5_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_9",
+						"pos": [
+							"c5_w1",
+							"c5_w2",
+							"c5_w3",
+							"c5_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_11",
+						"pos": [
+							"c5_w1",
+							"c5_w2",
+							"c5_w3",
+							"c5_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "e_c5_1",
+						"pos": [
+							"c5_w1",
+							"c5_w2",
+							"c5_w3",
+							"c5_w4"
+						],
+						"chance": 15
+					},
+					{
+						"typeId": "e_13",
+						"pos": [
+							"c5_w1",
+							"c5_w2",
+							"c5_w3",
+							"c5_w4"
+						],
+						"chance": 10
+					}
+				]
+			},
+			{
+				"group": "rare2",
+				"events": [
+					{
+						"typeId": "e_sp1",
+						"pos": [
+							"c5_w1",
+							"c5_w2",
+							"c5_w3",
+							"c5_w4"
+						],
+						"chance": 10
+					},
+					{
+						"typeId": "c_sp2",
+						"pos": [
+							"c5_w2",
+							"c5_w3"
+						],
+						"chance": 10
+					}
+				]
+			}
+		]
+		
+		
+		
+	},
+	"groupCoolTimeDesc": "事件分组冷却配置,冷却时间单位秒,正式配置为rare1: 1800,rare2: 28800。",
+	"groupCoolTime": {
+		"rare1": 1800,
+		"rare2": 28800
+	}
+}

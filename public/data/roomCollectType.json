@@ -1,0 +1,4932 @@
+{
+	"datas": {
+		"tree": {
+			"collectTypeId": "tree",
+			"name": "树木",
+			"effectId": "collectWhite",
+			"collectType": 1,
+			"collectMov": 1,
+			"collectHp": 20,
+			"collectAnim": 2,
+			"consume": "collect_white",
+			"reward": "collect_tree",
+			"time": 0,
+			"tags": [
+				"树木",
+				"typeTree"
+			]
+		},
+		"mucai001": {
+			"collectTypeId": "mucai001",
+			"name": "木材",
+			"effectId": "collectGreen",
+			"collectType": 1,
+			"collectMov": 1,
+			"collectHp": 40,
+			"collectAnim": 2,
+			"consume": "collect_none",
+			"reward": "collect_mucai001",
+			"time": 0,
+			"tags": []
+		},
+		"shidui001": {
+			"collectTypeId": "shidui001",
+			"name": "石堆",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 40,
+			"collectAnim": 3,
+			"consume": "collect_none",
+			"reward": "collect_shidui001",
+			"time": 0,
+			"tags": []
+		},
+		"stone": {
+			"collectTypeId": "stone",
+			"name": "石头",
+			"effectId": "collectWhite",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 3,
+			"consume": "collect_white",
+			"reward": "collect_stone",
+			"research": {
+				"id": "collectNub_stone",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_stone0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_stone0002"
+					}
+				]
+			},
+			"time": 0,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"tks": {
+			"collectTypeId": "tks",
+			"name": "铜矿石",
+			"effectId": "collectWhite",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_white",
+			"reward": "collect_tks",
+			"time": 0,
+			"research": {
+				"id": "collectNub_Cu",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_tks0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_tks0002"
+					}
+				]
+			},
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"Fe": {
+			"collectTypeId": "Fe",
+			"name": "铁矿石",
+			"effectId": "collectWhite",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_white",
+			"reward": "collect_Fe",
+			"time": 0,
+			"research": {
+				"id": "collectNub_Cu",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_Fe0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_Fe0002"
+					}
+				]
+			},
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"collect_sr": {
+			"collectTypeId": "collect_sr",
+			"name": "兽肉",
+			"effectId": "collectWhite",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "collect_sr",
+			"research": {
+				"id": "collectNub_meat",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_sr0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_sr0002"
+					}
+				]
+			},
+			"time": 0,
+			"tags": [
+				"兽肉"
+			]
+		},
+		"collect_ztr": {
+			"collectTypeId": "collect_ztr",
+			"name": "角猪",
+			"effectId": "collectWhite",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "collect_ztr",
+			"research": {
+				"id": "collectNub_meat",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_ztr0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_ztr0002"
+					}
+				]
+			},
+			"time": 0,
+			"tags": [
+				"兽肉"
+			]
+		},
+		"collect_slm": {
+			"collectTypeId": "collect_slm",
+			"name": "一滩黏液",
+			"effectId": "collectWhite",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "collect_slm",
+			"time": 0,
+			"tags": [
+				"黏液"
+			]
+		},
+		"cy": {
+			"collectTypeId": "cy",
+			"name": "药浆草",
+			"effectId": "collectWhite",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "collect_cy",
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_cy0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_cy0002"
+					}
+				]
+			},
+			"time": 0,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"jg": {
+			"collectTypeId": "jg",
+			"name": "浆果",
+			"effectId": "collectWhite",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "collect_jg",
+			"research": {
+				"id": "collectNub_cook",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_jg0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_jg0002"
+					}
+				]
+			},
+			"time": 0,
+			"tags": [
+				"浆果",
+				"typeHand"
+			]
+		},
+		"mg": {
+			"collectTypeId": "mg",
+			"name": "地菇",
+			"effectId": "collectWhite",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "collect_mg",
+			"time": 0,
+			"research": {
+				"id": "collectNub_cook",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_mg0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_mg0002"
+					}
+				]
+			},
+			"tags": [
+				"蘑菇",
+				"typeHand"
+			]
+		},
+		"mg01": {
+			"collectTypeId": "mg01",
+			"name": "地菇",
+			"effectId": "collectWhite",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "collect_mg01",
+			"time": 0,
+			"research": {
+				"id": "collectNub_cook",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_mg0101"
+					},
+					{
+						"level": 2,
+						"reward": "collect_mg0102"
+					}
+				]
+			},
+			"tags": [
+				"蘑菇",
+				"typeHand"
+			]
+		},
+		"yc": {
+			"collectTypeId": "yc",
+			"name": "野菜",
+			"effectId": "collectWhite",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "collect_yc",
+			"research": {
+				"id": "collectNub_cook",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_yc0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_yc0002"
+					}
+				]
+			},
+			"time": 0,
+			"tags": [
+				"野菜",
+				"typeHand"
+			]
+		},
+		"collect_hp": {
+			"collectTypeId": "collect_hp",
+			"effectId": "collectGreen",
+			"name": "活血草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_hp",
+			"time": 0,
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_hp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_hp0002"
+					}
+				]
+			},
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_swh03_001": {
+			"collectTypeId": "collect_swh03_001",
+			"effectId": "collectGreen",
+			"name": "水纹花",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_swh03",
+			"time": 0,
+			"crossDay": 1,
+			"research": {},
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_swh03": {
+			"collectTypeId": "collect_swh03",
+			"effectId": "collectGreen",
+			"name": "水纹花",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "collect_swh03",
+			"time": 0,
+			"research": {},
+			"tags": [
+				"草药",
+				"typeHand",
+				"0消耗"
+			]
+		},
+		"collect_slg03": {
+			"collectTypeId": "collect_slg03",
+			"effectId": "collectGreen",
+			"name": "水露果",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "collect_slg03",
+			"time": 0,
+			"research": {},
+			"tags": [
+				"浆果",
+				"typeHand",
+				"0消耗"
+			]
+		},
+		"collect_mzb03": {
+			"collectTypeId": "collect_mzb03",
+			"name": "魔爪贝",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_none",
+			"reward": "collect_mzb03",
+			"time": 0,
+			"tags": [
+				"肉类",
+				"typeStone",
+				"0消耗"
+			]
+		},
+		"collect_msnj03": {
+			"collectTypeId": "collect_msnj03",
+			"name": "魔水凝晶",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_white",
+			"reward": "collect_msnj03",
+			"time": 0,
+			"tags": [
+				"制作",
+				"typeStone"
+			]
+		},
+		"collect_slg03_001": {
+			"collectTypeId": "collect_slg03_001",
+			"effectId": "collectGreen",
+			"name": "水露果",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_slg03",
+			"time": 0,
+			"crossDay": 1,
+			"research": {},
+			"tags": [
+				"浆果",
+				"typeHand"
+			]
+		},
+		"collect_mzb03_001": {
+			"collectTypeId": "collect_mzb03_001",
+			"name": "魔爪贝",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_green",
+			"reward": "collect_mzb03",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"肉类",
+				"typeStone"
+			]
+		},
+		"collect_msnj03_001": {
+			"collectTypeId": "collect_msnj03_001",
+			"name": "魔水凝晶",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_none",
+			"reward": "collect_msnj03",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"制作",
+				"typeStone",
+				"0消耗"
+			]
+		},
+		"collect_hp_001": {
+			"collectTypeId": "collect_hp_001",
+			"effectId": "collectGreen",
+			"name": "活血草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_hp",
+			"time": 0,
+			"crossDay": 1,
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_hp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_hp0002"
+					}
+				]
+			},
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_hp_002": {
+			"collectTypeId": "collect_hp_002",
+			"effectId": "collectGreen",
+			"name": "活血草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_hp",
+			"time": 0,
+			"crossDay": 1,
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_hp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_hp0002"
+					}
+				]
+			},
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_hp_003": {
+			"collectTypeId": "collect_hp_003",
+			"effectId": "collectGreen",
+			"name": "活血草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_hp",
+			"time": 0,
+			"crossDay": 1,
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_hp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_hp0002"
+					}
+				]
+			},
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_hp_004": {
+			"collectTypeId": "collect_hp_004",
+			"effectId": "collectGreen",
+			"name": "活血草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_hp",
+			"time": 0,
+			"crossDay": 1,
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_hp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_hp0002"
+					}
+				]
+			},
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_hp_005": {
+			"collectTypeId": "collect_hp_005",
+			"effectId": "collectGreen",
+			"name": "活血草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_hp",
+			"time": 0,
+			"crossDay": 1,
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_hp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_hp0002"
+					}
+				]
+			},
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_hp_006": {
+			"collectTypeId": "collect_hp_006",
+			"effectId": "collectGreen",
+			"name": "活血草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_hp",
+			"time": 0,
+			"crossDay": 1,
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_hp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_hp0002"
+					}
+				]
+			},
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_hp_101": {
+			"collectTypeId": "collect_hp_101",
+			"effectId": "collectGreen",
+			"name": "活血草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_hp",
+			"time": 0,
+			"crossDay": 1,
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_hp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_hp0002"
+					}
+				]
+			},
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_hp_102": {
+			"collectTypeId": "collect_hp_102",
+			"effectId": "collectGreen",
+			"name": "活血草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_hp",
+			"time": 0,
+			"crossDay": 1,
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_hp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_hp0002"
+					}
+				]
+			},
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_hp_103": {
+			"collectTypeId": "collect_hp_103",
+			"effectId": "collectGreen",
+			"name": "活血草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_hp",
+			"time": 0,
+			"crossDay": 1,
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_hp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_hp0002"
+					}
+				]
+			},
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_hp_201": {
+			"collectTypeId": "collect_hp_201",
+			"effectId": "collectGreen",
+			"name": "活血草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_hp",
+			"time": 0,
+			"crossDay": 1,
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_hp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_hp0002"
+					}
+				]
+			},
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_hp_202": {
+			"collectTypeId": "collect_hp_202",
+			"effectId": "collectGreen",
+			"name": "活血草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_hp",
+			"time": 0,
+			"crossDay": 1,
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_hp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_hp0002"
+					}
+				]
+			},
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_hp_203": {
+			"collectTypeId": "collect_hp_203",
+			"effectId": "collectGreen",
+			"name": "活血草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_hp",
+			"time": 0,
+			"crossDay": 1,
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_hp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_hp0002"
+					}
+				]
+			},
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_mp": {
+			"collectTypeId": "collect_mp",
+			"effectId": "collectGreen",
+			"name": "蓝露草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_mp",
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_mp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_mp0002"
+					}
+				]
+			},
+			"time": 0,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_mp_001": {
+			"collectTypeId": "collect_mp_001",
+			"effectId": "collectGreen",
+			"name": "蓝露草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_mp",
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_mp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_mp0002"
+					}
+				]
+			},
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_mp_002": {
+			"collectTypeId": "collect_mp_002",
+			"effectId": "collectGreen",
+			"name": "蓝露草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_mp",
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_mp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_mp0002"
+					}
+				]
+			},
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_mp_003": {
+			"collectTypeId": "collect_mp_003",
+			"effectId": "collectGreen",
+			"name": "蓝露草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_mp",
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_mp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_mp0002"
+					}
+				]
+			},
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_mp_004": {
+			"collectTypeId": "collect_mp_004",
+			"effectId": "collectGreen",
+			"name": "蓝露草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_mp",
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_mp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_mp0002"
+					}
+				]
+			},
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_mp_005": {
+			"collectTypeId": "collect_mp_005",
+			"effectId": "collectGreen",
+			"name": "蓝露草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_mp",
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_mp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_mp0002"
+					}
+				]
+			},
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_mp_006": {
+			"collectTypeId": "collect_mp_006",
+			"effectId": "collectGreen",
+			"name": "蓝露草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_mp",
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_mp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_mp0002"
+					}
+				]
+			},
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_mp_101": {
+			"collectTypeId": "collect_mp_101",
+			"effectId": "collectGreen",
+			"name": "蓝露草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_mp",
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_mp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_mp0002"
+					}
+				]
+			},
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_mp_102": {
+			"collectTypeId": "collect_mp_102",
+			"effectId": "collectGreen",
+			"name": "蓝露草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_mp",
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_mp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_mp0002"
+					}
+				]
+			},
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_mp_103": {
+			"collectTypeId": "collect_mp_103",
+			"effectId": "collectGreen",
+			"name": "蓝露草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_mp",
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_mp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_mp0002"
+					}
+				]
+			},
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_mp_201": {
+			"collectTypeId": "collect_mp_201",
+			"effectId": "collectGreen",
+			"name": "蓝露草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_mp",
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_mp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_mp0002"
+					}
+				]
+			},
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_mp_202": {
+			"collectTypeId": "collect_mp_202",
+			"effectId": "collectGreen",
+			"name": "蓝露草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_mp",
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_mp0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_mp0002"
+					}
+				]
+			},
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_lzg01": {
+			"collectTypeId": "collect_lzg01",
+			"effectId": "collectGreen",
+			"name": "绿榛菇",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_lzg01",
+			"time": 0,
+			"research": {
+				"id": "collectNub_cook",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_lzg0101"
+					},
+					{
+						"level": 2,
+						"reward": "collect_lzg0102"
+					}
+				]
+			},
+			"tags": [
+				"蘑菇",
+				"typeHand"
+			]
+		},
+		"collect_hslsr04": {
+			"collectTypeId": "collect_hslsr04",
+			"effectId": "collectGreen",
+			"name": "黑森林松茸",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_hslsr04",
+			"time": 0,
+			"tags": [
+				"蘑菇",
+				"typeHand"
+			]
+		},
+		"collect_bl05": {
+			"collectTypeId": "collect_bl05",
+			"effectId": "collectGreen",
+			"name": "冰莲",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_bl05",
+			"time": 0,
+			"tags": [
+				"冰莲",
+				"typeHand"
+			]
+		},
+		"collect_bl05_001": {
+			"collectTypeId": "collect_bl05_001",
+			"effectId": "collectGreen",
+			"name": "冰莲",
+			"collectType": 2,
+			"crossDay": 1,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_bl05",
+			"time": 0,
+			"tags": [
+				"冰莲",
+				"typeHand"
+			]
+		},
+		"collect_hslsr04_001": {
+			"collectTypeId": "collect_hslsr04_001",
+			"effectId": "collectGreen",
+			"name": "黑森林松茸",
+			"collectType": 2,
+			"crossDay": 1,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_hslsr04",
+			"time": 0,
+			"tags": [
+				"蘑菇",
+				"typeHand"
+			]
+		},
+		"collect_lzg01_001": {
+			"collectTypeId": "collect_lzg01_001",
+			"effectId": "collectGreen",
+			"name": "绿榛菇",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_lzg01",
+			"time": 0,
+			"crossDay": 1,
+			"research": {
+				"id": "collectNub_cook",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_lzg0101"
+					},
+					{
+						"level": 2,
+						"reward": "collect_lzg0102"
+					}
+				]
+			},
+			"tags": [
+				"蘑菇",
+				"typeHand"
+			]
+		},
+		"collect_lzg01_002": {
+			"collectTypeId": "collect_lzg01_002",
+			"effectId": "collectGreen",
+			"name": "绿榛菇",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_lzg01",
+			"research": {
+				"id": "collectNub_cook",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_lzg0101"
+					},
+					{
+						"level": 2,
+						"reward": "collect_lzg0102"
+					}
+				]
+			},
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"蘑菇",
+				"typeHand"
+			]
+		},
+		"collect_lzg01_003": {
+			"collectTypeId": "collect_lzg01_003",
+			"effectId": "collectGreen",
+			"name": "绿榛菇",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_lzg01",
+			"research": {
+				"id": "collectNub_cook",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_lzg0101"
+					},
+					{
+						"level": 2,
+						"reward": "collect_lzg0102"
+					}
+				]
+			},
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"蘑菇",
+				"typeHand"
+			]
+		},
+		"collect_lzg01_101": {
+			"collectTypeId": "collect_lzg01_101",
+			"effectId": "collectGreen",
+			"name": "绿榛菇",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_lzg01",
+			"research": {
+				"id": "collectNub_cook",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_lzg0101"
+					},
+					{
+						"level": 2,
+						"reward": "collect_lzg0102"
+					}
+				]
+			},
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"蘑菇",
+				"typeHand"
+			]
+		},
+		"collect_lzg01_102": {
+			"collectTypeId": "collect_lzg01_102",
+			"effectId": "collectGreen",
+			"name": "绿榛菇",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_lzg01",
+			"research": {
+				"id": "collectNub_cook",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_lzg0101"
+					},
+					{
+						"level": 2,
+						"reward": "collect_lzg0102"
+					}
+				]
+			},
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"蘑菇",
+				"typeHand"
+			]
+		},
+		"collect_lzg01_4": {
+			"collectTypeId": "collect_lzg01_4",
+			"effectId": "collectGreen",
+			"name": "绿榛菇",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_lzg01",
+			"research": {
+				"id": "collectNub_cook",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_lzg0101"
+					},
+					{
+						"level": 2,
+						"reward": "collect_lzg0102"
+					}
+				]
+			},
+			"time": 72000,
+			"tags": [
+				"蘑菇",
+				"typeHand"
+			]
+		},
+		"collect_cjc02": {
+			"collectTypeId": "collect_cjc02",
+			"effectId": "collectGreen",
+			"name": "赤剑草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_cjc02",
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_cjc0201"
+					},
+					{
+						"level": 2,
+						"reward": "collect_cjc0202"
+					}
+				]
+			},
+			"time": 0,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_cjc02_201": {
+			"collectTypeId": "collect_cjc02_201",
+			"effectId": "collectGreen",
+			"name": "赤剑草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_cjc02",
+			"time": 0,
+			"crossDay": 1,
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_cjc0201"
+					},
+					{
+						"level": 2,
+						"reward": "collect_cjc0202"
+					}
+				]
+			},
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_cjc02_202": {
+			"collectTypeId": "collect_cjc02_202",
+			"effectId": "collectGreen",
+			"name": "赤剑草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_cjc02",
+			"time": 0,
+			"crossDay": 1,
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_cjc0201"
+					},
+					{
+						"level": 2,
+						"reward": "collect_cjc0202"
+					}
+				]
+			},
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_cjc02_203": {
+			"collectTypeId": "collect_cjc02_203",
+			"effectId": "collectGreen",
+			"name": "赤剑草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_cjc02",
+			"time": 0,
+			"crossDay": 1,
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_cjc0201"
+					},
+					{
+						"level": 2,
+						"reward": "collect_cjc0202"
+					}
+				]
+			},
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_cjc02_204": {
+			"collectTypeId": "collect_cjc02_204",
+			"effectId": "collectGreen",
+			"name": "赤剑草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_cjc02",
+			"time": 0,
+			"crossDay": 1,
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_cjc0201"
+					},
+					{
+						"level": 2,
+						"reward": "collect_cjc0202"
+					}
+				]
+			},
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_jlc": {
+			"collectTypeId": "collect_jlc",
+			"effectId": "collectBlue",
+			"name": "金铃草",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_blue",
+			"reward": "collect_jlc",
+			"research": {
+				"id": "collectNub_herbs",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_jlc0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_jlc0002"
+					}
+				]
+			},
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"yy": {
+			"collectTypeId": "yy",
+			"name": "岩盐",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_green",
+			"reward": "collect_yy",
+			"time": 0,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"collect_yy_101": {
+			"collectTypeId": "collect_yy_101",
+			"name": "岩盐",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_green",
+			"reward": "collect_yy",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"collect_yy_102": {
+			"collectTypeId": "collect_yy_102",
+			"name": "岩盐",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_green",
+			"reward": "collect_yy",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"collect_yy_103": {
+			"collectTypeId": "collect_yy_103",
+			"name": "岩盐",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_green",
+			"reward": "collect_yy",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"collect_yy_201": {
+			"collectTypeId": "collect_yy_201",
+			"name": "岩盐",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_green",
+			"reward": "collect_yy",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"collect_yy_202": {
+			"collectTypeId": "collect_yy_202",
+			"name": "岩盐",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_green",
+			"reward": "collect_yy",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"lh": {
+			"collectTypeId": "lh",
+			"name": "硫磺",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_green",
+			"reward": "collect_lh",
+			"time": 0,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"collect_lh_101": {
+			"collectTypeId": "collect_lh_101",
+			"name": "硫磺",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_green",
+			"reward": "collect_lh",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"collect_lh_102": {
+			"collectTypeId": "collect_lh_102",
+			"name": "硫磺",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_green",
+			"reward": "collect_lh",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"collect_lh_103": {
+			"collectTypeId": "collect_lh_103",
+			"name": "硫磺",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_green",
+			"reward": "collect_lh",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"collect_lh_104": {
+			"collectTypeId": "collect_lh_104",
+			"name": "硫磺",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_green",
+			"reward": "collect_lh",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"collect_lh_105": {
+			"collectTypeId": "collect_lh_105",
+			"name": "硫磺",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_green",
+			"reward": "collect_lh",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"collect_lh_106": {
+			"collectTypeId": "collect_lh_106",
+			"name": "硫磺",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_green",
+			"reward": "collect_lh",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"collect_lh_107": {
+			"collectTypeId": "collect_lh_107",
+			"name": "硫磺",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_green",
+			"reward": "collect_lh",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"collect_lh_108": {
+			"collectTypeId": "collect_lh_108",
+			"name": "硫磺",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_green",
+			"reward": "collect_lh",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"collect_lh_109": {
+			"collectTypeId": "collect_lh_109",
+			"name": "硫磺",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_green",
+			"reward": "collect_lh",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"collect_lh_201": {
+			"collectTypeId": "collect_lh_201",
+			"name": "硫磺",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_green",
+			"reward": "collect_lh",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"collect_lh_202": {
+			"collectTypeId": "collect_lh_202",
+			"name": "硫磺",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_green",
+			"reward": "collect_lh",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"collect_mnjj_101": {
+			"collectTypeId": "collect_mnjj_101",
+			"name": "遗迹残骸",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_green",
+			"reward": "collect_mnjj",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"collect_mnjj_102": {
+			"collectTypeId": "collect_mnjj_102",
+			"name": "遗迹残骸",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 3,
+			"consume": "collect_green",
+			"reward": "collect_mnjj",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"xm": {
+			"collectTypeId": "xm",
+			"name": "小麦",
+			"effectId": "collectWhite",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "collect_xm",
+			"research": {
+				"id": "collectNub_cook",
+				"levelReward": [
+					{
+						"level": 1,
+						"reward": "collect_xm0001"
+					},
+					{
+						"level": 2,
+						"reward": "collect_xm0002"
+					}
+				]
+			},
+			"time": 0,
+			"tags": [
+				"小麦",
+				"typeHand"
+			]
+		},
+		"ym": {
+			"collectTypeId": "ym",
+			"name": "亚麻",
+			"effectId": "collectWhite",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "collect_ym",
+			"time": 0,
+			"tags": [
+				"亚麻",
+				"typeHand"
+			]
+		},
+		"ydcy001": {
+			"collectTypeId": "ydcy001",
+			"name": "珍稀草药",
+			"effectId": "collectGold",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "collect_ydcy",
+			"time": 72000,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"ydcy002": {
+			"collectTypeId": "ydcy002",
+			"name": "珍稀草药",
+			"effectId": "collectGold",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "collect_ydcy",
+			"time": 72000,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"ydcy003": {
+			"collectTypeId": "ydcy003",
+			"name": "珍稀草药",
+			"effectId": "collectGold",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "collect_ydcy",
+			"time": 72000,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"sg": {
+			"collectTypeId": "sg",
+			"name": "树菇",
+			"effectId": "collectWhite",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "collect_sg",
+			"time": 0,
+			"tags": [
+				"蘑菇",
+				"typeHand"
+			]
+		},
+		"hsxg": {
+			"collectTypeId": "hsxg",
+			"name": "黑伞香菇",
+			"effectId": "collectBlue",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_hsxg",
+			"time": 36000,
+			"tags": [
+				"蘑菇",
+				"typeHand"
+			]
+		},
+		"lzg": {
+			"collectTypeId": "lzg",
+			"name": "绿榛菇",
+			"effectId": "collectGreen",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_lzg",
+			"time": 36000,
+			"tags": [
+				"蘑菇",
+				"typeHand"
+			]
+		},
+		"yjc": {
+			"collectTypeId": "yjc",
+			"name": "药浆草",
+			"effectId": "collectWhite",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "collect_yjc",
+			"time": 0,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"cylh": {
+			"collectTypeId": "cylh",
+			"name": "翠叶芦荟",
+			"effectId": "collectGreen",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_cylh",
+			"time": 36000,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"jdc": {
+			"collectTypeId": "jdc",
+			"name": "解毒草",
+			"effectId": "collectBlue",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_jdc",
+			"time": 36000,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"llc": {
+			"collectTypeId": "llc",
+			"name": "蓝露草",
+			"effectId": "collectGreen",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_green",
+			"reward": "collect_llc",
+			"time": 36000,
+			"tags": [
+				"草药",
+				"typeHand"
+			]
+		},
+		"collect_mon_035": {
+			"collectTypeId": "collect_mon_035",
+			"effectId": "collectWhite",
+			"name": "兽肉",
+			"des": "地图一采集兽肉",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "collect_mon_035",
+			"time": 0,
+			"tags": [
+				"角猪"
+			]
+		},
+		"sfkk_1_shui": {
+			"collectTypeId": "sfkk_1_shui",
+			"effectId": "collectPurple",
+			"name": "水元素结晶",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 50,
+			"collectAnim": 3,
+			"consume": "sfkk",
+			"reward": "sfkk_1_shui",
+			"time": 0,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"sfkk_1_huo": {
+			"collectTypeId": "sfkk_1_huo",
+			"effectId": "collectPurple",
+			"name": "火元素结晶",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 50,
+			"collectAnim": 3,
+			"consume": "sfkk",
+			"reward": "sfkk_1_huo",
+			"time": 0,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"sfkk_1_feng": {
+			"collectTypeId": "sfkk_1_feng",
+			"effectId": "collectPurple",
+			"name": "风元素结晶",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 50,
+			"collectAnim": 3,
+			"consume": "sfkk",
+			"reward": "sfkk_1_feng",
+			"time": 0,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"sfkk_1_di": {
+			"collectTypeId": "sfkk_1_di",
+			"effectId": "collectPurple",
+			"name": "地元素结晶",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 50,
+			"collectAnim": 3,
+			"consume": "sfkk",
+			"reward": "sfkk_1_di",
+			"time": 0,
+			"tags": [
+				"矿石",
+				"typeStone"
+			]
+		},
+		"map1101": {
+			"collectTypeId": "map1101",
+			"effectId": "collectWhite",
+			"name": "蜘蛛",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_mon",
+			"reward": "map1101",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"collect_zzs": {
+			"collectTypeId": "collect_zzs",
+			"effectId": "collectWhite",
+			"name": "蛛丝",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "collect_zzs",
+			"time": 0,
+			"tags": [
+				"采集"
+			]
+		},
+		"map1102": {
+			"collectTypeId": "map1102",
+			"effectId": "collectWhite",
+			"name": "蜘蛛",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 50,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "map1102",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"map1103": {
+			"collectTypeId": "map1103",
+			"effectId": "collectPurple",
+			"name": "蜘蛛女王",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 50,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "map1103",
+			"time": 0,
+			"tags": [
+				"副本",
+				"BOSS",
+				"无消耗直接掉落"
+			]
+		},
+		"map1201": {
+			"collectTypeId": "map1201",
+			"effectId": "collectWhite",
+			"name": "机械单元",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_mon",
+			"reward": "map1201",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"map1202": {
+			"collectTypeId": "map1202",
+			"effectId": "collectWhite",
+			"name": "机械单元",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 50,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "map1202",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"map1203": {
+			"collectTypeId": "map1203",
+			"effectId": "collectPurple",
+			"name": "机械核心",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 50,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "map1203",
+			"time": 0,
+			"tags": [
+				"副本",
+				"BOSS",
+				"无消耗直接掉落"
+			]
+		},
+		"map2101": {
+			"collectTypeId": "map2101",
+			"effectId": "collectWhite",
+			"name": "岩蟾蜍",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_mon",
+			"reward": "map2101",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"map2102": {
+			"collectTypeId": "map2102",
+			"effectId": "collectPurple",
+			"name": "岩蟾蜍",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 50,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "map2102",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"map2103": {
+			"collectTypeId": "map2103",
+			"effectId": "collectPurple",
+			"name": "巨形蟾蜍",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 50,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "map2103",
+			"time": 0,
+			"tags": [
+				"副本",
+				"BOSS",
+				"无消耗直接掉落"
+			]
+		},
+		"map2201": {
+			"collectTypeId": "map2201",
+			"effectId": "collectWhite",
+			"name": "恐兽",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_mon",
+			"reward": "map2201",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"map2201_1": {
+			"collectTypeId": "map2201_1",
+			"effectId": "collectWhite",
+			"name": "繁育巢穴",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_mon",
+			"reward": "map2201_1",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"map2202": {
+			"collectTypeId": "map2202",
+			"effectId": "collectPurple",
+			"name": "恐兽",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 50,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "map2202",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"map2203": {
+			"collectTypeId": "map2203",
+			"effectId": "collectPurple",
+			"name": "巨形恐鸟",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 50,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "map2203",
+			"time": 0,
+			"tags": [
+				"副本",
+				"BOSS",
+				"无消耗直接掉落"
+			]
+		},
+		"map3101": {
+			"collectTypeId": "map3101",
+			"effectId": "collectWhite",
+			"name": "水生魔物的残骸",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_mon",
+			"reward": "map3101",
+			"time": 0,
+			"tags": [
+				"副本",
+				"消耗1体力采集"
+			]
+		},
+		"map3102": {
+			"collectTypeId": "map3102",
+			"effectId": "collectWhite",
+			"name": "前boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "map3102",
+			"time": 0,
+			"tags": [
+				"副本",
+				"BOSS",
+				"无消耗直接掉落"
+			]
+		},
+		"map3201": {
+			"collectTypeId": "map3201",
+			"effectId": "collectWhite",
+			"name": "蛇怪",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_mon",
+			"reward": "map3201",
+			"time": 0,
+			"tags": [
+				"副本",
+				"消耗1体力采集"
+			]
+		},
+		"map3202": {
+			"collectTypeId": "map3202",
+			"effectId": "collectWhite",
+			"name": "前boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "map3202",
+			"time": 0,
+			"tags": [
+				"副本",
+				"BOSS",
+				"无消耗直接掉落"
+			]
+		},
+		"map4101": {
+			"collectTypeId": "map4101",
+			"effectId": "collectWhite",
+			"name": "蘑菇的残骸",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_mon",
+			"reward": "map4101",
+			"time": 0,
+			"tags": [
+				"副本",
+				"消耗1体力采集"
+			]
+		},
+		"map4102": {
+			"collectTypeId": "map4102",
+			"effectId": "collectWhite",
+			"name": "前boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "map4102",
+			"time": 0,
+			"tags": [
+				"副本",
+				"BOSS",
+				"无消耗直接掉落"
+			]
+		},
+		"map4201": {
+			"collectTypeId": "map4201",
+			"effectId": "collectWhite",
+			"name": "魔花",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_mon",
+			"reward": "map4201",
+			"time": 0,
+			"tags": [
+				"副本",
+				"消耗1体力采集"
+			]
+		},
+		"map4202": {
+			"collectTypeId": "map4202",
+			"effectId": "collectWhite",
+			"name": "前boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "map4202",
+			"time": 0,
+			"tags": [
+				"副本",
+				"BOSS",
+				"无消耗直接掉落"
+			]
+		},
+		"map5101": {
+			"collectTypeId": "map5101",
+			"effectId": "collectWhite",
+			"name": "冰晶",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_mon",
+			"reward": "map5101",
+			"time": 0,
+			"tags": [
+				"副本",
+				"消耗1体力采集"
+			]
+		},
+		"map5102": {
+			"collectTypeId": "map5102",
+			"effectId": "collectWhite",
+			"name": "前boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "map5102",
+			"time": 0,
+			"tags": [
+				"副本",
+				"BOSS",
+				"无消耗直接掉落"
+			]
+		},
+		"map5201": {
+			"collectTypeId": "map5201",
+			"effectId": "collectWhite",
+			"name": "熔火残骸",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_mon",
+			"reward": "map5201",
+			"time": 0,
+			"tags": [
+				"副本",
+				"消耗1体力采集"
+			]
+		},
+		"map5202": {
+			"collectTypeId": "map5202",
+			"effectId": "collectWhite",
+			"name": "后boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "map5202",
+			"time": 0,
+			"tags": [
+				"副本",
+				"BOSS",
+				"无消耗直接掉落"
+			]
+		},
+		"yzdj_cj": {
+			"collectTypeId": "yzdj_cj",
+			"effectId": "collectPurple",
+			"name": "遗失的武器箱",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 50,
+			"collectAnim": 1,
+			"consume": "collect_mon",
+			"reward": "yzdj_cj",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"baoxiang110": {
+			"collectTypeId": "baoxiang110",
+			"effectId": "",
+			"name": "精英",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang110",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"baoxiang111": {
+			"collectTypeId": "baoxiang111",
+			"effectId": "",
+			"name": "铜宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang111",
+			"time": 0,
+			"tags": [
+				"副本",
+				"铜宝箱"
+			]
+		},
+		"baoxiang112": {
+			"collectTypeId": "baoxiang112",
+			"effectId": "",
+			"name": "银宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang112",
+			"time": 0,
+			"tags": [
+				"副本",
+				"银宝箱"
+			]
+		},
+		"baoxiang113": {
+			"collectTypeId": "baoxiang113",
+			"effectId": "",
+			"name": "金宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang113",
+			"time": 0,
+			"tags": [
+				"副本",
+				"金宝箱"
+			]
+		},
+		"baoxiang120": {
+			"collectTypeId": "baoxiang120",
+			"effectId": "",
+			"name": "精英",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang120",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"baoxiang121": {
+			"collectTypeId": "baoxiang121",
+			"effectId": "",
+			"name": "铜宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang121",
+			"time": 0,
+			"tags": [
+				"副本",
+				"铜宝箱"
+			]
+		},
+		"baoxiang122": {
+			"collectTypeId": "baoxiang122",
+			"effectId": "",
+			"name": "银宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang122",
+			"time": 0,
+			"tags": [
+				"副本",
+				"银宝箱"
+			]
+		},
+		"baoxiang123": {
+			"collectTypeId": "baoxiang123",
+			"effectId": "",
+			"name": "金宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang123",
+			"time": 0,
+			"tags": [
+				"副本",
+				"金宝箱"
+			]
+		},
+		"baoxiang210": {
+			"collectTypeId": "baoxiang210",
+			"effectId": "",
+			"name": "精英",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang210",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"baoxiang211": {
+			"collectTypeId": "baoxiang211",
+			"effectId": "",
+			"name": "铜宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang211",
+			"time": 0,
+			"tags": [
+				"副本",
+				"铜宝箱"
+			]
+		},
+		"baoxiang212": {
+			"collectTypeId": "baoxiang212",
+			"effectId": "",
+			"name": "银宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang212",
+			"time": 0,
+			"tags": [
+				"副本",
+				"银宝箱"
+			]
+		},
+		"baoxiang213": {
+			"collectTypeId": "baoxiang213",
+			"effectId": "",
+			"name": "金宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang213",
+			"time": 0,
+			"tags": [
+				"副本",
+				"金宝箱"
+			]
+		},
+		"baoxiang220": {
+			"collectTypeId": "baoxiang220",
+			"effectId": "",
+			"name": "精英",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang220",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"baoxiang221": {
+			"collectTypeId": "baoxiang221",
+			"effectId": "",
+			"name": "铜宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang221",
+			"time": 0,
+			"tags": [
+				"副本",
+				"铜宝箱"
+			]
+		},
+		"baoxiang222": {
+			"collectTypeId": "baoxiang222",
+			"effectId": "",
+			"name": "银宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang222",
+			"time": 0,
+			"tags": [
+				"副本",
+				"银宝箱"
+			]
+		},
+		"baoxiang223": {
+			"collectTypeId": "baoxiang223",
+			"effectId": "",
+			"name": "金宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang223",
+			"time": 0,
+			"tags": [
+				"副本",
+				"金宝箱"
+			]
+		},
+		"baoxiang310": {
+			"collectTypeId": "baoxiang310",
+			"effectId": "",
+			"name": "精英",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang310",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"baoxiang311": {
+			"collectTypeId": "baoxiang311",
+			"effectId": "",
+			"name": "铜宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang311",
+			"time": 0,
+			"tags": [
+				"副本",
+				"铜宝箱"
+			]
+		},
+		"baoxiang312": {
+			"collectTypeId": "baoxiang312",
+			"effectId": "",
+			"name": "银宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang312",
+			"time": 0,
+			"tags": [
+				"副本",
+				"银宝箱"
+			]
+		},
+		"baoxiang313": {
+			"collectTypeId": "baoxiang313",
+			"effectId": "",
+			"name": "金宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang313",
+			"time": 0,
+			"tags": [
+				"副本",
+				"金宝箱"
+			]
+		},
+		"baoxiang320": {
+			"collectTypeId": "baoxiang320",
+			"effectId": "",
+			"name": "精英",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang320",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"baoxiang321": {
+			"collectTypeId": "baoxiang321",
+			"effectId": "",
+			"name": "铜宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang321",
+			"time": 0,
+			"tags": [
+				"副本",
+				"铜宝箱"
+			]
+		},
+		"baoxiang322": {
+			"collectTypeId": "baoxiang322",
+			"effectId": "",
+			"name": "银宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang322",
+			"time": 0,
+			"tags": [
+				"副本",
+				"银宝箱"
+			]
+		},
+		"baoxiang323": {
+			"collectTypeId": "baoxiang323",
+			"effectId": "",
+			"name": "金宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang323",
+			"time": 0,
+			"tags": [
+				"副本",
+				"金宝箱"
+			]
+		},
+		"baoxiang411": {
+			"collectTypeId": "baoxiang411",
+			"effectId": "",
+			"name": "铜宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang411",
+			"time": 0,
+			"tags": [
+				"副本",
+				"铜宝箱"
+			]
+		},
+		"baoxiang412": {
+			"collectTypeId": "baoxiang412",
+			"effectId": "",
+			"name": "银宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang412",
+			"time": 0,
+			"tags": [
+				"副本",
+				"银宝箱"
+			]
+		},
+		"baoxiang413": {
+			"collectTypeId": "baoxiang413",
+			"effectId": "",
+			"name": "金宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang413",
+			"time": 0,
+			"tags": [
+				"副本",
+				"金宝箱"
+			]
+		},
+		"baoxiang421": {
+			"collectTypeId": "baoxiang421",
+			"effectId": "",
+			"name": "铜宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang421",
+			"time": 0,
+			"tags": [
+				"副本",
+				"铜宝箱"
+			]
+		},
+		"baoxiang422": {
+			"collectTypeId": "baoxiang422",
+			"effectId": "",
+			"name": "银宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang422",
+			"time": 0,
+			"tags": [
+				"副本",
+				"银宝箱"
+			]
+		},
+		"baoxiang423": {
+			"collectTypeId": "baoxiang423",
+			"effectId": "",
+			"name": "金宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang423",
+			"time": 0,
+			"tags": [
+				"副本",
+				"金宝箱"
+			]
+		},
+		"baoxiang511": {
+			"collectTypeId": "baoxiang511",
+			"effectId": "",
+			"name": "铜宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang511",
+			"time": 0,
+			"tags": [
+				"副本",
+				"铜宝箱"
+			]
+		},
+		"baoxiang512": {
+			"collectTypeId": "baoxiang512",
+			"effectId": "",
+			"name": "银宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang512",
+			"time": 0,
+			"tags": [
+				"副本",
+				"银宝箱"
+			]
+		},
+		"baoxiang513": {
+			"collectTypeId": "baoxiang513",
+			"effectId": "",
+			"name": "金宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang513",
+			"time": 0,
+			"tags": [
+				"副本",
+				"金宝箱"
+			]
+		},
+		"baoxiang521": {
+			"collectTypeId": "baoxiang521",
+			"effectId": "",
+			"name": "铜宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang521",
+			"time": 0,
+			"tags": [
+				"副本",
+				"铜宝箱"
+			]
+		},
+		"baoxiang522": {
+			"collectTypeId": "baoxiang522",
+			"effectId": "",
+			"name": "银宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang522",
+			"time": 0,
+			"tags": [
+				"副本",
+				"银宝箱"
+			]
+		},
+		"baoxiang523": {
+			"collectTypeId": "baoxiang523",
+			"effectId": "",
+			"name": "金宝箱",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "baoxiang523",
+			"time": 0,
+			"tags": [
+				"副本",
+				"金宝箱"
+			]
+		},
+		"level10002": {
+			"collectTypeId": "level10002",
+			"effectId": "",
+			"name": "地图一野外精英掉落",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "level10002",
+			"time": 0,
+			"tags": [
+				"野外精英",
+				"0消耗"
+			]
+		},
+		"level20001": {
+			"collectTypeId": "level20001",
+			"effectId": "",
+			"name": "地图2野外精英掉落",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "level20001",
+			"time": 0,
+			"tags": [
+				"野外精英",
+				"0消耗"
+			]
+		},
+		"level30001": {
+			"collectTypeId": "level30001",
+			"effectId": "",
+			"name": "地图3野外精英掉落",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "level30001",
+			"time": 0,
+			"tags": [
+				"野外精英",
+				"0消耗"
+			]
+		},
+		"level40001": {
+			"collectTypeId": "level40001",
+			"effectId": "",
+			"name": "地图4野外精英掉落",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "level40001",
+			"time": 0,
+			"tags": [
+				"野外精英",
+				"0消耗"
+			]
+		},
+		"level50001": {
+			"collectTypeId": "level50001",
+			"effectId": "",
+			"name": "地图4野外精英掉落",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "level50001",
+			"time": 0,
+			"tags": [
+				"野外精英",
+				"0消耗"
+			]
+		},
+		"chufang001": {
+			"collectTypeId": "chufang001",
+			"name": "食物储藏箱",
+			"effectId": "collectGreen",
+			"collectType": 4,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "chufang001",
+			"time": 0,
+			"tags": []
+		},
+		"lianjin001": {
+			"collectTypeId": "lianjin001",
+			"name": "废弃的炼金箱",
+			"effectId": "collectGreen",
+			"collectType": 4,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "lianjin001",
+			"time": 0,
+			"tags": []
+		},
+		"zhizhuxiang001": {
+			"collectTypeId": "zhizhuxiang001",
+			"name": "蛛蛹",
+			"effectId": "collectGreen",
+			"collectType": 4,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "zhizhuxiang001",
+			"time": 0,
+			"tags": []
+		},
+		"lingjian001": {
+			"collectTypeId": "lingjian001",
+			"name": "废弃的零件",
+			"effectId": "collectGreen",
+			"collectType": 4,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "lingjian001",
+			"time": 0,
+			"tags": []
+		},
+		"xingxiangshiban001": {
+			"collectTypeId": "xingxiangshiban001",
+			"name": "星象石板",
+			"effectId": "collectGreen",
+			"collectType": 4,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "xingxiangshiban001",
+			"time": 0,
+			"tags": []
+		},
+		"caoyao001": {
+			"collectTypeId": "caoyao001",
+			"name": "草药堆",
+			"effectId": "collectGreen",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "caoyao001",
+			"time": 0,
+			"tags": []
+		},
+		"kuangshi001": {
+			"collectTypeId": "kuangshi001",
+			"name": "矿石堆",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 3,
+			"consume": "collect_none",
+			"reward": "kuangshi001",
+			"time": 0,
+			"tags": []
+		},
+		"chaoxue001": {
+			"collectTypeId": "chaoxue001",
+			"name": "繁育巢穴",
+			"effectId": "collectGreen",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "chaoxue001",
+			"time": 0,
+			"tags": []
+		},
+		"collect_lh_c2": {
+			"collectTypeId": "collect_lh_c2",
+			"name": "硫磺",
+			"effectId": "collectGreen",
+			"collectType": 3,
+			"collectMov": 2,
+			"collectHp": 20,
+			"collectAnim": 3,
+			"consume": "collect_none",
+			"reward": "collect_lh_c2",
+			"time": 0,
+			"tags": []
+		},
+		"bocai001": {
+			"collectTypeId": "bocai001",
+			"name": "铜箱子",
+			"effectId": "collectGreen",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_bocai001",
+			"reward": "bocai001",
+			"time": 0,
+			"tags": []
+		},
+		"bocai002": {
+			"collectTypeId": "bocai002",
+			"name": "银箱子",
+			"effectId": "collectBlue",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_bocai002",
+			"reward": "bocai002",
+			"time": 0,
+			"tags": []
+		},
+		"bocai003": {
+			"collectTypeId": "bocai003",
+			"name": "金箱子",
+			"effectId": "collectPurple",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_bocai003",
+			"reward": "bocai003",
+			"time": 0,
+			"tags": []
+		},
+		"bocai201": {
+			"collectTypeId": "bocai201",
+			"name": "铜箱子",
+			"effectId": "collectGreen",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_bocai001",
+			"reward": "bocai201",
+			"time": 0,
+			"tags": []
+		},
+		"bocai202": {
+			"collectTypeId": "bocai202",
+			"name": "银箱子",
+			"effectId": "collectBlue",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_bocai002",
+			"reward": "bocai202",
+			"time": 0,
+			"tags": []
+		},
+		"bocai203": {
+			"collectTypeId": "bocai203",
+			"name": "金箱子",
+			"effectId": "collectPurple",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_bocai003",
+			"reward": "bocai203",
+			"time": 0,
+			"tags": []
+		},
+		"bocai301": {
+			"collectTypeId": "bocai301",
+			"name": "铜箱子",
+			"effectId": "collectGreen",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_bocai001",
+			"reward": "bocai301",
+			"time": 0,
+			"tags": []
+		},
+		"bocai302": {
+			"collectTypeId": "bocai302",
+			"name": "银箱子",
+			"effectId": "collectBlue",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_bocai002",
+			"reward": "bocai302",
+			"time": 0,
+			"tags": []
+		},
+		"bocai303": {
+			"collectTypeId": "bocai303",
+			"name": "金箱子",
+			"effectId": "collectPurple",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_bocai003",
+			"reward": "bocai303",
+			"time": 0,
+			"tags": []
+		},
+		"bocai401": {
+			"collectTypeId": "bocai401",
+			"name": "铜箱子",
+			"effectId": "collectGreen",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_bocai001",
+			"reward": "bocai401",
+			"time": 0,
+			"tags": []
+		},
+		"bocai402": {
+			"collectTypeId": "bocai402",
+			"name": "银箱子",
+			"effectId": "collectBlue",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_bocai002",
+			"reward": "bocai402",
+			"time": 0,
+			"tags": []
+		},
+		"bocai403": {
+			"collectTypeId": "bocai403",
+			"name": "金箱子",
+			"effectId": "collectPurple",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_bocai003",
+			"reward": "bocai403",
+			"time": 0,
+			"tags": []
+		},
+		"bocai501": {
+			"collectTypeId": "bocai501",
+			"name": "铜箱子",
+			"effectId": "collectGreen",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_bocai001",
+			"reward": "bocai501",
+			"time": 0,
+			"tags": []
+		},
+		"bocai502": {
+			"collectTypeId": "bocai502",
+			"name": "银箱子",
+			"effectId": "collectBlue",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_bocai002",
+			"reward": "bocai502",
+			"time": 0,
+			"tags": []
+		},
+		"bocai503": {
+			"collectTypeId": "bocai503",
+			"name": "金箱子",
+			"effectId": "collectPurple",
+			"collectType": 4,
+			"collectMov": 4,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_bocai003",
+			"reward": "bocai503",
+			"time": 0,
+			"tags": []
+		},
+		
+		"main10001_boss": {
+			"collectTypeId": "main10001_boss",
+			"effectId": "collectWhite",
+			"name": "1boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main10001_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main10001_bossmain": {
+			"collectTypeId": "main10001_bossmain",
+			"effectId": "collectWhite",
+			"name": "1boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main10001_bossmain",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main10002_boss": {
+			"collectTypeId": "main10002_boss",
+			"effectId": "collectWhite",
+			"name": "1boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main10002_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main10005_boss": {
+			"collectTypeId": "main10005_boss",
+			"effectId": "collectWhite",
+			"name": "1boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main10005_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main10005_boss_1": {
+			"collectTypeId": "main10005_boss_1",
+			"effectId": "collectWhite",
+			"name": "1boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main10005_boss_1",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main10005_boss_2": {
+			"collectTypeId": "main10005_boss_2",
+			"effectId": "collectWhite",
+			"name": "1boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main10005_boss_2",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		
+		"main11003_boss": {
+			"collectTypeId": "main11003_boss",
+			"effectId": "collectWhite",
+			"name": "1boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main11003_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main11004_boss": {
+			"collectTypeId": "main11004_boss",
+			"effectId": "collectWhite",
+			"name": "1boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main11004_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main11005_boss": {
+			"collectTypeId": "main11005_boss",
+			"effectId": "collectWhite",
+			"name": "1boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main11005_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main11005_boss_1": {
+			"collectTypeId": "main11005_boss_1",
+			"effectId": "collectWhite",
+			"name": "1boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main11005_boss_1",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main11005_boss_2": {
+			"collectTypeId": "main11005_boss_2",
+			"effectId": "collectWhite",
+			"name": "1boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main11005_boss_2",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		
+		
+		
+		"main20001_boss": {
+			"collectTypeId": "main20001_boss",
+			"effectId": "collectWhite",
+			"name": "2boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main20001_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main20002_boss": {
+			"collectTypeId": "main20002_boss",
+			"effectId": "collectWhite",
+			"name": "2boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main20002_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main20005_boss": {
+			"collectTypeId": "main20005_boss",
+			"effectId": "collectWhite",
+			"name": "2boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main20005_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main20005_boss_1": {
+			"collectTypeId": "main20005_boss_1",
+			"effectId": "collectWhite",
+			"name": "2boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main20005_boss_1",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main20005_boss_2": {
+			"collectTypeId": "main20005_boss_2",
+			"effectId": "collectWhite",
+			"name": "2boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main20005_boss_2",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		
+		"main21003_boss": {
+			"collectTypeId": "main21003_boss",
+			"effectId": "collectWhite",
+			"name": "2boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main21003_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main21004_boss": {
+			"collectTypeId": "main21004_boss",
+			"effectId": "collectWhite",
+			"name": "2boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main21004_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main21005_boss": {
+			"collectTypeId": "main21005_boss",
+			"effectId": "collectWhite",
+			"name": "2boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main21005_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main21005_boss_1": {
+			"collectTypeId": "main21005_boss_1",
+			"effectId": "collectWhite",
+			"name": "2boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main21005_boss_1",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main21005_boss_2": {
+			"collectTypeId": "main21005_boss_2",
+			"effectId": "collectWhite",
+			"name": "2boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main21005_boss_2",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		
+		
+		"main30001_boss": {
+			"collectTypeId": "main30001_boss",
+			"effectId": "collectWhite",
+			"name": "3boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main30001_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main30002_boss": {
+			"collectTypeId": "main30002_boss",
+			"effectId": "collectWhite",
+			"name": "3boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main30002_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main30005_boss": {
+			"collectTypeId": "main30005_boss",
+			"effectId": "collectWhite",
+			"name": "3boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main30005_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main30005_boss_1": {
+			"collectTypeId": "main30005_boss_1",
+			"effectId": "collectWhite",
+			"name": "3boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main30005_boss_1",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main30005_boss_2": {
+			"collectTypeId": "main30005_boss_2",
+			"effectId": "collectWhite",
+			"name": "3boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main30005_boss_2",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		
+		"main31003_boss": {
+			"collectTypeId": "main31003_boss",
+			"effectId": "collectWhite",
+			"name": "3boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main31003_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main31004_boss": {
+			"collectTypeId": "main31004_boss",
+			"effectId": "collectWhite",
+			"name": "3boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main31004_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main31005_boss": {
+			"collectTypeId": "main31005_boss",
+			"effectId": "collectWhite",
+			"name": "3boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main31005_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main31005_boss_1": {
+			"collectTypeId": "main31005_boss_1",
+			"effectId": "collectWhite",
+			"name": "3boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main31005_boss_1",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main31005_boss_2": {
+			"collectTypeId": "main31005_boss_2",
+			"effectId": "collectWhite",
+			"name": "3boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main31005_boss_2",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		
+		
+		"main40001_boss": {
+			"collectTypeId": "main40001_boss",
+			"effectId": "collectWhite",
+			"name": "4boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main40001_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main40002_boss": {
+			"collectTypeId": "main40002_boss",
+			"effectId": "collectWhite",
+			"name": "4boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main40002_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main40002_boss_1": {
+			"collectTypeId": "main40002_boss_1",
+			"effectId": "collectWhite",
+			"name": "4boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main40002_boss_1",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main40002_boss_2": {
+			"collectTypeId": "main40002_boss_2",
+			"effectId": "collectWhite",
+			"name": "4boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main40002_boss_2",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		
+		"main41001_boss": {
+			"collectTypeId": "main41001_boss",
+			"effectId": "collectWhite",
+			"name": "4boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main41001_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main41002_boss": {
+			"collectTypeId": "main41002_boss",
+			"effectId": "collectWhite",
+			"name": "4boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main41002_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main41002_boss_1": {
+			"collectTypeId": "main41002_boss_1",
+			"effectId": "collectWhite",
+			"name": "4boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main41002_boss_1",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main41002_boss_2": {
+			"collectTypeId": "main41002_boss_2",
+			"effectId": "collectWhite",
+			"name": "4boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main41002_boss_2",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		
+		
+		"main50001_boss": {
+			"collectTypeId": "main50001_boss",
+			"effectId": "collectWhite",
+			"name": "4boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main50001_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main50002_boss": {
+			"collectTypeId": "main50002_boss",
+			"effectId": "collectWhite",
+			"name": "4boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main50002_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main50002_boss_1": {
+			"collectTypeId": "main50002_boss_1",
+			"effectId": "collectWhite",
+			"name": "4boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main50002_boss_1",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main50002_boss_2": {
+			"collectTypeId": "main50002_boss_2",
+			"effectId": "collectWhite",
+			"name": "4boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main50002_boss_2",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		
+		"main51001_boss": {
+			"collectTypeId": "main51001_boss",
+			"effectId": "collectWhite",
+			"name": "4boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main51001_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main51002_boss": {
+			"collectTypeId": "main51002_boss",
+			"effectId": "collectWhite",
+			"name": "4boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main51002_boss",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main51002_boss_1": {
+			"collectTypeId": "main51002_boss_1",
+			"effectId": "collectWhite",
+			"name": "4boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main51002_boss_1",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+		"main51002_boss_2": {
+			"collectTypeId": "main51002_boss_2",
+			"effectId": "collectWhite",
+			"name": "4boss",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "main51002_boss_2",
+			"time": 0,
+			"tags": [
+				"副本"
+			]
+		},
+
+		
+		
+		"yeWaiPet_c1": {
+			"collectTypeId": "yeWaiPet_c1",
+			"name": "魔物蛋巢",
+			"effectId": "collectPurple",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "yeWaiPet_c1",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"魔物蛋"
+			]
+		},
+		
+		
+		"yeWaiPet_c2": {
+			"collectTypeId": "yeWaiPet_c2",
+			"name": "魔物蛋巢",
+			"effectId": "collectPurple",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "yeWaiPet_c2",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"魔物蛋"
+			]
+		},
+		
+		"yeWaiPet_c3": {
+			"collectTypeId": "yeWaiPet_c3",
+			"name": "魔物蛋巢",
+			"effectId": "collectPurple",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "yeWaiPet_c3",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"魔物蛋"
+			]
+		},
+
+		"yeWaiPet_c4": {
+			"collectTypeId": "yeWaiPet_c4",
+			"name": "魔物蛋巢",
+			"effectId": "collectPurple",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "yeWaiPet_c4",
+			"time": 0,
+			"crossDay": 1,
+			"tags": [
+				"魔物蛋"
+			]
+		},
+
+		
+		"dungeonEgg_c1": {
+			"collectTypeId": "dungeonEgg_c1",
+			"name": "魔物蛋巢",
+			"effectId": "collectPurple",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "yeWaiPet_c1",
+			"time": 0,
+			"tags": [
+				"魔物蛋"
+			]
+		},
+		
+		
+		"dungeonEgg_c2": {
+			"collectTypeId": "dungeonEgg_c2",
+			"name": "魔物蛋巢",
+			"effectId": "collectPurple",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "yeWaiPet_c2",
+			"time": 0,
+			"tags": [
+				"魔物蛋"
+			]
+		},
+		
+		"dungeonEgg_c3": {
+			"collectTypeId": "dungeonEgg_c3",
+			"name": "魔物蛋巢",
+			"effectId": "collectPurple",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "yeWaiPet_c3",
+			"time": 0,
+			"tags": [
+				"魔物蛋"
+			]
+		},
+
+		"dungeonEgg_c4": {
+			"collectTypeId": "dungeonEgg_c4",
+			"name": "魔物蛋巢",
+			"effectId": "collectPurple",
+			"collectType": 2,
+			"collectMov": 2,
+			"collectHp": 35,
+			"collectAnim": 1,
+			"consume": "collect_white",
+			"reward": "yeWaiPet_c4",
+			"time": 0,
+			"tags": [
+				"魔物蛋"
+			]
+		},
+
+		"c1tongBookHsl01": {
+			"collectTypeId": "c1tongBookHsl01",
+			"effectId": "collectPurple",
+			"name": "被隐藏的物品",
+			"collectType": 5,
+			"collectMov": 5,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "collect_c1bookHsl11",
+			"tip": "发现了不知道是什么人藏起来的物品",
+			"time": 0,
+			"collectOnce": true,
+			"tags": [
+				"大地图",
+				"c1",
+				"哈萨琳传·其一"
+			]
+		},
+		
+		
+
+		"c1yinBookHsl05": {
+			"collectTypeId": "c1yinBookHsl05",
+			"effectId": "collectPurple",
+			"name": "被隐藏的物品",
+			"collectType": 5,
+			"collectMov": 5,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "collect_c1bookhsl12",
+			"tip": "发现了不知道是什么人藏起来的物品",
+			"time": 0,
+			"collectOnce": true,
+			"tags": [
+				"大地图",
+				"c1",
+				"哈萨3-1"
+			]
+		},
+		"c1yinBookHsl08": {
+			"collectTypeId": "c1yinBookHsl08",
+			"effectId": "collectPurple",
+			"name": "被隐藏的物品",
+			"collectType": 5,
+			"collectMov": 5,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "collect_c1bookhsl2",
+			"tip": "发现了不知道是什么人藏起来的物品",
+			"time": 0,
+			"collectOnce": true,
+			"tags": [
+				"大地图",
+				"c1",
+				"哈萨3-2"
+			]
+		},
+		
+		"c1jinBookHsl02": {
+			"collectTypeId": "c1jinBookHsl02",
+			"effectId": "collectPurple",
+			"name": "被隐藏的物品",
+			"collectType": 5,
+			"collectMov": 5,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "collect_c1bookhsl32",
+			"tip": "发现了不知道是什么人藏起来的物品",
+			"time": 0,
+			"collectOnce": true,
+			"tags": [
+				"大地图",
+				"c1",
+				"哈萨1-2"
+			]
+		},
+		"c1jinBookHsl03": {
+			"collectTypeId": "c1jinBookHsl03",
+			"effectId": "collectPurple",
+			"name": "被隐藏的物品",
+			"collectType": 5,
+			"collectMov": 5,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "collect_c1bookhsl31",
+			"tip": "发现了不知道是什么人藏起来的物品",
+			"time": 0,
+			"collectOnce": true,
+			"tags": [
+				"大地图",
+				"c1",
+				"哈萨2"
+			]
+		},
+		"c1jinBookHsl06": {
+			"collectTypeId": "c1jinBookHsl06",
+			"effectId": "collectPurple",
+			"name": "被隐藏的物品",
+			"collectType": 5,
+			"collectMov": 5,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"consume": "collect_none",
+			"reward": "collect_c1bookhsl5",
+			"tip": "发现了不知道是什么人藏起来的物品",
+			"time": 0,
+			"collectOnce": true,
+			"tags": [
+				"大地图",
+				"c1",
+				"哈萨5"
+			]
+		},
+		
+
+
+
+		"c1changJing01": {
+			"collectTypeId": "c1changJing01",
+			"name": "被隐藏的物品",
+			"effectId": "collectPurple",
+			"collectType": 5,
+			"collectMov": 5,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"tip": "发现了不知道是什么人藏起来的物品",
+			"consume": "collect_white",
+			"reward": "collect_c1tycj",
+			"time": 0,
+			"collectOnce": true,
+			"tags": [
+				"c1",
+				"场景交互",
+				"高亮"
+			]
+		},
+		"c1changJingHsl07": {
+			"collectTypeId": "c1changJingHsl07",
+			"name": "被隐藏的物品",
+			"effectId": "collectPurple",
+			"collectType": 5,
+			"collectMov": 5,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"tip": "发现了不知道是什么人藏起来的物品",
+			"consume": "collect_white",
+			"reward": "collect_c1bookhsl61",
+			"time": 0,
+			"collectOnce": true,
+			"tags": [
+				"c1",
+				"场景交互",
+				"高亮",
+				"哈萨6-1"
+			]
+		},
+		"c2changJing01": {
+			"collectTypeId": "c2changJing01",
+			"name": "被隐藏的物品",
+			"effectId": "collectPurple",
+			"collectType": 5,
+			"collectMov": 5,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"tip": "发现了不知道是什么人藏起来的物品",
+			"consume": "collect_white",
+			"reward": "collect_c2tycj",
+			"time": 0,
+			"collectOnce": true,
+			"tags": [
+				"c2",
+				"场景交互",
+				"高亮"
+			]
+		},
+		"c3changJing01": {
+			"collectTypeId": "c3changJing01",
+			"name": "被隐藏的物品",
+			"effectId": "collectPurple",
+			"collectType": 5,
+			"collectMov": 5,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"tip": "发现了不知道是什么人藏起来的物品",
+			"consume": "collect_white",
+			"reward": "collect_c3tycj",
+			"time": 0,
+			"collectOnce": true,
+			"tags": [
+				"c3",
+				"场景交互",
+				"高亮"
+			]
+		},
+
+		"c4changJing01": {
+			"collectTypeId": "c4changJing01",
+			"name": "被隐藏的物品",
+			"effectId": "collectPurple",
+			"collectType": 5,
+			"collectMov": 5,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"tip": "发现了不知道是什么人藏起来的物品",
+			"consume": "collect_white",
+			"reward": "collect_c4tycj",
+			"time": 0,
+			"collectOnce": true,
+			"tags": [
+				"c4",
+				"场景交互",
+				"高亮"
+			]
+		},
+
+		"c5changJing01": {
+			"collectTypeId": "c5changJing01",
+			"name": "被隐藏的物品",
+			"effectId": "collectPurple",
+			"collectType": 5,
+			"collectMov": 5,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"tip": "发现了不知道是什么人藏起来的物品",
+			"consume": "collect_white",
+			"reward": "collect_c5tycj",
+			"time": 0,
+			"collectOnce": true,
+			"tags": [
+				"c5",
+				"场景交互",
+				"高亮"
+			]
+		},
+
+		"c1yinCang": {
+			"collectTypeId": "c1yinCang",
+			"name": "？？？",
+			"effectId": "",
+			"collectType": 5,
+			"collectMov": 5,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"tip": "发现了一个被藏起来的包裹",
+			"consume": "collect_white",
+			"reward": "collect_c1tyyc",
+			"time": 0,
+			"collectOnce": true,
+			"tags": [
+				"c1",
+				"隐藏交互"
+			]
+		},
+		"c1yinCangHsl04": {
+			"collectTypeId": "c1yinCangHsl04",
+			"name": "被隐藏的物品",
+			"effectId": "collectPurple",
+			"collectType": 5,
+			"collectMov": 5,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"tip": "发现了不知道是什么人藏起来的物品",
+			"consume": "collect_white",
+			"reward": "collect_c1bookhsl4",
+			"time": 0,
+			"collectOnce": true,
+			"tags": [
+				"c1",
+				"隐藏交互",
+				"哈萨4"
+			]
+		},
+		"c1yinCangHsl09": {
+			"collectTypeId": "c1yinCangHsl09",
+			"name": "被隐藏的物品",
+			"effectId": "collectPurple",
+			"collectType": 5,
+			"collectMov": 5,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"tip": "发现了不知道是什么人藏起来的物品",
+			"consume": "collect_white",
+			"reward": "collect_c1bookhsl62",
+			"time": 0,
+			"collectOnce": true,
+			"tags": [
+				"c1",
+				"隐藏交互",
+				"哈萨6-2"
+			]
+		},
+		"c2yinCang": {
+			"collectTypeId": "c2yinCang",
+			"name": "？？？",
+			"effectId": "",
+			"collectType": 5,
+			"collectMov": 5,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"tip": "发现了一个被藏起来的包裹",
+			"consume": "collect_white",
+			"reward": "collect_c2tyyc",
+			"time": 0,
+			"collectOnce": true,
+			"tags": [
+				"c2",
+				"隐藏交互"
+			]
+		},
+		"c3yinCang": {
+			"collectTypeId": "c3yinCang",
+			"name": "？？？",
+			"effectId": "",
+			"collectType": 5,
+			"collectMov": 5,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"tip": "发现了一个被藏起来的包裹",
+			"consume": "collect_white",
+			"reward": "collect_c3tyyc",
+			"time": 0,
+			"collectOnce": true,
+			"tags": [
+				"c3",
+				"隐藏交互"
+			]
+		},
+		"c4yinCang": {
+			"collectTypeId": "c4yinCang",
+			"name": "？？？",
+			"effectId": "",
+			"collectType": 5,
+			"collectMov": 5,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"tip": "发现了一个被藏起来的包裹",
+			"consume": "collect_white",
+			"reward": "collect_c4tyyc",
+			"time": 0,
+			"collectOnce": true,
+			"tags": [
+				"c4",
+				"隐藏交互"
+			]
+		},
+		"c5yinCang": {
+			"collectTypeId": "c5yinCang",
+			"name": "？？？",
+			"effectId": "",
+			"collectType": 5,
+			"collectMov": 5,
+			"collectHp": 10,
+			"collectAnim": 1,
+			"tip": "发现了一个被藏起来的包裹",
+			"consume": "collect_white",
+			"reward": "collect_c5tyyc",
+			"time": 0,
+			"collectOnce": true,
+			"tags": [
+				"c5",
+				"隐藏交互"
+			]
+		}
+	}
+}

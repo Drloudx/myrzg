@@ -2332,7 +2332,8 @@
             },
             "category":[
                 1,
-                13
+                13,
+                135
             ],
             "quality":2,
             "name":"岩盐",
@@ -4729,41 +4730,8 @@
                 "equipLevel":3,
                 "position":3,
                 "unitData":{
-                    "rebDam":0,
-                    "damAddTypes":[
-
-                    ],
-                    "repelRes":0,
-                    "cureAdd":0,
-                    "damResTypes":[
-
-                    ],
-                    "phyDef":0,
-                    "runSpeed":0,
-                    "magicDef":0,
-                    "critRes":0,
-                    "phyAtk":0,
-                    "atkSpeed":0,
-                    "crit":0,
-                    "phyAtkPen":0,
-                    "buffChangeTypes":[
-
-                    ],
-                    "magicAtk":0,
-                    "magicAtkPen":0,
-                    "cirtDam":0,
-                    "atkFloatMin":0,
-                    "vampire":0,
-                    "damAtkAddTypes":[
-
-                    ],
                     "skillCool":2,
-                    "atkRange":0,
-                    "atkFloatMax":0,
-                    "maxHp":450,
-                    "damKeyTypes":[
-
-                    ]
+                    "maxHp":450
                 },
                 "suitTypeId":"suit_330"
             },
@@ -6078,7 +6046,7 @@
                 "position":1,
                 "unitData":{
                     "phyAtk":178,
-                    "cirtDam":4
+                    "critDam":4
                 },
                 "suitTypeId":""
             },
@@ -6749,7 +6717,8 @@
             },
             "category":[
                 1,
-                13
+                13,
+                135
             ],
             "quality":2,
             "name":"面粉",
@@ -9340,7 +9309,7 @@
                 "equipLevel":5,
                 "position":3,
                 "unitData":{
-                    "cirtDam":4,
+                    "critDam":4,
                     "maxHp":522
                 },
                 "suitTypeId":"suit_510"
@@ -12628,7 +12597,8 @@
             },
             "category":[
                 1,
-                13
+                13,
+                135
             ],
             "quality":2,
             "name":"腌菜",
@@ -17737,7 +17707,7 @@
                     ],
                     "magicAtk":0,
                     "magicAtkPen":0,
-                    "cirtDam":0,
+                    "critDam":0,
                     "atkFloatMin":0,
                     "vampire":0,
                     "damAtkAddTypes":[
@@ -19238,7 +19208,7 @@
                 "equipLevel":2,
                 "position":3,
                 "unitData":{
-                    "cirtDam":4,
+                    "critDam":4,
                     "maxHp":522
                 },
                 "suitTypeId":"suit_210"
@@ -19871,7 +19841,7 @@
                     ],
                     "magicAtk":0,
                     "magicAtkPen":0,
-                    "cirtDam":0,
+                    "critDam":0,
                     "atkFloatMin":0,
                     "vampire":0,
                     "damAtkAddTypes":[
@@ -21469,7 +21439,7 @@
                     ],
                     "magicAtk":0,
                     "magicAtkPen":0,
-                    "cirtDam":0,
+                    "critDam":0,
                     "atkFloatMin":0,
                     "vampire":0,
                     "damAtkAddTypes":[
@@ -26342,7 +26312,8 @@
             },
             "category":[
                 1,
-                13
+                13,
+                135
             ],
             "quality":2,
             "name":"风干肉",
@@ -28900,7 +28871,7 @@
                 323
             ],
             "quality":3,
-            "name":"珍菇翡翠白玉测试",
+            "name":"珍菇翡翠白玉汤",
             "typeId":"item_30034",
             "desc":"你不知道厨师是以什么样的心态做出了这道菜——看上去只是将手所能及的材料一股脑丢进锅里煮烂，但各种食材的味道与口感既没有失去层次感，又仿佛浑然一体。所有人在入口之后都会为身处这深渊之中，还可以品尝到如此料理而感慨。",
             "numSplit":99,
@@ -30429,7 +30400,8 @@
             },
             "category":[
                 1,
-                13
+                13,
+                135
             ],
             "quality":2,
             "name":"果酱",
@@ -30615,55 +30587,6 @@
             "useable":true,
             "autoUse":true,
             "noWeight":true
-        },
-        "item_19016":{
-            "origin":[
-                {
-                    "value":"日常计划一元素石采集",
-                    "type":"text"
-                }
-            ],
-            "foodType":"",
-            "equip":{
-
-            },
-            "category":[
-                2,
-                21
-            ],
-            "quality":3,
-            "name":"火之结晶",
-            "typeId":"item_19016",
-            "desc":"蕴含少量火元素魔力的结晶，可以进一步提升对应元素角色的极限。",
-            "numSplit":2,
-            "getTip":"",
-            "itemType":1,
-            "hide":false,
-            "sellable":false,
-            "dropable":true,
-            "sellPrice":1,
-            "priceRate":0,
-            "useable2":false,
-            "img":"item_19016",
-            "useAction2":"",
-            "sellExp":0,
-            "useAction":"",
-            "useActionPara2":{
-
-            },
-            "useActionPara":{
-
-            },
-            "use2Info":{
-
-            },
-            "maxNum":99,
-            "favValue":1,
-            "useDes":"",
-            "favOpen":false,
-            "useable":false,
-            "autoUse":false,
-            "noWeight":false
         },
         "item_30036":{
             "origin":[
@@ -34120,7 +34043,7 @@
                 "position":1,
                 "unitData":{
                     "phyAtk":189,
-                    "cirtDam":5
+                    "critDam":5
                 },
                 "suitTypeId":""
             },
@@ -36119,7 +36042,7 @@
                     ],
                     "magicAtk":0,
                     "magicAtkPen":0,
-                    "cirtDam":0,
+                    "critDam":0,
                     "atkFloatMin":0,
                     "vampire":0,
                     "damAtkAddTypes":[
@@ -37743,7 +37666,7 @@
                 "equipLevel":1,
                 "position":3,
                 "unitData":{
-                    "cirtDam":5,
+                    "critDam":5,
                     "maxHp":598
                 },
                 "suitTypeId":"suit_110"
@@ -40212,41 +40135,7 @@
                 "equipLevel":2,
                 "position":3,
                 "unitData":{
-                    "rebDam":0,
-                    "damAddTypes":[
-
-                    ],
-                    "repelRes":0,
-                    "cureAdd":0,
-                    "damResTypes":[
-
-                    ],
-                    "phyDef":0,
-                    "runSpeed":0,
-                    "magicDef":0,
-                    "critRes":0,
-                    "phyAtk":0,
-                    "atkSpeed":0,
-                    "crit":0,
-                    "phyAtkPen":0,
-                    "buffChangeTypes":[
-
-                    ],
-                    "magicAtk":0,
-                    "magicAtkPen":0,
-                    "cirtDam":0,
-                    "atkFloatMin":0,
-                    "vampire":0,
-                    "damAtkAddTypes":[
-
-                    ],
-                    "skillCool":0,
-                    "atkRange":0,
-                    "atkFloatMax":0,
-                    "maxHp":477,
-                    "damKeyTypes":[
-
-                    ]
+                    "maxHp":477
                 },
                 "suitTypeId":""
             },

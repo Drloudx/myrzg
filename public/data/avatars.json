@@ -1,0 +1,337 @@
+{
+	"datas": [
+		{
+			"typeId": "hero_001",
+			"lock": false,
+			"img": "at001_0",
+			"name": "主人公",
+			"des": "在旅途的初始自动获得",
+			"heroTypeId":"",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "new_hero_002",
+			"lock": true,
+			"img": "at002_1",
+			"name": "米托拉",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"new_hero_002",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_005",
+			"lock": true,
+			"img": "at005_0",
+			"name": "茜塔",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_005",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_005_skin01",
+			"lock": true,
+			"img": "at005a",
+			"name": "难得的休息日",
+			"des": "购买皮肤获得",
+			"heroTypeId":"",
+			"heroSkinId":"hero_005_skin01"
+		},
+		{
+			"typeId": "hero_007",
+			"lock": true,
+			"img": "at007_0",
+			"name": "拉碧丝",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_007",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_008",
+			"lock": true,
+			"img": "at008_0",
+			"name": "夏库塔拉",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_008",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_009",
+			"lock": true,
+			"img": "at009_0",
+			"name": "可可娜",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_009",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_011",
+			"lock": true,
+			"img": "at011_0",
+			"name": "缇莎",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_011",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_012",
+			"lock": true,
+			"img": "at012_0",
+			"name": "沃夫加",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_012",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_014",
+			"lock": true,
+			"img": "at014_0",
+			"name": "皮塔",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_014",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_015",
+			"lock": true,
+			"img": "at015_0",
+			"name": "芭杜尔",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_015",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_019",
+			"lock": true,
+			"img": "at019_0",
+			"name": "奇瓦",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_019",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_023",
+			"lock": true,
+			"img": "at023_0",
+			"name": "卡夫",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_023",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_025",
+			"lock": true,
+			"img": "at025_0",
+			"name": "嘉莉缇",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_025",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_026",
+			"lock": true,
+			"img": "at026_0",
+			"name": "贝拉多娜",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_026",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_027",
+			"lock": true,
+			"img": "at027_0",
+			"name": "梅莉莉",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_027",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_029",
+			"lock": true,
+			"img": "at029_0",
+			"name": "安娜",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_029",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_031",
+			"lock": true,
+			"img": "at031_0",
+			"name": "波特温",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_031",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_033",
+			"lock": true,
+			"img": "at033_0",
+			"name": "乌帕·萝特",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_033",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_034",
+			"lock": true,
+			"img": "at034_0",
+			"name": "露帕·萝特",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_034",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_036",
+			"lock": true,
+			"img": "at036_0",
+			"name": "贝尔卡",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_036",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_036_skin01",
+			"lock": true,
+			"img": "at036a",
+			"name": "学院的优等生",
+			"des": "购买皮肤获得",
+			"heroTypeId":"",
+			"heroSkinId":"hero_036_skin01"
+		},
+		{
+			"typeId": "hero_037",
+			"lock": true,
+			"img": "at037_0",
+			"name": "剋",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_037",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_041",
+			"lock": true,
+			"img": "at041_0",
+			"name": "埃迪蒂",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_041",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_043",
+			"lock": true,
+			"img": "at043_0",
+			"name": "阿娜洛洁",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_043",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_045",
+			"lock": true,
+			"img": "at045_0",
+			"name": "艾尔菲帕",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_045",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_046",
+			"lock": true,
+			"img": "at046_0",
+			"name": "迈妮娅",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_046",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_047",
+			"lock": true,
+			"img": "at047_0",
+			"name": "阿迪拉",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_047",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_049",
+			"lock": true,
+			"img": "at049_0",
+			"name": "菲莉娜",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_049",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_050",
+			"lock": true,
+			"img": "at050_0",
+			"name": "米拉贝尔",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_050",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_051",
+			"lock": true,
+			"img": "at051_0",
+			"name": "阿莱克西娅",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_051",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_053",
+			"lock": true,
+			"img": "at053_0",
+			"name": "艾薇杜尔",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_053",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_055",
+			"lock": true,
+			"img": "at055_0",
+			"name": "迦南",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_055",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_062",
+			"lock": true,
+			"img": "at062_0",
+			"name": "露比特·鲁特",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_062",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_064",
+			"lock": true,
+			"img": "at064_0",
+			"name": "伽拉忒亚",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_064",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_065",
+			"lock": true,
+			"img": "at065_0",
+			"name": "乌尔勒",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_065",
+			"heroSkinId":""
+		},
+		{
+			"typeId": "hero_066",
+			"lock": true,
+			"img": "at066_0",
+			"name": "奥格",
+			"des": "伙伴加入时自动获得",
+			"heroTypeId":"hero_066",
+			"heroSkinId":""
+		}
+	]
+}

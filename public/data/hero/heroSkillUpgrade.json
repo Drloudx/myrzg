@@ -1,0 +1,1348 @@
+{
+	"datas": {
+		"skillOne": {
+			"1": [
+				{
+					"rare": 1,
+					"level": 1,
+					"heroLevel": 1,
+					"upgradeConsume": {
+						"1": "skillOne13101",
+						"2": "skillOne13102",
+						"3": "skillOne13103",
+						"4": "skillOne13104"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 2,
+					"heroLevel": 4,
+					"upgradeConsume": {
+						"1": "skillOne13201",
+						"2": "skillOne13202",
+						"3": "skillOne13203",
+						"4": "skillOne13204"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 3,
+					"heroLevel": 7,
+					"upgradeConsume": {
+						"1": "skillOne13301",
+						"2": "skillOne13302",
+						"3": "skillOne13303",
+						"4": "skillOne13304"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 4,
+					"heroLevel": 10,
+					"upgradeConsume": {
+						"1": "skillOne13401",
+						"2": "skillOne13402",
+						"3": "skillOne13403",
+						"4": "skillOne13404"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 5,
+					"heroLevel": 15,
+					"upgradeConsume": {
+						"1": "skillOne13501",
+						"2": "skillOne13502",
+						"3": "skillOne13503",
+						"4": "skillOne13504"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 6,
+					"heroLevel": 20,
+					"upgradeConsume": {
+						"1": "skillOne13601",
+						"2": "skillOne13602",
+						"3": "skillOne13603",
+						"4": "skillOne13604"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 7,
+					"heroLevel": 25,
+					"upgradeConsume": {
+						"1": "skillOne13701",
+						"2": "skillOne13702",
+						"3": "skillOne13703",
+						"4": "skillOne13704"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 8,
+					"heroLevel": 30,
+					"upgradeConsume": {
+						"1": "skillOne13801",
+						"2": "skillOne13802",
+						"3": "skillOne13803",
+						"4": "skillOne13804"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 9,
+					"heroLevel": 35,
+					"upgradeConsume": {
+						"1": "skillOne13801",
+						"2": "skillOne13802",
+						"3": "skillOne13803",
+						"4": "skillOne13804"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 10,
+					"heroLevel": 40,
+					"upgradeConsume": {
+						"1": "skillOne13901",
+						"2": "skillOne13902",
+						"3": "skillOne13903",
+						"4": "skillOne13904"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 11,
+					"heroLevel": 45,
+					"upgradeConsume": {
+						"1": "skillOne13901",
+						"2": "skillOne13902",
+						"3": "skillOne13903",
+						"4": "skillOne13904"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 12,
+					"heroLevel": 50,
+					"upgradeConsume": {
+						"1": "skillOne13901",
+						"2": "skillOne13902",
+						"3": "skillOne13903",
+						"4": "skillOne13904"
+					}
+				}
+			],
+			"2": [
+				{
+					"rare": 2,
+					"level": 1,
+					"heroLevel": 1,
+					"upgradeConsume": {
+						"1": "skillOne13101",
+						"2": "skillOne13102",
+						"3": "skillOne13103",
+						"4": "skillOne13104"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 2,
+					"heroLevel": 4,
+					"upgradeConsume": {
+						"1": "skillOne13201",
+						"2": "skillOne13202",
+						"3": "skillOne13203",
+						"4": "skillOne13204"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 3,
+					"heroLevel": 7,
+					"upgradeConsume": {
+						"1": "skillOne13301",
+						"2": "skillOne13302",
+						"3": "skillOne13303",
+						"4": "skillOne13304"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 4,
+					"heroLevel": 10,
+					"upgradeConsume": {
+						"1": "skillOne13401",
+						"2": "skillOne13402",
+						"3": "skillOne13403",
+						"4": "skillOne13404"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 5,
+					"heroLevel": 15,
+					"upgradeConsume": {
+						"1": "skillOne13501",
+						"2": "skillOne13502",
+						"3": "skillOne13503",
+						"4": "skillOne13504"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 6,
+					"heroLevel": 20,
+					"upgradeConsume": {
+						"1": "skillOne13601",
+						"2": "skillOne13602",
+						"3": "skillOne13603",
+						"4": "skillOne13604"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 7,
+					"heroLevel": 25,
+					"upgradeConsume": {
+						"1": "skillOne13701",
+						"2": "skillOne13702",
+						"3": "skillOne13703",
+						"4": "skillOne13704"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 8,
+					"heroLevel": 30,
+					"upgradeConsume": {
+						"1": "skillOne13801",
+						"2": "skillOne13802",
+						"3": "skillOne13803",
+						"4": "skillOne13804"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 9,
+					"heroLevel": 35,
+					"upgradeConsume": {
+						"1": "skillOne13801",
+						"2": "skillOne13802",
+						"3": "skillOne13803",
+						"4": "skillOne13804"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 10,
+					"heroLevel": 40,
+					"upgradeConsume": {
+						"1": "skillOne13901",
+						"2": "skillOne13902",
+						"3": "skillOne13903",
+						"4": "skillOne13904"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 11,
+					"heroLevel": 45,
+					"upgradeConsume": {
+						"1": "skillOne13901",
+						"2": "skillOne13902",
+						"3": "skillOne13903",
+						"4": "skillOne13904"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 12,
+					"heroLevel": 50,
+					"upgradeConsume": {
+						"1": "skillOne13901",
+						"2": "skillOne13902",
+						"3": "skillOne13903",
+						"4": "skillOne13904"
+					}
+				}
+			],
+			"3": [
+				{
+					"rare": 3,
+					"level": 1,
+					"heroLevel": 1,
+					"upgradeConsume": {
+						"1": "skillOne13101",
+						"2": "skillOne13102",
+						"3": "skillOne13103",
+						"4": "skillOne13104"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 2,
+					"heroLevel": 4,
+					"upgradeConsume": {
+						"1": "skillOne13201",
+						"2": "skillOne13202",
+						"3": "skillOne13203",
+						"4": "skillOne13204"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 3,
+					"heroLevel": 7,
+					"upgradeConsume": {
+						"1": "skillOne13301",
+						"2": "skillOne13302",
+						"3": "skillOne13303",
+						"4": "skillOne13304"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 4,
+					"heroLevel": 10,
+					"upgradeConsume": {
+						"1": "skillOne13401",
+						"2": "skillOne13402",
+						"3": "skillOne13403",
+						"4": "skillOne13404"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 5,
+					"heroLevel": 15,
+					"upgradeConsume": {
+						"1": "skillOne13501",
+						"2": "skillOne13502",
+						"3": "skillOne13503",
+						"4": "skillOne13504"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 6,
+					"heroLevel": 20,
+					"upgradeConsume": {
+						"1": "skillOne13601",
+						"2": "skillOne13602",
+						"3": "skillOne13603",
+						"4": "skillOne13604"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 7,
+					"heroLevel": 25,
+					"upgradeConsume": {
+						"1": "skillOne13701",
+						"2": "skillOne13702",
+						"3": "skillOne13703",
+						"4": "skillOne13704"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 8,
+					"heroLevel": 30,
+					"upgradeConsume": {
+						"1": "skillOne13801",
+						"2": "skillOne13802",
+						"3": "skillOne13803",
+						"4": "skillOne13804"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 9,
+					"heroLevel": 35,
+					"upgradeConsume": {
+						"1": "skillOne13801",
+						"2": "skillOne13802",
+						"3": "skillOne13803",
+						"4": "skillOne13804"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 10,
+					"heroLevel": 40,
+					"upgradeConsume": {
+						"1": "skillOne13901",
+						"2": "skillOne13902",
+						"3": "skillOne13903",
+						"4": "skillOne13904"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 11,
+					"heroLevel": 45,
+					"upgradeConsume": {
+						"1": "skillOne13901",
+						"2": "skillOne13902",
+						"3": "skillOne13903",
+						"4": "skillOne13904"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 12,
+					"heroLevel": 50,
+					"upgradeConsume": {
+						"1": "skillOne13901",
+						"2": "skillOne13902",
+						"3": "skillOne13903",
+						"4": "skillOne13904"
+					}
+				}
+			],
+			"4": [
+				{
+					"rare": 4,
+					"level": 1,
+					"heroLevel": 1,
+					"upgradeConsume": {
+						"1": "skillOne14101",
+						"2": "skillOne14102",
+						"3": "skillOne14103",
+						"4": "skillOne14104"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 2,
+					"heroLevel": 4,
+					"upgradeConsume": {
+						"1": "skillOne14201",
+						"2": "skillOne14202",
+						"3": "skillOne14203",
+						"4": "skillOne14204"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 3,
+					"heroLevel": 7,
+					"upgradeConsume": {
+						"1": "skillOne14301",
+						"2": "skillOne14302",
+						"3": "skillOne14303",
+						"4": "skillOne14304"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 4,
+					"heroLevel": 10,
+					"upgradeConsume": {
+						"1": "skillOne14401",
+						"2": "skillOne14402",
+						"3": "skillOne14403",
+						"4": "skillOne14404"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 5,
+					"heroLevel": 15,
+					"upgradeConsume": {
+						"1": "skillOne14501",
+						"2": "skillOne14502",
+						"3": "skillOne14503",
+						"4": "skillOne14504"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 6,
+					"heroLevel": 20,
+					"upgradeConsume": {
+						"1": "skillOne14601",
+						"2": "skillOne14602",
+						"3": "skillOne14603",
+						"4": "skillOne14604"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 7,
+					"heroLevel": 25,
+					"upgradeConsume": {
+						"1": "skillOne14701",
+						"2": "skillOne14702",
+						"3": "skillOne14703",
+						"4": "skillOne14704"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 8,
+					"heroLevel": 30,
+					"upgradeConsume": {
+						"1": "skillOne14801",
+						"2": "skillOne14802",
+						"3": "skillOne14803",
+						"4": "skillOne14804"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 9,
+					"heroLevel": 35,
+					"upgradeConsume": {
+						"1": "skillOne14801",
+						"2": "skillOne14802",
+						"3": "skillOne14803",
+						"4": "skillOne14804"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 10,
+					"heroLevel": 40,
+					"upgradeConsume": {
+						"1": "skillOne14901",
+						"2": "skillOne14902",
+						"3": "skillOne14903",
+						"4": "skillOne14904"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 11,
+					"heroLevel": 45,
+					"upgradeConsume": {
+						"1": "skillOne14901",
+						"2": "skillOne14902",
+						"3": "skillOne14903",
+						"4": "skillOne14904"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 12,
+					"heroLevel": 50,
+					"upgradeConsume": {
+						"1": "skillOne14901",
+						"2": "skillOne14902",
+						"3": "skillOne14903",
+						"4": "skillOne14904"
+					}
+				}
+			],
+			"5": [
+				{
+					"rare": 5,
+					"level": 1,
+					"heroLevel": 1,
+					"upgradeConsume": {
+						"1": "skillOne15101",
+						"2": "skillOne15102",
+						"3": "skillOne15103",
+						"4": "skillOne15104"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 2,
+					"heroLevel": 4,
+					"upgradeConsume": {
+						"1": "skillOne15201",
+						"2": "skillOne15202",
+						"3": "skillOne15203",
+						"4": "skillOne15204"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 3,
+					"heroLevel": 7,
+					"upgradeConsume": {
+						"1": "skillOne15301",
+						"2": "skillOne15302",
+						"3": "skillOne15303",
+						"4": "skillOne15304"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 4,
+					"heroLevel": 10,
+					"upgradeConsume": {
+						"1": "skillOne15401",
+						"2": "skillOne15402",
+						"3": "skillOne15403",
+						"4": "skillOne15404"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 5,
+					"heroLevel": 15,
+					"upgradeConsume": {
+						"1": "skillOne15501",
+						"2": "skillOne15502",
+						"3": "skillOne15503",
+						"4": "skillOne15504"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 6,
+					"heroLevel": 20,
+					"upgradeConsume": {
+						"1": "skillOne15601",
+						"2": "skillOne15602",
+						"3": "skillOne15603",
+						"4": "skillOne15604"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 7,
+					"heroLevel": 25,
+					"upgradeConsume": {
+						"1": "skillOne15701",
+						"2": "skillOne15702",
+						"3": "skillOne15703",
+						"4": "skillOne15704"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 8,
+					"heroLevel": 30,
+					"upgradeConsume": {
+						"1": "skillOne15801",
+						"2": "skillOne15802",
+						"3": "skillOne15803",
+						"4": "skillOne15804"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 9,
+					"heroLevel": 35,
+					"upgradeConsume": {
+						"1": "skillOne15801",
+						"2": "skillOne15802",
+						"3": "skillOne15803",
+						"4": "skillOne15804"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 10,
+					"heroLevel": 40,
+					"upgradeConsume": {
+						"1": "skillOne15901",
+						"2": "skillOne15902",
+						"3": "skillOne15903",
+						"4": "skillOne15904"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 11,
+					"heroLevel": 45,
+					"upgradeConsume": {
+						"1": "skillOne15901",
+						"2": "skillOne15902",
+						"3": "skillOne15903",
+						"4": "skillOne15904"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 12,
+					"heroLevel": 50,
+					"upgradeConsume": {
+						"1": "skillOne15901",
+						"2": "skillOne15902",
+						"3": "skillOne15903",
+						"4": "skillOne15904"
+					}
+				}
+			]
+		},
+		"skillTwo": {
+			"1": [
+				{
+					"rare": 1,
+					"level": 1,
+					"heroLevel": 4,
+					"upgradeConsume": {
+						"1": "skillOne13101",
+						"2": "skillOne13102",
+						"3": "skillOne13103",
+						"4": "skillOne13104"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 2,
+					"heroLevel": 7,
+					"upgradeConsume": {
+						"1": "skillOne13201",
+						"2": "skillOne13202",
+						"3": "skillOne13203",
+						"4": "skillOne13204"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 3,
+					"heroLevel": 10,
+					"upgradeConsume": {
+						"1": "skillOne13301",
+						"2": "skillOne13302",
+						"3": "skillOne13303",
+						"4": "skillOne13304"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 4,
+					"heroLevel": 13,
+					"upgradeConsume": {
+						"1": "skillOne13401",
+						"2": "skillOne13402",
+						"3": "skillOne13403",
+						"4": "skillOne13404"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 5,
+					"heroLevel": 18,
+					"upgradeConsume": {
+						"1": "skillOne13501",
+						"2": "skillOne13502",
+						"3": "skillOne13503",
+						"4": "skillOne13504"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 6,
+					"heroLevel": 23,
+					"upgradeConsume": {
+						"1": "skillOne13601",
+						"2": "skillOne13602",
+						"3": "skillOne13603",
+						"4": "skillOne13604"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 7,
+					"heroLevel": 28,
+					"upgradeConsume": {
+						"1": "skillOne13701",
+						"2": "skillOne13702",
+						"3": "skillOne13703",
+						"4": "skillOne13704"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 8,
+					"heroLevel": 33,
+					"upgradeConsume": {
+						"1": "skillOne13801",
+						"2": "skillOne13802",
+						"3": "skillOne13803",
+						"4": "skillOne13804"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 9,
+					"heroLevel": 38,
+					"upgradeConsume": {
+						"1": "skillOne13801",
+						"2": "skillOne13802",
+						"3": "skillOne13803",
+						"4": "skillOne13804"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 10,
+					"heroLevel": 43,
+					"upgradeConsume": {
+						"1": "skillOne13901",
+						"2": "skillOne13902",
+						"3": "skillOne13903",
+						"4": "skillOne13904"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 11,
+					"heroLevel": 48,
+					"upgradeConsume": {
+						"1": "skillOne13901",
+						"2": "skillOne13902",
+						"3": "skillOne13903",
+						"4": "skillOne13904"
+					}
+				},
+				{
+					"rare": 1,
+					"level": 12,
+					"heroLevel": 53,
+					"upgradeConsume": {
+						"1": "skillOne13901",
+						"2": "skillOne13902",
+						"3": "skillOne13903",
+						"4": "skillOne13904"
+					}
+				}
+			],
+			"2": [
+				{
+					"rare": 2,
+					"level": 1,
+					"heroLevel": 4,
+					"upgradeConsume": {
+						"1": "skillOne13101",
+						"2": "skillOne13102",
+						"3": "skillOne13103",
+						"4": "skillOne13104"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 2,
+					"heroLevel": 7,
+					"upgradeConsume": {
+						"1": "skillOne13201",
+						"2": "skillOne13202",
+						"3": "skillOne13203",
+						"4": "skillOne13204"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 3,
+					"heroLevel": 10,
+					"upgradeConsume": {
+						"1": "skillOne13301",
+						"2": "skillOne13302",
+						"3": "skillOne13303",
+						"4": "skillOne13304"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 4,
+					"heroLevel": 13,
+					"upgradeConsume": {
+						"1": "skillOne13401",
+						"2": "skillOne13402",
+						"3": "skillOne13403",
+						"4": "skillOne13404"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 5,
+					"heroLevel": 18,
+					"upgradeConsume": {
+						"1": "skillOne13501",
+						"2": "skillOne13502",
+						"3": "skillOne13503",
+						"4": "skillOne13504"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 6,
+					"heroLevel": 23,
+					"upgradeConsume": {
+						"1": "skillOne13601",
+						"2": "skillOne13602",
+						"3": "skillOne13603",
+						"4": "skillOne13604"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 7,
+					"heroLevel": 28,
+					"upgradeConsume": {
+						"1": "skillOne13701",
+						"2": "skillOne13702",
+						"3": "skillOne13703",
+						"4": "skillOne13704"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 8,
+					"heroLevel": 33,
+					"upgradeConsume": {
+						"1": "skillOne13801",
+						"2": "skillOne13802",
+						"3": "skillOne13803",
+						"4": "skillOne13804"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 9,
+					"heroLevel": 38,
+					"upgradeConsume": {
+						"1": "skillOne13801",
+						"2": "skillOne13802",
+						"3": "skillOne13803",
+						"4": "skillOne13804"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 10,
+					"heroLevel": 43,
+					"upgradeConsume": {
+						"1": "skillOne13901",
+						"2": "skillOne13902",
+						"3": "skillOne13903",
+						"4": "skillOne13904"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 11,
+					"heroLevel": 48,
+					"upgradeConsume": {
+						"1": "skillOne13901",
+						"2": "skillOne13902",
+						"3": "skillOne13903",
+						"4": "skillOne13904"
+					}
+				},
+				{
+					"rare": 2,
+					"level": 12,
+					"heroLevel": 53,
+					"upgradeConsume": {
+						"1": "skillOne13901",
+						"2": "skillOne13902",
+						"3": "skillOne13903",
+						"4": "skillOne13904"
+					}
+				}
+			],
+			"3": [
+				{
+					"rare": 3,
+					"level": 1,
+					"heroLevel": 4,
+					"upgradeConsume": {
+						"1": "skillOne13101",
+						"2": "skillOne13102",
+						"3": "skillOne13103",
+						"4": "skillOne13104"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 2,
+					"heroLevel": 7,
+					"upgradeConsume": {
+						"1": "skillOne13201",
+						"2": "skillOne13202",
+						"3": "skillOne13203",
+						"4": "skillOne13204"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 3,
+					"heroLevel": 10,
+					"upgradeConsume": {
+						"1": "skillOne13301",
+						"2": "skillOne13302",
+						"3": "skillOne13303",
+						"4": "skillOne13304"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 4,
+					"heroLevel": 13,
+					"upgradeConsume": {
+						"1": "skillOne13401",
+						"2": "skillOne13402",
+						"3": "skillOne13403",
+						"4": "skillOne13404"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 5,
+					"heroLevel": 18,
+					"upgradeConsume": {
+						"1": "skillOne13501",
+						"2": "skillOne13502",
+						"3": "skillOne13503",
+						"4": "skillOne13504"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 6,
+					"heroLevel": 23,
+					"upgradeConsume": {
+						"1": "skillOne13601",
+						"2": "skillOne13602",
+						"3": "skillOne13603",
+						"4": "skillOne13604"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 7,
+					"heroLevel": 28,
+					"upgradeConsume": {
+						"1": "skillOne13701",
+						"2": "skillOne13702",
+						"3": "skillOne13703",
+						"4": "skillOne13704"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 8,
+					"heroLevel": 33,
+					"upgradeConsume": {
+						"1": "skillOne13801",
+						"2": "skillOne13802",
+						"3": "skillOne13803",
+						"4": "skillOne13804"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 9,
+					"heroLevel": 38,
+					"upgradeConsume": {
+						"1": "skillOne13801",
+						"2": "skillOne13802",
+						"3": "skillOne13803",
+						"4": "skillOne13804"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 10,
+					"heroLevel": 43,
+					"upgradeConsume": {
+						"1": "skillOne13901",
+						"2": "skillOne13902",
+						"3": "skillOne13903",
+						"4": "skillOne13904"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 11,
+					"heroLevel": 48,
+					"upgradeConsume": {
+						"1": "skillOne13901",
+						"2": "skillOne13902",
+						"3": "skillOne13903",
+						"4": "skillOne13904"
+					}
+				},
+				{
+					"rare": 3,
+					"level": 12,
+					"heroLevel": 53,
+					"upgradeConsume": {
+						"1": "skillOne13901",
+						"2": "skillOne13902",
+						"3": "skillOne13903",
+						"4": "skillOne13904"
+					}
+				}
+			],
+			"4": [
+				{
+					"rare": 4,
+					"level": 1,
+					"heroLevel": 4,
+					"upgradeConsume": {
+						"1": "skillOne14101",
+						"2": "skillOne14102",
+						"3": "skillOne14103",
+						"4": "skillOne14104"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 2,
+					"heroLevel": 7,
+					"upgradeConsume": {
+						"1": "skillOne14201",
+						"2": "skillOne14202",
+						"3": "skillOne14203",
+						"4": "skillOne14204"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 3,
+					"heroLevel": 10,
+					"upgradeConsume": {
+						"1": "skillOne14301",
+						"2": "skillOne14302",
+						"3": "skillOne14303",
+						"4": "skillOne14304"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 4,
+					"heroLevel": 13,
+					"upgradeConsume": {
+						"1": "skillOne14401",
+						"2": "skillOne14402",
+						"3": "skillOne14403",
+						"4": "skillOne14404"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 5,
+					"heroLevel": 18,
+					"upgradeConsume": {
+						"1": "skillOne14501",
+						"2": "skillOne14502",
+						"3": "skillOne14503",
+						"4": "skillOne14504"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 6,
+					"heroLevel": 23,
+					"upgradeConsume": {
+						"1": "skillOne14601",
+						"2": "skillOne14602",
+						"3": "skillOne14603",
+						"4": "skillOne14604"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 7,
+					"heroLevel": 28,
+					"upgradeConsume": {
+						"1": "skillOne14701",
+						"2": "skillOne14702",
+						"3": "skillOne14703",
+						"4": "skillOne14704"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 8,
+					"heroLevel": 33,
+					"upgradeConsume": {
+						"1": "skillOne14801",
+						"2": "skillOne14802",
+						"3": "skillOne14803",
+						"4": "skillOne14804"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 9,
+					"heroLevel": 38,
+					"upgradeConsume": {
+						"1": "skillOne14801",
+						"2": "skillOne14802",
+						"3": "skillOne14803",
+						"4": "skillOne14804"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 10,
+					"heroLevel": 43,
+					"upgradeConsume": {
+						"1": "skillOne14901",
+						"2": "skillOne14902",
+						"3": "skillOne14903",
+						"4": "skillOne14904"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 11,
+					"heroLevel": 48,
+					"upgradeConsume": {
+						"1": "skillOne14901",
+						"2": "skillOne14902",
+						"3": "skillOne14903",
+						"4": "skillOne14904"
+					}
+				},
+				{
+					"rare": 4,
+					"level": 12,
+					"heroLevel": 53,
+					"upgradeConsume": {
+						"1": "skillOne14901",
+						"2": "skillOne14902",
+						"3": "skillOne14903",
+						"4": "skillOne14904"
+					}
+				}
+			],
+			"5": [
+				{
+					"rare": 5,
+					"level": 1,
+					"heroLevel": 4,
+					"upgradeConsume": {
+						"1": "skillOne15101",
+						"2": "skillOne15102",
+						"3": "skillOne15103",
+						"4": "skillOne15104"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 2,
+					"heroLevel": 7,
+					"upgradeConsume": {
+						"1": "skillOne15201",
+						"2": "skillOne15202",
+						"3": "skillOne15203",
+						"4": "skillOne15204"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 3,
+					"heroLevel": 10,
+					"upgradeConsume": {
+						"1": "skillOne15301",
+						"2": "skillOne15302",
+						"3": "skillOne15303",
+						"4": "skillOne15304"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 4,
+					"heroLevel": 13,
+					"upgradeConsume": {
+						"1": "skillOne15401",
+						"2": "skillOne15402",
+						"3": "skillOne15403",
+						"4": "skillOne15404"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 5,
+					"heroLevel": 18,
+					"upgradeConsume": {
+						"1": "skillOne15501",
+						"2": "skillOne15502",
+						"3": "skillOne15503",
+						"4": "skillOne15504"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 6,
+					"heroLevel": 23,
+					"upgradeConsume": {
+						"1": "skillOne15601",
+						"2": "skillOne15602",
+						"3": "skillOne15603",
+						"4": "skillOne15604"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 7,
+					"heroLevel": 28,
+					"upgradeConsume": {
+						"1": "skillOne15701",
+						"2": "skillOne15702",
+						"3": "skillOne15703",
+						"4": "skillOne15704"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 8,
+					"heroLevel": 33,
+					"upgradeConsume": {
+						"1": "skillOne15801",
+						"2": "skillOne15802",
+						"3": "skillOne15803",
+						"4": "skillOne15804"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 9,
+					"heroLevel": 38,
+					"upgradeConsume": {
+						"1": "skillOne15801",
+						"2": "skillOne15802",
+						"3": "skillOne15803",
+						"4": "skillOne15804"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 10,
+					"heroLevel": 43,
+					"upgradeConsume": {
+						"1": "skillOne15901",
+						"2": "skillOne15902",
+						"3": "skillOne15903",
+						"4": "skillOne15904"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 11,
+					"heroLevel": 48,
+					"upgradeConsume": {
+						"1": "skillOne15901",
+						"2": "skillOne15902",
+						"3": "skillOne15903",
+						"4": "skillOne15904"
+					}
+				},
+				{
+					"rare": 5,
+					"level": 12,
+					"heroLevel": 53,
+					"upgradeConsume": {
+						"1": "skillOne15901",
+						"2": "skillOne15902",
+						"3": "skillOne15903",
+						"4": "skillOne15904"
+					}
+				}
+			]
+		}
+	}
+}

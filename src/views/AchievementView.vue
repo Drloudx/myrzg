@@ -1,134 +1,156 @@
 <template>
   <div class="page-view-container">
-    <!-- Top Control Bar (3-Row Layout matching Image 1 & Image 2) -->
-    <div class="filter-sticky-bar achievement-filter-sticky">
-      <!-- Row 1: Full-Width Category Segmented Pill Bar (图1 款式) -->
-      <div class="control-row-1">
-        <div class="segmented-pill-container category-segmented">
-          <div
-            v-for="cat in categoryOptions"
-            :key="cat.key"
-            :class="['segmented-pill-item', { active: filterCategory === cat.key }]"
-            @click="filterCategory = cat.key"
-          >
-            {{ cat.label }}
+
+    <!-- 筛选区（羊皮纸面板，和物品图鉴风格一致的 UiSearchInput + UiFilterRow + UiFilterPill） -->
+    <div class="filter-panel paper-panel">
+      <UiSearchInput v-model="searchQuery" placeholder="搜索成就名称、描述或道具..." />
+
+      <!-- 分类筛选行 -->
+      <UiFilterRow label="分类：">
+        <UiFilterPill
+          v-for="cat in categoryOptions"
+          :key="cat.key"
+          :active="filterCategory === cat.key"
+          @click="filterCategory = cat.key"
+        >
+          {{ cat.label }}
+        </UiFilterPill>
+      </UiFilterRow>
+
+      <!-- 状态筛选行（右侧保留已收集计数） -->
+      <UiFilterRow label="状态：">
+        <UiFilterPill
+          v-for="st in statusOptions"
+          :key="st.key"
+          :active="filterStatus === st.key"
+          @click="filterStatus = st.key"
+        >
+          {{ st.label }}
+        </UiFilterPill>
+
+        <template #right>
+          <div class="collection-counter">
+            已收集 <span class="count-num">{{ collectedCount }}</span> / {{ achievements.length }}
           </div>
-        </div>
-      </div>
-
-      <!-- Row 2: Compact Status Segmented Bar (图2 款式) + Right Counter -->
-      <div class="control-row-2">
-        <div class="segmented-pill-container status-segmented">
-          <div
-            v-for="status in statusOptions"
-            :key="status.key"
-            :class="['segmented-pill-item', { active: filterStatus === status.key }]"
-            @click="filterStatus = status.key"
-          >
-            {{ status.label }}
-          </div>
-        </div>
-
-        <div class="collection-counter">
-          已收集 <span class="count-num">{{ collectedCount }}</span> / {{ achievements.length }}
-        </div>
-      </div>
-
-      <!-- Row 3: Full-Width In-Page Search Bar using /ui/search.svg -->
-      <div class="control-row-3">
-        <div class="search-input-wrapper-full">
-          <img src="/ui/search.svg" class="search-icon-img" alt="搜索" />
-          <input
-            type="text"
-            v-model="searchQuery"
-            placeholder="搜索成就或道具..."
-            class="ach-search-input-full"
-          />
-          <button v-if="searchQuery" class="clear-btn" @click="searchQuery = ''">✕</button>
-        </div>
-      </div>
+        </template>
+      </UiFilterRow>
     </div>
 
     <!-- Async Data Loading State -->
-    <div v-if="!isDataReady" class="global-loading-state">
-      <div class="global-loading-spinner"></div>
-      <span>正在装配成就与奖励数据...</span>
-    </div>
+    <UiEmptyState v-if="!isDataReady" type="loading" text="正在装配成就与奖励数据..." />
 
-    <!-- Achievement Cards List -->
-    <div v-else class="data-grid-scroll ach-scroll-container" id="achGridScroll">
-      <div class="ach-cards-list">
-        <div
-          v-for="item in filteredAchievements"
-          :key="item.id"
-          :id="'ach-card-' + item.id"
-          class="ach-card"
-          :class="{
-            collected: isCollected(item.id),
-            'card-highlight-pulse': highlightedAchId === item.id
-          }"
-        >
-          <!-- Card Left: Category Image Icon + Title & Description -->
-          <div class="card-left">
-            <div class="icon-box-wrapper">
-              <img
-                :src="getCategoryIcon(item.category)"
-                :alt="item.category"
-                class="ach-category-icon"
-                loading="lazy"
-                @error="handleImgError"
-              />
-            </div>
-
-            <div class="ach-info">
-              <div class="ach-name-row">
-                <span class="ach-name">{{ item.name }}</span>
-              </div>
-              <div class="ach-des">{{ item.des }}</div>
-            </div>
+    <!-- 列表区（懒加载每批 60 项） -->
+    <UiCardGrid v-else id="achGridScroll" class="ach-scroll-container">
+      <UiListRow
+        v-for="item in displayedAchievements"
+        :key="item.id"
+        :id="'ach-card-' + item.id"
+        class="ach-list-row"
+        :class="{ 'card-highlight-pulse': highlightedAchId === item.id, 'is-collected': isCollected(item.id) }"
+        clickable
+        @click="openDetail(item)"
+      >
+        <div class="ach-card-main">
+          <div class="ach-card-icon-wrap">
+            <img
+              :src="getCategoryIcon(item.category)"
+              :alt="getCategoryName(item.category)"
+              class="ach-category-icon"
+              loading="lazy"
+              @error="handleImgError"
+            />
           </div>
-
-          <!-- Card Right: Custom Switch Top + Rewards List Bottom -->
-          <div class="card-right">
-            <!-- Custom Switch (Compact Height 24px) -->
-            <div
-              class="custom-switch"
-              :class="{ active: isCollected(item.id) }"
-              @click.stop="toggleCollected(item.id)"
-              :title="isCollected(item.id) ? '已收集 (点击取消)' : '未收集 (点击标记)'"
-            >
-              <span class="switch-mark icon-check">✓</span>
-              <span class="switch-mark icon-cross">✕</span>
-              <div class="switch-knob"></div>
+          <div class="ach-card-info">
+            <div class="ach-card-name-row">
+              <span class="ach-card-name">{{ item.name }}</span>
             </div>
+            <div class="ach-card-des">{{ item.des || '（无描述）' }}</div>
+          </div>
+        </div>
 
-            <!-- Reward Items Flex Row (Icon + Count ONLY, No Names Rendered) -->
-            <div class="card-rewards-row" v-if="item.rewards && item.rewards.length > 0">
+        <template #right>
+          <div class="ach-card-right">
+            <!-- 收集状态切换开关（与参考图一致的圆角胶囊滑块） -->
+            <button
+              type="button"
+              class="ach-switch-toggle"
+              :class="{ 'is-active': isCollected(item.id) }"
+              :title="isCollected(item.id) ? '已收集 (点击取消)' : '未收集 (点击标记)'"
+              @click.stop="toggleCollected(item.id)"
+            >
+              <span class="switch-track">
+                <span class="switch-icon left">✓</span>
+                <span class="switch-handle"></span>
+                <span class="switch-icon right">✕</span>
+              </span>
+            </button>
+
+            <!-- 奖励图标列表（横排展示 × 数量） -->
+            <div v-if="item.rewards && item.rewards.length" class="ach-card-rewards">
               <div
                 v-for="(rw, rIdx) in item.rewards"
                 :key="rIdx"
-                class="reward-item"
+                class="ach-reward-pill"
+                :title="`${rw.name || '奖励'} × ${rw.count}`"
               >
                 <img
                   :src="rw.icon"
                   :alt="rw.name || '奖励'"
-                  class="reward-icon-img"
+                  class="ach-reward-icon"
                   loading="lazy"
                   @error="handleImgError"
                 />
-                <span class="reward-count">× {{ rw.count }}</span>
+                <span class="ach-reward-count">× {{ rw.count }}</span>
               </div>
             </div>
           </div>
-        </div>
+        </template>
+      </UiListRow>
 
-        <div v-if="filteredAchievements.length === 0" class="no-data">
-          未找到符合条件的成就数据
-        </div>
+      <UiEmptyState v-if="filteredAchievements.length === 0" type="empty" text="未找到符合条件的成就数据" />
+    </UiCardGrid>
+
+    <UiBackToTop scroll-container="#achGridScroll" />
+
+    <!-- 成就详情弹窗（全屏详情） -->
+    <UiModal
+      v-model:visible="detailModal.visible"
+      :title="detailModal.item ? detailModal.item.name : '成就详情'"
+      max-width="820px"
+      scroll-id="achModalScroll"
+      :z-index="3000"
+    >
+      <div v-if="detailModal.item" class="ach-modal-body">
+        <UiSection title="基础信息">
+          <UiInfoRow label="分类" :value="getCategoryName(detailModal.item.category)" />
+          <UiInfoRow label="奖励编号" :value="detailModal.item.rewardId" />
+        </UiSection>
+
+        <UiSection v-if="detailModal.item.des" title="描述">
+          <p class="ach-modal-des">{{ detailModal.item.des }}</p>
+        </UiSection>
+
+        <UiSection v-if="detailModal.item.rewards && detailModal.item.rewards.length" title="奖励">
+          <div class="reward-list">
+            <UiRewardCard
+              v-for="(rw, rIdx) in detailModal.item.rewards"
+              :key="rIdx"
+              :clickable="!!rw.typeId"
+              :rule="{
+                targetName: rw.name || (rw.typeId ? '物品 ' + rw.typeId : '奖励'),
+                targetImg: rw.icon,
+                min: rw.count,
+                max: rw.count,
+                typeId: rw.typeId
+              }"
+              @click="handleRewardClick(rw)"
+            />
+          </div>
+        </UiSection>
       </div>
-    </div>
 
-    <BackToTop scroll-container="#achGridScroll" />
+      <UiBackToTop scroll-container="#achModalScroll" />
+    </UiModal>
   </div>
 </template>
 
@@ -136,11 +158,24 @@
 import { ref, computed, watch, onMounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAppStateStore } from '../stores/appState'
-import BackToTop from '../components/BackToTop.vue'
-import BaseModal from '../components/BaseModal.vue'
+import {
+  UiBackToTop,
+  UiCardGrid,
+  UiEmptyState,
+  UiFilterPill,
+  UiFilterRow,
+  UiInfoRow,
+  UiListRow,
+  UiModal,
+  UiRewardCard,
+  UiSearchInput,
+  UiSection
+} from '../components/ui/index.js'
 import { isBlacklisted } from '../config/blacklist.js'
 import { fetchWithFallback } from '../utils/request.js'
 import { getImageUrl } from '../utils/env.js'
+import { buildAchievementData } from '../utils/achievementData.js'
+import { useLazyList } from '../composables/useLazyList'
 
 const route = useRoute()
 const router = useRouter()
@@ -169,6 +204,25 @@ const highlightedAchId = ref('')
 
 const achievements = ref([])
 const isDataReady = ref(false)
+
+// 成就详情弹窗状态（按迁移契约第4条新增：卡面点击打开全屏详情）
+const detailModal = ref({ visible: false, item: null })
+
+const openDetail = (item) => {
+  detailModal.value = { visible: true, item }
+}
+
+const getCategoryName = (cat) => {
+  const found = categoryOptions.find(o => o.key === cat)
+  return found ? found.label : (cat || '未知')
+}
+
+// 奖励卡点击 → 通过全局 itemId 查询打开物品详情
+const handleRewardClick = (rw) => {
+  if (rw && rw.typeId) {
+    router.push({ query: { ...route.query, itemId: rw.typeId } })
+  }
+}
 
 // Map category to icons in /AchievementPanel/
 const getCategoryIcon = (cat) => {
@@ -235,84 +289,27 @@ const handleLocateAchievement = (targetId, queryQ) => {
 
 onMounted(async () => {
   try {
-    const [achRes, rewRes, itemRes] = await Promise.all([
-      fetchWithFallback('data/achievement.json'),
-      fetchWithFallback('data/reward.json'),
-      fetchWithFallback('data/item.json')
-    ])
+    let assembled = null
 
-    const achJson = achRes
-    const rewJson = rewRes
-    const itemJson = itemRes
+    // 优先读取构建期预解析单文件
+    try {
+      const data = await fetchWithFallback('data/parsed/achievements.json')
+      assembled = data.achievements
+    } catch (e) {
+      console.warn('parsed/achievements.json 不可用，回退到原始多文件加载:', e?.message || e)
+    }
 
-    const rawAchList = Object.values(achJson.achievement || {})
-    const rewardMap = rewJson.datas || {}
-    const itemMap = itemJson.datas || {}
+    if (!assembled) {
+      const [achRes, rewRes, itemRes] = await Promise.all([
+        fetchWithFallback('data/achievement.json'),
+        fetchWithFallback('data/reward.json'),
+        fetchWithFallback('data/item.json')
+      ])
+      assembled = buildAchievementData({ achJson: achRes, rewJson: rewRes, itemJson: itemRes }).achievements
+    }
 
-    // Filter out blacklisted achievements at data assembly stage
-    const filteredRawList = rawAchList.filter(a => !isBlacklisted(a))
-
-    const assembled = filteredRawList.map(a => {
-      const rewardObj = rewardMap[a.reward] || {}
-      const rewards = []
-      const rewardItemNames = []
-
-      // Money (银币) -> /Common_ItemIcon/item_00001.png
-      if (rewardObj.money && rewardObj.money > 0) {
-        rewards.push({
-          icon: getImageUrl('/Common_ItemIcon/item_00001.png'),
-          count: rewardObj.money,
-          name: '银币'
-        })
-      }
-
-      // Ke (氪金) -> /Common_ItemIcon/item_00002.png
-      if (rewardObj.ke && rewardObj.ke > 0) {
-        rewards.push({
-          icon: getImageUrl('/Common_ItemIcon/item_00002.png'),
-          count: rewardObj.ke,
-          name: '氪金'
-        })
-      }
-
-
-
-      // Items Array -> /Common_ItemIcon/{typeId}.png
-      if (rewardObj.items && Array.isArray(rewardObj.items)) {
-        rewardObj.items.forEach(it => {
-          if (it.rules && Array.isArray(it.rules)) {
-            it.rules.forEach(rule => {
-              if (rule.typeId) {
-                const count = rule.min || rule.max || it.num || 1
-                rewards.push({
-                  icon: getImageUrl(`/Common_ItemIcon/${rule.typeId}.png`),
-                  count,
-                  typeId: rule.typeId
-                })
-
-                // Hidden item name extraction for search
-                const matchedItem = itemMap[rule.typeId]
-                if (matchedItem && matchedItem.name) {
-                  rewardItemNames.push(matchedItem.name)
-                }
-              }
-            })
-          }
-        })
-      }
-
-      return {
-        id: a.typeId,
-        name: a.name,
-        des: a.des,
-        category: a.category || 'adv',
-        rewardId: a.reward,
-        rewards,
-        rewardItemNames
-      }
-    })
-
-    achievements.value = assembled
+    // 黑名单过滤（与原组装后行为一致）
+    achievements.value = assembled.filter(a => !isBlacklisted(a))
     isDataReady.value = true
 
     // Check if mounted with target ID or query
@@ -371,201 +368,81 @@ const filteredAchievements = computed(() => {
     return true
   })
 })
+
+const { displayedItems: displayedAchievements } = useLazyList(filteredAchievements, 20, '#achGridScroll')
 </script>
 
 <style scoped>
-.achievement-filter-sticky {
-  padding: 10px 16px;
+/* ===== 页面特有布局（筛选面板 / 单列卡片流） ===== */
+.filter-panel {
+  margin: 0 0 12px 0;
+  padding: 10px 14px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-}
-
-/* Control Row 1: Full-Width Category Segmented Bar (图1 款式) */
-.control-row-1 {
-  width: 100%;
-}
-
-/* Segmented Pill Track (分段控制器框架 - 灰底全圆角) */
-.segmented-pill-container {
-  display: flex;
-  align-items: center;
-  padding: 3px;
-  background: var(--input-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-  box-sizing: border-box;
-}
-
-/* Row 1: Category Pill Bar is 100% Full Width (图1 款式) */
-.category-segmented {
-  width: 100%;
-}
-
-/* Row 2: Status Pill Bar is Content Width (图2 款式) */
-.status-segmented {
-  display: inline-flex;
-  width: auto;
-}
-
-/* Segmented Pill Item (分段内部按钮) */
-.segmented-pill-item {
-  flex: 1;
-  text-align: center;
-  padding: 6px 14px;
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-sub);
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  user-select: none;
-  white-space: nowrap;
-}
-
-.segmented-pill-item:hover {
-  color: var(--text-main);
-}
-
-/* Active Selected Item (图1 & 图2 款式: 白底/暗底卡片浮起 + Primary 文字) */
-.segmented-pill-item.active {
-  background: var(--card-bg, #ffffff);
-  color: var(--primary);
-  font-weight: 700;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-/* Control Row 2: Compact Status Segmented + Right Counter Text */
-.control-row-2 {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  width: 100%;
+  gap: 10px;
+  flex-shrink: 0;
 }
 
 .collection-counter {
   font-size: 13px;
   font-weight: 600;
-  color: var(--text-sub);
+  color: var(--text-muted);
   white-space: nowrap;
+  padding: 0 4px;
 }
 
-.count-num {
-  color: var(--primary);
-  font-weight: 700;
+/* ===== 成就列表行卡片（参考图与任务图鉴风格） ===== */
+.ach-scroll-container :deep(.ui-card-grid) {
+  grid-template-columns: 1fr;
+  gap: 10px;
 }
 
-/* Control Row 3: Full-Width Search Input using /ui/search.svg */
-.control-row-3 {
-  width: 100%;
-}
-
-.search-input-wrapper-full {
-  position: relative;
+.ach-list-row {
   display: flex;
   align-items: center;
-  width: 100%;
-}
-
-.search-icon-img {
-  position: absolute;
-  left: 12px;
-  width: 16px;
-  height: 16px;
-  filter: var(--icon-filter);
-  pointer-events: none;
-}
-
-.ach-search-input-full {
-  width: 100%;
-  height: 34px;
-  padding: 4px 30px 4px 34px;
-  border: 1px solid var(--input-border);
-  border-radius: 17px;
-  font-size: 13px;
-  background: var(--input-bg);
-  color: var(--input-text);
+  justify-content: space-between;
+  gap: 14px;
+  background-color: rgba(223, 206, 179, 0.92);
+  border: 1.5px solid var(--border-soft, rgba(143, 115, 81, 0.35));
+  border-radius: 8px;
+  padding: 12px 16px;
+  min-height: 72px;
   box-sizing: border-box;
   transition: all 0.2s ease;
 }
 
-.ach-search-input-full:focus {
-  outline: none;
-  border-color: var(--input-border-focus);
-  background: var(--card-bg);
+.dark-mode .ach-list-row {
+  background-color: rgba(46, 34, 23, 0.84);
+  border-color: rgba(143, 115, 81, 0.3);
 }
 
-.clear-btn {
-  position: absolute;
-  right: 10px;
-  background: transparent;
-  border: none;
-  color: var(--text-sub);
-  cursor: pointer;
-  font-size: 12px;
+.ach-list-row:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent-bright, #7a9a99);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
 }
 
-/* Achievement Cards List Container */
-.ach-scroll-container {
-  padding-top: 4px;
+.ach-list-row.is-collected {
+  border-color: rgba(122, 154, 153, 0.6);
+  background-color: rgba(223, 206, 179, 0.96);
+}
+.dark-mode .ach-list-row.is-collected {
+  background-color: rgba(56, 44, 32, 0.85);
+  border-color: rgba(122, 154, 153, 0.45);
 }
 
-.ach-cards-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding-bottom: 20px;
-}
-
-/* Card Container (Reduced height & padding) */
-.ach-card {
+/* 左侧主体内容 */
+.ach-card-main {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 8px 14px;
-  background: var(--card-bg, #ffffff);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  transition: all 0.25s ease;
-  gap: 10px;
-}
-
-.ach-card:hover {
-  background: var(--hover-bg);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
-}
-
-/* Card Highlight Animation upon Global Search Selection */
-.ach-card.card-highlight-pulse {
-  border-color: var(--primary) !important;
-  box-shadow: 0 0 16px rgba(59, 130, 246, 0.45) !important;
-  animation: cardPulse 0.8s ease-in-out 3;
-}
-
-@keyframes cardPulse {
-  0%, 100% {
-    border-color: var(--primary);
-    box-shadow: 0 0 14px rgba(59, 130, 246, 0.4);
-  }
-  50% {
-    border-color: #60a5fa;
-    box-shadow: 0 0 22px rgba(96, 165, 250, 0.7);
-  }
-}
-
-/* Card Left Section */
-.card-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  gap: 14px;
   flex: 1;
   min-width: 0;
 }
 
-.icon-box-wrapper {
-  width: 36px;
-  height: 36px;
+.ach-card-icon-wrap {
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -573,136 +450,199 @@ const filteredAchievements = computed(() => {
 }
 
 .ach-category-icon {
-  width: 100%;
-  height: 100%;
+  width: 44px;
+  height: 44px;
   object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
 }
 
-.ach-info {
+.ach-card-info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
+  flex: 1;
   min-width: 0;
+  text-align: left;
 }
 
-.ach-name-row {
+.ach-card-name-row {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
-.ach-name {
-  font-size: 14px;
+.ach-card-name {
+  font-size: 16px;
   font-weight: 700;
-  color: var(--text-main);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  color: var(--text-main, #3e2a14);
+  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  letter-spacing: 0.5px;
+  line-height: 1.3;
 }
 
-.ach-des {
-  font-size: 11px;
-  color: var(--text-sub);
-  line-height: 1.35;
+.ach-card-des {
+  font-size: 13px;
+  color: var(--text-muted, #6b5134);
+  line-height: 1.5;
+  word-break: break-word;
 }
 
-/* Card Right Section */
-.card-right {
+/* 右侧：开关与奖励横排 */
+.ach-card-right {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 6px;
+  justify-content: space-between;
+  gap: 8px;
   flex-shrink: 0;
+  min-height: 52px;
 }
 
-/* Custom Switch Component (Compact 44px x 24px) */
-.custom-switch {
-  position: relative;
-  width: 44px;
-  height: 24px;
-  border-radius: 12px;
-  background: #94a3b8;
+/* 收集状态切换胶囊滑块（仿图中的圆润开关） */
+.ach-switch-toggle {
+  background: transparent;
+  border: none;
+  padding: 0;
   cursor: pointer;
-  user-select: none;
-  transition: background-color 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.switch-track {
+  position: relative;
+  width: 54px;
+  height: 28px;
+  border-radius: 14px;
+  background: rgba(110, 95, 80, 0.38);
+  border: 1.5px solid var(--border-soft, #8f7351);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 5px;
+  padding: 0 8px;
   box-sizing: border-box;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.25);
 }
 
-.custom-switch.active {
-  background: #22c55e;
+.ach-switch-toggle.is-active .switch-track {
+  background: #745234;
+  border-color: #543922;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+.dark-mode .ach-switch-toggle.is-active .switch-track {
+  background: #876241;
+  border-color: #4a3522;
 }
 
-.switch-mark {
-  font-size: 10px;
-  font-weight: bold;
-  color: rgba(255, 255, 255, 0.95);
-  line-height: 1;
-  z-index: 1;
-}
-
-.icon-check {
-  margin-left: 1px;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.icon-cross {
-  margin-right: 1px;
-  opacity: 1;
-  transition: opacity 0.2s ease;
-}
-
-.custom-switch.active .icon-check {
-  opacity: 1;
-}
-
-.custom-switch.active .icon-cross {
-  opacity: 0;
-}
-
-.switch-knob {
+.switch-handle {
   position: absolute;
-  top: 3px;
+  top: 2.5px;
   left: 3px;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
   transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 2;
 }
 
-.custom-switch.active .switch-knob {
-  transform: translateX(20px);
+.ach-switch-toggle.is-active .switch-handle {
+  transform: translateX(25px);
 }
 
-/* Reward Items Flex Row */
-.card-rewards-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.reward-item {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-}
-
-.reward-icon-img {
-  width: 18px;
-  height: 18px;
-  object-fit: contain;
-}
-
-.reward-count {
+.switch-icon {
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 800;
+  user-select: none;
+  line-height: 1;
+  transition: opacity 0.2s ease;
+}
+
+.switch-icon.left {
+  color: #ffffff;
+  opacity: 0;
+}
+
+.switch-icon.right {
+  color: rgba(255, 255, 255, 0.85);
+  opacity: 1;
+}
+
+.ach-switch-toggle.is-active .switch-icon.left {
+  opacity: 1;
+}
+
+.ach-switch-toggle.is-active .switch-icon.right {
+  opacity: 0;
+}
+
+/* 奖励图标流 */
+.ach-card-rewards {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.ach-reward-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ach-reward-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
+}
+
+.ach-reward-count {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main, #3e2a14);
+  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+}
+
+/* 全局搜索定位高亮脉冲（主题青描边） */
+.card-highlight-pulse {
+  border-color: var(--accent-bright) !important;
+  box-shadow: 0 0 16px rgba(122, 154, 153, 0.45) !important;
+  animation: cardPulse 0.8s ease-in-out 3;
+}
+
+@keyframes cardPulse {
+  0%, 100% {
+    border-color: var(--accent-bright);
+    box-shadow: 0 0 14px rgba(122, 154, 153, 0.4);
+  }
+  50% {
+    border-color: var(--accent);
+    box-shadow: 0 0 22px rgba(85, 117, 116, 0.7);
+  }
+}
+
+/* ===== 成就详情弹窗 ===== */
+.ach-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ach-modal-des {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.75;
   color: var(--text-main);
+  white-space: pre-wrap;
+}
+
+.reward-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px;
 }
 </style>

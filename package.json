@@ -5,8 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "data:clean": "node scripts/clean-data.js",
-    "build": "node scripts/clean-data.js && vite build",
+    "data:build": "node scripts/parse/index.mjs",
+    "data:dungeons:effects": "node scripts/dev/update-dungeon-room-effects.mjs",
+    "build": "npm run data:build && vite build",
+    "search:update": "node scripts/parse/search.mjs",
+    "verify": "node scripts/dev/verify.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -16,6 +19,7 @@
     "@capacitor/cli": "^8.4.2",
     "@capacitor/core": "^8.4.2",
     "@capacitor/filesystem": "^8.1.2",
+    "@capacitor/share": "^8.0.1",
     "@capacitor/status-bar": "^8.0.0",
     "@capawesome-team/capacitor-file-opener": "^8.0.1",
     "@capgo/capacitor-updater": "^8.51.2",

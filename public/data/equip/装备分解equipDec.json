@@ -1,0 +1,39 @@
+{
+	"equipDec": {
+		"1": {
+			"1": "equipDec_11",
+			"2": "equipDec_12",
+			"3": "equipDec_13",
+			"4": "equipDec_14",
+			"5": "equipDec_15"
+		},
+		"2": {
+			"1": "equipDec_21",
+			"2": "equipDec_22",
+			"3": "equipDec_23",
+			"4": "equipDec_24",
+			"5": "equipDec_25"
+		},
+		"3": {
+			"1": "equipDec_31",
+			"2": "equipDec_32",
+			"3": "equipDec_33",
+			"4": "equipDec_34",
+			"5": "equipDec_35"
+		},
+		"4": {
+			"1": "equipDec_41",
+			"2": "equipDec_42",
+			"3": "equipDec_43",
+			"4": "equipDec_44",
+			"5": "equipDec_45"
+		},
+		"5": {
+			"1": "equipDec_51",
+			"2": "equipDec_52",
+			"3": "equipDec_53",
+			"4": "equipDec_54",
+			"5": "equipDec_55"
+		}
+	}
+}

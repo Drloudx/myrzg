@@ -1,0 +1,9255 @@
+{
+	"itemExchange": {
+		"423001": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi100101",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423001",
+			"reward": "item_423001",
+			"team": "baodimap1"
+		},
+		"423002": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi100101",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423002",
+			"reward": "item_423002",
+			"team": "baodimap1"
+		},
+		"423003": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi100101",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423003",
+			"reward": "item_423003",
+			"team": "baodimap1"
+		},
+		"423004": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi100101",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423004",
+			"reward": "item_423004",
+			"team": "baodimap1"
+		},
+		"423005": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi200101",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423005",
+			"reward": "item_423005",
+			"team": "baodimap2"
+		},
+		"423006": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi200101",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423006",
+			"reward": "item_423006",
+			"team": "baodimap2"
+		},
+		"423007": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi200101",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423007",
+			"reward": "item_423007",
+			"team": "baodimap2"
+		},
+		"423008": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi200101",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423008",
+			"reward": "item_423008",
+			"team": "baodimap2"
+		},
+		"423009": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi300101",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423009",
+			"reward": "item_423009",
+			"team": "baodimap3"
+		},
+		"423010": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi300101",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423010",
+			"reward": "item_423010",
+			"team": "baodimap3"
+		},
+		"423011": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi300101",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423011",
+			"reward": "item_423011",
+			"team": "baodimap3"
+		},
+		"423012": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi300101",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423012",
+			"reward": "item_423012",
+			"team": "baodimap3"
+		},
+		"423013": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"蓝"],
+			"id": "423013",
+			"reward": "item_423013",
+			"consume": "baodi400101",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4"
+		},
+		"423014": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"蓝"],
+			"id": "423014",
+			"reward": "item_423014",
+			"consume": "baodi400101",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4"
+		},
+		"423015": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"蓝"],
+			"id": "423015",
+			"reward": "item_423015",
+			"consume": "baodi400101",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4"
+		},
+		"423016": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"蓝"],
+			"id": "423016",
+			"reward": "item_423016",
+			"consume": "baodi400101",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4"
+		},
+		"423017": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝"],
+			"id": "423017",
+			"reward": "item_423017",
+			"consume": "baodi500101",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5"
+		},
+		"423018": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝"],
+			"id": "423018",
+			"reward": "item_423018",
+			"consume": "baodi500101",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5"
+		},
+		"423019": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝"],
+			"id": "423019",
+			"reward": "item_423019",
+			"consume": "baodi500101",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5"
+		},
+		"423020": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝"],
+			"id": "423020",
+			"reward": "item_423020",
+			"consume": "baodi500101",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5"
+		},
+		"422002": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi100102",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422002",
+			"reward": "item_422002",
+			"team": "baodimap1"
+		},
+		"422003": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi100102",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422003",
+			"reward": "item_422003",
+			"team": "baodimap1"
+		},
+		"422004": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi100102",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422004",
+			"reward": "item_422004",
+			"team": "baodimap1"
+		},
+		"422005": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi200102",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422005",
+			"reward": "item_422005",
+			"team": "baodimap2"
+		},
+		"422006": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi200102",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422006",
+			"reward": "item_422006",
+			"team": "baodimap2"
+		},
+		"422007": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi200102",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422007",
+			"reward": "item_422007",
+			"team": "baodimap2"
+		},
+		"422008": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi200102",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422008",
+			"reward": "item_422008",
+			"team": "baodimap2"
+		},
+		"422001": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi100102",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422001",
+			"reward": "item_422001",
+			"team": "baodimap1"
+		},
+		"422010": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi300102",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422010",
+			"reward": "item_422010",
+			"team": "baodimap3"
+		},
+		"422011": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi300102",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422011",
+			"reward": "item_422011",
+			"team": "baodimap3"
+		},
+		"422012": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi300102",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422012",
+			"reward": "item_422012",
+			"team": "baodimap3"
+		},
+		"422013": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"蓝"],
+			"id": "422013",
+			"reward": "item_422013",
+			"consume": "baodi400102",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4"
+		},
+		"422014": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"蓝"],
+			"id": "422014",
+			"reward": "item_422014",
+			"consume": "baodi400102",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4"
+		},
+		"422015": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"蓝"],
+			"id": "422015",
+			"reward": "item_422015",
+			"consume": "baodi400102",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4"
+		},
+		"422016": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"蓝"],
+			"id": "422016",
+			"reward": "item_422016",
+			"consume": "baodi400102",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4"
+		},
+		"422009": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi300102",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422009",
+			"reward": "item_422009",
+			"team": "baodimap3"
+		},
+		"422018": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝"],
+			"id": "422018",
+			"reward": "item_422018",
+			"consume": "baodi500102",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5"
+		},
+		"422019": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝"],
+			"id": "422019",
+			"reward": "item_422019",
+			"consume": "baodi500102",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5"
+		},
+		"422020": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝"],
+			"id": "422020",
+			"reward": "item_422020",
+			"consume": "baodi500102",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5"
+		},
+		"422017": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝"],
+			"id": "422017",
+			"reward": "item_422017",
+			"consume": "baodi500102",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5"
+		},
+		"421002": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi100103",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421002",
+			"reward": "item_421002",
+			"team": "baodimap1"
+		},
+		"421003": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi100103",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421003",
+			"reward": "item_421003",
+			"team": "baodimap1"
+		},
+		"421004": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi100103",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421004",
+			"reward": "item_421004",
+			"team": "baodimap1"
+		},
+		"421005": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi200103",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421005",
+			"reward": "item_421005",
+			"team": "baodimap2"
+		},
+		"421006": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi200103",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421006",
+			"reward": "item_421006",
+			"team": "baodimap2"
+		},
+		"421007": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi200103",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421007",
+			"reward": "item_421007",
+			"team": "baodimap2"
+		},
+		"421008": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi200103",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421008",
+			"reward": "item_421008",
+			"team": "baodimap2"
+		},
+		"421001": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi100103",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421001",
+			"reward": "item_421001",
+			"team": "baodimap1"
+		},
+		"421010": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi300103",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421010",
+			"reward": "item_421010",
+			"team": "baodimap3"
+		},
+		"421011": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi300103",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421011",
+			"reward": "item_421011",
+			"team": "baodimap3"
+		},
+		"421012": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi300103",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421012",
+			"reward": "item_421012",
+			"team": "baodimap3"
+		},
+		"421013": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"蓝"],
+			"id": "421013",
+			"reward": "item_421013",
+			"consume": "baodi400103",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4"
+		},
+		"421014": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"蓝"],
+			"id": "421014",
+			"reward": "item_421014",
+			"consume": "baodi400103",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4"
+		},
+		"421015": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"蓝"],
+			"id": "421015",
+			"reward": "item_421015",
+			"consume": "baodi400103",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4"
+		},
+		"421016": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"蓝"],
+			"id": "421016",
+			"reward": "item_421016",
+			"consume": "baodi400103",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4"
+		},
+		"421009": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"蓝"],
+			"des": "防具兑换",
+			"consume": "baodi300103",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421009",
+			"reward": "item_421009",
+			"team": "baodimap3"
+		},
+		"421018": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝"],
+			"id": "421018",
+			"reward": "item_421018",
+			"consume": "baodi500103",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5"
+		},
+		"421019": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝"],
+			"id": "421019",
+			"reward": "item_421019",
+			"consume": "baodi500103",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5"
+		},
+		"421020": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝"],
+			"id": "421020",
+			"reward": "item_421020",
+			"consume": "baodi500103",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5"
+		},
+		"421017": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝"],
+			"id": "421017",
+			"reward": "item_421017",
+			"consume": "baodi500103",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5"
+		},
+		"416002": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"蓝"],
+			"des": "武器兑换",
+			"consume": "baodi2003",
+			"name": " a*2",
+			"sort": 0,
+			"id": "416002",
+			"reward": "equip416002",
+			"team": "baodimap2"
+		},
+		"416003": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"蓝"],
+			"des": "武器兑换",
+			"consume": "baodi3003",
+			"name": " a*2",
+			"sort": 0,
+			"id": "416003",
+			"reward": "equip416003",
+			"team": "baodimap3"
+		},
+		"416004": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"蓝"],
+			"id": "416004",
+			"reward": "equip416004",
+			"consume": "baodi4003",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "武器兑换",
+			"team": "baodimap4"
+		},
+		"416005": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝"],
+			"id": "416005",
+			"reward": "equip416005",
+			"consume": "baodi5003",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "武器兑换",
+			"team": "baodimap5"
+		},
+		"415003": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"蓝"],
+			"des": "武器兑换",
+			"consume": "baodi2002",
+			"name": " a*2",
+			"sort": 0,
+			"id": "415003",
+			"reward": "equip415003",
+			"team": "baodimap2"
+		},
+		"415004": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"蓝"],
+			"des": "武器兑换",
+			"consume": "baodi3002",
+			"name": " a*2",
+			"sort": 0,
+			"id": "415004",
+			"reward": "equip415004",
+			"team": "baodimap3"
+		},
+		"415005": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"蓝"],
+			"id": "415005",
+			"reward": "equip415005",
+			"consume": "baodi4002",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "武器兑换",
+			"team": "baodimap4"
+		},
+		"415006": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝"],
+			"id": "415006",
+			"reward": "equip415006",
+			"consume": "baodi5002",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "武器兑换",
+			"team": "baodimap5"
+		},
+		"30000": {
+			"limitCondition": {
+				
+			},
+			"id": "30000",
+			"des": "100金币换一次大型生命药剂，无限制",
+			"consume": "consume_001",
+			"name": " a*2",
+			"sort": 0,
+			"reward": "reward_001",
+			"team": "team3"
+		},
+		"413001": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"蓝"],
+			"des": "武器兑换",
+			"consume": "baodi1003",
+			"name": " a*2",
+			"sort": 0,
+			"id": "413001",
+			"reward": "equip413001",
+			"team": "baodimap1"
+		},
+		"412003": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"蓝"],
+			"des": "武器兑换",
+			"consume": "baodi2001",
+			"name": " a*2",
+			"sort": 0,
+			"id": "412003",
+			"reward": "equip412003",
+			"team": "baodimap2"
+		},
+		"412004": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"蓝"],
+			"des": "武器兑换",
+			"consume": "baodi3001",
+			"name": " a*2",
+			"sort": 0,
+			"id": "412004",
+			"reward": "equip412004",
+			"team": "baodimap3"
+		},
+		"412005": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"蓝"],
+			"id": "412005",
+			"reward": "equip412005",
+			"consume": "baodi4001",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "武器兑换",
+			"team": "baodimap4"
+		},
+		"412006": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝"],
+			"id": "412006",
+			"reward": "equip412006",
+			"consume": "baodi5001",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "武器兑换",
+			"team": "baodimap5"
+		},
+		"411001": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"蓝"],
+			"des": "武器兑换",
+			"consume": "baodi1001",
+			"name": " a*2",
+			"sort": 0,
+			"id": "411001",
+			"reward": "equip411001",
+			"team": "baodimap1"
+		},
+		"25000": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "day"
+			},
+			"category": ["委托",
+			"每日"],
+			"id": "25000",
+			"reward": "weiTuoDay_001",
+			"consume": "weiTuoBanDay_001",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "委托板每日100氪金",
+			"team": "weiTuoBanDay"
+		},
+		"20000": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "day"
+			},
+			"id": "20000",
+			"des": "100金币换1000绑氪金，每天限制5次",
+			"consume": "consume_001",
+			"name": " a*2",
+			"sort": 0,
+			"reward": "reward_001",
+			"team": "team"
+		},
+		"20001": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "day"
+			},
+			"id": "20001",
+			"des": "100绑氪金换100非绑定氪金，每天限制1次",
+			"consume": "consume_001",
+			"name": " a*2",
+			"sort": 0,
+			"reward": "reward_001",
+			"team": "team2"
+		},
+		"20002": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "day"
+			},
+			"id": "20002",
+			"des": "100金币换10体力，每天限制10次",
+			"consume": "consume_001",
+			"name": " a*2",
+			"sort": 0,
+			"reward": "reward_001",
+			"team": "team2"
+		},
+		"20003": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "week"
+			},
+			"id": "20003",
+			"des": "100氪金换100装备经验，每周限制5次",
+			"consume": "consume_001",
+			"name": " a*2",
+			"sort": 0,
+			"reward": "reward_001",
+			"team": "team2"
+		},
+		"20004": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "month"
+			},
+			"id": "20004",
+			"des": "100绑氪换1000英雄经验+1000装备经验，每月限制1次",
+			"consume": "consume_001",
+			"name": " a*2",
+			"sort": 0,
+			"reward": "reward_001",
+			"team": "team2"
+		},
+		"100010": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "day"
+			},
+			"id": "100010",
+			"des": "金币20+5个物品换2次物品（每日10次)",
+			"consume": "consume_001",
+			"name": " a*2",
+			"sort": 0,
+			"reward": "reward_001",
+			"team": "team1"
+		},
+		"100011": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"id": "100011",
+			"des": "100金币换一次大型生命药剂，无限制",
+			"consume": "consume_001",
+			"name": " a*2",
+			"sort": 0,
+			"reward": "reward_001",
+			"team": "team3"
+		},
+		"100012": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "week"
+			},
+			"id": "100012",
+			"des": "100金币换一次大型生命药剂，无限制",
+			"consume": "consume_001",
+			"name": " a*2",
+			"sort": 0,
+			"reward": "reward_001",
+			"team": "team3"
+		},
+		"100013": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"id": "100013",
+			"des": "100金币换一次大型生命药剂，无限制",
+			"consume": "consume_001",
+			"name": " a*2",
+			"sort": 0,
+			"reward": "reward_001",
+			"team": "team3"
+		},
+		"100014": {
+			"limitCondition": {
+				
+			},
+			"id": "100014",
+			"des": "100金币换一次大型生命药剂，无限制",
+			"consume": "consume_001",
+			"name": " a*2",
+			"sort": 0,
+			"reward": "reward_001",
+			"team": "team3"
+		},
+		"100015": {
+			"limitCondition": {
+				
+			},
+			"id": "100015",
+			"des": "100金币换一次大型生命药剂，无限制",
+			"consume": "consume_001",
+			"name": " a*2",
+			"sort": 0,
+			"reward": "reward_001",
+			"team": "team3"
+		},
+		"10000": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"id": "10000",
+			"des": "金币100+6个物品换(每日5次)",
+			"consume": "skillTwo23101",
+			"name": " a*2",
+			"sort": 0,
+			"reward": "exch001",
+			"team": "team1"
+		},
+		"10001": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "day"
+			},
+			"id": "10001",
+			"des": "金币200+5个物品换2次物品（每日10次)",
+			"consume": "skillTwo23101",
+			"name": " a*2",
+			"sort": 0,
+			"reward": "exch001",
+			"team": "team2"
+		},
+		"10002": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "week"
+			},
+			"id": "10002",
+			"des": "10氪金 + 1个物品中换2个物品，每周限制10次",
+			"consume": "skillTwo23101",
+			"name": " a*2",
+			"sort": 0,
+			"reward": "exch002",
+			"team": "team3"
+		},
+		"10003": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "month"
+			},
+			"id": "10003",
+			"des": "100氪金 + 20个物品中换1个物品，每月限制1次",
+			"consume": "skillTwo23101",
+			"name": " a*2",
+			"sort": 0,
+			"reward": "exch002",
+			"team": "team4"
+		},
+		"10004": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "month"
+			},
+			"id": "10004",
+			"des": "100氪金 + 10000金币中换1个极品装备，每月限制1次",
+			"consume": "skillTwo23101",
+			"name": " a*2",
+			"sort": 0,
+			"reward": "exch001",
+			"team": "team1"
+		},
+		"weituo104_4": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"id": "weituo104_4",
+			"category": ["委托",
+			"c4",
+			"4杂物"],
+			"reward": "weituo005",
+			"consume": "weituo004_4",
+			"name": " a*2",
+			"sort": 53,
+			"showCondition": "",
+			"des": "100首饰",
+			"team": "weituo400"
+		},
+		"422003_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi100102_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422003_1",
+			"reward": "item_422003_1",
+			"team": "baodimap1_1"
+		},
+		"weituo112_5": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"id": "weituo112_5",
+			"category": ["委托",
+			"c5",
+			"4杂物"],
+			"reward": "weituo019",
+			"consume": "weituo006_5",
+			"name": " a*2",
+			"sort": 55,
+			"showCondition": "",
+			"des": "工艺最低礼物",
+			"team": "weituo500"
+		},
+		"pvpExchange001": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "global"
+			},
+			"category": ["pvp",
+			"s1"],
+			"des": "pvp",
+			"consume": "pvpExchange001",
+			"name": "",
+			"sort": 0,
+			"id": "pvpExchange001",
+			"reward": "pvpExchange001",
+			"team": "pvp001"
+		},
+		"weituo119_5": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"id": "weituo119_5",
+			"category": ["委托",
+			"c5",
+			"3特殊"],
+			"reward": "weituo504",
+			"consume": "weituo102_5",
+			"name": " a*2",
+			"sort": 33,
+			"showCondition": "",
+			"des": "蓝材料2",
+			"team": "weituo510"
+		},
+		"422010_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi300102_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422010_1",
+			"reward": "item_422010_1",
+			"team": "baodimap3_1"
+		},
+		"421015_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"紫"],
+			"id": "421015_1",
+			"reward": "item_421015_1",
+			"consume": "baodi400103_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4_1"
+		},
+		"huoyue013": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "day"
+			},
+			"category": ["活跃",
+			"s1"],
+			"id": "huoyue013",
+			"reward": "huoyue013",
+			"consume": "huoyue013",
+			"name": "水碎日",
+			"sort": 13,
+			"showCondition": "",
+			"des": "1书",
+			"team": "huoyue"
+		},
+		"422001_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi100102_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422001_1",
+			"reward": "item_422001_1",
+			"team": "baodimap1_1"
+		},
+		"heroJifen007": {
+			"limitCondition": {
+				"num": 2,
+				"exchangeType": "day"
+			},
+			"id": "heroJifen007",
+			"category": ["商城",
+			"星型徽印"],
+			"reward": "itemEx_heroJifen007",
+			"consume": "heroJifen003",
+			"name": "魔爪氪金手镯",
+			"sort": 7,
+			"showCondition": "",
+			"des": "1奖券每日1",
+			"team": "bke"
+		},
+		"weituo106_2": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c2",
+			"4杂物"],
+			"id": "weituo106_2",
+			"reward": "weituo011",
+			"consume": "weituo005_2",
+			"name": " a*2",
+			"sort": 49,
+			"showCondition": "",
+			"des": "水碎片",
+			"team": "weituo200"
+		},
+		"market50105": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c2"],
+			"id": "market50105",
+			"reward": "market50105",
+			"consume": "market_jj_c2_q3_1",
+			"name": "c2花卉绿化石柱",
+			"sort": 13,
+			"showCondition": "",
+			"des": "c2花卉绿化石柱",
+			"team": "market2"
+		},
+		"market_item_50057": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c3"],
+			"id": "market_item_50057",
+			"reward": "market_item_50057",
+			"consume": "market_jj_c3_q3_2",
+			"name": "望远镜",
+			"sort": 11,
+			"showCondition": "",
+			"des": "c3望远镜",
+			"team": "market3"
+		},
+		"huoyue010": {
+			"limitCondition": {
+				"num": 6,
+				"exchangeType": "week"
+			},
+			"category": ["活跃",
+			"s1"],
+			"id": "huoyue010",
+			"reward": "huoyue010",
+			"consume": "huoyue010",
+			"name": "蓝礼C周",
+			"sort": 10,
+			"showCondition": "",
+			"des": "1书",
+			"team": "huoyue"
+		},
+		"423010_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi300103_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423010_1",
+			"reward": "item_423010_1",
+			"team": "baodimap3_1"
+		},
+		"market10004": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "day"
+			},
+			"category": ["商店",
+			"未使用"],
+			"id": "market10004",
+			"reward": "market10004",
+			"consume": "market003",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "蜘蛛",
+			"team": "market"
+		},
+		"416005_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝_1"],
+			"id": "416005_1",
+			"reward": "equip416005_1",
+			"consume": "baodi5003_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "武器兑换",
+			"team": "baodimap5_1"
+		},
+		"423008_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi200101_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423008_1",
+			"reward": "item_423008_1",
+			"team": "baodimap2_1"
+		},
+		"petJifen001": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "day"
+			},
+			"id": "petJifen001",
+			"category": ["商城",
+			"翼型徽印"],
+			"reward": "bangke001",
+			"consume": "petJifen001",
+			"name": "契约书",
+			"sort": 0,
+			"showCondition": "",
+			"des": "1奖券每日1",
+			"team": "bke"
+		},
+		"weituo111_5": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"id": "weituo111_5",
+			"category": ["委托",
+			"c5",
+			"4杂物"],
+			"reward": "weituo018",
+			"consume": "weituo006_5",
+			"name": " a*2",
+			"sort": 56,
+			"showCondition": "",
+			"des": "首饰最低礼物",
+			"team": "weituo500"
+		},
+		"bke007": {
+			"limitCondition": {
+				
+			},
+			"id": "bke007",
+			"category": ["商城",
+			"氪金商店"],
+			"reward": "bangke006",
+			"consume": "100bke",
+			"name": "特别招待券",
+			"sort": 0,
+			"showCondition": "",
+			"des": "特别招待券",
+			"team": "bke"
+		},
+		"market50026": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c1"],
+			"id": "market50026",
+			"reward": "market50026",
+			"consume": "market_jj_c1_q2_1",
+			"name": " a*2",
+			"sort": 19,
+			"showCondition": "",
+			"des": "c1_q2杂物布袋",
+			"team": "market"
+		},
+		"weituo102_2": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c2",
+			"1氪金道具"],
+			"id": "weituo102_2",
+			"reward": "weituo003",
+			"consume": "weituo003_2",
+			"name": " a*2",
+			"sort": 2,
+			"showCondition": "",
+			"des": "蜂蜜面包",
+			"team": "weituo200"
+		},
+		"weituo106_3": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c3",
+			"4杂物"],
+			"id": "weituo106_3",
+			"reward": "weituo011",
+			"consume": "weituo005_3",
+			"name": " a*2",
+			"sort": 57,
+			"showCondition": "",
+			"des": "水碎片",
+			"team": "weituo300"
+		},
+		"421002_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi100103_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421002_1",
+			"reward": "item_421002_1",
+			"team": "baodimap1_1"
+		},
+		"weituo_item_50082": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c4",
+			"2家具"],
+			"id": "weituo_item_50082",
+			"reward": "weituo_item_50082",
+			"consume": "weituo_jj_q3_1_c4",
+			"name": "架",
+			"sort": 22,
+			"showCondition": "",
+			"des": "c4家具",
+			"team": "weituo420"
+		},
+		"weituo108": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c1",
+			"4杂物"],
+			"id": "weituo108",
+			"reward": "weituo013",
+			"consume": "weituo005",
+			"name": " a*2",
+			"sort": 60,
+			"showCondition": "",
+			"des": "风碎",
+			"team": "weituo100"
+		},
+		"weituo109_4": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"id": "weituo109_4",
+			"category": ["委托",
+			"c4",
+			"4杂物"],
+			"reward": "weituo014",
+			"consume": "weituo005_4",
+			"name": " a*2",
+			"sort": 59,
+			"showCondition": "",
+			"des": "地碎",
+			"team": "weituo400"
+		},
+		"421011_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi300103_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421011_1",
+			"reward": "item_421011_1",
+			"team": "baodimap3_1"
+		},
+		"market50011": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c1"],
+			"id": "market50011",
+			"reward": "market50011",
+			"consume": "market_jj_c1_q2_1",
+			"name": " a*2",
+			"sort": 18,
+			"showCondition": "",
+			"des": "c1_q2红木椅",
+			"team": "market"
+		},
+		"weituo104_3": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c3",
+			"4杂物"],
+			"id": "weituo104_3",
+			"reward": "weituo005",
+			"consume": "weituo004_3",
+			"name": " a*2",
+			"sort": 53,
+			"showCondition": "",
+			"des": "100首饰",
+			"team": "weituo300"
+		},
+		"pvpExchange007": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "global"
+			},
+			"category": ["pvp",
+			"s1"],
+			"id": "pvpExchange007",
+			"reward": "pvpExchange007",
+			"consume": "pvpExchange004",
+			"name": "",
+			"sort": 7,
+			"showCondition": "",
+			"des": "pvp",
+			"team": "pvp001"
+		},
+		"422006_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi200102_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422006_1",
+			"reward": "item_422006_1",
+			"team": "baodimap2_1"
+		},
+		"tuzi_item_30032": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"绿"],
+			"des": "兔子通用绿",
+			"consume": "tuzi_002",
+			"name": "兔子通用绿",
+			"sort": 0,
+			"id": "tuzi_item_30032",
+			"reward": "tuzi_item_30032",
+			"team": "tuziGreen"
+		},
+		"weituo110_2": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c2",
+			"4杂物"],
+			"id": "weituo110_2",
+			"reward": "weituo017",
+			"consume": "weituo006_2",
+			"name": " a*2",
+			"sort": 46,
+			"showCondition": "",
+			"des": "美食最低礼物",
+			"team": "weituo200"
+		},
+		"421019_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝_1"],
+			"id": "421019_1",
+			"reward": "item_421019_1",
+			"consume": "baodi500103_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5_1"
+		},
+		"pvpExchange009": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "global"
+			},
+			"category": ["pvp",
+			"s1"],
+			"id": "pvpExchange009",
+			"reward": "pvpExchange009",
+			"consume": "pvpExchange003",
+			"name": "",
+			"sort": 11,
+			"showCondition": "",
+			"des": "pvp",
+			"team": "pvp001"
+		},
+		"market50014": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c1"],
+			"id": "market50014",
+			"reward": "market50014",
+			"consume": "market_jj_c1_q3_1",
+			"name": " a*2",
+			"sort": 13,
+			"showCondition": "",
+			"des": "c1_q3红木沙发",
+			"team": "market"
+		},
+		"weituo_item_50103": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c2",
+			"2家具"],
+			"id": "weituo_item_50103",
+			"reward": "weituo_item_50103",
+			"consume": "weituo_jj_q3_2_c2",
+			"name": "假山石景",
+			"sort": 21,
+			"showCondition": "",
+			"des": "c2家具",
+			"team": "weituo220"
+		},
+		"tuzi_item_27009": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"category": ["兔子",
+			"绿"],
+			"des": "兔子通用绿",
+			"consume": "tuzi_002",
+			"name": "兔子通用绿",
+			"sort": 0,
+			"id": "tuzi_item_27009",
+			"reward": "tuzi_item_27009",
+			"team": "tuziGreen"
+		},
+		"weituo001": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "day"
+			},
+			"category": ["委托",
+			"每日"],
+			"id": "weituo001",
+			"reward": "weituo001",
+			"consume": "weituo001",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "氪金",
+			"team": "weituogongzi"
+		},
+		"weituo117_2": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c2",
+			"3特殊"],
+			"id": "weituo117_2",
+			"reward": "weituo202",
+			"consume": "weituo101_2",
+			"name": " a*2",
+			"sort": 32,
+			"showCondition": "",
+			"des": "后boss材料",
+			"team": "weituo210"
+		},
+		"bke013": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "week"
+			},
+			"id": "bke013",
+			"category": ["商城",
+			"氪金商店"],
+			"reward": "bangke013",
+			"consume": "60bke",
+			"name": "先时迷宠造像",
+			"sort": 0,
+			"showCondition": "",
+			"des": "【礼物】先时迷宠造像",
+			"team": "bke"
+		},
+		"market302": {
+			"limitCondition": {
+				"num": 8,
+				"exchangeType": "day"
+			},
+			"category": ["商店",
+			"c4"],
+			"id": "market302",
+			"reward": "market302",
+			"consume": "shop001",
+			"name": " a*2",
+			"sort": 1,
+			"showCondition": "",
+			"des": "花瓣",
+			"team": "market4"
+		},
+		"421012_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi300103_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421012_1",
+			"reward": "item_421012_1",
+			"team": "baodimap3_1"
+		},
+		"market_item_50047": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c2"],
+			"id": "market_item_50047",
+			"reward": "market_item_50047",
+			"consume": "market_jj_c2_q2_1",
+			"name": "石墙",
+			"sort": 18,
+			"showCondition": "",
+			"des": "c2石墙",
+			"team": "market2"
+		},
+		"421006_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi200103_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421006_1",
+			"reward": "item_421006_1",
+			"team": "baodimap2_1"
+		},
+		"weituo107_5": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"id": "weituo107_5",
+			"category": ["委托",
+			"c5",
+			"4杂物"],
+			"reward": "weituo012",
+			"consume": "weituo005_5",
+			"name": " a*2",
+			"sort": 58,
+			"showCondition": "",
+			"des": "火碎",
+			"team": "weituo500"
+		},
+		"weituo101_5": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"id": "weituo101_5",
+			"category": ["委托",
+			"c5",
+			"1氪金道具"],
+			"reward": "weituo002",
+			"consume": "weituo002_5",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "抽奖券",
+			"team": "weituo500"
+		},
+		"weituo112_4": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"id": "weituo112_4",
+			"category": ["委托",
+			"c4",
+			"4杂物"],
+			"reward": "weituo019",
+			"consume": "weituo006_4",
+			"name": " a*2",
+			"sort": 55,
+			"showCondition": "",
+			"des": "工艺最低礼物",
+			"team": "weituo400"
+		},
+		"weituo112_2": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c2",
+			"4杂物"],
+			"id": "weituo112_2",
+			"reward": "weituo019",
+			"consume": "weituo006_2",
+			"name": " a*2",
+			"sort": 47,
+			"showCondition": "",
+			"des": "工艺最低礼物",
+			"team": "weituo200"
+		},
+		"market50102": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c1"],
+			"id": "market50102",
+			"reward": "market50102",
+			"consume": "market_jj_c1_q3_2",
+			"name": " a*2",
+			"sort": 14,
+			"showCondition": "",
+			"des": "c1_q2原木小柜",
+			"team": "market"
+		},
+		"weituo_item_50049": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c2",
+			"2家具"],
+			"id": "weituo_item_50049",
+			"reward": "weituo_item_50049",
+			"consume": "weituo_jj_q3_1_c2",
+			"name": "仙人掌盆栽",
+			"sort": 23,
+			"showCondition": "",
+			"des": "c2家具",
+			"team": "weituo220"
+		},
+		"weituo111_2": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c2",
+			"4杂物"],
+			"id": "weituo111_2",
+			"reward": "weituo018",
+			"consume": "weituo006_2",
+			"name": " a*2",
+			"sort": 48,
+			"showCondition": "",
+			"des": "首饰最低礼物",
+			"team": "weituo200"
+		},
+		"tuzi_item_30039": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"绿"],
+			"des": "兔子通用绿",
+			"consume": "tuzi_002",
+			"name": "兔子通用绿",
+			"sort": 0,
+			"id": "tuzi_item_30039",
+			"reward": "tuzi_item_30039",
+			"team": "tuziGreen"
+		},
+		"weituo108_2": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c2",
+			"4杂物"],
+			"id": "weituo108_2",
+			"reward": "weituo013",
+			"consume": "weituo005_2",
+			"name": " a*2",
+			"sort": 52,
+			"showCondition": "",
+			"des": "风碎",
+			"team": "weituo200"
+		},
+		"market_item_50045": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c2"],
+			"id": "market_item_50045",
+			"reward": "market_item_50045",
+			"consume": "market_jj_c2_q3_2",
+			"name": "芦荟盆栽",
+			"sort": 16,
+			"showCondition": "",
+			"des": "c2芦荟盆栽",
+			"team": "market2"
+		},
+		"423014_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"紫"],
+			"id": "423014_1",
+			"reward": "item_423014_1",
+			"consume": "baodi400101_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4_1"
+		},
+		"heroJifen008": {
+			"limitCondition": {
+				"num": 2,
+				"exchangeType": "day"
+			},
+			"id": "heroJifen008",
+			"category": ["商城",
+			"星型徽印"],
+			"reward": "itemEx_heroJifen008",
+			"consume": "heroJifen003",
+			"name": "魔神封印之壶",
+			"sort": 8,
+			"showCondition": "",
+			"des": "1奖券每日1",
+			"team": "bke"
+		},
+		"market009": {
+			"limitCondition": {
+				"num": 8,
+				"exchangeType": "day"
+			},
+			"category": ["商店",
+			"未使用"],
+			"id": "market009",
+			"reward": "market009",
+			"consume": "market001",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "蜘蛛",
+			"team": "market"
+		},
+		"market401": {
+			"limitCondition": {
+				"num": 8,
+				"exchangeType": "day"
+			},
+			"category": ["商店",
+			"c5"],
+			"id": "market401",
+			"reward": "market401",
+			"consume": "shop001",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "冰晶",
+			"team": "market5"
+		},
+		"huoyue009": {
+			"limitCondition": {
+				"num": 6,
+				"exchangeType": "week"
+			},
+			"category": ["活跃",
+			"s1"],
+			"id": "huoyue009",
+			"reward": "huoyue009",
+			"consume": "huoyue009",
+			"name": "蓝礼B周",
+			"sort": 9,
+			"showCondition": "",
+			"des": "1书",
+			"team": "huoyue"
+		},
+		"ex_tower1_6": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"id": "ex_tower1_6",
+			"des": "",
+			"reward": "itemEx_ex_tower1_6",
+			"consume": "itemEx_ex_tower1_3cube",
+			"name": "塔兑换_宝箱",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 8,
+			"category": ["爬塔",
+			"塔1"],
+			"showCondition": "",
+			"team": "tower1"
+		},
+		"416003_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"紫"],
+			"des": "武器兑换",
+			"consume": "baodi3003_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "416003_1",
+			"reward": "equip416003_1",
+			"team": "baodimap3_1"
+		},
+		"422014_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"紫"],
+			"id": "422014_1",
+			"reward": "item_422014_1",
+			"consume": "baodi400102_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4_1"
+		},
+		"413001_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"紫"],
+			"des": "武器兑换",
+			"consume": "baodi1003_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "413001_1",
+			"reward": "equip413001_1",
+			"team": "baodimap1_1"
+		},
+		"heroJifen004": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "day"
+			},
+			"id": "heroJifen004",
+			"category": ["商城",
+			"星型徽印"],
+			"reward": "itemEx_heroJifen004",
+			"consume": "heroJifen002",
+			"name": "风之碎片×3",
+			"sort": 14,
+			"showCondition": "",
+			"des": "1奖券每日1",
+			"team": "bke"
+		},
+		"weituo101_2": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c2",
+			"1氪金道具"],
+			"id": "weituo101_2",
+			"reward": "weituo002",
+			"consume": "weituo002_2",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "抽奖券",
+			"team": "weituo200"
+		},
+		"tuzi_item_30012": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"绿"],
+			"des": "兔子通用绿",
+			"consume": "tuzi_002",
+			"name": "兔子通用绿",
+			"sort": 0,
+			"id": "tuzi_item_30012",
+			"reward": "tuzi_item_30012",
+			"team": "tuziGreen"
+		},
+		"423012_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi300103_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423012_1",
+			"reward": "item_423012_1",
+			"team": "baodimap3_1"
+		},
+		"weituo201_2": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c2",
+			"1氪金道具"],
+			"id": "weituo201_2",
+			"reward": "weituo002_2",
+			"consume": "weituo003_2",
+			"name": " a*2",
+			"sort": 1,
+			"showCondition": "",
+			"des": "魔物抽奖券",
+			"team": "weituo200"
+		},
+		"tuzi_item_31006": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"绿"],
+			"des": "兔子通用绿",
+			"consume": "tuzi_002",
+			"name": "兔子通用绿",
+			"sort": 0,
+			"id": "tuzi_item_31006",
+			"reward": "tuzi_item_31006",
+			"team": "tuziGreen"
+		},
+		"market_item_50067": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"id": "market_item_50067",
+			"category": ["商店",
+			"c4"],
+			"reward": "market_item_50067",
+			"consume": "market_jj_c4_q3_1",
+			"name": "挂饰",
+			"sort": 12,
+			"showCondition": "",
+			"des": "c4挂饰",
+			"team": "market4"
+		},
+		"PtJifen001": {
+			"limitCondition": {
+				
+			},
+			"id": "PtJifen001",
+			"category": ["商城",
+			"回忆结晶"],
+			"reward": "itemEx_PtJifen001",
+			"consume": "itemEx_PtJifen001",
+			"name": "契约书",
+			"sort": 0,
+			"showCondition": "",
+			"des": "10溢出资源换1抽",
+			"team": "ptjifen"
+		},
+		"423002_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi100101_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423002_1",
+			"reward": "item_423002_1",
+			"team": "baodimap1_1"
+		},
+		"weituo112_3": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c3",
+			"4杂物"],
+			"id": "weituo112_3",
+			"reward": "weituo019",
+			"consume": "weituo006_3",
+			"name": " a*2",
+			"sort": 55,
+			"showCondition": "",
+			"des": "工艺最低礼物",
+			"team": "weituo300"
+		},
+		"weituo110_3": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c3",
+			"4杂物"],
+			"id": "weituo110_3",
+			"reward": "weituo017",
+			"consume": "weituo006_3",
+			"name": " a*2",
+			"sort": 54,
+			"showCondition": "",
+			"des": "美食最低礼物",
+			"team": "weituo300"
+		},
+		"weituo111": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c1",
+			"4杂物"],
+			"id": "weituo111",
+			"reward": "weituo018",
+			"consume": "weituo006",
+			"name": " a*2",
+			"sort": 56,
+			"showCondition": "",
+			"des": "首饰最低礼物",
+			"team": "weituo100"
+		},
+		"market50025": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c1"],
+			"id": "market50025",
+			"reward": "market50025",
+			"consume": "market_jj_c1_q2_1",
+			"name": " a*2",
+			"sort": 21,
+			"showCondition": "",
+			"des": "c1_q2石铲",
+			"team": "market"
+		},
+		"tuzi_item_31012": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"id": "tuzi_item_31012",
+			"des": "兔子通用蓝",
+			"reward": "tuzi_item_31012",
+			"consume": "tuzi_003",
+			"name": "兔子通用蓝",
+			"sort": 0,
+			"category": ["兔子",
+			"蓝"],
+			"showCondition": "",
+			"team": "tuziBlue"
+		},
+		"421003_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi100103_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421003_1",
+			"reward": "item_421003_1",
+			"team": "baodimap1_1"
+		},
+		"ex_tower1_7": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"id": "ex_tower1_7",
+			"des": "",
+			"reward": "itemEx_ex_tower1_7",
+			"consume": "itemEx_ex_tower1_3cube",
+			"name": "塔兑换_狗粮",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 9,
+			"category": ["爬塔",
+			"塔1"],
+			"showCondition": "",
+			"team": "tower1"
+		},
+		"422005_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi200102_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422005_1",
+			"reward": "item_422005_1",
+			"team": "baodimap2_1"
+		},
+		"market50010": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c1"],
+			"id": "market50010",
+			"reward": "market50010",
+			"consume": "market_jj_c1_q3_2",
+			"name": " a*2",
+			"sort": 11,
+			"showCondition": "",
+			"des": "c1_q3红木床",
+			"team": "market"
+		},
+		"market_item_50021": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"id": "market_item_50021",
+			"category": ["商店",
+			"c4"],
+			"reward": "market_item_50021",
+			"consume": "market_jj_c4_q3_2",
+			"name": "吊床",
+			"sort": 11,
+			"showCondition": "",
+			"des": "c4吊床",
+			"team": "market4"
+		},
+		"fuZhuang001": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"id": "fuZhuang001",
+			"category": ["商城",
+			"服装"],
+			"reward": "fuZhuang001",
+			"consume": "100bke",
+			"name": "难得的休息日",
+			"sort": 0,
+			"showCondition": "",
+			"des": "茜塔皮肤",
+			"team": "fuZhuang"
+		},
+		"weituo104_5": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"id": "weituo104_5",
+			"category": ["委托",
+			"c5",
+			"4杂物"],
+			"reward": "weituo005",
+			"consume": "weituo004_5",
+			"name": " a*2",
+			"sort": 53,
+			"showCondition": "",
+			"des": "100首饰",
+			"team": "weituo500"
+		},
+		"weituo125": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c1",
+			"2家具"],
+			"id": "weituo125",
+			"reward": "weituo_item_50030",
+			"consume": "weituo_jj_q3_1_c1",
+			"name": " a*2",
+			"sort": 13,
+			"showCondition": "",
+			"des": "c0+c1家具",
+			"team": "weituo120"
+		},
+		"equipQualityUpgrade002": {
+			"limitCondition": {
+				
+			},
+			"id": "equipQualityUpgrade002",
+			"des": "装备打造测试，无限制",
+			"consume": "equipQualityUpgrade002",
+			"name": " a*2",
+			"sort": 0,
+			"reward": "equipQualityUpgrade002",
+			"team": "equipQualityUpgrade002"
+		},
+		"ex_tower1_5": {
+			"limitCondition": {
+				"num": 4,
+				"exchangeType": "global"
+			},
+			"id": "ex_tower1_5",
+			"des": "",
+			"reward": "itemEx_ex_tower1_5",
+			"consume": "itemEx_ex_tower1_5cube",
+			"name": "塔兑换_宝箱",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 7,
+			"category": ["爬塔",
+			"塔1"],
+			"showCondition": "",
+			"team": "tower1"
+		},
+		"payke003": {
+			"limitCondition": {
+				
+			},
+			"id": "payke003",
+			"category": ["商城",
+			"payke"],
+			"reward": "payke003",
+			"consume": "payke003",
+			"name": "蜂蜜面包",
+			"sort": 0,
+			"showCondition": "",
+			"des": "蜘蛛",
+			"team": "payke"
+		},
+		"market011": {
+			"limitCondition": {
+				"num": 8,
+				"exchangeType": "day"
+			},
+			"category": ["商店",
+			"未使用"],
+			"id": "market011",
+			"reward": "market011",
+			"consume": "market001",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "蜘蛛",
+			"team": "market"
+		},
+		"weituo118_2": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c2",
+			"3特殊"],
+			"id": "weituo118_2",
+			"reward": "weituo203",
+			"consume": "weituo102_2",
+			"name": " a*2",
+			"sort": 34,
+			"showCondition": "",
+			"des": "蓝材料1",
+			"team": "weituo210"
+		},
+		"weituo_item_50052": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c2",
+			"2家具"],
+			"id": "weituo_item_50052",
+			"reward": "weituo_item_50052",
+			"consume": "weituo_jj_q3_2_c2",
+			"name": "石柱子",
+			"sort": 22,
+			"showCondition": "",
+			"des": "c2家具",
+			"team": "weituo220"
+		},
+		"tuzi_item_27007": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				"num": 2,
+				"exchangeType": "month"
+			},
+			"category": ["兔子",
+			"蓝"],
+			"des": "兔子通用蓝",
+			"consume": "tuzi_003",
+			"name": "兔子通用蓝",
+			"sort": 0,
+			"id": "tuzi_item_27007",
+			"reward": "tuzi_item_27007",
+			"team": "tuziBlue"
+		},
+		"keIcon": {
+			"limitCondition": {
+				
+			},
+			"category": ["通用兑换比例"],
+			"des": "payke兑换ke的兑换比例",
+			"consume": "consume_keIcon",
+			"name": "",
+			"sort": 0,
+			"id": "keIcon",
+			"reward": "reward_keIcon",
+			"team": ""
+		},
+		"bke011": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "week"
+			},
+			"id": "bke011",
+			"category": ["商城",
+			"氪金商店"],
+			"reward": "bangke011",
+			"consume": "60bke",
+			"name": "白沙蒙布朗",
+			"sort": 0,
+			"showCondition": "",
+			"des": "【礼物】白沙蒙布朗",
+			"team": "bke"
+		},
+		"dailySupply01": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "day"
+			},
+			"category": ["活动每日补给"],
+			"id": "dailySupply01",
+			"reward": "itemEx_dailySupply01",
+			"consume": "",
+			"name": "下午茶",
+			"sort": 0,
+			"showCondition": "",
+			"des": "每日时段补给",
+			"team": "dailySupply"
+		},
+		"423019_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝_1"],
+			"id": "423019_1",
+			"reward": "item_423019_1",
+			"consume": "baodi500101_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5_1"
+		},
+		"bke012": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "week"
+			},
+			"id": "bke012",
+			"category": ["商城",
+			"氪金商店"],
+			"reward": "bangke012",
+			"consume": "60bke",
+			"name": "灼热翡翠项坠",
+			"sort": 0,
+			"showCondition": "",
+			"des": "【礼物】灼热翡翠项坠",
+			"team": "bke"
+		},
+		"412005_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"紫"],
+			"id": "412005_1",
+			"reward": "equip412005_1",
+			"consume": "baodi4001_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "武器兑换",
+			"team": "baodimap4_1"
+		},
+		"weituo112": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c1",
+			"4杂物"],
+			"id": "weituo112",
+			"reward": "weituo019",
+			"consume": "weituo006",
+			"name": " a*2",
+			"sort": 55,
+			"showCondition": "",
+			"des": "工艺最低礼物",
+			"team": "weituo100"
+		},
+		"weituo_item_50062": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c3",
+			"2家具"],
+			"id": "weituo_item_50062",
+			"reward": "weituo_item_50062",
+			"consume": "weituo_jj_q2_1_c3",
+			"name": "餐车",
+			"sort": 24,
+			"showCondition": "",
+			"des": "c3家具",
+			"team": "weituo320"
+		},
+		"weituo102_5": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "global"
+			},
+			"id": "weituo102_5",
+			"category": ["委托",
+			"c5",
+			"1氪金道具"],
+			"reward": "weituo003",
+			"consume": "weituo003_5",
+			"name": " a*2",
+			"sort": 2,
+			"showCondition": "",
+			"des": "蜂蜜面包",
+			"team": "weituo500"
+		},
+		"bke005": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "week"
+			},
+			"id": "bke005",
+			"category": ["商城",
+			"氪金商店"],
+			"reward": "bangke005",
+			"consume": "bke004",
+			"name": "蜂蜜面包",
+			"sort": 0,
+			"showCondition": "",
+			"des": "3面包",
+			"team": "bke"
+		},
+		"tuzi_item_30004": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"蓝"],
+			"des": "兔子通用蓝",
+			"consume": "tuzi_003",
+			"name": "兔子通用蓝",
+			"sort": 0,
+			"id": "tuzi_item_30004",
+			"reward": "tuzi_item_30004",
+			"team": "tuziBlue"
+		},
+		"423001_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi100101_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423001_1",
+			"reward": "item_423001_1",
+			"team": "baodimap1_1"
+		},
+		"market_item_50048": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c2"],
+			"id": "market_item_50048",
+			"reward": "market_item_50048",
+			"consume": "market_jj_c2_q2_2",
+			"name": "石矮墙",
+			"sort": 17,
+			"showCondition": "",
+			"des": "c2石矮墙",
+			"team": "market2"
+		},
+		"weituo104": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c1",
+			"4杂物"],
+			"id": "weituo104",
+			"reward": "weituo005",
+			"consume": "weituo004",
+			"name": " a*2",
+			"sort": 53,
+			"showCondition": "",
+			"des": "100首饰",
+			"team": "weituo100"
+		},
+		"tuzi_item_31007": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"蓝"],
+			"des": "兔子通用蓝",
+			"consume": "tuzi_003",
+			"name": "兔子通用蓝",
+			"sort": 0,
+			"id": "tuzi_item_31007",
+			"reward": "tuzi_item_31007",
+			"team": "tuziBlue"
+		},
+		"heroJifen001": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "day"
+			},
+			"id": "heroJifen001",
+			"category": ["商城",
+			"星型徽印"],
+			"reward": "bangke001",
+			"consume": "heroJifen001",
+			"name": "契约书",
+			"sort": 0,
+			"showCondition": "",
+			"des": "1奖券每日1",
+			"team": "bke"
+		},
+		"tuzi_item_20016": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"绿"],
+			"des": "兔子通用绿",
+			"consume": "tuzi_002",
+			"name": "兔子通用绿",
+			"sort": 0,
+			"id": "tuzi_item_20016",
+			"reward": "tuzi_item_20016",
+			"team": "tuziGreen"
+		},
+		"huoyue001": {
+			"limitCondition": {
+				"num": 2,
+				"exchangeType": "month"
+			},
+			"category": ["活跃",
+			"s1"],
+			"id": "huoyue001",
+			"reward": "huoyue001",
+			"consume": "huoyue001",
+			"name": "角色月",
+			"sort": 1,
+			"showCondition": "",
+			"des": "1书",
+			"team": "huoyue"
+		},
+		"weituo106": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c1",
+			"4杂物"],
+			"id": "weituo106",
+			"reward": "weituo011",
+			"consume": "weituo005",
+			"name": " a*2",
+			"sort": 57,
+			"showCondition": "",
+			"des": "水碎片",
+			"team": "weituo100"
+		},
+		"heroJifen005": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "day"
+			},
+			"id": "heroJifen005",
+			"category": ["商城",
+			"星型徽印"],
+			"reward": "itemEx_heroJifen005",
+			"consume": "heroJifen002",
+			"name": "地之碎片×3",
+			"sort": 15,
+			"showCondition": "",
+			"des": "1奖券每日1",
+			"team": "bke"
+		},
+		"market_item_50046": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c2"],
+			"id": "market_item_50046",
+			"reward": "market_item_50046",
+			"consume": "market_jj_c2_q3_1",
+			"name": "石柱子",
+			"sort": 14,
+			"showCondition": "",
+			"des": "c2石柱子",
+			"team": "market2"
+		},
+		"market_item_50064": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c3"],
+			"id": "market_item_50064",
+			"reward": "market_item_50064",
+			"consume": "market_jj_c3_q2_2",
+			"name": "原木挂墙厨具",
+			"sort": 18,
+			"showCondition": "",
+			"des": "c3原木挂墙厨具",
+			"team": "market3"
+		},
+		"tuzi_item_30003": {
+			"randomShopLimitNum": 2,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"白"],
+			"des": "兔子通用白",
+			"consume": "tuzi_001",
+			"name": "兔子通用白",
+			"sort": 0,
+			"id": "tuzi_item_30003",
+			"reward": "tuzi_item_30003",
+			"team": "tuziWhite"
+		},
+		"market_item_50055": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c3"],
+			"id": "market_item_50055",
+			"reward": "market_item_50055",
+			"consume": "market_jj_c3_q2_2",
+			"name": "落地花瓶",
+			"sort": 15,
+			"showCondition": "",
+			"des": "c3落地花瓶",
+			"team": "market3"
+		},
+		"bke009": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "week"
+			},
+			"id": "bke009",
+			"category": ["商城",
+			"氪金商店"],
+			"reward": "bangke009",
+			"consume": "100bke",
+			"name": "精英冒险家手记×3",
+			"sort": 0,
+			"showCondition": "",
+			"des": "精英冒险家手记*3",
+			"team": "bke"
+		},
+		"423003_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi100101_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423003_1",
+			"reward": "item_423003_1",
+			"team": "baodimap1_1"
+		},
+		"tuzi_item_30036": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"绿"],
+			"des": "兔子通用绿",
+			"consume": "tuzi_002",
+			"name": "兔子通用绿",
+			"sort": 0,
+			"id": "tuzi_item_30036",
+			"reward": "tuzi_item_30036",
+			"team": "tuziGreen"
+		},
+		"weituo105_3": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c3",
+			"4杂物"],
+			"id": "weituo105_3",
+			"reward": "weituo006",
+			"consume": "weituo004_3",
+			"name": " a*2",
+			"sort": 52,
+			"showCondition": "",
+			"des": "100雕像",
+			"team": "weituo300"
+		},
+		"weituo114_2": {
+			"limitCondition": {
+				"num": 50,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c2",
+			"4杂物"],
+			"id": "weituo114_2",
+			"reward": "weituo015",
+			"consume": "weituo007_2",
+			"name": " a*2",
+			"sort": 55,
+			"showCondition": "",
+			"des": "装备经验",
+			"team": "weituo200"
+		},
+		"heroJifen006": {
+			"limitCondition": {
+				"num": 2,
+				"exchangeType": "day"
+			},
+			"id": "heroJifen006",
+			"category": ["商城",
+			"星型徽印"],
+			"reward": "itemEx_heroJifen006",
+			"consume": "heroJifen003",
+			"name": "深渊荟萃巴菲",
+			"sort": 6,
+			"showCondition": "",
+			"des": "1奖券每日1",
+			"team": "bke"
+		},
+		"422017_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝_1"],
+			"id": "422017_1",
+			"reward": "item_422017_1",
+			"consume": "baodi500102_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5_1"
+		},
+		"weituo117_4": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "month"
+			},
+			"id": "weituo117_4",
+			"category": ["委托",
+			"c4",
+			"3特殊"],
+			"reward": "weituo402",
+			"consume": "weituo101_4",
+			"name": " a*2",
+			"sort": 32,
+			"showCondition": "",
+			"des": "后boss材料",
+			"team": "weituo410"
+		},
+		"item_15007": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "day"
+			},
+			"category": ["种子商店",
+			"未使用"],
+			"des": "种子",
+			"consume": "zhongzi500",
+			"name": "草药种子",
+			"sort": 0,
+			"id": "item_15007",
+			"reward": "zhongzi15007",
+			"team": "zhongzi"
+		},
+		"item_15012": {
+			"limitCondition": {
+				"num": 4,
+				"exchangeType": "day"
+			},
+			"category": ["种子商店",
+			"草药组"],
+			"id": "item_15012",
+			"reward": "zhongzi15012",
+			"consume": "zhongzi100",
+			"name": "草药种子",
+			"sort": 0,
+			"showCondition": "",
+			"des": "种子",
+			"team": "zhongzi"
+		},
+		"bke002": {
+			"limitCondition": {
+				
+			},
+			"id": "bke002",
+			"category": ["商城",
+			"氪金商店"],
+			"reward": "bangke001",
+			"consume": "bke002",
+			"name": "契约书",
+			"sort": 0,
+			"showCondition": "",
+			"des": "1奖券正常",
+			"team": "bke"
+		},
+		"tuzi_item_30001": {
+			"randomShopLimitNum": 2,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"白"],
+			"des": "兔子通用白",
+			"consume": "tuzi_001",
+			"name": "兔子通用白",
+			"sort": 0,
+			"id": "tuzi_item_30001",
+			"reward": "tuzi_item_30001",
+			"team": "tuziWhite"
+		},
+		"weituo102_3": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c3",
+			"1氪金道具"],
+			"id": "weituo102_3",
+			"reward": "weituo003",
+			"consume": "weituo003_3",
+			"name": " a*2",
+			"sort": 3,
+			"showCondition": "",
+			"des": "蜂蜜面包",
+			"team": "weituo300"
+		},
+		"tuzi_item_30038": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"绿"],
+			"des": "兔子通用绿",
+			"consume": "tuzi_002",
+			"name": "兔子通用绿",
+			"sort": 0,
+			"id": "tuzi_item_30038",
+			"reward": "tuzi_item_30038",
+			"team": "tuziGreen"
+		},
+		"bke004": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "week"
+			},
+			"id": "bke004",
+			"category": ["商城",
+			"氪金商店"],
+			"reward": "bangke004",
+			"consume": "bke004",
+			"name": "前辈冒险家手记×3",
+			"sort": 0,
+			"showCondition": "",
+			"des": "10礼包",
+			"team": "bke"
+		},
+		"market007": {
+			"limitCondition": {
+				"num": 8,
+				"exchangeType": "day"
+			},
+			"category": ["商店",
+			"c1"],
+			"id": "market007",
+			"reward": "market007",
+			"consume": "shop001",
+			"name": " a*2",
+			"sort": 1,
+			"showCondition": "",
+			"des": "c1商店_古代齿轮*2",
+			"team": "market"
+		},
+		"item_15016": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "day"
+			},
+			"category": ["种子商店",
+			"普通"],
+			"id": "item_15016",
+			"reward": "zhongzi15016",
+			"consume": "zhongzi100",
+			"name": "草药种子",
+			"sort": 0,
+			"showCondition": "",
+			"des": "种子",
+			"team": "zhongzi"
+		},
+		"ex_tower1_9": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"id": "ex_tower1_9",
+			"des": "",
+			"reward": "itemEx_ex_tower1_9",
+			"consume": "itemEx_ex_tower1_9",
+			"name": "塔兑换_家具A",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 4,
+			"category": ["爬塔",
+			"塔1"],
+			"showCondition": "",
+			"team": "tower1"
+		},
+		"item_15018": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "day"
+			},
+			"category": ["种子商店",
+			"c3"],
+			"id": "item_15018",
+			"reward": "zhongzi15018",
+			"consume": "zhongzi101",
+			"name": "水路锅种子",
+			"sort": 0,
+			"showCondition": "zhongziC3",
+			"des": "种子",
+			"team": "zhongzi"
+		},
+		"weituo127": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c1",
+			"2家具"],
+			"id": "weituo127",
+			"reward": "weituo_item_50029",
+			"consume": "weituo_jj_q3_2_c1",
+			"name": " a*2",
+			"sort": 12,
+			"showCondition": "",
+			"des": "c0+c1家具",
+			"team": "weituo120"
+		},
+		"pvpExchange011": {
+			"limitCondition": {
+				"num": 15,
+				"exchangeType": "global"
+			},
+			"category": ["pvp",
+			"s1"],
+			"id": "pvpExchange011",
+			"reward": "itemEx_pvpExchange011",
+			"consume": "pvpExchange002",
+			"name": "",
+			"sort": 2,
+			"showCondition": "",
+			"des": "pvp",
+			"team": "pvp001"
+		},
+		"tuzi_item_30016": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"蓝"],
+			"des": "兔子通用蓝",
+			"consume": "tuzi_003",
+			"name": "兔子通用蓝",
+			"sort": 0,
+			"id": "tuzi_item_30016",
+			"reward": "tuzi_item_30016",
+			"team": "tuziBlue"
+		},
+		"tuzi_item_27005": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "month"
+			},
+			"category": ["兔子",
+			"紫"],
+			"des": "兔子通用紫色",
+			"consume": "tuzi_004",
+			"name": "兔子通用紫色",
+			"sort": 0,
+			"id": "tuzi_item_27005",
+			"reward": "tuzi_item_27005",
+			"team": "tuziPurple"
+		},
+		"421005_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi200103_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421005_1",
+			"reward": "item_421005_1",
+			"team": "baodimap2_1"
+		},
+		"pvpExchange008": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "global"
+			},
+			"category": ["pvp",
+			"s1"],
+			"id": "pvpExchange008",
+			"reward": "pvpExchange008",
+			"consume": "pvpExchange003",
+			"name": "",
+			"sort": 9,
+			"showCondition": "",
+			"des": "pvp",
+			"team": "pvp001"
+		},
+		"weituo105_5": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"id": "weituo105_5",
+			"category": ["委托",
+			"c5",
+			"4杂物"],
+			"reward": "weituo006",
+			"consume": "weituo004_5",
+			"name": " a*2",
+			"sort": 52,
+			"showCondition": "",
+			"des": "100雕像",
+			"team": "weituo500"
+		},
+		"weituo118_3": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c3",
+			"3特殊"],
+			"id": "weituo118_3",
+			"reward": "weituo303",
+			"consume": "weituo102_3",
+			"name": " a*2",
+			"sort": 34,
+			"showCondition": "",
+			"des": "蓝材料1",
+			"team": "weituo310"
+		},
+		"weituo111_3": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c3",
+			"4杂物"],
+			"id": "weituo111_3",
+			"reward": "weituo018",
+			"consume": "weituo006_3",
+			"name": " a*2",
+			"sort": 56,
+			"showCondition": "",
+			"des": "首饰最低礼物",
+			"team": "weituo300"
+		},
+		"market_item_50054": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c3"],
+			"id": "market_item_50054",
+			"reward": "market_item_50054",
+			"consume": "market_jj_c3_q2_2",
+			"name": "情报板",
+			"sort": 13,
+			"showCondition": "",
+			"des": "c3情报板",
+			"team": "market3"
+		},
+		"tuzi_item_31009": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"绿"],
+			"des": "兔子通用绿",
+			"consume": "tuzi_002",
+			"name": "兔子通用绿",
+			"sort": 0,
+			"id": "tuzi_item_31009",
+			"reward": "tuzi_item_31009",
+			"team": "tuziGreen"
+		},
+		"huoyue007": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "month"
+			},
+			"category": ["活跃",
+			"s1"],
+			"id": "huoyue007",
+			"reward": "huoyue007",
+			"consume": "huoyue007",
+			"name": "紫礼C月",
+			"sort": 7,
+			"showCondition": "",
+			"des": "1书",
+			"team": "huoyue"
+		},
+		"weituo106_4": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"id": "weituo106_4",
+			"category": ["委托",
+			"c4",
+			"4杂物"],
+			"reward": "weituo011",
+			"consume": "weituo005_4",
+			"name": " a*2",
+			"sort": 57,
+			"showCondition": "",
+			"des": "水碎片",
+			"team": "weituo400"
+		},
+		"huoyue016": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "day"
+			},
+			"category": ["活跃",
+			"s1"],
+			"id": "huoyue016",
+			"reward": "huoyue016",
+			"consume": "huoyue016",
+			"name": "地碎日",
+			"sort": 16,
+			"showCondition": "",
+			"des": "1书",
+			"team": "huoyue"
+		},
+		"market50101": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c1"],
+			"id": "market50101",
+			"reward": "market50101",
+			"consume": "market_jj_c1_q2_2",
+			"name": " a*2",
+			"sort": 15,
+			"showCondition": "",
+			"des": "c1_q2原木小柜",
+			"team": "market"
+		},
+		"weituo201_3": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c3",
+			"1氪金道具"],
+			"id": "weituo201_3",
+			"reward": "weituo002_2",
+			"consume": "weituo003_3",
+			"name": " a*2",
+			"sort": 2,
+			"showCondition": "",
+			"des": "魔物抽奖券",
+			"team": "weituo300"
+		},
+		"423009_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi300103_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423009_1",
+			"reward": "item_423009_1",
+			"team": "baodimap3_1"
+		},
+		"item_15015": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "day"
+			},
+			"category": ["种子商店",
+			"普通"],
+			"id": "item_15015",
+			"reward": "zhongzi15015",
+			"consume": "zhongzi100",
+			"name": "草药种子",
+			"sort": 0,
+			"showCondition": "",
+			"des": "种子",
+			"team": "zhongzi"
+		},
+		"weituo114_4": {
+			"limitCondition": {
+				"num": 50,
+				"exchangeType": "month"
+			},
+			"id": "weituo114_4",
+			"category": ["委托",
+			"c4",
+			"4杂物"],
+			"reward": "weituo015_2",
+			"consume": "weituo007_4",
+			"name": " a*2",
+			"sort": 62,
+			"showCondition": "",
+			"des": "装备经验",
+			"team": "weituo400"
+		},
+		"weituo103_4": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"id": "weituo103_4",
+			"category": ["委托",
+			"c4",
+			"4杂物"],
+			"reward": "weituo004",
+			"consume": "weituo004_4",
+			"name": " a*2",
+			"sort": 51,
+			"showCondition": "",
+			"des": "100美食",
+			"team": "weituo400"
+		},
+		"market50027": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c1"],
+			"id": "market50027",
+			"reward": "market50027",
+			"consume": "market_jj_c1_q3_1",
+			"name": " a*2",
+			"sort": 12,
+			"showCondition": "",
+			"des": "c1_q2原木小柜",
+			"team": "market"
+		},
+		"422008_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi200102_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422008_1",
+			"reward": "item_422008_1",
+			"team": "baodimap2_1"
+		},
+		"415005_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"紫"],
+			"id": "415005_1",
+			"reward": "equip415005_1",
+			"consume": "baodi4002_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "武器兑换",
+			"team": "baodimap4_1"
+		},
+		"pvpExchange006": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "global"
+			},
+			"category": ["pvp",
+			"s1"],
+			"id": "pvpExchange006",
+			"reward": "pvpExchange006",
+			"consume": "pvpExchange004",
+			"name": "",
+			"sort": 8,
+			"showCondition": "",
+			"des": "pvp",
+			"team": "pvp001"
+		},
+		"422015_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"紫"],
+			"id": "422015_1",
+			"reward": "item_422015_1",
+			"consume": "baodi400102_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4_1"
+		},
+		"item_15002": {
+			"limitCondition": {
+				"num": 2,
+				"exchangeType": "day"
+			},
+			"category": ["种子商店",
+			"草药组"],
+			"id": "item_15002",
+			"reward": "zhongzi15002",
+			"consume": "zhongzi1000",
+			"name": "草药种子",
+			"sort": 0,
+			"showCondition": "zhongziC2",
+			"des": "种子",
+			"team": "zhongzi"
+		},
+		"423005_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi200101_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423005_1",
+			"reward": "item_423005_1",
+			"team": "baodimap2_1"
+		},
+		"tuzi_item_31010": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"蓝"],
+			"des": "兔子通用蓝",
+			"consume": "tuzi_003",
+			"name": "兔子通用蓝",
+			"sort": 0,
+			"id": "tuzi_item_31010",
+			"reward": "tuzi_item_31010",
+			"team": "tuziBlue"
+		},
+		"tuzi_item_31003": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"绿"],
+			"des": "兔子通用绿",
+			"consume": "tuzi_002",
+			"name": "兔子通用绿",
+			"sort": 0,
+			"id": "tuzi_item_31003",
+			"reward": "tuzi_item_31003",
+			"team": "tuziGreen"
+		},
+		"huoyue011": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "day"
+			},
+			"category": ["活跃",
+			"s1"],
+			"id": "huoyue011",
+			"reward": "huoyue011",
+			"consume": "huoyue011",
+			"name": "绿狗角色日",
+			"sort": 11,
+			"showCondition": "",
+			"des": "1书",
+			"team": "huoyue"
+		},
+		"market402": {
+			"limitCondition": {
+				"num": 8,
+				"exchangeType": "day"
+			},
+			"category": ["商店",
+			"c5"],
+			"id": "market402",
+			"reward": "market402",
+			"consume": "shop001",
+			"name": " a*2",
+			"sort": 1,
+			"showCondition": "",
+			"des": "火晶",
+			"team": "market5"
+		},
+		"weituo119_3": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c3",
+			"3特殊"],
+			"id": "weituo119_3",
+			"reward": "weituo304",
+			"consume": "weituo102_3",
+			"name": " a*2",
+			"sort": 33,
+			"showCondition": "",
+			"des": "蓝材料2",
+			"team": "weituo310"
+		},
+		"market_item_50058": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c3"],
+			"id": "market_item_50058",
+			"reward": "market_item_50058",
+			"consume": "market_jj_c3_q3_1",
+			"name": "尊贵椅子",
+			"sort": 12,
+			"showCondition": "",
+			"des": "c3尊贵椅子",
+			"team": "market3"
+		},
+		"speedIcon": {
+			"limitCondition": {
+				"num": 6,
+				"exchangeType": "day"
+			},
+			"category": ["通用兑换比例"],
+			"id": "speedIcon",
+			"reward": "reward_speedIcon",
+			"consume": "consume_speedIcon",
+			"name": "",
+			"sort": 0,
+			"showCondition": "",
+			"des": "ke兑换加速点",
+			"team": ""
+		},
+		"weituo118_4": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"id": "weituo118_4",
+			"category": ["委托",
+			"c4",
+			"3特殊"],
+			"reward": "weituo403",
+			"consume": "weituo102_4",
+			"name": " a*2",
+			"sort": 34,
+			"showCondition": "",
+			"des": "蓝材料1",
+			"team": "weituo410"
+		},
+		"weituo115_3": {
+			"limitCondition": {
+				"num": 50,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c3",
+			"4杂物"],
+			"id": "weituo115_3",
+			"reward": "weituo020",
+			"consume": "weituo008_3",
+			"name": " a*2",
+			"sort": 64,
+			"showCondition": "",
+			"des": "钱",
+			"team": "weituo300"
+		},
+		"weituo201": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c1",
+			"1氪金道具"],
+			"id": "weituo201",
+			"reward": "weituo002_2",
+			"consume": "weituo003",
+			"name": " a*2",
+			"sort": 1,
+			"showCondition": "",
+			"des": "魔物抽奖券",
+			"team": "weituo100"
+		},
+		"heroJifen003": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "day"
+			},
+			"id": "heroJifen003",
+			"category": ["商城",
+			"星型徽印"],
+			"reward": "itemEx_heroJifen003",
+			"consume": "heroJifen002",
+			"name": "火之碎片×3",
+			"sort": 13,
+			"showCondition": "",
+			"des": "1奖券每日1",
+			"team": "bke"
+		},
+		"ex_tower1_4": {
+			"limitCondition": {
+				"num": 15,
+				"exchangeType": "global"
+			},
+			"id": "ex_tower1_4",
+			"des": "",
+			"reward": "itemEx_ex_tower1_4",
+			"consume": "itemEx_ex_tower1_2cube",
+			"name": "塔兑换_面包",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 6,
+			"category": ["爬塔",
+			"塔1"],
+			"showCondition": "",
+			"team": "tower1"
+		},
+		"huoyue002": {
+			"limitCondition": {
+				"num": 4,
+				"exchangeType": "month"
+			},
+			"category": ["活跃",
+			"s1"],
+			"id": "huoyue002",
+			"reward": "huoyue002",
+			"consume": "huoyue002",
+			"name": "魔物月",
+			"sort": 2,
+			"showCondition": "",
+			"des": "1书",
+			"team": "huoyue"
+		},
+		"415004_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"紫"],
+			"des": "武器兑换",
+			"consume": "baodi3002_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "415004_1",
+			"reward": "equip415004_1",
+			"team": "baodimap3_1"
+		},
+		"weituo116_2": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c2",
+			"3特殊"],
+			"id": "weituo116_2",
+			"reward": "weituo201",
+			"consume": "weituo101_2",
+			"name": " a*2",
+			"sort": 31,
+			"showCondition": "",
+			"des": "前boss材料",
+			"team": "weituo210"
+		},
+		"item_15014": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "day"
+			},
+			"category": ["种子商店",
+			"普通"],
+			"id": "item_15014",
+			"reward": "zhongzi15014",
+			"consume": "zhongzi100",
+			"name": "草药种子",
+			"sort": 0,
+			"showCondition": "",
+			"des": "种子",
+			"team": "zhongzi"
+		},
+		"pack_gift1": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "global"
+			},
+			"category": ["补给商城"],
+			"id": "pack_gift1",
+			"reward": "pack_gift1",
+			"consume": "pack_gift1",
+			"name": "驿站的礼物补给",
+			"sort": 0,
+			"showCondition": "",
+			"des": "驿站的礼物补给",
+			"team": "pack"
+		},
+		"422009_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi300102_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422009_1",
+			"reward": "item_422009_1",
+			"team": "baodimap3_1"
+		},
+		"market003": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "day"
+			},
+			"category": ["商店",
+			"未使用"],
+			"id": "market003",
+			"reward": "market003",
+			"consume": "market002",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "地碎片",
+			"team": "market"
+		},
+		"weituo117": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c1",
+			"3特殊"],
+			"id": "weituo117",
+			"reward": "weituo102",
+			"consume": "weituo101",
+			"name": " a*2",
+			"sort": 42,
+			"showCondition": "",
+			"des": "后boss材料",
+			"team": "weituo110"
+		},
+		"422016_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"紫"],
+			"id": "422016_1",
+			"reward": "item_422016_1",
+			"consume": "baodi400102_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4_1"
+		},
+		"weituo113_2": {
+			"limitCondition": {
+				"num": 50,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c2",
+			"4杂物"],
+			"id": "weituo113_2",
+			"reward": "weituo016",
+			"consume": "weituo007_2",
+			"name": " a*2",
+			"sort": 54,
+			"showCondition": "",
+			"des": "人经验",
+			"team": "weituo200"
+		},
+		"415006_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝_1"],
+			"id": "415006_1",
+			"reward": "equip415006_1",
+			"consume": "baodi5002_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "武器兑换",
+			"team": "baodimap5_1"
+		},
+		"market50100": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c1"],
+			"id": "market50100",
+			"reward": "market50100",
+			"consume": "market_jj_c1_q2_2",
+			"name": " a*2",
+			"sort": 23,
+			"showCondition": "",
+			"des": "c1_q2原木小柜",
+			"team": "market"
+		},
+		"weituo_item_50061": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c3",
+			"2家具"],
+			"id": "weituo_item_50061",
+			"reward": "weituo_item_50061",
+			"consume": "weituo_jj_q3_2_c3",
+			"name": "餐车",
+			"sort": 21,
+			"showCondition": "",
+			"des": "c3家具",
+			"team": "weituo320"
+		},
+		"choukamowu001": {
+			"limitCondition": {
+				
+			},
+			"category": ["general全局配置"],
+			"des": "general里面100ke兑换1特别魔物招待券",
+			"consume": "choukamowu001",
+			"name": "100ke兑换1特别招待券",
+			"sort": 0,
+			"id": "choukamowu001",
+			"reward": "choukamowu001",
+			"team": "chouka"
+		},
+		"market101": {
+			"limitCondition": {
+				"num": 8,
+				"exchangeType": "day"
+			},
+			"category": ["商店",
+			"c2"],
+			"id": "market101",
+			"reward": "market101",
+			"consume": "shop001",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "粗皮",
+			"team": "market2"
+		},
+		"market_item_50056": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c3"],
+			"id": "market_item_50056",
+			"reward": "market_item_50056",
+			"consume": "market_jj_c3_q2_2",
+			"name": "脚梯",
+			"sort": 14,
+			"showCondition": "",
+			"des": "c3脚梯",
+			"team": "market3"
+		},
+		"tuzi_item_30034": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"蓝"],
+			"des": "兔子通用蓝",
+			"consume": "tuzi_003",
+			"name": "兔子通用蓝",
+			"sort": 0,
+			"id": "tuzi_item_30034",
+			"reward": "tuzi_item_30034",
+			"team": "tuziBlue"
+		},
+		"weituo114": {
+			"limitCondition": {
+				"num": 50,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c1",
+			"4杂物"],
+			"id": "weituo114",
+			"reward": "weituo015",
+			"consume": "weituo007",
+			"name": " a*2",
+			"sort": 63,
+			"showCondition": "",
+			"des": "装备经验",
+			"team": "weituo100"
+		},
+		"tuzi_item_30037": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"绿"],
+			"des": "兔子通用绿",
+			"consume": "tuzi_002",
+			"name": "兔子通用绿",
+			"sort": 0,
+			"id": "tuzi_item_30037",
+			"reward": "tuzi_item_30037",
+			"team": "tuziGreen"
+		},
+		"411001_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"紫"],
+			"des": "武器兑换",
+			"consume": "baodi1001_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "411001_1",
+			"reward": "equip411001_1",
+			"team": "baodimap1_1"
+		},
+		"tuzi_item_31001": {
+			"randomShopLimitNum": 2,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"白"],
+			"des": "兔子通用白",
+			"consume": "tuzi_001",
+			"name": "兔子通用白",
+			"sort": 0,
+			"id": "tuzi_item_31001",
+			"reward": "tuzi_item_31001",
+			"team": "tuziWhite"
+		},
+		"tuzi_item_31004": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"蓝"],
+			"des": "兔子通用蓝",
+			"consume": "tuzi_003",
+			"name": "兔子通用蓝",
+			"sort": 0,
+			"id": "tuzi_item_31004",
+			"reward": "tuzi_item_31004",
+			"team": "tuziBlue"
+		},
+		"tuzi_item_31013": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"id": "tuzi_item_31013",
+			"des": "兔子通用蓝",
+			"reward": "tuzi_item_31013",
+			"consume": "tuzi_003",
+			"name": "兔子通用蓝",
+			"sort": 0,
+			"category": ["兔子",
+			"蓝"],
+			"showCondition": "",
+			"team": "tuziBlue"
+		},
+		"421014_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"紫"],
+			"id": "421014_1",
+			"reward": "item_421014_1",
+			"consume": "baodi400103_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4_1"
+		},
+		"423004_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi100101_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423004_1",
+			"reward": "item_423004_1",
+			"team": "baodimap1_1"
+		},
+		"market002": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "day"
+			},
+			"category": ["商店",
+			"未使用"],
+			"id": "market002",
+			"reward": "market002",
+			"consume": "market002",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "火碎片",
+			"team": "market"
+		},
+		"market008": {
+			"limitCondition": {
+				"num": 8,
+				"exchangeType": "day"
+			},
+			"category": ["商店",
+			"未使用"],
+			"id": "market008",
+			"reward": "market008",
+			"consume": "market001",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "蜘蛛",
+			"team": "market"
+		},
+		"weituo110_5": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"id": "weituo110_5",
+			"category": ["委托",
+			"c5",
+			"4杂物"],
+			"reward": "weituo017",
+			"consume": "weituo006_5",
+			"name": " a*2",
+			"sort": 54,
+			"showCondition": "",
+			"des": "美食最低礼物",
+			"team": "weituo500"
+		},
+		"market50106": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c2"],
+			"id": "market50106",
+			"reward": "market50106",
+			"consume": "market_jj_c2_q3_1",
+			"name": "钟楼",
+			"sort": 12,
+			"showCondition": "",
+			"des": "c2钟楼",
+			"team": "market2"
+		},
+		"weituo111_4": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"id": "weituo111_4",
+			"category": ["委托",
+			"c4",
+			"4杂物"],
+			"reward": "weituo018",
+			"consume": "weituo006_4",
+			"name": " a*2",
+			"sort": 56,
+			"showCondition": "",
+			"des": "首饰最低礼物",
+			"team": "weituo400"
+		},
+		"421017_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝_1"],
+			"id": "421017_1",
+			"reward": "item_421017_1",
+			"consume": "baodi500103_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5_1"
+		},
+		"weituo123": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c1",
+			"2家具"],
+			"id": "weituo123",
+			"reward": "weituo_item_50031",
+			"consume": "weituo_jj_q2_2_c1",
+			"name": " a*2",
+			"sort": 16,
+			"showCondition": "",
+			"des": "c0+c1家具",
+			"team": "weituo120"
+		},
+		"fuZhuang002": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"id": "fuZhuang002",
+			"category": ["商城",
+			"服装"],
+			"reward": "fuZhuang002",
+			"consume": "100bke",
+			"name": "学院的优等生",
+			"sort": 0,
+			"showCondition": "",
+			"des": "贝尔卡皮肤",
+			"team": "fuZhuang"
+		},
+		"huoyue003": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "week"
+			},
+			"category": ["活跃",
+			"s1"],
+			"id": "huoyue003",
+			"reward": "huoyue003",
+			"consume": "huoyue003",
+			"name": "角色周",
+			"sort": 3,
+			"showCondition": "",
+			"des": "1书",
+			"team": "huoyue"
+		},
+		"huoyue005": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "month"
+			},
+			"category": ["活跃",
+			"s1"],
+			"id": "huoyue005",
+			"reward": "huoyue005",
+			"consume": "huoyue005",
+			"name": "紫礼A月",
+			"sort": 5,
+			"showCondition": "",
+			"des": "1书",
+			"team": "huoyue"
+		},
+		"market50017": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c1"],
+			"id": "market50017",
+			"reward": "market50017",
+			"consume": "market_jj_c1_q2_2",
+			"name": " a*2",
+			"sort": 17,
+			"showCondition": "",
+			"des": "c1_q2木制圆桌",
+			"team": "market"
+		},
+		"weituo126": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c1",
+			"2家具"],
+			"id": "weituo126",
+			"reward": "weituo_item_50032",
+			"consume": "weituo_jj_q3_1_c1",
+			"name": " a*2",
+			"sort": 14,
+			"showCondition": "",
+			"des": "c0+c1家具",
+			"team": "weituo120"
+		},
+		"dailySupply02": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "day"
+			},
+			"category": ["活动每日补给"],
+			"id": "dailySupply02",
+			"reward": "itemEx_dailySupply02",
+			"consume": "",
+			"name": "晚宴",
+			"sort": 0,
+			"showCondition": "",
+			"des": "每日时段补给",
+			"team": "dailySupply"
+		},
+		"422002_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi100102_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422002_1",
+			"reward": "item_422002_1",
+			"team": "baodimap1_1"
+		},
+		"tuzi_item_30014": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"紫"],
+			"des": "兔子通用紫色",
+			"consume": "tuzi_004",
+			"name": "兔子通用紫色",
+			"sort": 0,
+			"id": "tuzi_item_30014",
+			"reward": "tuzi_item_30014",
+			"team": "tuziPurple"
+		},
+		"weituo117_5": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "month"
+			},
+			"id": "weituo117_5",
+			"category": ["委托",
+			"c5",
+			"3特殊"],
+			"reward": "weituo502",
+			"consume": "weituo101_5",
+			"name": " a*2",
+			"sort": 32,
+			"showCondition": "",
+			"des": "后boss材料",
+			"team": "weituo510"
+		},
+		"payke001": {
+			"limitCondition": {
+				
+			},
+			"id": "payke001",
+			"category": ["商城",
+			"payke"],
+			"reward": "payke001",
+			"consume": "payke001",
+			"name": "契约书",
+			"sort": 0,
+			"showCondition": "",
+			"des": "蜘蛛",
+			"team": "payke"
+		},
+		"item_15003": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "day"
+			},
+			"category": ["种子商店",
+			"普通"],
+			"id": "item_15003",
+			"reward": "zhongzi15003",
+			"consume": "zhongzi100",
+			"name": "小麦草药种子",
+			"sort": 0,
+			"showCondition": "",
+			"des": "种子",
+			"team": "zhongzi"
+		},
+		"item_15011": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "day"
+			},
+			"category": ["种子商店",
+			"草药组"],
+			"id": "item_15011",
+			"reward": "zhongzi15011",
+			"consume": "zhongzi100",
+			"name": "草药种子",
+			"sort": 0,
+			"showCondition": "",
+			"des": "种子",
+			"team": "zhongzi"
+		},
+		"tiIcon": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "day"
+			},
+			"category": ["通用兑换比例"],
+			"id": "tiIcon",
+			"reward": "reward_tiIcon",
+			"consume": "consume_tiIcon",
+			"name": "体力×60",
+			"sort": 0,
+			"showCondition": "",
+			"des": "ke兑换体力",
+			"team": ""
+		},
+		"market_item_50065": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c3"],
+			"id": "market_item_50065",
+			"reward": "market_item_50065",
+			"consume": "market_jj_c3_q2_2",
+			"name": "落地花瓶",
+			"sort": 17,
+			"showCondition": "",
+			"des": "c3原木置物板",
+			"team": "market3"
+		},
+		"weituo_item_50080": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"id": "weituo_item_50080",
+			"category": ["委托",
+			"c4",
+			"2家具"],
+			"reward": "weituo_item_50080",
+			"consume": "weituo_jj_q2_1_c4",
+			"name": "蘑菇",
+			"sort": 25,
+			"showCondition": "",
+			"des": "c4家具",
+			"team": "weituo420"
+		},
+		"412006_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝_1"],
+			"id": "412006_1",
+			"reward": "equip412006_1",
+			"consume": "baodi5001_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "武器兑换",
+			"team": "baodimap5_1"
+		},
+		"416004_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"紫"],
+			"id": "416004_1",
+			"reward": "equip416004_1",
+			"consume": "baodi4003_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "武器兑换",
+			"team": "baodimap4_1"
+		},
+		"415003_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"紫"],
+			"des": "武器兑换",
+			"consume": "baodi2002_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "415003_1",
+			"reward": "equip415003_1",
+			"team": "baodimap2_1"
+		},
+		"market004": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "day"
+			},
+			"category": ["商店",
+			"未使用"],
+			"id": "market004",
+			"reward": "market004",
+			"consume": "market002",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "风碎片",
+			"team": "market"
+		},
+		"market104": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "week"
+			},
+			"category": ["商店",
+			"未使用"],
+			"id": "market104",
+			"reward": "market104",
+			"consume": "market001",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "未使用",
+			"team": "market2"
+		},
+		"weituo115": {
+			"limitCondition": {
+				"num": 50,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c1",
+			"4杂物"],
+			"id": "weituo115",
+			"reward": "weituo020",
+			"consume": "weituo008",
+			"name": " a*2",
+			"sort": 61,
+			"showCondition": "",
+			"des": "钱",
+			"team": "weituo100"
+		},
+		"421020_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝_1"],
+			"id": "421020_1",
+			"reward": "item_421020_1",
+			"consume": "baodi500103_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5_1"
+		},
+		"PtJifen002": {
+			"limitCondition": {
+				
+			},
+			"id": "PtJifen002",
+			"category": ["商城",
+			"回忆结晶"],
+			"reward": "itemEx_PtJifen002",
+			"consume": "itemEx_PtJifen002",
+			"name": "特别招待券",
+			"sort": 2,
+			"showCondition": "",
+			"des": "5溢出资源换1魔物抽",
+			"team": "ptjifen"
+		},
+		"423016_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"紫"],
+			"id": "423016_1",
+			"reward": "item_423016_1",
+			"consume": "baodi400101_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4_1"
+		},
+		"421008_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi200103_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421008_1",
+			"reward": "item_421008_1",
+			"team": "baodimap2_1"
+		},
+		"tuzi_item_30015": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"绿"],
+			"des": "兔子通用绿",
+			"consume": "tuzi_002",
+			"name": "兔子通用绿",
+			"sort": 0,
+			"id": "tuzi_item_30015",
+			"reward": "tuzi_item_30015",
+			"team": "tuziGreen"
+		},
+		"chouka001": {
+			"limitCondition": {
+				
+			},
+			"category": ["general全局配置"],
+			"des": "general里面200ke兑换1奖券",
+			"consume": "chouka001",
+			"name": "200ke兑换1奖券",
+			"sort": 0,
+			"id": "chouka001",
+			"reward": "chouka001",
+			"team": "chouka"
+		},
+		"weituo201_4": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"id": "weituo201_4",
+			"category": ["委托",
+			"c4",
+			"1氪金道具"],
+			"reward": "weituo002_2",
+			"consume": "weituo003_4",
+			"name": " a*2",
+			"sort": 1,
+			"showCondition": "",
+			"des": "魔物抽奖券",
+			"team": "weituo400"
+		},
+		"market50000": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c1"],
+			"id": "market50000",
+			"reward": "market50000",
+			"consume": "market_jj_c1_q2_1",
+			"name": " a*2",
+			"sort": 22,
+			"showCondition": "",
+			"des": "c1_q2木制水桶",
+			"team": "market"
+		},
+		"421001_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi100103_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421001_1",
+			"reward": "item_421001_1",
+			"team": "baodimap1_1"
+		},
+		"weituo124": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c1",
+			"2家具"],
+			"id": "weituo124",
+			"reward": "weituo_item_50035",
+			"consume": "weituo_jj_q2_2_c1",
+			"name": " a*2",
+			"sort": 15,
+			"showCondition": "",
+			"des": "c0+c1家具",
+			"team": "weituo120"
+		},
+		"weituo120": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c1",
+			"2家具"],
+			"id": "weituo120",
+			"reward": "weituo_item_50036",
+			"consume": "weituo_jj_q2_1_c1",
+			"name": " a*2",
+			"sort": 18,
+			"showCondition": "",
+			"des": "c0+c1家具",
+			"team": "weituo120"
+		},
+		"weituo105": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c1",
+			"4杂物"],
+			"id": "weituo105",
+			"reward": "weituo006",
+			"consume": "weituo004",
+			"name": " a*2",
+			"sort": 52,
+			"showCondition": "",
+			"des": "100雕像",
+			"team": "weituo100"
+		},
+		"weituo116": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c1",
+			"3特殊"],
+			"id": "weituo116",
+			"reward": "weituo101",
+			"consume": "weituo101",
+			"name": " a*2",
+			"sort": 41,
+			"showCondition": "",
+			"des": "前boss材料",
+			"team": "weituo110"
+		},
+		"422018_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝_1"],
+			"id": "422018_1",
+			"reward": "item_422018_1",
+			"consume": "baodi500102_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5_1"
+		},
+		"weituo201_5": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"id": "weituo201_5",
+			"category": ["委托",
+			"c5",
+			"1氪金道具"],
+			"reward": "weituo002_2",
+			"consume": "weituo003_5",
+			"name": " a*2",
+			"sort": 1,
+			"showCondition": "",
+			"des": "魔物抽奖券",
+			"team": "weituo500"
+		},
+		"huoyue006": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "month"
+			},
+			"category": ["活跃",
+			"s1"],
+			"id": "huoyue006",
+			"reward": "huoyue006",
+			"consume": "huoyue006",
+			"name": "紫礼B月",
+			"sort": 6,
+			"showCondition": "",
+			"des": "1书",
+			"team": "huoyue"
+		},
+		"412003_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"紫"],
+			"des": "武器兑换",
+			"consume": "baodi2001_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "412003_1",
+			"reward": "equip412003_1",
+			"team": "baodimap2_1"
+		},
+		"weituo103_2": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c2",
+			"4杂物"],
+			"id": "weituo103_2",
+			"reward": "weituo004",
+			"consume": "weituo004_2",
+			"name": " a*2",
+			"sort": 43,
+			"showCondition": "",
+			"des": "100美食",
+			"team": "weituo200"
+		},
+		"pvpExchange003": {
+			"limitCondition": {
+				"num": 99,
+				"exchangeType": "global"
+			},
+			"category": ["pvp",
+			"s1"],
+			"id": "pvpExchange003",
+			"reward": "pvpExchange003",
+			"consume": "pvpExchange003",
+			"name": "",
+			"sort": 4,
+			"showCondition": "",
+			"des": "pvp",
+			"team": "pvp001"
+		},
+		"423018_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝_1"],
+			"id": "423018_1",
+			"reward": "item_423018_1",
+			"consume": "baodi500101_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5_1"
+		},
+		"weituo115_2": {
+			"limitCondition": {
+				"num": 50,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c2",
+			"4杂物"],
+			"id": "weituo115_2",
+			"reward": "weituo020",
+			"consume": "weituo008_2",
+			"name": " a*2",
+			"sort": 53,
+			"showCondition": "",
+			"des": "钱",
+			"team": "weituo200"
+		},
+		"tuzi_item_30035": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"绿"],
+			"des": "兔子通用绿",
+			"consume": "tuzi_002",
+			"name": "兔子通用绿",
+			"sort": 0,
+			"id": "tuzi_item_30035",
+			"reward": "tuzi_item_30035",
+			"team": "tuziGreen"
+		},
+		"pvpExchange002": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "global"
+			},
+			"category": ["pvp",
+			"s1"],
+			"id": "pvpExchange002",
+			"reward": "pvpExchange002",
+			"consume": "pvpExchange002",
+			"name": "",
+			"sort": 3,
+			"showCondition": "",
+			"des": "pvp",
+			"team": "pvp001"
+		},
+		"weituo104_2": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c2",
+			"4杂物"],
+			"id": "weituo104_2",
+			"reward": "weituo005",
+			"consume": "weituo004_2",
+			"name": " a*2",
+			"sort": 45,
+			"showCondition": "",
+			"des": "100首饰",
+			"team": "weituo200"
+		},
+		"weituo103_5": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"id": "weituo103_5",
+			"category": ["委托",
+			"c5",
+			"4杂物"],
+			"reward": "weituo004",
+			"consume": "weituo004_5",
+			"name": " a*2",
+			"sort": 51,
+			"showCondition": "",
+			"des": "100美食",
+			"team": "weituo500"
+		},
+		"tuzi_item_27011": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "month"
+			},
+			"category": ["兔子",
+			"紫"],
+			"des": "兔子通用紫色",
+			"consume": "tuzi_004",
+			"name": "兔子通用紫色",
+			"sort": 0,
+			"id": "tuzi_item_27011",
+			"reward": "tuzi_item_27011",
+			"team": "tuziPurple"
+		},
+		"ex_tower1_8": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"id": "ex_tower1_8",
+			"des": "",
+			"reward": "itemEx_ex_tower1_8",
+			"consume": "itemEx_ex_tower1_8",
+			"name": "塔兑换_家具A",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 3,
+			"category": ["爬塔",
+			"塔1"],
+			"showCondition": "",
+			"team": "tower1"
+		},
+		"pack_heroExp1": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "global"
+			},
+			"category": ["补给商城"],
+			"id": "pack_heroExp1",
+			"reward": "pack_heroExp1",
+			"consume": "pack_heroExp1",
+			"name": "迦南的冒险家补给",
+			"sort": 0,
+			"showCondition": "",
+			"des": "迦南的冒险家补给",
+			"team": "pack"
+		},
+		"pack_equipExp1": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "global"
+			},
+			"category": ["补给商城"],
+			"id": "pack_equipExp1",
+			"reward": "pack_equipExp1",
+			"consume": "pack_equipExp1",
+			"name": "黑铁锻炉的锻造补给",
+			"sort": 0,
+			"showCondition": "",
+			"des": "黑铁锻炉的锻造补给",
+			"team": "pack"
+		},
+		"market10021": {
+			"limitCondition": {
+				"num": 8,
+				"exchangeType": "day"
+			},
+			"category": ["商店",
+			"未使用"],
+			"id": "market10021",
+			"reward": "market10021",
+			"consume": "market003",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "蜘蛛",
+			"team": "market"
+		},
+		"weituo113_3": {
+			"limitCondition": {
+				"num": 50,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c3",
+			"4杂物"],
+			"id": "weituo113_3",
+			"reward": "weituo016_2",
+			"consume": "weituo007_3",
+			"name": " a*2",
+			"sort": 62,
+			"showCondition": "",
+			"des": "人经验",
+			"team": "weituo300"
+		},
+		"item_15006": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "day"
+			},
+			"category": ["种子商店",
+			"未使用"],
+			"des": "种子",
+			"consume": "zhongzi500",
+			"name": "草药种子",
+			"sort": 0,
+			"id": "item_15006",
+			"reward": "zhongzi15006",
+			"team": "zhongzi"
+		},
+		"item_15020": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "day"
+			},
+			"category": ["种子商店",
+			"c4"],
+			"id": "item_15020",
+			"reward": "zhongzi15020",
+			"consume": "zhongzi101",
+			"name": "松茸种子",
+			"sort": 0,
+			"showCondition": "zhongziC4",
+			"des": "种子",
+			"team": "zhongzi"
+		},
+		"422020_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝_1"],
+			"id": "422020_1",
+			"reward": "item_422020_1",
+			"consume": "baodi500102_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5_1"
+		},
+		"tuzi_item_31005": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"绿"],
+			"des": "兔子通用绿",
+			"consume": "tuzi_002",
+			"name": "兔子通用绿",
+			"sort": 0,
+			"id": "tuzi_item_31005",
+			"reward": "tuzi_item_31005",
+			"team": "tuziGreen"
+		},
+		"heroJifen002": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "day"
+			},
+			"id": "heroJifen002",
+			"category": ["商城",
+			"星型徽印"],
+			"reward": "itemEx_heroJifen002",
+			"consume": "heroJifen002",
+			"name": "水之碎片×3",
+			"sort": 12,
+			"showCondition": "",
+			"des": "1奖券每日1",
+			"team": "bke"
+		},
+		"weituo106_5": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"id": "weituo106_5",
+			"category": ["委托",
+			"c5",
+			"4杂物"],
+			"reward": "weituo011",
+			"consume": "weituo005_5",
+			"name": " a*2",
+			"sort": 57,
+			"showCondition": "",
+			"des": "水碎片",
+			"team": "weituo500"
+		},
+		"423017_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝_1"],
+			"id": "423017_1",
+			"reward": "item_423017_1",
+			"consume": "baodi500101_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5_1"
+		},
+		"tuzi_item_31008": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"绿"],
+			"des": "兔子通用绿",
+			"consume": "tuzi_002",
+			"name": "兔子通用绿",
+			"sort": 0,
+			"id": "tuzi_item_31008",
+			"reward": "tuzi_item_31008",
+			"team": "tuziGreen"
+		},
+		"421009_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi300103_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421009_1",
+			"reward": "item_421009_1",
+			"team": "baodimap3_1"
+		},
+		"weituo119_2": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c2",
+			"3特殊"],
+			"id": "weituo119_2",
+			"reward": "weituo204",
+			"consume": "weituo102_2",
+			"name": " a*2",
+			"sort": 33,
+			"showCondition": "",
+			"des": "蓝材料2",
+			"team": "weituo210"
+		},
+		"huoyue012": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "day"
+			},
+			"category": ["活跃",
+			"s1"],
+			"id": "huoyue012",
+			"reward": "huoyue012",
+			"consume": "huoyue012",
+			"name": "绿狗武器日",
+			"sort": 12,
+			"showCondition": "",
+			"des": "1书",
+			"team": "huoyue"
+		},
+		"pvpExchange010": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "global"
+			},
+			"category": ["pvp",
+			"s1"],
+			"id": "pvpExchange010",
+			"reward": "pvpExchange010",
+			"consume": "pvpExchange003",
+			"name": "",
+			"sort": 10,
+			"showCondition": "",
+			"des": "pvp",
+			"team": "pvp001"
+		},
+		"421016_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"紫"],
+			"id": "421016_1",
+			"reward": "item_421016_1",
+			"consume": "baodi400103_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4_1"
+		},
+		"weituo109_3": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c3",
+			"4杂物"],
+			"id": "weituo109_3",
+			"reward": "weituo014",
+			"consume": "weituo005_3",
+			"name": " a*2",
+			"sort": 59,
+			"showCondition": "",
+			"des": "地碎",
+			"team": "weituo300"
+		},
+		"weituo103_3": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c3",
+			"4杂物"],
+			"id": "weituo103_3",
+			"reward": "weituo004",
+			"consume": "weituo004_3",
+			"name": " a*2",
+			"sort": 51,
+			"showCondition": "",
+			"des": "100美食",
+			"team": "weituo300"
+		},
+		"tuzi_item_27006": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"category": ["兔子",
+			"绿"],
+			"des": "兔子通用绿",
+			"consume": "tuzi_002",
+			"name": "兔子通用绿",
+			"sort": 0,
+			"id": "tuzi_item_27006",
+			"reward": "tuzi_item_27006",
+			"team": "tuziGreen"
+		},
+		"422007_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi200102_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422007_1",
+			"reward": "item_422007_1",
+			"team": "baodimap2_1"
+		},
+		"weituo_item_50050": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c2",
+			"2家具"],
+			"id": "weituo_item_50050",
+			"reward": "weituo_item_50050",
+			"consume": "weituo_jj_q2_2_c2",
+			"name": "咖喱",
+			"sort": 26,
+			"showCondition": "",
+			"des": "c2家具",
+			"team": "weituo220"
+		},
+		"422004_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi100102_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422004_1",
+			"reward": "item_422004_1",
+			"team": "baodimap1_1"
+		},
+		"tuzi_item_30017": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"紫"],
+			"des": "兔子通用紫色",
+			"consume": "tuzi_004",
+			"name": "兔子通用紫色",
+			"sort": 0,
+			"id": "tuzi_item_30017",
+			"reward": "tuzi_item_30017",
+			"team": "tuziPurple"
+		},
+		"market103": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "day"
+			},
+			"category": ["种子商店",
+			"c2"],
+			"id": "market103",
+			"reward": "market103",
+			"consume": "zhongzi101",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "zhongziC2",
+			"des": "赤剑草",
+			"team": "zhongzi"
+		},
+		"weituo121": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c1",
+			"2家具"],
+			"id": "weituo121",
+			"reward": "weituo_item_50034",
+			"consume": "weituo_jj_q2_1_c1",
+			"name": " a*2",
+			"sort": 17,
+			"showCondition": "",
+			"des": "c0+c1家具",
+			"team": "weituo120"
+		},
+		"423015_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"紫"],
+			"id": "423015_1",
+			"reward": "item_423015_1",
+			"consume": "baodi400101_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4_1"
+		},
+		"416002_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"紫"],
+			"des": "武器兑换",
+			"consume": "baodi2003_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "416002_1",
+			"reward": "equip416002_1",
+			"team": "baodimap2_1"
+		},
+		"421007_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi200103_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421007_1",
+			"reward": "item_421007_1",
+			"team": "baodimap2_1"
+		},
+		"weituo114_3": {
+			"limitCondition": {
+				"num": 50,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c3",
+			"4杂物"],
+			"id": "weituo114_3",
+			"reward": "weituo015_2",
+			"consume": "weituo007_3",
+			"name": " a*2",
+			"sort": 63,
+			"showCondition": "",
+			"des": "装备经验",
+			"team": "weituo300"
+		},
+		"market001": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "day"
+			},
+			"category": ["商店",
+			"未使用"],
+			"id": "market001",
+			"reward": "market001",
+			"consume": "market002",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "shui碎片",
+			"team": "market"
+		},
+		"weituo_item_50059": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c3",
+			"2家具"],
+			"id": "weituo_item_50059",
+			"reward": "weituo_item_50059",
+			"consume": "weituo_jj_q2_2_c3",
+			"name": "书架",
+			"sort": 25,
+			"showCondition": "",
+			"des": "c3家具",
+			"team": "weituo320"
+		},
+		"weituo_item_50063": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c3",
+			"2家具"],
+			"id": "weituo_item_50063",
+			"reward": "weituo_item_50063",
+			"consume": "weituo_jj_q2_2_c3",
+			"name": "圆桌",
+			"sort": 23,
+			"showCondition": "",
+			"des": "c3家具",
+			"team": "weituo320"
+		},
+		"weituo113_5": {
+			"limitCondition": {
+				"num": 50,
+				"exchangeType": "month"
+			},
+			"id": "weituo113_5",
+			"category": ["委托",
+			"c5",
+			"4杂物"],
+			"reward": "weituo016_2",
+			"consume": "weituo007_5",
+			"name": " a*2",
+			"sort": 61,
+			"showCondition": "",
+			"des": "人经验",
+			"team": "weituo500"
+		},
+		"421018_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝_1"],
+			"id": "421018_1",
+			"reward": "item_421018_1",
+			"consume": "baodi500103_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5_1"
+		},
+		"tuzi_item_27010": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				"num": 2,
+				"exchangeType": "month"
+			},
+			"category": ["兔子",
+			"蓝"],
+			"des": "兔子通用蓝",
+			"consume": "tuzi_003",
+			"name": "兔子通用蓝",
+			"sort": 0,
+			"id": "tuzi_item_27010",
+			"reward": "tuzi_item_27010",
+			"team": "tuziBlue"
+		},
+		"choukamowu002": {
+			"limitCondition": {
+				
+			},
+			"category": ["general全局配置"],
+			"id": "choukamowu002",
+			"reward": "choukamowu002",
+			"consume": "choukamowu002",
+			"name": "300银币兑换1普通招待券",
+			"sort": 0,
+			"showCondition": "",
+			"des": "general里面100ke兑换1普通魔物招待奖券",
+			"team": "chouka"
+		},
+		"weituo101": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c1",
+			"1氪金道具"],
+			"id": "weituo101",
+			"reward": "weituo002",
+			"consume": "weituo002",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "角色抽奖券",
+			"team": "weituo100"
+		},
+		"weituo_item_50099": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c1",
+			"2家具"],
+			"id": "weituo_item_50099",
+			"reward": "weituo_item_50099",
+			"consume": "weituo_jj_q3_2_c1",
+			"name": " a*2",
+			"sort": 11,
+			"showCondition": "",
+			"des": "c0+c1家具",
+			"team": "weituo120"
+		},
+		"weituo116_5": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "month"
+			},
+			"id": "weituo116_5",
+			"category": ["委托",
+			"c5",
+			"3特殊"],
+			"reward": "weituo501",
+			"consume": "weituo101_5",
+			"name": " a*2",
+			"sort": 31,
+			"showCondition": "",
+			"des": "前boss材料",
+			"team": "weituo510"
+		},
+		"weituo109_5": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"id": "weituo109_5",
+			"category": ["委托",
+			"c5",
+			"4杂物"],
+			"reward": "weituo014",
+			"consume": "weituo005_5",
+			"name": " a*2",
+			"sort": 59,
+			"showCondition": "",
+			"des": "地碎",
+			"team": "weituo500"
+		},
+		"weituo116_3": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c3",
+			"3特殊"],
+			"id": "weituo116_3",
+			"reward": "weituo301",
+			"consume": "weituo101_3",
+			"name": " a*2",
+			"sort": 31,
+			"showCondition": "",
+			"des": "前boss材料",
+			"team": "weituo310"
+		},
+		"pack_money1": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "global"
+			},
+			"category": ["补给商城"],
+			"id": "pack_money1",
+			"reward": "pack_money1",
+			"consume": "pack_money1",
+			"name": "商会的物资补给",
+			"sort": 0,
+			"showCondition": "",
+			"des": "商会的物资补给",
+			"team": "pack"
+		},
+		"412004_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"紫"],
+			"des": "武器兑换",
+			"consume": "baodi3001_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "412004_1",
+			"reward": "equip412004_1",
+			"team": "baodimap3_1"
+		},
+		"weituo118": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c1",
+			"3特殊"],
+			"id": "weituo118",
+			"reward": "weituo103",
+			"consume": "weituo102",
+			"name": " a*2",
+			"sort": 43,
+			"showCondition": "",
+			"des": "蓝材料1",
+			"team": "weituo110"
+		},
+		"weituo116_4": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "month"
+			},
+			"id": "weituo116_4",
+			"category": ["委托",
+			"c4",
+			"3特殊"],
+			"reward": "weituo401",
+			"consume": "weituo101_4",
+			"name": " a*2",
+			"sort": 31,
+			"showCondition": "",
+			"des": "前boss材料",
+			"team": "weituo410"
+		},
+		"ex_tower1_3": {
+			"limitCondition": {
+				"num": 4,
+				"exchangeType": "global"
+			},
+			"id": "ex_tower1_3",
+			"des": "",
+			"reward": "itemEx_ex_tower1_3",
+			"consume": "itemEx_ex_tower1_5cube",
+			"name": "塔兑换_面包",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 5,
+			"category": ["爬塔",
+			"塔1"],
+			"showCondition": "",
+			"team": "tower1"
+		},
+		"421013_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"紫"],
+			"id": "421013_1",
+			"reward": "item_421013_1",
+			"consume": "baodi400103_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4_1"
+		},
+		"equipQualityUpgrade001": {
+			"limitCondition": {
+				
+			},
+			"id": "equipQualityUpgrade001",
+			"des": "装备打造测试",
+			"consume": "equipQualityUpgrade001",
+			"name": " a*2",
+			"sort": 0,
+			"reward": "equipQualityUpgrade001",
+			"team": "equipQualityUpgrade001"
+		},
+		"weituo109": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c1",
+			"4杂物"],
+			"id": "weituo109",
+			"reward": "weituo014",
+			"consume": "weituo005",
+			"name": " a*2",
+			"sort": 59,
+			"showCondition": "",
+			"des": "地碎",
+			"team": "weituo100"
+		},
+		"market202": {
+			"limitCondition": {
+				"num": 8,
+				"exchangeType": "day"
+			},
+			"category": ["商店",
+			"c3"],
+			"id": "market202",
+			"reward": "market202",
+			"consume": "shop001",
+			"name": " a*2",
+			"sort": 1,
+			"showCondition": "",
+			"des": "蛇皮",
+			"team": "market3"
+		},
+		"bke003": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "week"
+			},
+			"id": "bke003",
+			"category": ["商城",
+			"氪金商店"],
+			"reward": "bangke003",
+			"consume": "bke003",
+			"name": "银币",
+			"sort": 0,
+			"showCondition": "",
+			"des": "【废弃】",
+			"team": "bke"
+		},
+		"market201": {
+			"limitCondition": {
+				"num": 6,
+				"exchangeType": "day"
+			},
+			"category": ["商店",
+			"c3"],
+			"id": "market201",
+			"reward": "market201",
+			"consume": "shop002",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "水晶",
+			"team": "market3"
+		},
+		"weituo105_4": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"id": "weituo105_4",
+			"category": ["委托",
+			"c4",
+			"4杂物"],
+			"reward": "weituo006",
+			"consume": "weituo004_4",
+			"name": " a*2",
+			"sort": 52,
+			"showCondition": "",
+			"des": "100雕像",
+			"team": "weituo400"
+		},
+		"tuzi_item_31002": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"绿"],
+			"des": "兔子通用绿",
+			"consume": "tuzi_002",
+			"name": "兔子通用绿",
+			"sort": 0,
+			"id": "tuzi_item_31002",
+			"reward": "tuzi_item_31002",
+			"team": "tuziGreen"
+		},
+		"huoyue014": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "day"
+			},
+			"category": ["活跃",
+			"s1"],
+			"id": "huoyue014",
+			"reward": "huoyue014",
+			"consume": "huoyue014",
+			"name": "火碎日",
+			"sort": 14,
+			"showCondition": "",
+			"des": "1书",
+			"team": "huoyue"
+		},
+		"chouka002": {
+			"limitCondition": {
+				
+			},
+			"category": ["general全局配置"],
+			"des": "general里面1payke=1ke",
+			"consume": "chouka002",
+			"name": "payke兑换1ke",
+			"sort": 0,
+			"id": "chouka002",
+			"reward": "chouka002",
+			"team": "chouka"
+		},
+		"huoyue004": {
+			"limitCondition": {
+				"num": 2,
+				"exchangeType": "week"
+			},
+			"category": ["活跃",
+			"s1"],
+			"id": "huoyue004",
+			"reward": "huoyue004",
+			"consume": "huoyue004",
+			"name": "魔物周",
+			"sort": 4,
+			"showCondition": "",
+			"des": "1书",
+			"team": "huoyue"
+		},
+		"tuzi_item_27004": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"category": ["兔子",
+			"蓝"],
+			"des": "兔子通用蓝",
+			"consume": "tuzi_003",
+			"name": "兔子通用蓝",
+			"sort": 0,
+			"id": "tuzi_item_27004",
+			"reward": "tuzi_item_27004",
+			"team": "tuziBlue"
+		},
+		"payke004": {
+			"limitCondition": {
+				
+			},
+			"id": "payke004",
+			"category": ["商城",
+			"payke"],
+			"reward": "payke004",
+			"consume": "payke004",
+			"name": "100氪金",
+			"sort": 0,
+			"showCondition": "",
+			"des": "蜘蛛",
+			"team": "payke"
+		},
+		"market006": {
+			"limitCondition": {
+				"num": 8,
+				"exchangeType": "day"
+			},
+			"category": ["商店",
+			"c1"],
+			"id": "market006",
+			"reward": "market006",
+			"consume": "shop001",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "c1商店_蜘蛛丝*2",
+			"team": "market"
+		},
+		"weituo119": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c1",
+			"2家具"],
+			"id": "weituo119",
+			"reward": "weituo_item_50028",
+			"consume": "weituo_jj_q2_1_c1",
+			"name": " a*2",
+			"sort": 20,
+			"showCondition": "",
+			"des": "c0+c1家具",
+			"team": "weituo120"
+		},
+		"weituo110_4": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"id": "weituo110_4",
+			"category": ["委托",
+			"c4",
+			"4杂物"],
+			"reward": "weituo017",
+			"consume": "weituo006_4",
+			"name": " a*2",
+			"sort": 54,
+			"showCondition": "",
+			"des": "美食最低礼物",
+			"team": "weituo400"
+		},
+		"market_item_50044": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c2"],
+			"id": "market_item_50044",
+			"reward": "market_item_50044",
+			"consume": "market_jj_c2_q3_1",
+			"name": "c2芭蕉叶盆栽",
+			"sort": 15,
+			"showCondition": "",
+			"des": "c2芭蕉叶盆栽",
+			"team": "market2"
+		},
+		"weituo101_3": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c3",
+			"1氪金道具"],
+			"id": "weituo101_3",
+			"reward": "weituo002",
+			"consume": "weituo002_3",
+			"name": " a*2",
+			"sort": 1,
+			"showCondition": "",
+			"des": "抽奖券",
+			"team": "weituo300"
+		},
+		"weituo113": {
+			"limitCondition": {
+				"num": 50,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c1",
+			"4杂物"],
+			"id": "weituo113",
+			"reward": "weituo016",
+			"consume": "weituo007",
+			"name": " a*2",
+			"sort": 62,
+			"showCondition": "",
+			"des": "人经验",
+			"team": "weituo100"
+		},
+		"ex_tower1_1": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"id": "ex_tower1_1",
+			"des": "",
+			"reward": "itemEx_tower1_1",
+			"consume": "itemEx_tower1_1",
+			"name": "塔兑换_角色券",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["爬塔",
+			"塔1"],
+			"showCondition": "",
+			"team": "tower1"
+		},
+		"pvpExchange004": {
+			"limitCondition": {
+				"num": 99,
+				"exchangeType": "global"
+			},
+			"category": ["pvp",
+			"s1"],
+			"id": "pvpExchange004",
+			"reward": "pvpExchange004",
+			"consume": "pvpExchange003",
+			"name": "",
+			"sort": 5,
+			"showCondition": "",
+			"des": "pvp",
+			"team": "pvp001"
+		},
+		"weituo101_4": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"id": "weituo101_4",
+			"category": ["委托",
+			"c4",
+			"1氪金道具"],
+			"reward": "weituo002",
+			"consume": "weituo002_4",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "抽奖券",
+			"team": "weituo400"
+		},
+		"bke006": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "day"
+			},
+			"id": "bke006",
+			"category": ["商城",
+			"氪金商店"],
+			"reward": "bangke006",
+			"consume": "50bke",
+			"name": "特别招待券",
+			"sort": 0,
+			"showCondition": "",
+			"des": "特别招待券（半价）",
+			"team": "bke"
+		},
+		"422019_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝_1"],
+			"id": "422019_1",
+			"reward": "item_422019_1",
+			"consume": "baodi500102_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5_1"
+		},
+		"weituo110": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c1",
+			"4杂物"],
+			"id": "weituo110",
+			"reward": "weituo017",
+			"consume": "weituo006",
+			"name": " a*2",
+			"sort": 54,
+			"showCondition": "",
+			"des": "美食最低礼物",
+			"team": "weituo100"
+		},
+		"weituo115_4": {
+			"limitCondition": {
+				"num": 50,
+				"exchangeType": "month"
+			},
+			"id": "weituo115_4",
+			"category": ["委托",
+			"c4",
+			"4杂物"],
+			"reward": "weituo020",
+			"consume": "weituo008_4",
+			"name": " a*2",
+			"sort": 63,
+			"showCondition": "",
+			"des": "钱",
+			"team": "weituo400"
+		},
+		"tuzi_item_30013": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"蓝"],
+			"des": "兔子通用蓝",
+			"consume": "tuzi_003",
+			"name": "兔子通用蓝",
+			"sort": 0,
+			"id": "tuzi_item_30013",
+			"reward": "tuzi_item_30013",
+			"team": "tuziBlue"
+		},
+		"421010_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi300103_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421010_1",
+			"reward": "item_421010_1",
+			"team": "baodimap3_1"
+		},
+		"weituo113_4": {
+			"limitCondition": {
+				"num": 50,
+				"exchangeType": "month"
+			},
+			"id": "weituo113_4",
+			"category": ["委托",
+			"c4",
+			"4杂物"],
+			"reward": "weituo016_2",
+			"consume": "weituo007_4",
+			"name": " a*2",
+			"sort": 61,
+			"showCondition": "",
+			"des": "人经验",
+			"team": "weituo400"
+		},
+		"weituo103": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c1",
+			"4杂物"],
+			"id": "weituo103",
+			"reward": "weituo004",
+			"consume": "weituo004",
+			"name": " a*2",
+			"sort": 51,
+			"showCondition": "",
+			"des": "100美食",
+			"team": "weituo100"
+		},
+		"tuzi_item_19207": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"绿"],
+			"des": "兔子通用绿",
+			"consume": "tuzi_002",
+			"name": "兔子通用绿",
+			"sort": 0,
+			"id": "tuzi_item_19207",
+			"reward": "tuzi_item_19207",
+			"team": "tuziGreen"
+		},
+		"market012": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "day"
+			},
+			"category": ["种子商店",
+			"c1"],
+			"id": "market012",
+			"reward": "market012",
+			"consume": "zhongzi101",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "蜘蛛",
+			"team": "zhongzi"
+		},
+		"market50016": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c1"],
+			"id": "market50016",
+			"reward": "market50016",
+			"consume": "market_jj_c1_q2_2",
+			"name": " a*2",
+			"sort": 20,
+			"showCondition": "",
+			"des": "c1_q2木制书桌",
+			"team": "market"
+		},
+		"weituo_item_50053": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c2",
+			"2家具"],
+			"id": "weituo_item_50053",
+			"reward": "weituo_item_50053",
+			"consume": "weituo_jj_q3_2_c2",
+			"name": "石柱子",
+			"sort": 24,
+			"showCondition": "",
+			"des": "c2家具",
+			"team": "weituo220"
+		},
+		"weituo107": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c1",
+			"4杂物"],
+			"id": "weituo107",
+			"reward": "weituo012",
+			"consume": "weituo005",
+			"name": " a*2",
+			"sort": 58,
+			"showCondition": "",
+			"des": "火碎",
+			"team": "weituo100"
+		},
+		"pvpExchange005": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "global"
+			},
+			"category": ["pvp",
+			"s1"],
+			"id": "pvpExchange005",
+			"reward": "pvpExchange005",
+			"consume": "pvpExchange004",
+			"name": "",
+			"sort": 6,
+			"showCondition": "",
+			"des": "pvp",
+			"team": "pvp001"
+		},
+		"weituo107_2": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c2",
+			"4杂物"],
+			"id": "weituo107_2",
+			"reward": "weituo012",
+			"consume": "weituo005_2",
+			"name": " a*2",
+			"sort": 50,
+			"showCondition": "",
+			"des": "火碎",
+			"team": "weituo200"
+		},
+		"item_15019": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "day"
+			},
+			"category": ["种子商店",
+			"c3"],
+			"id": "item_15019",
+			"reward": "zhongzi15019",
+			"consume": "zhongzi101",
+			"name": "水纹花种子",
+			"sort": 0,
+			"showCondition": "zhongziC3",
+			"des": "种子",
+			"team": "zhongzi"
+		},
+		"weituo122": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c1",
+			"2家具"],
+			"id": "weituo122",
+			"reward": "weituo_item_50033",
+			"consume": "weituo_jj_q2_2_c1",
+			"name": " a*2",
+			"sort": 19,
+			"showCondition": "",
+			"des": "c0+c1家具",
+			"team": "weituo120"
+		},
+		"weituo108_5": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"id": "weituo108_5",
+			"category": ["委托",
+			"c5",
+			"4杂物"],
+			"reward": "weituo013",
+			"consume": "weituo005_5",
+			"name": " a*2",
+			"sort": 60,
+			"showCondition": "",
+			"des": "风碎",
+			"team": "weituo500"
+		},
+		"422011_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi300102_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422011_1",
+			"reward": "item_422011_1",
+			"team": "baodimap3_1"
+		},
+		"weituo_item_50051": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c2",
+			"2家具"],
+			"id": "weituo_item_50051",
+			"reward": "weituo_item_50051",
+			"consume": "weituo_jj_q2_1_c2",
+			"name": "篮子",
+			"sort": 25,
+			"showCondition": "",
+			"des": "c2家具",
+			"team": "weituo220"
+		},
+		"weituo102": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c1",
+			"1氪金道具"],
+			"id": "weituo102",
+			"reward": "weituo003",
+			"consume": "weituo003",
+			"name": " a*2",
+			"sort": 2,
+			"showCondition": "",
+			"des": "蜂蜜面包",
+			"team": "weituo100"
+		},
+		"421004_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c1",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi100103_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "421004_1",
+			"reward": "item_421004_1",
+			"team": "baodimap1_1"
+		},
+		"weituo105_2": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c2",
+			"4杂物"],
+			"id": "weituo105_2",
+			"reward": "weituo006",
+			"consume": "weituo004_2",
+			"name": " a*2",
+			"sort": 44,
+			"showCondition": "",
+			"des": "100雕像",
+			"team": "weituo200"
+		},
+		"weituo107_3": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c3",
+			"4杂物"],
+			"id": "weituo107_3",
+			"reward": "weituo012",
+			"consume": "weituo005_3",
+			"name": " a*2",
+			"sort": 58,
+			"showCondition": "",
+			"des": "火碎",
+			"team": "weituo300"
+		},
+		"market102": {
+			"limitCondition": {
+				"num": 8,
+				"exchangeType": "day"
+			},
+			"category": ["商店",
+			"c2"],
+			"id": "market102",
+			"reward": "market102",
+			"consume": "shop001",
+			"name": " a*2",
+			"sort": 1,
+			"showCondition": "",
+			"des": "鸟羽",
+			"team": "market2"
+		},
+		"market_item_50069": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c3"],
+			"id": "market_item_50069",
+			"reward": "market_item_50069",
+			"consume": "market_jj_c3_q2_2",
+			"name": "落地花瓶",
+			"sort": 16,
+			"showCondition": "",
+			"des": "c3备菜餐盘",
+			"team": "market3"
+		},
+		"weituo128": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c1",
+			"2家具"],
+			"id": "weituo128",
+			"reward": "weituo_item_50037",
+			"consume": "weituo_jj_q3_2_c1",
+			"name": " a*2",
+			"sort": 13,
+			"showCondition": "",
+			"des": "c0+c1家具",
+			"team": "weituo120"
+		},
+		"422012_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi300102_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "422012_1",
+			"reward": "item_422012_1",
+			"team": "baodimap3_1"
+		},
+		"pack_ti1": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "global"
+			},
+			"category": ["补给商城"],
+			"id": "pack_ti1",
+			"reward": "pack_ti1",
+			"consume": "pack_ti1",
+			"name": "旅店的厨房补给",
+			"sort": 0,
+			"showCondition": "",
+			"des": "旅店的厨房补给",
+			"team": "pack"
+		},
+		"weituo107_4": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"id": "weituo107_4",
+			"category": ["委托",
+			"c4",
+			"4杂物"],
+			"reward": "weituo012",
+			"consume": "weituo005_4",
+			"name": " a*2",
+			"sort": 58,
+			"showCondition": "",
+			"des": "火碎",
+			"team": "weituo400"
+		},
+		"huoyue015": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "day"
+			},
+			"category": ["活跃",
+			"s1"],
+			"id": "huoyue015",
+			"reward": "huoyue015",
+			"consume": "huoyue015",
+			"name": "风碎日",
+			"sort": 15,
+			"showCondition": "",
+			"des": "1书",
+			"team": "huoyue"
+		},
+		"bke001": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "day"
+			},
+			"id": "bke001",
+			"category": ["商城",
+			"氪金商店"],
+			"reward": "bangke001",
+			"consume": "bke001",
+			"name": "契约书",
+			"sort": 0,
+			"showCondition": "",
+			"des": "1奖券每日1",
+			"team": "bke"
+		},
+		"huoyue008": {
+			"limitCondition": {
+				"num": 6,
+				"exchangeType": "week"
+			},
+			"category": ["活跃",
+			"s1"],
+			"id": "huoyue008",
+			"reward": "huoyue008",
+			"consume": "huoyue008",
+			"name": "蓝礼A周",
+			"sort": 8,
+			"showCondition": "",
+			"des": "1书",
+			"team": "huoyue"
+		},
+		"equipQualityUpgrade003": {
+			"limitCondition": {
+				
+			},
+			"id": "equipQualityUpgrade003",
+			"des": "装备打造测试，无限制",
+			"consume": "equipQualityUpgrade003",
+			"name": " a*2",
+			"sort": 0,
+			"reward": "equipQualityUpgrade003",
+			"team": "equipQualityUpgrade003"
+		},
+		"423020_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c5",
+			"蓝_1"],
+			"id": "423020_1",
+			"reward": "item_423020_1",
+			"consume": "baodi500101_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap5_1"
+		},
+		"tuzi_item_27008": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "month"
+			},
+			"category": ["兔子",
+			"紫"],
+			"des": "兔子通用紫色",
+			"consume": "tuzi_004",
+			"name": "兔子通用紫色",
+			"sort": 0,
+			"id": "tuzi_item_27008",
+			"reward": "tuzi_item_27008",
+			"team": "tuziPurple"
+		},
+		"weituo115_5": {
+			"limitCondition": {
+				"num": 50,
+				"exchangeType": "month"
+			},
+			"id": "weituo115_5",
+			"category": ["委托",
+			"c5",
+			"4杂物"],
+			"reward": "weituo020",
+			"consume": "weituo008_5",
+			"name": " a*2",
+			"sort": 63,
+			"showCondition": "",
+			"des": "钱",
+			"team": "weituo500"
+		},
+		"tuzi_item_31011": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"id": "tuzi_item_31011",
+			"des": "兔子通用蓝",
+			"reward": "tuzi_item_31011",
+			"consume": "tuzi_003",
+			"name": "兔子通用蓝",
+			"sort": 0,
+			"category": ["兔子",
+			"蓝"],
+			"showCondition": "",
+			"team": "tuziBlue"
+		},
+		"weituo102_4": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "global"
+			},
+			"id": "weituo102_4",
+			"category": ["委托",
+			"c4",
+			"1氪金道具"],
+			"reward": "weituo003",
+			"consume": "weituo003_4",
+			"name": " a*2",
+			"sort": 2,
+			"showCondition": "",
+			"des": "蜂蜜面包",
+			"team": "weituo400"
+		},
+		"weituo109_2": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c2",
+			"4杂物"],
+			"id": "weituo109_2",
+			"reward": "weituo014",
+			"consume": "weituo005_2",
+			"name": " a*2",
+			"sort": 51,
+			"showCondition": "",
+			"des": "地碎",
+			"team": "weituo200"
+		},
+		"tuzi_item_27003": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"category": ["兔子",
+			"绿"],
+			"des": "兔子通用绿",
+			"consume": "tuzi_002",
+			"name": "兔子通用绿",
+			"sort": 0,
+			"id": "tuzi_item_27003",
+			"reward": "tuzi_item_27003",
+			"team": "tuziGreen"
+		},
+		"423006_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi200101_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423006_1",
+			"reward": "item_423006_1",
+			"team": "baodimap2_1"
+		},
+		"market_item_50079": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c4"],
+			"id": "market_item_50079",
+			"reward": "market_item_50079",
+			"consume": "market_jj_c4_q2_1",
+			"name": "树桩",
+			"sort": 13,
+			"showCondition": "",
+			"des": "c3树桩",
+			"team": "market4"
+		},
+		"item_15021": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "day"
+			},
+			"category": ["种子商店",
+			"c5"],
+			"id": "item_15021",
+			"reward": "zhongzi15021",
+			"consume": "zhongzi101",
+			"name": "冰莲种子",
+			"sort": 0,
+			"showCondition": "zhongziC5",
+			"des": "种子",
+			"team": "zhongzi"
+		},
+		"market50015": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c1"],
+			"id": "market50015",
+			"reward": "market50015",
+			"consume": "market_jj_c1_q2_2",
+			"name": " a*2",
+			"sort": 16,
+			"showCondition": "",
+			"des": "c1_q2原木置物柜",
+			"team": "market"
+		},
+		"bke010": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "week"
+			},
+			"id": "bke010",
+			"category": ["商城",
+			"氪金商店"],
+			"reward": "bangke010",
+			"consume": "100bke",
+			"name": "稳定铸晶石×3",
+			"sort": 0,
+			"showCondition": "",
+			"des": "稳定铸晶石*3",
+			"team": "bke"
+		},
+		"423013_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"紫"],
+			"id": "423013_1",
+			"reward": "item_423013_1",
+			"consume": "baodi400101_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4_1"
+		},
+		"bke008": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "week"
+			},
+			"id": "bke008",
+			"category": ["商城",
+			"氪金商店"],
+			"reward": "bangke007",
+			"consume": "100bke",
+			"name": "银币×2000",
+			"sort": 0,
+			"showCondition": "",
+			"des": "2000银币",
+			"team": "bke"
+		},
+		"weituo117_3": {
+			"limitCondition": {
+				"num": 3,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c3",
+			"3特殊"],
+			"id": "weituo117_3",
+			"reward": "weituo302",
+			"consume": "weituo101_3",
+			"name": " a*2",
+			"sort": 32,
+			"showCondition": "",
+			"des": "后boss材料",
+			"team": "weituo310"
+		},
+		"423007_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c2",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi200101_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423007_1",
+			"reward": "item_423007_1",
+			"team": "baodimap2_1"
+		},
+		"ex_tower1_2": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "global"
+			},
+			"id": "ex_tower1_2",
+			"des": "",
+			"reward": "itemEx_ex_tower1_2",
+			"consume": "itemEx_ex_tower1_2",
+			"name": "塔兑换_魔物券",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 2,
+			"category": ["爬塔",
+			"塔1"],
+			"showCondition": "",
+			"team": "tower1"
+		},
+		"weituo_item_50060": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c3",
+			"2家具"],
+			"id": "weituo_item_50060",
+			"reward": "weituo_item_50060",
+			"consume": "weituo_jj_q3_1_c3",
+			"name": "树桌",
+			"sort": 22,
+			"showCondition": "",
+			"des": "c3家具",
+			"team": "weituo320"
+		},
+		"423011_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c3",
+			"紫"],
+			"des": "防具兑换",
+			"consume": "baodi300103_1",
+			"name": " a*2",
+			"sort": 0,
+			"id": "423011_1",
+			"reward": "item_423011_1",
+			"team": "baodimap3_1"
+		},
+		"weituo119_4": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"id": "weituo119_4",
+			"category": ["委托",
+			"c4",
+			"3特殊"],
+			"reward": "weituo404",
+			"consume": "weituo102_4",
+			"name": " a*2",
+			"sort": 33,
+			"showCondition": "",
+			"des": "蓝材料2",
+			"team": "weituo410"
+		},
+		"weituo_item_50081": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["委托",
+			"c4",
+			"2家具"],
+			"id": "weituo_item_50081",
+			"reward": "weituo_item_50081",
+			"consume": "weituo_jj_q3_2_c4",
+			"name": "花艺",
+			"sort": 23,
+			"showCondition": "",
+			"des": "c4家具",
+			"team": "weituo420"
+		},
+		"weituo108_4": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"id": "weituo108_4",
+			"category": ["委托",
+			"c4",
+			"4杂物"],
+			"reward": "weituo013",
+			"consume": "weituo005_4",
+			"name": " a*2",
+			"sort": 60,
+			"showCondition": "",
+			"des": "风碎",
+			"team": "weituo400"
+		},
+		"market301": {
+			"limitCondition": {
+				"num": 8,
+				"exchangeType": "day"
+			},
+			"category": ["商店",
+			"c4"],
+			"id": "market301",
+			"reward": "market301",
+			"consume": "shop001",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "孢子",
+			"team": "market4"
+		},
+		"tuzi_item_30033": {
+			"randomShopLimitNum": 1,
+			"limitCondition": {
+				
+			},
+			"category": ["兔子",
+			"绿"],
+			"des": "兔子通用绿",
+			"consume": "tuzi_002",
+			"name": "兔子通用绿",
+			"sort": 0,
+			"id": "tuzi_item_30033",
+			"reward": "tuzi_item_30033",
+			"team": "tuziGreen"
+		},
+		"item_15017": {
+			"limitCondition": {
+				"num": 5,
+				"exchangeType": "day"
+			},
+			"category": ["种子商店",
+			"普通"],
+			"id": "item_15017",
+			"reward": "zhongzi15017",
+			"consume": "zhongzi100",
+			"name": "亚麻种子",
+			"sort": 0,
+			"showCondition": "",
+			"des": "种子",
+			"team": "zhongzi"
+		},
+		"market50104": {
+			"limitCondition": {
+				"num": 1,
+				"exchangeType": "global"
+			},
+			"category": ["商店",
+			"c2"],
+			"id": "market50104",
+			"reward": "market50104",
+			"consume": "market_jj_c2_q3_1",
+			"name": "花卉展示灯台",
+			"sort": 11,
+			"showCondition": "",
+			"des": "c2花卉展示灯台",
+			"team": "market2"
+		},
+		"payke002": {
+			"limitCondition": {
+				
+			},
+			"id": "payke002",
+			"category": ["商城",
+			"payke"],
+			"reward": "payke002",
+			"consume": "payke002",
+			"name": "契约书",
+			"sort": 0,
+			"showCondition": "",
+			"des": "蜘蛛",
+			"team": "payke"
+		},
+		"422013_1": {
+			"limitCondition": {
+				
+			},
+			"category": ["装备兑换",
+			"c4",
+			"紫"],
+			"id": "422013_1",
+			"reward": "item_422013_1",
+			"consume": "baodi400102_1",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "防具兑换",
+			"team": "baodimap4_1"
+		},
+		"item_15013": {
+			"limitCondition": {
+				"num": 4,
+				"exchangeType": "day"
+			},
+			"category": ["种子商店",
+			"草药组"],
+			"id": "item_15013",
+			"reward": "zhongzi15013",
+			"consume": "zhongzi100",
+			"name": "草药种子",
+			"sort": 0,
+			"showCondition": "",
+			"des": "种子",
+			"team": "zhongzi"
+		},
+		"market010": {
+			"limitCondition": {
+				"num": 8,
+				"exchangeType": "day"
+			},
+			"category": ["商店",
+			"未使用"],
+			"id": "market010",
+			"reward": "market010",
+			"consume": "market001",
+			"name": " a*2",
+			"sort": 0,
+			"showCondition": "",
+			"des": "蜘蛛",
+			"team": "market"
+		},
+		"weituo108_3": {
+			"limitCondition": {
+				"num": 20,
+				"exchangeType": "month"
+			},
+			"category": ["委托",
+			"c3",
+			"4杂物"],
+			"id": "weituo108_3",
+			"reward": "weituo013",
+			"consume": "weituo005_3",
+			"name": " a*2",
+			"sort": 60,
+			"showCondition": "",
+			"des": "风碎",
+			"team": "weituo300"
+		},
+		"weituo118_5": {
+			"limitCondition": {
+				"num": 10,
+				"exchangeType": "month"
+			},
+			"id": "weituo118_5",
+			"category": ["委托",
+			"c5",
+			"3特殊"],
+			"reward": "weituo503",
+			"consume": "weituo102_5",
+			"name": " a*2",
+			"sort": 34,
+			"showCondition": "",
+			"des": "蓝材料1",
+			"team": "weituo510"
+		},
+		"weituo114_5": {
+			"limitCondition": {
+				"num": 50,
+				"exchangeType": "month"
+			},
+			"id": "weituo114_5",
+			"category": ["委托",
+			"c5",
+			"4杂物"],
+			"reward": "weituo015_2",
+			"consume": "weituo007_5",
+			"name": " a*2",
+			"sort": 62,
+			"showCondition": "",
+			"des": "装备经验",
+			"team": "weituo500"
+		},
+		"item_19311": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19311",
+			"des": "item_19311",
+			"consume": "item_19311",
+			"showCondition": "",
+			"name": "item_19311",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19311",
+			"team": "Gem"
+		},
+		"item_19312": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19312",
+			"des": "item_19312",
+			"consume": "item_19312",
+			"showCondition": "",
+			"name": "item_19312",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19312",
+			"team": "Gem"
+		},
+		"item_19313": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19313",
+			"des": "item_19313",
+			"consume": "item_19313",
+			"showCondition": "",
+			"name": "item_19313",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19313",
+			"team": "Gem"
+		},
+		"item_19314": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19314",
+			"des": "item_19314",
+			"consume": "item_19314",
+			"showCondition": "",
+			"name": "item_19314",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19314",
+			"team": "Gem"
+		},
+		"item_19315": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19315",
+			"des": "item_19315",
+			"consume": "item_19315",
+			"showCondition": "",
+			"name": "item_19315",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19315",
+			"team": "Gem"
+		},
+		"item_19321": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19321",
+			"des": "item_19321",
+			"consume": "item_19321",
+			"showCondition": "",
+			"name": "item_19321",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19321",
+			"team": "Gem"
+		},
+		"item_19322": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19322",
+			"des": "item_19322",
+			"consume": "item_19322",
+			"showCondition": "",
+			"name": "item_19322",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19322",
+			"team": "Gem"
+		},
+		"item_19323": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19323",
+			"des": "item_19323",
+			"consume": "item_19323",
+			"showCondition": "",
+			"name": "item_19323",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19323",
+			"team": "Gem"
+		},
+		"item_19324": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19324",
+			"des": "item_19324",
+			"consume": "item_19324",
+			"showCondition": "",
+			"name": "item_19324",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19324",
+			"team": "Gem"
+		},
+		"item_19325": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19325",
+			"des": "item_19325",
+			"consume": "item_19325",
+			"showCondition": "",
+			"name": "item_19325",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19325",
+			"team": "Gem"
+		},
+		"item_19331": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19331",
+			"des": "item_19331",
+			"consume": "item_19331",
+			"showCondition": "",
+			"name": "item_19331",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19331",
+			"team": "Gem"
+		},
+		"item_19332": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19332",
+			"des": "item_19332",
+			"consume": "item_19332",
+			"showCondition": "",
+			"name": "item_19332",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19332",
+			"team": "Gem"
+		},
+		"item_19333": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19333",
+			"des": "item_19333",
+			"consume": "item_19333",
+			"showCondition": "",
+			"name": "item_19333",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19333",
+			"team": "Gem"
+		},
+		"item_19334": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19334",
+			"des": "item_19334",
+			"consume": "item_19334",
+			"showCondition": "",
+			"name": "item_19334",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19334",
+			"team": "Gem"
+		},
+		"item_19335": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19335",
+			"des": "item_19335",
+			"consume": "item_19335",
+			"showCondition": "",
+			"name": "item_19335",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19335",
+			"team": "Gem"
+		},
+		"item_19341": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19341",
+			"des": "item_19341",
+			"consume": "item_19341",
+			"showCondition": "",
+			"name": "item_19341",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19341",
+			"team": "Gem"
+		},
+		"item_19342": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19342",
+			"des": "item_19342",
+			"consume": "item_19342",
+			"showCondition": "",
+			"name": "item_19342",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19342",
+			"team": "Gem"
+		},
+		"item_19343": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19343",
+			"des": "item_19343",
+			"consume": "item_19343",
+			"showCondition": "",
+			"name": "item_19343",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19343",
+			"team": "Gem"
+		},
+		"item_19344": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19344",
+			"des": "item_19344",
+			"consume": "item_19344",
+			"showCondition": "",
+			"name": "item_19344",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19344",
+			"team": "Gem"
+		},
+		"item_19345": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19345",
+			"des": "item_19345",
+			"consume": "item_19345",
+			"showCondition": "",
+			"name": "item_19345",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19345",
+			"team": "Gem"
+		},
+		"item_19351": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19351",
+			"des": "item_19351",
+			"consume": "item_19351",
+			"showCondition": "",
+			"name": "item_19351",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19351",
+			"team": "Gem"
+		},
+		"item_19352": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19352",
+			"des": "item_19352",
+			"consume": "item_19352",
+			"showCondition": "",
+			"name": "item_19352",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19352",
+			"team": "Gem"
+		},
+		"item_19353": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19353",
+			"des": "item_19353",
+			"consume": "item_19353",
+			"showCondition": "",
+			"name": "item_19353",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19353",
+			"team": "Gem"
+		},
+		"item_19354": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19354",
+			"des": "item_19354",
+			"consume": "item_19354",
+			"showCondition": "",
+			"name": "item_19354",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19354",
+			"team": "Gem"
+		},
+		"item_19355": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19355",
+			"des": "item_19355",
+			"consume": "item_19355",
+			"showCondition": "",
+			"name": "item_19355",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19355",
+			"team": "Gem"
+		},
+		"item_19361": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19361",
+			"des": "item_19361",
+			"consume": "item_19361",
+			"showCondition": "",
+			"name": "item_19361",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19361",
+			"team": "Gem"
+		},
+		"item_19362": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19362",
+			"des": "item_19362",
+			"consume": "item_19362",
+			"showCondition": "",
+			"name": "item_19362",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19362",
+			"team": "Gem"
+		},
+		"item_19363": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19363",
+			"des": "item_19363",
+			"consume": "item_19363",
+			"showCondition": "",
+			"name": "item_19363",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19363",
+			"team": "Gem"
+		},
+		"item_19364": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19364",
+			"des": "item_19364",
+			"consume": "item_19364",
+			"showCondition": "",
+			"name": "item_19364",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19364",
+			"team": "Gem"
+		},
+		"item_19365": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19365",
+			"des": "item_19365",
+			"consume": "item_19365",
+			"showCondition": "",
+			"name": "item_19365",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19365",
+			"team": "Gem"
+		},
+		"item_19371": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19371",
+			"des": "item_19371",
+			"consume": "item_19371",
+			"showCondition": "",
+			"name": "item_19371",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19371",
+			"team": "Gem"
+		},
+		"item_19372": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19372",
+			"des": "item_19372",
+			"consume": "item_19372",
+			"showCondition": "",
+			"name": "item_19372",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19372",
+			"team": "Gem"
+		},
+		"item_19373": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19373",
+			"des": "item_19373",
+			"consume": "item_19373",
+			"showCondition": "",
+			"name": "item_19373",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19373",
+			"team": "Gem"
+		},
+		"item_19374": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19374",
+			"des": "item_19374",
+			"consume": "item_19374",
+			"showCondition": "",
+			"name": "item_19374",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19374",
+			"team": "Gem"
+		},
+		"item_19375": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19375",
+			"des": "item_19375",
+			"consume": "item_19375",
+			"showCondition": "",
+			"name": "item_19375",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19375",
+			"team": "Gem"
+		},
+		"item_19381": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19381",
+			"des": "item_19381",
+			"consume": "item_19381",
+			"showCondition": "",
+			"name": "item_19381",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19381",
+			"team": "Gem"
+		},
+		"item_19382": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19382",
+			"des": "item_19382",
+			"consume": "item_19382",
+			"showCondition": "",
+			"name": "item_19382",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19382",
+			"team": "Gem"
+		},
+		"item_19383": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19383",
+			"des": "item_19383",
+			"consume": "item_19383",
+			"showCondition": "",
+			"name": "item_19383",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19383",
+			"team": "Gem"
+		},
+		"item_19384": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19384",
+			"des": "item_19384",
+			"consume": "item_19384",
+			"showCondition": "",
+			"name": "item_19384",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19384",
+			"team": "Gem"
+		},
+		"item_19385": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19385",
+			"des": "item_19385",
+			"consume": "item_19385",
+			"showCondition": "",
+			"name": "item_19385",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19385",
+			"team": "Gem"
+		},
+		"item_19391": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19391",
+			"des": "item_19391",
+			"consume": "item_19391",
+			"showCondition": "",
+			"name": "item_19391",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19391",
+			"team": "Gem"
+		},
+		"item_19392": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19392",
+			"des": "item_19392",
+			"consume": "item_19392",
+			"showCondition": "",
+			"name": "item_19392",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19392",
+			"team": "Gem"
+		},
+		"item_19393": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19393",
+			"des": "item_19393",
+			"consume": "item_19393",
+			"showCondition": "",
+			"name": "item_19393",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19393",
+			"team": "Gem"
+		},
+		"item_19394": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19394",
+			"des": "item_19394",
+			"consume": "item_19394",
+			"showCondition": "",
+			"name": "item_19394",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19394",
+			"team": "Gem"
+		},
+		"item_19395": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19395",
+			"des": "item_19395",
+			"consume": "item_19395",
+			"showCondition": "",
+			"name": "item_19395",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19395",
+			"team": "Gem"
+		},
+		"item_19401": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19401",
+			"des": "item_19401",
+			"consume": "item_19401",
+			"showCondition": "",
+			"name": "item_19401",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19401",
+			"team": "Gem"
+		},
+		"item_19402": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19402",
+			"des": "item_19402",
+			"consume": "item_19402",
+			"showCondition": "",
+			"name": "item_19402",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19402",
+			"team": "Gem"
+		},
+		"item_19403": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19403",
+			"des": "item_19403",
+			"consume": "item_19403",
+			"showCondition": "",
+			"name": "item_19403",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19403",
+			"team": "Gem"
+		},
+		"item_19404": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19404",
+			"des": "item_19404",
+			"consume": "item_19404",
+			"showCondition": "",
+			"name": "item_19404",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19404",
+			"team": "Gem"
+		},
+		"item_19405": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19405",
+			"des": "item_19405",
+			"consume": "item_19405",
+			"showCondition": "",
+			"name": "item_19405",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19405",
+			"team": "Gem"
+		},
+		"item_19411": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19411",
+			"des": "item_19411",
+			"consume": "item_19411",
+			"showCondition": "",
+			"name": "item_19411",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19411",
+			"team": "Gem"
+		},
+		"item_19412": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19412",
+			"des": "item_19412",
+			"consume": "item_19412",
+			"showCondition": "",
+			"name": "item_19412",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19412",
+			"team": "Gem"
+		},
+		"item_19413": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19413",
+			"des": "item_19413",
+			"consume": "item_19413",
+			"showCondition": "",
+			"name": "item_19413",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19413",
+			"team": "Gem"
+		},
+		"item_19414": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19414",
+			"des": "item_19414",
+			"consume": "item_19414",
+			"showCondition": "",
+			"name": "item_19414",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19414",
+			"team": "Gem"
+		},
+		"item_19415": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19415",
+			"des": "item_19415",
+			"consume": "item_19415",
+			"showCondition": "",
+			"name": "item_19415",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19415",
+			"team": "Gem"
+		},
+		"item_19421": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19421",
+			"des": "item_19421",
+			"consume": "item_19421",
+			"showCondition": "",
+			"name": "item_19421",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19421",
+			"team": "Gem"
+		},
+		"item_19422": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19422",
+			"des": "item_19422",
+			"consume": "item_19422",
+			"showCondition": "",
+			"name": "item_19422",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19422",
+			"team": "Gem"
+		},
+		"item_19423": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19423",
+			"des": "item_19423",
+			"consume": "item_19423",
+			"showCondition": "",
+			"name": "item_19423",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19423",
+			"team": "Gem"
+		},
+		"item_19424": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19424",
+			"des": "item_19424",
+			"consume": "item_19424",
+			"showCondition": "",
+			"name": "item_19424",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19424",
+			"team": "Gem"
+		},
+		"item_19425": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19425",
+			"des": "item_19425",
+			"consume": "item_19425",
+			"showCondition": "",
+			"name": "item_19425",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19425",
+			"team": "Gem"
+		},
+		"item_19431": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19431",
+			"des": "item_19431",
+			"consume": "item_19431",
+			"showCondition": "",
+			"name": "item_19431",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19431",
+			"team": "Gem"
+		},
+		"item_19432": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19432",
+			"des": "item_19432",
+			"consume": "item_19432",
+			"showCondition": "",
+			"name": "item_19432",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19432",
+			"team": "Gem"
+		},
+		"item_19433": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19433",
+			"des": "item_19433",
+			"consume": "item_19433",
+			"showCondition": "",
+			"name": "item_19433",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19433",
+			"team": "Gem"
+		},
+		"item_19434": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19434",
+			"des": "item_19434",
+			"consume": "item_19434",
+			"showCondition": "",
+			"name": "item_19434",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19434",
+			"team": "Gem"
+		},
+		"item_19435": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19435",
+			"des": "item_19435",
+			"consume": "item_19435",
+			"showCondition": "",
+			"name": "item_19435",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19435",
+			"team": "Gem"
+		},
+		"item_19441": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19441",
+			"des": "item_19441",
+			"consume": "item_19441",
+			"showCondition": "",
+			"name": "item_19441",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19441",
+			"team": "Gem"
+		},
+		"item_19442": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19442",
+			"des": "item_19442",
+			"consume": "item_19442",
+			"showCondition": "",
+			"name": "item_19442",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19442",
+			"team": "Gem"
+		},
+		"item_19443": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19443",
+			"des": "item_19443",
+			"consume": "item_19443",
+			"showCondition": "",
+			"name": "item_19443",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19443",
+			"team": "Gem"
+		},
+		"item_19444": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19444",
+			"des": "item_19444",
+			"consume": "item_19444",
+			"showCondition": "",
+			"name": "item_19444",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19444",
+			"team": "Gem"
+		},
+		"item_19445": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19445",
+			"des": "item_19445",
+			"consume": "item_19445",
+			"showCondition": "",
+			"name": "item_19445",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19445",
+			"team": "Gem"
+		},
+		"item_19451": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19451",
+			"des": "item_19451",
+			"consume": "item_19451",
+			"showCondition": "",
+			"name": "item_19451",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19451",
+			"team": "Gem"
+		},
+		"item_19452": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19452",
+			"des": "item_19452",
+			"consume": "item_19452",
+			"showCondition": "",
+			"name": "item_19452",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19452",
+			"team": "Gem"
+		},
+		"item_19453": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19453",
+			"des": "item_19453",
+			"consume": "item_19453",
+			"showCondition": "",
+			"name": "item_19453",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19453",
+			"team": "Gem"
+		},
+		"item_19454": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19454",
+			"des": "item_19454",
+			"consume": "item_19454",
+			"showCondition": "",
+			"name": "item_19454",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19454",
+			"team": "Gem"
+		},
+		"item_19455": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19455",
+			"des": "item_19455",
+			"consume": "item_19455",
+			"showCondition": "",
+			"name": "item_19455",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19455",
+			"team": "Gem"
+		},
+		"item_19461": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19461",
+			"des": "item_19461",
+			"consume": "item_19461",
+			"showCondition": "",
+			"name": "item_19461",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19461",
+			"team": "Gem"
+		},
+		"item_19462": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19462",
+			"des": "item_19462",
+			"consume": "item_19462",
+			"showCondition": "",
+			"name": "item_19462",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19462",
+			"team": "Gem"
+		},
+		"item_19463": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19463",
+			"des": "item_19463",
+			"consume": "item_19463",
+			"showCondition": "",
+			"name": "item_19463",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19463",
+			"team": "Gem"
+		},
+		"item_19464": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19464",
+			"des": "item_19464",
+			"consume": "item_19464",
+			"showCondition": "",
+			"name": "item_19464",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19464",
+			"team": "Gem"
+		},
+		"item_19465": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19465",
+			"des": "item_19465",
+			"consume": "item_19465",
+			"showCondition": "",
+			"name": "item_19465",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19465",
+			"team": "Gem"
+		},
+		"item_19471": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19471",
+			"des": "item_19471",
+			"consume": "item_19471",
+			"showCondition": "",
+			"name": "item_19471",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19471",
+			"team": "Gem"
+		},
+		"item_19472": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19472",
+			"des": "item_19472",
+			"consume": "item_19472",
+			"showCondition": "",
+			"name": "item_19472",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19472",
+			"team": "Gem"
+		},
+		"item_19473": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19473",
+			"des": "item_19473",
+			"consume": "item_19473",
+			"showCondition": "",
+			"name": "item_19473",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19473",
+			"team": "Gem"
+		},
+		"item_19474": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19474",
+			"des": "item_19474",
+			"consume": "item_19474",
+			"showCondition": "",
+			"name": "item_19474",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19474",
+			"team": "Gem"
+		},
+		"item_19475": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19475",
+			"des": "item_19475",
+			"consume": "item_19475",
+			"showCondition": "",
+			"name": "item_19475",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19475",
+			"team": "Gem"
+		},
+		"item_19481": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19481",
+			"des": "item_19481",
+			"consume": "item_19481",
+			"showCondition": "",
+			"name": "item_19481",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19481",
+			"team": "Gem"
+		},
+		"item_19482": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19482",
+			"des": "item_19482",
+			"consume": "item_19482",
+			"showCondition": "",
+			"name": "item_19482",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19482",
+			"team": "Gem"
+		},
+		"item_19483": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19483",
+			"des": "item_19483",
+			"consume": "item_19483",
+			"showCondition": "",
+			"name": "item_19483",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19483",
+			"team": "Gem"
+		},
+		"item_19484": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19484",
+			"des": "item_19484",
+			"consume": "item_19484",
+			"showCondition": "",
+			"name": "item_19484",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19484",
+			"team": "Gem"
+		},
+		"item_19485": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19485",
+			"des": "item_19485",
+			"consume": "item_19485",
+			"showCondition": "",
+			"name": "item_19485",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19485",
+			"team": "Gem"
+		},
+		"item_19491": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19491",
+			"des": "item_19491",
+			"consume": "item_19491",
+			"showCondition": "",
+			"name": "item_19491",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19491",
+			"team": "Gem"
+		},
+		"item_19492": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19492",
+			"des": "item_19492",
+			"consume": "item_19492",
+			"showCondition": "",
+			"name": "item_19492",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19492",
+			"team": "Gem"
+		},
+		"item_19493": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19493",
+			"des": "item_19493",
+			"consume": "item_19493",
+			"showCondition": "",
+			"name": "item_19493",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19493",
+			"team": "Gem"
+		},
+		"item_19494": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19494",
+			"des": "item_19494",
+			"consume": "item_19494",
+			"showCondition": "",
+			"name": "item_19494",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19494",
+			"team": "Gem"
+		},
+		"item_19495": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19495",
+			"des": "item_19495",
+			"consume": "item_19495",
+			"showCondition": "",
+			"name": "item_19495",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19495",
+			"team": "Gem"
+		},
+		"item_19501": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19501",
+			"des": "item_19501",
+			"consume": "item_19501",
+			"showCondition": "",
+			"name": "item_19501",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19501",
+			"team": "Gem"
+		},
+		"item_19502": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19502",
+			"des": "item_19502",
+			"consume": "item_19502",
+			"showCondition": "",
+			"name": "item_19502",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19502",
+			"team": "Gem"
+		},
+		"item_19503": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19503",
+			"des": "item_19503",
+			"consume": "item_19503",
+			"showCondition": "",
+			"name": "item_19503",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19503",
+			"team": "Gem"
+		},
+		"item_19504": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19504",
+			"des": "item_19504",
+			"consume": "item_19504",
+			"showCondition": "",
+			"name": "item_19504",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19504",
+			"team": "Gem"
+		},
+		"item_19505": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19505",
+			"des": "item_19505",
+			"consume": "item_19505",
+			"showCondition": "",
+			"name": "item_19505",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19505",
+			"team": "Gem"
+		},
+		"item_19511": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19511",
+			"des": "item_19511",
+			"consume": "item_19511",
+			"showCondition": "",
+			"name": "item_19511",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19511",
+			"team": "Gem"
+		},
+		"item_19512": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19512",
+			"des": "item_19512",
+			"consume": "item_19512",
+			"showCondition": "",
+			"name": "item_19512",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19512",
+			"team": "Gem"
+		},
+		"item_19513": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19513",
+			"des": "item_19513",
+			"consume": "item_19513",
+			"showCondition": "",
+			"name": "item_19513",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19513",
+			"team": "Gem"
+		},
+		"item_19514": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19514",
+			"des": "item_19514",
+			"consume": "item_19514",
+			"showCondition": "",
+			"name": "item_19514",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19514",
+			"team": "Gem"
+		},
+		"item_19515": {
+			"limitCondition": {
+				
+			},
+			"id": "item_19515",
+			"des": "item_19515",
+			"consume": "item_19515",
+			"showCondition": "",
+			"name": "item_19515",
+			"___classTypeName": "net.pixvi.myrmonedt.panel.itemExchangePanel.ItemExTVo",
+			"sort": 1,
+			"category": ["宝石兑换"],
+			"reward": "item_19515",
+			"team": "Gem"
+		}
+	}
+}

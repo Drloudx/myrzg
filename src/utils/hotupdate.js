@@ -1,9 +1,9 @@
 import { CapacitorUpdater } from '@capgo/capacitor-updater';
 import { App } from '@capacitor/app';
-import { isNative } from './env';
+import { isNative, CLOUD_URL } from './env';
 
 // 游戏前端内核的热更 manifest (以 JSON 形式托管在云端)
-const HOTUPDATE_MANIFEST_URL = 'https://myrzg.yxzmy.top/update/hotupdate.json';
+const HOTUPDATE_MANIFEST_URL = `${CLOUD_URL}/update/hotupdate.json`;
 
 /**
  * 比较两个版本号，v1 > v2 返回 1，v1 < v2 返回 -1，相等返回 0
@@ -52,7 +52,7 @@ export const checkHotUpdate = async () => {
               version: giteeVersion,
               _needsApkUpdate: true,
               downloadUrl: apkAsset.browser_download_url,
-              body: giteeData.body || '包含底层引擎的重大更新，建议立即下载。',
+              body: giteeData.body || '包含底层的更新，建议立即更新。',
               _currentVer: nativeVersion
             };
           }

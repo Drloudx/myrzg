@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>未知大陆 - 官方游戏Wiki</title>
+    <!-- 引入复古风格的Google字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* 从地图中提取的主题调色板 */
+        :root {
+            --bg-dark: #bba282;        /* 外围深色羊皮纸（不再用作body背景） */
+            --paper-light: #dfceb3;    /* 核心阅读区亮色羊皮纸 */
+            --text-main: #3e2a14;      /* 深棕色墨水文字 */
+            --text-muted: #6b5134;     /* 次要文字 */
+            --border-color: #8f7351;   /* 描边颜色 */
+            --accent-water: #7a9a99;   /* 提取自地图湖泊的暗青色，用于高亮和链接 */
+            --accent-hover: #557574;   
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+			font-family: 'Noto Serif SC', 'Georgia', serif;
+			/* 背景图放在body，向下偏移60px，避开header */
+			background-image: url("map_w1_bg.png");
+			background-size: cover;
+			background-position: center 60px; /* y轴偏移header高度60px */
+			background-attachment: fixed;
+			background-color:#000;
+			color: var(--text-main);
+			line-height: 1.6;
+		}
+
+		.wiki-wrapper {
+			max-width: 1400px;
+			margin: 0 auto;
+			display: grid;
+			grid-template-columns: 250px 1fr 300px;
+			gap: 20px;
+			padding: 30px 20px;
+			/* 删掉这里的 background-image 相关全部代码！ */
+			min-height: calc(100vh - 60px);
+		}
+
+        /* 顶部导航条 */
+        header {
+            background-color: #2b1f15; /* 深色原木质感 */
+            color: #dfceb3;
+            padding: 0 40px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            border-bottom: 3px solid var(--accent-water);
+        }
+        header .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow: 0 0 5px rgba(0,0,0,0.8);
+        }
+        .search-bar input {
+            background: #463424;
+            border: 1px solid #6b5134;
+            color: #dfceb3;
+            padding: 6px 15px;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+       
+        /* 通用纸张面板：增加透明度，让后面地图背景透出来 */
+        .paper-panel {
+            background-color: rgba(223, 206, 179, 0.85);
+            border: 2px solid var(--border-color);
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.35), inset 0 0 20px rgba(135, 107, 72, 0.1);
+            border-radius: 4px;
+            padding: 20px;
+            position: relative;
+        }
+        
+        /* 面板四角的装饰钉 */
+        .paper-panel::before, .paper-panel::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #5c4327;
+            box-shadow: inset 1px 1px 2px rgba(255,255,255,0.3);
+        }
+        .paper-panel::before { top: 8px; left: 8px; }
+        .paper-panel::after { bottom: 8px; right: 8px; }
+        /* 左侧导航栏 */
+        .sidebar {
+            font-size: 15px;
+        }
+        .sidebar h3 {
+            font-family: 'Cinzel', 'Noto Serif SC', serif;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            color: #2b1f15;
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar li {
+            margin-bottom: 8px;
+        }
+        .sidebar a {
+            text-decoration: none;
+            color: var(--text-main);
+            transition: color 0.2s;
+        }
+        .sidebar a:hover {
+            color: var(--accent-water);
+            font-weight: bold;
+        }
+        .sidebar a::before {
+            content: "▸";
+            margin-right: 8px;
+            color: var(--accent-water);
+        }
+        /* 主体内容区 */
+        .content {
+            padding: 30px;
+        }
+        .content h1 {
+            font-family: 'Cinzel', 'Noto Serif SC', serif;
+            font-size: 32px;
+            border-bottom: 3px double var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .content h2 {
+            font-family: 'Cinzel', 'Noto Serif SC', serif;
+            font-size: 22px;
+            margin: 25px 0 15px 0;
+            color: #2b1f15;
+            display: flex;
+            align-items: center;
+        }
+        .content h2::before {
+            content: "";
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            background: var(--accent-water);
+            transform: rotate(45deg);
+            margin-right: 12px;
+        }
+        /* 您的地图展示容器（页面内的预览地图，保留；如果你想把它删掉也可以） */
+        .map-container {
+            width: 100%;
+            border: 4px solid #2b1f15;
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+            background: #a98d6c; /* 占位背景 */
+        }
+        .map-container img {
+            width: 100%;
+            display: block;
+            transition: transform 0.3s;
+        }
+        .map-container:hover img {
+            transform: scale(1.02); /* 悬停微弱放大，增强互动感 */
+        }
+        
+        /* 交互式图钉（示例） */
+        .map-pin {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background-color: #8b0000;
+            border: 2px solid #ffddaa;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .pin-1 { top: 42%; left: 35%; }
+        .pin-2 { top: 32%; left: 55%; }
+        .pin-3 { top: 65%; left: 65%; }
+        .text-block p {
+            margin-bottom: 15px;
+            text-indent: 2em;
+            text-align: justify;
+        }
+        /* 右侧信息框 (Infobox) */
+        .infobox {
+            background-color: rgba(223, 206, 179, 0.75);
+        }
+        .infobox-title {
+            background-color: var(--border-color);
+            color: var(--paper-light);
+            text-align: center;
+            padding: 10px;
+            font-family: 'Cinzel', 'Noto Serif SC', serif;
+            font-weight: bold;
+            font-size: 18px;
+            margin: -20px -20px 15px -20px;
+            border-bottom: 2px solid #5c4327;
+        }
+        .infobox-image {
+            width: 100%;
+            height: 150px;
+            background: url('map_w1_bg.png') center/cover;
+            border: 1px solid var(--border-color);
+            margin-bottom: 15px;
+        }
+        .info-row {
+            display: flex;
+            padding: 6px 0;
+            border-bottom: 1px dashed var(--border-color);
+            font-size: 14px;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            width: 80px;
+            font-weight: bold;
+            color: var(--text-muted);
+        }
+        .info-value {
+            flex: 1;
+            text-align: right;
+            color: var(--text-main);
+        }
+
+        /* 简单适配移动端 */
+        @media(max-width:1100px){
+            .wiki-wrapper{
+                grid-template-columns:1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">AETHERIA WIKI</div>
+        <div class="search-bar">
+            <input type="text" placeholder="搜索手记、地点或传说...">
+        </div>
+    </header>
+    <div class="wiki-wrapper">
+        <!-- 左侧导航 -->
+        <aside class="sidebar paper-panel">
+            <h3>导航目录</h3>
+            <ul>
+                <li><a href="#">世界地图 (Current)</a></li>
+                <li><a href="#">编年史与历史</a></li>
+                <li><a href="#">种族与派系</a></li>
+                <li><a href="#">怪物图鉴</a></li>
+                <li><a href="#">神兵与圣物</a></li>
+            </ul>
+            <h3 style="margin-top: 30px;">热门地点</h3>
+            <ul>
+                <li><a href="#">灰烬平原</a></li>
+                <li><a href="#">巨龙之湖</a></li>
+                <li><a href="#">云端浮岛</a></li>
+                <li><a href="#">迷雾森林</a></li>
+            </ul>
+        </aside>
+        <!-- 中间主要内容区 -->
+        <main class="content paper-panel">
+            <h1>艾瑟瑞亚大陆全图</h1>
+            
+            <div class="map-container">
+                <!-- 这里引用了您上传的地图图片 -->
+                <img src="map_w1_bg.png" alt="艾瑟瑞亚世界地图">
+                
+                <!-- 模拟在地图上打点的Wiki交互元素 -->
+                <div class="map-pin pin-1" title="西部高地"></div>
+                <div class="map-pin pin-2" title="静谧之湖"></div>
+                <div class="map-pin pin-3" title="南部沼泽"></div>
+            </div>
+            <div class="text-block">
+                <h2>地理概况</h2>
+                <p>艾瑟瑞亚（Aetheria）是一片古老而神秘的奇幻大陆。从地图上可以看出，这片土地被巨大的内陆湖泊分为几个主要区域。左侧散落着奇异的符文遗迹，而云层环绕的边缘暗示着这是一片被迷雾隔绝的未知领域。</p>
+                <p>地图中最为显著的地标包括东部的<b>深蓝巨湖</b>，其水系延伸至大陆的脉络中；以及西南部广袤的沙漠与高耸的岩柱群。中部的森林与连绵的山脉为游侠和冒险者提供了天然的庇护所。</p>
+                
+                <h2>未解之谜</h2>
+                <p>在大陆的西侧隐约可见一些古老的符文（如图中左侧的文字），学者们认为这是第一纪元留下的远古坐标，可能指向某个沉睡在地下的古代兵器或是失落神庙。</p>
+            </div>
+        </main>
+        <!-- 右侧信息框 -->
+        <aside class="infobox paper-panel">
+            <div class="infobox-title">艾瑟瑞亚 (Aetheria)</div>
+            <!-- 截取地图局部作为缩略图 -->
+            <div class="infobox-image" style="background-position: left center;"></div>
+            
+            <div class="info-row">
+                <div class="info-label">类型</div>
+                <div class="info-value">超大世界区域</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">统治者</div>
+                <div class="info-value">无 (纷争之地)</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">主要种族</div>
+                <div class="info-value">人类、森精灵、石像族</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">怪物等级</div>
+                <div class="info-value">Lv. 1 - Lv. 50</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">危险度</div>
+                <div class="info-value" style="color: #8b0000; font-weight: bold;">极高</div>
+            </div>
+            
+            <h3 style="margin-top:20px; font-size: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 5px;">区域特性</h3>
+            <p style="font-size: 13px; margin-top: 10px; color: var(--text-muted);">
+                该区域包含多种极端地形，从干旱的戈壁到生机勃勃的湖畔。探险者需准备充足的补给，并提防潜伏在森林深处的变异野兽。
+            </p>
+        </aside>
+    </div>
+</body>
+</html>

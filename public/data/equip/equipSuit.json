@@ -1,0 +1,452 @@
+{
+	"suit_110": {
+		"typeId": "suit_110",
+		"suitName": "荆棘守护者",
+		"equipTypeId": [
+			"item_421001",
+			"item_421002",
+			"item_421003",
+			"item_421004"
+		],
+		"suitData": [
+			{
+				"suitNum": 1,
+				"suitDes": "技能伤害 提升 {7%}。",
+				"skillTriggerId": "suit_111",
+				"level": 1
+			},
+			{
+				"suitNum": 2,
+				"suitDes": "物理攻击 提升 {10%}。",
+				"skillTriggerId": "suit_112",
+				"level": 1
+			},
+			{
+				"suitNum": 3,
+				"suitDes": "每受到 {4} 次攻击，对周围造成 {100%} 物理攻击 加成的物理伤害，并获得 {80%} 的反伤效果持续 {8} 秒。",
+				"skillTriggerId": "suit_113",
+				"level": 1
+			}
+		]
+	},
+	"suit_120": {
+		"typeId": "suit_120",
+		"suitName": "荒原守护者",
+		"equipTypeId": [
+			"item_422001",
+			"item_422002",
+			"item_422003",
+			"item_422004"
+		],
+		"suitData": [
+			{
+				"suitNum": 1,
+				"suitDes": "冷却缩减提升 {5%}。",
+				"skillTriggerId": "suit_121",
+				"level": 1
+			},
+			{
+				"suitNum": 2,
+				"suitDes": "技能伤害 提升 {13%}。",
+				"skillTriggerId": "suit_122",
+				"level": 1
+			},
+			{
+				"suitNum": 3,
+				"suitDes": "每 {2} 次释放主动技能后，增加自身 {70%} 的攻速，持续 {5} 秒。",
+				"skillTriggerId": "suit_123",
+				"level": 1
+			}
+		]
+	},
+	"suit_130": {
+		"typeId": "suit_130",
+		"suitName": "麦田守护者",
+		"equipTypeId": [
+			"item_423001",
+			"item_423002",
+			"item_423003",
+			"item_423004"
+		],
+		"suitData": [
+			{
+				"suitNum": 1,
+				"suitDes": "物理攻击 提升{5%}。",
+				"skillTriggerId": "suit_131",
+				"level": 1
+			},
+			{
+				"suitNum": 2,
+				"suitDes": "冷却缩减提升 {10%}。",
+				"skillTriggerId": "suit_132",
+				"level": 1
+			},
+			{
+				"suitNum": 3,
+				"suitDes": "每 {1} 次释放技能，对所有我方单位提供“鼓舞”效果。（鼓舞：下次普攻伤害增加 {40%}。）",
+				"skillTriggerId": "suit_133",
+				"level": 1
+			}
+		]
+	},
+	"suit_210": {
+		"typeId": "suit_210",
+		"suitName": "结晶守护者",
+		"equipTypeId": [
+			"item_421005",
+			"item_421006",
+			"item_421007",
+			"item_421008"
+		],
+		"suitData": [
+			{
+				"suitNum": 1,
+				"suitDes": "暴击伤害提升 {8%}。",
+				"skillTriggerId": "suit_211",
+				"level": 1
+			},
+			{
+				"suitNum": 2,
+				"suitDes": "生命值上限提升 {8%}。",
+				"skillTriggerId": "suit_212",
+				"level": 1
+			},
+			{
+				"suitNum": 3,
+				"suitDes": "每 {1} 次释放技能，生成一个可吸收 {800} 伤害的护盾，持续 {7} 秒。（冷却：10秒。）",
+				"skillTriggerId": "suit_213",
+				"level": 1
+			}
+		]
+	},
+	"suit_220": {
+		"typeId": "suit_220",
+		"suitName": "山岩守护者",
+		"equipTypeId": [
+			"item_422005",
+			"item_422006",
+			"item_422007",
+			"item_422008"
+		],
+		"suitData": [
+			{
+				"suitNum": 1,
+				"suitDes": "技能伤害 提升 {7%}。",
+				"skillTriggerId": "suit_221",
+				"level": 1
+			},
+			{
+				"suitNum": 2,
+				"suitDes": "暴击伤害提升 {15%}。",
+				"skillTriggerId": "suit_222",
+				"level": 1
+			},
+			{
+				"suitNum": 3,
+				"suitDes": "每 {5} 秒，下一次普通攻击伤害必定暴击。",
+				"skillTriggerId": "suit_223",
+				"level": 1
+			}
+		]
+	},
+	"suit_230": {
+		"typeId": "suit_230",
+		"suitName": "风羽守护者",
+		"equipTypeId": [
+			"item_423005",
+			"item_423006",
+			"item_423007",
+			"item_423008"
+		],
+		"suitData": [
+			{
+				"suitNum": 1,
+				"suitDes": "生命值 上限提升 {4%}。",
+				"skillTriggerId": "suit_231",
+				"level": 1
+			},
+			{
+				"suitNum": 2,
+				"suitDes": "技能伤害 提升 {13%}。",
+				"skillTriggerId": "suit_232",
+				"level": 1
+			},
+			{
+				"suitNum": 3,
+				"suitDes": "每次普通攻击，获得 {2%} 冷却缩减 与 {2%} 移速，持续 {8} 秒，该效果最高可叠加到 {5} 层。",
+				"skillTriggerId": "suit_233",
+				"level": 1
+			}
+		]
+	},
+	"suit_310": {
+		"typeId": "suit_310",
+		"suitName": "蛇鳞守护者",
+		"equipTypeId": [
+			"item_421009",
+			"item_421010",
+			"item_421011",
+			"item_421012"
+		],
+		"suitData": [
+			{
+				"suitNum": 1,
+				"suitDes": "暴击率提升 {4%}。",
+				"skillTriggerId": "suit_311",
+				"level": 1
+			},
+			{
+				"suitNum": 2,
+				"suitDes": "魔法防御提升 {10%}。",
+				"skillTriggerId": "suit_312",
+				"level": 1
+			},
+			{
+				"suitNum": 3,
+				"suitDes": "当生命值低于 {65%} 时，普通攻击伤害增加 {30%} ，并获得 {10%} 物理伤害减免。",
+				"skillTriggerId": "suit_313",
+				"level": 1
+			}
+		]
+	},
+	"suit_320": {
+		"typeId": "suit_320",
+		"suitName": "集镇守护者",
+		"equipTypeId": [
+			"item_422009",
+			"item_422010",
+			"item_422011",
+			"item_422012"
+		],
+		"suitData": [
+			{
+				"suitNum": 1,
+				"suitDes": "冷却缩减提升 {5%}。",
+				"skillTriggerId": "suit_321",
+				"level": 1
+			},
+			{
+				"suitNum": 2,
+				"suitDes": "暴击率提升 {8%}。",
+				"skillTriggerId": "suit_322",
+				"level": 1
+			},
+			{
+				"suitNum": 3,
+				"suitDes": "每 {1} 次释放技能，下 {2} 次普通攻击速度提升 {100%}。效果冷却：12秒。",
+				"skillTriggerId": "suit_323",
+				"level": 1
+			}
+		]
+	},
+	"suit_330": {
+		"typeId": "suit_330",
+		"suitName": "湖水守护者",
+		"equipTypeId": [
+			"item_423009",
+			"item_423010",
+			"item_423011",
+			"item_423012"
+		],
+		"suitData": [
+			{
+				"suitNum": 1,
+				"suitDes": "魔法防御提升 {5%}。",
+				"skillTriggerId": "suit_331",
+				"level": 1
+			},
+			{
+				"suitNum": 2,
+				"suitDes": "冷却缩减提升 {10%}。",
+				"skillTriggerId": "suit_332",
+				"level": 1
+			},
+			{
+				"suitNum": 3,
+				"suitDes": "每当血量和法力恢复时，会对自身释放一个增加{12%}魔法伤害的状态，效果持续5秒。冷却：5秒。",
+				"skillTriggerId": "suit_333",
+				"level": 1
+			}
+		]
+	},
+	"suit_410": {
+		"typeId": "suit_410",
+		"suitName": "花圃守护者",
+		"equipTypeId": [
+			"item_421013",
+			"item_421014",
+			"item_421015",
+			"item_421016"
+		],
+		"suitData": [
+			{
+				"suitNum": 1,
+				"suitDes": "物理攻击提升 {4%}。",
+				"skillTriggerId": "suit_411",
+				"level": 1
+			},
+			{
+				"suitNum": 2,
+				"suitDes": "暴击抵抗提升 {8%}。",
+				"skillTriggerId": "suit_412",
+				"level": 1
+			},
+			{
+				"suitNum": 3,
+				"suitDes": "每当受到攻击时，获得“花圃的恩典”状态，持续 10 秒，最高叠加 5 层。释放技能时，消耗所有“花圃的恩典”层数，每层会使该技能伤害增加 {10%}。",
+				"skillTriggerId": "suit_413",
+				"level": 1
+			}
+		]
+	},
+	"suit_420": {
+		"typeId": "suit_420",
+		"suitName": "金弦守护者",
+		"equipTypeId": [
+			"item_422013",
+			"item_422014",
+			"item_422015",
+			"item_422016"
+		],
+		"suitData": [
+			{
+				"suitNum": 1,
+				"suitDes": "魔法攻击提升 {5%}。",
+				"skillTriggerId": "suit_421",
+				"level": 1
+			},
+			{
+				"suitNum": 2,
+				"suitDes": "物理攻击提升 {8%}。",
+				"skillTriggerId": "suit_422",
+				"level": 1
+			},
+			{
+				"suitNum": 3,
+				"suitDes": "每当附近有 1 名敌方目标被击败，获得“金弦的鼓舞”状态，使自身的普通攻击伤害提高 {10%}，持续 10 秒，最高叠加 5 层。",
+				"skillTriggerId": "suit_423",
+				"level": 1
+			}
+		]
+	},
+	"suit_430": {
+		"typeId": "suit_430",
+		"suitName": "林地守护者",
+		"equipTypeId": [
+			"item_423013",
+			"item_423014",
+			"item_423015",
+			"item_423016"
+		],
+		"suitData": [
+			{
+				"suitNum": 1,
+				"suitDes": "暴击抵抗提升 {4%}。",
+				"skillTriggerId": "suit_431",
+				"level": 1
+			},
+			{
+				"suitNum": 2,
+				"suitDes": "魔法攻击提升 {10%}。",
+				"skillTriggerId": "suit_432",
+				"level": 1
+			},
+			{
+				"suitNum": 3,
+				"suitDes": "当自身生命值等于或高于生命最大值的 {80%} 时，获得“林地的祝福”状态，使自身所有技能伤害提高 {20%}。",
+				"skillTriggerId": "suit_433",
+				"level": 1
+			}
+		]
+	},
+	"suit_510": {
+		"typeId": "suit_510",
+		"suitName": "冻炎守护者",
+		"equipTypeId": [
+			"item_421017",
+			"item_421018",
+			"item_421019",
+			"item_421020"
+		],
+		"suitData": [
+			{
+				"suitNum": 1,
+				"suitDes": "暴击率提升 {4%}。",
+				"skillTriggerId": "suit_511",
+				"level": 1
+			},
+			{
+				"suitNum": 2,
+				"suitDes": "魔法防御提升{8%}。",
+				"skillTriggerId": "suit_512",
+				"level": 1
+			},
+			{
+				"suitNum": 3,
+				"suitDes": "受到敌方目标攻击时，立即对该敌方目标造成 {10%物理攻击} 伤害，并附加“急冻”状态，持续 5 秒。",
+				"skillTriggerId": "suit_513",
+				"level": 1
+			}
+		]
+	},
+	"suit_520": {
+		"typeId": "suit_520",
+		"suitName": "霜寒守护者",
+		"equipTypeId": [
+			"item_422017",
+			"item_422018",
+			"item_422019",
+			"item_422020"
+		],
+		"suitData": [
+			{
+				"suitNum": 1,
+				"suitDes": "冷却缩减提升 {3%}。",
+				"skillTriggerId": "suit_521",
+				"level": 1
+			},
+			{
+				"suitNum": 2,
+				"suitDes": "暴击率提升 {8%}。",
+				"skillTriggerId": "suit_522",
+				"level": 1
+			},
+			{
+				"suitNum": 3,
+				"suitDes": "当自身生命值等于或低于最大生命值的 {90%} 时，获得“经霜傲雪”状态：每失去 {10%} 的最大生命值，提高 {3%} 的技能伤害。",
+				"skillTriggerId": "suit_523",
+				"level": 1
+			}
+		]
+	},
+	"suit_530": {
+		"typeId": "suit_530",
+		"suitName": "灵雪守护者",
+		"equipTypeId": [
+			"item_423017",
+			"item_423018",
+			"item_423019",
+			"item_423020"
+		],
+		"suitData": [
+			{
+				"suitNum": 1,
+				"suitDes": "魔法防御提升 {4%}。",
+				"skillTriggerId": "suit_531",
+				"level": 1
+			},
+			{
+				"suitNum": 2,
+				"suitDes": "冷却缩减提升 {6%}。",
+				"skillTriggerId": "suit_532",
+				"level": 1
+			},
+			{
+				"suitNum": 3,
+				"suitDes": "每次施放技能后，使“灵雪的守护”显现，对生命值最低角色施加其最高生命 {5%} 的护盾，持续 5 秒。",
+				"skillTriggerId": "suit_533",
+				"level": 1
+			}
+		]
+	}
+}
