@@ -1,48 +1,22 @@
 <template>
   <div class="page-view-container">
-    <!-- Top Filter Header (2-Row Segmented Pill Layout matching AchievementView) -->
-    <div class="filter-sticky-bar pet-filter-sticky">
-      <!-- Row 1: Full-Width Pool & Star Filter Bar (全部, 金币池, 氪金池, 3星, 4星, 5星) -->
+
+    <!-- 筛选区：半透明羊皮纸面板（池子星级 + 孵化行动 + 显示字段 + 表头） -->
+    <div class="filter-sticky-bar pet-filter-sticky paper-panel">
+      <!-- Row 1: 全宽 池子/星级 分段页签 -->
       <div class="control-row-1">
-        <div class="segmented-pill-container pool-star-segmented">
-          <div
-            v-for="item in row1Options"
-            :key="item.key"
-            :class="['segmented-pill-item', { active: activeRow1Filter === item.key }]"
-            @click="activeRow1Filter = item.key"
-          >
-            {{ item.label }}
-          </div>
-        </div>
+        <UiSegmentedTabs v-model="activeRow1Filter" :options="row1Options" />
       </div>
 
-      <!-- Row 2: Action Segmented Bar (全部, 卖, 喂, 按需选择) + Reset Button -->
+      <!-- Row 2: 孵化行动分段页签 + 重置 -->
       <div class="control-row-2">
-        <div class="segmented-pill-container action-segmented">
-          <div
-            v-for="item in row2Options"
-            :key="item.key"
-            :class="['segmented-pill-item', { active: activeRow2Filter === item.key }]"
-            @click="activeRow2Filter = item.key"
-          >
-            {{ item.label }}
-          </div>
-        </div>
-
-        <button class="reset-btn" @click="resetFilters">重置</button>
+        <UiSegmentedTabs v-model="activeRow2Filter" :options="row2Options" />
+        <UiButton size="sm" variant="secondary" @click="resetFilters">重置</UiButton>
       </div>
 
-      <!-- Display Field Control Collapsible Panel -->
-      <div class="field-control-panel">
-        <div class="field-control-header" @click="isFieldPanelOpen = !isFieldPanelOpen">
-          <span class="panel-title">
-            <span class="blue-bar"></span>
-            显示字段 <span class="selected-count">(已选 {{ selectedFields.length }} 项)</span>
-          </span>
-          <span class="arrow" :class="{ open: isFieldPanelOpen }">▼</span>
-        </div>
-
-        <div v-show="isFieldPanelOpen" class="field-checkboxes-grid">
+      <!-- 显示字段折叠面板 -->
+      <UiAccordion v-model="isFieldPanelOpen" :title="`显示字段 (已选 ${selectedFields.length} 项)`">
+        <div class="field-checkboxes-grid">
           <label
             v-for="field in allFields"
             :key="field.key"
@@ -57,9 +31,9 @@
             <span class="field-label">{{ field.label }}</span>
           </label>
         </div>
-      </div>
+      </UiAccordion>
 
-      <!-- Table Header Row in Strict Standard Field Order -->
+      <!-- 表头行（木色条，按标准字段顺序） -->
       <div class="table-header-row">
         <div class="th-cell th-name" @click="toggleSort('name')">
           名称 <span class="sort-icon">{{ getSortIcon('name') }}</span>
@@ -76,22 +50,19 @@
       </div>
     </div>
 
-    <!-- Main Async Fetch Loading State -->
-    <div v-if="!isDataReady" class="global-loading-state">
-      <div class="global-loading-spinner"></div>
-      <span>正在拉取并解析魔物蛋数据...</span>
-    </div>
+    <!-- 加载态 -->
+    <UiEmptyState v-if="!isDataReady" type="loading" text="正在拉取并解析魔物蛋数据..." />
 
-    <!-- Main Table Row List -->
-    <div v-else class="data-grid-scroll pet-table-scroll" id="petTableGrid">
-      <div class="pet-table-container">
+    <!-- 表格主体（懒加载每批 60 项） -->
+    <div v-else class="pet-table-scroll" id="petTableGrid">
+      <div class="pet-table-container paper-panel">
         <div
-          v-for="pet in filteredPets"
+          v-for="pet in displayedPets"
           :key="pet.id"
           class="pet-table-row"
           @click="openDetail(pet)"
         >
-          <!-- Left: Name + Egg Icon -->
+          <!-- 名称 + 蛋图标 -->
           <div class="td-cell td-name">
             <div class="egg-icon-wrapper">
               <img
@@ -105,7 +76,7 @@
             <span class="pet-name" :class="`quality-text-${pet.quality}`">{{ pet.name }}</span>
           </div>
 
-          <!-- Dynamic Metric Cells in Strict Standard Field Order -->
+          <!-- 动态指标列（严格标准字段顺序） -->
           <div
             v-for="fKey in activeOrderedFields"
             :key="fKey"
@@ -113,9 +84,9 @@
             :class="`td-${fKey}`"
           >
             <template v-if="fKey === 'recommend'">
-              <span :class="['rec-badge', `rec-${pet.recommendationKey}`]">
+              <UiTag :tone="pet.recommendationKey === 'sell' ? 'danger' : (pet.recommendationKey === 'feed' ? 'accent' : 'gold')">
                 {{ pet.recommendationText }}
-              </span>
+              </UiTag>
             </template>
             <template v-else-if="fKey === 'eggTime'">
               {{ pet.formattedTime }}
@@ -137,89 +108,88 @@
             </template>
           </div>
         </div>
-      </div>
 
-      <div v-if="filteredPets.length === 0" class="no-data">未找到匹配的魔物蛋数据</div>
+        <UiEmptyState v-if="filteredPets.length === 0" text="未找到匹配的魔物蛋数据" />
+      </div>
     </div>
 
-    <!-- Detail Modal -->
-    <BaseModal :visible="detailModal.visible" :title="`${detailModal.pet.name || ''} `" @close="closeDetail">
-      <div class="detail-top">
-        <div class="detail-egg-icon">
-          <img
-            v-if="detailModal.pet.eggImg"
-            :src="getImageUrl(`/pet/eggs/${detailModal.pet.eggImg}.png`)"
-            :alt="detailModal.pet.name"
-            class="detail-egg-img"
-            loading="lazy"
-          />
-        </div>
-        <div class="detail-basic">
-          <div class="detail-title-row">
-            <span class="detail-title" :class="`quality-text-${detailModal.pet.quality}`">
-              {{ detailModal.pet.name }}
-            </span>
-            <span :class="['rec-badge', `rec-${detailModal.pet.recommendationKey}`]">
+    <!-- 详情弹窗 -->
+    <UiModal
+      v-model:visible="detailModal.visible"
+      :title="detailModal.pet && detailModal.pet.name ? detailModal.pet.name : '魔物蛋详情'"
+      max-width="820px"
+      scroll-id="petEggModalScroll"
+      @close="closeDetail"
+    >
+      <template v-if="detailModal.pet && detailModal.pet.name">
+        <UiInfoPanel>
+          <template #media>
+            <img
+              v-if="detailModal.pet.eggImg"
+              :src="getImageUrl(`/pet/eggs/${detailModal.pet.eggImg}.png`)"
+              :alt="detailModal.pet.name"
+              class="detail-egg-img"
+              loading="lazy"
+            />
+          </template>
+          <UiInfoRow label="星级">
+            <UiTag :quality="detailModal.pet.quality">{{ detailModal.pet.displayStar }}星</UiTag>
+          </UiInfoRow>
+          <UiInfoRow label="推荐">
+            <UiTag :tone="detailModal.pet.recommendationKey === 'sell' ? 'danger' : (detailModal.pet.recommendationKey === 'feed' ? 'accent' : 'gold')">
               {{ detailModal.pet.recommendationText }}
-            </span>
-          </div>
-          <div class="detail-labels">
-            <span class="rarity-badge" :class="`badge-${detailModal.pet.quality}`">{{ detailModal.pet.displayStar }}星</span>
-            <span class="mini-tag tag-time">孵化时长：{{ detailModal.pet.formattedTime }}</span>
-          </div>
-        </div>
-      </div>
+            </UiTag>
+          </UiInfoRow>
+          <UiInfoRow label="孵化时长" :value="detailModal.pet.formattedTime" />
+        </UiInfoPanel>
 
-      <!-- Core Metrics Table Section -->
-      <div class="detail-section">
-        <div class="section-title">孵化收益数据</div>
-        <div class="metrics-table">
-          <div class="table-row">
-            <span class="row-k">孵化时长</span>
-            <span class="row-v">{{ detailModal.pet.formattedTime }}</span>
-          </div>
-          <div class="table-row">
-            <span class="row-k">出售金币</span>
-            <span class="row-v gold-color">{{ detailModal.pet.sellPrice }} 金币</span>
-          </div>
-          <div class="table-row">
-            <span class="row-k">喂养经验</span>
-            <span class="row-v exp-color">{{ detailModal.pet.exp }} 经验</span>
-          </div>
-          <div class="table-row">
-            <span class="row-k">分钟金币率</span>
-            <span class="row-v highlight">{{ (detailModal.pet.goldPerMin || 0).toFixed(2) }} 金币/分</span>
-          </div>
-          <div class="table-row">
-            <span class="row-k">分钟经验率</span>
-            <span class="row-v highlight">{{ (detailModal.pet.expPerMin || 0).toFixed(2) }} 经验/分</span>
-          </div>
-          <div class="table-row">
-            <span class="row-k">金效 (售价 ÷ 经验)</span>
-            <span class="row-v">{{ (detailModal.pet.goldEff || 0).toFixed(2) }}</span>
-          </div>
-          <div class="table-row">
-            <span class="row-k">经效 (经验 ÷ 售价)</span>
-            <span class="row-v">{{ (detailModal.pet.expEff || 0).toFixed(4) }}</span>
-          </div>
-        </div>
-      </div>
+        <UiSection title="孵化收益数据">
+          <UiInfoRow label="孵化时长" :value="detailModal.pet.formattedTime" />
+          <UiInfoRow label="出售金币">
+            <span class="gold-val">{{ detailModal.pet.sellPrice }} 金币</span>
+          </UiInfoRow>
+          <UiInfoRow label="喂养经验">
+            <span class="exp-val">{{ detailModal.pet.exp }} 经验</span>
+          </UiInfoRow>
+          <UiInfoRow label="分钟金币率">
+            <span class="value-highlight">{{ (detailModal.pet.goldPerMin || 0).toFixed(2) }} 金币/分</span>
+          </UiInfoRow>
+          <UiInfoRow label="分钟经验率">
+            <span class="value-highlight">{{ (detailModal.pet.expPerMin || 0).toFixed(2) }} 经验/分</span>
+          </UiInfoRow>
+          <UiInfoRow label="金效 (售价 ÷ 经验)" :value="(detailModal.pet.goldEff || 0).toFixed(2)" />
+          <UiInfoRow label="经效 (经验 ÷ 售价)" :value="(detailModal.pet.expEff || 0).toFixed(4)" />
+        </UiSection>
 
+      </template>
 
-    </BaseModal>
+      <UiBackToTop scroll-container="#petEggModalScroll" />
+    </UiModal>
 
-    <BackToTop scroll-container="#petTableGrid" />
+    <UiBackToTop scroll-container="#petTableGrid" />
   </div>
 </template>
 
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import BaseModal from '../components/BaseModal.vue'
-import BackToTop from '../components/BackToTop.vue'
+import {
+  UiSegmentedTabs,
+  UiAccordion,
+  UiButton,
+  UiEmptyState,
+  UiModal,
+  UiInfoPanel,
+  UiInfoRow,
+  UiSection,
+  UiTag,
+  UiBackToTop
+} from '../components/ui/index.js'
 import { isBlacklisted } from '../config/blacklist.js'
 import { fetchWithFallback } from '../utils/request.js'
 import { getImageUrl } from '../utils/env.js'
+import { buildPetEggsData } from '../utils/petEggsData.js'
+import { useLazyList } from '../composables/useLazyList'
 
 const route = useRoute()
 const router = useRouter()
@@ -241,19 +211,19 @@ const premiumPoolNames = [
 
 // Filter options definitions
 const row1Options = [
-  { key: '全部', label: '全部' },
-  { key: '金币池', label: '金币池' },
-  { key: '氪金池', label: '氪金池' },
-  { key: '3星', label: '3星' },
-  { key: '4星', label: '4星' },
-  { key: '5星', label: '5星' }
+  { value: '全部', label: '全部' },
+  { value: '金币池', label: '金币池' },
+  { value: '氪金池', label: '氪金池' },
+  { value: '3星', label: '3星' },
+  { value: '4星', label: '4星' },
+  { value: '5星', label: '5星' }
 ]
 
 const row2Options = [
-  { key: '全部', label: '全部' },
-  { key: '卖', label: '卖' },
-  { key: '喂', label: '喂' },
-  { key: '按需选择', label: '按需选择' }
+  { value: '全部', label: '全部' },
+  { value: '卖', label: '卖' },
+  { value: '喂', label: '喂' },
+  { value: '按需选择', label: '按需选择' }
 ]
 
 // Filter & Control States
@@ -351,46 +321,20 @@ const calcRecommendation = (sellPrice, exp) => {
 
 onMounted(async () => {
   try {
-    const res = await fetchWithFallback('data/pet.json')
-    const json = res
-    const rawList = Object.values(json.datas || {})
+    let processed = null
 
-    const processed = rawList.map(p => {
-      const eggTimeMin = p.eggTime > 0 ? p.eggTime / 60 : 1
-      const goldPerMin = p.sellPrice / eggTimeMin
-      const expPerMin = p.exp / eggTimeMin
-      const goldEff = p.exp > 0 ? (p.sellPrice / p.exp) : 0
-      const expEff = p.sellPrice > 0 ? (p.exp / p.sellPrice) : 0
-      const rec = calcRecommendation(p.sellPrice, p.exp)
+    // 优先读取构建期预解析单文件
+    try {
+      const data = await fetchWithFallback('data/parsed/pet-eggs.json')
+      processed = data.pets
+    } catch (e) {
+      console.warn('parsed/pet-eggs.json 不可用，回退到原始多文件加载:', e?.message || e)
+    }
 
-      // Star Mapping: In game minimum star is 3 (1->3星, 2->4星, 3->5星)
-      const displayStar = p.star + 2
-
-      return {
-        id: p.monId || p.typeId,
-        eggImg: p.eggImg || p.typeId,
-        name: p.name,
-        star: p.star,
-        displayStar,
-        quality: displayStar >= 5 ? 5 : (displayStar === 4 ? 4 : 3),
-        des: p.des,
-        eggTime: p.eggTime,
-        eggTimeMin: Math.round(eggTimeMin * 10) / 10,
-        formattedTime: formatEggTime(p.eggTime),
-        sellPrice: p.sellPrice,
-        exp: p.exp,
-        goldPerMin,
-        expPerMin,
-        goldEff,
-        expEff,
-        recommendationKey: rec.key,
-        recommendationText: rec.text,
-        hp: p.hp,
-        atk: p.atk,
-        def: p.def,
-        dex: p.dex
-      }
-    })
+    if (!processed) {
+      const res = await fetchWithFallback('data/pet.json')
+      processed = buildPetEggsData({ petJson: res }).pets
+    }
 
     pets.value = processed
   } catch (err) {
@@ -478,6 +422,8 @@ const filteredPets = computed(() => {
   return result
 })
 
+const { displayedItems: displayedPets } = useLazyList(filteredPets, 60, '#petTableGrid')
+
 const openDetail = (pet) => {
   detailModal.value = { visible: true, pet }
   const query = { ...route.query, id: pet.id }
@@ -493,28 +439,27 @@ const closeDetail = () => {
 </script>
 
 <style scoped>
+/* 筛选区（半透明羊皮纸面板） */
 .pet-filter-sticky {
-  padding: 10px 16px;
+  padding: 10px 12px;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-bottom: 8px;
 }
 
-/* Control Row 1: Full Width 6-Column Segmented Bar */
+/* Row 1: 全宽分段页签均分 */
 .control-row-1 {
   width: 100%;
 }
-
-.pool-star-segmented {
-  display: flex;
+.control-row-1 .ui-segmented {
   width: 100%;
 }
-
-.pool-star-segmented .segmented-pill-item {
+.control-row-1 :deep(.ui-segmented__item) {
   flex: 1;
 }
 
-/* Control Row 2: Compact Content-Width Segmented Bar + Right Reset Button */
+/* Row 2: 紧凑分段 + 右侧重置按钮 */
 .control-row-2 {
   display: flex;
   align-items: center;
@@ -523,138 +468,18 @@ const closeDetail = () => {
   width: 100%;
 }
 
-.action-segmented {
-  display: inline-flex;
-  width: auto;
-}
-
-/* Segmented Pill Track Base */
-.segmented-pill-container {
-  align-items: center;
-  padding: 3px;
-  background: var(--input-bg, #f1f5f9);
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-  box-sizing: border-box;
-}
-
-/* Segmented Pill Item Base */
-.segmented-pill-item {
-  text-align: center;
-  padding: 6px 14px;
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-sub);
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  user-select: none;
-  white-space: nowrap;
-}
-
-.segmented-pill-item:hover {
-  color: var(--text-main);
-}
-
-.segmented-pill-item.active {
-  background: var(--card-bg, #ffffff);
-  color: var(--primary);
-  font-weight: 700;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.reset-btn {
-  padding: 6px 16px;
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
-  background: var(--card-bg, #ffffff);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-sub);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-
-.reset-btn:hover {
-  background: var(--hover-bg);
-  color: var(--text-main);
-}
-
-.reset-btn {
-  padding: 4px 14px;
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
-  background: var(--card-bg, #ffffff);
-  font-size: 13px;
-  color: var(--text-sub);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-
-.reset-btn:hover {
-  background: var(--hover-bg);
-  color: var(--text-main);
-}
-
-/* Display Field Control Panel */
-.field-control-panel {
-  background: var(--card-bg, #ffffff);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 10px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.field-control-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  user-select: none;
-}
-
-.panel-title {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text-main);
-}
-
-.blue-bar {
-  width: 4px;
-  height: 14px;
-  background: var(--primary);
-  border-radius: 2px;
-}
-
-.selected-count {
-  font-size: 11px;
-  color: var(--text-sub);
-  font-weight: normal;
-}
-
-.arrow {
-  font-size: 10px;
-  color: var(--text-sub);
-  transition: transform 0.2s ease;
-}
-
-.arrow.open {
-  transform: rotate(180deg);
-}
-
+/* 显示字段复选框网格（页面特有） */
 .field-checkboxes-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
   padding-top: 6px;
-  border-top: 1px dashed var(--border-color);
+}
+
+@media screen and (max-width: 768px) {
+  .field-checkboxes-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .field-checkbox-item {
@@ -662,20 +487,14 @@ const closeDetail = () => {
   align-items: center;
   gap: 6px;
   padding: 6px 10px;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  background: var(--input-bg, #f8fafc);
-  font-size: 12px;
+  border-radius: 4px;
+  border: 1px solid var(--border-faint);
+  background: rgba(43, 31, 21, 0.06);
+  font-size: 13px;
+  color: var(--text-main);
   cursor: pointer;
   user-select: none;
   transition: all 0.15s ease;
-}
-
-/* 手机端屏幕小于768px时字体改为10px */
-@media screen and (max-width: 768px) {
-  .field-checkbox-item {
-    font-size: 10px;
-  }
 }
 
 .field-checkbox-item input {
@@ -685,44 +504,46 @@ const closeDetail = () => {
 .checkbox-box {
   width: 14px;
   height: 14px;
-  border-radius: 4px;
-  border: 1.5px solid var(--text-sub);
+  border-radius: 3px;
+  border: 1.5px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.15s ease;
+  flex-shrink: 0;
 }
 
 .field-checkbox-item.checked {
-  border-color: var(--primary);
-  background: rgba(59, 130, 246, 0.06);
-  color: var(--primary);
-  font-weight: 600;
+  border-color: var(--accent-bright);
+  background: rgba(122, 154, 153, 0.14);
 }
 
 .field-checkbox-item.checked .checkbox-box {
-  background: var(--primary);
-  border-color: var(--primary);
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 .field-checkbox-item.checked .checkbox-box::after {
   content: '✓';
-  color: #ffffff;
+  color: var(--paper);
   font-size: 10px;
   font-weight: bold;
 }
 
-/* Table Header Row - Vertically & Horizontally Centered */
+/* 表头行：木色条 */
 .table-header-row {
   display: flex;
   align-items: center;
   padding: 8px 12px;
   font-size: 13px;
   font-weight: 700;
-  color: var(--primary);
-  background: rgba(59, 130, 246, 0.06);
-  border-radius: 8px;
+  color: var(--paper);
+  background: linear-gradient(180deg, var(--wood-soft), var(--wood));
+  border: 1px solid #17100a;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 0 rgba(223, 206, 179, 0.2);
   user-select: none;
+  flex-shrink: 0;
 }
 
 .th-cell {
@@ -733,6 +554,7 @@ const closeDetail = () => {
   text-align: center;
   gap: 4px;
   cursor: pointer;
+  min-width: 0;
 }
 
 .th-name {
@@ -743,35 +565,49 @@ const closeDetail = () => {
 
 .sort-icon {
   font-size: 11px;
-  opacity: 0.7;
+  opacity: 0.75;
 }
 
-/* Table Rows & Scroll */
+/* 表格滚动容器 */
 .pet-table-scroll {
-  padding-top: 4px;
+  flex: 1;
+  overflow-y: auto;
+  padding: 2px 0 14px 0;
+  box-sizing: border-box;
+  min-height: 0;
 }
 
 .pet-table-container {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  overflow: hidden;
 }
 
 .pet-table-row {
   display: flex;
   align-items: center;
-  padding: 10px 12px;
-  background: var(--card-bg, #ffffff);
-  border-bottom: 1px solid var(--border-color);
+  padding: 9px 12px;
+  background: transparent;
+  border-bottom: 1px solid var(--border-faint);
   cursor: pointer;
   transition: background 0.15s ease;
+  font-size: 13px;
+}
+
+.pet-table-row:last-child {
+  border-bottom: none;
+}
+
+/* 行斑马纹 */
+.pet-table-row:nth-child(even) {
+  background: rgba(43, 31, 21, 0.05);
 }
 
 .pet-table-row:hover {
-  background: var(--hover-bg);
+  background: rgba(122, 154, 153, 0.14);
 }
 
-/* Table Cell Vertically & Horizontally Centered */
+/* 单元格 */
 .td-cell {
   flex: 1;
   font-size: 13px;
@@ -781,6 +617,8 @@ const closeDetail = () => {
   align-items: center;
   justify-content: center;
   text-align: center;
+  line-height: 1.6;
+  min-width: 0;
 }
 
 .td-name {
@@ -812,162 +650,20 @@ const closeDetail = () => {
   text-overflow: ellipsis;
 }
 
-/* Recommendation Badges ("卖", "喂", "按需选择") */
-.rec-badge {
-  padding: 2px 8px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 700;
-  display: inline-block;
-}
-
-/* 卖 - 浅红背景粉字 */
-.rec-sell {
-  background: #fef2f2;
-  color: #ef4444;
-  border: 1px solid rgba(239, 68, 68, 0.2);
-}
-
-/* 喂 - 浅绿背景绿字 */
-.rec-feed {
-  background: #ecfdf5;
-  color: #10b981;
-  border: 1px solid rgba(16, 185, 129, 0.2);
-}
-
-/* 按需选择 - 浅黄/橙背景 */
-.rec-optional {
-  background: #fffbe8;
-  color: #d97706;
-  border: 1px solid rgba(217, 119, 6, 0.2);
-}
-
-/* Detail Modal Styles */
-.detail-top {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.detail-egg-icon {
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
+/* 详情弹窗内 */
 .detail-egg-img {
-  width: 44px;
-  height: 44px;
+  width: 72px;
+  height: 72px;
   object-fit: contain;
 }
 
-.detail-basic {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex: 1;
-}
-
-.detail-title-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.detail-title {
-  font-size: 18px;
+.gold-val {
+  color: var(--gold);
   font-weight: 700;
 }
 
-.detail-labels {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.tag-time {
-  background: rgba(59, 130, 246, 0.1);
-  color: var(--primary);
-}
-
-.detail-section {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.section-title {
-  font-size: 13px;
+.exp-val {
+  color: var(--q4);
   font-weight: 700;
-  color: var(--text-main);
-}
-
-.metrics-table {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  background: var(--bg);
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
-}
-
-.table-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 12px;
-}
-
-.row-k {
-  color: var(--text-sub);
-}
-
-.row-v {
-  font-weight: 600;
-  color: var(--text-main);
-}
-
-.row-v.highlight {
-  color: var(--primary);
-  font-weight: 700;
-}
-
-.gold-color { color: #d97706; }
-.exp-color { color: #9333ea; }
-
-.attr-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
-}
-
-.attr-cell {
-  background: var(--bg);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 6px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.attr-k {
-  font-size: 10px;
-  color: var(--text-sub);
-}
-
-.attr-v {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text-main);
-}
-
-.section-content {
-  font-size: 12px;
-  color: var(--text-sub);
-  line-height: 1.5;
 }
 </style>

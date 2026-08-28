@@ -1,106 +1,130 @@
-<template>
-  <Transition name="fade">
-    <div v-if="visible" class="item-modal-overlay" @click.self="handleClose">
-      <div class="item-modal-content monster-detail">
-        <button class="close-btn" @click="handleClose">✕</button>
-        <div v-if="renderError" class="error-state" style="padding:20px; color:red;">
-          渲染错误: {{ renderError }}
-        </div>
-        <template v-else>
-        
-        <!-- Top Info: Icon, Name, Labels -->
-        <div class="modal-header" v-if="monster">
-          <div class="icon-wrapper quality-bg-3">
-          <img 
-            :src="getImageUrl(`/images/PicHandBookPanel/${monster.icon}.png`)" 
-            :alt="monster.name"
-            class="item-icon"
-            @error="handleImgError"
+﻿<template>
+  <UiModal
+    :visible="visible"
+    :title="currentForm?.name || monster?.name || '怪物详情'"
+    max-width="820px"
+    scroll-id="monsterModalScroll"
+    :z-index="2000"
+    @update:visible="handleClose"
+  >
+    <div v-if="renderError" class="error-state">
+      渲染错误: {{ renderError }}
+    </div>
+    <template v-else>
+      <!-- ID 复制标签 -->
+      <div v-if="monster" class="id-line">
+        <UiTag tone="wood" class="copy-tag" @click="copyId(currentForm?.id)" :title="'点击复制 ID'">
+          ID: {{ currentForm?.id }}
+        </UiTag>
+      </div>
+
+      <!-- 顶部立绘区 -->
+      <div class="portrait-section paper-panel corner-nails" v-if="monster">
+        <div class="portrait-box">
+          <span class="portrait-label">{{ currentForm?.tabLabel || '当前形态' }}</span>
+          <UiTag v-if="monster.label || currentForm?.category" tone="accent" class="portrait-element">
+            {{ monster.label || currentForm?.category }}
+          </UiTag>
+          <img
+            v-show="showPortrait"
+            :src="portraitUrl"
+            :alt="currentForm?.name || monster.name"
+            class="portrait-img"
+            @error="handlePortraitError"
+            @load="handlePortraitLoad"
           />
         </div>
-          <div class="header-info">
-            <h2 class="main-title quality-text-3">{{ currentForm?.name || monster.name }}</h2>
-            <div class="tags-row mt-2" v-if="monster.label || monster.place?.length > 0">
-              <span v-if="monster.label" class="mini-tag tag-job">{{ monster.label }}</span>
-              <span class="mini-tag tag-time" v-for="p in monster.place" :key="p">{{ p }}</span>
-            </div>
-          </div>
+
+        <!-- 出没地点标签 -->
+        <div class="tags-row" v-if="monster.place?.length > 0">
+          <UiTag v-for="p in monster.place" :key="p" tone="default">{{ p }}</UiTag>
         </div>
 
-        <!-- Scrollable Area -->
-        <div class="modal-scroll-area" id="monsterModalScroll" v-if="monster">
-          <!-- Description -->
-      <div class="detail-section" v-if="monster.text">
-        <div class="section-title">图鉴描述</div>
-        <div class="section-content text-desc">{{ monster.text }}</div>
-      </div>
-
-      <!-- Weakness -->
-      <div class="detail-section mt-3" v-if="currentForm?.weakAttDes">
-        <div class="section-title">弱点属性</div>
-        <div class="section-content text-desc">
-          <span v-html="formatWeakAtt(currentForm.weakAttDes)"></span>
+        <!-- 描述 -->
+        <div class="monster-desc" v-if="monster.text">
+          {{ monster.text }}
         </div>
       </div>
 
-      <!-- Forms Tabs -->
-      <div class="detail-section" v-if="allForms.length > 1">
-        <div class="tabs-container">
-          <button 
-            v-for="(form, idx) in allForms" 
-            :key="idx"
-            class="tab-btn"
-            :class="{ active: currentFormIndex === idx }"
-            @click="selectForm(idx)"
-          >
-            {{ form.name || '形态' + (idx + 1) }}
-          </button>
-        </div>
+      <!-- 形态切换页签 -->
+      <div class="forms-tabs" v-if="allForms.length > 1">
+        <UiTabs v-model="currentFormIndex" :options="formTabOptions" />
       </div>
 
-      <!-- Form Content -->
+      <!-- 形态内容 -->
       <div class="form-content" v-if="currentForm">
-        
-        <!-- Base Stats -->
-        <div class="detail-section" v-if="currentForm.stats?.length > 0">
-          <div class="section-title">战斗面板</div>
+        <!-- 1. 战斗面板 -->
+        <UiSection v-if="currentForm.rawStats" title="战斗面板">
+          <!-- 目标等级滑块 -->
+          <div class="slider-group paper-panel-solid">
+            <div class="slider-header">
+              <span class="slider-title">目标等级</span>
+              <span class="slider-val">Lv.{{ currentLevel }} / 101</span>
+            </div>
+            <input
+              type="range"
+              min="1"
+              max="101"
+              v-model.number="currentLevel"
+              class="calc-range-slider"
+            />
+          </div>
+
+          <h4 class="attr-subheading">基础属性（随等级成长）</h4>
           <div class="attr-grid">
-            <div class="attr-cell" v-for="stat in (currentForm.stats || [])" :key="stat?.key || Math.random()">
-              <span class="attr-k" v-if="stat">{{ stat.label }}</span>
-              <span class="attr-v" v-if="stat">{{ stat.value }}</span>
+            <div class="attr-cell" v-for="stat in growableStats" :key="stat.key">
+              <span class="attr-k">{{ stat.label }}</span>
+              <span class="attr-values-row">
+                <span class="attr-val-base">{{ stat.baseVal }}</span>
+                <span class="attr-arrow">→</span>
+                <span class="attr-val-calc">{{ stat.calcVal }}</span>
+              </span>
             </div>
           </div>
-          <div class="tags-row mt-2" v-if="currentForm.keyList && currentForm.keyList.length > 0">
-            <span class="mini-tag bg-gray" v-for="k in currentForm.keyList" :key="k">{{ k }}</span>
-          </div>
-        </div>
 
-        <!-- Buffs / Elite Affixes -->
-        <div class="detail-section" v-if="currentForm.buffs?.length > 0">
-          <div class="section-title">可能携带效果</div>
+          <template v-if="nonGrowableStats.length > 0">
+            <h4 class="attr-subheading">其他属性（固定值）</h4>
+            <div class="attr-grid">
+              <div class="attr-cell" v-for="stat in nonGrowableStats" :key="stat.key">
+                <span class="attr-k">{{ stat.label }}</span>
+                <span class="attr-v">{{ stat.value }}</span>
+              </div>
+            </div>
+          </template>
+
+          <div class="tags-row" v-if="currentForm.keyList && currentForm.keyList.length > 0">
+            <UiTag v-for="k in currentForm.keyList" :key="k" tone="gold">{{ k }}</UiTag>
+          </div>
+        </UiSection>
+
+        <!-- 2. 弱点属性 -->
+        <UiSection v-if="currentForm.weakAttDes" title="弱点属性">
+          <p class="text-desc" v-html="formatWeakAtt(currentForm.weakAttDes)"></p>
+        </UiSection>
+
+        <!-- 3. 可能携带效果 -->
+        <UiSection v-if="currentForm.buffs?.length > 0" title="可能携带效果">
           <div class="skill-list">
             <div class="skill-item" v-for="buff in (currentForm.buffs || [])" :key="buff?.id || Math.random()">
               <div v-if="buff">
                 <div class="skill-header">
                   <span class="skill-name">{{ buff.nameAdd }}{{ buff.name }}</span>
-                  <!-- 权重暂时隐藏: <span class="skill-cost" v-if="buff.weight">权重: {{ buff.weight }}</span> -->
                 </div>
                 <div class="skill-desc">{{ buff.des }}</div>
                 <div class="skill-mechanics" v-if="buff.muPower || buff.baseDamage || buff.repelForce || buff.rectRange || (buff.addBuffs && buff.addBuffs.length > 0)">
-                  <span v-if="buff.muPower" class="mech-tag dmg">倍率{{ buff.damageType ? '(' + formatDamageType(buff.damageType) + ')' : '' }}: {{ Math.round(buff.muPower * 100) }}%</span>
-                  <span v-if="buff.baseDamage" class="mech-tag dmg">基础伤害: {{ buff.baseDamage }}</span>
-                  <span v-if="buff.repelForce" class="mech-tag cc">隐藏击退: {{ buff.repelForce }}</span>
-                  <span v-if="buff.rectRange" class="mech-tag cc">判定范围: {{ buff.rectRange }}</span>
-                  <span v-if="buff.addBuffs && buff.addBuffs.length > 0" class="mech-tag dmg">附加状态: {{ buff.addBuffs.join(', ') }}</span>
+                  <UiTag v-if="buff.muPower" tone="danger">倍率{{ buff.damageType ? '(' + formatDamageType(buff.damageType) + ')' : '' }}: {{ Math.round(buff.muPower * 100) }}%</UiTag>
+                  <UiTag v-if="buff.baseDamage" tone="danger">基础伤害: {{ buff.baseDamage }}</UiTag>
+                  <UiTag v-if="buff.repelForce" tone="gold">隐藏击退: {{ buff.repelForce }}</UiTag>
+                  <UiTag v-if="buff.rectRange" tone="gold">判定范围: {{ buff.rectRange }}</UiTag>
+                  <UiTag v-if="buff.addBuffs && buff.addBuffs.length > 0" tone="danger">附加状态: {{ buff.addBuffs.join(', ') }}</UiTag>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </UiSection>
 
-        <!-- Skills -->
-        <div class="detail-section" v-if="currentForm.skills?.length > 0">
-          <div class="section-title">技能组</div>
+        <!-- 4. 技能组 -->
+        <UiSection v-if="currentForm.skills?.length > 0" title="技能组">
           <div class="skill-list">
             <div class="skill-item" v-for="skill in (currentForm.skills || [])" :key="skill?.id || Math.random()">
               <div v-if="skill">
@@ -110,57 +134,43 @@
                 </div>
                 <div class="skill-desc">{{ skill.des }}</div>
                 <div class="skill-mechanics" v-if="(skill.muPowers && skill.muPowers.length > 0) || skill.baseDamage || skill.repelForce || skill.repelTime">
-                  <span v-if="skill.muPowers && skill.muPowers.length > 0" class="mech-tag dmg">倍率: {{ skill.muPowers.map(m => (m.type ? formatDamageType(m.type) : '') + Math.round(m.val * 100) + '%').join(' / ') }}</span>
-                  <span v-if="skill.baseDamage" class="mech-tag dmg">基础伤害: {{ skill.baseDamage }}</span>
-                  <span v-if="skill.repelForce" class="mech-tag cc">击退力: {{ skill.repelForce }}</span>
-                  <span v-if="skill.repelTime" class="mech-tag cc">硬直时长: {{ skill.repelTime }}s</span>
+                  <UiTag v-if="skill.muPowers && skill.muPowers.length > 0" tone="danger">倍率: {{ skill.muPowers.map(m => (m.type ? formatDamageType(m.type) : '') + Math.round(m.val * 100) + '%').join(' / ') }}</UiTag>
+                  <UiTag v-if="skill.baseDamage" tone="danger">基础伤害: {{ skill.baseDamage }}</UiTag>
+                  <UiTag v-if="skill.repelForce" tone="gold">击退力: {{ skill.repelForce }}</UiTag>
+                  <UiTag v-if="skill.repelTime" tone="gold">硬直时长: {{ skill.repelTime }}s</UiTag>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </UiSection>
 
-        <!-- Drops / Rewards -->
-        <div class="detail-section" v-if="activeRewards?.length > 0">
-          <div class="section-title">战利品掉落</div>
-          <div class="reward-group">
-            <div v-for="(group, gIdx) in activeRewards" :key="gIdx" class="reward-pool">
-              <div class="reward-items">
-                <div 
-                  v-for="(r, rIdx) in (group.rules || [])" 
-                  :key="rIdx" 
-                  class="reward-item"
-                  @click="handleRewardClick(r)"
-                  :class="{ clickable: r && (r.mode === 'item' || r.mode === 'equipGroup') && r.targetId }"
-                >
-                  <div v-if="r" style="display:flex; width:100%;">
-                    <img :src="getImageUrl(r.targetImg)" class="r-icon" @error="handleImgError" />
-                    <div class="r-info">
-                      <span class="r-name" :class="`quality-text-${r.targetQuality}`">{{ r.targetName }}{{ group.min === group.max ? (group.min > 0 ? ' x' + group.min : '') : ' x' + group.min + '-' + group.max }}</span>
-                      <span class="r-prob" v-if="r.actualProb">{{ (r.actualProb * 100).toFixed(1) }}%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <!-- 5. 战利品掉落 -->
+        <UiSection v-if="activeRewards?.length > 0" title="战利品掉落">
+          <div v-for="(group, gIdx) in activeRewards" :key="gIdx" class="reward-pool paper-panel-solid">
+            <div class="reward-items">
+              <UiRewardCard
+                v-for="(r, rIdx) in (group.rules || [])"
+                :key="rIdx"
+                :rule="r ? { ...r, targetImg: getImageUrl(r.targetImg), min: group.min, max: group.max } : {}"
+                :clickable="!!(r && (r.mode === 'item' || r.mode === 'equipGroup') && r.targetId)"
+                @click="r && handleRewardClick(r)"
+              />
             </div>
           </div>
-        </div>
+        </UiSection>
       </div>
-        </div>
-        </template>
-        <BackToTop scroll-container="#monsterModalScroll" />
-      </div>
-    </div>
-  </Transition>
+    </template>
+    <UiBackToTop scroll-container="#monsterModalScroll" />
+  </UiModal>
 </template>
 
 <script setup>
-import { ref, computed, watch, onErrorCaptured } from 'vue'
+import { ref, computed, watch, onErrorCaptured, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import BaseModal from './BaseModal.vue'
-import BackToTop from './BackToTop.vue'
+import { UiModal, UiSection, UiTag, UiTabs, UiRewardCard, UiBackToTop } from './ui/index.js'
 import { getImageUrl } from '../utils/env'
-import { fetchMonsterData } from '../utils/monsterParser'
+import { fetchMonsterData, fetchMonsterLevelStrength, fetchFullMonsterHandbook } from '../utils/monsterParser'
+import { translateStatName } from '../utils/gameMappings'
 
 const props = defineProps({
   visible: Boolean
@@ -173,8 +183,20 @@ const route = useRoute()
 
 const monster = ref(null)
 const currentFormIndex = ref(0)
-const title = ref('怪物详情')
 const renderError = ref(null)
+
+const levelStrengthMap = ref({})
+const currentLevel = ref(1)
+const portraitUrl = ref('')
+const showPortrait = ref(true)
+
+onMounted(async () => {
+  try {
+    levelStrengthMap.value = await fetchMonsterLevelStrength()
+  } catch (err) {
+    console.error('Failed to load monster level strength:', err)
+  }
+})
 
 onErrorCaptured((err) => {
   renderError.value = err.message || String(err)
@@ -184,12 +206,31 @@ onErrorCaptured((err) => {
 
 watch(() => route.query.id, async (newId) => {
   if (newId && route.path.includes('monsters')) {
-    const allMons = await fetchMonsterData()
-    const found = allMons.find(m => m.id === newId)
-    if (found) {
-      monster.value = found
-      title.value = found.name
-      currentFormIndex.value = 0
+    const [mons, fullMons] = await Promise.all([
+      fetchMonsterData(),
+      fetchFullMonsterHandbook()
+    ])
+    
+    let foundMonster = null
+    let foundFormIndex = 0
+    
+    const searchMonster = (m) => {
+      const forms = m.forms || []
+      const summons = m.summons || []
+      const allF = [...forms, ...summons]
+      const idx = allF.findIndex(f => f.id === newId)
+      if (idx !== -1) {
+        foundMonster = m
+        foundFormIndex = idx
+        return true
+      }
+      return false
+    }
+
+    const isFound = mons.some(searchMonster) || fullMons.some(searchMonster)
+    if (isFound && foundMonster) {
+      monster.value = foundMonster
+      currentFormIndex.value = foundFormIndex
       emit('update:visible', true)
     }
   }
@@ -211,13 +252,88 @@ const allForms = computed(() => {
   return [...forms, ...summons]
 })
 
+const formTabOptions = computed(() =>
+  allForms.value.map((f, idx) => ({ value: idx, label: f.tabLabel || f.name || '形态' + (idx + 1) }))
+)
+
 const currentForm = computed(() => {
   if (!allForms.value.length) return null
   return allForms.value[currentFormIndex.value]
 })
 
+// 形态页签切换时同步 URL（与 selectForm 行为一致）
+watch(currentFormIndex, (idx) => {
+  const form = allForms.value[idx]
+  if (form) {
+    router.replace({ query: { ...route.query, id: form.id } })
+  }
+})
+
+watch(currentForm, (newForm) => {
+  if (newForm) {
+    currentLevel.value = newForm.level || 1
+    showPortrait.value = true
+    portraitUrl.value = getImageUrl(`/images/MonstersView/${newForm.portraitName || 'colect_mon_' + newForm.id}.png`)
+  }
+}, { immediate: true })
+
+const handlePortraitLoad = () => {
+  showPortrait.value = true
+}
+
+const handlePortraitError = (e) => {
+  const currentSrc = e.target.src
+  const cleanBaseId = monster.value?.id ? String(monster.value.id).replace('hero_', '') : ''
+  const variantId = currentForm.value?.id || ''
+
+  // 1. If MonstersView/colect_mon_... fails, try PicHandBookPanel/colect_mon_...
+  if (currentSrc.includes('/images/MonstersView/')) {
+    e.target.src = currentSrc.replace('/images/MonstersView/', '/images/PicHandBookPanel/')
+    return
+  }
+
+  // 2. Try spelling variant (colect_mon_xxx -> colectr_mon_xxx) in both dirs
+  if (currentSrc.includes('colect_mon_')) {
+    e.target.src = currentSrc.replace('colect_mon_', 'colectr_mon_')
+    return
+  }
+  if (currentSrc.includes('/images/MonstersView/') && currentSrc.includes('colectr_mon_')) {
+    e.target.src = currentSrc.replace('/images/MonstersView/', '/images/PicHandBookPanel/')
+    return
+  }
+
+  // 3. If variant's colect_mon/colectr_mon failed in both dirs, try base monster's colect_mon
+  if ((currentSrc.includes('colect_') || currentSrc.includes('colectr_')) && variantId && variantId !== cleanBaseId && cleanBaseId) {
+    portraitUrl.value = getImageUrl(`/images/MonstersView/colect_mon_${cleanBaseId}.png`)
+    return
+  }
+
+  // 4. If base colect_mon failed, try form's raw icon
+  const rawIcon = currentForm.value?.icon || monster.value?.icon
+  if (rawIcon) {
+    portraitUrl.value = getImageUrl(`/images/MonstersView/${rawIcon}.png`)
+    return
+  }
+
+  // 5. Otherwise hide
+  showPortrait.value = false
+}
+
 const selectForm = (idx) => {
   currentFormIndex.value = idx
+  const form = allForms.value[idx]
+  if (form) {
+    router.replace({ query: { ...route.query, id: form.id } })
+  }
+}
+
+const copyId = (id) => {
+  if (!id) return
+  navigator.clipboard.writeText(id).then(() => {
+    alert('已复制 ID: ' + id)
+  }).catch(err => {
+    console.error('Failed to copy ID:', err)
+  })
 }
 
 const activeRewards = computed(() => {
@@ -227,13 +343,49 @@ const activeRewards = computed(() => {
   return monster.value?.baseRewards || []
 })
 
+const growableStats = computed(() => {
+  if (!currentForm.value || !currentForm.value.rawStats) return []
+  const raw = currentForm.value.rawStats
+  const coef = levelStrengthMap.value[String(currentLevel.value)]?.coefficient || 1.0
+  const keys = ['maxHp', 'phyAtk', 'magicAtk', 'phyDef', 'magicDef']
+  
+  return keys.map(key => {
+    const baseVal = raw[key] || 0
+    if (baseVal === 0) return null
+    return {
+      key,
+      label: translateStatName(key),
+      baseVal,
+      calcVal: Math.floor(baseVal * coef)
+    }
+  }).filter(Boolean)
+})
+
+const nonGrowableStats = computed(() => {
+  if (!currentForm.value || !currentForm.value.rawStats) return []
+  const raw = currentForm.value.rawStats
+  const keys = [
+    'crit', 'critRes', 'critDam', 'atkRange', 'atkFloatMin', 'atkFloatMax',
+    'runSpeed', 'repelRes', 'phyAtkPen', 'magicAtkPen', 'rebDam', 'vampire', 'cureAdd'
+  ]
+  
+  return keys.map(key => {
+    const val = raw[key] || 0
+    if (val === 0) return null
+    return {
+      key,
+      label: translateStatName(key),
+      value: val
+    }
+  }).filter(Boolean)
+})
+
 const handleImgError = (e) => {
   e.target.style.display = 'none'
 }
 
 const handleRewardClick = (rule) => {
   if ((rule.mode === 'item' || rule.mode === 'equipGroup') && rule.targetId) {
-    // Navigate globally to item detail using itemId
     router.push({ query: { ...route.query, itemId: rule.targetId } })
   }
 }
@@ -255,345 +407,264 @@ const formatDamageType = (type) => {
 </script>
 
 <style scoped>
-.item-modal-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--bg-color, #f5f6f8);
-  z-index: 1000;
+.id-line {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 0;
-  overflow: hidden;
+  justify-content: flex-end;
+  margin-bottom: 10px;
 }
-
-.item-modal-content {
-  background: var(--bg-color, #f5f6f8);
-  width: 100%;
-  max-width: none;
-  height: 100%;
-  border-radius: 0;
-  box-shadow: none;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-}
-
-.close-btn {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 32px;
-  height: 32px;
-  border-radius: 4px;
-  background: transparent;
-  border: none;
-  font-size: 20px;
-  color: var(--text-sub, #64748b);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.copy-tag {
   cursor: pointer;
-  z-index: 10;
-  transition: all 0.2s ease;
+  user-select: none;
+}
+.copy-tag:active {
+  opacity: 0.6;
 }
 
-.close-btn:hover {
-  color: var(--primary, #3b82f6);
-  background-color: var(--bg-hover, rgba(0,0,0,0.05));
-}
-
-.monster-detail {
+/* 立绘区 */
+.portrait-section {
+  padding: 18px 14px;
   display: flex;
   flex-direction: column;
-}
-
-.modal-header {
-  padding: 24px;
-  display: flex;
-  gap: 20px;
   align-items: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  margin-bottom: 16px;
 }
-
-
-
-.icon-wrapper {
-  width: 80px;
-  height: 80px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.5);
+.portrait-box {
+  position: relative;
+  width: 100%;
+  max-width: 260px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
-  overflow: hidden;
+  background: rgba(43, 31, 21, 0.08);
+  border-radius: 6px;
+  border: 1px dashed var(--border-color, #8f7351);
+  padding: 14px 12px;
+  box-shadow: inset 0 2px 8px rgba(43, 31, 21, 0.2);
 }
-
-.item-icon {
-  width: 64px;
-  height: 64px;
+.portrait-label {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--wood, #2b1f15);
+  color: var(--paper, #dfceb3);
+  font-weight: 700;
+  z-index: 2;
+}
+.portrait-element {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+}
+.portrait-img {
+  max-height: 190px;
+  max-width: 100%;
   object-fit: contain;
+  margin-top: 12px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
 }
-
-.header-info {
-  flex: 1;
-}
-
-.title-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.main-title {
-  margin: 0 0 8px;
-  font-size: 20px;
-  font-weight: bold;
-}
-
 .tags-row {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
 }
-
-.modal-scroll-area {
-  flex: 1;
-  overflow-y: auto;
-  padding: 24px;
-  background: var(--bg-color, #fff);
-  color: var(--text-color, #333);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.mt-2 { margin-top: 8px; }
-.mt-3 { margin-top: 12px; }
-.bg-gray { background: var(--border-color); color: var(--text-main); }
-
-.detail-section {
-  background: var(--hover-bg);
-  border-radius: 12px;
-  padding: 16px;
-}
-
-.section-title {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 12px;
-  color: var(--text-main);
-  display: flex;
-  align-items: center;
-}
-
-.section-title::before {
-  content: '';
-  display: inline-block;
-  width: 4px;
-  height: 14px;
-  background: var(--primary);
-  border-radius: 2px;
-  margin-right: 8px;
-}
-
-.text-desc {
+.monster-desc {
   font-size: 14px;
-  color: var(--text-sub);
-  line-height: 1.6;
+  color: var(--text-main, #3e2a14);
+  line-height: 1.75;
+  margin-top: 14px;
+  text-align: justify;
+  background: rgba(43, 31, 21, 0.07);
+  border: 1px solid var(--border-faint, rgba(143, 115, 81, 0.25));
+  padding: 12px 14px;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  text-indent: 2em;
 }
 
-.tabs-container {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.tab-btn {
-  padding: 6px 16px;
-  border-radius: 20px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text-sub);
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.tab-btn.active {
-  background: var(--primary);
-  color: white;
-  border-color: var(--primary);
+/* 形态页签 */
+.forms-tabs {
+  margin-bottom: 14px;
 }
 
 .form-content {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
+  padding-bottom: 20px;
 }
 
+/* 滑块 */
+.slider-group {
+  padding: 12px 14px;
+  margin-bottom: 12px;
+}
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.slider-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main, #3e2a14);
+}
+.slider-val {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent-ink, #557574);
+}
+.dark-mode .slider-val {
+  color: var(--accent-bright, #93b3b2);
+}
+.calc-range-slider {
+  width: 100%;
+  cursor: pointer;
+  accent-color: var(--accent-bright, #7a9a99);
+  height: 6px;
+}
+
+/* 属性 */
+.attr-subheading {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted, #6b5134);
+  margin: 14px 0 8px;
+  border-left: 3px solid var(--accent-bright, #7a9a99);
+  padding-left: 8px;
+}
 .attr-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 8px;
 }
-
-@media (min-width: 480px) {
-  .attr-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
 .attr-cell {
-  background: var(--card-bg);
-  padding: 8px 12px;
-  border-radius: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
+  padding: 8px 11px;
+  background: rgba(43, 31, 21, 0.07);
+  border: 1px solid var(--border-faint, rgba(143, 115, 81, 0.25));
+  border-radius: 3px;
   font-size: 13px;
-  border: 1px solid var(--border-color);
+  min-width: 0;
+}
+.attr-k {
+  color: var(--text-muted, #6b5134);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.attr-v {
+  font-weight: 700;
+  color: var(--text-main, #3e2a14);
+}
+.attr-values-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.attr-val-base {
+  color: var(--text-faint, #8a6d4d);
+  text-decoration: line-through;
+  font-size: 12px;
+}
+.attr-arrow {
+  color: var(--text-faint, #8a6d4d);
+}
+.attr-val-calc {
+  color: var(--accent-ink, #557574);
+}
+.dark-mode .attr-val-calc {
+  color: var(--accent-bright, #93b3b2);
 }
 
-.attr-k { color: var(--text-sub); }
-.attr-v { font-weight: 600; color: var(--text-main); }
+.text-desc {
+  font-size: 14px;
+  color: var(--text-main, #3e2a14);
+  line-height: 1.7;
+  margin: 0;
+}
 
+/* 技能 */
 .skill-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
-
 .skill-item {
-  background: var(--card-bg);
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  border-bottom: 1px dashed var(--border-soft, rgba(143, 115, 81, 0.45));
+  padding-bottom: 12px;
 }
-
+.skill-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
 .skill-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
 }
-
 .skill-name {
-  font-weight: 600;
-  color: var(--primary);
   font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main, #3e2a14);
 }
-
 .skill-cost {
   font-size: 12px;
-  color: #f59e0b;
+  color: var(--accent-ink, #557574);
+  font-weight: 700;
 }
-
+.dark-mode .skill-cost {
+  color: var(--accent-bright, #93b3b2);
+}
 .skill-desc {
   font-size: 13px;
-  color: var(--text-sub);
-  line-height: 1.5;
+  color: var(--text-muted, #6b5134);
+  line-height: 1.65;
 }
-
 .skill-mechanics {
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
-.mech-tag {
-  font-size: 11px;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background: rgba(0,0,0,0.05);
-}
-
-.mech-tag.dmg { color: #ef4444; background: rgba(239, 68, 68, 0.1); }
-.mech-tag.cc { color: #f97316; background: rgba(249, 115, 22, 0.1); }
-.mech-tag.aoe { color: #8b5cf6; background: rgba(139, 92, 246, 0.1); }
-.mech-tag.debuff { color: #10b981; background: rgba(16, 185, 129, 0.1); }
-
-.reward-subtitle {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-sub);
-  margin-bottom: 8px;
-}
-
+/* 掉落 */
 .reward-pool {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
   padding: 12px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
-
-.pool-title {
-  font-size: 12px;
-  color: var(--text-sub);
-  margin-bottom: 12px;
-  text-align: center;
-  background: var(--hover-bg);
-  padding: 4px;
-  border-radius: 4px;
+.reward-pool:last-child {
+  margin-bottom: 0;
 }
-
 .reward-items {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 8px;
 }
 
-.reward-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: var(--hover-bg);
-  padding: 8px;
-  border-radius: 6px;
+.error-state {
+  text-align: center;
+  padding: 40px;
+  color: var(--danger, #8b0000);
 }
 
-.reward-item.clickable {
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.reward-item.clickable:hover {
-  background: rgba(59, 130, 246, 0.1);
-}
-
-.r-icon {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-}
-
-.r-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.r-name {
-  font-size: 13px;
-  font-weight: 500;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.r-prob {
-  font-size: 12px;
-  color: var(--text-sub);
+@media (max-width: 600px) {
+  .attr-grid, .reward-items {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

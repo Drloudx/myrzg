@@ -1,0 +1,3856 @@
+{
+    "datas":
+    {
+        "hero_001":
+        {
+            "typeId": "hero_001",
+            "des": "拿着小锤子的大辫子小女孩战士",
+            "campName": "营地，求生者草原",
+            "icon": "at001_0",
+            "name": "希尔",
+            "name2": "传承的末裔",
+            "img": "chara001_0",
+            "imgPos": "43_-143",
+            "rare": 3,
+            "job": 1,
+            "element": 1,
+            "itemFavor":
+            {
+                "item_27003": 300,
+                "item_27004": 300,
+                "item_27005": 300
+            },
+            "giftType": 1,
+            "viewData":
+            {
+                "height": 2,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_001_girl",
+                "skinName": "skill_off",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front",
+                    "attack2_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back",
+                    "attack2_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "希尔",
+                "name2": "传承的末裔",
+                "phyAtk": 320,
+                "magicAtk": 230,
+                "phyDef": 300,
+                "magicDef": 141,
+                "maxHp": 1824,
+                "atkSpeed": 0.7,
+                "crit": 10,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 2,
+                "atkFloatMin": 0.9,
+                "atkFloatMax": 1.1,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 460,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "人类",
+                    "战士",
+                    "女性"
+                ]
+            },
+            "talentSkillList":
+            [
+                "00104"
+            ],
+            "skillList":
+            [
+                "00102",
+                "00103"
+            ],
+            "normalAttack": "00101",
+            "paSkillList":
+            {
+                "starSkill1": "00105",
+                "starSkill2": "00106",
+                "starSkill3": "00107",
+                "starSkill4": "00108"
+            }
+        },
+        "hero_002":
+        {
+            "typeId": "hero_002",
+            "des": "米托拉（旧）",
+            "icon": "at002_0",
+            "name": "米托拉（旧）",
+            "img": "chara002_0",
+            "imgPos": "-417_-675",
+            "campName": "荒野客",
+            "hide": true,
+            "rare": 3,
+            "job": 5,
+            "element": 2,
+            "itemFavor":
+            {
+                "item_1008": 10,
+                "item_1009": 1
+            },
+            "viewData":
+            {
+                "height": 2,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_002",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front",
+                    "attack2_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back",
+                    "attack2_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "米托拉",
+                "phyAtk": 400,
+                "magicAtk": 330,
+                "phyDef": 170,
+                "magicDef": 84,
+                "maxHp": 1035,
+                "atkSpeed": 0.875,
+                "crit": 13,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 2,
+                "atkFloatMin": 0.8,
+                "atkFloatMax": 1.2,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 450,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "刺客",
+                    "女性"
+                ]
+            },
+            "talentSkillList":
+            [
+                "00204"
+            ],
+            "skillList":
+            [
+                "00202",
+                "00203"
+            ],
+            "normalAttack": "00201",
+            "paSkillList":
+            {
+                "starSkill1": "00205",
+                "starSkill2": "00206",
+                "starSkill3": "00207",
+                "starSkill4": "00208"
+            }
+        },
+        "hero_008":
+        {
+            "typeId": "hero_008",
+            "des": "夏库塔拉",
+            "icon": "at008_0",
+            "name": "夏库塔拉",
+            "name2": "烈焰舞者",
+            "campName": "妖精舞团，秋日荒野",
+            "img": "chara008_0",
+            "imgPos": "-9_-23",
+            "rare": 3,
+            "job": 3,
+            "element": 2,
+            "itemFavor":
+            {
+                "item_27009": 60,
+                "item_27010": 85,
+                "item_27011": 120
+            },
+            "giftType": 3,
+            "viewData":
+            {
+                "stepSoundType": "wingsoft",
+                "height": 2,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_008",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "夏库塔拉",
+                "phyAtk": 317,
+                "magicAtk": 423,
+                "phyDef": 158,
+                "magicDef": 202,
+                "maxHp": 1333,
+                "atkSpeed": 0.735,
+                "crit": 12,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 5.5,
+                "atkFloatMin": 0.95,
+                "atkFloatMax": 1.05,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 600,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "辅助",
+                    "植物"
+                ]
+            },
+            "talentSkillList":
+            [
+                "00804"
+            ],
+            "skillList":
+            [
+                "00802",
+                "00803"
+            ],
+            "normalAttack": "00801",
+            "paSkillList":
+            {
+                "starSkill1": "00805",
+                "starSkill2": "00806",
+                "starSkill3": "00807",
+                "starSkill4": "00808"
+            }
+        },
+        "hero_031":
+        {
+            "typeId": "hero_031",
+            "des": "波特温",
+            "icon": "at031_0",
+            "name": "波特温",
+            "name2": "迷途旅人",
+            "img": "chara031_0",
+            "imgPos": "0_-261",
+            "campName": "荒野客",
+            "rare": 3,
+            "job": 4,
+            "element": 3,
+            "itemFavor":
+            {
+                "item_27009": 60,
+                "item_27010": 85,
+                "item_27011": 120
+            },
+            "giftType": 3,
+            "viewData":
+            {
+                "height": 2.1,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_031",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front",
+                    "attack2_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back",
+                    "attack2_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "波特温",
+                "phyAtk": 382,
+                "magicAtk": 332,
+                "phyDef": 181,
+                "magicDef": 68,
+                "maxHp": 1298,
+                "atkSpeed": 0.805,
+                "crit": 13,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 8,
+                "atkFloatMin": 0.95,
+                "atkFloatMax": 1.05,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 500,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                []
+            },
+            "talentSkillList":
+            [
+                "03104"
+            ],
+            "skillList":
+            [
+                "03102",
+                "03103"
+            ],
+            "normalAttack": "03101",
+            "paSkillList":
+            {
+                "starSkill1": "03105",
+                "starSkill2": "03106",
+                "starSkill3": "03107",
+                "starSkill4": "03108"
+            }
+        },
+        "hero_025":
+        {
+            "typeId": "hero_025",
+            "des": "嘉莉缇",
+            "icon": "at025_0",
+            "name": "嘉莉缇",
+            "name2": "金弦猎手",
+            "img": "chara025_0",
+            "imgPos": "-7_-138",
+            "campName": "金弦之厅，黑森林",
+            "rare": 4,
+            "job": 4,
+            "element": 4,
+            "itemFavor":
+            {
+                "item_27003": 60,
+                "item_27004": 85,
+                "item_27005": 120
+            },
+            "giftType": 1,
+            "viewData":
+            {
+                "height": 2.2,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_025",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "嘉莉缇",
+                "phyAtk": 430,
+                "magicAtk": 328,
+                "phyDef": 206,
+                "magicDef": 75,
+                "maxHp": 1346,
+                "atkSpeed": 0.81,
+                "crit": 12,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 8,
+                "atkFloatMin": 0.8,
+                "atkFloatMax": 1.2,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 579,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                []
+            },
+            "talentSkillList":
+            [
+                "02504"
+            ],
+            "skillList":
+            [
+                "02502",
+                "02503"
+            ],
+            "normalAttack": "02501",
+            "paSkillList":
+            {
+                "starSkill1": "02505",
+                "starSkill2": "02506",
+                "starSkill3": "02507",
+                "starSkill4": "02508"
+            }
+        },
+        "hero_027":
+        {
+            "typeId": "hero_027",
+            "des": "梅莉莉",
+            "icon": "at027_0",
+            "name": "梅莉莉",
+            "name2": "全能侍者",
+            "img": "chara027_0",
+            "imgPos": "69_-57",
+            "campName": "驿站侍者队，秋日荒野",
+            "rare": 4,
+            "job": 4,
+            "element": 3,
+            "itemFavor":
+            {
+                "item_27003": 60,
+                "item_27004": 85,
+                "item_27005": 120
+            },
+            "giftType": 1,
+            "viewData":
+            {
+                "height": 2.1,
+                "scale": 1,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_027",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "梅莉莉",
+                "phyAtk": 452,
+                "magicAtk": 325,
+                "phyDef": 201,
+                "magicDef": 72,
+                "maxHp": 1382,
+                "atkSpeed": 0.81,
+                "crit": 12,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 8,
+                "atkFloatMin": 0.8,
+                "atkFloatMax": 1.2,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 584,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                []
+            },
+            "talentSkillList":
+            [
+                "02704"
+            ],
+            "skillList":
+            [
+                "02702",
+                "02703"
+            ],
+            "normalAttack": "02701",
+            "paSkillList":
+            {
+                "starSkill1": "02705",
+                "starSkill2": "02706",
+                "starSkill3": "02707",
+                "starSkill4": "02708"
+            }
+        },
+        "hero_007":
+        {
+            "typeId": "hero_007",
+            "des": "拉碧丝",
+            "icon": "at007_0",
+            "name": "拉碧丝",
+            "name2": "魅惑之羽",
+            "img": "chara007_0",
+            "campName": "妖精舞团，秋日荒野",
+            "imgPos": "-14_-122",
+            "rare": 3,
+            "job": 6,
+            "element": 3,
+            "itemFavor":
+            {
+                "item_27006": 60,
+                "item_27007": 85,
+                "item_27008": 120
+            },
+            "giftType": 2,
+            "viewData":
+            {
+                "height": 1.9,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_007",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "拉碧丝",
+                "phyAtk": 211,
+                "magicAtk": 282,
+                "phyDef": 207,
+                "magicDef": 155,
+                "maxHp": 1277,
+                "atkSpeed": 0.665,
+                "crit": 10,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 7.5,
+                "atkFloatMin": 0.95,
+                "atkFloatMax": 1.05,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 550,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "辅助",
+                    "植物"
+                ]
+            },
+            "talentSkillList":
+            [
+                "00704"
+            ],
+            "skillList":
+            [
+                "00702",
+                "00703"
+            ],
+            "normalAttack": "00701",
+            "paSkillList":
+            {
+                "starSkill1": "00705",
+                "starSkill2": "00706",
+                "starSkill3": "00707",
+                "starSkill4": "00708"
+            }
+        },
+        "hero_015":
+        {
+            "typeId": "hero_015",
+            "des": "脏辫鹿人",
+            "icon": "at015_0",
+            "name": "芭杜尔",
+            "name2": "树冠守望者",
+            "img": "chara015_0",
+            "imgPos": "-103_-160",
+            "campName": "金弦之厅，黑森林",
+            "rare": 4,
+            "job": 6,
+            "element": 3,
+            "itemFavor":
+            {
+                "item_27003": 60,
+                "item_27004": 85,
+                "item_27005": 120
+            },
+            "giftType": 1,
+            "viewData":
+            {
+                "height": 2,
+                "scale": 0.903,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_015",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "鹿人",
+                "phyAtk": 222,
+                "magicAtk": 310,
+                "phyDef": 170,
+                "magicDef": 130,
+                "maxHp": 1710,
+                "atkSpeed": 0.665,
+                "crit": 10,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 7.5,
+                "atkFloatMin": 0.95,
+                "atkFloatMax": 1.05,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 600,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "辅助",
+                    "植物"
+                ]
+            },
+            "talentSkillList":
+            [
+                "01504"
+            ],
+            "skillList":
+            [
+                "01502",
+                "01503"
+            ],
+            "normalAttack": "01501",
+            "paSkillList":
+            {
+                "starSkill1": "01505",
+                "starSkill2": "01506",
+                "starSkill3": "01507",
+                "starSkill4": "01508"
+            }
+        },
+        "hero_012":
+        {
+            "typeId": "hero_012",
+            "des": "驼背狼",
+            "icon": "at012_0",
+            "name": "沃夫加",
+            "name2": "荒野孤狼",
+            "img": "chara012_0",
+            "imgPos": "53_-252",
+            "campName": "荒野客",
+            "rare": 3,
+            "job": 4,
+            "element": 2,
+            "itemFavor":
+            {
+                "item_27009": 60,
+                "item_27010": 85,
+                "item_27011": 120
+            },
+            "giftType": 3,
+            "viewData":
+            {
+                "height": 2.1,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_012",
+                "skinName": "normal",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front",
+                    "attack2_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back",
+                    "attack2_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "沃夫加",
+                "phyAtk": 412,
+                "magicAtk": 223,
+                "phyDef": 153,
+                "magicDef": 62,
+                "maxHp": 1236,
+                "atkSpeed": 0.805,
+                "crit": 12,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 8,
+                "atkFloatMin": 0.8,
+                "atkFloatMax": 1.2,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 530,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "游侠",
+                    "男性"
+                ]
+            },
+            "talentSkillList":
+            [
+                "01204"
+            ],
+            "skillList":
+            [
+                "01202",
+                "01203"
+            ],
+            "normalAttack": "01201",
+            "paSkillList":
+            {
+                "starSkill1": "01205",
+                "starSkill2": "01206",
+                "starSkill3": "01207",
+                "starSkill4": "01208"
+            }
+        },
+        "hero_005":
+        {
+            "typeId": "hero_005",
+            "des": "中二女仆茜塔",
+            "name": "茜塔",
+            "name2": "守护之斧",
+            "icon": "at005_0",
+            "campName": "驿站侍者队，秋日荒野",
+            "img": "chara005_0",
+            "imgPos": "10_-147",
+            "rare": 3,
+            "job": 2,
+            "element": 1,
+            "itemFavor":
+            {
+                "item_27009": 60,
+                "item_27010": 85,
+                "item_27011": 120
+            },
+            "giftType": 3,
+            "viewData":
+            {
+                "height": 2,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_005",
+                "skinName": "normal",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "茜塔",
+                "phyAtk": 315,
+                "magicAtk": 212,
+                "phyDef": 543,
+                "magicDef": 121,
+                "maxHp": 1810,
+                "atkSpeed": 0.665,
+                "crit": 9,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 2,
+                "atkFloatMin": 0.9,
+                "atkFloatMax": 1.1,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 390,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "骑士",
+                    "不死人"
+                ]
+            },
+            "talentSkillList":
+            [
+                "00504"
+            ],
+            "skillList":
+            [
+                "00502",
+                "00503"
+            ],
+            "normalAttack": "00501",
+            "paSkillList":
+            {
+                "starSkill1": "00505",
+                "starSkill2": "00506",
+                "starSkill3": "00507",
+                "starSkill4": "00508"
+            }
+        },
+        "hero_055":
+        {
+            "typeId": "hero_055",
+            "des": "迦南",
+            "name": "迦南",
+            "name2": "苍翼一闪",
+            "campName": "菲尔德蕾的契约者，秋日荒野",
+            "icon": "at055_0",
+            "img": "chara055_0",
+            "imgPos": "57_-176",
+            "rare": 5,
+            "job": 1,
+            "element": 3,
+            "itemFavor":
+            {
+                "item_27009": 60,
+                "item_27010": 85,
+                "item_27011": 120
+            },
+            "giftType": 3,
+            "viewData":
+            {
+                "height": 2,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_055",
+                "skinName": "normal",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front",
+                    "attack2_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back",
+                    "attack2_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "迦南",
+                "phyAtk": 421,
+                "magicAtk": 311,
+                "phyDef": 306,
+                "magicDef": 166,
+                "maxHp": 2035,
+                "atkSpeed": 0.7,
+                "crit": 10,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 2,
+                "atkFloatMin": 0.8,
+                "atkFloatMax": 1.2,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 500,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "骑士",
+                    "不死人"
+                ]
+            },
+            "talentSkillList":
+            [
+                "05504"
+            ],
+            "skillList":
+            [
+                "05502",
+                "05503"
+            ],
+            "normalAttack": "05501",
+            "paSkillList":
+            {
+                "starSkill1": "05505",
+                "starSkill2": "05506",
+                "starSkill3": "05507",
+                "starSkill4": "05508"
+            }
+        },
+        "hero_057":
+        {
+            "typeId": "hero_057",
+            "des": "艾茵（临时）",
+            "icon": "at057_0",
+            "name": "艾茵",
+            "name2": "奇美拉之镰",
+            "img": "chara002_0",
+            "imgPos": "-417_-675",
+            "campName": "结社",
+            "hide": true,
+            "rare": 3,
+            "job": 5,
+            "element": 2,
+            "itemFavor":
+            {
+                "item_1008": 10,
+                "item_1009": 1
+            },
+            "viewData":
+            {
+                "height": 2,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_002",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front",
+                    "attack2_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back",
+                    "attack2_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "米托拉",
+                "phyAtk": 400,
+                "magicAtk": 330,
+                "phyDef": 170,
+                "magicDef": 84,
+                "maxHp": 1035,
+                "atkSpeed": 0.875,
+                "crit": 13,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 2,
+                "atkFloatMin": 0.8,
+                "atkFloatMax": 1.2,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 450,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "刺客",
+                    "女性"
+                ]
+            },
+            "talentSkillList":
+            [
+                "00204"
+            ],
+            "skillList":
+            [
+                "00202",
+                "00203"
+            ],
+            "normalAttack": "00201",
+            "paSkillList":
+            {
+                "starSkill1": "00205",
+                "starSkill2": "00206",
+                "starSkill3": "00207",
+                "starSkill4": "00208"
+            }
+        },
+        "hero_014":
+        {
+            "typeId": "hero_014",
+            "des": "皮塔",
+            "icon": "at014_0",
+            "name": "皮塔",
+            "name2": "丛山之刃",
+            "img": "chara014_0",
+            "imgPos": "24.5_-10",
+            "campName": "巴诺姆自卫团，索利德山地",
+            "rare": 3,
+            "job": 5,
+            "element": 3,
+            "itemFavor":
+            {
+                "item_27006": 60,
+                "item_27007": 85,
+                "item_27008": 120
+            },
+            "giftType": 2,
+            "viewData":
+            {
+                "height": 1.95,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_014",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front",
+                    "attack2_front",
+                    "attack3_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back",
+                    "attack2_back",
+                    "attack3_front"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "皮塔",
+                "phyAtk": 420,
+                "magicAtk": 210,
+                "phyDef": 143,
+                "magicDef": 153,
+                "maxHp": 1611,
+                "atkSpeed": 0.875,
+                "crit": 13,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 2,
+                "atkFloatMin": 0.8,
+                "atkFloatMax": 1.2,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 470,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "刺客",
+                    "福瑞"
+                ]
+            },
+            "talentSkillList":
+            [
+                "01404"
+            ],
+            "skillList":
+            [
+                "01402",
+                "01403"
+            ],
+            "normalAttack": "01401",
+            "paSkillList":
+            {
+                "starSkill1": "01405",
+                "starSkill2": "01406",
+                "starSkill3": "01407",
+                "starSkill4": "01408"
+            }
+        },
+        "hero_009":
+        {
+            "typeId": "hero_009",
+            "des": "可可娜",
+            "icon": "at009_0",
+            "name": "可可娜",
+            "name2": "月光娑影",
+            "campName": "妖精舞团，秋日荒野",
+            "img": "chara009_0",
+            "imgPos": "115_-20",
+            "rare": 3,
+            "job": 3,
+            "element": 3,
+            "itemFavor":
+            {
+                "item_27003": 60,
+                "item_27004": 85,
+                "item_27005": 120
+            },
+            "giftType": 1,
+            "viewData":
+            {
+                "stepSoundType": "wingsoft",
+                "height": 2,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_009",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "可可娜",
+                "phyAtk": 274,
+                "magicAtk": 377,
+                "phyDef": 173,
+                "magicDef": 216,
+                "maxHp": 1487,
+                "atkSpeed": 0.735,
+                "crit": 12,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 7.5,
+                "atkFloatMin": 0.8,
+                "atkFloatMax": 1.2,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 610,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "妖精",
+                    "辅助",
+                    "女性"
+                ]
+            },
+            "talentSkillList":
+            [
+                "00904"
+            ],
+            "skillList":
+            [
+                "00902",
+                "00903"
+            ],
+            "normalAttack": "00901",
+            "paSkillList":
+            {
+                "starSkill1": "00905",
+                "starSkill2": "00906",
+                "starSkill3": "00907",
+                "starSkill4": "00908"
+            }
+        },
+        "hero_019":
+        {
+            "typeId": "hero_019",
+            "des": "奇瓦",
+            "icon": "at019_0",
+            "name": "奇瓦",
+            "name2": "元灵骑士",
+            "img": "chara019_0",
+            "imgPos": "-48_-187",
+            "campName": "大书院，霜烬平原",
+            "rare": 5,
+            "job": 3,
+            "element": 2,
+            "itemFavor":
+            {
+                "item_27003": 60,
+                "item_27004": 85,
+                "item_27005": 120
+            },
+            "giftType": 1,
+            "viewData":
+            {
+                "stepSoundType": "wingsoft",
+                "height": 2.4,
+                "scale": 0.903,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_019",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "奇瓦",
+                "phyAtk": 254,
+                "magicAtk": 476,
+                "phyDef": 174,
+                "magicDef": 223,
+                "maxHp": 1437,
+                "atkSpeed": 0.735,
+                "crit": 12,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 7,
+                "atkFloatMin": 0.8,
+                "atkFloatMax": 1.2,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 496,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "法师",
+                    "女性"
+                ]
+            },
+            "talentSkillList":
+            [
+                "01904"
+            ],
+            "skillList":
+            [
+                "01902",
+                "01903"
+            ],
+            "normalAttack": "01901",
+            "paSkillList":
+            {
+                "starSkill1": "01905",
+                "starSkill2": "01906",
+                "starSkill3": "01907",
+                "starSkill4": "01908"
+            }
+        },
+        "hero_028":
+        {
+            "typeId": "hero_028",
+            "des": "格薇勒（临时）",
+            "icon": "at028_0",
+            "name": "格薇勒",
+            "name2": "豪饮的侍者",
+            "img": "chara019_0",
+            "imgPos": "-48_-187",
+            "campName": "驿站侍者队，秋日荒野",
+            "rare": 5,
+            "job": 3,
+            "element": 2,
+            "hide": true,
+            "itemFavor":
+            {
+                "item_27003": 60,
+                "item_27004": 85,
+                "item_27005": 120
+            },
+            "giftType": 1,
+            "viewData":
+            {
+                "stepSoundType": "wingsoft",
+                "height": 2.4,
+                "scale": 0.903,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_019",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "格薇勒",
+                "phyAtk": 254,
+                "magicAtk": 476,
+                "phyDef": 174,
+                "magicDef": 223,
+                "maxHp": 1437,
+                "atkSpeed": 0.735,
+                "crit": 12,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 7,
+                "atkFloatMin": 0.8,
+                "atkFloatMax": 1.2,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 496,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "法师",
+                    "女性"
+                ]
+            },
+            "talentSkillList":
+            [
+                "01904"
+            ],
+            "skillList":
+            [
+                "01902",
+                "01903"
+            ],
+            "normalAttack": "01901",
+            "paSkillList":
+            {
+                "starSkill1": "01905",
+                "starSkill2": "01906",
+                "starSkill3": "01907",
+                "starSkill4": "01908"
+            }
+        },
+        "hero_045":
+        {
+            "typeId": "hero_045",
+            "des": "艾尔菲帕",
+            "icon": "at045_0",
+            "name": "艾尔菲帕",
+            "name2": "雷鸣守护者",
+            "img": "chara045_0",
+            "imgPos": "-6_-73",
+            "campName": "秘境的守护者",
+            "rare": 4,
+            "job": 3,
+            "element": 3,
+            "itemFavor":
+            {
+                "item_27009": 60,
+                "item_27010": 85,
+                "item_27011": 120
+            },
+            "giftType": 3,
+            "viewData":
+            {
+                "height": 2,
+                "scale": 0.98,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_045",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "艾尔菲帕",
+                "phyAtk": 323,
+                "magicAtk": 421,
+                "phyDef": 171,
+                "magicDef": 233,
+                "maxHp": 1407,
+                "atkSpeed": 0.74,
+                "crit": 12,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 7,
+                "atkFloatMin": 0.8,
+                "atkFloatMax": 1.2,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 496,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "法师",
+                    "女性"
+                ]
+            },
+            "talentSkillList":
+            [
+                "04504"
+            ],
+            "skillList":
+            [
+                "04502",
+                "04503"
+            ],
+            "normalAttack": "04501",
+            "paSkillList":
+            {
+                "starSkill1": "04505",
+                "starSkill2": "04506",
+                "starSkill3": "04507",
+                "starSkill4": "04508"
+            }
+        },
+        "hero_046":
+        {
+            "typeId": "hero_046",
+            "des": "迈妮娅",
+            "icon": "at046_0",
+            "name": "迈妮娅",
+            "name2": "苦力矿工",
+            "campName": "苦力矿工",
+            "img": "chara046_0",
+            "imgPos": "17_-66",
+            "rare": 3,
+            "job": 2,
+            "element": 4,
+            "itemFavor":
+            {
+                "item_27006": 60,
+                "item_27007": 85,
+                "item_27008": 120
+            },
+            "giftType": 2,
+            "viewData":
+            {
+                "height": 1.7,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_046",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "迈妮娅",
+                "phyAtk": 349,
+                "magicAtk": 274,
+                "phyDef": 555,
+                "magicDef": 139,
+                "maxHp": 2055,
+                "atkSpeed": 0.67,
+                "crit": 9,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 2,
+                "atkFloatMin": 0.9,
+                "atkFloatMax": 1.1,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 409,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                []
+            },
+            "talentSkillList":
+            [
+                "04604"
+            ],
+            "skillList":
+            [
+                "04602",
+                "04603"
+            ],
+            "normalAttack": "04601",
+            "paSkillList":
+            {
+                "starSkill1": "04605",
+                "starSkill2": "04606",
+                "starSkill3": "04607",
+                "starSkill4": "04608"
+            }
+        },
+        "hero_047":
+        {
+            "typeId": "hero_047",
+            "des": "阿迪拉",
+            "icon": "at047_0",
+            "name": "阿迪拉",
+            "name2": "流离之翼",
+            "img": "chara047_0",
+            "campName": "巴诺姆村，索利德山地",
+            "imgPos": "40_-174",
+            "hide": true,
+            "rare": 4,
+            "job": 5,
+            "element": 3,
+            "itemFavor":
+            {
+                "item_1008": 10,
+                "item_1009": 1
+            },
+            "viewData":
+            {
+                "height": 2,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_047",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front",
+					"attack1_front",
+                    "attack3_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back",
+					"attack1_back",
+                    "attack3_front"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "阿迪拉",
+                "phyAtk": 475,
+                "magicAtk": 380,
+                "phyDef": 203,
+                "magicDef": 168,
+                "maxHp": 1632,
+                "atkSpeed": 0.88,
+                "crit": 13,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 2,
+                "atkFloatMin": 0.8,
+                "atkFloatMax": 1.2,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 546,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "刺客",
+                    "女性"
+                ]
+            },
+            "talentSkillList":
+            [
+                "04704"
+            ],
+            "skillList":
+            [
+                "04702",
+                "04703"
+            ],
+            "normalAttack": "04701",
+            "paSkillList":
+            {
+                "starSkill1": "04705",
+                "starSkill2": "04706",
+                "starSkill3": "04707",
+                "starSkill4": "04708"
+            }
+        },
+        "hero_011":
+        {
+            "typeId": "hero_011",
+            "des": "缇莎",
+            "icon": "at011_0",
+            "name": "缇莎",
+            "name2": "晶石秘术师",
+            "campName": "旧日修行所，秋日荒野",
+            "img": "chara011_0",
+            "imgPos": "-17_-153",
+            "rare": 3,
+            "job": 3,
+            "element": 2,
+            "itemFavor":
+            {
+                "item_27006": 60,
+                "item_27007": 85,
+                "item_27008": 120
+            },
+            "giftType": 2,
+            "viewData":
+            {
+                "height": 2,
+                "scale": 0.903,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_011",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "缇莎",
+                "phyAtk": 272,
+                "magicAtk": 355,
+                "phyDef": 182,
+                "magicDef": 212,
+                "maxHp": 1412,
+                "atkSpeed": 0.7,
+                "crit": 12,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 6,
+                "atkFloatMin": 0.8,
+                "atkFloatMax": 1.2,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 552,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "法师",
+                    "女性"
+                ]
+            },
+            "talentSkillList":
+            [
+                "01104"
+            ],
+            "skillList":
+            [
+                "01102",
+                "01103"
+            ],
+            "normalAttack": "01101",
+            "paSkillList":
+            {
+                "starSkill1": "01105",
+                "starSkill2": "01106",
+                "starSkill3": "01107",
+                "starSkill4": "01108"
+            }
+        },
+        "new_hero_002":
+        {
+            "typeId": "new_hero_002",
+            "des": "米托拉",
+            "icon": "at002_1",
+            "name": "米托拉",
+            "name2": "最初的伙伴",
+            "campName": "营地，求生者草原",
+            "img": "chara002_1",
+            "imgPos": "-31_-193",
+            "rare": 3,
+            "job": 5,
+            "element": 2,
+            "itemFavor":
+            {
+                "item_27003": 60,
+                "item_27004": 85,
+                "item_27005": 120
+            },
+            "giftType": 1,
+            "viewData":
+            {
+                "height": 2.15,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_002_1",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front",
+                    "attack2_front",
+                    "attack3_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back",
+                    "attack2_back",
+                    "attack3_front"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "米托拉",
+                "phyAtk": 367,
+                "magicAtk": 320,
+                "phyDef": 180,
+                "magicDef": 158,
+                "maxHp": 1554,
+                "atkSpeed": 0.875,
+                "crit": 13,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 2,
+                "atkFloatMin": 0.8,
+                "atkFloatMax": 1.2,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 496,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "刺客",
+                    "女性"
+                ]
+            },
+            "talentSkillList":
+            [
+                "new_00204"
+            ],
+            "skillList":
+            [
+                "new00202",
+                "new00203"
+            ],
+            "normalAttack": "new00201",
+            "paSkillList":
+            {
+                "starSkill1": "new_00205",
+                "starSkill2": "new_00206",
+                "starSkill3": "new_00207",
+                "starSkill4": "new_00208"
+            }
+        },
+        "hero_023":
+        {
+            "typeId": "hero_023",
+            "des": "哈士奇",
+            "icon": "at023_0",
+            "name": "卡夫",
+            "name2": "索利德之牙",
+            "campName": "巴诺姆自卫团，索利德山地",
+            "img": "chara023_0",
+            "imgPos": "12_33",
+            "rare": 3,
+            "job": 1,
+            "element": 3,
+            "itemFavor":
+            {
+                "item_27006": 60,
+                "item_27007": 85,
+                "item_27008": 120
+            },
+            "giftType": 2,
+            "viewData":
+            {
+                "height": 2.1,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_023",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "卡夫",
+                "phyAtk": 336,
+                "magicAtk": 212,
+                "phyDef": 313,
+                "magicDef": 145,
+                "maxHp": 1860,
+                "atkSpeed": 0.7,
+                "crit": 10,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 2,
+                "atkFloatMin": 0.8,
+                "atkFloatMax": 1.2,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 480,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                []
+            },
+            "talentSkillList":
+            [
+                "02304"
+            ],
+            "skillList":
+            [
+                "02302",
+                "02303"
+            ],
+            "normalAttack": "02301",
+            "paSkillList":
+            {
+                "starSkill1": "02305",
+                "starSkill2": "02306",
+                "starSkill3": "02307",
+                "starSkill4": "02308"
+            }
+        },
+        "hero_026":
+        {
+            "typeId": "hero_026",
+            "des": "贝拉多娜",
+            "icon": "at026_0",
+            "name": "贝拉多娜",
+            "name2": "赤血剑姬",
+            "img": "chara026_0",
+            "imgPos": "-14_-111",
+            "rare": 4,
+            "job": 1,
+            "element": 2,
+            "itemFavor":
+            {
+                "item_27003": 60,
+                "item_27004": 85,
+                "item_27005": 120
+            },
+            "giftType": 1,
+            "viewData":
+            {
+                "height": 2.15,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_026",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "贝拉多娜",
+                "phyAtk": 412,
+                "magicAtk": 289,
+                "phyDef": 305,
+                "magicDef": 171,
+                "maxHp": 1919,
+                "atkSpeed": 0.7,
+                "crit": 10,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 2.0,
+                "atkFloatMin": 0.9,
+                "atkFloatMax": 1.1,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 423,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "刺客",
+                    "女性"
+                ]
+            },
+            "talentSkillList":
+            [
+                "02604"
+            ],
+            "skillList":
+            [
+                "02602",
+                "02603"
+            ],
+            "normalAttack": "02601",
+            "paSkillList":
+            {
+                "starSkill1": "02605",
+                "starSkill2": "02606",
+                "starSkill3": "02607",
+                "starSkill4": "02608"
+            }
+        },
+        "hero_037":
+        {
+            "typeId": "hero_037",
+            "des": "中分虎",
+            "icon": "at037_0",
+            "name": "剋",
+            "name2": "浪游武宗",
+            "campName": "荒野客",
+            "img": "chara037_0",
+            "imgPos": "24_-254",
+            "rare": 4,
+            "job": 2,
+            "element": 3,
+            "itemFavor":
+            {
+                "item_27009": 60,
+                "item_27010": 85,
+                "item_27011": 120
+            },
+            "giftType": 3,
+            "viewData":
+            {
+                "height": 2.4,
+                "scale": 0.903,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_037",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "剋",
+                "phyAtk": 330,
+                "magicAtk": 210,
+                "phyDef": 510,
+                "magicDef": 132,
+                "maxHp": 1777,
+                "atkSpeed": 0.665,
+                "crit": 9,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 2,
+                "atkFloatMin": 0.85,
+                "atkFloatMax": 1.15,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 420,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                []
+            },
+            "talentSkillList":
+            [
+                "03704"
+            ],
+            "skillList":
+            [
+                "03702",
+                "03703"
+            ],
+            "normalAttack": "03701",
+            "paSkillList":
+            {
+                "starSkill1": "03705",
+                "starSkill2": "03706",
+                "starSkill3": "03707",
+                "starSkill4": "03708"
+            }
+        },
+        "hero_029":
+        {
+            "typeId": "hero_029",
+            "des": "安娜",
+            "icon": "at029_0",
+            "name": "安娜",
+            "name2": "天灾调律者",
+            "campName": "灾害研究所，索利德山地",
+            "img": "chara029_0",
+            "imgPos": "27_-158",
+            "rare": 4,
+            "job": 6,
+            "element": 4,
+            "itemFavor":
+            {
+                "item_27009": 60,
+                "item_27010": 85,
+                "item_27011": 120
+            },
+            "giftType": 3,
+            "viewData":
+            {
+                "height": 2,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_029",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "安娜",
+                "phyAtk": 254,
+                "magicAtk": 299,
+                "phyDef": 190,
+                "magicDef": 142,
+                "maxHp": 1342,
+                "atkSpeed": 0.665,
+                "crit": 10,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 8.2,
+                "atkFloatMin": 0.95,
+                "atkFloatMax": 1.05,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 582,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                []
+            },
+            "talentSkillList":
+            [
+                "02904"
+            ],
+            "skillList":
+            [
+                "02902",
+                "02903"
+            ],
+            "normalAttack": "02901",
+            "paSkillList":
+            {
+                "starSkill1": "02905",
+                "starSkill2": "02906",
+                "starSkill3": "02907",
+                "starSkill4": "02908"
+            }
+        },
+        "hero_034":
+        {
+            "typeId": "hero_034",
+            "des": "露帕·萝特",
+            "icon": "at034_0",
+            "name": "露帕·萝特",
+            "name2": "酣息之杖",
+            "campName": "水占师环会，魔爪湖畔",
+            "img": "chara034_0",
+            "hide": false,
+            "imgPos": "-6_-146",
+            "rare": 4,
+            "job": 3,
+            "element": 1,
+            "itemFavor":
+            {
+                "item_27003": 60,
+                "item_27004": 85,
+                "item_27005": 120
+            },
+            "giftType": 1,
+            "viewData":
+            {
+                "height": 2,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_034",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "露帕·萝特",
+                "phyAtk": 308,
+                "magicAtk": 408,
+                "phyDef": 177,
+                "magicDef": 209,
+                "maxHp": 1502,
+                "atkSpeed": 0.74,
+                "crit": 10,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 8.2,
+                "atkFloatMin": 0.9,
+                "atkFloatMax": 1.1,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 672,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                []
+            },
+            "talentSkillList":
+            [
+                "03404"
+            ],
+            "skillList":
+            [
+                "03402",
+                "03403"
+            ],
+            "normalAttack": "03401",
+            "paSkillList":
+            {
+                "starSkill1": "03405",
+                "starSkill2": "03406",
+                "starSkill3": "03407",
+                "starSkill4": "03408"
+            }
+        },
+        "hero_049":
+        {
+            "typeId": "hero_049",
+            "des": "菲莉娜",
+            "icon": "at049_0",
+            "name": "菲莉娜",
+            "name2": "傲崖的金鹿",
+            "campName": "巴诺姆村，索利德山地",
+            "img": "chara049_0",
+            "imgPos": "-126_-227",
+            "rare": 5,
+            "job": 4,
+            "element": 4,
+            "itemFavor":
+            {
+                "item_27006": 60,
+                "item_27007": 85,
+                "item_27008": 120
+            },
+            "giftType": 2,
+            "viewData":
+            {
+                "height": 2.2,
+                "scale": 0.903,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_049",
+                "skinName": "skill2_off",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "菲莉娜",
+                "phyAtk": 430,
+                "magicAtk": 381,
+                "phyDef": 211,
+                "magicDef": 73,
+                "maxHp": 1498,
+                "atkSpeed": 0.805,
+                "crit": 12,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 8,
+                "atkFloatMin": 0.8,
+                "atkFloatMax": 1.2,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 520,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                []
+            },
+            "talentSkillList":
+            [
+                "04904"
+            ],
+            "skillList":
+            [
+                "04902",
+                "04903"
+            ],
+            "normalAttack": "04901",
+            "paSkillList":
+            {
+                "starSkill1": "04905",
+                "starSkill2": "04906",
+                "starSkill3": "04907",
+                "starSkill4": "04908"
+            }
+        },
+        "hero_050":
+        {
+            "typeId": "hero_050",
+            "des": "混混太妹",
+            "icon": "at050_0",
+            "name": "米拉贝尔",
+            "name2": "狂野白兔",
+            "campName": "巴诺姆自卫团，索利德山地",
+            "img": "chara050_0",
+            "imgPos": "14_-25",
+            "rare": 5,
+            "job": 1,
+            "element": 4,
+            "itemFavor":
+            {
+                "item_27003": 60,
+                "item_27004": 85,
+                "item_27005": 120
+            },
+            "giftType": 1,
+            "viewData":
+            {
+                "height": 2,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_050",
+                "skinName": "normal",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "米拉贝尔",
+                "phyAtk": 395,
+                "magicAtk": 280,
+                "phyDef": 320,
+                "magicDef": 180,
+                "maxHp": 2251,
+                "atkSpeed": 0.7,
+                "crit": 10,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 2,
+                "atkFloatMin": 0.85,
+                "atkFloatMax": 1.15,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 500,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                []
+            },
+            "talentSkillList":
+            [
+                "05004"
+            ],
+            "skillList":
+            [
+                "05002",
+                "05003"
+            ],
+            "normalAttack": "05001",
+            "paSkillList":
+            {
+                "starSkill1": "05005",
+                "starSkill2": "05006",
+                "starSkill3": "05007",
+                "starSkill4": "05008"
+            }
+        },
+        "hero_041":
+        {
+            "typeId": "hero_041",
+            "des": "埃迪蒂",
+            "icon": "at041_0",
+            "name": "埃迪蒂",
+            "name2": "秩序守护者",
+            "campName": "大市集治安队，魔爪湖畔",
+            "img": "chara041_0",
+            "hide": false,
+            "imgPos": "-22_-205",
+            "rare": 3,
+            "job": 1,
+            "element": 1,
+            "itemFavor":
+            {
+                "item_27003": 60,
+                "item_27004": 85,
+                "item_27005": 120
+            },
+            "giftType": 1,
+            "viewData":
+            {
+                "height": 2,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_041",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "埃迪蒂",
+                "phyAtk": 361,
+                "magicAtk": 250,
+                "phyDef": 294,
+                "magicDef": 153,
+                "maxHp": 1843,
+                "atkSpeed": 0.7,
+                "crit": 10,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 2,
+                "atkFloatMin": 0.85,
+                "atkFloatMax": 1.15,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 440,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                []
+            },
+            "talentSkillList":
+            [
+                "04104"
+            ],
+            "skillList":
+            [
+                "04102",
+                "04103"
+            ],
+            "normalAttack": "04101",
+            "paSkillList":
+            {
+                "starSkill1": "04105",
+                "starSkill2": "04106",
+                "starSkill3": "04107",
+                "starSkill4": "04108"
+            }
+        },
+        "hero_051":
+        {
+            "typeId": "hero_051",
+            "des": "阿莱克西娅",
+            "icon": "at051_0",
+            "name": "阿莱克西娅",
+            "name2": "神眷之圣女",
+            "campName": "水占师环会，魔爪湖畔",
+            "img": "chara051_0",
+            "imgPos": "69_36",
+            "rare": 5,
+            "job": 6,
+            "element": 1,
+            "itemFavor":
+            {
+                "item_27006": 60,
+                "item_27007": 85,
+                "item_27008": 120
+            },
+            "giftType": 2,
+            "viewData":
+            {
+                "height": 2,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_051",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "阿莱克西娅",
+                "phyAtk": 272,
+                "magicAtk": 382,
+                "phyDef": 220,
+                "magicDef": 152,
+                "maxHp": 1590,
+                "atkSpeed": 0.67,
+                "crit": 10,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 8,
+                "atkFloatMin": 0.95,
+                "atkFloatMax": 1.05,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 670,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                []
+            },
+            "talentSkillList":
+            [
+                "05104"
+            ],
+            "skillList":
+            [
+                "05102",
+                "05103"
+            ],
+            "normalAttack": "05101",
+            "paSkillList":
+            {
+                "starSkill1": "05105",
+                "starSkill2": "05106",
+                "starSkill3": "05107",
+                "starSkill4": "05108"
+            }
+        },
+        "hero_036":
+        {
+            "typeId": "hero_036",
+            "des": "贝尔卡",
+            "icon": "at036_0",
+            "name": "贝尔卡",
+            "name2": "驭水学士",
+            "img": "chara036_0",
+            "campName": "水占师环会，魔爪湖畔",
+            "imgPos": "48_-137",
+            "rare": 4,
+            "job": 3,
+            "element": 1,
+            "itemFavor":
+            {
+                "item_27006": 60,
+                "item_27007": 85,
+                "item_27008": 120
+            },
+            "giftType": 2,
+            "viewData":
+            {
+                "height": 2,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_036",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "贝尔卡",
+                "phyAtk": 272,
+                "magicAtk": 390,
+                "phyDef": 172,
+                "magicDef": 223,
+                "maxHp": 1415,
+                "atkSpeed": 0.735,
+                "crit": 12,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 7.5,
+                "atkFloatMin": 0.9,
+                "atkFloatMax": 1.1,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 603,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                []
+            },
+            "talentSkillList":
+            [
+                "03604"
+            ],
+            "skillList":
+            [
+                "03602",
+                "03603"
+            ],
+            "normalAttack": "03601",
+            "paSkillList":
+            {
+                "starSkill1": "03605",
+                "starSkill2": "03606",
+                "starSkill3": "03607",
+                "starSkill4": "03608"
+            }
+        },
+        "hero_033":
+        {
+            "typeId": "hero_033",
+            "des": "乌帕·萝特",
+            "name": "乌帕·萝特",
+            "name2": "新锐之镰",
+            "icon": "at033_0",
+            "campName": "水占师环会，魔爪湖畔",
+            "img": "chara033_0",
+            "imgPos": "-19_-109",
+            "rare": 4,
+            "job": 2,
+            "element": 1,
+            "itemFavor":
+            {
+                "item_27006": 60,
+                "item_27007": 85,
+                "item_27008": 120
+            },
+            "giftType": 2,
+            "viewData":
+            {
+                "height": 2,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_033",
+                "skinName": "normal",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "乌帕",
+                "phyAtk": 340,
+                "magicAtk": 277,
+                "phyDef": 573,
+                "magicDef": 151,
+                "maxHp": 2091,
+                "atkSpeed": 0.67,
+                "crit": 9,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 2,
+                "atkFloatMin": 0.9,
+                "atkFloatMax": 1.1,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 493,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "骑士",
+                    "不死人"
+                ]
+            },
+            "talentSkillList":
+            [
+                "03304"
+            ],
+            "skillList":
+            [
+                "03302",
+                "03303"
+            ],
+            "normalAttack": "03301",
+            "paSkillList":
+            {
+                "starSkill1": "03305",
+                "starSkill2": "03306",
+                "starSkill3": "03307",
+                "starSkill4": "03308"
+            }
+        },
+        "hero_053":
+        {
+            "typeId": "hero_053",
+            "des": "艾薇杜尔",
+            "campName": "金弦之厅，黑森林",
+            "icon": "at053_0",
+            "name": "艾薇杜尔",
+            "name2": "冥晦之瞳",
+            "img": "chara053_0",
+            "imgPos": "-75_118",
+            "rare": 5,
+            "job": 5,
+            "element": 3,
+            "itemFavor":
+            {
+                "item_27009": 60,
+                "item_27010": 85,
+                "item_27011": 120
+            },
+            "giftType": 3,
+            "viewData":
+            {
+                "height": 2,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_053",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front",
+                    "attack3_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back",
+                    "attack3_front"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "艾薇杜尔",
+                "phyAtk": 471,
+                "magicAtk": 376,
+                "phyDef": 184,
+                "magicDef": 178,
+                "maxHp": 1311,
+                "atkSpeed": 0.7,
+                "crit": 13,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 4.5,
+                "atkFloatMin": 0.8,
+                "atkFloatMax": 1.2,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 555,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "人类",
+                    "女性"
+                ]
+            },
+            "talentSkillList":
+            [
+                "05304"
+            ],
+            "skillList":
+            [
+                "05302",
+                "05303"
+            ],
+            "normalAttack": "05301",
+            "paSkillList":
+            {
+                "starSkill1": "05305",
+                "starSkill2": "05306",
+                "starSkill3": "05307",
+                "starSkill4": "05308"
+            }
+        },
+        "hero_053_c4":
+        {
+            "typeId": "hero_053_c4",
+            "des": "艾薇杜尔c4ex2",
+            "campName": "金弦之厅，黑森林",
+            "icon": "at053_0",
+            "hide": true,
+            "name": "艾薇杜尔",
+            "name2": "冥晦之瞳",
+            "img": "chara053_0",
+            "imgPos": "-75_118",
+            "rare": 5,
+            "job": 5,
+            "element": 3,
+            "itemFavor":
+            {
+                "item_27009": 60,
+                "item_27010": 85,
+                "item_27011": 120
+            },
+            "giftType": 3,
+            "viewData":
+            {
+                "height": 2,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_053",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front",
+                    "attack3_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back",
+                    "attack3_front"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "艾薇杜尔",
+                "phyAtk": 480,
+                "magicAtk": 376,
+                "phyDef": 484,
+                "magicDef": 265,
+                "maxHp": 6311,
+                "atkSpeed": 0.7,
+                "crit": 43,
+                "critRes": 0,
+                "critDam": 200,
+                "atkRange": 4.5,
+                "atkFloatMin": 0.8,
+                "atkFloatMax": 1.2,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 555,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "人类",
+                    "女性"
+                ]
+            },
+            "talentSkillList":
+            [
+                "05304"
+            ],
+            "skillList":
+            [
+                "05302",
+                "05303"
+            ],
+            "normalAttack": "05301",
+            "paSkillList":
+            {
+                "starSkill1": "05305",
+                "starSkill2": "05306",
+                "starSkill3": "05307",
+                "starSkill4": "05308"
+            }
+        },
+        "hero_062":
+        {
+            "typeId": "hero_062",
+            "des": "大根子",
+            "campName": "金弦之厅，黑森林",
+            "icon": "at062_0",
+            "name": "露比特·鲁特",
+            "name2": "森林大厨",
+            "img": "chara062_0",
+            "imgPos": "-36_-74",
+            "rare": 3,
+            "job": 1,
+            "element": 4,
+            "itemFavor":
+            {
+                "item_27003": 60,
+                "item_27004": 85,
+                "item_27005": 120
+            },
+            "giftType": 1,
+            "viewData":
+            {
+                "height": 2,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_062",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front",
+                    "attack2_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back",
+                    "attack2_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "鲁特",
+                "phyAtk": 356,
+                "magicAtk": 280,
+                "phyDef": 308,
+                "magicDef": 159,
+                "maxHp": 1824,
+                "atkSpeed": 0.7,
+                "crit": 10,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 2,
+                "atkFloatMin": 0.9,
+                "atkFloatMax": 1.1,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 502,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "战士"
+                ]
+            },
+            "talentSkillList":
+            [
+                "06204"
+            ],
+            "skillList":
+            [
+                "06202",
+                "06203"
+            ],
+            "normalAttack": "06201",
+            "paSkillList":
+            {
+                "starSkill1": "06205",
+                "starSkill2": "06206",
+                "starSkill3": "06207",
+                "starSkill4": "06208"
+            }
+        },
+        "hero_064":
+        {
+            "typeId": "hero_064",
+            "des": "伽拉忒亚",
+            "icon": "at064_0",
+            "name": "伽拉忒亚",
+            "name2": "苍与赤之歌",
+            "campName": "大书院，霜烬平原",
+            "img": "chara064_0",
+            "hide": false,
+            "imgPos": "-119_-115",
+            "rare": 5,
+            "job": 5,
+            "element": 2,
+            "itemFavor":
+            {
+                "item_27009": 60,
+                "item_27010": 85,
+                "item_27011": 120
+            },
+            "giftType": 3,
+            "viewData":
+            {
+                "height": 2,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_064",
+                "skinName": "fire",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "伽拉忒亚",
+                "phyAtk": 495,
+                "magicAtk": 356,
+                "phyDef": 202,
+                "magicDef": 166,
+                "maxHp": 1792,
+                "atkSpeed": 0.88,
+                "crit": 13,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 2,
+                "atkFloatMin": 0.85,
+                "atkFloatMax": 1.15,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 550,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                []
+            },
+            "talentSkillList":
+            [
+                "06404"
+            ],
+            "skillList":
+            [
+                "06402",
+                "06403"
+            ],
+            "normalAttack": "06401",
+            "paSkillList":
+            {
+                "starSkill1": "06405",
+                "starSkill2": "06406",
+                "starSkill3": "06407",
+                "starSkill4": "06408"
+            }
+        },
+        "hero_066":
+        {
+            "typeId": "hero_066",
+            "des": "奥格",
+            "icon": "at066_0",
+            "name": "奥格",
+            "name2": "雪域探险家",
+            "campName": "奥格的温泉村，霜烬平原",
+            "img": "chara066_0",
+            "imgPos": "17_-66",
+            "rare": 4,
+            "job": 1,
+            "element": 1,
+            "itemFavor":
+            {
+                "item_27006": 60,
+                "item_27007": 85,
+                "item_27008": 120
+            },
+            "giftType": 2,
+            "viewData":
+            {
+                "height": 1.7,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_066",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "奥格",
+                "phyAtk": 365,
+                "magicAtk": 274,
+                "phyDef": 309,
+                "magicDef": 159,
+                "maxHp": 2055,
+                "atkSpeed": 0.7,
+                "crit": 10,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 2,
+                "atkFloatMin": 0.9,
+                "atkFloatMax": 1.1,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 550,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                []
+            },
+            "talentSkillList":
+            [
+                "06604"
+            ],
+            "skillList":
+            [
+                "06602",
+                "06603"
+            ],
+            "normalAttack": "06601",
+            "paSkillList":
+            {
+                "starSkill1": "06605",
+                "starSkill2": "06606",
+                "starSkill3": "06607",
+                "starSkill4": "06608"
+            }
+        },
+        "hero_065":
+        {
+            "typeId": "hero_065",
+            "des": "乌尔勒",
+            "icon": "at065_0",
+            "name": "乌尔勒",
+            "name2": "大书院的掌管者",
+            "img": "chara065_0",
+            "imgPos": "-19_41",
+            "campName": "大书院，霜烬平原",
+            "rare": 5,
+            "job": 4,
+            "element": 2,
+            "itemFavor":
+            {
+                "item_27003": 60,
+                "item_27004": 85,
+                "item_27005": 120
+            },
+            "giftType": 1,
+            "viewData":
+            {
+                "height": 2.4,
+                "scale": 0.903,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_065",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front",
+                    "attack2_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back",
+                    "attack2_front"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "乌尔勒",
+                "phyAtk": 478,
+                "magicAtk": 386,
+                "phyDef": 218,
+                "magicDef": 77,
+                "maxHp": 1567,
+                "atkSpeed": 0.81,
+                "crit": 12,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 7,
+                "atkFloatMin": 0.8,
+                "atkFloatMax": 1.2,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 627,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                [
+                    "游侠",
+                    "女性"
+                ]
+            },
+            "talentSkillList":
+            [
+                "06504"
+            ],
+            "skillList":
+            [
+                "06502",
+                "06503"
+            ],
+            "normalAttack": "06501",
+            "paSkillList":
+            {
+                "starSkill1": "06505",
+                "starSkill2": "06506",
+                "starSkill3": "06507",
+                "starSkill4": "06508"
+            }
+        },
+        "hero_043":
+        {
+            "typeId": "hero_043",
+            "des": "阿娜洛洁",
+            "icon": "at043_0",
+            "name": "阿娜洛洁",
+            "name2": "荒芜大地上盛开的太阳之花",
+            "img": "chara043_0",
+            "imgPos": "20_-121",
+            "campName": "荒芜大地",
+            "rare": 5,
+            "job": 6,
+            "element": 4,
+            "itemFavor":
+            {
+                "item_27003": 60,
+                "item_27004": 85,
+                "item_27005": 120
+            },
+            "giftType": 1,
+            "viewData":
+            {
+                "height": 2.2,
+                "scale": 0.951,
+                "animTimeScale": 1,
+                "skeletonName": "Npc_043",
+                "skinName": "default",
+                "atk_Front_AnimNames":
+                [
+                    "attack1_front"
+                ],
+                "atk_Back_AnimNames":
+                [
+                    "attack1_back"
+                ],
+                "dead_AnimName": "die",
+                "nearDeadLoop_AnimName": "die_dying",
+                "nearDeadStart_AnimName": "die_start",
+                "hit_Front_AnimName": "hurt_front",
+                "hit_Back_AnimName": "hurt_back",
+                "walk_front_AnimName": "walk_front",
+                "walk_back_AnimName": "walk_back",
+                "run_front_AnimName": "run_front",
+                "run_back_AnimName": "run_back",
+                "win_AnimName": "skill_win"
+            },
+            "unitData":
+            {
+                "level": 1,
+                "name": "阿娜洛洁",
+                "phyAtk": 262,
+                "magicAtk": 354,
+                "phyDef": 222,
+                "magicDef": 168,
+                "maxHp": 1688,
+                "atkSpeed": 0.67,
+                "crit": 10,
+                "critRes": 0,
+                "critDam": 150,
+                "atkRange": 8,
+                "atkFloatMin": 0.8,
+                "atkFloatMax": 1.2,
+                "walkSpeed": 0.5,
+                "runSpeed": 4.3,
+                "spType": "mp",
+                "maxSp": 689,
+                "addSp":
+                [],
+                "repelRes": 0,
+                "collection": 10,
+                "poisonMax": 100,
+                "poisonDown": 10,
+                "helpTime": 5,
+                "restoreHp": 0,
+                "restoreSp": 0,
+                "tags":
+                []
+            },
+            "talentSkillList":
+            [
+                "04304"
+            ],
+            "skillList":
+            [
+                "04302",
+                "04303"
+            ],
+            "normalAttack": "04301",
+            "paSkillList":
+            {
+                "starSkill1": "04305",
+                "starSkill2": "04306",
+                "starSkill3": "04307",
+                "starSkill4": "04308"
+            }
+        }
+    }
+}

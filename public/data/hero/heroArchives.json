@@ -1,0 +1,2774 @@
+{
+    "archives":
+    {
+        "hero_001":
+        [
+            {
+                "archiveDesc": "　　出身克里斯汀的小小工匠。拥有着过人的智慧，凡事都能理性地思考。\n　　自幼从巨匠的父亲处学习各种失传的工匠技法，年纪轻轻便成果斐然。在耳濡目染克里斯汀对工匠的迫害后，决意追随父亲的理念，重振工匠之道——“创造美好之物，重铸损毁之物”。\n　　拥有一把传承自父亲的工匠锤，据说是黄昏前先时工匠的遗物。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_001_00",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            }
+        ],
+        
+        "new_hero_002":
+        [
+            {
+                "archiveDesc": "姓名：米托拉\n所属：自己的营地！\n出身：失忆了所以不记得\n技能：拾荒，双剑术\n住址：和[myName]一起盖的营地，求生者草原\n武器：拾来的双剑，还没取名呢\n兴趣：吃喝，打架，和[myName]在一起\n契约附语：我就是你最好的伙伴！遇到什么麻烦，就快来找我米托拉吧！",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "new_hero_002_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　长着猫耳和尾巴的魔人少女。在求生者草原占据了一处废弃的荒野客营地，独自生活了两年。\n　　性格耿直，只凭直觉做事，不懂人情世故，给人一种仿佛野生小动物的印象。\n　　自称来到深渊之前的记忆很模糊。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "new_hero_002_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　在凶险的深渊，米托拉以一种近乎偏执的态度坚持着野外独居的生活。虽然附近的管理者——驿站多次对她伸出援手，邀请她来到聚落附近居住以接受保护，但每次都会被她强硬地拒绝。",
+                "archiveTask": "",
+                "archiveTitle": "荒野行者",
+                "typeId": "new_hero_002_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　米托拉发来信件，想要邀请你一起去草原拾荒。",
+                "archiveTask": "　　独居时期的米托拉仿佛是个野孩子，不擅长与人交流，在一些众所周知的常识上也显得非常笨拙。\n　　在草原上，她完全依赖自己的狩猎技巧获取食物，但完全不知道烹饪的方法。尽管艾尔莎曾苦口婆心地告诉她熟食味道好还有利于身体健康，但她也只是会把肉烤成焦炭，然后反驳这种味道还不如生肉配蘑菇。",
+                "archiveTitle": "野孩子",
+                "typeId": "new_hero_002_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_002_1",
+                "mailTypeId": "mail_fav_hero_002_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　",
+                "archiveTask": "",
+                "archiveTitle": "自律非凡",
+                "typeId": "new_hero_002_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }
+        ],
+        "hero_005":
+        [
+            {
+                "archiveDesc": "姓名：茜塔\n所属：驿站侍者队\n出身：滑泥群落，魔爪沼泽（早没了）\n技能：清洁扫除\n住址：租住于你的营地\n武器：巨斧，或者扫帚也算？\n兴趣：下班\n契约附语：时薪不低于230阿比，一天只做八小时，这个总可以做到吧……",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_005_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　身形高挑，性格慵懒的水栖属魔人少女，驿站旅店侍者队中的一员。\n　　毕生夙愿不过是每天按时准点下班，却总被不可抗力拖入无休止的三班倒，弄得她整日都是一副苦大仇深、愁云惨雾的模样。\n　　偶尔也兼任契约者，擅长挥舞大斧与魔物战斗，气势惊人。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_005_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　烹饪、扫除、待客样样全能的茜塔，是旅店公认的顶梁柱。她默默扛起大小事务，那份可靠感让同伴们无比安心，也让她成了后辈们依赖的对象。",
+                "archiveTask": "",
+                "archiveTitle": "顶梁柱",
+                "typeId": "hero_005_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　茜塔发来了信件，邀请你来驿站旅店吃一顿饭。",
+                "archiveTask": "　　茜塔极其厌恶加班加点，永远只做分内的工作是她一生的愿望。虽然茜塔不喜欢主动接活，但正式委托给她的工作一定能出色地完成。",
+                "archiveTitle": "节能打工者",
+                "typeId": "hero_005_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_005_1",
+                "mailTypeId": "mail_fav_hero_005_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　经常有熟客评价茜塔“看起来不近人情，实则内心火热且期待变化”，每逢此时茜塔都会坚决地表达反对意见，并会用头发往他们脸上滋水以表达不满。",
+                "archiveTask": "",
+                "archiveTitle": "外冷内热",
+                "typeId": "hero_005_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_007":
+        [           
+            {
+                "archiveDesc": "姓名：拉碧丝\n所属：妖精舞团\n出身：森歌部族，黑森林\n技能：舞蹈，编排舞剧、团队运营、财务管理\n住址：妖精舞团宿舍，驿站住民区\n武器：曼妙的身姿❤\n兴趣：观赏田野，星探猎头\n契约附语：啊啦，还要写这个呢。我是拉碧丝，愿我的舞蹈能为你带来……愉悦。",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_007_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　黑森林的风之妖精。曾是部族中的祝祷舞者，能以曼妙舞姿向森林呼唤治愈之力。\n　　如今作为妖精舞团的创始人兼经理，她编排舞剧、招纳新血，在驿站旅店的专属舞台上将演出经营得有声有色。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_007_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　拉碧丝是妖精舞团的核心。她作为前辈和经理，尽心尽力带领舞团编排演出和训练。但她对后辈的严格要求，也让许多慕名加入舞团的新人撑不过一个礼拜。",
+                "archiveTask": "",
+                "archiveTitle": "舞团核心",
+                "typeId": "hero_007_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　拉碧丝发来邮件，想请你帮个忙。",
+                "archiveTask": "　　拉碧丝除了是舞团资历最老前辈外，也没什么特别之处。之前她在森林里也仅是恪守传统的祝祷舞领舞，对迎合酒客喜好的舞蹈并不在行。更何况目前的深渊各处都受到异变影响，招募新人的工作也并不轻松。",
+                "archiveTitle": "舞台的难处",
+                "typeId": "hero_007_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_007_1",
+                "mailTypeId": "mail_fav_hero_007_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　妖精舞团刚组建时，她们静谧温软的舞蹈风格并不是很讨酒客喜欢。但自从天资聪颖的夏库塔拉和有独特魅力的可可娜加入后，三人合力编排的共舞演出，令舞团一时声名鹊起，真正走向偶像之路。",
+                "archiveTask": "",
+                "archiveTitle": "偶像之路",
+                "typeId": "hero_007_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_008":
+        [
+            {
+                "archiveDesc": "姓名：夏库塔拉！\n所属：妖精舞团！\n出身：图兰顿沙漠！\n技能：舞蹈！火热的舞蹈！最火热的舞蹈！\n住址：妖精舞团宿舍，驿站住民区！\n武器：火热的舞蹈！！\n兴趣：火热的舞蹈，和任何开心好玩的事情！\n契约附语：除了火热的舞蹈，咱也是很能干的哦！要是觉得无聊，可以来和咱唠嗑解闷呀！",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_008_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　来自图兰顿沙漠的沙炎妖精。\n　　性格火辣，元气满满，能在敌人脚下卷起炽热的沙尘之炎，将其烧尽。\n　　天资聪颖，舞技过人，是驿站妖精舞团的主力。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_008_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　夏库塔拉出身资源贫瘠的沙漠，早已习惯了平日艰苦的生活。\n　　虽然比起拉碧丝年纪尚小，但她的乐观和热情让她在加入舞团前就在荒野各处有着不少朋友。",
+                "archiveTask": "",
+                "archiveTitle": "火辣热情",
+                "typeId": "hero_008_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　夏库塔拉发来了邮件，想要来营地宣传舞台的演出。",
+                "archiveTask": "　　沙炎部族以野蛮好战而著称，而夏库塔拉也是从拉碧丝处首次得知妖精还能通过跳舞吸引客人关注。\n　　而她第一次登台的火热表演，就直接将旅店的气氛掀到了最高潮。看着热火朝天的舞台和台下观众们的喝彩，夏库塔拉真正燃起了舞蹈的热情。",
+                "archiveTitle": "天资卓越",
+                "typeId": "hero_008_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_008_1",
+                "mailTypeId": "mail_fav_hero_008_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　夏库塔拉出身南方图兰顿的沙炎部族。所在的部族在妖精战争中派她远赴深渊支援盟友，但最终败走他乡，不幸成为黑月部族的奴隶，被装上了抑制魔力的魔法脚镣。",
+                "archiveTask": "",
+                "archiveTitle": "异域风情",
+                "typeId": "hero_008_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_009":
+        [
+            {
+                "archiveDesc": "姓名：可可娜\n所属：空（批注：妖精舞团）\n出身：空（批注：黑月部族，黑森林）\n技能：空（批注：月光华舞）\n住址：空（批注：妖精舞团宿舍，驿站住民区）\n武器：空（批注：的确没有）\n兴趣：空（批注：毒舌、离家出走）\n契约附语：没事别来找我……我不想和任何人打交道……",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_009_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　黑森林黑月部族的妖精。不仅因出身被其他部族唾弃，还因天生魔力微弱、性格怯懦怕生，在黑月部族内部也饱受欺凌。她在大兽潮的灾难中幸存下来，走投无路时结识了拉碧丝，由此加入了妖精舞台。\n　　能利用月光的力量，配合身上的有毒鳞粉，让敌人在月色中痛苦地倒下。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_009_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　由于过去受尽欺侮，可可娜早已遗忘了怎么友善待人。\n　　即使有人对她伸出援手，她也会因为防备而用稚嫩的言语攻击对方，但那仿佛只是某种蹩脚的诅咒，引得大家尴尬一笑。在驿站的时间长了，可可娜的心防也逐渐卸下，渐渐能够接受他人的好意。",
+                "archiveTask": "",
+                "archiveTitle": "过去的伤痛",
+                "typeId": "hero_009_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　可可娜发来了邮件，似乎陷入了非同一般的困境。",
+                "archiveTask": "　　但不知是不是她来自黑月部族的原因，这些蹩脚的诅咒总是以某种方式得以应验，一度成为酒馆中流传的乡间传说。\n　　最后，掏钱买可可娜的诅咒嘴臭成为了某些观众的点名项目；甚至还有不少粉丝沉醉于她蹩脚的毒舌，央求她毫无杀伤力的辱骂。",
+                "archiveTitle": "成真的诅咒",
+                "typeId": "hero_009_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_009_1",
+                "mailTypeId": "mail_fav_hero_009_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　起初，可可娜根本不想加入拉碧丝的舞团，对跳舞也毫无兴趣。但食不果腹、衣不蔽体的流浪生活让她别无选择。\n　　禁不住拉碧丝的软磨硬泡（和地狱训练），可可娜还是穿上了舞装，完成了她惊艳的首次表演。",
+                "archiveTask": "",
+                "archiveTitle": "首次表演",
+                "typeId": "hero_009_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_011":
+        [
+            {
+                "archiveDesc": "姓名：缇莎\n所属：先时追寻者（瓦菲诺说过这个名很酷！）\n出身：白沙荒原东南部某个沙穴（妈妈告诉缇莎的！）\n技能：结晶魔法，感知魔力，带路（批注：是迷路）\n住址：旧日修行所，秋日荒野\n武器：能操纵地元素的晶杖\n兴趣：到处冒险\n契约附语：嘿嘿……趁妈妈不在，赶快带缇莎去各种地方冒险吧！",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_011_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　天真烂漫却又带点迷糊冒失的魔人少女。对世间一切冒险都有着浓厚的兴趣。\n　　脚踝和尾巴上长有引人注目的水红色结晶，据说这些是她体内充盈的魔力的外在表现。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_011_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　缇莎大部分时间都在旧日修行所中度过，听着妈妈莉拉的指令修行秘术，背诵经文。不过，有着孩童般顽皮心性的缇莎似乎并不喜欢这种枯燥的生活。",
+                "archiveTask": "",
+                "archiveTitle": "修业学徒",
+                "typeId": "hero_011_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　缇莎发来了信件，说想要来营地找你玩。",
+                "archiveTask": "　　尽管在修行所接受过许多方面的教育，缇莎却总是一副迷糊冒失的模样，而她那惊人的路痴属性更是堪称一绝。即使面对的仅是一两里的直路，她都能在原地兜兜转转耗上半个时辰，因此被大家戏称为“迷糊小笨蛋”——但她从不在意这点。",
+                "archiveTitle": "迷糊小笨蛋",
+                "typeId": "hero_011_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_011_1",
+                "mailTypeId": "mail_fav_hero_011_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　缇莎在无聊的时候总是会趴在修行所的窗前，盯着每个路过的冒险者，幻想他们经历过的传奇故事。她渴望离开修行所外出旅行，体验世间各种各样的刺激冒险。",
+                "archiveTask": "",
+                "archiveTitle": "渴望冒险",
+                "typeId": "hero_011_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_012":
+        [
+            {
+                "archiveDesc": "姓名：沃夫加\n所属：荒野客\n出身：巴诺姆村，索利德山\n技能：狩猎，精确射击\n住址：居无定所，有事请联系驿站\n武器：自制的惯用猎弓\n兴趣：拆骨，制皮，冥想\n契约附语：我喜欢独来独往，但有事随时可来找我。",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_012_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　沃夫加是一名流浪猎人，似乎成为驿站的契约者有很长一段时间了。\n　　从外表上看，沃夫加显然是一名成熟的猎手。破旧的弓箭与匕首，藏匿在毛发与皮肤之间的伤痕，彰显着一股生人勿近的味道。但沃夫加对待每一位合作的契约者都保持应有的礼貌，据说这是身为猎人的“礼仪”。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_012_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　沃夫加在求生者草原拥有自己的猎场，除去同驿站合作的时间，他一年四季几乎都徘徊在猎场之中。他也因此经常被人调侃成“被困在猎场的套中狼”。",
+                "archiveTask": "",
+                "archiveTitle": "猎场住民",
+                "typeId": "hero_012_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　沃夫加发来信件，似乎说想见识见识你的狩猎技巧。",
+                "archiveTask": "　　无论是打猎还是出行，沃夫加总是一人行动。哪怕在驿站吃饭的时候，他也会独自一人在角落进食。这种独来独往的行事风格使他总被称为“孤狼”。",
+                "archiveTitle": "隐蔽处的孤狼",
+                "typeId": "hero_012_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_012_1",
+                "mailTypeId": "mail_fav_hero_012_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　虽然沃夫加看起来不在乎别人，但若遇见优秀的人，他也会在暗中观察学习。他曾在驿站铁匠铺枯坐一下午，只为观察学习对面铁匠的打铁技艺。",
+                "archiveTask": "",
+                "archiveTitle": "暗中学习",
+                "typeId": "hero_012_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_014":
+        [
+            {
+                "archiveDesc": "姓名：皮塔\n所属：巴诺姆自卫团\n出身：索利德山\n技能：任何你能想到的游荡者技能\n住址：巴诺姆村，索利德山地\n武器：游荡者双刃\n兴趣：捣蛋，恶作剧，跟着大姐头和老大混\n契约附语：大姐头不在，你就是我的老大！我们接下来要去对付谁？",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_014_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　皮塔是巴诺姆村自卫团的成员，目前在村中负责护卫工作。仅从外表看，瘦弱的皮塔总透着人畜无害的气质；但熟悉他的人都清楚，他完全配得上山狐族狡猾的本性——那副无害的模样不过是他精心伪装的表象罢了。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_014_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　  皮塔喜欢收集各种各样的战利品，无论是金光闪闪的耳环、还是木制的雕像，都会被他放入收纳皮包当中。\n　　这个习惯部分源自山狐的习惯，更多是源于皮塔的虚荣。皮塔毫不掩饰自己那爱慕虚荣的想法，并将战利品当成是自己荣耀的证明。",
+                "archiveTask": "",
+                "archiveTitle": "战利品收集者",
+                "typeId": "hero_014_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　皮塔发来信件，说村子里似乎进了贼，想向你求助。",
+                "archiveTask": "　　皮塔乐于将战场上的战利品据为己有，但也乐于将这些战利品分享给自己的下属，甚至愿意舍身帮助手下拿到想要的东西。比如皮塔一个下属喜欢的水晶被哈比叼走了，皮塔会连续跑一座山把那个水晶抢回来送给手下。\n　　虽然这种行为通常被认为是收买人心，但皮塔的行为显然更像是大哥照顾小弟，是一种不求任何回报的付出。",
+                "archiveTitle": "喜爱分享的大哥",
+                "typeId": "hero_014_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_014_1",
+                "mailTypeId": "mail_fav_hero_014_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　“皮塔可聪明了！呃，到底有多聪明？反正他给自卫团的大家出了不少主意！”\n　　阴险狡猾是皮塔的代名词，尽管他瘦小的身形不适合硬碰硬的战斗，他却总能利用敏捷和聪慧填充力量上的不足，通过高超的计谋击败强大的对手。",
+                "archiveTask": "",
+                "archiveTitle": "聪慧与狡诈",
+                "typeId": "hero_014_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_015":
+        [
+            {
+                "archiveDesc": "姓名：芭杜尔\n所属：三枝议会\n出身：杜尔家族，黑森林\n技能：德鲁伊法术，炼金术\n住址：金弦之厅橡树冠1区302号树屋\n武器：赫尔温·杜尔，巨木之枝\n兴趣：制药，种田\n契约附语：不在金弦之厅的这段时间，就让我们好好相处吧。",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_015_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　芭杜尔是一位鹿人德鲁伊兼旅行药师。她在求生者草原的某处开辟了一片药圃，种植着各种草药。然而，在之后的重逢中，你们发现这似乎只是芭杜尔的隐藏身份，而她真正的身份，则大大出乎了你们的意料：她竟是黑森林金弦之厅的领袖之一，三枝议会的树冠守望者。\n　　芭杜尔总给人沉稳的印象，周围人都评价她理性务实，甚至显得有些不近人情。但若与她拉近些距离，她内心中坚定的意志和热情之火定会令你深受感染。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_015_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　很多人都知道，在求生者草原一带偶尔会出现一名奇怪的旅行药师，她有着长长的鹿角，穿着奇异的服装，性情古怪，神出鬼没。虽然经常找不到她的人，但对于很多荒野客来说，一个愿意接诊的药师已经是他们没有选择之下的最后指望。而芭杜尔的医术也完全对得起他们的期待，久而久之，关于荒野药师的传闻就这样流传了开来。",
+                "archiveTask": "",
+                "archiveTitle": "奇怪的药师",
+                "typeId": "hero_015_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　芭杜尔发来了信件，想要来参观你的营地。",
+                "archiveTask": "　　从研习医学的第一天起，芭杜尔就被告知，真正的治愈并非一味的抚慰和缓解，而是要直面病痛的根源。很多时候，对于患者来说，切除病灶的利刃要比缓慢生效的药膏有效得多——即使过程会带来痛苦。这种务实甚至略显冷酷的哲学深深影响了芭杜尔，在之后的人生中，逐渐成为了她的行事准则。",
+                "archiveTitle": "利刃与药膏",
+                "typeId": "hero_015_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_015_1",
+                "mailTypeId": "mail_fav_hero_015_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　芭杜尔与森林的联系超乎寻常。她在最危险的密林中行走，却如在自家后院般闲庭信步，凶猛的野兽在她面前会收敛爪牙，仿佛她是森林本身的一部分。对她而言，森林并非单纯的资源产地，而是一个有意志、有情绪的生命共同体。这份深刻的共鸣，使她能解读自然的低语，并借用其力量来施展奇迹。",
+                "archiveTask": "",
+                "archiveTitle": "森林之友",
+                "typeId": "hero_015_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_019":
+        [
+            {
+                "archiveDesc": "姓名：奇瓦\n所属：荒野客\n出身：大书院，霜烬平原\n技能：火焰魔法，指挥软软\n住址：你的营地里\n武器：洛瑞瑟尔，司书魔杖\n兴趣：冒险，元素学，鲁特琴\n契约附语：不需要害怕软软的理由：一、它会帮忙看家护院；二、它不会伤害你；三：一顿只吃一小筐煤",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_019_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　坐在名为“软软”的熔火元素背上，四处旅行的曼恰奇族少女。她娇小的身形和身下那庞大的魔物总能瞬间攫住路人的视线，但她似乎总在竭力避免成为焦点。\n　　在与某位求生者草原崭露头角的新锐营地主签订伙伴契约时，她曾坦诚相告：自己是在从遥远“大书院”离家出走的路上，意外捡到这只炽热的熔火元素的。自那以后，她便与软软相依为命，一同在深渊各处旅行，直到现在。\n　　这还真是个能让人惊掉下巴的故事。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_019_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　虽然大部分魔物对于人类来说都是威胁，但奇瓦却总是骑在熔火元素“软软”的背上。一人一魔总是一起行动，仿佛亲人一般不分彼此、亲密无间，仿佛她们是天生的搭档。",
+                "archiveTask": "",
+                "archiveTitle": "魔物骑士",
+                "typeId": "hero_019_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　奇瓦写了一封信，感谢你收留了她，并表示要来拜访营地。",
+                "archiveTask": "　　似乎是因为严格管教的原因，年纪轻轻的奇瓦在很小的时候就从家逃了出来。这位在学院颇有天分的秘术师不想当笼中鸟，渴望能在天空中自由翱翔。",
+                "archiveTitle": "逃家的孩子",
+                "typeId": "hero_019_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_019_1",
+                "mailTypeId": "mail_fav_hero_019_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　奇瓦脚下名为“软软”的熔火元素非常怕生，每次与陌生人短距离接触时都会不自觉地释放火焰。不过在奇瓦的安抚下，它也能很快恢复平静。",
+                "archiveTask": "",
+                "archiveTitle": "怕生的软软",
+                "typeId": "hero_019_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_023":
+        [
+            {
+                "archiveDesc": "姓名：卡天（批注：卡夫）\n所属：巴若母白卫团（批注：自卫团）\n出身：不知道（批注：佣兵团里长大）\n技能：打架\n住址：巴若母村（批注：巴诺姆村）\n武器：良牙奉（批注：狼牙棒）\n兴趣：打架，打架，打架\n契约附语：你的地盘听你的，老木（划掉）大",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_023_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　卡夫是个优秀的战士，也是个单纯的莽汉——这几乎是巴诺姆村村民的共识。\n　　身为自卫团成员，巡逻就是卡夫的日常。他总是扛着狼牙棒，在村子的大街小巷间游走。那看似凶狠实则憨厚的眼神，仿佛在警告潜在的来犯者：胆敢作恶，必遭他的重锤伺候；但对熟悉他的村民来说，他笨拙地帮老奶奶提重物、或是被小孩子缠着修理玩具时挠头傻笑的样子，才是他真实的模样。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_023_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　卡夫坚信，面对困难就该勇往直前，用一身蛮劲和热血碾碎一切障碍。对这样的莽汉来说，或许唯有持续战斗、挥洒热血才最痛快。",
+                "archiveTask": "",
+                "archiveTitle": "鲁莽的狼人",
+                "typeId": "hero_023_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　卡夫最近很焦虑，连和你约好的事情都放了鸽子。",
+                "archiveTask": "　　卡夫不喜欢思考，更习惯凭经验做事。\n　　他曾在与恐兽对峙时，发现其弱点在脖颈处，便领悟了专攻脖颈的战法。然而在面对没有脖子的岩蟾蜍时，这种方法就完全无效。可卡夫仍固执地沿用旧法，直至被揍得鼻青脸肿也不肯改变，最后凭着气势才消灭魔物。",
+                "archiveTitle": "气势最重要",
+                "typeId": "hero_023_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_023_1",
+                "mailTypeId": "mail_fav_hero_023_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　在战斗的时候，卡夫总爱用些玩命的招数，哪怕这会把他坑进绝境。问他为啥，他就一句：“不吃点苦头咋变强？”\n　　仿佛在他眼中，只要能变强，豁出命去都值。",
+                "archiveTask": "",
+                "archiveTitle": "变强的期望",
+                "typeId": "hero_023_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_025":
+        [
+            {
+                "archiveDesc": "姓名：嘉莉缇\n所属：三枝议会\n出身：黑森林\n技能：唱，跳，狙击，做饭\n住址：金弦之厅榕树冠2区505号树屋\n武器：风之痕\n兴趣：举办宴会\n契约附语：来开宴会吧！！",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_025_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　嘉莉缇是金弦之厅“三枝议会”的成员之一，司掌“宴会大师”之职。她的职责范围涵盖了部族的物资管理与民生后勤，并负责筹办维系部族精神的传统“大宴席”。在因“大兽潮”而变得封闭的黑森林中，她是维系着社群活力与传统的关键人物。\n　　嘉莉缇总是洋溢着热情，如大宴会中央的篝火般充满活力。她坚信盛宴代表着黑森林乐观的传统，是对抗绝望的武器，是金弦之厅不可或缺的精神图腾。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_025_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　“嘉莉缇大人她……总是充满干劲！虽然有时候看起来有点粗心，但她比谁都更看重‘大宴席’的意义。她常对我说，我们的工作不只是准备食物，更是在为大家准备重新团聚、彼此慰藉的理由。有她鼓励我，我觉得自己不只是个厨师，更是在守护大家重要的东西。”——来自厨师副手的评价。",
+                "archiveTask": "",
+                "archiveTitle": "热情的掌宴",
+                "typeId": "hero_025_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　嘉莉缇发来信件，想问能否拜访你的营地。",
+                "archiveTask": "　　嘉莉缇如今对“大宴席”的执着，源于那场被称为“灾变之宴”的悲剧。作为当时宴会的主持者，她在最欢乐的庆典上，亲眼目睹了“大兽潮”的降临。那一天，本应充满欢声笑语的宴会场，化为了无数族人死伤的悲剧之地。这场灾难成为了她心中无法抹去的阴影，也塑造了她如今的信念。",
+                "archiveTitle": "灾变之宴",
+                "typeId": "hero_025_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_025_1",
+                "mailTypeId": "mail_fav_hero_025_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　嘉莉缇并非看不到森林中潜藏的危机，但她选择用自己的方式去战斗。她认为，恐惧和绝望是比魔物更可怕的敌人，一旦人心被其占据，再坚固的防线也会不攻自破。因此，她将自己定位为“希望的守护者”，她的职责就是用乐观和欢宴构筑起一道内心的防线，让族人有勇气去面对一切外部的威胁。",
+                "archiveTask": "",
+                "archiveTitle": "希望的守护者",
+                "typeId": "hero_025_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_026":
+        [
+            {
+                "archiveDesc": "姓名：贝拉多娜·德·希斯珀利亚\n所属：荒野客\n出身：深渊以西维蒙特利亚，遥远的希斯珀利亚家族（批注：本人自述）\n技能：赤血剑法\n住址：巴诺姆村，索利德山\n武器：诺克缇维娅，赤血刺剑\n兴趣：欣赏高雅艺术，享用高端料理，受到尊贵礼遇\n契约附语：本小姐最宠爱的下仆唷～本小姐不远万里来到你身边，要好好感恩哦～",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_026_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　红发，扎着双马尾，长着一双蝙蝠形状的阔耳的“贵族”魔人少女，自称来自高贵的希斯珀利亚家族。\n　　家族遭遇变故后，她独自逃到了深渊，并在此处站稳了脚跟。多年以来以复兴家族为己任，一直默默努力付出。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_026_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　  贝拉多娜总是携带着一把优雅的红色西洋刺剑，她喜欢用这把剑施展她家族的赤血剑术，她也因此自称为“赤血剑姬”。",
+                "archiveTask": "",
+                "archiveTitle": "赤血剑姬",
+                "typeId": "hero_026_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　贝拉多娜发来邮件，似乎有关于资金的事情想找人详谈。",
+                "archiveTask": "　　即便不再是贵族，但贝拉多娜仍然大手大脚地花钱。有时为她可能为请大家吃饭而花掉半月攒的钱，只为争取一些昔日贵族的面子。",
+                "archiveTitle": "大小姐要花钱",
+                "typeId": "hero_026_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_026_1",
+                "mailTypeId": "mail_fav_hero_026_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　为了节省开销，贝拉多娜会经常在日记本上记下自己的花销，并痛心疾首地表示自己不会再花钱。然后过几天后，日记本上就会出现她悔过的话语。",
+                "archiveTask": "",
+                "archiveTitle": "日记本",
+                "typeId": "hero_026_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_027":
+        [
+            {
+                "archiveDesc": "姓名：梅莉莉\n所属：驿站侍者队\n出身：森歌部族，黑森林\n技能：家政服务（万般全能）\n住址：侍者队宿舍，驿站住民区\n武器：厨具组合\n兴趣：全身心的服务\n契约附语：请放松身心，好好享受侍者队领班的服务吧！",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_027_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　来自魔爪湖畔的蝶之妖精。虽然身形娇小、稚气未脱，但她可是驿站旅店侍者队的领班！厉害吧？\n　　面对下属时，梅莉莉是一位热情又耐心的领袖，总是温柔细致地指导后辈。而面对客人时，她又是专业热情的侍者，用心服务着旅店的每一位来客。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_027_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　梅莉莉天性活泼开朗，对万事万物都抱着积极阳光的态度。即便是再忧郁的人待在她身边，也很容易被她的这份活力所感染。",
+                "archiveTask": "",
+                "archiveTitle": "阳光开朗小妖精",
+                "typeId": "hero_027_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　梅莉莉发来信件，想要来拜访你的营地。",
+                "archiveTask": "　　梅莉莉对工作也怀有发自内心的热情。即便面对大量繁杂的任务，她也会全身心投入，从无半句怨言，并身体力行地激励着其他人，包括总是愁眉苦脸的下属茜塔。",
+                "archiveTitle": "勤劳的领班",
+                "typeId": "hero_027_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_027_1",
+                "mailTypeId": "mail_fav_hero_027_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　虽然职位高能力强，梅莉莉却总被大家当小孩子看。当被客人打趣是小朋友时，她总会憋红了脸，嘟着嘴抗议：“别把我当成小孩子！”",
+                "archiveTask": "",
+                "archiveTitle": "小小的大人",
+                "typeId": "hero_027_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_029":
+        [
+            {
+                "archiveDesc": "姓名：安娜\n所属：灾害研究所\n出身：霜烬平原\n技能：科学研究，驱使元素精灵，筹措经费\n住址：灾害研究所，索利德山中部\n武器：名为“睿智”的阿德鲁琴\n兴趣：没什么兴趣，就弹弹琴吧\n契约附语：我只和聪明人打交道，你是我见过最聪明的。",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_029_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　一位来自“大书院”的学者。\n　　在书院学习期间，安娜以全优的成绩完成了“灾害预兆学”和“古代魔导能量学”的双学位。在决定后续研究方向时，学系的领导们都推荐安娜主攻古代魔导学，认为只有这种方向才能发挥安娜真正的才能。但为了继承养父兼恩师的理想，安娜最终还是选择了灾害学这条冷门的道路，个人的名声，也从“无人不知的才女”，变成了“专攻末日预言的怪胎”。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_029_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　安娜从不掩饰对音乐的喜爱。时常悬挂在腰间的阿德鲁琴，是她根据历史文献仿造的古代乐器，同时也兼具法器的功能。安娜用业余时间复原了数十首古曲，并整理出一整套阿德鲁琴的演奏技法，得到了音乐科教授们的一致肯定，甚至建议她放弃灾害研究，转投音乐部门，遭到了她坚定的拒绝。对安娜来说，梦想是梦想，爱好是爱好，没有为了爱好放弃梦想的道理。",
+                "archiveTask": "",
+                "archiveTitle": "阿德鲁琴",
+                "typeId": "hero_029_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　安娜发来了邮件，请你帮她解决燃眉之急。",
+                "archiveTask": "　　安娜不记得自己出身何地，但可以确定的是，自己并非是深渊的原住民。她唯一模糊的记忆，就是和族人们在野外的简陋定居点中相依为命。可想而知，面对突如其来的天灾，这些可怜人会遭到怎样的命运。安娜在父母的拼死保护下侥幸生还，随后被追逐灾害而来的弗雷德教授收养，带回了深渊。这次刻骨铭心的经历让安娜下定决心，追随养父走上了灾害学研究之路。",
+                "archiveTitle": "安娜的出身",
+                "typeId": "hero_029_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_029_1",
+                "mailTypeId": "mail_fav_hero_029_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　安娜年仅九岁便展露出惊人的天赋，完成了大书院预科的全部学业。到十三岁时，就连各学系长都不得不承认，她的能力已经足以胜任教授一职。即使如此，在待人接物上，安娜倒不会显得特别傲慢，除了“偶尔”说话带刺，既不会颐指气使，也不会因对方身份而差别对待。但那并非意味她谦虚谨慎——单纯是因为智力上的优越，让她平等地俯视所有人。",
+                "archiveTask": "",
+                "archiveTitle": "天才与凡人",
+                "typeId": "hero_029_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_031":
+        [
+            {
+                "archiveDesc": "姓名：波特温\n所属：荒野客（纸被笔捅穿了个洞）\n出身：克里斯汀，大陆最伟大的人类之国\n技能：射击，情报工作\n住址：居无定所，有事联系赛弗德里克\n武器：弓\n兴趣：无可奉告\n契约附语：每周会来报到，有事就做事。",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_031_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　波特温是一名人类。他出身于人类中的武家贵族，五年前，他受到家族的命令来到深渊进行调查，但很快便发生了大规模兽潮，令他孤身一人被困在深渊，无法回到故乡。\n　　虽然先后受到过哈萨林和菲尔德蕾时代的驿站邀请其成为契约主，但他一直觉得“区区魔物模仿人类罢了，懂个什么契约精神”，并坚持认为魔人一旦碰到了利益瓜葛一定会背叛。也许一个契机，可以让他放下无聊的成见，彻底融入深渊的规则之中？",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_031_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　在众人面前，波特温总是以爵士自称，似乎想要通过他的贵族头衔以示高傲。不过在残酷的深渊中，所谓的贵族头衔也不过是一个无用的称号。",
+                "archiveTask": "",
+                "archiveTitle": "高傲的爵士",
+                "typeId": "hero_031_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　波特温发来了信件，看来……他对你意见挺大。",
+                "archiveTask": "　　自从来到深渊以后，波特温就经常收集一些精巧的用具，其中也包括古代遗迹里的宝物。他说这样能让他想起过去的文明生活，他实在难以忍受深渊粗糙技术所造出来的物品。",
+                "archiveTitle": "那文明的过往",
+                "typeId": "hero_031_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_031_1",
+                "mailTypeId": "mail_fav_hero_031_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　虽然被困在深渊，但波特温也绝不自甘堕落，他立刻拿起弓箭开始为生存而奔波，并时刻保持自己身为贵族的操守。他认为贵族越是在险境中，就越要用双手维护自己的尊严。",
+                "archiveTask": "",
+                "archiveTitle": "高贵者的自洁",
+                "typeId": "hero_031_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_033":
+        [
+            {
+                "archiveDesc": "姓名：乌帕·萝特\n所属：水占师环会\n出身：尾指村，魔爪湖\n技能：水占师魔法，自创近身术系\n住址：尾指村东033号\n武器：赛·克雷斯，镰刃法杖\n兴趣：锻炼身体，惩戒坏蛋，妹妹\n契约附语：乌帕驾到！是水占师，也是战士！我会好好保护你的，现在就开始负重特训吧！",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_033_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　挥舞着大镰，冲锋在最前线的蝾螈魔人。乌帕是村子里公认的元气少女，她体内似乎有着用不完的活力。每日朝阳升起之时，尾指村必然会出现晨跑乌帕的身影。除了跑步之外，她还会做托举巨石、千米竞泳、倒挂树枝等体能训练——这在水占师里可不算多见。除此之外，她的横冲直撞也让妹妹露帕总是为她头疼。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_033_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　水占师的队伍里，成员多数都是习惯在后方施法的秘术师。唯独乌帕总爱挥舞着她那把大镰拼杀在最前线。\n　　每当战斗开始她就如离弦之箭冲进敌阵，虽然这般打法的确能打乱敌人阵脚，却也常常让自己处于险境之中。她自觉雄心万丈，却总令她的队友们——尤其是妹妹露帕头疼不已。",
+                "archiveTask": "",
+                "archiveTitle": "一马当先",
+                "typeId": "hero_033_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　乌帕发来信件，表示她不能在原先的地方继续训练了，想要来你的营地。",
+                "archiveTask": "　　乌帕并不执着与人争强斗胜，唯独妹妹露帕是个例外。乌帕从小就希望证明自己是姐妹中更强的那一个，在决定参加水占师的选拔后，两人的斗争变得更加激烈。\n　　尽管这种剑拔弩张的关系持续了很久，但两姐妹的情谊却从未受损。她们如此执意要战胜彼此，原因似乎只有一个——只为证明自己拥有守护对方的力量。",
+                "archiveTitle": "好胜的姐姐",
+                "typeId": "hero_033_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_033_1",
+                "mailTypeId": "mail_fav_hero_033_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　和妹妹露帕一样，乌帕也是极具天赋的秘术师，被不少前辈寄予厚望。但她最钟爱的战斗方式，却是径直冲向敌阵、近身搏杀。乌帕也头疼了很久：究竟是遵从期许，成为队友身后的施法者，还是遵从本心呢？最终，乌帕选择了忠于自我。尽管这个选择让道路多了几分崎岖，但在多年以后，她终究锤炼出了独属于自己的战斗风格，成为了队伍的中流砥柱。",
+                "archiveTask": "",
+                "archiveTitle": "略有迷茫",
+                "typeId": "hero_033_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_034":
+        [
+            {
+                "archiveDesc": "姓名：露帕·萝特\n所属：水占师环会\n出身：尾指村，魔爪湖\n技能：水占师魔法，标准术系\n住址：尾指村东033号\n武器：瓦·克雷斯，魔晶法杖\n兴趣：睡觉，甜食，姐姐\n契约附语：帮我弄一张世界上最柔软的床",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_034_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　魔爪湖曾流传着一个奇怪的传闻：每有旅行者来到湖畔，总能在某棵甜果树下遇见一名沉睡的少女。\n　　秘术师露帕总给人轻飘飘的感觉，对周遭一切都很随性。即便置身惊涛骇浪的船上，她也能安然沉睡。整天懒洋洋的她基本不做任何多余的事，全身最活跃的恐怕当属那对随风摇晃的耳朵。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_034_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　与活泼的姐姐截然不同，妹妹露帕天生慵懒，几乎每走几步就要小憩片刻。加上她嗜睡的体质，渐渐被人唤作“沉睡的秘术师”。",
+                "archiveTask": "",
+                "archiveTitle": "沉睡的秘术师",
+                "typeId": "hero_034_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　露帕发来了信件，希望能有一个可以好好休息的地方。",
+                "archiveTask": "　　若是走进露帕的房间，首先映入眼帘的便是各式各样的床：软绵绵的地铺、铺着云朵般被褥的大床、悬在半空的吊床……在这里，只要困意来袭，便可倒头就睡。这方天地，俨然是专属于她的“睡眠世界”。",
+                "archiveTitle": "床乃吾之所向",
+                "typeId": "hero_034_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_034_1",
+                "mailTypeId": "mail_fav_hero_034_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　露帕虽然显得无精打采，可一旦遭遇关键时刻，她总能打起精神迎战。对她而言，这嗜睡的体质并不会影响她能使出的魔法，甚至还能迷惑对手：任谁也想不到，眼前绵羊般温顺的少女，竟是位强大的秘术师。",
+                "archiveTask": "",
+                "archiveTitle": "可别小看我！",
+                "typeId": "hero_034_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_036":
+        [
+            {
+                "archiveDesc": "姓名：贝尔卡·莱茵\n所属：水占师环会\n出身：四指村，魔爪湖\n技能：水占师魔法，水质勘测，理论研究\n住址：尾指村西036号\n武器：名为“机密”的探水杖，大书院同款有售\n兴趣：冒险，读书\n契约附语：我会好好努力的，请好好看着我吧！",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_036_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　贝尔卡是来自魔爪湖的水占师。她活泼爱笑，对未知充满好奇，曾在遥远的“大书院”修学。虽然在水占师环会里资历尚浅，但努力和坚毅仍是她最强大的武器。\n　　贝尔卡一直在为寻找友人柏莉尔的下落而四处奔走。经过不断的尝试，用上了无数方法，贝尔卡依然一无所获。就在她几乎快要放弃搜寻之时，一对声名鹊起的英雄搭档进入了她的视野，成为了她能抓到的最后的希望。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_036_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　在“水占师之环”中，贝尔卡是个特殊的存在。由于曾在大书院求学，贝尔卡不仅同样拥有对水神的信仰，还如同学者般建立了一整套严谨的学术思维。这让她身上发生了奇妙的化学反应：信仰与理性被她视为相辅相成的工具，迸发出强大的创造力。虽然在传统派眼中这种思维多少有些离经叛道，但诸如“防水符文”之类的新发明，依然让贝尔卡在环会之中获得了不少声望。",
+                "archiveTask": "",
+                "archiveTitle": "非主流水占师",
+                "typeId": "hero_036_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　贝尔卡发来信件，想来你的营地坐坐。",
+                "archiveTask": "　　作为“圣女辅佐”，贝尔卡身负重任。此职位不仅要求她协助圣女阿莱克西娅处理环会日常事务、筹备“净水仪式”等重大典礼，更让她成为了圣女最贴近的守护者。她对圣女怀有极高的敬意与深切的关怀，时刻担忧着那位因过度无私而不断透支自己的领袖。",
+                "archiveTitle": "圣女辅佐",
+                "typeId": "hero_036_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_036_1",
+                "mailTypeId": "mail_fav_hero_036_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　很多人都会因为贝尔卡稚嫩的外表下意识地看轻她，把她看成圣女的随从。但事实上，圣女辅佐官一职绝非虚衔，而是手握重权的核心要职，其地位甚至比内环导师还要高上半畴。她掌握着环会信息流转的咽喉，所有呈报圣女的文书都需经她审阅与筛选。然而她从未将这份权力视为私器，只是牢牢恪守着辅佐的本分，忠诚地履行着圣女守护者与执行者的职责。",
+                "archiveTask": "",
+                "archiveTitle": "恪守本分",
+                "typeId": "hero_036_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_037":
+        [
+            {
+                "archiveDesc": "姓名：剋\n所属：浪迹天涯（批注：荒野客）\n出身：虎斗寺，龙岳\n技能：功夫，烹饪，旅行\n住址：破败古院，索利德山\n武器：灌注意志的双拳\n兴趣：论道，火锅，练拳\n契约附语：感谢信任。吾名为剋，今后愿与小友一同奋斗。",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_037_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　一位来自龙岳的魔人炼气士，因为一些原因，正在卡露蒂亚大陆上四方云游。由于“大兽潮”封闭了深渊的入口，剋不得已留在了这处边陲之地。在发现索利德山的哈比危机后，剋在心中的侠气驱使下，主动留在了荒山古院之中，以一己之力，阻拦了哈比们的外出作乱之举。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_037_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　据剋自称，他所修炼的是一种名为“炼气士”的特殊传承。这种传承并非卡露蒂亚大陆的本地流传，而是来自大海东边的舶来品。传闻这种传承对于龙种助益极大，可以让他们事半功倍地发掘自身潜力，这让炼气士在龙岳大行其道。但即使如此，也非人人都有资格成为炼气士。能够被炼气士门派收入门墙的，不说凤毛麟角，至少也是百里挑一的逸才。剋自然也位列其中。",
+                "archiveTask": "",
+                "archiveTitle": "炼气之道",
+                "typeId": "hero_037_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　剋发来信件，称其想要来营地拜访一番。",
+                "archiveTask": "　　剋所拜入的虎斗院，其传承“烈虎宗”乃是精研风火属性炼气法门及相关武术功法的名门大宗。其麾下近百名炼气士，不止武力超卓，规模亦足以跻身龙岳诸派三甲。所有人都相信，烈虎宗的传承，将会跨越百年、千年……但出乎所有人的意料，虎斗院和烈虎宗的终结竟猝然来临。烈虎仙宗，就在它最鼎盛的巅峰时刻，如同烟花一般轰然炸裂，化为历史的尘埃。",
+                "archiveTitle": "烈虎仙宗",
+                "typeId": "hero_037_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_037_1",
+                "mailTypeId": "mail_fav_hero_037_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　所谓“风从虎、云从龙”，身为具有虎类魔物血脉的魔人，剋从一开始，就在风系武学一道上展现出了不错的天赋。到他三十岁时，他已经做到青出于蓝，在风属性的开发上来到了登峰造极的地步。但宗门的变故，却让他心灰意冷，一代豪侠也因此销声匿迹，从此绝迹江湖。",
+                "archiveTask": "",
+                "archiveTitle": "虎啸生风",
+                "typeId": "hero_037_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_041":
+        [
+            {
+                "archiveDesc": "姓名：埃迪蒂\n所属：大市集治安队\n出身：四指村，魔爪湖\n技能：水之剑术\n住址：大市集东部住宅区2区12栋041\n武器：狂澜\n兴趣：自省，自知，自律，读小说\n契约附语：若看见任何无序之事，请立刻告知于我。",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_041_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　对于在魔爪湖讨生活的人们来说，大市集的治安队队长埃迪蒂，一向是作为商会会长的左右手而广为人知。\n　　作为一名秩序的维护者，她总是表现得高效、冷酷、不近人情，震慑着每一个混迹于大市集的潜在危险分子。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_041_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　然而，只要真正去了解埃迪蒂，便会发现她并非表面那般冷漠。她心底始终燃烧着守护正义的炽热火焰，而在她看来，正义之路的起点便是对规则的恪守，这便是构建公正世界的坚实基石。",
+                "archiveTask": "",
+                "archiveTitle": "恪守规则",
+                "typeId": "hero_041_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　埃迪蒂发来了信件。她说自己似乎陷入了瓶颈，想要来营地向你请求突破的方法。你决定帮她一把。",
+                "archiveTask": "　　若要选出一件能代表埃迪蒂的物件，那她手中的银剑必是不二之选。事实上，埃迪蒂对剑的钟爱之情也溢于言表。在治安队的训练场上，常能见到她挥舞她的宝贝银剑，剑光闪烁间，尽显她的飒爽英姿。",
+                "archiveTitle": "执剑英姿",
+                "typeId": "hero_041_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_041_1",
+                "mailTypeId": "mail_fav_hero_041_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　出身贫寒的埃迪蒂自律非凡。\n　　　　她绝非对欲望无感：巡逻于大市集，鲜香烤肉、香甜糕点的气味，她同样能感知得到；然而她并不以为那是一种诱惑，更习惯回到宿舍，端起她的粗茶淡饭。",
+                "archiveTask": "",
+                "archiveTitle": "自律非凡",
+                "typeId": "hero_041_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            },
+            {
+                "archiveDesc": "埃迪蒂再次发来了信件。邀请你一同去大市集，来指导她如何“休息”。",
+                "archiveTask": "　　虽说埃迪蒂平日里总是摆出一副冷酷的样子，但在大市集的街坊邻里眼中，她更像是一位和善的守护者。\n　　　　当埃迪蒂巡逻路过商铺时，店家们常常会热情地欢迎她，但她总是以工作为由婉言谢绝。一次，一群孩子包围了埃迪蒂，吵闹着非要埃迪蒂讲个故事不可。面对孩子们的热情，她最终无法拒绝，只得陪他们度过了一个愉快的午休。",
+                "archiveTitle": "受欢迎的队长",
+                "typeId": "hero_041_4",
+                "reward": "heroArchives02",
+                "taskTypeId": "fav_hero_041_2",
+                "mailTypeId": "mail_fav_hero_041_2",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 20,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　很少有人知道，这位实力高强的治安队长，数年前还是一位贫民街出身的普通女孩。为了给重病的挚友筹集诊金，当时仅十二岁的她，常握着一把铁剑走出村子，像一名契约者般完成附近集镇发布的众多委托。她在磨砺中飞速成长，大兽潮来临前，她早已成为湖区闻名的小小剑客。”",
+                "archiveTask": "",
+                "archiveTitle": "贫民出身",
+                "typeId": "hero_041_5",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "crit": 5
+                },
+                "unlockFavValue": 25
+            },
+            {
+                "archiveDesc": "收到了埃迪蒂发来的信件。她邀请你一同去贫民街一趟。这似乎和她小时候的事有关。",
+                "archiveTask": "　　《湖风剑侠志》是一本风靡魔爪湖的侠客小说，它影响了魔爪湖的许多孩子，年幼的埃迪蒂便是其中之一。正是这部小说让埃迪蒂梦想成为一名追求正义的剑客。\n　　　　多年过去以后，虽然埃迪蒂早已遗忘小说的具体情节，大兽潮也摧毁了她的过往，但这份追求正义的剑侠之梦却保留了下来，并一直在她的内心熊熊燃烧。",
+                "archiveTitle": "剑侠之梦",
+                "typeId": "hero_041_6",
+                "reward": "heroArchives03",
+                "taskTypeId": "fav_hero_041_3",
+                "mailTypeId": "mail_fav_hero_041_3",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 30,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　埃迪蒂能取得如今这般瞩目的成就，并非仰仗习得了什么惊世骇俗的高超剑术，纯粹是靠着她那股子看似“笨拙”、实则坚毅无比的努力。\n　　　　她的天赋固然重要，但更关键的是她那坚定的意志与关怀他人的赤诚之心。正是这股力量，让她在困境中破茧成蝶，从贫民街的弱女子蜕变为守护一方的强者。",
+                "archiveTask": "",
+                "archiveTitle": "笨拙的努力",
+                "typeId": "hero_041_7",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "critDam": 20
+                },
+                "unlockFavValue": 35
+            },
+            {
+                "archiveDesc": "埃迪蒂发来了信件。再次邀请你一同去大市集一趟。赶快前去赴约吧。",
+                "archiveTask": "　　“她是幽灵，她是恶鬼。她在魔爪湖中徘徊，她会将所有罪恶摧毁。”\n　　　　最初是某个崇拜埃迪蒂的孩童编的小曲，不久却便迅速传遍了魔爪湖，并衍生出了很多稀奇古怪的版本。但有一点人尽皆知：那个嫉恶如仇的治安队长早已成为令魔爪湖所有恶徒胆寒的“魔鬼”。",
+                "archiveTitle": "恶徒的噩梦",
+                "typeId": "hero_041_8",
+                "reward": "heroArchives04",
+                "taskTypeId": "fav_hero_041_4",
+                "mailTypeId": "mail_fav_hero_041_4",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 40,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　想当年，贫穷的她没钱拜师学艺，所能依靠的唯有自学。拔剑、挥斩、招架、刺击，这些最为基础的剑招，便是她日复一日刻苦练习的全部内容，她的剑术也仅仅由这些质朴无华的剑势组合而成。可埃迪蒂从不觉得这有何不妥，在她心中，始终笃定地认为：“剑不就只是这样而已吗？”凭借着这份质朴的坚持，她硬是闯出了属于自己的一片天地。",
+                "archiveTask": "",
+                "archiveTitle": "朴实之剑",
+                "typeId": "hero_041_9",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyDef": 500,
+                    "magicDef": 500
+                },
+                "unlockFavValue": 45
+            },
+            {
+                "archiveDesc": "成功突破的埃迪蒂发来了信件，希望能到你的营地做客。快同她聊聊吧。",
+                "archiveTask": "　　埃迪蒂心里清楚，世界远不像孩童哼唱的歌谣那般安宁平和。倘若哪天大兽潮的灾祸再度袭来，没人能保证深渊能再一次度过劫难。然而，就像她曾说过的那样，岁月流转，诸多事物都已改变。她的实力今非昔比，性格也有所蜕变，可那份守护家园的坚定信念，却从未有过一丝动摇。\n　　　　哪怕有朝一日，她又变回了当初那个在四指镇柔弱无助的小女孩，她也定会毫不犹豫地握紧手中的铁剑，勇敢无畏地向任何胆敢侵犯家园的恶人发起挑战。",
+                "archiveTitle": "不变的信念",
+                "typeId": "hero_041_10",
+                "reward": "heroArchives05",
+                "taskTypeId": "fav_hero_041_5",
+                "mailTypeId": "mail_fav_hero_041_5",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 50,
+                "lockFav": true
+            }
+        ],
+        "hero_043":
+        [
+            {
+                "archiveDesc": "姓名：阿娜洛洁\n所属：荒野客\n出身：黑森林\n技能：制药，行商\n住址：四海为家！（批注：居无定所）\n武器：重弩“买卖”\n兴趣：讨价还价，低买高卖，寻找草药\n契约附语：签完7日内找我买药立享八折",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_043_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　来自黑森林的猎手，同时兼有制药师和商人的身份。她的体型迷你矮小，有着超乎常人的活力，十分擅长和各路豪杰打交道。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_043_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　阿娜洛洁的护身武器是一把巨大的弓弩。不知为何，矮小的她也能将其威力发挥到极致。然而也由于她娇小的身型，这把显眼的武器常常引来卫兵的注意，被他们不由分说地没收——人们总认定她只是个举着危险武器胡乱把玩的熊孩子。",
+                "archiveTask": "",
+                "archiveTitle": "弓弩猎手",
+                "typeId": "hero_043_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　阿娜洛洁给你写了一封信，想要来你的营地参观你的制药台。",
+                "archiveTask": "　　对阿娜洛洁而言，能每天与坩埚与研钵相伴，便是至幸的时刻。她在制药时那兴奋投入的模样，活脱脱像个发现新泥坑、正玩得起劲的孩童，稚气十足却又充满纯粹的快乐。而这份源于热爱的专注，更让她的制药技艺突飞猛进。她研制出的药物，也曾拯救许多人的生命。",
+                "archiveTitle": "制药专家",
+                "typeId": "hero_043_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_043_1",
+                "mailTypeId": "mail_fav_hero_043_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　早在很久以前，阿娜洛洁便因无法忍受森林里那股狂热的氛围，毅然选择了离开。她独自踏上旅程，在广袤危险的深渊中浪游，靠售卖自制的药品维持收入。",
+                "archiveTask": "",
+                "archiveTitle": "游浪商人",
+                "typeId": "hero_043_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }
+        ],
+        "hero_045":
+        [
+            {
+                "archiveDesc": "姓名：艾尔菲帕\n所属：荒野客\n出身：轰雷四宝器（批注：我也不明白意思）\n技能：控制雷电\n住址：一处秘境，魔爪沼泽\n武器：雷鹏之羽\n兴趣：守护宝器，发呆\n契约附语：谢谢你帮我。你和轰雷四宝器，我都会好好守护。",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_045_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　在魔爪沼泽深处，紫色的雷电在密室中噼啪作响，苍白的秘术师于宝器前默然伫立。这幅景象鲜为人知，却已是艾尔菲帕这百年来的真实写照。\n　　艾尔菲帕曾是古代的雷鸟，逝去后借“凭雷之杖”的力量以魔人之姿重获新生。在各种机缘巧合下，她继承了守卫轰雷四宝器的使命，坚守封印至今。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_045_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　艾尔菲帕偶尔会携着提灯外出遗迹巡视，以防任何动摇封印的意外。\n　　出于善良的本性，她偶尔也会为迷途的冒险者指引道路。久而久之，关于这位拿着提灯的“白色魔女”的传闻便在深渊流传开来。",
+                "archiveTask": "",
+                "archiveTitle": "白色魔女",
+                "typeId": "hero_045_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　艾尔菲帕来信，想要来你的营地拜访你。",
+                "archiveTask": "　　尽管她身为鸟类魔人，没法像鸟类一样飞行，但她总会被小鸟们当作同伴。她曾在遗迹外的树下小憩，醒来却发现自己的肚皮上多出了一整窝的鸟蛋。",
+                "archiveTitle": "被小鸟缠上了",
+                "typeId": "hero_045_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_045_1",
+                "mailTypeId": "mail_fav_hero_045_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　艾尔菲帕总是温柔地照料着亲近她的小鸟，但也总免不了遇到些倔强好斗的刺头。这些自封的挑战者总爱用尖尖的鸟嘴啄她的头顶，气势汹汹的模样仿佛在宣告自己才是鸟群的老大。这时的她也总会孩子气地伸出手指戳它们的鸟喙，让小小的战斗总是会僵持许久。",
+                "archiveTask": "",
+                "archiveTitle": "我才是小鸟",
+                "typeId": "hero_045_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_046":
+        [
+            {
+                "archiveDesc": "姓名：迈妮娅\n所属：灾害研究所（正式员工）\n出身：不记得了\n技能：挖矿，大力\n住址：灾害研究所，索利德山\n武器：名为“鼎鼎”的巨型铁镐\n兴趣：收集闪亮亮的石头\n契约附语：你好（涂抹痕迹）！我是（划痕）迈妮娅，今后请多指教（潦草的字迹）！",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_046_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　这位身形娇小却力大无穷的魔人女孩，似乎天生就有着耗之不竭的体力。可迈妮娅却把这份天赋用在奔波于各路矿井做矿工，让她活脱脱成了一个整天苦中作乐的地道打工人。\n　　虽然拥有令人羡慕的体质，可迈妮娅的头脑偏偏不大灵光，难以驾驭自己那惊人的力量。有时写一封不到两百字的信件，她都能捏断不下五支笔，这让她彻底和一切文职工作无缘。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_046_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　由于常年混迹各路矿场，矿山里几乎人人都认得这位绿皮肤的小小矿工。无论休息还是战斗，她总是穿着那身矿工服。据她说，这身行头就是为了能随时开工而准备的。",
+                "archiveTask": "",
+                "archiveTitle": "小小矿工",
+                "typeId": "hero_046_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　迈妮娅给你来了一封信，想要来你的营地坐坐。",
+                "archiveTask": "　　可能是由于长期从事体力劳动，迈妮娅总是惯用蛮力解决问题；就算心里明白该收着点，那身惊人的力气也常常不听使唤。任何脆弱的玩意经过她手都会被捏成粉末，哪怕是加工过的实木硬材也难逃被粉碎的命运。",
+                "archiveTitle": "大大力气",
+                "typeId": "hero_046_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_046_1",
+                "mailTypeId": "mail_fav_hero_046_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　迈妮娅总随身带着一把比她身子还大的铁镐，据说是特意托铁匠打造的，原本只想着用来挖矿。可这大铁镐的硬度和分量都堪比重型武器，因此也成了她在战斗时经常抡起来的家伙。",
+                "archiveTask": "",
+                "archiveTitle": "重重铁镐",
+                "typeId": "hero_046_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_047":
+        [
+            {
+                "archiveDesc": "姓名：阿迪拉\n所属：契约者\n出身：某处哈比繁育地，索利德山\n技能：操使钩爪\n住址：你猜？（批注：巴诺姆村北部营地）\n武器：哈比之钩\n兴趣：看别人破防的样子\n契约附语：哎呀呀，终于要找阿迪拉帮忙了吗？杂鱼工匠～",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_047_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　身材纤细，拥有着大大翅膀的哈比少女。能在空中自由飞翔。\n　　和普通哈比相比，阿迪拉有着更成熟的思想。不过她身上也拥有着哈比的部分特性，比如喜欢闪闪发亮的东西，喜欢对着关系好的人恶作剧等等。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_047_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　对熟悉的人说话，阿迪拉总是会带着一番戏谑的腔调。她有着一个口头禅——“杂鱼”。越喜欢对方，她就越是会称对方为杂鱼，即便是亲密之人也不例外。",
+                "archiveTask": "",
+                "archiveTitle": "毒舌哈比",
+                "typeId": "hero_047_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　阿迪拉给你写了一封奇怪的信，大致意思是要来你的营地和你进行对决。",
+                "archiveTask": "　　即便是面对生活中的一些细枝末节，阿迪拉都总有着异常的好胜心。\n　　某次拾荒后，阿迪拉发现身边哈比的战利品都比自己好。于是她趁着大家睡觉的时候再次飞跃漫山遍野，直至找到更棒的战利品才罢休。",
+                "archiveTitle": "好胜心",
+                "typeId": "hero_047_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_047_1",
+                "mailTypeId": "mail_fav_hero_047_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　相比普通人，哈比属魔人阿迪拉有着令人艳羡的飞行能力，这也是她在战斗方面的优势。在战斗时她总会飞向天空，从高处观察敌人的动向与弱点，并在关键时刻发动致命的攻击。",
+                "archiveTask": "",
+                "archiveTitle": "羽翼之力",
+                "typeId": "hero_047_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }
+        ],
+        "hero_049":
+        [
+            {
+                "archiveDesc": "姓名：菲莉娜\n所属：驿站契约者\n出身：索利德山\n技能：箭术，猎术，登山术\n住址：巴诺姆村北部营地\n武器：大地之怒\n兴趣：社交，做契约任务\n契约附语：驿站那边也请你多给我些面子啦！",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_049_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　菲莉娜继承了传说中的魔物“金鹿”的血脉，头顶的巨角与龙尾般粗壮的鹿尾，正是其血脉和力量的证明。\n　　这份血统赋予了菲莉娜两种常人难以想象的神奇馈赠：远超常人的体能，使她能够拉开二十人方能拉动的强弓，而号令大地的魔力，则让她在险峰之间如履平地，为她赢得了“傲崖的金鹿”这一美名。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_049_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　由于在故乡，魔物血脉被视为不祥之兆，菲莉娜自幼就受到左邻右舍的嫌弃和迫害。为了保护女儿，菲莉娜的父母不得不带着年仅六岁的她逃出村子，昏头转向之中落入了危机四伏的深渊。如果没有奇遇，菲莉娜一家恐怕最多三天就会成为魔物的腹中美餐；万幸，驿站前代领袖哈萨琳及时发现了她们。这次邂逅，也成了菲莉娜就职契约者的契机。 ",
+                "archiveTask": "",
+                "archiveTitle": "流离的命运",
+                "typeId": "hero_049_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　菲莉娜发来了信件。她说有件事需要你的帮忙。",
+                "archiveTask": "　　似乎是出于某种天生的亲和力，驿站的来往者似乎都成为了菲莉娜的熟人。菲莉娜本人对此并无自觉，她只是乐于向陷入困境者伸出援手。这份热忱也让她深得驿站的器重。\n　　“她是为数不多受到巴诺姆民众仰赖的外来者。”某位山民说道，“当年矿山危机，她二话不说就帮了我们住民许多忙。这份情谊实在难以忘怀。”",
+                "archiveTitle": "山民之友",
+                "typeId": "hero_049_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_049_1",
+                "mailTypeId": "mail_fav_hero_049_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　菲莉娜并未接受过任何魔法方面的教导，她所掌握的全部战技，都是凭借她自己的艰苦训练和灵光一闪，独自摸索出来的。透过金鹿血脉之力，菲莉娜能将土属性的力量灌注到箭矢之中，化作宛如流星坠落，足以震撼大地的魔箭。菲莉娜曾被嘱托向其他契约者传授这门技艺，但到最后也没有人能够学会她一招半式。",
+                "archiveTask": "",
+                "archiveTitle": "大地的弓弦",
+                "typeId": "hero_049_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_050":
+        [
+            {
+                "archiveDesc": "姓名：米拉贝尔\n所属：巴诺姆自卫团\n出身：巴诺姆村，索利德山\n技能：锤爆所有混蛋的脑袋\n住址：工头小屋，巴诺姆村\n武器：山神都怕的铁锤\n兴趣：照顾所有哥们姐们，吃胡萝卜\n契约附语：我来了！打谁，说话！",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_050_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　米拉贝尔对母亲的记忆已然模糊，只剩下一些温柔触感与哼唱鼻音的碎片。母亲离世后，父亲罗伯特将对亡妻的全部思念，都化作了对女儿的期望——希望她能成为母亲那般温柔美好的“淑女”。",
+                "archiveTask": "",
+                "archiveTitle": "淑女期望",
+                "typeId": "hero_050_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　米拉贝尔发来信件，她想要来你的营地看看。",
+                "archiveTask": "　　罗伯特对女儿的淑女教育是全面而认真的。除了基本的读写，米拉贝尔还学习了简单的竖琴弹奏和巴诺姆村的传统舞蹈。罗伯特坚信，这些才艺能让她在任何场合都应对得体。米拉贝尔也确实学得很好，但她从未告诉父亲，比起拨弄琴弦，她更喜欢在练习的间隙，偷偷模仿矿工们挥舞铁镐的动作，感受力量在手臂中流动的踏实感。",
+                "archiveTitle": "淑女必修课",
+                "typeId": "hero_050_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_050_1",
+                "mailTypeId": "mail_fav_hero_050_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　对于含辛茹苦养大自己的父亲，米拉贝尔深深地感恩，为此她心甘情愿地扮演着父亲所期望的“淑女”角色。然而，在大兽潮之后，面对村庄日益凋敝的现实，她内心对于这种“百无一用”的身份感到越发厌烦与焦躁。最终，米拉贝尔选择脱下淑女的长裙，换上便于行动的劲装。作为“太妹”和“大姐头”的米拉贝尔出生了——礼貌的微笑无法拯救巴诺姆村，但强大的力量，或许可以。",
+                "archiveTask": "",
+                "archiveTitle": "白兔的变身",
+                "typeId": "hero_050_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_051":
+        [
+            {
+                "archiveDesc": "姓名：阿莱克西娅\n所属：水占师环会（批注：现为营地）\n出身：魔爪湖\n技能：水占师魔法，龙血之术\n住址：尾指村东，圣女侧屋\n武器：龙血凝珠，塞瓦赐福的串珠\n兴趣：帮助他人，奉献自我\n契约附语：我是阿莱克西娅，叫我阿莱姐就好啦。期待能和你一起度过美好而安宁的时光。",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_051_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　水占师之环的圣女。阿莱克西娅以“塞瓦选民”的身份，统率着这个崇拜水神塞瓦的施法者组织，数十年如一日地庇护着魔爪湖的人们。\n　　强大、慈悲、美丽……深受恩惠的湖区住民们用能够想到的各种辞藻赞美阿莱克西娅，甚至有人认为，她即是水神大人的在世化身。对于这种论调，阿莱克西娅一直深感苦恼。在她心目中，自己仅仅只是水神之道的追随者，就连距离“圣女”这个词，其实都还有很远、很远的道路。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_051_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　阿莱克西娅出身于一个十分贫苦的渔民家庭。在双亲遭水生魔物袭击遇害之后，时年七岁的阿莱克西娅被丹涅尔长老接引，成为了水占师之环的一员。在环会导师的教导下，天赋出众的阿莱克西娅很快就崭露头角，于十五岁之龄，通过了高级水占师的考核，成为了环会历史上最年轻的内环导师。这也成为了阿莱克西娅一生劳碌的开始……",
+                "archiveTask": "",
+                "archiveTitle": "圣女的出身",
+                "typeId": "hero_051_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　你收到了来自阿莱克西娅的信鹰，快去看看信上说了什么吧！",
+                "archiveTask": "　　亲近的人都知道，阿莱克西娅有着梦游的怪癖。在长距离旅行时，偶尔……或者经常陷入睡眠状态。为了避免在睡梦中遭到突袭，阿莱克西娅特地锻炼出了坚强的体魄，并发明了一系列预警魔法。在魔爪湖地区，这种对策一直以来都运行良好，但在魔物比较弱的其它地区，旧有的方法似乎遇到了一些意想不到的新问题。",
+                "archiveTitle": "圣女的梦游",
+                "typeId": "hero_051_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_051_1",
+                "mailTypeId": "mail_fav_hero_051_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　很少有人注意到阿莱克西娅一天工作多长时间，但绝大多数时候，当你有事找她的时候，她不是在工作之中，就是在去工作的路上。“如果没有圣女大人，或许水占师之环不出三个月就会因为工作堆积而自灭了！”——曾经有初级水占师如是评价。在外人看来，这只是一种夸张的描述，但在环会的成员们看来，这话至少有八成是事实。",
+                "archiveTask": "",
+                "archiveTitle": "圣女的劳碌",
+                "typeId": "hero_051_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_053":
+        [
+            {
+                "archiveDesc": "姓名：艾薇杜尔\n所属：荒野客（原金弦之厅，现为营地）\n出身：黑森林\n技能：通灵之魔眼，指挥“朋友”作战\n住址：居无定所（现为营地）\n武器：附灵的格尔温·杜尔，巨木之枝\n兴趣：缝布娃娃\n契约附语：我能看见这里的“朋友”，它们都很喜欢你呢……啊，我不是有意要吓你的……",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_053_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　艾薇杜尔是一位拥有“魔眼”的鹿人少女，曾经被当做“金弦之厅”的下一任“灵魂先知”培养，但却因为某些原因离家出走。数年后的现在，因为预见了黑森林的灾难，艾薇杜尔选择回到故土，即使希望渺茫，但艾薇杜尔还是想为家乡作出最后的努力。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_053_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　艾薇杜尔的魔眼，被称为“灵视之魔眼”，在魔眼发动之时，会出现金色瞳孔的异象。根据记载，这种魔眼本应只有“目视灵体”这样极为简单的功用，但由于艾薇杜尔本身具有极佳的灵感体质，相辅相成之下，居然拥有了感知灵界、沟通灵体，乃至于通过灵界视觉窥见未来一角的种种威能。",
+                "archiveTask": "",
+                "archiveTitle": "灵视之魔眼",
+                "typeId": "hero_053_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　艾薇杜尔发来了信件，想找你商量件难言的烦恼。",
+                "archiveTask": "　　虽然身负窥见未来的能力，让艾薇杜尔从小就受到灵魂先知一脉的看重，但这种能力带给她的并非荣耀，而是无尽的痛苦——由于所见的未来几乎都是无法避免的悲剧，艾薇杜尔被族人们视为带来不幸的“乌鸦嘴”并敬而远之。这份特殊的能力，既是她力量的源泉，也是她字辈与胆怯性格的根源所在。",
+                "archiveTitle": "灾厄之魔眼",
+                "typeId": "hero_053_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_053_1",
+                "mailTypeId": "mail_fav_hero_053_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　虽然也有接受过战斗训练，但艾薇杜尔本人并不以战斗见长。为了获得自保之力，她选择用魔眼与滞留世间的灵体沟通，这些孤独的“朋友”们会听从她的召唤，化为无形的守护者，为了保护他们唯一的朋友而战。",
+                "archiveTask": "",
+                "archiveTitle": "灵界的朋友",
+                "typeId": "hero_053_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_055":
+        [
+            {
+                "archiveDesc": "姓名：迦南\n所属：驿站契约者\n出身：保密～\n技能：金羽乌剑术\n住址：驿站住民区，东2区055号\n武器：黑翎\n兴趣：社交，追逐潮流\n契约附语：作为契约者前辈——噢，现在是作为伙伴啦，请好好依靠我吧！",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_055_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　迦南是驿站的“明星契约者”，作为菲尔德蕾麾下最富声名的契约者而广为人知。\n　　姿容秀丽、品行端正、实力高强，从任何角度来说，她都好像是契约者的模范样本，也因此被驿站视为最大的招牌。\n　　这给迦南带来了巨大的人气，也让她承担了巨大的期待。\n　　但迦南从未背叛过这份期待，在需要她站出来的时候，她永远都能挺身而出，完美地完成人们想要她做到的一切。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_055_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　迦南是流淌着金羽鸦血脉的魔人。金羽鸦，又称“金乌”，是只在龙岳一带现身的超上位魔物。而迦南本人在来到深渊之前，据说也曾居住在龙岳周边。\n　　从有真龙庇护的安全区域，跋山涉水来到身处文明圈之外的深渊，如果不是有故事的人，显然是不会这么做的。但个中缘由，由于迦南的赫赫威名，至今无人胆敢探询。",
+                "archiveTask": "",
+                "archiveTitle": "金乌血脉",
+                "typeId": "hero_055_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　迦南发来信件，想要拜访你的营地。",
+                "archiveTask": "　　迦南非常照顾小孩子。\n　　对于在驿站周边的聚居点里居住的小孩子们，迦南经常会给他们带些难得的糖果，或是教导他们一些基础的剑术。\n　　有人了解到，迦南在深渊之外有一个关系很好的妹妹，或许她对小孩子的喜爱，就是因为在他们身上看到了妹妹的影子。",
+                "archiveTitle": "迦南与孩子",
+                "typeId": "hero_055_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_055_1",
+                "mailTypeId": "mail_fav_hero_055_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　黑铁锻炉的掌炉者透露，迦南掌握着某种非常厉害的铸剑术。在迦南初到深渊之际，她为菲尔德蕾重铸了哈萨琳的佩剑，以此交换了驿站的保护。\n　　但在那之后，迦南就再也没有出手铸剑，而是开始学习冒险的知识和战斗的技巧，然后在短短几年间迅速成长为了现在的明星契约者。时至今日，已经几乎没有人知道，她曾有一个铸剑师的身份。",
+                "archiveTask": "",
+                "archiveTitle": "铸剑大师",
+                "typeId": "hero_055_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_062":
+        [
+            {
+                "archiveDesc": "姓名：露比特的说\n所属：金弦之厅的说\n出身：黑森林的说\n技能：烹饪的说\n住址：黑森林-金弦之厅的说\n武器：绝品锅铲和大锅子的说\n兴趣：创作食谱的说，教后辈做菜的说，寻找更多大根子同族的说\n契约附语：露比特来了的说！今后你的胃袋就请交给大根子的说！请多指教的说！",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_062_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　露比特是“金弦之厅”麾下“宴会大师”一脉的厨师长，虽然看似是年幼的少女，但其实是名为“大根子”的魔物。和其他的大根子一样，露比特也有着天真烂漫的性情和强烈的责任心。虽然时常因为一些小事而手忙脚乱，但露比特总是会尽可能一丝不苟地完成所有该做的事，尤其是在料理一道上，更是如此。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_062_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　对大根子而言，能掌管厨房是一种特权，因为这意味着可以最先品尝到最新鲜的食材，并随心所欲地进行烹饪实验。露比特热爱大厨的工作，不仅是为了得到大家的认可，更是打心底里享受这份工作本身。",
+                "archiveTask": "",
+                "archiveTitle": "大厨的职责",
+                "typeId": "hero_062_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　露比特发来信件，似乎是有什么大危机的说。",
+                "archiveTask": "　　在大根子的古老观念中，身高并非单纯的物理尺度，而是生命力的象征。最高的个体被认为获得了大地最多的恩惠，因此最有资格领导族群、分配食物。这套规则维系着族群的和谐，对身高的执着，本质上是对自然法则的敬畏。",
+                "archiveTitle": "族长的标准",
+                "typeId": "hero_062_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_062_1",
+                "mailTypeId": "mail_fav_hero_062_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　“绝对不能输的说！”——露比特的烦恼非常纯粹，完全源自于孩童般的好胜心。在她简单的世界里，“最高”就是“最好”，“输了”就是一件让人丢脸的大事。比起失去族长“大权”，失败本身才更加不可接受！为了一直赢下去，露比特愿意做出任何事——虽然在旁人看来，小孩子口中的“任何事”，比起不择手段的大人来说，始终还是要单纯得多。",
+                "archiveTask": "",
+                "archiveTitle": "露比特的烦恼",
+                "typeId": "hero_062_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_064":
+        [
+            {
+                "archiveDesc": "姓名：伽拉忒亚\n所属：大书院\n出身：不记得了～\n技能：双剑术，快速检索\n住址：大书院，霜烬平原\n武器：霜锋与烬刃\n兴趣：和妈妈姐姐一起玩，一问一答\n契约附语：我是伽拉忒亚！有什么问题尽管问，我立刻为您找答案！",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_064_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　伽拉忒亚是现任大书院院长乌尔勒的养女，并被授予了“院长代理”的头衔。虽然号称是院长代理，但伽拉忒亚并没有被赋予任何决策的权力。她平时的工作一般是待在主楼，在乌尔勒院长不在的时候，为来访者提供引导和信息。“这不就是前台吗？”有学生曾经如此评价，但很快就收到了来自院长本人的书面纠正，于是整个书院便再没有人不长眼地提起这个话题。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_064_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　与伽拉忒亚交流时会发现一种奇特的现象：她无法理解比喻或感叹等抽象表达，倾向于从字面意义上理解所有问题。当被提问时，她会如同检索资料库一般，将脑海中所有相关的原文信息不加筛选地背诵出来，因此与她的对话常常会走向意想不到的方向。",
+                "archiveTask": "",
+                "archiveTitle": "有问必答",
+                "typeId": "hero_064_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　伽拉忒亚发来了信件，想要来拜访营地。",
+                "archiveTask": "　　伽拉忒亚的真实身份，是大书院为应对文明毁灭的灾难而设立的“最终保险”计划的执行者。凭借其超凡的记忆力，她背诵并储藏了整个大书院的所有藏书与文献，成为了一个行走的活体知识库。她本人对此深感自豪，并认为这是一项非常光荣的使命。“能够被选为最终保险的执行人，明明是很棒的事啊！”",
+                "archiveTitle": "最终保险",
+                "typeId": "hero_064_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_064_1",
+                "mailTypeId": "mail_fav_hero_064_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　伽拉忒亚没有被院长乌尔勒收养前的任何个人记忆。这无疑令人同情，但她自己毫不在意，反而因为能遇到米托拉这样的失忆同伴而雀跃不已。对于养母和姐姐，她怀揣纯粹的孺慕与喜爱，毫无独占欲和嫉妒之心。\n　　“这实在是单纯得有些不真实了。”有人评价道，但两母女都不觉有什么不妥。在乌尔勒的羽翼下，伽拉忒亚远不必抛弃单纯才能生存。",
+                "archiveTask": "",
+                "archiveTitle": "空白的过去",
+                "typeId": "hero_064_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_065":
+        [
+            {
+                "archiveDesc": "姓名：乌尔勒\n所属：大书院\n出身：霜烬平原\n技能：教书，科研，管理\n住址：大书院教职员宿舍\n武器：先时工艺学系065号浮游装置组合套装\n兴趣：摆弄机械\n契约附语：偶尔向阿姨撒撒娇也是可以的哦？",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_065_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　乌尔勒是“大书院”的现任院长，也是这片冰封雪原上学术界的最高领袖。作为先时文化与知识的守护者，她以卓越的智慧和领导力管理着整个组织。身为曼恰奇族的她身量娇小，让人难以将她和威严的书院长联系起来。但当她认真起来时，那份强大的气场便会随之凸显，让人明白，乌尔勒院长的权威绝对不容置疑。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_065_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　乌尔勒对女儿奇瓦的爱，强烈到近乎偏执。她对女儿离家后的时光有着近乎苛刻的精准记忆，重逢时的关切也细致到检视其成长的每一丝痕迹，仿佛任何微小的变化都是在外受苦的证明。在她眼中，女儿永远是那个需要被捧在手心呵护的孩子。这种毫不掩饰的溺爱，与她作为院长的威严形象形成了鲜明而有趣的对比。",
+                "archiveTask": "",
+                "archiveTitle": "溺爱的母亲",
+                "typeId": "hero_065_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　乌尔勒发来了信件。她说想去驿站进行一次畅饮之旅。",
+                "archiveTask": "　　乌尔勒是工程学和魔导动力学的大师，对于先时工匠的技艺也有相当的研究。虽然由于关键技术的缺失，导致她无法像[myName]一样成规模地再现先时技术的产物，但她对技术的理解仍足以让她完成很多今人难以想象的成就，比如修复“人外的黄昏”前的魔导终端，或是只凭一瞥，就找出他人设计图中的致命缺陷。",
+                "archiveTitle": "机械贤者",
+                "typeId": "hero_065_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_065_1",
+                "mailTypeId": "mail_fav_hero_065_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　乌尔勒收养伽拉忒亚是一个完全的意外，我们很难想象到底是什么促使院长阁下作出了这样的决定。但可以肯定的是，不管她是出于何种理由选择了这个新的家人，乌尔勒给伽拉忒亚的爱，都和给予奇瓦的别无二致。",
+                "archiveTask": "",
+                "archiveTitle": "两份母爱",
+                "typeId": "hero_065_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_066":
+        [
+            {
+                "archiveDesc": "姓名：奥格\n所属：奥格的温泉村\n出身：霜烬平原\n技能：探险，凿冰，管理经营\n住址：伊菲卡温泉谷，霜烬平原\n武器：名为“家伙事”的冰镐\n兴趣：赚钱，数钱，花钱\n契约附语：好，我们一起赚大钱吧！",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_066_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　奥格是莉拉首座雇佣的探险家，长期活跃在遗迹探索的第一线，为莉拉首座的深渊拯救计划立下了汗马功劳。不过，比起艰苦的探险生涯，奥格最近似乎找到了真正值得倾注一生的梦想。可想而知，这自然让莉拉首座产生了不小的意见。",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_066_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　奥格自称“伟大的探险家”，这个称呼，即使是莉拉首座这种高标准严要求的人也从未否认过。虽然有着包括但不限于中途涨价、抛弃同伴、临时溜号等种种劣迹，但奥格光凭一己之力，为莉拉首座探索了深渊里接近百分之八十的先时遗迹，仅凭这一点，就足以让她无愧于“伟大的探险家”之名。",
+                "archiveTask": "",
+                "archiveTitle": "伟大的探险家",
+                "typeId": "hero_066_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　奥格发来了信件。她对你的营地非常感兴趣。",
+                "archiveTask": "　　虽然有着与人类相似的外表，但奥格并非人类与魔物混血的魔人，而是货真价实的貂类魔物。由于“人外的黄昏”对整个卡露蒂亚的非人类种族带来了巨大的理智冲击，现存具有理智的魔物，绝大多数都是实力强横之辈。然而奥格实力平平，却依然保持了健全的心智，这让莉拉首座非常好奇，为了方便研究开始了长期雇佣——“伟大的探险家”之类，完完全全是意外之喜。",
+                "archiveTitle": "魔物之躯",
+                "typeId": "hero_066_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_066_1",
+                "mailTypeId": "mail_fav_hero_066_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　或许是因为自身种族的关系使然，奥格在初次遇到温泉之后，立刻对这种神奇的泉水展现出了狂热的喜爱。那并非一种简单的、对于舒适的追求，而是一种更深层次的、仿佛源自血脉深处的共鸣。雪貂会喜欢温泉吗？奥格并不关心。但奥格确信自己对温泉爱得深沉，以至于想要让所有人都爱上这种美妙的东西。",
+                "archiveTask": "",
+                "archiveTitle": "我为温泉狂",
+                "typeId": "hero_066_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            }],
+        "hero_999":
+        [
+            {
+                "archiveDesc": "姓名：埃迪蒂\n所属：大市集治安队\n出身：四指村，魔爪湖\n技能：水之剑术\n住址：大市集东部住宅区2区12栋999\n武器：狂澜\n兴趣：自省，自知，自律，读小说\n契约附语：若看见任何无序之事，请立刻告知于我。",
+                "archiveTask": "",
+                "archiveTitle": "契约信息",
+                "typeId": "hero_999_0_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　",
+                "archiveTask": "",
+                "archiveTitle": "伙伴简介",
+                "typeId": "hero_999_0",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 0,
+                "unitData":
+                {},
+                "unlockFavValue": 0
+            },
+            {
+                "archiveDesc": "　　",
+                "archiveTask": "",
+                "archiveTitle": "请填充文本",
+                "typeId": "hero_999_1",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyAtk": 200,
+                    "magicAtk": 200
+                },
+                "unlockFavValue": 5
+            },
+            {
+                "archiveDesc": "　　",
+                "archiveTask": "　　",
+                "archiveTitle": "请填充文本",
+                "typeId": "hero_999_2",
+                "reward": "heroArchives01",
+                "taskTypeId": "fav_hero_999_1",
+                "mailTypeId": "mail_fav_hero_999_1",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 10,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　",
+                "archiveTask": "",
+                "archiveTitle": "请填充文本",
+                "typeId": "hero_999_3",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "maxHp": 500
+                },
+                "unlockFavValue": 15
+            },
+            {
+                "archiveDesc": "　　",
+                "archiveTask": "　　",
+                "archiveTitle": "请填充文本",
+                "typeId": "hero_999_4",
+                "reward": "heroArchives02",
+                "taskTypeId": "fav_hero_999_2",
+                "mailTypeId": "mail_fav_hero_999_2",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 20,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　",
+                "archiveTask": "",
+                "archiveTitle": "请填充文本",
+                "typeId": "hero_999_5",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "crit": 5
+                },
+                "unlockFavValue": 25
+            },
+            {
+                "archiveDesc": "　　",
+                "archiveTask": "　　",
+                "archiveTitle": "请填充文本",
+                "typeId": "hero_999_6",
+                "reward": "heroArchives03",
+                "taskTypeId": "fav_hero_999_3",
+                "mailTypeId": "mail_fav_hero_999_3",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 30,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　",
+                "archiveTask": "",
+                "archiveTitle": "请填充文本",
+                "typeId": "hero_999_7",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "critDam": 20
+                },
+                "unlockFavValue": 35
+            },
+            {
+                "archiveDesc": "　　",
+                "archiveTask": "　　",
+                "archiveTitle": "请填充文本",
+                "typeId": "hero_999_8",
+                "reward": "heroArchives04",
+                "taskTypeId": "fav_hero_999_4",
+                "mailTypeId": "mail_fav_hero_999_4",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 40,
+                "lockFav": true
+            },
+            {
+                "archiveDesc": "　　",
+                "archiveTask": "",
+                "archiveTitle": "请填充文本",
+                "typeId": "hero_999_9",
+                "reward": "",
+                "taskTypeId": "",
+                "mailTypeId": "",
+                "type": 3,
+                "unitData":
+                {
+                    "phyDef": 500,
+                    "magicDef": 500
+                },
+                "unlockFavValue": 45
+            },
+            {
+                "archiveDesc": "　　",
+                "archiveTask": "　　",
+                "archiveTitle": "请填充文本",
+                "typeId": "hero_999_10",
+                "reward": "heroArchives05",
+                "taskTypeId": "fav_hero_999_5",
+                "mailTypeId": "mail_fav_hero_999_5",
+                "type": 1,
+                "unitData":
+                {},
+                "unlockFavValue": 50,
+                "lockFav": true
+            }
+        ]
+        
+    }
+}

@@ -5,8 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "data:clean": "node scripts/clean-data.js",
-    "build": "node scripts/clean-data.js && vite build",
+    "data:build": "node scripts/parse/index.mjs",
+    "data:dungeons:effects": "node scripts/dev/update-dungeon-room-effects.mjs",
+    "build": "npm run data:build && vite build",
+    "search:update": "node scripts/parse/search.mjs",
+    "verify": "node scripts/dev/verify.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

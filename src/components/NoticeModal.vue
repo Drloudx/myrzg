@@ -1,19 +1,17 @@
 <template>
-  <BaseModal
+  <UiModal
     :visible="modelValue"
     title="公告与反馈"
-    @close="closeModal"
+    max-width="440px"
+    teleport-to="body"
+    @update:visible="closeModal"
   >
-    <div v-if="isLoading" class="loading-state">
-      加载中...
-    </div>
-    <div v-else-if="error" class="error-state">
-      加载失败: {{ error }}
-    </div>
+    <UiEmptyState v-if="isLoading" type="loading" text="正在翻阅公告卷轴..." />
+    <UiEmptyState v-else-if="error" type="error" :text="'加载失败: ' + error" />
     <div v-else class="notice-list">
-      <div v-for="(notice, index) in notices" :key="index" class="notice-item" :class="{ 'pinned-notice': notice.isPinned }">
+      <div v-for="(notice, index) in notices" :key="index" class="notice-item paper-panel-solid">
         <h4 class="notice-item-title">
-          <span v-if="notice.isPinned" class="pinned-tag">置顶</span>
+          <UiTag v-if="notice.isPinned" tone="danger">置顶</UiTag>
           {{ notice.title }}
         </h4>
         <span class="notice-item-date">{{ notice.date }}</span>
@@ -21,14 +19,14 @@
       </div>
     </div>
     <template #footer>
-      <button class="modal-btn-confirm" @click="closeModal">确认</button>
+      <UiButton variant="primary" @click="closeModal">确认</UiButton>
     </template>
-  </BaseModal>
+  </UiModal>
 </template>
 
 <script setup>
 import { ref, watch, onMounted } from 'vue'
-import BaseModal from './BaseModal.vue'
+import { UiModal, UiButton, UiTag, UiEmptyState } from './ui/index.js'
 import { fetchWithFallback } from '../utils/request.js'
 
 const props = defineProps({
@@ -86,104 +84,35 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.custom-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10000;
-}
-.custom-modal-content {
-  background: var(--bg-color, #ffffff);
-  width: 90%;
-  max-width: 400px;
-  max-height: 80vh;
-  border-radius: 12px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-.dark-mode .custom-modal-content {
-  background: #1e1e1e;
-  color: #fff;
-}
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px;
-  border-bottom: 1px solid var(--border-color, #eee);
-}
-.dark-mode .modal-header {
-  border-bottom-color: #333;
-}
-.modal-title {
-  margin: 0;
-  font-size: 18px;
-}
-.close-btn {
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  color: #999;
-}
-.modal-body {
-  padding: 16px;
-  overflow-y: auto;
-}
-.loading-state, .error-state {
-  text-align: center;
-  padding: 20px;
-  color: #666;
-}
-.dark-mode .loading-state, .dark-mode .error-state {
-  color: #aaa;
-}
 .notice-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 .notice-item {
-  padding: 12px;
-  background: rgba(0, 0, 0, 0.02);
-  border-radius: 8px;
-  border: 1px solid var(--border-color, #eee);
-}
-.dark-mode .notice-item {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: #444;
+  padding: 12px 14px;
 }
 .notice-item-title {
   margin: 0 0 4px 0;
-  font-size: 16px;
-  color: #2196f3;
+  font-size: 15px;
+  color: var(--text-main, #3e2a14);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 .notice-item-date {
   font-size: 12px;
-  color: #999;
+  color: var(--text-faint, #8a6d4d);
   display: block;
   margin-bottom: 8px;
+  font-style: italic;
 }
 .notice-item-content {
   margin: 0;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.7;
   white-space: pre-wrap;
-}
-.pinned-tag {
-  background-color: #ef4444;
-  color: white;
-  font-size: 10px;
-  padding: 2px 6px;
-  border-radius: 4px;
-  margin-right: 6px;
-  vertical-align: middle;
+  color: var(--text-main, #3e2a14);
 }
 </style>

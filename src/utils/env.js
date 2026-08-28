@@ -4,7 +4,14 @@ import { Capacitor } from '@capacitor/core';
 export const CLOUD_URL = 'https://myrzg.yxzmy.top';
 
 // 识别是否为 Android 原生 APP 环境
-export const isNative = Capacitor.isNativePlatform();
+// 注意：改为惰性安全求值，保证该模块能在 Node 构建脚本（scripts/parse/*.mjs）中安全 import
+let _isNative = false
+try {
+  _isNative = typeof window !== 'undefined' && Capacitor.isNativePlatform()
+} catch (_) {
+  _isNative = false
+}
+export const isNative = _isNative
 
 /**
  * 获取静态/动态资源基准路径
