@@ -1,0 +1,1 @@
+{"des":"向尾指村的木匠耶沙米尔提交 3 个木板和 1 个石砖。","script":"s_3_12_2_n","exps":[{"para":{"tag":"tag_1"},"key":"tag"},{"para":{"layer":"chara2"},"key":"top"},{"para":{"nameSide":"left","charaName":"木匠耶沙米尔","text":"[show]嗯？手上的材料还不够哦。没有材料的话我没法把风干架弄出来。[l][cm][hide]"},"key":"text"},{"para":{"tag":"tag_2"},"key":"tag"},{"para":{"end":true},"key":"end"}]}

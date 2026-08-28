@@ -1,0 +1,1248 @@
+{
+    "datas": {
+        "sldsd": {
+            "icon": "goto_yzdq",
+            "category": [
+                "c2_索利德山地"
+            ],
+            "openCondition": "areaOpen_sldsd",
+            "name": "索利德山地",
+            "areaMons": [],
+            "bgm": {
+                "day": "farmDay",
+                "battle": "battle1",
+                "night": "farmNight"
+            },
+            "areaItems": [],
+            "areaNo": "5",
+            "des": "第二章地区",
+            "instanceTypeId": [
+                "dungeoncsc",
+                "dungeonanxtyj"
+            ],
+            "typeId": "sldsd",
+            "areaType": 0,
+            "areaLayer": [],
+            "comeToLevelId": "",
+            "achivementTypeId": [],
+            "weatherArea": "yzdq",
+            "chapter": ""
+        },
+        "yznb": {
+            "icon": "goto_yznb",
+            "category": [],
+            "openCondition": "",
+            "name": "驿站内部",
+            "bgm": {
+                "day": "farmDay",
+                "battle": "battle1",
+                "night": "farmNight"
+            },
+            "areaNo": "1",
+            "des": "驿站内部说明",
+            "instanceTypeId": [
+                "dungeonB",
+                "dungeonD"
+            ],
+            "typeId": "yznb",
+            "areaType": 0,
+            "areaLayer": [
+                "world",
+                "yzdq"
+            ],
+            "comeToLevelId": "yznb_1",
+            "achivementTypeId": [],
+            "weatherArea": "yzdq"
+        },
+        "c1_map": {
+            "des": "秋日荒野",
+            "icon": "",
+            "category": [
+                "c1_秋日荒野"
+            ],
+            "openCondition": "",
+            "name": "秋日荒野",
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [],
+            "areaNo": "10",
+            "exploreCondition": "exploreIcon_c1_w1",
+            "instanceTypeId": [],
+            "typeId": "c1_map",
+            "areaMons": [],
+            "areaType": 0,
+            "areaLayer": [],
+            "comeToLevelId": "",
+            "shopIcon": {
+                "shopId": [
+                    "c1_map_bishao"
+                ],
+                "condition": ""
+            },
+            "dailyTaskIcon": {
+                "condition": "",
+                "areaTypeId": "c1_map"
+            },
+            "achivementTypeId": [],
+            "weatherArea": "",
+            "chapter": "c1"
+        },
+        "c0_map": {
+            "icon": "",
+            "category": [
+                "c0_求生者草原"
+            ],
+            "openCondition": "",
+            "name": "求生者草原",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [],
+            "areaNo": "8",
+            "des": "暂无描述",
+            "instanceTypeId": [],
+            "typeId": "c0_map",
+            "areaType": 0,
+            "areaLayer": [],
+            "comeToLevelId": "",
+            "achivementTypeId": [],
+            "weatherArea": "",
+            "chapter": "c0"
+        },
+        "c3_area5": {
+            "icon": "map_w1_c3_a5",
+            "category": [
+                "c3_魔爪湖畔"
+            ],
+            "openCondition": "",
+            "name": "蒸馏工厂废墟",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10001",
+                "item_10002",
+                "item_10103"
+            ],
+            "areaNo": "25",
+            "des": "图洛德为净化富魔水所设立的工厂，在发现蒸馏法净化水源的效率太低之后便被放弃了。但总有传闻说这栋废弃的建筑中经常有神秘的身影出没。而更诡异的是，这栋建筑似乎不时就会传出低沉的噪声，仿佛有什么黑暗的秘密隐藏在这里……",
+            "instanceTypeId": [],
+            "typeId": "c3_area5",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c3_area5_1",
+            "achivementTypeId": [],
+            "weatherArea": "c3_map",
+            "chapter": "c3"
+        },
+        "zhyjs": {
+            "icon": "goto_yznb",
+            "category": [],
+            "openCondition": "",
+            "name": "灾害研究所内部",
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaNo": "6",
+            "des": "灾害研究所内部",
+            "instanceTypeId": [],
+            "typeId": "zhyjs",
+            "areaType": 0,
+            "areaLayer": [
+                "world",
+                "sldsd"
+            ],
+            "achivementTypeId": [],
+            "weatherArea": "yzdq"
+        },
+        "c5_area2": {
+            "icon": "map_w1_c5_a2",
+            "category": [
+                "c5_霜烬平原"
+            ],
+            "openCondition": "",
+            "name": "沉星冰湖",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10002",
+                "item_10056",
+                "item_10086"
+            ],
+            "areaNo": "34",
+            "des": "这里曾是一处广袤辽阔的湖泊，供养着周围的聚落。在异变中，整座湖水渐渐凝结成寒冰，最终幻化成了如今永冻冰湖的模样。冰层之下，无数的结晶熠熠闪烁，星星点点，宛如星辰沉入其间，令人不禁心驰神往、浮想联翩。",
+            "instanceTypeId": [],
+            "typeId": "c5_area2",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c5_area2_1",
+            "achivementTypeId": [],
+            "weatherArea": "c5_map",
+            "chapter": "c5"
+        },
+        "c2_area4": {
+            "icon": "map_w1_c2_a4",
+            "category": [
+                "c2_索利德山地"
+            ],
+            "openCondition": "",
+            "name": "山神之殒",
+            "areaMons": [],
+            "bgm": {
+                "day": "dungeon1",
+                "battle": "",
+                "night": "dungeon1"
+            },
+            "areaItems": [
+                "item_10042",
+                "item_10052"
+            ],
+            "areaNo": "18",
+            "des": "传说这里是旧日山神索利德的陨落之地。该是多么巨大的生物，才会留下这样一副躯壳？如果它的力量和体型匹配，对于凡人来说，那一定是宛如天灾，仿若神明！",
+            "instanceTypeId": [],
+            "typeId": "c2_area4",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c2_area4_1",
+            "achivementTypeId": [],
+            "weatherArea": "c2_map",
+            "chapter": "c2"
+        },
+        "c4_map": {
+            "des": "第四章地区",
+            "icon": "",
+            "category": [
+                "c4_黑森林"
+            ],
+            "openCondition": "",
+            "name": "黑森林",
+            "areaMons": [],
+            "weatherArea": "",
+            "areaItems": [],
+            "areaNo": "26",
+            "exploreCondition": "exploreIcon_c4_w1",
+            "instanceTypeId": [],
+            "typeId": "c4_map",
+            "areaType": 0,
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "comeToLevelId": "",
+            "shopIcon": {
+                "shopId": [
+                    "c4_map_shop"
+                ],
+                "condition": "shopIcon_c4"
+            },
+            "dailyTaskIcon": {
+                "condition": "dailyTask_c4_map",
+                "areaTypeId": "c4_map"
+            },
+            "achivementTypeId": [],
+            "areaLayer": [],
+            "chapter": "c4"
+        },
+        "sp2_area1": {
+            "icon": "",
+            "category": [
+                "sp2_黏滑溪谷"
+            ],
+            "openCondition": "",
+            "name": "黏糊糊城堡",
+            "bgm": {
+                "day": "",
+                "night": "",
+                "battle": ""
+            },
+            "areaItems": [],
+            "areaNo": "41",
+            "des": "空旷的森林广场，四周摆放一些史莱姆的屋子。",
+            "instanceTypeId": [],
+            "typeId": "sp2_area1",
+            "areaMons": [],
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "sp2_area1_1",
+            "chapter": "sp2",
+            "achivementTypeId": [],
+            "weatherArea": ""
+        },
+        "c3_area1": {
+            "icon": "map_w1_c3_a1",
+            "category": [
+                "c3_魔爪湖畔"
+            ],
+            "openCondition": "",
+            "name": "尾指村",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10001",
+                "item_10052",
+                "item_10053",
+                "item_10100"
+            ],
+            "areaNo": "21",
+            "des": "尾指村是魔爪湖北部的小村庄，村民大多以捕鱼为生。传说此地受到了水神塞瓦的祝福，因此许多水占师选择在此定居，久而久之这里便成了水占师的聚居点。村民和水占师在此地和谐共处，尾指村就这样静静地在魔爪湖上渡过了漫长的时光……",
+            "instanceTypeId": [],
+            "typeId": "c3_area1",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c3_area1_1",
+            "achivementTypeId": [],
+            "weatherArea": "c3_map",
+            "chapter": "c3"
+        },
+        "c2_area2": {
+            "icon": "map_w1_c2_a2",
+            "category": [
+                "c2_索利德山地"
+            ],
+            "openCondition": "",
+            "name": "灾害研究所",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10002",
+                "item_10055",
+                "item_10046",
+                "item_10003",
+                "item_10042",
+                "item_10048",
+                "item_10022",
+                "item_10052"
+            ],
+            "areaNo": "18",
+            "des": "为什么荒芜的山地里会有一间这样的研究所？至少短短几年之前，这里应该还没有这样一座建筑。毫无疑问，这座建筑是由大书院悄无声息地建设起来——从这一点来看，对于“灾害学”的研究，大书院并不像他们嘴上说的那么不屑一顾。",
+            "instanceTypeId": [],
+            "typeId": "c2_area2",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c2_area2_1",
+            "achivementTypeId": [],
+            "weatherArea": "c2_map",
+            "chapter": "c2"
+        },
+        "c2_area1": {
+            "icon": "map_w1_c2_a1",
+            "category": [
+                "c2_索利德山地"
+            ],
+            "openCondition": "",
+            "name": "巴诺姆村",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10001",
+                "item_10097",
+                "item_10052",
+                "item_10086",
+                "item_10048"
+            ],
+            "areaNo": "17",
+            "des": "远离文明世界的魔人们，在索利德山上建立起自己的村落。他们自称为“山民”，怀抱着对外人的不信任，小心地经营着自己的生活，与外界的一切保持着距离……直到名为“大兽潮”的灾难席卷而来，不分彼此，与每一个人相关。",
+            "instanceTypeId": [],
+            "typeId": "c2_area1",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c2_area1_1",
+            "achivementTypeId": [],
+            "weatherArea": "c2_map",
+            "chapter": "c2"
+        },
+        "c4_area2": {
+            "icon": "map_w1_c4_a2",
+            "category": [
+                "c4_黑森林"
+            ],
+            "openCondition": "",
+            "name": "布拉格乌尔庄园",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10057",
+                "item_10036",
+                "item_10053"
+            ],
+            "areaNo": "28",
+            "des": "前宴会大师布拉格乌尔的居所。这里曾经充满了欢声笑语和浓郁的蕈酵飘香，但如今除了他满屋的唉声叹气，仅存寥寥几桶窖藏。在灾变之宴的阴霾下，庄园的景象大不如前。昔日的欢乐已被忧愁取代，满屋的叹息声诉说着他的失意落寞。",
+            "instanceTypeId": [],
+            "typeId": "c4_area2",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c4_area2_1",
+            "achivementTypeId": [],
+            "weatherArea": "",
+            "chapter": "c4"
+        },
+        "c1_area2": {
+            "icon": "map_w1_c1_a2",
+            "category": [
+                "c1_秋日荒野"
+            ],
+            "openCondition": "",
+            "name": "风车平野",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10001",
+                "item_10002",
+                "item_10023",
+                "item_10052",
+                "item_10053",
+                "item_10058",
+                "item_10082",
+                "item_10097"
+            ],
+            "areaNo": "12",
+            "des": "风车平野曾是一片沃土，滋养着其上的无数作物，是这片荒野弥足珍贵的粮食来源。如今，异变的阴影覆盖着这片原本宁静的土地，威胁着住民们的劳动成果。只有守住这片丰沃的土地，才能确保驿站住民们的未来。",
+            "instanceTypeId": [],
+            "typeId": "c1_area2",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c1_area2_1",
+            "achivementTypeId": [],
+            "weatherArea": "c1_map",
+            "chapter": "c1"
+        },
+        "c3_area4": {
+            "icon": "map_w1_c3_a4",
+            "category": [
+                "c3_魔爪湖畔"
+            ],
+            "openCondition": "",
+            "name": "贫民街",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10002",
+                "item_10052",
+                "item_10101"
+            ],
+            "areaNo": "24",
+            "des": "如果说阳光所照之处必有阴影，那贫民街就是魔爪湖最大的阴影。这里原先的四指镇在大兽潮的冲击下变为废墟。幸存的居民回来定居后，这里就已失去了往日的繁荣。后来在内外环境的压力下此地变得越来越贫穷，直至沦落到现在的窘境。",
+            "instanceTypeId": [],
+            "typeId": "c3_area4",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c3_area4_1",
+            "achivementTypeId": [],
+            "weatherArea": "c3_map",
+            "chapter": "c3"
+        },
+        "c5_area3": {
+            "icon": "map_w1_c5_a3",
+            "category": [
+                "c5_霜烬平原"
+            ],
+            "openCondition": "",
+            "name": "奥格的温泉村",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10001",
+                "item_10002",
+                "item_10088"
+            ],
+            "areaNo": "35",
+            "des": "大书院在火属性节点建设的温泉村，是旅人们在冰天雪地中唯一慰藉。村内设有温泉旅馆和伴手礼商铺，常年热闹非凡。从此处出发，便能到达烟雾缭绕，热气氤氲的伊菲卡温泉谷。然而近期由于魔力震荡，旅客差评连连，生意颇不景气。",
+            "instanceTypeId": [],
+            "typeId": "c5_area3",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c5_area3_1",
+            "achivementTypeId": [],
+            "weatherArea": "c5_map",
+            "chapter": "c5"
+        },
+        "c3_area3": {
+            "icon": "map_w1_c3_a3",
+            "category": [
+                "c3_魔爪湖畔"
+            ],
+            "openCondition": "",
+            "name": "大市集",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10102",
+                "item_10082",
+                "item_10055"
+            ],
+            "areaNo": "23",
+            "des": "这座市集不仅象征着魔爪湖的繁华，也象征着本地居民坚韧的意志。大兽潮来临后，魔爪湖居民在水商商会的领导下，在异变的压力下在此地建立起了一个小型聚居地。后来经过不断发展，这里从一无所有变成了魔爪湖的中心——大市集。",
+            "instanceTypeId": [],
+            "typeId": "c3_area3",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c3_area3_1",
+            "achivementTypeId": [],
+            "weatherArea": "c3_map",
+            "chapter": "c3"
+        },
+        "sp2_map": {
+            "weatherArea": "",
+            "icon": "",
+            "category": [
+                "sp2_黏滑溪谷"
+            ],
+            "openCondition": "",
+            "name": "黏滑溪谷",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [],
+            "areaNo": "40",
+            "des": "求生者草原深处的黏滑溪谷，以及隐藏在溪谷深处的神秘秘境。",
+            "instanceTypeId": [],
+            "typeId": "sp2_map",
+            "areaType": 0,
+            "areaLayer": [],
+            "comeToLevelId": "",
+            "chapter": "sp2",
+            "achivementTypeId": []
+        },
+        "ydzb": {
+            "icon": "goto_ydzb",
+            "category": [
+                "迷途荒野",
+                "营地周边"
+            ],
+            "openCondition": "ydzbUnlock",
+            "name": "求生者草原",
+            "bgm": {
+                "day": "farmDay",
+                "battle": "battle1",
+                "night": "farmNight"
+            },
+            "areaNo": "3",
+            "des": "营地附近的一片小树林。",
+            "instanceTypeId": [
+                "dungeonC"
+            ],
+            "typeId": "ydzb",
+            "areaType": 0,
+            "areaLayer": [
+                "world"
+            ],
+            "achivementTypeId": [
+                "999001",
+                "999002",
+                "999003",
+                "999004"
+            ],
+            "weatherArea": ""
+        },
+        "c1_area3": {
+            "icon": "map_w1_c1_a3",
+            "category": [
+                "c1_秋日荒野"
+            ],
+            "openCondition": "",
+            "name": "黑铁锻炉",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10001",
+                "item_10002",
+                "item_10003",
+                "item_10023",
+                "item_10082",
+                "item_10086"
+            ],
+            "areaNo": "13",
+            "des": "掌炉者库尔斯曾经亲眼目睹中央工房的高炉在兽潮的肆虐下坍塌，但他并没有屈服于命运，而是在废墟上重新建立起了新生的黑铁锻炉。在旧工房的残垣之间，二十多家铁匠铺日夜不停，吞下一筐筐矿石，为驿站的复兴提供着源源不绝的农具和武器。",
+            "instanceTypeId": [],
+            "typeId": "c1_area3",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c1_area3_1",
+            "achivementTypeId": [],
+            "weatherArea": "c1_map",
+            "chapter": "c1"
+        },
+        "c4_area4": {
+            "icon": "map_w1_c4_a4",
+            "category": [
+                "c4_黑森林"
+            ],
+            "openCondition": "",
+            "name": "阴魂禁林",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10056",
+                "item_10055",
+                "item_10022"
+            ],
+            "areaNo": "30",
+            "des": "在经历异变之后，那高大的巨木周遭终日被厚重的迷雾所笼罩。因无法回归灵魂的通途，无数迷惘的阴影和愤怒的魂灵在这一带徘徊游荡。它们形成一道无形的屏障，坚决地阻止着任何人的靠近，使得此地变得阴森恐怖，尽失生机。",
+            "instanceTypeId": [],
+            "typeId": "c4_area4",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c4_area4_1",
+            "achivementTypeId": [],
+            "weatherArea": "c4_map",
+            "chapter": "c4"
+        },
+        "c4_area1": {
+            "icon": "map_w1_c4_a1",
+            "category": [
+                "c4_黑森林"
+            ],
+            "openCondition": "",
+            "name": "金弦之厅",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10001",
+                "item_10002",
+                "item_10058",
+                "item_10111"
+            ],
+            "areaNo": "27",
+            "des": "金弦之厅是黑森林所有住民共同的家园。他们崇拜森林深处的巨木，在树腰上建造树屋。每逢深秋，树冠尽染金袍，悬垂的藤蔓如摇曳的琴弦，响奏自然之歌。此处由护林人、宴会大师和灵魂先知组成的三枝议会共同治理，秩序井然，生机勃勃。",
+            "instanceTypeId": [],
+            "typeId": "c4_area1",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c4_area1_1",
+            "achivementTypeId": [],
+            "weatherArea": "c4_map",
+            "chapter": "c4"
+        },
+        "c5_area4": {
+            "icon": "map_w1_c5_a4",
+            "category": [
+                "c5_霜烬平原"
+            ],
+            "openCondition": "",
+            "name": "火龙山径",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10113",
+                "item_10118"
+            ],
+            "areaNo": "36",
+            "des": "通往火龙之峰的山径。火龙之峰曾是洛奇希火山群中的一座小火山，却拥有着飞翼般的陡峭岩崖。在喷发之际，其峰顶的烈火能熊熊燃烧数月之久，故而得名。在异变之后，它终年被厚厚白雪覆盖，其双翼也因雪崩而垮塌，全然没了昔日的威风凛凛。",
+            "instanceTypeId": [],
+            "typeId": "c5_area4",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c5_area4_1",
+            "achivementTypeId": [],
+            "weatherArea": "c5_map",
+            "chapter": "c5"
+        },
+        "c4_area5": {
+            "icon": "map_w1_c4_a5",
+            "category": [
+                "c4_黑森林"
+            ],
+            "openCondition": "",
+            "name": "巨木之口",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10001",
+                "item_10002",
+                "item_10111"
+            ],
+            "areaNo": "31",
+            "des": "备受尊崇的伟大巨木。它承载着森林的历史，是灵魂循环的终点，也是赫尔娜遗迹的入口。五年前于此发生的灾变之宴，给所有住民带去了毁灭性的打击。这处古老神圣之地如今只剩死寂，直到复仇魔女，罗姆洛敏的到来……",
+            "instanceTypeId": [],
+            "typeId": "c4_area5",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c4_area5_1",
+            "achivementTypeId": [],
+            "weatherArea": "c4_map",
+            "chapter": "c4"
+        },
+        "c2_map": {
+            "des": "第二章地区",
+            "icon": "goto_yzdq",
+            "category": [
+                "c2_索利德山地"
+            ],
+            "openCondition": "areaOpen_sldsd",
+            "name": "索利德山地",
+            "areaMons": [],
+            "weatherArea": "",
+            "areaItems": [],
+            "areaNo": "5",
+            "exploreCondition": "exploreIcon_c2_w1",
+            "instanceTypeId": [
+                "dungeoncsc",
+                "dungeonanxtyj"
+            ],
+            "typeId": "c2_map",
+            "areaType": 0,
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "comeToLevelId": "",
+            "shopIcon": {
+                "shopId": [
+                    "c2_map_shop"
+                ],
+                "condition": "shopIcon_c2"
+            },
+            "dailyTaskIcon": {
+                "condition": "dailyTask_c2_map",
+                "areaTypeId": "c2_map"
+            },
+            "achivementTypeId": [],
+            "areaLayer": [],
+            "chapter": "c2"
+        },
+        "c5_map": {
+            "des": "第五章地区",
+            "icon": "",
+            "category": [
+                "c5_霜烬平原"
+            ],
+            "openCondition": "",
+            "name": "霜烬平原",
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [],
+            "areaNo": "32",
+            "exploreCondition": "exploreIcon_c5_w1",
+            "instanceTypeId": [],
+            "typeId": "c5_map",
+            "areaMons": [],
+            "areaType": 0,
+            "areaLayer": [],
+            "comeToLevelId": "",
+            "shopIcon": {
+                "shopId": [
+                    "c4_map_shop"
+                ],
+                "condition": "shopIcon_c4"
+            },
+            "dailyTaskIcon": {
+                "condition": "dailyTask_c5_map",
+                "areaTypeId": "c5_map"
+            },
+            "achivementTypeId": [],
+            "weatherArea": "",
+            "chapter": "c5"
+        },
+        "sp1_map": {
+            "icon": "",
+            "category": [
+                "sp1_洋馆"
+            ],
+            "openCondition": "",
+            "name": "幽夜古堡",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [],
+            "areaNo": "38",
+            "des": "洛莉安的幽夜古堡",
+            "instanceTypeId": [],
+            "typeId": "sp1_map",
+            "areaType": 0,
+            "areaLayer": [],
+            "comeToLevelId": "",
+            "achivementTypeId": [],
+            "weatherArea": "",
+            "chapter": "sp1"
+        },
+        "yz": {
+            "icon": "area_yz",
+            "category": [],
+            "openCondition": "",
+            "name": "驿站区域（废弃方案存档",
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "des": "野外区域表，定义野外的区域和区域内的房间。",
+            "instanceTypeId": [],
+            "typeId": "yz",
+            "areaType": 0,
+            "condition": {},
+            "areaLayer": [
+                "world"
+            ]
+        },
+        "c5_area1": {
+            "icon": "map_w1_c5_a1",
+            "category": [
+                "c5_霜烬平原"
+            ],
+            "openCondition": "",
+            "name": "大书院",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10002",
+                "item_10118"
+            ],
+            "areaNo": "33",
+            "des": "为一同渡过异变难关，以深渊唯一的大学“大书院”为中心扩建而成的村镇。居民以半身兽人 “曼恰奇族” 为主，与其他地区前来留学的学者一同努力，抵御着异变带来的威胁。据说，大书院乃是为数不多从“人外的黄昏”中存续至今的建筑。",
+            "instanceTypeId": [],
+            "typeId": "c5_area1",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c5_area1_1",
+            "achivementTypeId": [],
+            "weatherArea": "c5_map",
+            "chapter": "c5"
+        },
+        "c4_area3": {
+            "icon": "map_w1_c4_a3",
+            "category": [
+                "c4_黑森林"
+            ],
+            "openCondition": "",
+            "name": "西部猎场",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10001",
+                "item_10002",
+                "item_10082",
+                "item_10042"
+            ],
+            "areaNo": "29",
+            "des": "森林住民的猎场，一直为金弦之厅供应着重要的肉食。然而在异变的冲击下，森林边缘逐渐变得枯萎，由树木构成的屏障也在慢慢消失。荒野中的外来者和魔物持续进犯，让猎场的失守已成定局，只是时间早晚的问题。",
+            "instanceTypeId": [],
+            "typeId": "c4_area3",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c4_area3_1",
+            "achivementTypeId": [],
+            "weatherArea": "c4_map",
+            "chapter": "c4"
+        },
+        "c5_area5": {
+            "icon": "map_w1_c5_a5",
+            "category": [
+                "c5_霜烬平原"
+            ],
+            "openCondition": "",
+            "name": "霜燃之扉",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10001",
+                "item_10056",
+                "item_10086"
+            ],
+            "areaNo": "37",
+            "des": "隐匿在达卡拉大火山腰部的巨大洞口，里面便是神秘莫测的哈玛塔坎遗迹。其内部的火属性魔力盈满四溢，洞口周边只剩被滚烫岩浆烧得焦黑一片的雪地。火焰与寒冰彼此交织，就如同霜烬平原在这次异变中所历经的历史……",
+            "instanceTypeId": [],
+            "typeId": "c5_area5",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c5_area5_1",
+            "achivementTypeId": [],
+            "weatherArea": "c5_map",
+            "chapter": "c5"
+        },
+        "world": {
+            "icon": "",
+            "category": [],
+            "openCondition": "",
+            "name": "世界地图",
+            "areaMons": [],
+            "bgm": {
+                "day": "c1_1",
+                "battle": "c1_1",
+                "night": "c1_1"
+            },
+            "areaItems": [],
+            "areaNo": "0",
+            "des": "世界地图",
+            "instanceTypeId": [],
+            "typeId": "world",
+            "areaType": 0,
+            "areaLayer": [],
+            "comeToLevelId": "",
+            "achivementTypeId": [],
+            "weatherArea": "",
+            "chapter": ""
+        },
+        "c0_area1": {
+            "icon": "map_w1_c0_a1",
+            "category": [
+                "c0_求生者草原"
+            ],
+            "openCondition": "",
+            "name": "营地周边",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10001",
+                "item_10002",
+                "item_10006",
+                "item_10016",
+                "item_10057",
+                "item_10053",
+                "item_10052",
+                "item_10058",
+                "item_10036"
+            ],
+            "areaNo": "9",
+            "des": "在深渊这片环境严苛的土地，求生者草原仿佛是一处得来不易的绿洲。这里的草地鲜绿而松软，潺潺的溪流贯穿其中，丘陵起伏，风景如画。美味的蘑菇盛长遍地，一些爱好和平、不善争斗的魔物也栖息于此，为深渊孕育出一丝难得的安宁与希望。",
+            "instanceTypeId": [],
+            "typeId": "c0_area1",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c0_area1_2",
+            "achivementTypeId": [],
+            "weatherArea": "c0_map",
+            "chapter": "c0"
+        },
+        "c3_area2": {
+            "icon": "map_w1_c3_a2",
+            "category": [
+                "c3_魔爪湖畔"
+            ],
+            "openCondition": "",
+            "name": "献水圣坛",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10103",
+                "item_10022",
+                "item_10058",
+                "item_10002",
+                "item_10055"
+            ],
+            "areaNo": "22",
+            "des": "传说在几百年前，水神塞瓦的庇佑者们为回报它的恩情，选择在这里修建了一座圣坛。可随着水神的离去，此地逐渐失去了昔日的繁华，在时间的冲刷下渐渐沉寂。只剩那爬满苔藓的破旧石砖证明着这段传说的存在……",
+            "instanceTypeId": [],
+            "typeId": "c3_area2",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c3_area2_1",
+            "achivementTypeId": [],
+            "weatherArea": "c3_map",
+            "chapter": "c3"
+        },
+        "c1_area1": {
+            "newComeToLevelId": "c1_area1_4",
+            "icon": "map_w1_c1_a1",
+            "category": [
+                "c1_秋日荒野"
+            ],
+            "areaLayer": [],
+            "openCondition": "",
+            "name": "驿站住民区",
+            "areaMons": [],
+            "weatherArea": "c1_map",
+            "areaItems": [
+                "item_10001",
+                "item_10002",
+                "item_10055",
+                "item_10082",
+                "item_10043",
+                "item_10023",
+                "item_10036"
+            ],
+            "areaNo": "11",
+            "des": "作为驿站的主要住民区，它曾是深渊文明和繁荣的象征；而在被兽潮蹂躏后，这里便只剩残垣断壁，风华不再。如今，异变的余波仍旧威胁着每一个人；但在菲尔德蕾的领导下，这些不屈不挠的住民仍坚守着契约者的理念，誓从废墟中重建希望。",
+            "instanceTypeId": [],
+            "typeId": "c1_area1",
+            "areaType": 1,
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "comeToLevelId": "c1_area1_1",
+            "chapter": "c1",
+            "achivementTypeId": [],
+            "newComeToLevelCondition": "CT005"
+        },
+        "c1_area5": {
+            "icon": "map_w1_c1_a5",
+            "category": [
+                "c1_秋日荒野"
+            ],
+            "openCondition": "",
+            "name": "观星高地",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10002",
+                "item_10003",
+                "item_10082",
+                "item_10086",
+                "item_10087"
+            ],
+            "areaNo": "14",
+            "des": "或许在遥远的过去，这里曾有无数占星家在此集会，借着仪器探寻星辰的奥秘。但在岁月的洗刷下，这里只剩下了零星的石柱和残损的星晷，依然诉说着过往的辉煌。",
+            "instanceTypeId": [],
+            "typeId": "c1_area5",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c1_area5_1",
+            "achivementTypeId": [],
+            "weatherArea": "c1_map",
+            "chapter": "c1"
+        },
+        "c2_area3": {
+            "icon": "map_w1_c2_a3",
+            "category": [
+                "c2_索利德山地"
+            ],
+            "openCondition": "",
+            "name": "破败古院",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10088",
+                "item_10056",
+                "item_10048"
+            ],
+            "areaNo": "18",
+            "des": "这座古院存在的时光，大概比现存的历史还要长。在“人外的黄昏”以前的鼎盛时期，这里应该也曾人潮如织。然而江流石转，物换星移，此时的残迹中已经看不到丝毫昔日的盛景，只有依稀追忆让人唏嘘不已。",
+            "instanceTypeId": [],
+            "typeId": "c2_area3",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c2_area3_1",
+            "achivementTypeId": [],
+            "weatherArea": "c2_map",
+            "chapter": "c2"
+        },
+        "c3_map": {
+            "des": "第三章地区",
+            "icon": "",
+            "category": [
+                "c3_魔爪湖畔"
+            ],
+            "openCondition": "",
+            "name": "魔爪湖畔",
+            "areaMons": [],
+            "weatherArea": "",
+            "areaItems": [],
+            "areaNo": "20",
+            "exploreCondition": "exploreIcon_c3_w1",
+            "instanceTypeId": [],
+            "typeId": "c3_map",
+            "areaType": 0,
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "comeToLevelId": "",
+            "shopIcon": {
+                "shopId": [
+                    "c3_map_shop"
+                ],
+                "condition": "shopIcon_c3"
+            },
+            "dailyTaskIcon": {
+                "condition": "dailyTask_c3_map",
+                "areaTypeId": "c3_map"
+            },
+            "achivementTypeId": [],
+            "areaLayer": [],
+            "chapter": "c3"
+        },
+        "yzdq": {
+            "icon": "goto_yzdq",
+            "category": [
+                "迷途荒野"
+            ],
+            "openCondition": "yzdqUnlock",
+            "name": "秋日荒野",
+            "bgm": {
+                "day": "farmDay",
+                "battle": "battle1",
+                "night": "farmNight"
+            },
+            "areaNo": "2",
+            "des": "“驿站”所在的地区",
+            "instanceTypeId": [
+                "dungeonB",
+                "dungeonD",
+                "dungeonaseyj"
+            ],
+            "typeId": "yzdq",
+            "areaType": 0,
+            "areaLayer": [
+                "world"
+            ],
+            "achivementTypeId": [],
+            "weatherArea": ""
+        },
+        "sp1_area1": {
+            "icon": "",
+            "category": [
+                "sp1_洋馆"
+            ],
+            "openCondition": "",
+            "name": "幽夜古堡",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [],
+            "areaNo": "39",
+            "des": "暂无描述",
+            "instanceTypeId": [],
+            "typeId": "sp1_area1",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "",
+            "achivementTypeId": [],
+            "weatherArea": "",
+            "chapter": "sp1"
+        },
+        "c1_area4": {
+            "icon": "map_w1_c1_a4",
+            "category": [
+                "c1_秋日荒野"
+            ],
+            "openCondition": "",
+            "name": "旧日修行所",
+            "areaMons": [],
+            "bgm": {
+                "day": "",
+                "battle": "",
+                "night": ""
+            },
+            "areaItems": [
+                "item_10001",
+                "item_10002",
+                "item_10023",
+                "item_10056",
+                "item_10055",
+                "item_10052",
+                "item_10088"
+            ],
+            "areaNo": "16",
+            "des": "这是一座坐落在观星高地东南的神秘学修行所。在兽潮之后，一伙以首座莉拉为首的修行者占据了这里，一面广开善路庇护弱者，一面雇佣学者积极探索，很快就吸引了不少人在此定居，成为了秋日荒野一带举足轻重的一股力量。",
+            "instanceTypeId": [],
+            "typeId": "c1_area4",
+            "areaType": 1,
+            "areaLayer": [],
+            "comeToLevelId": "c1_area4_1",
+            "achivementTypeId": [],
+            "weatherArea": "c1_map",
+            "chapter": "c1"
+        }
+    }
+}
