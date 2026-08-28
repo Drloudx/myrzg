@@ -1,234 +1,310 @@
 <template>
-  <div class="rewards-view">
-    <!-- Top Filter Bar (matching AchievementView exact styles) -->
-    <div class="filter-sticky-bar achievement-filter-sticky">
-      <!-- Main Categories (Row 1) -->
+  <div class="page-view-container">
+
+    <!-- 筛选区：半透明羊皮纸面板（分类 / 状态 / 子状态 分段页签） -->
+    <div class="filter-sticky-bar rewards-filter-sticky paper-panel">
+      <!-- 主分类（Row 1） -->
       <div class="control-row-1">
-        <div class="segmented-pill-container category-segmented">
-          <div
-            v-for="cat in mainCategories"
-            :key="cat.id"
-            :class="['segmented-pill-item', { active: currentMainCat === cat.id }]"
-            @click="currentMainCat = cat.id"
-          >
-            {{ cat.name }}
-          </div>
-        </div>
+        <UiSegmentedTabs
+          v-model="currentMainCat"
+          :options="mainCategories.map(cat => ({ value: cat.id, label: cat.name }))"
+        />
       </div>
 
-      <!-- Sub Categories for PVP (Row 2) -->
+      <!-- PVP 子分类（Row 2） -->
       <div class="control-row-2" v-if="currentMainCat === 'pvp'">
-        <div class="segmented-pill-container status-segmented">
-          <div
-            v-for="sub in pvpSubCategories"
-            :key="sub.id"
-            :class="['segmented-pill-item', { active: currentSubCat === sub.id }]"
-            @click="currentSubCat = sub.id"
-          >
-            {{ sub.name }}
-          </div>
-        </div>
+        <UiSegmentedTabs
+          v-model="currentSubCat"
+          :options="pvpSubCategories.map(sub => ({ value: sub.id, label: sub.name }))"
+        />
       </div>
-      
-      <!-- Sub Categories for Hidden Rewards (Row 2) -->
+
+      <!-- 隐藏物品地图子分类（Row 2） -->
       <div class="control-row-2" v-if="currentMainCat === 'hidden'">
-        <div class="segmented-pill-container status-segmented">
-          <div
-            v-for="mapName in hiddenMapCategories"
-            :key="mapName"
-            :class="['segmented-pill-item', { active: currentHiddenCat === mapName }]"
-            @click="currentHiddenCat = mapName"
-          >
-            {{ mapName }}
-          </div>
-        </div>
+        <UiSegmentedTabs
+          v-model="currentHiddenCat"
+          :options="hiddenMapCategories.map(mapName => ({ value: mapName, label: mapName }))"
+        />
       </div>
 
-      <!-- 3rd Level Categories for Exchange (Row 3) -->
+      <!-- 兑换三级分类（Row 3） -->
       <div class="control-row-3" v-if="currentMainCat === 'pvp' && currentSubCat === 'exchange'">
-        <div class="segmented-pill-container sub-status-segmented">
-          <div
-            v-for="(list, subCat) in pvpRewards?.exchange || {}"
-            :key="subCat"
-            :class="['segmented-pill-item', { active: currentExchangeCat === subCat }]"
-            @click="currentExchangeCat = subCat"
-          >
-            {{ subCat === 's1' ? 'S1 兑换' : subCat + ' 兑换' }}
-          </div>
-        </div>
+        <UiSegmentedTabs
+          v-model="currentExchangeCat"
+          :options="Object.keys(pvpRewards?.exchange || {}).map(subCat => ({ value: subCat, label: subCat === 's1' ? 'S1 兑换' : subCat + ' 兑换' }))"
+        />
       </div>
     </div>
 
-    <!-- Loading State -->
-    <div v-if="loading" class="loading-state">
-      <div class="spinner"></div>
-      <p>正在加载数据...</p>
-    </div>
+    <!-- 加载态 -->
+    <UiEmptyState v-if="loading" type="loading" text="正在装配奖励数据..." />
 
-    <!-- Main Content Area -->
+    <!-- 主内容区 -->
     <div v-else-if="pvpRewards" class="rewards-content" id="rewardsScroll">
 
       <template v-if="currentMainCat === 'pvp'">
-        
+
         <!-- 兑换奖励 -->
         <div v-if="currentSubCat === 'exchange'" class="reward-list-container">
-          <div v-if="pvpRewards.exchange[currentExchangeCat]">
-            <div class="list-row" v-for="ex in pvpRewards.exchange[currentExchangeCat]" :key="ex.id" :id="`pvpExchange-${ex.id}`">
-              <div class="row-left">
-                <span class="row-label">奖励</span>
-                <div class="items-flex">
-                  <div v-for="group in ex.rewardItems" :key="group.typeId || Math.random()" class="item-group">
-                    <div v-for="rule in group.rules" :key="rule.typeId" class="item-chip clickable" @click="openItem(rule.typeId)">
-                      <img :src="getIcon(rule.typeId)" alt="icon" />
-                      <span>×{{ rule.num || (rule.min === rule.max ? rule.min : `${rule.min}~${rule.max}`) }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row-right">
-                <span class="row-label">消耗</span>
-                <div class="items-flex">
-                  <div v-for="cItem in ex.consumeItems" :key="cItem.typeId" class="item-group">
-                    <div v-for="rule in cItem.rules || [cItem]" :key="rule.typeId || cItem.typeId" class="item-chip clickable" @click="openItem(rule.typeId || cItem.typeId)">
-                      <img :src="getIcon(rule.typeId || cItem.typeId)" alt="icon" />
-                      <span>×{{ rule.num || cItem.num || (rule.min === rule.max ? rule.min : `${rule.min}~${rule.max}`) }}</span>
-                    </div>
-                  </div>
-                </div>
-                <span v-if="ex.limitCondition" class="limit-badge">限购 {{ ex.limitCondition.num }}</span>
-              </div>
-            </div>
+          <div v-if="pvpRewards.exchange[currentExchangeCat]" class="exchange-trade-list">
+            <UiExchangeTrade
+              v-for="ex in pvpRewards.exchange[currentExchangeCat]"
+              :key="ex.id"
+              :id="`pvpExchange-${ex.id}`"
+              :title="pvpExchangeTitle(ex)"
+              :reward-items="flattenPvpItems(ex.rewardItems)"
+              :consume-items="flattenPvpItems(ex.consumeItems)"
+              :limit-text="pvpLimitText(ex.limitCondition)"
+              @item-click="openItem"
+            />
           </div>
         </div>
 
         <!-- 段位奖励 -->
         <div v-if="currentSubCat === 'tier'" class="reward-list-container">
-          <div class="list-row" v-for="tier in pvpRewards.tier" :key="tier.id" :id="`tier-${tier.id}`">
+          <UiListRow v-for="tier in pvpRewards.tier" :key="tier.id" :id="`tier-${tier.id}`">
             <div class="row-left">
               <span class="row-title">{{ tier.name }}</span>
             </div>
-            <div class="row-right flex-start">
-              <div class="items-flex">
-                <div v-for="group in tier.rewardItems" :key="group.typeId || Math.random()" class="item-group">
-                  <div v-for="rule in group.rules" :key="rule.typeId" class="item-chip clickable" @click="openItem(rule.typeId)">
-                    <img :src="getIcon(rule.typeId)" alt="icon" />
-                    <span>×{{ rule.num || (rule.min === rule.max ? rule.min : `${rule.min}~${rule.max}`) }}</span>
+            <template #right>
+              <div class="row-right flex-start">
+                <div class="items-flex">
+                  <div v-for="group in tier.rewardItems" :key="group.typeId || Math.random()" class="item-group">
+                    <UiRewardCard
+                      v-for="rule in group.rules"
+                      :key="rule.typeId"
+                      :rule="{
+                        targetName: (getCachedItem(rule.typeId) || {}).name || rule.typeId,
+                        targetImg: getIcon(rule.typeId),
+                        targetQuality: (getCachedItem(rule.typeId) || {}).quality || 1,
+                        min: rule.min !== undefined ? rule.min : (rule.num !== undefined ? rule.num : undefined),
+                        max: rule.max !== undefined ? rule.max : (rule.num !== undefined ? rule.num : undefined),
+                        num: rule.num,
+                        typeId: rule.typeId
+                      }"
+                      @click="openItem(rule.typeId)"
+                    />
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </template>
+          </UiListRow>
         </div>
 
         <!-- 排名奖励 -->
         <div v-if="currentSubCat === 'rank'" class="reward-list-container">
-          <div class="list-row" v-for="rank in pvpRewards.rank" :key="rank.start" :id="`rank-${rank.start}`">
+          <UiListRow v-for="rank in pvpRewards.rank" :key="rank.start" :id="`rank-${rank.start}`">
             <div class="row-left">
               <span class="row-title">{{ rank.end === -1 ? `${rank.start}名以后` : `${rank.start}-${rank.end}名` }}</span>
             </div>
-            <div class="row-right flex-start">
-              <div class="items-flex">
-                <div v-for="group in rank.rewardItems" :key="group.typeId || Math.random()" class="item-group">
-                  <div v-for="rule in group.rules" :key="rule.typeId" class="item-chip clickable" @click="openItem(rule.typeId)">
-                    <img :src="getIcon(rule.typeId)" alt="icon" />
-                    <span>×{{ rule.num || (rule.min === rule.max ? rule.min : `${rule.min}~${rule.max}`) }}</span>
+            <template #right>
+              <div class="row-right flex-start">
+                <div class="items-flex">
+                  <div v-for="group in rank.rewardItems" :key="group.typeId || Math.random()" class="item-group">
+                    <UiRewardCard
+                      v-for="rule in group.rules"
+                      :key="rule.typeId"
+                      :rule="{
+                        targetName: (getCachedItem(rule.typeId) || {}).name || rule.typeId,
+                        targetImg: getIcon(rule.typeId),
+                        targetQuality: (getCachedItem(rule.typeId) || {}).quality || 1,
+                        min: rule.min !== undefined ? rule.min : (rule.num !== undefined ? rule.num : undefined),
+                        max: rule.max !== undefined ? rule.max : (rule.num !== undefined ? rule.num : undefined),
+                        num: rule.num,
+                        typeId: rule.typeId
+                      }"
+                      @click="openItem(rule.typeId)"
+                    />
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </template>
+          </UiListRow>
         </div>
 
         <!-- 战斗结算 -->
         <div v-if="currentSubCat === 'battle'" class="reward-list-container">
-          <div class="list-row" v-if="pvpRewards.battle.win" id="battle-win">
+          <UiListRow v-if="pvpRewards.battle.win" id="battle-win">
             <div class="row-left">
               <span class="row-title win-title">战斗胜利</span>
             </div>
-            <div class="row-right flex-start">
-              <div class="items-flex">
-                <div v-for="group in pvpRewards.battle.win.rewardItems" :key="group.typeId || Math.random()" class="item-group">
-                  <div v-for="rule in group.rules" :key="rule.typeId" class="item-chip clickable" @click="openItem(rule.typeId)">
-                    <img :src="getIcon(rule.typeId)" alt="icon" />
-                    <span>×{{ rule.num || (rule.min === rule.max ? rule.min : `${rule.min}~${rule.max}`) }}</span>
+            <template #right>
+              <div class="row-right flex-start">
+                <div class="items-flex">
+                  <div v-for="group in pvpRewards.battle.win.rewardItems" :key="group.typeId || Math.random()" class="item-group">
+                    <UiRewardCard
+                      v-for="rule in group.rules"
+                      :key="rule.typeId"
+                      :rule="{
+                        targetName: (getCachedItem(rule.typeId) || {}).name || rule.typeId,
+                        targetImg: getIcon(rule.typeId),
+                        targetQuality: (getCachedItem(rule.typeId) || {}).quality || 1,
+                        min: rule.min !== undefined ? rule.min : (rule.num !== undefined ? rule.num : undefined),
+                        max: rule.max !== undefined ? rule.max : (rule.num !== undefined ? rule.num : undefined),
+                        num: rule.num,
+                        typeId: rule.typeId
+                      }"
+                      @click="openItem(rule.typeId)"
+                    />
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          
-          <div class="list-row" v-if="pvpRewards.battle.fail" id="battle-fail">
+            </template>
+          </UiListRow>
+
+          <UiListRow v-if="pvpRewards.battle.fail" id="battle-fail">
             <div class="row-left">
               <span class="row-title fail-title">战斗失败</span>
             </div>
-            <div class="row-right flex-start">
-              <div class="items-flex">
-                <div v-for="group in pvpRewards.battle.fail.rewardItems" :key="group.typeId || Math.random()" class="item-group">
-                  <div v-for="rule in group.rules" :key="rule.typeId" class="item-chip clickable" @click="openItem(rule.typeId)">
-                    <img :src="getIcon(rule.typeId)" alt="icon" />
-                    <span>×{{ rule.num || (rule.min === rule.max ? rule.min : `${rule.min}~${rule.max}`) }}</span>
+            <template #right>
+              <div class="row-right flex-start">
+                <div class="items-flex">
+                  <div v-for="group in pvpRewards.battle.fail.rewardItems" :key="group.typeId || Math.random()" class="item-group">
+                    <UiRewardCard
+                      v-for="rule in group.rules"
+                      :key="rule.typeId"
+                      :rule="{
+                        targetName: (getCachedItem(rule.typeId) || {}).name || rule.typeId,
+                        targetImg: getIcon(rule.typeId),
+                        targetQuality: (getCachedItem(rule.typeId) || {}).quality || 1,
+                        min: rule.min !== undefined ? rule.min : (rule.num !== undefined ? rule.num : undefined),
+                        max: rule.max !== undefined ? rule.max : (rule.num !== undefined ? rule.num : undefined),
+                        num: rule.num,
+                        typeId: rule.typeId
+                      }"
+                      @click="openItem(rule.typeId)"
+                    />
+                  </div>
+                </div>
+              </div>
+            </template>
+          </UiListRow>
+        </div>
+
+      </template>
+
+      <!-- 被隐藏的物品 -->
+      <template v-else-if="currentMainCat === 'hidden'">
+        <div class="reward-list-container">
+          <UiListRow
+            v-for="(group, idx) in groupedHiddenRewards"
+            :key="idx"
+            :id="`hidden-${group.roomId}`"
+          >
+            <div class="hidden-row-title">{{ group.areaName }} - {{ group.roomName }}</div>
+            <div class="hidden-row-info">
+              <span class="row-title">{{ group.collectName }}</span>
+              <span v-if="group.collectTip" class="collect-tip">{{ group.collectTip }}</span>
+            </div>
+            <div class="items-flex">
+              <div v-for="grp in group.rewardItems" :key="grp.typeId || Math.random()" class="item-group">
+                <UiRewardCard
+                  v-for="rule in grp.rules"
+                  :key="rule.typeId"
+                  :rule="{
+                    targetName: (getCachedItem(rule.typeId) || {}).name || rule.typeId,
+                    targetImg: getIcon(rule.typeId),
+                    targetQuality: (getCachedItem(rule.typeId) || {}).quality || 1,
+                    min: rule.min !== undefined ? rule.min : (rule.num !== undefined ? rule.num : undefined),
+                    max: rule.max !== undefined ? rule.max : (rule.num !== undefined ? rule.num : undefined),
+                    num: rule.num,
+                    typeId: rule.typeId
+                  }"
+                  @click="openItem(rule.typeId)"
+                />
+              </div>
+            </div>
+            <!-- 点位预览图：独占一行，放在点位信息下方 -->
+            <img
+              v-if="group.prevImg"
+              :src="getImageUrl(group.prevImg)"
+              class="hidden-prev-img"
+              alt="点位预览"
+              loading="lazy"
+              @click="openPrevImg(group.prevImg)"
+            />
+          </UiListRow>
+
+          <UiEmptyState v-if="!groupedHiddenRewards.length" text="当前地图下暂无隐藏场景宝箱数据" />
+        </div>
+      </template>
+
+      <!-- 育室槽位消耗 -->
+      <template v-else-if="currentMainCat === 'slot_cost'">
+        <div class="reward-list-container">
+          <UiListRow>
+            <div class="slot-cost-title">培育室槽位扩张费用</div>
+
+            <div class="slot-costs-grid-layout" v-if="slotCosts">
+              <!-- 银币扩建 -->
+              <div class="slot-column-card">
+                <h4 class="slot-column-title">银币扩建</h4>
+                <div class="slot-cost-list-item" v-for="(item, idx) in slotCosts.petSlotMoney" :key="idx">
+                  <span class="slot-times-label">第 {{ idx + 1 }} 次扩建</span>
+                  <div class="slot-cost-details">
+                    <span class="slot-level-req">需要冒险等级 {{ item.level }}</span>
+                    <div class="slot-cost-badge">
+                      <img :src="getImageUrl(REWARD_MODE_INFO.money.icon)" class="mini-coin-icon" />
+                      <span>×{{ item.value }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 金币扩建 -->
+              <div class="slot-column-card">
+                <h4 class="slot-column-title">金币扩建</h4>
+                <div class="slot-cost-list-item" v-for="(item, idx) in slotCosts.petSlotKe" :key="idx">
+                  <span class="slot-times-label">第 {{ idx + 1 }} 次扩建</span>
+                  <div class="slot-cost-details">
+                    <span class="slot-level-req">需要冒险等级 {{ item.level }}</span>
+                    <div class="slot-cost-badge">
+                      <img :src="getImageUrl(REWARD_MODE_INFO.ke.icon)" class="mini-coin-icon" />
+                      <span>×{{ item.value }}</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-
-      </template>
-
-      <!-- Hidden Rewards -->
-      <template v-else-if="currentMainCat === 'hidden'">
-        <div class="reward-list-container">
-          <div class="list-row" style="flex-direction: column; align-items: stretch;" v-for="(group, idx) in groupedHiddenRewards" :key="idx" :id="`hidden-${group.roomId}`">
-            <div class="row-left" style="margin-bottom: 8px;">
-              <span class="row-title" style="color: var(--primary, #3b82f6);">{{ group.areaName }} - {{ group.roomName }}</span>
-            </div>
-            
-            <div class="list-row inner-reward-row" style="border: none; background: rgba(0,0,0,0.02); padding: 8px 12px; flex-wrap: wrap; gap: 8px;">
-               <div class="row-left" style="flex: 1 1 auto; min-width: 200px; flex-wrap: wrap;">
-                  <span class="row-title">{{ group.collectName }}</span>
-                  <span class="row-label" style="white-space: normal; line-height: 1.4;" v-if="group.collectTip">{{ group.collectTip }}</span>
-               </div>
-               <div class="row-right flex-start" style="flex: 0 1 auto; flex-wrap: wrap;">
-                  <div class="items-flex" style="flex-wrap: wrap; gap: 8px;">
-                    <div v-for="grp in group.rewardItems" :key="grp.typeId || Math.random()" class="item-group">
-                      <div v-for="rule in grp.rules" :key="rule.typeId" class="item-chip clickable" @click="openItem(rule.typeId)">
-                        <img :src="getIcon(rule.typeId)" alt="icon" />
-                        <span>×{{ rule.num || (rule.min === rule.max ? rule.min : `${rule.min}~${rule.max}`) }}</span>
-                      </div>
-                    </div>
-                  </div>
-               </div>
-            </div>
-          </div>
-          
-          <div v-if="!groupedHiddenRewards.length" class="placeholder-content">
-            <p>当前地图下暂无隐藏场景宝箱数据</p>
-          </div>
+            <UiEmptyState v-else text="暂无育室槽位数据" />
+          </UiListRow>
         </div>
       </template>
 
-      <!-- Placeholder -->
+      <!-- 占位 -->
       <template v-else>
-        <div class="placeholder-content">
-          <p>该板块奖励数据暂未开放，敬请期待...</p>
-        </div>
+        <UiEmptyState text="该板块奖励数据暂未开放，敬请期待..." />
       </template>
     </div>
-    
-    <BackToTop scroll-container="#rewardsScroll" />
+
+    <UiBackToTop scroll-container="#rewardsScroll" />
+
+    <!-- 点位预览图全屏查看 -->
+    <div v-if="prevImgModal.visible" class="prev-img-overlay" @click="closePrevImg">
+      <img :src="prevImgModal.url" class="prev-img-full" alt="点位预览大图" @click.stop />
+      <div class="prev-img-close" @click="closePrevImg">✕</div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch, nextTick } from 'vue'
+import { ref, onMounted, watch, nextTick, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import {
+  UiSegmentedTabs,
+  UiEmptyState,
+  UiListRow,
+  UiExchangeTrade,
+  UiRewardCard,
+  UiTag,
+  UiBackToTop
+} from '../components/ui/index.js'
 import { fetchWithFallback } from '../utils/request.js'
 import { getCachedItem, fetchItemData } from '../utils/itemParser'
-import { pushItemDetail } from '../utils/itemModalState'
 import { getImageUrl } from '../utils/env'
-import BackToTop from '../components/BackToTop.vue'
 import { isBlacklisted } from '../config/blacklist.js'
+import { fetchPetData } from '../utils/petParser'
+import { REWARD_MODE_INFO } from '../utils/gameMappings'
 
 const route = useRoute()
 const router = useRouter()
@@ -238,7 +314,7 @@ const pvpRewards = ref(null)
 const mainCategories = [
   { id: 'pvp', name: '挑战赛奖励' },
   { id: 'hidden', name: '被隐藏的物品' },
-  { id: 'ph2', name: '占位奖励2' },
+  { id: 'slot_cost', name: '育室槽位消耗' },
   { id: 'ph3', name: '占位奖励3' }
 ]
 const currentMainCat = ref('pvp')
@@ -254,8 +330,7 @@ const currentExchangeCat = ref('s1')
 
 const hiddenRewardsData = ref([])
 const currentHiddenCat = ref('')
-
-import { computed } from 'vue'
+const slotCosts = ref(null)
 
 const hiddenMapCategories = computed(() => {
   const maps = new Set(hiddenRewardsData.value.map(h => h.bigMapName))
@@ -276,13 +351,13 @@ onMounted(async () => {
 
   let pvpRes = null
   let hiddenRes = null
-  
+
   try {
     pvpRes = await fetchWithFallback('data/parsed/parsed-pvp.json')
   } catch (e) {
     console.error('Failed to load parsed/parsed-pvp.json', e)
   }
-  
+
   try {
     hiddenRes = await fetchWithFallback('data/parsed/parsed-hidden.json')
   } catch(e) {
@@ -296,14 +371,23 @@ onMounted(async () => {
       if (keys.length > 0) currentExchangeCat.value = keys[0]
     }
   }
-  
+
   if (hiddenRes) {
-    hiddenRewardsData.value = hiddenRes.filter(h => !isBlacklisted({ 
-      name: `${h.bigMapName} ${h.areaName} ${h.roomName} ${h.collectName || ''}` 
+    hiddenRewardsData.value = hiddenRes.filter(h => !isBlacklisted({
+      name: `${h.bigMapName} ${h.areaName} ${h.roomName} ${h.collectName || ''}`
     }))
     if (hiddenRewardsData.value.length > 0) {
       currentHiddenCat.value = hiddenRewardsData.value[0].bigMapName
     }
+  }
+
+  try {
+    const petData = await fetchPetData()
+    if (petData && petData.petSetting) {
+      slotCosts.value = petData.petSetting
+    }
+  } catch (e) {
+    console.error('Failed to load petSetting for slotCosts', e)
   }
 
   loading.value = false
@@ -313,13 +397,13 @@ onMounted(async () => {
 const scrollToTarget = () => {
   const { id } = route.query
   if (!id) return
-  
+
   if (String(id).startsWith('hidden-')) {
     currentMainCat.value = 'hidden'
   } else {
     currentMainCat.value = 'pvp'
   }
-  
+
   let targetId = ''
   if (String(id).startsWith('pvpExchange')) {
     currentSubCat.value = 'exchange'
@@ -344,7 +428,7 @@ const scrollToTarget = () => {
       currentHiddenCat.value = rewardGroup.bigMapName
     }
   }
-  
+
   nextTick(() => {
     if (targetId) {
       const el = document.getElementById(targetId)
@@ -371,6 +455,37 @@ const getIcon = (typeId) => {
   return getImageUrl('/ui/default_item.svg')
 }
 
+const flattenPvpItems = (groups = []) => {
+  const items = []
+  for (const group of groups || []) {
+    const rules = group?.rules || [group]
+    for (const rule of rules) {
+      const typeId = rule?.typeId || group?.typeId
+      if (!typeId) continue
+      const item = getCachedItem(typeId) || {}
+      const num = rule?.num ?? group?.num ?? rule?.min ?? rule?.max ?? 1
+      items.push({
+        typeId,
+        num,
+        name: item.name || typeId,
+        icon: getIcon(typeId),
+        quality: item.quality || 1
+      })
+    }
+  }
+  return items
+}
+
+const pvpExchangeTitle = (exchange) => {
+  const firstReward = flattenPvpItems(exchange?.rewardItems)[0]
+  return firstReward?.name || '兑换物品'
+}
+
+const pvpLimitText = (limit) => {
+  if (!limit) return ''
+  return limit.num ? `限购 ${limit.num} 次` : '限购'
+}
+
 const openItem = (typeId) => {
   const item = getCachedItem(typeId)
   if (item) {
@@ -378,178 +493,128 @@ const openItem = (typeId) => {
   }
 }
 
+// 点位预览图查看（全屏遮罩）
+const prevImgModal = ref({ visible: false, url: '' })
+const openPrevImg = (url) => {
+  prevImgModal.value = { visible: true, url: getImageUrl(url) }
+}
+const closePrevImg = () => {
+  prevImgModal.value.visible = false
+}
+
 </script>
 
 <style scoped>
-.rewards-view {
+/* 筛选区（半透明羊皮纸面板） */
+.rewards-filter-sticky {
+  padding: 10px 12px;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  background: var(--bg-main, #f5f7fa);
-  overflow: hidden;
-}
-
-/* Tabs UI exactly matching AchievementView */
-.filter-sticky-bar {
-  background: var(--bg-card, #fff);
-  padding: 16px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  border-bottom: 1px solid rgba(0,0,0,0.06);
-  z-index: 10;
+  gap: 8px;
+  margin-bottom: 10px;
   flex-shrink: 0;
 }
 
-/* Control Row 1: Full-Width Category Segmented Bar */
-.control-row-1 {
+.control-row-1, .control-row-2, .control-row-3 {
   width: 100%;
 }
 
-/* Segmented Pill Track (分段控制器框架 - 灰底全圆角) */
-.segmented-pill-container {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 4px;
-  padding: 3px;
-  background: var(--input-bg, #f0f2f5);
-  border: 1px solid var(--border-color, #e5e7eb);
-  border-radius: 14px;
-  box-sizing: border-box;
-}
-
-/* Row 1: Category Pill Bar is 100% Full Width */
-.category-segmented {
+.control-row-1 .ui-segmented {
   width: 100%;
 }
-.category-segmented::after {
-  content: "";
-  flex: 10 1 auto;
-}
-
-/* Row 2/3: Status Pill Bar is Content Width */
-.status-segmented, .sub-status-segmented {
-  display: inline-flex;
-  width: auto;
-}
-
-/* Segmented Pill Item (分段内部按钮) */
-.segmented-pill-item {
-  flex: 1 1 auto;
-  text-align: center;
-  padding: 6px 14px;
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-sub, #666);
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  user-select: none;
-  white-space: nowrap;
-}
-
-.segmented-pill-item:hover {
-  color: var(--text-main, #333);
-}
-
-/* Active Selected Item */
-.segmented-pill-item.active {
-  background: var(--card-bg, #ffffff);
-  color: var(--primary, #3b82f6);
-  font-weight: 700;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.control-row-2, .control-row-3 {
-  width: 100%;
-}
-
-.loading-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.control-row-1 :deep(.ui-segmented__item) {
   flex: 1;
-  color: var(--text-sub, #666);
 }
 
+/* 主内容滚动区 */
 .rewards-content {
   flex: 1;
   overflow-y: auto;
-  padding: 24px;
-  position: relative;
+  padding: 2px 0 14px 0;
+  box-sizing: border-box;
+  min-height: 0;
 }
 
 .reward-list-container {
-  max-width: 900px;
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  padding-bottom: 8px;
+}
+
+.exchange-trade-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 12px;
 }
 
-.list-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: var(--bg-card, #fff);
-  border: 1px solid rgba(0,0,0,0.06);
-  border-radius: 8px;
-  padding: 12px 16px;
-  transition: background-color 0.5s ease;
+/* PVP 兑换奖励较多，使用紧凑图标避免奖励列过度占高。 */
+.exchange-trade-list :deep(.ui-exchange-trade__item--reward) {
+  width: 82px;
+}
+.exchange-trade-list :deep(.ui-exchange-trade__item--reward img) {
+  width: 42px;
+  height: 42px;
+  flex-basis: 42px;
+}
+.exchange-trade-list :deep(.ui-exchange-trade__reward-stage) {
+  min-height: 74px;
 }
 
-/* For mobile responsive */
-@media (max-width: 600px) {
-  .list-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+@media (max-width: 640px) {
+  .exchange-trade-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
 }
 
-.highlight-section {
-  background-color: #f0f7ff !important;
-  border-color: #3b82f6 !important;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3) !important;
-}
-
+/* 列布局 */
 .row-left {
   display: flex;
   align-items: center;
   gap: 12px;
   flex: 1;
+  min-width: 0;
+  flex-wrap: wrap;
 }
 
 .row-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   justify-content: flex-end;
   flex: 1;
+  min-width: 0;
+  flex-wrap: wrap;
 }
+
 .row-right.flex-start {
   justify-content: flex-start;
 }
 
 .row-label {
-  font-size: 14px;
-  color: var(--text-sub, #888);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
   white-space: nowrap;
 }
 
 .row-title {
   font-size: 15px;
-  font-weight: 500;
-  color: var(--text-main, #333);
+  font-weight: 700;
+  color: var(--text-main);
   min-width: 80px;
 }
+
 .win-title {
-  color: #10b981;
+  color: var(--q2);
 }
+
 .fail-title {
-  color: #ef4444;
+  color: var(--danger);
 }
 
 .items-flex {
@@ -561,50 +626,214 @@ const openItem = (typeId) => {
 
 .item-group {
   display: flex;
-  gap: 4px;
-}
-
-.item-chip {
-  display: flex;
-  align-items: center;
-  background: var(--bg-main, #f5f7fa);
-  padding: 4px 8px;
-  border-radius: 6px;
-  border: 1px solid rgba(0,0,0,0.05);
-  font-size: 13px;
+  flex-wrap: wrap;
   gap: 6px;
-  color: var(--text-main, #333);
 }
 
-.item-chip img {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
+/* 手机端：列表行纵向堆叠 */
+@media (max-width: 640px) {
+  .ui-list-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ui-list-row :deep(.ui-list-row__right) {
+    width: 100%;
+    justify-content: flex-start;
+  }
 }
 
-.clickable {
-  cursor: pointer;
-  transition: transform 0.1s;
-}
-.clickable:hover {
-  transform: translateY(-2px);
-  background: rgba(0,0,0,0.04);
+/* 锚点高亮 */
+.highlight-section {
+  background-color: rgba(122, 154, 153, 0.2) !important;
+  border-color: var(--accent-bright) !important;
+  box-shadow: 0 0 0 2px rgba(122, 154, 153, 0.35) !important;
 }
 
-.limit-badge {
-  background: #f59e0b;
-  color: white;
-  padding: 4px 8px;
+/* 被隐藏的物品 */
+.hidden-row-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.hidden-row-info {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.collect-tip {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.hidden-prev-img {
+  display: block;
+  width: 100%;
+  max-width: 520px;
+  margin: 6px auto 0;
   border-radius: 4px;
+  border: 1px solid var(--border-faint);
+  cursor: zoom-in;
+  object-fit: contain;
+  background: rgba(217, 198, 166, 0.62);
+}
+
+/* 育室槽位消耗 */
+.slot-cost-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.slot-costs-grid-layout {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .slot-costs-grid-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.slot-column-card {
+  background: rgba(217, 198, 166, 0.62);
+  border: 1px solid var(--border-faint);
+  border-radius: 4px;
+  padding: 14px;
+}
+
+.slot-column-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 10px;
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border-soft);
+  padding-bottom: 6px;
+}
+
+.slot-cost-list-item {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--border-soft);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.slot-cost-list-item:last-child {
+  border-bottom: none;
+}
+
+.slot-times-label {
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.slot-cost-details {
+  display: grid;
+  grid-template-columns: minmax(0, 142px) 78px;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.slot-level-req {
+  color: var(--text-muted);
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 600;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  background: rgba(43, 31, 21, 0.14);
+  padding: 3px 8px;
+  border-radius: 3px;
   white-space: nowrap;
 }
 
-.placeholder-content {
-  text-align: center;
-  padding: 60px 20px;
-  color: var(--text-sub, #888);
-  font-size: 15px;
+.slot-cost-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 78px;
+  justify-content: flex-start;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+}
+
+.dark-mode .hidden-prev-img,
+.dark-mode .slot-column-card {
+  background: rgba(35, 26, 17, 0.62);
+}
+
+@media (max-width: 600px) {
+  .slot-cost-list-item {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+
+  .slot-cost-details {
+    justify-content: start;
+  }
+}
+
+.mini-coin-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+/* 点位预览大图遮罩（羊皮纸化） */
+.prev-img-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: var(--modal-overlay);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.prev-img-full {
+  max-width: 95vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.prev-img-close {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(223, 206, 179, 0.15);
+  border: 1px solid rgba(223, 206, 179, 0.35);
+  color: var(--paper);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s ease;
+}
+
+.prev-img-close:hover {
+  background: rgba(223, 206, 179, 0.28);
 }
 </style>

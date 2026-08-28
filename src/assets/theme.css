@@ -1,0 +1,738 @@
+/* ==========================================================================
+   羊皮纸 Wiki 主题设计系统 (Parchment Wiki Design System)
+   基于 ui模板.html 提取调色板，为深歌小助手全站统一视觉。
+   --------------------------------------------------------------------------
+   调色板来源：
+     --paper-dark   #bba282  外围深色羊皮纸
+     --paper-light  #dfceb3  核心阅读区亮色羊皮纸
+     --text-main    #3e2a14  深棕色墨水文字
+     --text-muted   #6b5134  次要文字
+     --border-color #8f7351  描边颜色
+     --accent-water #7a9a99  湖泊暗青（高亮/链接）
+     --accent-hover #557574  悬停
+     --wood-dark    #2b1f15  深色原木（顶栏/面板标题）
+   ========================================================================== */
+
+/* ====== 0. 字体引入 ====== */
+/* 游戏主字体：源码中的 TextMeshPro 使用 MYR2SansRegular/Bold SDF。
+   网页直接使用对应源字体，避免依赖外部字体服务。 */
+@font-face {
+  font-family: 'MYR2Sans';
+  src: url('/fonts/MYR2SansRegular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'MYR2Sans';
+  src: url('/fonts/MYR2SansBold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* 本地 HarmonyOS 字体（保留原 @font-face，文件缺失时自动回落） */
+@font-face {
+  font-family: 'HarmonyOS_Bold';
+  src: url('/fonts/HarmonyOS_Sans_Bold.ttf') format('truetype');
+  font-weight: bold;
+}
+@font-face {
+  font-family: 'HarmonyOS_Regular';
+  src: url('/fonts/HarmonyOS_Sans_Regular.ttf') format('truetype');
+  font-weight: normal;
+}
+/* 浏览器 UI 渲染使用同一族的常规/粗体文件，避免小字号由 MYR2Sans TTF 栅格化产生毛刺。 */
+@font-face {
+  font-family: 'HarmonyOS';
+  src: url('/fonts/HarmonyOS_Sans_Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'HarmonyOS';
+  src: url('/fonts/HarmonyOS_Sans_Bold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* ====== 1. 羊皮纸主题 CSS 变量 ====== */
+:root {
+  /* 移动端沉浸式安全区（保留） */
+  --safe-top: max(env(safe-area-inset-top), 0px);
+  --safe-bottom: max(env(safe-area-inset-bottom), 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --header-height: 60px;
+
+  /* —— 羊皮纸主题核心色 —— */
+  --paper-dark: #bba282;              /* 外围深色羊皮纸 */
+  --paper: #dfceb3;                   /* 亮色羊皮纸 */
+  --paper-soft: #e9dcc3;              /* 更浅羊皮纸（卡片底） */
+  --paper-solid: #d9c6a6;             /* 不透明羊皮纸（表头/输入底） */
+  --text-main: #3e2a14;               /* 深棕墨水 */
+  --text-muted: #6b5134;              /* 次要文字 */
+  --text-faint: #8a6d4d;              /* 弱化文字 */
+  --border-color: #8f7351;            /* 描边 */
+  --border-soft: rgba(143, 115, 81, 0.45);
+  --border-faint: rgba(143, 115, 81, 0.25);
+  --accent: #557574;                  /* 湖泊暗青（主色/悬停） */
+  --accent-bright: #7a9a99;
+  --accent-ink: #2f4a49;              /* 青的加深（文本态） */
+  --wood: #2b1f15;                    /* 深色原木（顶栏/面板标题） */
+  --wood-soft: #463424;               /* 原木浅一档（输入框底） */
+  --wood-deep: #1e150d;               /* 最深木色 */
+  --danger: #8b0000;                  /* 深红（危险/极高） */
+  --danger-soft: rgba(139, 0, 0, 0.10);
+  --gold: #8a6a1f;                    /* 暗金（强调） */
+
+  /* —— 兼容旧变量别名（旧代码仍可工作） —— */
+  --bg: var(--paper-dark);
+  --bg-color: var(--paper-dark);
+  --bg-card: var(--paper-soft);
+  --card-bg: var(--paper-soft);
+  --hover-bg: rgba(85, 117, 116, 0.14);
+  --primary: var(--accent);
+  --primary-hover: var(--accent-ink);
+  --text-sub: var(--text-muted);
+  --text-color: var(--text-main);
+
+  --input-bg: #f3ead5;
+  --input-border: var(--border-soft);
+  --input-border-focus: var(--accent-bright);
+  --input-text: var(--text-main);
+
+  --modal-bg: #efe2c4;
+  --modal-text: var(--text-main);
+  --modal-header-border: var(--border-faint);
+  --modal-close-color: var(--text-muted);
+  --modal-overlay: rgba(24, 14, 6, 0.55);
+
+  /* UI SVG 图标滤镜（亮色羊皮纸下将白色图标反转为深色） */
+  --icon-filter: invert(1) brightness(0.4) sepia(0.4);
+  --icon-filter1: none;
+
+  /* —— 游戏源码 Const.QualityColorString 原色 —— */
+  --rarity-legend: #ffb64d;
+  --rarity-epic: #ee62f1;
+  --rarity-rare: #3fa2ff;
+  --rarity-common: #cfba96;
+  --q1: #cfba96;
+  --q2: #a7c037;
+  --q3: #3fa2ff;
+  --q4: #ee62f1;
+  --q5: #ffb64d;
+
+  /* 浅色羊皮纸上的可读文字色；不替代游戏原色，仅用于文字。 */
+  --q1-text: #6f5b3c;
+  --q2-text: #5d7100;
+  --q3-text: #1768a8;
+  --q4-text: #a536aa;
+  --q5-text: #b15d00;
+
+  /* 品质背景色（与 .quality-bg-N 一致；供 JS getQualityColors 读取，唯一来源） */
+  --q1-bg: rgba(111, 91, 60, 0.12);
+  --q2-bg: rgba(167, 192, 55, 0.22);
+  --q3-bg: rgba(63, 162, 255, 0.20);
+  --q4-bg: rgba(238, 98, 241, 0.19);
+  --q5-bg: rgba(255, 182, 77, 0.24);
+  /* 叠加在插画上的品质角标底，保持不透明以确保文字可读。 */
+  --quality-label-bg: rgba(239, 226, 196, 0.96);
+}
+
+/* —— 暗色模式：暗木羊皮卷 —— */
+.dark-mode {
+  --paper-dark: #211710;
+  --paper: #2e2217;
+  --paper-soft: #362a1d;
+  --paper-solid: #3f3020;
+  --text-main: #eaddc2;
+  --text-muted: #bca983;
+  --text-faint: #9c8a6c;
+  --border-color: #8f7351;
+  --border-soft: rgba(143, 115, 81, 0.55);
+  --border-faint: rgba(143, 115, 81, 0.3);
+  --accent: #7a9a99;
+  --accent-bright: #93b3b2;
+  --accent-ink: #a8c6c5;
+  --wood: #17100a;
+  --wood-soft: #3a2c1d;
+  --wood-deep: #0f0a06;
+  --danger: #d24545;
+  --danger-soft: rgba(210, 69, 69, 0.16);
+  --gold: #c9a24b;
+
+  --bg: var(--paper-dark);
+  --bg-color: var(--paper-dark);
+  --bg-card: var(--paper-soft);
+  --card-bg: var(--paper-soft);
+  --hover-bg: rgba(122, 154, 153, 0.16);
+  --primary: var(--accent);
+  --primary-hover: var(--accent-ink);
+  --text-sub: var(--text-muted);
+  --text-color: var(--text-main);
+
+  --input-bg: #3f3020;
+  --input-border: var(--border-soft);
+  --input-border-focus: var(--accent-bright);
+  --input-text: var(--text-main);
+
+  --modal-bg: #332619;
+  --modal-text: var(--text-main);
+  --modal-header-border: var(--border-faint);
+  --modal-close-color: var(--text-muted);
+  --modal-overlay: rgba(8, 5, 2, 0.7);
+
+  --icon-filter: none;
+  --icon-filter1: invert(1);
+
+  /* 暗色模式仍保持游戏原色，避免同一品质在不同主题下语义漂移。 */
+  --q1: #cfba96;
+  --q2: #a7c037;
+  --q3: #3fa2ff;
+  --q4: #ee62f1;
+  --q5: #ffb64d;
+  --q1-text: #cfba96;
+  --q2-text: #a7c037;
+  --q3-text: #3fa2ff;
+  --q4-text: #ee62f1;
+  --q5-text: #ffb64d;
+  --q1-bg: rgba(207, 186, 150, 0.24);
+  --q2-bg: rgba(167, 192, 55, 0.24);
+  --q3-bg: rgba(63, 162, 255, 0.23);
+  --q4-bg: rgba(238, 98, 241, 0.22);
+  --q5-bg: rgba(255, 182, 77, 0.25);
+  --quality-label-bg: rgba(54, 42, 29, 0.94);
+}
+
+/* ====== 2. 全局基础 ====== */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: #000;
+  color: var(--text-main);
+  /* 地图背景：像模板一样铺在 body，向下避开顶栏 */
+  background-image: url('/ui/map_w1_bg.png');
+  background-size: cover;
+  background-position: center calc(var(--header-height, 60px) + var(--safe-top, 0px));
+  background-attachment: fixed;
+  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-synthesis: none;
+  -webkit-text-size-adjust: 100% !important;
+  text-size-adjust: 100% !important;
+  -webkit-tap-highlight-color: transparent;
+  line-height: 1.6;
+}
+
+#app {
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 标题字体：HarmonyOS 粗体，MYR2Sans 仅作游戏字形回退 */
+h1, h2, h3, h4, h5, h6,
+.app-title,
+.section-title,
+.panel-title,
+.card-name {
+  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-weight: 700;
+  color: inherit;
+}
+
+/* 链接 */
+a {
+  color: var(--accent-ink, var(--accent));
+  text-decoration: none;
+}
+a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+button {
+  font-family: inherit;
+}
+
+input, textarea, select {
+  font-family: inherit;
+}
+
+/* 顶部筛选面板标准样式（全站统一从 theme.css 继承，页面无需各自重复定义 margin） */
+.filter-panel,
+.filter-sticky-bar,
+[class*="-filter-sticky"],
+[class*="-filter-panel"] {
+  margin: 0 0 12px 0;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-shrink: 0;
+  max-height: 55vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.modal-body [class*="-list"] {
+  padding-bottom: 0 !important;
+}
+
+/* ====== 3. 羊皮纸面板（模板 .paper-panel 核心形态） ====== */
+.paper-panel {
+  background-color: rgba(223, 206, 179, 0.94);
+  border: 2px solid var(--border-color);
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.35), inset 0 0 20px rgba(135, 107, 72, 0.12);
+  border-radius: 4px;
+  position: relative;
+}
+.dark-mode .paper-panel {
+  background-color: rgba(46, 34, 23, 0.9);
+}
+
+/* 面板四角装饰钉 */
+.paper-panel.corner-nails::before,
+.paper-panel.corner-nails::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #5c4327;
+  box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.3);
+  z-index: 1;
+  pointer-events: none;
+}
+.paper-panel.corner-nails::before { top: 8px; left: 8px; }
+.paper-panel.corner-nails::after { bottom: 8px; right: 8px; }
+
+/* 不透明面板（表格/密集数据区） */
+.paper-panel-solid {
+  background-color: var(--paper-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+/* 页面大标题（模板 .content h1：双线分隔、居中） */
+.wiki-page-title {
+  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--text-main);
+  border-bottom: 3px double var(--border-color);
+  padding-bottom: 10px;
+  margin: 4px 0 16px 0;
+  letter-spacing: 1px;
+}
+
+/* ====== 4. 品质（稀有度）系统 —— 全站统一灰/绿/蓝/紫/橙 ====== */
+.quality-text-1 { color: var(--q1-text) !important; }
+.quality-text-2 { color: var(--q2-text) !important; }
+.quality-text-3 { color: var(--q3-text) !important; }
+.quality-text-4 { color: var(--q4-text) !important; }
+.quality-text-5 { color: var(--q5-text) !important; }
+
+.quality-bg-1 { background-color: var(--q1-bg) !important; }
+.quality-bg-2 { background-color: var(--q2-bg) !important; }
+.quality-bg-3 { background-color: var(--q3-bg) !important; }
+.quality-bg-4 { background-color: var(--q4-bg) !important; }
+.quality-bg-5 { background-color: var(--q5-bg) !important; }
+
+.quality-border-1 { border-color: var(--q1) !important; }
+.quality-border-2 { border-color: var(--q2) !important; }
+.quality-border-3 { border-color: var(--q3) !important; }
+.quality-border-4 { border-color: var(--q4) !important; }
+.quality-border-5 { border-color: var(--q5) !important; }
+
+.rarity-badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #fdf6e3;
+  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+}
+.badge-1 { background: var(--q1); }
+.badge-2 { background: var(--q2); }
+.badge-3 { background: var(--q3); }
+.badge-4 { background: var(--q4); }
+.badge-5 { background: var(--q5); }
+
+.rarity-bg-5 { background: var(--q5); }
+.rarity-bg-4 { background: var(--q4); }
+.rarity-bg-3 { background: var(--q3); }
+.rarity-bg-2 { background: var(--q2); }
+.rarity-bg-1 { background: var(--q1); }
+
+/* 高亮数值（描述文本中的 {数值} 标记渲染） */
+.value-highlight {
+  color: var(--accent-ink, var(--accent));
+  font-weight: 700;
+}
+.dark-mode .value-highlight {
+  color: #8fbcba;
+}
+
+/* ====== 5. 兼容全局类（旧代码过渡期可用） ====== */
+.page-view-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-height: 0;
+}
+
+.max-w-wrapper {
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  padding-left: 16px;
+  padding-right: 16px;
+  box-sizing: border-box;
+}
+
+.no-data, .empty-tip {
+  color: var(--text-faint);
+  font-size: 13px;
+  text-align: center;
+  padding: 8px 0;
+  font-style: italic;
+}
+
+.count-bar {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.count-num {
+  color: var(--accent-ink, var(--accent));
+  font-weight: 700;
+}
+
+/* 通用列表行（RewardsView 等） */
+.ui-list-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background-color: rgba(223, 206, 179, 0.9);
+  border: 1px solid var(--border-faint);
+  border-bottom-color: var(--border-soft);
+  border-radius: 3px;
+  padding: 10px 14px;
+  color: var(--text-main);
+  font-size: 13px;
+}
+.dark-mode .ui-list-row {
+  background-color: rgba(63, 48, 32, 0.82);
+}
+.ui-list-row.clickable {
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.ui-list-row.clickable:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent-bright);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.22);
+}
+
+/* ====== 6. 兼容旧弹窗/按钮类 ====== */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--modal-overlay);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal-window {
+  background: var(--modal-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  width: 90%;
+  max-width: 480px;
+  max-height: 82vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), inset 0 0 24px rgba(135, 107, 72, 0.12);
+  overflow: hidden;
+  margin-bottom: var(--safe-bottom);
+}
+.modal-header {
+  padding: 12px 18px;
+  background: var(--wood);
+  color: var(--paper);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-bottom: 2px solid var(--border-color);
+}
+.modal-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.modal-close-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: 1px solid rgba(223, 206, 179, 0.35);
+  color: var(--paper);
+  font-size: 14px;
+  cursor: pointer;
+  width: 26px;
+  height: 26px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+.modal-close-btn:hover {
+  background: rgba(223, 206, 179, 0.15);
+  border-color: var(--paper);
+}
+.modal-body {
+  padding: 18px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  color: var(--modal-text);
+  font-size: 14px;
+}
+.modal-footer {
+  padding: 12px 18px 16px;
+  border-top: 1px dashed var(--border-soft);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.modal-btn-confirm {
+  background-color: var(--wood);
+  color: var(--paper);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 9px 26px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 1px;
+  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+.modal-btn-confirm:hover {
+  background-color: var(--wood-soft);
+  border-color: var(--accent-bright);
+}
+
+/* ====== 7. 加载中状态 ====== */
+.global-loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  width: 100%;
+  gap: 12px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+.global-loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(85, 117, 116, 0.25);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: global-spin 0.9s linear infinite;
+}
+@keyframes global-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ====== 7b. 旧版视图兼容类（视图迁移完成后可逐步移除） ====== */
+.data-grid-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 16px 12px 16px;
+  box-sizing: border-box;
+}
+.data-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+.data-grid-container.wide-cards {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+.data-card {
+  background: var(--paper-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: 5px;
+  padding: 14px;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.data-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+.card-top-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.card-avatar, .card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  flex-shrink: 0;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+.card-main-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden;
+  min-width: 0;
+}
+.card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.card-name {
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.mini-tag {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid var(--border-faint);
+  color: var(--text-muted);
+}
+.tag-job { background: rgba(122, 154, 153, 0.18); color: var(--accent-ink, #557574); }
+.tag-attr { background: var(--q4-bg); color: var(--q4); }
+.slot-tag { font-size: 11px; color: var(--text-faint); }
+.dark-mode .tag-attr { color: var(--q4, #b06dd4); }
+
+/* 旧筛选行/按钮（部分视图过渡期使用） */
+.filter-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+}
+.filter-label {
+  color: var(--text-muted);
+  white-space: nowrap;
+  padding-top: 5px;
+  min-width: 54px;
+  flex-shrink: 0;
+  font-weight: 700;
+}
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1;
+}
+.filter-btn {
+  background: rgba(233, 220, 195, 0.6);
+  border: 1px solid var(--border-faint);
+  border-radius: 12px;
+  padding: 4px 12px;
+  font-size: 13px;
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+}
+.filter-btn:hover {
+  color: var(--text-main);
+  border-color: var(--border-soft);
+}
+.filter-btn.active {
+  background: var(--wood);
+  color: var(--paper);
+  border-color: #17100a;
+  font-weight: 700;
+}
+.filter-btn.quality-text-1.active { background: var(--q1); color: #2b1f15 !important; }
+.filter-btn.quality-text-2.active { background: var(--q2); color: #2b1f15 !important; }
+.filter-btn.quality-text-3.active { background: var(--q3); color: #17231f !important; }
+.filter-btn.quality-text-4.active { background: var(--q4); color: #2b1f15 !important; }
+.filter-btn.quality-text-5.active { background: var(--q5); color: #2b1f15 !important; }
+
+/* ====== 8. 滚动条（羊皮纸质感） ====== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(43, 31, 21, 0.12);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+  border: 1px solid rgba(43, 31, 21, 0.25);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--wood-soft);
+}

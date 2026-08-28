@@ -1,0 +1,2409 @@
+{
+	"datas": {
+		"explore1_1": {
+			"level": 3,
+			"quality": 1,
+			"consume": "explore001",
+			"mapIcon": "35",
+			"icon": "",
+			"timeMinute": 120,
+			"name": "白杨林道",
+			"ti": 0,
+			"condition": "",
+			"reward": "explore1_1",
+			"enemys": [
+				"007",
+				"008",
+				"009"
+			],
+			"positions": [
+				"林间小径",
+				"角布林的伏击",
+				"积水潭"
+			],
+			"bg_far": "c1_001_0",
+			"bg_floor": "c1_001_1",
+			"bg_near": "c1_001_2",
+			"maxNum": 1,
+			"eventName": "白杨林道",
+			"eventDes": "发现了一片小树林，里面有不少适合作为木材的树木。",
+			"eventImg": "explore1_1"
+		},
+		"explore1_2": {
+			"level": 5,
+			"quality": 2,
+			"consume": "explore002",
+			"mapIcon": "35",
+			"icon": "",
+			"timeMinute": 240,
+			"name": "郊野农场",
+			"ti": 0,
+			"condition": "",
+			"reward": "explore1_2",
+			"enemys": [
+				"007",
+				"008",
+				"009"
+			],
+			"positions": [
+				"麦田小道",
+				"农具堆积处",
+				"被魔物占据的野岭"
+			],
+			"bg_far": "c1_001_0",
+			"bg_floor": "c1_001_1",
+			"bg_near": "c1_001_2",
+			"maxNum": 1,
+			"eventName": "郊野农场",
+			"eventDes": "因兽潮的袭击而废弃的农场，似乎还能找到不少残留的农作物。",
+			"eventImg": "explore1_2"
+		},
+		"explore1_3": {
+			"level": 5,
+			"quality": 1,
+			"consume": "explore001",
+			"mapIcon": "24",
+			"icon": "",
+			"timeMinute": 120,
+			"name": "哈萨琳之手野营地",
+			"ti": 0,
+			"condition": "",
+			"reward": "explore1_3",
+			"enemys": [
+				"056_1",
+				"056_2",
+				"056_3",
+				"056_4",
+				"056_5"
+			],
+			"positions": [
+				"切断佣兵补给线",
+				"深入藏身洞窟",
+				"追捕荒野客穷寇"
+			],
+			"bg_far": "c1_001_0",
+			"bg_floor": "c1_001_1",
+			"bg_near": "c1_001_2",
+			"maxNum": 1,
+			"eventName": "哈萨琳之手野营地",
+			"eventDes": "据被打劫的旅人报告，在这附近发现了一处哈萨琳之手的野营地。",
+			"eventImg": "explore1_13"
+		},
+		"explore1_4": {
+			"level": 5,
+			"quality": 2,
+			"consume": "explore002",
+			"mapIcon": "24",
+			"icon": "",
+			"timeMinute": 240,
+			"name": "磨牙溪谷",
+			"ti": 0,
+			"condition": "",
+			"reward": "explore1_4",
+			"enemys": [
+				"037",
+				"038",
+				"039"
+			],
+			"positions": [
+				"被地鼠占领的泉眼",
+				"磨牙溪谷深处",
+				"伏击芙洛波大佬"
+			],
+			"bg_far": "c1_001_0",
+			"bg_floor": "c1_001_1",
+			"bg_near": "c1_001_2",
+			"maxNum": 1,
+			"eventName": "磨牙溪谷",
+			"eventDes": "一处被芙洛波占领的溪谷，热湖附近有不少优质的硫磺石和岩盐。",
+			"eventImg": "explore1_4"
+		},
+		"explore1_5": {
+			"level": 5,
+			"quality": 2,
+			"consume": "explore002",
+			"mapIcon": "32",
+			"icon": "",
+			"timeMinute": 240,
+			"name": "蛇腹矿坑",
+			"ti": 0,
+			"condition": "",
+			"reward": "explore1_5",
+			"enemys": [
+				"037",
+				"038",
+				"002",
+				"010"
+			],
+			"positions": [
+				"蛇腹矿坑浅部",
+				"矿工用具仓库",
+				"废旧的矿车残骸",
+				"破损的运输轨道"
+			],
+			"bg_far": "",
+			"bg_floor": "c1_004_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "蛇腹矿坑",
+			"eventDes": "在废弃的矿洞中发现了大量尚未开采完的矿石。",
+			"eventImg": "explore1_5"
+		},
+		"explore1_6": {
+			"level": 7,
+			"quality": 3,
+			"consume": "explore003",
+			"mapIcon": "25",
+			"icon": "",
+			"timeMinute": 360,
+			"name": "魔力紊乱的矿洞",
+			"ti": 0,
+			"condition": "",
+			"reward": "explore1_6",
+			"enemys": [
+				"002",
+				"010",
+				"012",
+				"037",
+				"038"
+			],
+			"positions": [
+				"结晶穹顶",
+				"狭窄的过道",
+				"砂蜘蛛的巢穴"
+			],
+			"bg_far": "",
+			"bg_floor": "c1_004_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "魔力紊乱的矿洞",
+			"eventDes": "在魔力紊乱的矿洞中，发现了少量元素结晶矿物，同时也让附近的魔物变得更加危险。",
+			"eventImg": "ts_1"
+		},
+		"explore1_7": {
+			"level": 3,
+			"quality": 2,
+			"consume": "explore002",
+			"mapIcon": "13",
+			"icon": "",
+			"timeMinute": 240,
+			"name": "妖精花园",
+			"ti": 0,
+			"condition": "",
+			"reward": "explore1_7",
+			"enemys": [
+				"007",
+				"008",
+				"009"
+			],
+			"positions": [
+				"妖精的演舞场",
+				"迷幻花田",
+				"阵阵虫鸣的灌木林"
+			],
+			"bg_far": "c1_001_0",
+			"bg_floor": "c1_001_1",
+			"bg_near": "c1_001_2",
+			"maxNum": 1,
+			"eventName": "妖精花园",
+			"eventDes": "发现了一处提灯妖精们的聚居地，附近生长着大量的药草花，也被称为“妖精的花园”。",
+			"eventImg": "explore1_7"
+		},
+		"explore1_10": {
+			"level": 5,
+			"quality": 2,
+			"consume": "explore002",
+			"mapIcon": "36",
+			"icon": "",
+			"timeMinute": 240,
+			"name": "蘑菇地",
+			"ti": 0,
+			"condition": "",
+			"reward": "explore1_10",
+			"enemys": [
+				"004",
+				"009"
+			],
+			"positions": [
+				"浆果灌木丛",
+				"满是菌丝的沃土",
+				"繁茂的小丘"
+			],
+			"bg_far": "c1_001_0",
+			"bg_floor": "c1_001_1",
+			"bg_near": "c1_001_2",
+			"maxNum": 1,
+			"eventName": "蘑菇地",
+			"eventDes": "在雨后发现了一片生长出大量蘑菇的林地，似乎也并不是所有种类都可以食用的样子……",
+			"eventImg": "explore1_10"
+		},
+		"explore1_11": {
+			"level": 7,
+			"quality": 2,
+			"consume": "explore002",
+			"mapIcon": "29",
+			"icon": "",
+			"timeMinute": 240,
+			"name": "观星高地遗址",
+			"ti": 0,
+			"condition": "",
+			"reward": "explore1_11",
+			"enemys": [
+				"007",
+				"008",
+				"037",
+				"038",
+				"009"
+			],
+			"positions": [
+				"破损的星晷",
+				"风化的石碑阵",
+				"离群的魔物"
+			],
+			"bg_far": "c1_001_0",
+			"bg_floor": "c1_001_1",
+			"bg_near": "c1_001_2",
+			"maxNum": 1,
+			"eventName": "观星高地遗址",
+			"eventDes": "在野地发现了一处古代遗址，说不能找到一些失落技术的记载和材料。",
+			"eventImg": "explore1_11"
+		},
+		"explore1_12": {
+			"level": 3,
+			"quality": 1,
+			"consume": "explore001",
+			"mapIcon": "39",
+			"icon": "",
+			"timeMinute": 120,
+			"name": "奔袭的兽群",
+			"ti": 0,
+			"condition": "",
+			"reward": "explore1_12",
+			"enemys": [
+				"004",
+				"035"
+			],
+			"positions": [
+				"一群怒不可遏的野猪",
+				"一群怒火中烧的野猪",
+				"一群怒气冲天的野猪"
+			],
+			"bg_far": "c1_001_0",
+			"bg_floor": "c1_001_1",
+			"bg_near": "c1_001_2",
+			"maxNum": 1,
+			"eventName": "奔袭的兽群",
+			"eventDes": "在附近发现了兽群的线索，狩猎时间到了！",
+			"eventImg": "explore1_12"
+		},
+		"explore1_13": {
+			"level": 7,
+			"quality": 3,
+			"consume": "explore003",
+			"mapIcon": "3",
+			"icon": "",
+			"timeMinute": 360,
+			"name": "角布林盘踞地",
+			"ti": 0,
+			"condition": "",
+			"reward": "explore1_13",
+			"enemys": [
+				"007crazy",
+				"008crazy",
+				"034"
+			],
+			"positions": [
+				"伏击阵线",
+				"剿灭头领",
+				"物资堆积处"
+			],
+			"bg_far": "c1_001_0",
+			"bg_floor": "c1_001_1",
+			"bg_near": "c1_001_2",
+			"maxNum": 1,
+			"eventName": "角布林盘踞地",
+			"eventDes": "在附近发现了一处新建立的角布林营地，最好在它们还没有发展壮大前解决掉。",
+			"eventImg": "explore1_13"
+		},
+		"explore1_14": {
+			"level": 4,
+			"quality": 2,
+			"consume": "explore002",
+			"mapIcon": "3",
+			"icon": "",
+			"timeMinute": 240,
+			"name": "旅店地窖浅层",
+			"ti": 0,
+			"condition": "",
+			"reward": "explore1_14",
+			"enemys": [
+				"002",
+				"010",
+				"012"
+			],
+			"positions": [
+				"飘香的驿站酒窖",
+				"古旧的食材储藏室",
+				"简单的清理工作"
+			],
+			"bg_far": "",
+			"bg_floor": "c1_003_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "旅店地窖浅层",
+			"eventDes": "在旅店地下的古代地窖浅层迷宫中发现了一片尚未探索的区域。",
+			"eventImg": "explore1_14"
+		},
+		"explore1_15": {
+			"level": 5,
+			"quality": 3,
+			"consume": "explore003",
+			"mapIcon": "3",
+			"icon": "",
+			"timeMinute": 360,
+			"name": "旅店地窖深层",
+			"ti": 0,
+			"condition": "",
+			"reward": "explore1_15",
+			"enemys": [
+				"011",
+				"013",
+				"012"
+			],
+			"positions": [
+				"古镇地下遗址",
+				"黑暗深邃的通道",
+				"蜘蛛女王的巢穴"
+			],
+			"bg_far": "",
+			"bg_floor": "c1_003_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "旅店地窖深层",
+			"eventDes": "在旅店地下的古代地窖深层迷宫中发现了一片尚未探索的区域。",
+			"eventImg": "explore1_14"
+		},
+		"explore1_16": {
+			"level": 8,
+			"quality": 2,
+			"consume": "explore002",
+			"mapIcon": "3",
+			"icon": "",
+			"timeMinute": 240,
+			"name": "安瑟恩遗迹浅层",
+			"ti": 0,
+			"condition": "",
+			"reward": "explore1_16",
+			"enemys": [
+				"040",
+				"041"
+			],
+			"positions": [
+				"迷惘的构装体",
+				"灯火通明的小道",
+				"摆有神像的广场"
+			],
+			"bg_far": "",
+			"bg_floor": "c1_002_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "安瑟恩遗迹浅层",
+			"eventDes": "在安瑟恩遗迹的浅层迷宫中发现了一片尚未探索的区域。",
+			"eventImg": "explore1_16"
+		},
+		"explore1_17": {
+			"level": 9,
+			"quality": 3,
+			"consume": "explore003",
+			"mapIcon": "3",
+			"icon": "",
+			"timeMinute": 360,
+			"name": "安瑟恩遗迹深层",
+			"ti": 0,
+			"condition": "",
+			"reward": "explore1_17",
+			"enemys": [
+				"040",
+				"041",
+				"042"
+			],
+			"positions": [
+				"警觉的构装体",
+				"空旷的祭祀间",
+				"安瑟恩单元的构装场"
+			],
+			"bg_far": "",
+			"bg_floor": "c1_002_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "安瑟恩遗迹深层",
+			"eventDes": "在安瑟恩遗迹的深层迷宫中发现了一片尚未探索的区域。",
+			"eventImg": "explore1_16"
+		},
+		
+		"explore1_18": {
+			"level": 7,
+			"quality": 2,
+			"consume": "explore002",
+			"mapIcon": "53",
+			"icon": "",
+			"timeMinute": 240,
+			"name": "荒野中的魔物蛋巢",
+			"ti": 0,
+			"condition": "",
+			"reward": "explore1_18",
+			"enemys": [
+				"009",
+				"007",
+		
+				"037",
+				"038",
+				"014",
+				"008"
+			],
+			"positions": [
+				"杂草掩盖的蛋巢",
+				"灌木之中的蛋巢",
+				"洞穴之中的蛋巢"
+			],
+			"bg_far": "c1_001_0",
+			"bg_floor": "c1_001_1",
+			"bg_near": "c1_001_2",
+			"maxNum": 1,
+			"eventName": "荒野中的魔物蛋巢",
+			"eventDes": "在金黄的荒野中发现了一处魔物蛋巢，也许能带回几颗未遭异变影响的魔物蛋。",
+			"eventImg": "explore1_1"
+		},
+		
+		"explore2_1": {
+			"level": 12,
+			"quality": 1,
+			"consume": "explore001",
+			"ti": 0,
+			"timeMinute": 120,
+			"mapIcon": "35",
+			"icon": "",
+			"name": "晶红枯木林",
+			"condition": "",
+			"reward": "explore2_1",
+			"enemys": [
+				"045",
+				"046"
+			],
+			"positions": [
+				"刺针灌木丛",
+				"野草丛生的废田",
+				"枯木林深处"
+			],
+			"bg_far": "",
+			"bg_floor": "c2_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "晶红枯木林",
+			"eventDes": "发现了一片枯木林，里面有不少适合作为木材的树木。",
+			"eventImg": "ts_3"
+		},
+		"explore2_2": {
+			"level": 12,
+			"quality": 1,
+			"consume": "explore001",
+			"ti": 0,
+			"timeMinute": 120,
+			"mapIcon": "24",
+			"icon": "",
+			"name": "灰岩峭壁",
+			"condition": "",
+			"reward": "explore2_2",
+			"enemys": [
+				"045",
+				"046",
+				"047"
+			],
+			"positions": [
+				"促狭的山道",
+				"一群急奔的恐兽",
+				"裂隙山隘"
+			],
+			"bg_far": "",
+			"bg_floor": "c2_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "灰岩峭壁",
+			"eventDes": "在峭壁处发现了上好的石料，同时还能发现一些岩盐矿和硫磺矿。",
+			"eventImg": "ts_c2_3"
+		},
+		"explore2_3": {
+			"level": 12,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "24",
+			"icon": "",
+			"name": "天梯之下",
+			"condition": "",
+			"reward": "explore2_3",
+			"enemys": [
+				"053",
+				"054"
+			],
+			"positions": [
+				"一群徘徊的哈比",
+				"天河冲流带",
+				"湿润的山中小路"
+			],
+			"bg_far": "",
+			"bg_floor": "c2_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "天梯之下",
+			"eventDes": "在古代天梯下发现了上好的石料，同时还能发现一些岩盐矿和硫磺矿。",
+			"eventImg": "ts_c2_3"
+		},
+		"explore2_4": {
+			"level": 12,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "32",
+			"icon": "",
+			"name": "一群佣兵残党",
+			"condition": "",
+			"reward": "explore2_4",
+			"enemys": [
+				"056_1",
+				"056_2",
+				"056_3",
+				"056_4",
+				"056_5"
+			],
+			"positions": [
+				"捉拿外围流寇",
+				"剿灭斥候小队",
+				"突袭佣兵本阵"
+			],
+			"bg_far": "",
+			"bg_floor": "c2_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "一群佣兵残党",
+			"eventDes": "佣兵残党占领了附近的一处废弃的铜矿。",
+			"eventImg": "ts_2"
+		},
+		"explore2_5": {
+			"level": 15,
+			"quality": 3,
+			"consume": "explore003",
+			"ti": 0,
+			"timeMinute": 360,
+			"mapIcon": "25",
+			"icon": "",
+			"name": "魔力紊乱的山谷",
+			"condition": "",
+			"reward": "explore2_5",
+			"enemys": [
+				"045",
+				"046",
+				"049",
+				"050",
+				"051"
+			],
+			"positions": [
+				"结晶的小丘",
+				"璀璨的幽谷小径",
+				"啃食元素结晶的魔物"
+			],
+			"bg_far": "",
+			"bg_floor": "c2_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "魔力紊乱的山谷",
+			"eventDes": "在魔力紊乱的山谷的矿洞中，发现了少量元素结晶矿物，同时也让附近的魔物变得更加危险。",
+			"eventImg": "ts_1"
+		},
+		"explore2_6": {
+			"level": 12,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "37",
+			"icon": "",
+			"name": "赤剑草丛",
+			"condition": "",
+			"reward": "explore2_6",
+			"enemys": [
+				"045",
+				"046"
+			],
+			"positions": [
+				"赭染草坪",
+				"繁茂的山野",
+				"一群愤怒的魔物"
+			],
+			"bg_far": "",
+			"bg_floor": "c2_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "赤剑草丛",
+			"eventDes": "发现了一处生长着稀有药草——赤剑草的药草丛，附近似乎有很多危险的魔物。",
+			"eventImg": "ts_4"
+		},
+		"explore2_7": {
+			"level": 15,
+			"quality": 3,
+			"consume": "explore003",
+			"ti": 0,
+			"timeMinute": 360,
+			"mapIcon": "13",
+			"icon": "",
+			"name": "野草陷坑",
+			"condition": "",
+			"reward": "explore2_7",
+			"enemys": [
+				"049",
+				"050",
+				"051"
+			],
+			"positions": [
+				"覆草的洞窟小径",
+				"被魔物占据的石穴",
+				"野草陷坑深处"
+			],
+			"bg_far": "",
+			"bg_floor": "c1_004_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "野草陷坑",
+			"eventDes": "发现了一处生长着稀有药草——金铃草的药草丛，附近似乎有很多危险的魔物。",
+			"eventImg": "ts_4"
+		},
+		"explore2_8": {
+			"level": 12,
+			"quality": 1,
+			"consume": "explore001",
+			"ti": 0,
+			"timeMinute": 120,
+			"mapIcon": "41",
+			"icon": "",
+			"name": "狂暴恐兽巢穴",
+			"condition": "",
+			"reward": "explore2_8",
+			"enemys": [
+				"045_elite",
+				"046_elite",
+				"047"
+			],
+			"positions": [
+				"巴诺姆村郊外",
+				"恐兽聚集地",
+				"恐兽的孵化场"
+			],
+			"bg_far": "",
+			"bg_floor": "c2_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "狂暴恐兽巢穴",
+			"eventDes": "发现了一处恐兽的巢穴，说不定能找到一些恐兽羽毛作为材料。",
+			"eventImg": "ts_c2_4"
+		},
+		"explore2_9": {
+			"level": 12,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "24",
+			"icon": "",
+			"name": "山巅考古行动",
+			"condition": "",
+			"reward": "explore2_9",
+			"enemys": [
+				"053",
+				"054"
+			],
+			"positions": [
+				"山神骸骨调查行动",
+				"巨大红晶挖掘行动",
+				"遗迹结构测绘行动",
+				"蟾兽样本采集行动"
+			],
+			"bg_far": "",
+			"bg_floor": "c2_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "山巅考古行动",
+			"eventDes": "在野地发现了一处古代遗址，说不能找到一些失落技术的记载和材料。",
+			"eventImg": "explore1_11"
+		},
+		"explore2_10": {
+			"level": 12,
+			"quality": 1,
+			"consume": "explore001",
+			"ti": 0,
+			"timeMinute": 120,
+			"mapIcon": "40",
+			"icon": "",
+			"name": "岩蟾蜍洞窟",
+			"condition": "",
+			"reward": "explore2_10",
+			"enemys": [
+				"049_elite",
+				"050_elite",
+				"051_1",
+				"052_1"
+			],
+			"positions": [
+				"布置山民陷阱",
+				"防守补给阵地",
+				"压制碎岩统领"
+			],
+			"bg_far": "",
+			"bg_floor": "c1_004_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "岩蟾蜍洞窟",
+			"eventDes": "一群岩蟾蜍占领了此处的洞窟，对附近的村民造成了不少麻烦。",
+			"eventImg": "ts_c2_1"
+		},
+		"explore2_11": {
+			"level": 15,
+			"quality": 3,
+			"consume": "explore003",
+			"ti": 0,
+			"timeMinute": 360,
+			"mapIcon": "3",
+			"icon": "",
+			"name": "哈比繁育地",
+			"condition": "",
+			"reward": "explore2_11",
+			"enemys": [
+				"053_elite"
+			],
+			"positions": [
+				"僧院外围",
+				"满是鸟巢的巨木",
+				"哈比巢母围歼战"
+			],
+			"bg_far": "",
+			"bg_floor": "c2_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "哈比繁育地",
+			"eventDes": "附近的哈比占领了一处佣兵残党的营地，并重新筑起了巢。",
+			"eventImg": "ts_c2_4"
+		},
+		"explore2_12": {
+			"level": 13,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "3",
+			"icon": "",
+			"name": "蔓晶采石场浅部",
+			"condition": "",
+			"reward": "explore2_12",
+			"enemys": [
+				"049",
+				"050",
+				"051"
+			],
+			"positions": [
+				"废旧的采石设备站",
+				"被魔物占据的轨道",
+				"魔岩矿坑"
+			],
+			"bg_far": "",
+			"bg_floor": "c2_003_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "蔓晶采石场浅部",
+			"eventDes": "在蔓晶采石场的浅部隧道中发现了一片尚未探索的区域。",
+			"eventImg": "ts_c2_1"
+		},
+		"explore2_13": {
+			"level": 15,
+			"quality": 3,
+			"consume": "explore003",
+			"ti": 0,
+			"timeMinute": 360,
+			"mapIcon": "3",
+			"icon": "",
+			"name": "蔓晶采石场深部",
+			"condition": "",
+			"reward": "explore2_13",
+			"enemys": [
+				"049",
+				"050",
+				"051",
+				"052"
+			],
+			"positions": [
+				"长满红晶的洞厅",
+				"狂暴的岩蟾蜍群",
+				"碎岩统领的御座"
+			],
+			"bg_far": "",
+			"bg_floor": "c2_003_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "蔓晶采石场深部",
+			"eventDes": "在蔓晶采石场的深部隧道中发现了一片尚未探索的区域。",
+			"eventImg": "ts_c2_1"
+		},
+		"explore2_14": {
+			"level": 15,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "3",
+			"icon": "",
+			"name": "阿娜希塔遗迹浅部",
+			"condition": "",
+			"reward": "explore2_14",
+			"enemys": [
+				"045",
+				"046",
+				"047",
+				"049",
+				"050",
+				"051",
+				"053",
+				"054"
+			],
+			"positions": [
+				"细狭的遗迹长廊",
+				"被魔物占领的殿堂",
+				"空荡荡的储藏室"
+			],
+			"bg_far": "",
+			"bg_floor": "c2_002_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "阿娜希塔遗迹浅部",
+			"eventDes": "在阿娜希塔遗迹浅部迷宫中发现了一片尚未探索的区域。",
+			"eventImg": "ts_c2_2"
+		},
+		"explore2_15": {
+			"level": 18,
+			"quality": 3,
+			"consume": "explore003",
+			"ti": 0,
+			"timeMinute": 360,
+			"mapIcon": "3",
+			"icon": "",
+			"name": "阿娜希塔遗迹深部",
+			"condition": "",
+			"reward": "explore2_15",
+			"enemys": [
+				"045",
+				"046",
+				"047",
+				"049",
+				"050",
+				"051",
+				"053",
+				"054"
+			],
+			"positions": [
+				"宽敞残破的集会厅",
+				"布满机关的密道",
+				"恐怖蟾兽的寝宫"
+			],
+			"bg_far": "",
+			"bg_floor": "c2_002_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "阿娜希塔遗迹深部",
+			"eventDes": "在阿娜希塔遗迹深部迷宫中发现了一片尚未探索的区域。",
+			"eventImg": "ts_c2_2"
+		},
+		
+		"explore2_16": {
+			"level": 12,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "53",
+			"icon": "",
+			"name": "山地中的魔物蛋巢",
+			"condition": "",
+			"reward": "explore2_16",
+			"enemys": [
+				"045",
+				"046"
+			],
+			"positions": [
+				"顽石之间的蛋巢",
+				"砂砾之下的蛋巢",
+				"山洞之中的蛋巢"
+			],
+			"bg_far": "",
+			"bg_floor": "c2_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "山地中的魔物蛋巢",
+			"eventDes": "在空旷的山野间发现了一处魔物蛋巢，也许能带回几颗未遭异变影响的魔物蛋。",
+			"eventImg": "ts_c2_3"
+		},
+		
+		"explore3_1": {
+			"level": 22,
+			"quality": 1,
+			"consume": "explore001",
+			"ti": 0,
+			"timeMinute": 120,
+			"mapIcon": "35",
+			"icon": "",
+			"name": "幽静小道",
+			"condition": "",
+			"reward": "explore3_1",
+			"enemys": [
+				"058",
+				"059"
+			],
+			"positions": [
+				"泥泞的黄土路",
+				"潮湿的软泥地",
+				"道路尽头的史莱姆群"
+			],
+			"bg_far": "",
+			"bg_floor": "c3_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "幽静小道",
+			"eventDes": "一处幽静的小道，路旁有不少适合作为木材的树木，以及一些野果。",
+			"eventImg": "ts_c3_3"
+		},
+		"explore3_2": {
+			"level": 22,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "35",
+			"icon": "",
+			"name": "葳蕤绿林",
+			"condition": "",
+			"reward": "explore3_2",
+			"enemys": [
+				"058",
+				"059",
+				"061",
+				"062"
+			],
+			"positions": [
+				"扎堆的灌木丛",
+				"林野间的泥潭",
+				"密林深处"
+			],
+			"bg_far": "",
+			"bg_floor": "c3_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "葳蕤绿林",
+			"eventDes": "一处幽深的绿林，里面有不少适合作为木材的树木，以及一些野果。",
+			"eventImg": "ts_c3_3"
+		},
+		"explore3_3": {
+			"level": 22,
+			"quality": 1,
+			"consume": "explore001",
+			"ti": 0,
+			"timeMinute": 120,
+			"mapIcon": "24",
+			"icon": "",
+			"name": "水蚀岩地",
+			"condition": "",
+			"reward": "explore3_3",
+			"enemys": [
+				"058",
+				"059"
+			],
+			"positions": [
+				"散布的碎石堆",
+				"光秃泥地",
+				"被魔物摧毁的木桩"
+			],
+			"bg_far": "",
+			"bg_floor": "c3_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "水蚀岩地",
+			"eventDes": "水岸被河流冲刷形成的碎石堆，可以找到一些石料。",
+			"eventImg": "ts_c3_3"
+		},
+		"explore3_4": {
+			"level": 22,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "24",
+			"icon": "",
+			"name": "水蚀岩带",
+			"condition": "",
+			"reward": "explore3_4",
+			"enemys": [
+				"058",
+				"059",
+				"061",
+				"062"
+			],
+			"positions": [
+				"沉沉荒土",
+				"滑润的燧石堆",
+				"穿越碎岩的溪流",
+				"扎堆的魔物群"
+			],
+			"bg_far": "",
+			"bg_floor": "c3_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "水蚀岩带",
+			"eventDes": "水岸被河流冲刷形成的碎石堆，可以找到不少优质的石料。",
+			"eventImg": "ts_c3_3"
+		},
+		"explore3_5": {
+			"level": 25,
+			"quality": 3,
+			"consume": "explore003",
+			"ti": 0,
+			"timeMinute": 360,
+			"mapIcon": "25",
+			"icon": "",
+			"name": "魔力紊乱的河谷",
+			"condition": "",
+			"reward": "explore3_5",
+			"enemys": [
+				"058",
+				"059",
+				"061",
+				"062"
+			],
+			"positions": [
+				"散落的碎晶石",
+				"狭窄的山间",
+				"魔物的聚居地"
+			],
+			"bg_far": "",
+			"bg_floor": "c1_004_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "魔力紊乱的河谷",
+			"eventDes": "在魔力紊乱的河谷矿洞中，发现了少量元素结晶矿物，同时也让附近的魔物变得更加危险。",
+			"eventImg": "ts_1"
+		},
+		"explore3_6": {
+			"level": 22,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "42",
+			"icon": "",
+			"name": "布满水纹花的浅滩",
+			"condition": "",
+			"reward": "explore3_6",
+			"enemys": [
+				"061",
+				"062",
+				"064",
+				"065"
+			],
+			"positions": [
+				"涟涟溪水",
+				"绿溪里的小石堆",
+				"绮丽的水纹花丛"
+			],
+			"bg_far": "",
+			"bg_floor": "c3_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "布满水纹花的浅滩",
+			"eventDes": "发现了一大片水纹花，还有不少伴生的药草。",
+			"eventImg": "ts_c3_4"
+		},
+		"explore3_7": {
+			"level": 25,
+			"quality": 3,
+			"consume": "explore003",
+			"ti": 0,
+			"timeMinute": 360,
+			"mapIcon": "38",
+			"icon": "",
+			"name": "溪涧药丛",
+			"condition": "",
+			"reward": "explore3_7",
+			"enemys": [
+				"061",
+				"062",
+				"064",
+				"065"
+			],
+			"positions": [
+				"摇曳的芦苇荡",
+				"布满鹅卵石堆的溪流",
+				"隐秘的小石潭"
+			],
+			"bg_far": "",
+			"bg_floor": "c3_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "溪涧药丛",
+			"eventDes": "在溪涧旁发现了一处生长着稀有药草——金铃草的药草丛，附近似乎有很多危险的魔物。",
+			"eventImg": "ts_4"
+		},
+		"explore3_8": {
+			"level": 22,
+			"quality": 1,
+			"consume": "explore001",
+			"ti": 0,
+			"timeMinute": 120,
+			"mapIcon": "43",
+			"icon": "",
+			"name": "魔爪蛇窟",
+			"condition": "",
+			"reward": "explore3_8",
+			"enemys": [
+				"066",
+				"067",
+				"068"
+			],
+			"positions": [
+				"蛇窟外围",
+				"扎推的魔爪蛇怪",
+				"蛇怪的孵化场"
+			],
+			"bg_far": "",
+			"bg_floor": "c1_004_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "魔爪蛇窟",
+			"eventDes": "魔爪蛇作为入侵物种，占领附近的山洞，对附近的村民造成了不少麻烦。",
+			"eventImg": "ts_5"
+		},
+		"explore3_9": {
+			"level": 22,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "29",
+			"icon": "",
+			"name": "深潭下的遗址",
+			"condition": "",
+			"reward": "explore3_9",
+			"enemys": [
+				"064",
+				"065"
+			],
+			"positions": [
+				"被水侵蚀的石道",
+				"幽暗寂静的洞穴",
+				"被侵蚀毁坏的陷阱",
+				"空空如也的湖底空洞"
+			],
+			"bg_far": "",
+			"bg_floor": "c1_004_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "深潭下的遗址",
+			"eventDes": "在野地发现了一处古代遗址，说不能找到一些失落技术的记载和材料。",
+			"eventImg": "explore1_11"
+		},
+		"explore3_10": {
+			"level": 22,
+			"quality": 1,
+			"consume": "explore001",
+			"ti": 0,
+			"timeMinute": 120,
+			"mapIcon": "44",
+			"icon": "",
+			"name": "废墟中的强盗窝点",
+			"condition": "",
+			"reward": "explore3_10",
+			"enemys": [
+				"067",
+				"068",
+				"056_1",
+				"056_2",
+				"056_3",
+				"056_4",
+				"056_5"
+			],
+			"positions": [
+				"被魔物摧毁的小村",
+				"埋伏的强盗",
+				"强盗的老窝"
+			],
+			"bg_far": "",
+			"bg_floor": "c1_004_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "废墟中的强盗窝点",
+			"eventDes": "一伙强盗占领了凝晶矿场附近的小村庄。",
+			"eventImg": "ts_2"
+		},
+		"explore3_11": {
+			"level": 25,
+			"quality": 3,
+			"consume": "explore003",
+			"ti": 0,
+			"timeMinute": 360,
+			"mapIcon": "3",
+			"icon": "",
+			"name": "粘怪盘踞地",
+			"condition": "",
+			"reward": "explore3_11",
+			"enemys": [
+				"058",
+				"059",
+				"060"
+			],
+			"positions": [
+				"巨型史莱姆的啃食痕",
+				"粘怪的防线",
+				"魔水吞噬者的寝宫"
+			],
+			"bg_far": "",
+			"bg_floor": "c3_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "粘怪盘踞地",
+			"eventDes": "在富魔水的影响下，大量繁殖的粘怪占领了附近的工厂。",
+			"eventImg": "ts_c3_2"
+		},
+		"explore3_12": {
+			"level": 22,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "3",
+			"icon": "",
+			"name": "辛瓦特遗迹·浅部",
+			"condition": "",
+			"reward": "explore3_12",
+			"enemys": [
+				"061",
+				"062"
+			],
+			"positions": [
+				"破碎的楼梯",
+				"布满青苔的走道",
+				"深邃的地下通道"
+			],
+			"bg_far": "",
+			"bg_floor": "c3_002_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "辛瓦特遗迹·浅部",
+			"eventDes": "在辛瓦特遗迹浅部迷宫中发现了一片尚未探索的区域。",
+			"eventImg": "ts_c3_1"
+		},
+		"explore3_13": {
+			"level": 25,
+			"quality": 3,
+			"consume": "explore003",
+			"ti": 0,
+			"timeMinute": 360,
+			"mapIcon": "3",
+			"icon": "",
+			"name": "辛瓦特遗迹·深部",
+			"condition": "",
+			"reward": "explore3_13",
+			"enemys": [
+				"061",
+				"062",
+				"063"
+			],
+			"positions": [
+				"被水草缠绕的装置群",
+				"愤怒的杜吉芽群",
+				"杜吉芽的栖息场"
+			],
+			"bg_far": "",
+			"bg_floor": "c3_002_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "辛瓦特遗迹·深部",
+			"eventDes": "在辛瓦特遗迹深部迷宫中发现了一片尚未探索的区域。",
+			"eventImg": "ts_c3_1"
+		},
+		"explore3_14": {
+			"level": 25,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "3",
+			"icon": "",
+			"name": "黑涧浴池·浅部",
+			"condition": "",
+			"reward": "explore3_14",
+			"enemys": [
+				"061",
+				"062",
+				"064",
+				"065",
+				"066",
+				"067"
+			],
+			"positions": [
+				"阴暗潮湿的走道",
+				"木箱堆积的储物室",
+				"铁具散落的工作间"
+			],
+			"bg_far": "",
+			"bg_floor": "c3_003_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "黑涧浴池·浅部",
+			"eventDes": "在特黑涧浴池浅部迷宫中发现了一片尚未探索的区域。",
+			"eventImg": "ts_c3_2"
+		},
+		"explore3_15": {
+			"level": 28,
+			"quality": 3,
+			"consume": "explore003",
+			"ti": 0,
+			"timeMinute": 360,
+			"mapIcon": "3",
+			"icon": "",
+			"name": "黑涧浴池·深部",
+			"condition": "",
+			"reward": "explore3_15",
+			"enemys": [
+				"061",
+				"062",
+				"064",
+				"065",
+				"066",
+				"067"
+			],
+			"positions": [
+				"布满管道的长廊",
+				"恶臭弥漫的实验室",
+				"摆放净水装置的大厅"
+			],
+			"bg_far": "",
+			"bg_floor": "c3_003_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "黑涧浴池·深部",
+			"eventDes": "在特黑涧浴池深部迷宫中发现了一片尚未探索的区域。",
+			"eventImg": "ts_c3_2"
+		},
+		
+		"explore3_16": {
+			"level": 22,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "53",
+			"icon": "",
+			"name": "湖边的魔物蛋巢",
+			"condition": "",
+			"reward": "explore3_16",
+			"enemys": [
+				"058",
+				"059",
+				"061",
+				"062",
+				"064",
+				"065"
+			],
+			"positions": [
+				"水纹花丛中的蛋巢",
+				"水草缠绕的蛋巢",
+				"青苔石碓中的蛋巢"
+			],
+			"bg_far": "",
+			"bg_floor": "c3_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "湖边的魔物蛋巢",
+			"eventDes": "在湖泊的周边发现了一处魔物蛋巢，也许能带回几颗未遭异变影响的魔物蛋。",
+			"eventImg": "ts_c3_3"
+		},
+		
+		"explore4_1": {
+			"level": 32,
+			"quality": 1,
+			"consume": "explore001",
+			"ti": 0,
+			"timeMinute": 120,
+			"mapIcon": "35",
+			"icon": "",
+			"name": "野果灌木",
+			"condition": "",
+			"reward": "explore4_1",
+			"enemys": [
+				"024",
+				"025"
+			],
+			"positions": [
+				"满是脚印的土路",
+				"野菜丛生的草地",
+				"灌木林中心"
+			],
+			"bg_far": "",
+			"bg_floor": "c4_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "野果灌木",
+			"eventDes": "发现了一处灌木林，有许多野菜和浆果分布在此。但在采摘的途中要小心埋伏在暗处的敌人。",
+			"eventImg": "ts_c4_3"
+		},
+		"explore4_2": {
+			"level": 32,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "35",
+			"icon": "",
+			"name": "流溪林莽",
+			"condition": "",
+			"reward": "explore4_2",
+			"enemys": [
+				"020",
+				"021",
+				"022"
+			],
+			"positions": [
+				"蕈人聚居点地",
+				"宽阔的树林",
+				"洼地上的蘑菇丛"
+			],
+			"bg_far": "",
+			"bg_floor": "c4_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "流溪林莽",
+			"eventDes": "发现一处有溪水流过的树林，有许多蘑菇伴生在此地，同时附近也有很多的魔物游荡。",
+			"eventImg": "ts_c4_3"
+		},
+		"explore4_3": {
+			"level": 32,
+			"quality": 1,
+			"consume": "explore001",
+			"ti": 0,
+			"timeMinute": 120,
+			"mapIcon": "24",
+			"icon": "",
+			"name": "林间幽谷",
+			"condition": "",
+			"reward": "explore4_3",
+			"enemys": [
+				"016",
+				"017"
+			],
+			"positions": [
+				"泠泠谷间",
+				"安静的蕈人群",
+				"深谷之中"
+			],
+			"bg_far": "",
+			"bg_floor": "c4_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "林间幽谷",
+			"eventDes": "发现一处长满绿植的幽静山谷，此处布有许多可采收的石材",
+			"eventImg": "ts_c4_3"
+		},
+		"explore4_4": {
+			"level": 32,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "24",
+			"icon": "",
+			"name": "愁闷丘陵",
+			"condition": "",
+			"reward": "explore4_4",
+			"enemys": [
+				"016",
+				"017",
+				"024",
+				"025"
+			],
+			"positions": [
+				"被阳光直射的岩地",
+				"吵闹的蕈人群",
+				"林中小高地",
+				"隐蔽的岩矿"
+			],
+			"bg_far": "",
+			"bg_floor": "c4_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "愁闷丘陵",
+			"eventDes": "在林中出现的小丘陵，附近有许多好用的石材。但也有一群魔物在此地休息。",
+			"eventImg": "ts_c4_3"
+		},
+		"explore4_5": {
+			"level": 35,
+			"quality": 3,
+			"consume": "explore003",
+			"ti": 0,
+			"timeMinute": 360,
+			"mapIcon": "25",
+			"icon": "",
+			"name": "魔力紊乱的地穴",
+			"condition": "",
+			"reward": "explore4_5",
+			"enemys": [
+				"031",
+				"032",
+				"033",
+				"024",
+				"025"
+			],
+			"positions": [
+				"散发不安气息的洞穴",
+				"四通八达的地道",
+				"元素结晶前的魔物群"
+			],
+			"bg_far": "",
+			"bg_floor": "c1_004_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "魔力紊乱的地穴",
+			"eventDes": "在密林深处发现了好几个地穴，穴下有着许多结晶矿物，同时也让附近的魔物变得危险。",
+			"eventImg": "ts_1"
+		},
+		"explore4_6": {
+			"level": 32,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "47",
+			"icon": "",
+			"name": "布满松茸的林地",
+			"condition": "",
+			"reward": "explore4_6",
+			"enemys": [
+				"016",
+				"017",
+				"024",
+				"025"
+			],
+			"positions": [
+				"湿润的泥地",
+				"香气环绕的林间",
+				"聚集的蕈人群",
+				"长满松茸的树群"
+			],
+			"bg_far": "",
+			"bg_floor": "c4_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "布满松茸的林地",
+			"eventDes": "在林中发现了一个香气弥漫的森林，有许多松茸生长在此地。不过松茸的香味也吸引了许多魔物到来。",
+			"eventImg": "ts_c4_4"
+		},
+		"explore4_7": {
+			"level": 35,
+			"quality": 3,
+			"consume": "explore003",
+			"ti": 0,
+			"timeMinute": 360,
+			"mapIcon": "38",
+			"icon": "",
+			"name": "溪涧药丛",
+			"condition": "",
+			"reward": "explore4_7",
+			"enemys": [
+				"024",
+				"025"
+			],
+			"positions": [
+				"摇曳的芦苇荡",
+				"布满鹅卵石堆的溪流",
+				"隐秘的小石潭"
+			],
+			"bg_far": "",
+			"bg_floor": "c4_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "溪涧药丛",
+			"eventDes": "在溪涧旁发现了一处生长着稀有药草——金铃草的药草丛，附近似乎有很多危险的魔物。",
+			"eventImg": "ts_4"
+		},
+		"explore4_8": {
+			"level": 32,
+			"quality": 1,
+			"consume": "explore001",
+			"ti": 0,
+			"timeMinute": 120,
+			"mapIcon": "51",
+			"icon": "",
+			"name": "异变蘑菇聚集地",
+			"condition": "",
+			"reward": "explore4_8",
+			"enemys": [
+				"020",
+				"021",
+				"022"
+			],
+			"positions": [
+				"腐化的烂木",
+				"被踏碎的车队",
+				"沉睡的异变蘑菇群"
+			],
+			"bg_far": "",
+			"bg_floor": "c4_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "异变蘑菇聚集地",
+			"eventDes": "发现一处弥漫着诡异气息的树林，有很多异变蘑菇怪聚集在此，虽然危险但也有许多机缘。",
+			"eventImg": "ts_c4_5"
+		},
+		"explore4_9": {
+			"level": 32,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "29",
+			"icon": "",
+			"name": "林中遗迹",
+			"condition": "",
+			"reward": "explore4_9",
+			"enemys": [
+				"031",
+				"032",
+				"033",
+				"020",
+				"021",
+				"022"
+			],
+			"positions": [
+				"铺满碎石的土路",
+				"扎根在石块上的树林",
+				"爬满树根的墙壁",
+				"绿植下的废墟"
+			],
+			"bg_far": "",
+			"bg_floor": "c4_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "林中遗迹",
+			"eventDes": "在深林中发现了一处古代遗址，说不定能找到一些失落技术的记载和材料。",
+			"eventImg": "explore1_11"
+		},
+		"explore4_10": {
+			"level": 32,
+			"quality": 1,
+			"consume": "explore001",
+			"ti": 0,
+			"timeMinute": 120,
+			"mapIcon": "52",
+			"icon": "",
+			"name": "魔花繁衍地",
+			"condition": "",
+			"reward": "explore4_10",
+			"enemys": [
+				"031",
+				"031",
+				"033"
+			],
+			"positions": [
+				"枯死的巨木",
+				"散发恶臭的草地",
+				"魔花的聚集处"
+			],
+			"bg_far": "",
+			"bg_floor": "c4_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "魔花繁衍地",
+			"eventDes": "在一处腐烂森林中发现了许多魔花，这里很有可能是魔花繁衍生息的地方。",
+			"eventImg": "ts_c4_6"
+		},
+		"explore4_11": {
+			"level": 35,
+			"quality": 3,
+			"consume": "explore003",
+			"ti": 0,
+			"timeMinute": 360,
+			"mapIcon": "3",
+			"icon": "",
+			"name": "穿林而过魔物潮",
+			"condition": "",
+			"reward": "explore4_11",
+			"enemys": [
+				"024",
+				"025",
+				"020",
+				"021",
+				"022",
+				"031",
+				"032",
+				"033"
+			],
+			"positions": [
+				"被撕裂的巨木",
+				"充满埋伏的草丛",
+				"进击的魔物群"
+			],
+			"bg_far": "",
+			"bg_floor": "c4_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "穿林而过魔物潮",
+			"eventDes": "发现了数群聚集起来的魔物潮，它们浩浩荡荡地在丛林间穿梭。",
+			"eventImg": "ts_c4_2"
+		},
+		"explore4_12": {
+			"level": 32,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "3",
+			"icon": "",
+			"name": "垂死菌林·浅部",
+			"condition": "",
+			"reward": "explore4_12",
+			"enemys": [
+				"024",
+				"025",
+				"020",
+				"021",
+				"022"
+			],
+			"positions": [
+				"爬满真菌的阶梯",
+				"干枯的巨木群",
+				"阴冷的坟场"
+			],
+			"bg_far": "",
+			"bg_floor": "c4_002_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "垂死菌林·浅部",
+			"eventDes": "在垂死菌林的浅部树林中发现了一片尚未探索的区域。",
+			"eventImg": "ts_c4_1"
+		},
+		"explore4_13": {
+			"level": 35,
+			"quality": 3,
+			"consume": "explore003",
+			"ti": 0,
+			"timeMinute": 360,
+			"mapIcon": "3",
+			"icon": "",
+			"name": "垂死菌林·深部",
+			"condition": "",
+			"reward": "explore4_13",
+			"enemys": [
+				"024",
+				"025",
+				"020",
+				"021",
+				"022"
+			],
+			"positions": [
+				"被踩坏的蘑菇圈",
+				"恶臭弥漫的洼地",
+				"腐烂蕈人的巢穴"
+			],
+			"bg_far": "",
+			"bg_floor": "c4_002_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "垂死菌林·深部",
+			"eventDes": "在垂死菌林的深部树林中发现了一片尚未探索的区域。",
+			"eventImg": "ts_c4_1"
+		},
+		"explore4_14": {
+			"level": 35,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "3",
+			"icon": "",
+			"name": "赫尔那遗迹·浅部",
+			"condition": "",
+			"reward": "explore4_14",
+			"enemys": [
+				"020",
+				"021",
+				"022",
+				"031",
+				"032",
+				"033"
+			],
+			"positions": [
+				"阴暗的碎岩走道",
+				"被巨木堵塞的洞口",
+				"树根组成的通道"
+			],
+			"bg_far": "",
+			"bg_floor": "c4_003_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "赫尔那遗迹·浅部",
+			"eventDes": "在赫尔那遗迹的浅部迷宫中发现了一片尚未探索的区域。",
+			"eventImg": "ts_c4_2"
+		},
+		"explore4_15": {
+			"level": 38,
+			"quality": 3,
+			"consume": "explore003",
+			"ti": 0,
+			"timeMinute": 360,
+			"mapIcon": "3",
+			"icon": "",
+			"name": "赫尔那遗迹·深部",
+			"condition": "",
+			"reward": "explore4_15",
+			"enemys": [
+				"020",
+				"021",
+				"022",
+				"031",
+				"032",
+				"033"
+			],
+			"positions": [
+				"摆满木雕的暗室",
+				"发臭的先时造物",
+				"哀声不止的地牢"
+			],
+			"bg_far": "",
+			"bg_floor": "c4_003_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "赫尔那遗迹·深部",
+			"eventDes": "在赫尔那遗迹的深部迷宫中发现了一片尚未探索的区域。",
+			"eventImg": "ts_c4_2"
+		},
+		
+		"explore4_16": {
+			"level": 32,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "35",
+			"icon": "",
+			"name": "森林中的魔物蛋巢",
+			"condition": "",
+			"reward": "explore4_16",
+			"enemys": [
+				"020",
+				"021",
+				"022"
+			],
+			"positions": [
+				"大树荫下的蛋巢",
+				"藤蔓之中的蛋巢",
+				"树洞之中的蛋巢"
+			],
+			"bg_far": "",
+			"bg_floor": "c4_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "森林中的魔物蛋巢",
+			"eventDes": "在密林之间发现了一处魔物蛋巢，也许能带回几颗未遭异变影响的魔物蛋。",
+			"eventImg": "ts_c4_3"
+		},
+		
+		"explore5_1": {
+			"level": 42,
+			"quality": 1,
+			"consume": "explore001",
+			"ti": 0,
+			"timeMinute": 120,
+			"mapIcon": "32",
+			"icon": "",
+			"name": "雪层下的地穴",
+			"condition": "",
+			"reward": "explore5_1",
+			"enemys": [
+				"085",
+				"086"
+			],
+			"positions": [
+				"凹陷的雪地",
+				"积雪堆积的洞坑",
+				"连绵不绝的铜矿"
+			],
+			"bg_far": "",
+			"bg_floor": "c5_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "雪层下的地穴",
+			"eventDes": "发现一处表面凹凸不平的厚重积雪层。拨开积雪后，可见下方四通八达的洞穴网络，洞内隐约传来魔物的低吼声。",
+			"eventImg": "ts_c5_3"
+		},
+		"explore5_2": {
+			"level": 42,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "34",
+			"icon": "",
+			"name": "火山的残烬",
+			"condition": "",
+			"reward": "explore5_2",
+			"enemys": [
+				"087",
+				"088"
+			],
+			"positions": [
+				"盖满积雪的岩道",
+				"冷谷中的巨石堆",
+				"露天硫磺矿"
+			],
+			"bg_far": "",
+			"bg_floor": "c5_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "火山的残烬",
+			"eventDes": "在一片被积雪覆盖的空地上，发现了火山休眠后遗留的丰富矿物资源。尽管火山已沉寂于寒冬，但此地仍蕴藏着大量稀有矿藏。",
+			"eventImg": "ts_c5_3"
+		},
+		"explore5_3": {
+			"level": 42,
+			"quality": 1,
+			"consume": "explore001",
+			"ti": 0,
+			"timeMinute": 120,
+			"mapIcon": "24",
+			"icon": "",
+			"name": "幽静雪脊",
+			"condition": "",
+			"reward": "explore5_3",
+			"enemys": [
+				"083",
+				"084"
+			],
+			"positions": [
+				"寂静小道",
+				"光滑的雪坡",
+				"山腰上的枯木林",
+				"冰棱妖精聚居地"
+			],
+			"bg_far": "",
+			"bg_floor": "c5_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "幽静雪脊",
+			"eventDes": "一条覆满薄雪的山脊静立于风雪中，灰色山岩从雪层下清晰显露，呈现出冷冽而肃穆的景致。",
+			"eventImg": "ts_c5_3"
+		},
+		"explore5_4": {
+			"level": 42,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "24",
+			"icon": "",
+			"name": "灰火坑洞",
+			"condition": "",
+			"reward": "explore5_4",
+			"enemys": [
+				"085",
+				"086",
+				"087",
+				"088"
+			],
+			"positions": [
+				"含有熔岩的碎石堆",
+				"白雪中的岩地",
+				"岩浆上的石板"
+			],
+			"bg_far": "",
+			"bg_floor": "c5_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "灰火坑洞",
+			"eventDes": "遍布坑洞的山地堆积着经年的火山灰，此地虽盛产珍贵石材，却因强大魔物频繁出没而危机四伏。",
+			"eventImg": "ts_c5_3"
+		},
+		"explore5_5": {
+			"level": 45,
+			"quality": 3,
+			"consume": "explore003",
+			"ti": 0,
+			"timeMinute": 360,
+			"mapIcon": "25",
+			"icon": "",
+			"name": "魔力紊乱的岩脉",
+			"condition": "",
+			"reward": "explore5_5",
+			"enemys": [
+				"085",
+				"086",
+				"087",
+				"088"
+			],
+			"positions": [
+				"摇摇晃晃的石板路",
+				"岩浆外渗的土地",
+				"啃食晶体的魔物群",
+				"魔物汇集的岩浆池"
+			],
+			"bg_far": "",
+			"bg_floor": "c1_004_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "魔力紊乱的岩脉",
+			"eventDes": "灰地中发现一条因魔力外泄而紊乱的岩脉。岩脉表面凝结了大量散发魔力的结晶矿物，但也因此引来众多凶残的魔物聚集。",
+			"eventImg": "ts_1"
+		},
+		"explore5_6": {
+			"level": 42,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "48",
+			"icon": "",
+			"name": "闪烁微光的山谷",
+			"condition": "",
+			"reward": "explore5_6",
+			"enemys": [
+				"083",
+				"084",
+				"085",
+				"086"
+			],
+			"positions": [
+				"光秃秃的枯木林",
+				"狭隘的山谷口",
+				"阳光分割的莲花地"
+			],
+			"bg_far": "",
+			"bg_floor": "c5_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "闪烁微光的山谷",
+			"eventDes": "狭窄的山谷中不时泛起淡蓝色微光。光源可能来自成片生长的冰莲花，亦或是栖息于此的冰棱妖精。",
+			"eventImg": "ts_c5_4"
+		},
+		"explore5_7": {
+			"level": 45,
+			"quality": 3,
+			"consume": "explore003",
+			"ti": 0,
+			"timeMinute": 360,
+			"mapIcon": "38",
+			"icon": "",
+			"name": "绝壁上的洞窟",
+			"condition": "",
+			"reward": "explore5_7",
+			"enemys": [
+				"083",
+				"084",
+				"085",
+				"086"
+			],
+			"positions": [
+				"寒风凛冽的山谷",
+				"无人的废弃营地",
+				"断崖绝壁",
+				"雪洞中的金铃草"
+			],
+			"bg_far": "",
+			"bg_floor": "c5_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "绝壁上的洞窟",
+			"eventDes": "一处高悬于绝壁的隐秘洞窟，周围盘踞着危险魔物，难以抵达。传闻洞窟深处藏有稀世珍宝。",
+			"eventImg": "ts_c5_7"
+		},
+		"explore5_8": {
+			"level": 42,
+			"quality": 1,
+			"consume": "explore001",
+			"ti": 0,
+			"timeMinute": 120,
+			"mapIcon": "49",
+			"icon": "",
+			"name": "四通八达的地穴",
+			"condition": "",
+			"reward": "explore5_8",
+			"enemys": [
+				"085",
+				"086"
+			],
+			"positions": [
+				"被撕烂的枯木林",
+				"未覆盖白雪的洞口",
+				"空间广阔的洞厅",
+				"芙洛波繁衍地"
+			],
+			"bg_far": "",
+			"bg_floor": "c1_004_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "四通八达的地穴",
+			"eventDes": "地穴入口处散落着被啃食的枯木与碎石，弥漫着不安气息。洞穴内部错综复杂，疑似魔物的巢穴。",
+			"eventImg": "ts_c5_5"
+		},
+		"explore5_9": {
+			"level": 42,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "42",
+			"icon": "",
+			"name": "山脚下的雪洞",
+			"condition": "",
+			"reward": "explore5_9",
+			"enemys": [
+				"085",
+				"086",
+				"087",
+				"088"
+			],
+			"positions": [
+				"被雪岩遮蔽的洞口",
+				"一路向下的山洞",
+				"长满钟乳石的地底",
+				"地下河灌溉的水纹花堆"
+			],
+			"bg_far": "",
+			"bg_floor": "c1_004_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "山脚下的雪洞",
+			"eventDes": "山脚处的洞窟蜿蜒通向地底深处。越往深处，寒意愈发刺骨，但地底亦埋藏着丰饶资源。",
+			"eventImg": "ts_c5_7"
+		},
+		"explore5_10": {
+			"level": 42,
+			"quality": 1,
+			"consume": "explore001",
+			"ti": 0,
+			"timeMinute": 120,
+			"mapIcon": "50",
+			"icon": "",
+			"name": "雪壁之下的熔岩池",
+			"condition": "",
+			"reward": "explore5_10",
+			"enemys": [
+				"087",
+				"088"
+			],
+			"positions": [
+				"白雪后的熔岩地",
+				"被岩浆吞没的木林",
+				"弹射火星的岩浆",
+				"熔火元素魔物群"
+			],
+			"bg_far": "",
+			"bg_floor": "c1_004_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "雪壁之下的熔岩池",
+			"eventDes": "炽热岩浆于雪壁环绕的山地中翻涌，此地蕴藏珍贵的熔火资源，却也栖息着大量危险魔物。",
+			"eventImg": "ts_c5_6"
+		},
+		"explore5_11": {
+			"level": 45,
+			"quality": 3,
+			"consume": "explore003",
+			"ti": 0,
+			"timeMinute": 360,
+			"mapIcon": "3",
+			"icon": "",
+			"name": "白雪中的魔物群",
+			"condition": "",
+			"reward": "explore5_11",
+			"enemys": [
+				"087",
+				"088",
+				"089",
+				"085",
+				"086"
+			],
+			"positions": [
+				"融化散型的雪堆",
+				"被烧毁的小村庄",
+				"前行的熔岩大军"
+			],
+			"bg_far": "",
+			"bg_floor": "c5_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "白雪中的魔物群",
+			"eventDes": "一群失控魔物在雪原上开辟出一条熔岩路径，如同抗拒冰雪侵蚀的倔强火种。不过这种行为严重破坏生态平衡，并对周边居民构成威胁。",
+			"eventImg": "ts_c5_2"
+		},
+		"explore5_12": {
+			"level": 42,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "3",
+			"icon": "",
+			"name": "伊菲卡温泉谷·浅部",
+			"condition": "",
+			"reward": "explore5_12",
+			"enemys": [
+				"083",
+				"084",
+				"085",
+				"086"
+			],
+			"positions": [
+				"散发暖气的温泉池",
+				"覆盖白雪的冷杉林",
+				"刺鼻味环绕的山谷"
+			],
+			"bg_far": "",
+			"bg_floor": "c5_002_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "伊菲卡温泉谷·浅部",
+			"eventDes": "在伊菲卡温泉谷的浅部山谷中发现了一片尚未探索的区域。",
+			"eventImg": "ts_c5_1"
+		},
+		"explore5_13": {
+			"level": 45,
+			"quality": 3,
+			"consume": "explore003",
+			"ti": 0,
+			"timeMinute": 360,
+			"mapIcon": "3",
+			"icon": "",
+			"name": "伊菲卡温泉谷·深部",
+			"condition": "",
+			"reward": "explore5_13",
+			"enemys": [
+				"083",
+				"084",
+				"085",
+				"086"
+			],
+			"positions": [
+				"雪地中的鲜花丛",
+				"潜伏雪中的魔物群",
+				"被拆毁的帐篷堆",
+				"冰棱妖精的巢穴"
+			],
+			"bg_far": "",
+			"bg_floor": "c5_002_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "伊菲卡温泉谷·深部",
+			"eventDes": "在伊菲卡温泉谷的浅部山谷中发现了一片尚未探索的区域。",
+			"eventImg": "ts_c5_1"
+		},
+		"explore5_14": {
+			"level": 45,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "3",
+			"icon": "",
+			"name": "哈玛塔坎遗迹·浅部",
+			"condition": "",
+			"reward": "explore5_14",
+			"enemys": [
+				"087",
+				"088",
+				"089",
+				"085",
+				"086"
+			],
+			"positions": [
+				"火山下的小道",
+				"碎石堆砌的大门",
+				"闷热的熔岩小道",
+				"破碎的熔岩雕像群"
+			],
+			"bg_far": "",
+			"bg_floor": "c5_003_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "哈玛塔坎遗迹·浅部",
+			"eventDes": "在哈玛塔坎遗迹的深部迷宫中发现了一片尚未探索的区域。",
+			"eventImg": "ts_c5_2"
+		},
+		"explore5_15": {
+			"level": 48,
+			"quality": 3,
+			"consume": "explore003",
+			"ti": 0,
+			"timeMinute": 360,
+			"mapIcon": "3",
+			"icon": "",
+			"name": "哈玛塔坎遗迹·深部",
+			"condition": "",
+			"reward": "explore5_15",
+			"enemys": [
+				"087",
+				"088",
+				"089",
+				"085",
+				"086"
+			],
+			"positions": [
+				"滚烫的岩浆池",
+				"摆满先时造物的密室",
+				"熔火元素栖息地",
+				"怒火狂涛的岩浆河"
+			],
+			"bg_far": "",
+			"bg_floor": "c5_003_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "哈玛塔坎遗迹·深部",
+			"eventDes": "在哈玛塔坎遗迹的深部迷宫中发现了一片尚未探索的区域。",
+			"eventImg": "ts_c5_2"
+		},
+		"explore5_16": {
+			"level": 42,
+			"quality": 2,
+			"consume": "explore002",
+			"ti": 0,
+			"timeMinute": 240,
+			"mapIcon": "34",
+			"icon": "",
+			"name": "雪原中的魔物蛋巢",
+			"condition": "",
+			"reward": "explore5_16",
+			"enemys": [
+				"083",
+				"084",
+				"085",
+				"086",
+				"087",
+				"088"
+			],
+			"positions": [
+				"雪堆之中的蛋巢",
+				"冰棱守护着的蛋巢",
+				"火山灰覆盖着的蛋巢"
+			],
+			"bg_far": "",
+			"bg_floor": "c5_001_1",
+			"bg_near": "",
+			"maxNum": 1,
+			"eventName": "雪原中的魔物蛋巢",
+			"eventDes": "在皑皑白雪之中发现了一处魔物蛋巢，也许能带回几颗未遭异变影响的魔物蛋。",
+			"eventImg": "ts_c5_3"
+		}
+	}
+}

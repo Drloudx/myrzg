@@ -1,28 +1,31 @@
 <template>
-  <Teleport to="body">
-    <Transition name="modal-fade">
-      <div v-if="visible" class="modal-overlay" @click.self="handleClose">
-        <div class="modal-window" :style="{ maxWidth: maxWidth }">
-          <div class="modal-header">
-            <slot name="header">
-              <h3 class="modal-title">{{ title }}</h3>
-            </slot>
-            <button class="modal-close-btn" @click="handleClose" title="关闭">✕</button>
-          </div>
-          <div class="modal-body">
-            <slot></slot>
-          </div>
-          <div v-if="$slots.footer" class="modal-footer">
-            <slot name="footer"></slot>
-          </div>
-        </div>
-      </div>
-    </Transition>
-  </Teleport>
+  <UiModal
+    :visible="visible"
+    :title="title"
+    :max-width="maxWidth"
+    @update:visible="emit('close')"
+    @close="emit('close')"
+  >
+    <template #header>
+      <slot name="header">
+        <h3 class="base-modal-title">{{ title }}</h3>
+      </slot>
+    </template>
+    <slot></slot>
+    <template #footer>
+      <slot name="footer"></slot>
+    </template>
+  </UiModal>
 </template>
 
 <script setup>
-const props = defineProps({
+/**
+ * BaseModal —— 兼容旧接口的弹窗外壳（内部统一走组件库 UiModal）
+ * 保留 visible / title / maxWidth / close 事件，业务组件无需改动即可获得羊皮纸外观。
+ */
+import { UiModal } from './ui/index.js'
+
+defineProps({
   visible: {
     type: Boolean,
     default: false
@@ -38,20 +41,13 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['close'])
-
-const handleClose = () => {
-  emit('close')
-}
 </script>
 
 <style scoped>
-.modal-fade-enter-active,
-.modal-fade-leave-active {
-  transition: opacity 0.25s ease;
-}
-
-.modal-fade-enter-from,
-.modal-fade-leave-to {
-  opacity: 0;
+.base-modal-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: inherit;
 }
 </style>

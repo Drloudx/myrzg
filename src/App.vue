@@ -1,52 +1,26 @@
 <template>
   <div class="app-container" :class="{ 'dark-theme': isDarkMode }">
-    <!-- Top Fixed Header -->
+    <!-- 顶部木质导航条 -->
     <header class="app-header">
       <div class="header-content">
         <div class="header-top-row">
           <div class="header-left">
             <img src="/ui/logo.png" class="app-logo" alt="深渊之歌" />
-            <h1 class="header-title">{{ pageTitle }}</h1>
-          </div>
-
-          <!-- Desktop Global Search Bar -->
-          <div class="global-search-container desktop-search">
-            <div class="global-search-box">
-              <img src="/ui/search.svg" class="search-icon-img" alt="搜索" />
-              <input
-                type="text"
-                v-model="globalQuery"
-                @focus="handleSearchFocus"
-                placeholder="全局搜索..."
-                class="global-search-input"
-              />
-              <button v-if="globalQuery" class="clear-btn" @click="globalQuery = ''">✕</button>
-            </div>
-
-            <!-- Quick Dropdown Results -->
-            <div v-if="isSearchOpen && globalQuery.trim()" class="global-search-dropdown">
-              <div v-if="filteredSearchIndex.length === 0" class="search-empty">
-                未找到“{{ globalQuery }}”的相关结果
-              </div>
-              <div v-else class="search-result-list">
-                <div
-                  v-for="item in filteredSearchIndex.slice(0, 15)"
-                  :key="`${item.type}-${item.id}`"
-                  class="search-result-item"
-                  @click="handleSelectSearchResult(item)"
-                >
-                  <span class="item-type-badge" :class="item.type">
-                    {{ item.type === 'role' ? '角色' : (item.type === 'equip' ? '装备' : (item.type === 'achievement' ? '成就' : (item.type === 'recipe' ? '料理' : (item.type === 'item' ? '物品' : (item.type === 'pet' ? '魔物蛋' : (item.type === 'monster' ? '怪物' : '未知')))))) }}
-                  </span>
-                  <span class="item-name" :class="`quality-text-${item.quality}`">{{ item.name }}</span>
-                  <div class="item-tags-flex" v-if="item.categoryTags && item.categoryTags.length">
-                    <span v-for="tag in item.categoryTags" :key="tag" class="category-tag-pill">{{ tag }}</span>
-                  </div>
-                  <span v-else class="item-tag">{{ item.type === 'pet' ? '魔物蛋' : (item.type === 'achievement' ? item.category : `${item.category} · ${item.subTag}`) }}</span>
-                </div>
-              </div>
+            <div class="header-title-wrap">
+              <h1 class="header-title">{{ pageTitle }}</h1>
+              <span class="header-brand">深渊之歌 · 资料库</span>
             </div>
           </div>
+
+          <!-- 桌面端全局搜索 -->
+          <GlobalSearchBox
+            container-class="desktop-search"
+            v-model="globalQuery"
+            :is-search-open="isSearchOpen"
+            :results="filteredSearchIndex"
+            @focus="handleSearchFocus"
+            @select="handleSelectSearchResult"
+          />
 
           <div class="header-right">
             <button class="icon-btn" @click="toggleDarkMode" :title="isDarkMode ? '切换浅色模式' : '切换暗色模式'">
@@ -65,7 +39,7 @@
               <!-- 点击外部关闭的透明遮罩 -->
               <div v-if="isSettingsOpen" class="settings-mask" @click.stop="isSettingsOpen = false"></div>
 
-              <div v-if="isSettingsOpen" class="settings-dropdown">
+              <div v-if="isSettingsOpen" class="settings-dropdown paper-panel">
                 <div class="dropdown-item" :class="{ 'mobile-only': !isNative }" @click="showMenuModeModal = true; isSettingsOpen = false">
                   <img :src="getImageUrl('/ui/menu.svg')" class="item-icon" />
                   <span>切换菜单模式</span>
@@ -74,10 +48,6 @@
                   <img :src="getImageUrl('/ui/announcement.svg')" class="item-icon" />
                   <span>公告</span>
                 </div>
-<!--                 <div class="dropdown-item" v-if="isNative" @click="showVersionCheckModal = true; isSettingsOpen = false">-->
-<!--                  <img :src="getImageUrl('/ui/update.svg')" class="item-icon" />-->
-<!--                  <span>版本检查</span>-->
-<!--                </div>-->
                 <div class="dropdown-item" @click="showVersionCheckModal = true; isSettingsOpen = false">
                   <img :src="getImageUrl('/ui/update.svg')" class="item-icon" />
                   <span>版本检查</span>
@@ -99,58 +69,29 @@
           </div>
         </div>
 
-        <!-- Mobile Search Row (Only Shown on Mobile < 768px) -->
+        <!-- 移动端搜索行 -->
         <div class="mobile-search-row">
-          <div class="global-search-container mobile-search">
-            <div class="global-search-box">
-              <img src="/ui/search.svg" class="search-icon-img" alt="搜索" />
-              <input
-                type="text"
-                v-model="globalQuery"
-                @focus="handleSearchFocus"
-                placeholder="全局搜索..."
-                class="global-search-input"
-              />
-              <button v-if="globalQuery" class="clear-btn" @click="globalQuery = ''">✕</button>
-            </div>
-
-            <!-- Quick Dropdown Results -->
-            <div v-if="isSearchOpen && globalQuery.trim()" class="global-search-dropdown">
-              <div v-if="filteredSearchIndex.length === 0" class="search-empty">
-                未找到“{{ globalQuery }}”的相关结果
-              </div>
-              <div v-else class="search-result-list">
-                <div
-                  v-for="item in filteredSearchIndex.slice(0, 15)"
-                  :key="`${item.type}-${item.id}`"
-                  class="search-result-item"
-                  @click="handleSelectSearchResult(item)"
-                >
-                  <span class="item-type-badge" :class="item.type">
-                    {{ item.type === 'role' ? '角色' : (item.type === 'equip' ? '装备' : (item.type === 'achievement' ? '成就' : (item.type === 'recipe' ? '料理' : (item.type === 'item' ? '物品' : (item.type === 'pet' ? '魔物蛋' : (item.type === 'monster' ? '怪物' : '未知')))))) }}
-                  </span>
-                  <span class="item-name" :class="`quality-text-${item.quality}`">{{ item.name }}</span>
-                  <div class="item-tags-flex" v-if="item.categoryTags && item.categoryTags.length">
-                    <span v-for="tag in item.categoryTags" :key="tag" class="category-tag-pill">{{ tag }}</span>
-                  </div>
-                  <span v-else class="item-tag">{{ item.type === 'pet' ? '魔物蛋' : (item.type === 'achievement' ? item.category : `${item.category} · ${item.subTag}`) }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <GlobalSearchBox
+            container-class="mobile-search"
+            v-model="globalQuery"
+            :is-search-open="isSearchOpen"
+            :results="filteredSearchIndex"
+            @focus="handleSearchFocus"
+            @select="handleSelectSearchResult"
+          />
         </div>
       </div>
     </header>
 
-    <!-- Main Router View Area -->
+    <!-- 主区域 -->
     <div class="main-layout-row">
-      <!-- 电脑端侧边栏 (原版组件，仅在宽屏显示) -->
+      <!-- 电脑端左侧导航 -->
       <div v-if="!isNative" class="desktop-sidebar-container desktop-only">
         <NavigationMenu :is-desktop="true" menu-mode="side" />
       </div>
 
       <main class="app-main" @click="isSearchOpen = false">
-        <!-- Global Item Detail Modal -->
+        <!-- 全局物品详情弹窗 -->
         <ItemDetailModal 
           v-model:visible="itemModalState.visible" 
           :item="itemModalState.item"
@@ -159,11 +100,40 @@
         <router-view />
       </main>
 
-      <!-- 右侧空白占位，保证 app-main 完美居中 -->
-      <div v-if="!isNative" class="desktop-right-spacer desktop-only"></div>
+      <!-- 右侧页面信息面板（模板 infobox 风格）：放页面标题 + 概况 + 备注区 -->
+      <div v-if="!isNative" class="desktop-right-container desktop-only">
+        <aside class="page-info-panel paper-panel corner-nails">
+          <div class="info-title-bar">
+            <span class="info-title-text">{{ pageTitle }}</span>
+          </div>
+          <div class="info-cover-image"></div>
+          <div class="info-body">
+            <div class="info-meta-rows">
+              <div class="info-row">
+                <span class="info-label">当前模块</span>
+                <span class="info-value">{{ pageTitle }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">网站版本</span>
+                <span class="info-value">v1.0.0</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">游戏版本</span>
+                <span class="info-value">v1.0.0</span>
+              </div>
+            </div>
+            <div class="info-section">
+              <h3 class="info-section-title">备注与说明</h3>
+              <p class="info-note">
+                点击卡片可查看详细属性、词条与来源关系。
+              </p>
+            </div>
+          </div>
+        </aside>
+      </div>
     </div>
 
-    <!-- Navigation (FAB Button) -->
+    <!-- 移动端导航悬浮按钮 -->
     <div class="nav-fab-btn" :class="{ 'mobile-only': !isNative }" @click.stop="isNavOpen = !isNavOpen" title="功能导航">
       <span></span>
       <span></span>
@@ -173,7 +143,7 @@
     <!-- 侧边导航栏 -->
     <NavigationMenu :class="{ 'mobile-only': !isNative }" :is-open="isNavOpen" :menu-mode="menuMode" @close="isNavOpen = false" />
       
-    <!-- Hot Update Modal -->
+    <!-- 全局弹窗 -->
     <UpdateModal ref="updateModalRef" />
     <MenuModeModal v-model="showMenuModeModal" v-model:mode="menuMode" />
     <NoticeModal v-model="showNoticeModal" />
@@ -185,7 +155,7 @@
       :title="messageTitle" 
       @close="onMessageModalClose(false)"
     >
-      <div class="message-content" style="text-align: center; padding: 10px 0; font-size: 14px; color: var(--text-main);">
+      <div class="message-content">
         {{ messageText }}
       </div>
       <template #footer>
@@ -210,6 +180,7 @@ import { Capacitor } from '@capacitor/core'
 import { App as CapApp } from '@capacitor/app'
 import { StatusBar, Style } from '@capacitor/status-bar'
 import NavigationMenu from './components/NavigationMenu.vue'
+import GlobalSearchBox from './components/GlobalSearchBox.vue'
 import UpdateModal from './components/UpdateModal.vue'
 import MenuModeModal from './components/MenuModeModal.vue'
 import NoticeModal from './components/NoticeModal.vue'
@@ -229,12 +200,26 @@ import { getImageUrl, isNative } from './utils/env.js'
 const route = useRoute()
 const router = useRouter()
 
-const currentRoute = computed(() => route.path)
-const handleNavigate = (path) => {
-  if (currentRoute.value !== path) {
-    router.push(path)
-  }
+const PAGE_TITLES = {
+  '/items': '物品图鉴',
+  '/equip': '装备图鉴',
+  '/heroes': '角色图鉴',
+  '/pets': '魔物图鉴',
+  '/monsters': '怪物图鉴',
+  '/recipes': '料理图鉴',
+  '/rewards': '魔物收益',
+  '/achievement': '成就查询',
+  '/tasks': '任务图鉴',
+  '/events': '事件图鉴',
+  '/exchange': '兑换图鉴',
+  '/petseggs': '魔物蛋图鉴',
+  '/dungeons': '副本图鉴',
+  '/other': '其他'
 }
+
+const pageTitle = computed(() => {
+  return PAGE_TITLES[route.path] || route.meta?.title || '资源库'
+})
 
 const isNavOpen = ref(false)
 const isDarkMode = ref(false)
@@ -360,25 +345,10 @@ const handleRequestUpdate = (info) => {
 
 const isIndexLoaded = ref(false)
 
-const pageTitle = computed(() => {
-  if (route.path === '/equip') return '装备图鉴'
-  if (route.path === '/petseggs') return '魔物收益'
-  if (route.path === '/achievement') return '成就查询'
-  if (route.path === '/recipes') return '菜谱查询'
-  if (route.path === '/items') return '物品图鉴'
-  if (route.path === '/monsters') return '怪物图鉴'
-  if (route.path === '/rewards') return '奖励'
-
-
-
-
-  return '未知页面'
-})
-
 const fetchSearchIndex = async () => {
   if (isIndexLoaded.value) return
   try {
-    const res = await fetchWithFallback('data/search-index.json')
+    const res = await fetchWithFallback('data/parsed/search-index.json')
     searchIndex.value = res
     isIndexLoaded.value = true
   } catch (err) {
@@ -394,12 +364,14 @@ const handleSearchFocus = () => {
 const filteredSearchIndex = computed(() => {
   if (!globalQuery.value.trim()) return []
   const q = globalQuery.value.trim().toLowerCase()
-  const validTypes = ['recipe', 'achievement', 'pet', 'item', 'role', 'equip', 'monster']
+  const qParts = q.split(/\s+/).filter(Boolean)
+  const validTypes = ['recipe', 'achievement', 'pet', 'pet_egg', 'item', 'role', 'equip', 'monster', 'task', 'event', 'explore', 'exchange', 'hidden']
   const results = searchIndex.value.filter(item => 
     validTypes.includes(item.type) && 
     !isBlacklisted(item) && 
     item.keywords && 
-    item.keywords.includes(q)
+    // 多词查询：每个词都需命中（AND），解决「辛普拉 长子」这类带空格查询失败的问题
+    qParts.every(part => item.keywords.includes(part))
   )
 
   // Sort results to prioritize exact matches and prefix matches
@@ -440,11 +412,46 @@ const handleSelectSearchResult = async (item) => {
       return
     }
 
+    if (item.type === 'equip') {
+      // If it's an equipment, redirect to /equip and open detail modal
+      router.push({ path: '/equip', query: { itemId: item.id } })
+      globalQuery.value = ''
+      return
+    }
+
+    if (item.type === 'task') {
+      router.push({ path: '/tasks', query: { task: item.id } })
+      globalQuery.value = ''
+      return
+    }
+    if (item.type === 'event') {
+      router.push({ path: '/events', query: { event: item.id } })
+      globalQuery.value = ''
+      return
+    }
+    if (item.type === 'explore') {
+      router.push({ path: '/events', query: { tab: 'explore', explore: item.id } })
+      globalQuery.value = ''
+      return
+    }
+    if (item.type === 'exchange') {
+      router.push({ path: '/exchange' })
+      globalQuery.value = ''
+      return
+    }
+    if (item.type === 'hidden') {
+      router.push({ path: '/rewards' })
+      globalQuery.value = ''
+      return
+    }
+
     let targetPath = '/'
-    if (item.type === 'pet') targetPath = '/petseggs'
+    if (item.type === 'pet') targetPath = '/pets'
+    else if (item.type === 'pet_egg') targetPath = '/petseggs'
     else if (item.type === 'achievement') targetPath = '/achievement'
     else if (item.type === 'recipe') targetPath = '/recipes'
     else if (item.type === 'monster') targetPath = '/monsters'
+    else if (item.type === 'role') targetPath = '/heroes'
     
     router.push({
       path: targetPath,
@@ -531,141 +538,7 @@ watch(() => route.query.itemId, async (newId) => {
 </script>
 
 <style scoped>
-/* 顶部设置与下拉菜单 */
-.settings-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.settings-mask {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-}
-
-.settings-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: 8px;
-  width: 160px;
-  z-index: 1001;
-  background: var(--bg-color, #ffffff);
-  border-radius: 12px;
-  border: 1px solid var(--border-color, #e0e0e0);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  animation: slideDown 0.2s ease-out;
-  overflow: hidden;
-}
-
-.dark-mode .settings-dropdown {
-  background: #1e1e1e;
-  border-color: #333;
-}
-
-.dropdown-item {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 12px 16px;
-  cursor: pointer;
-  color: var(--text-color, #333);
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-.dark-mode .dropdown-item {
-  color: #fff;
-}
-
-.dropdown-item:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-
-.dark-mode .dropdown-item:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.dropdown-item .item-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
-  margin-left: 0;
-  filter: var(--icon-filter, none);
-}
-
-.setting-icon-img {
-  width: 20px;
-  height: 20px;
-  filter: var(--icon-filter, none);
-  transition: transform 0.2s;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.nav-fab-btn {
-  position: fixed;
-  right: 20px;
-  bottom: calc(80px + var(--safe-bottom));
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  background: var(--bg-color, rgba(255, 255, 255, 0.85));
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  z-index: 990;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  -webkit-tap-highlight-color: transparent;
-  box-shadow: 0 4px 16px #00000026;
-}
-
-.dark-mode .nav-fab-btn {
-  background: var(--card-bg, #ffffff);
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-.nav-fab-btn span {
-  display: block;
-  width: 18px;
-  height: 2px;
-  background-color: var(--text-color, #333);
-  border-radius: 2px;
-  transition: all 0.2s;
-}
-
-.dark-mode .nav-fab-btn span {
-  background-color: #fff;
-}
-
-.nav-fab-btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-}
-
-.nav-fab-btn:active {
-  transform: translateY(-2px);
-  filter: brightness(0.9);
-}
-
+/* ====== 顶部木质导航条（模板 header 风格） ====== */
 .app-container {
   display: flex;
   flex-direction: column;
@@ -673,66 +546,84 @@ watch(() => route.query.itemId, async (newId) => {
   height: 100dvh;
   width: 100%;
   overflow: hidden;
-  background-color: var(--bg);
+  background-color: transparent;
   color: var(--text-main);
 }
 
 .app-header {
   flex-shrink: 0;
-  background: var(--card-bg);
-  border-bottom: 1px solid var(--border-color);
+  background-color: var(--wood, #2b1f15);
   z-index: 10000;
   padding-top: var(--safe-top);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  border-bottom: 3px solid var(--accent-bright, #7a9a99);
 }
 
 .header-content {
   display: flex;
   flex-direction: column;
-  padding: 0 16px;
-  max-width: 800px;
+  padding: 0 20px;
+  max-width: 1400px;
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
 }
 
 .header-top-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr) 300px;
+  gap: 20px;
   align-items: center;
-  justify-content: space-between;
-  height: var(--header-height);
-  gap: 12px;
+  height: var(--header-height, 60px);
+  width: 100%;
 }
 
 .header-left {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex-shrink: 0;
+  min-width: 0;
+  width: 100%;
 }
 
 .app-logo {
-  height: 42px;
+  height: 40px;
   width: auto;
   object-fit: contain;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
+}
+
+.header-title-wrap {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  min-width: 0;
 }
 
 .header-title {
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 17px;
+  font-weight: 700;
   margin: 0;
-  color: var(--text-main);
+  color: var(--paper, #dfceb3);
+  letter-spacing: 2px;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
 }
 
-.global-search-container {
-  position: relative;
+.header-brand {
+  font-size: 11px;
+  color: rgba(223, 206, 179, 0.65);
+  letter-spacing: 3px;
 }
 
 .desktop-search {
   display: flex;
-  flex: 1;
-  max-width: 420px;
-  margin: 0 16px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
 }
 
 .mobile-search-row {
@@ -740,7 +631,56 @@ watch(() => route.query.itemId, async (newId) => {
   padding-bottom: 10px;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
+  .header-content {
+    padding: 0 12px;
+  }
+  .header-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    height: 52px;
+  }
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+  }
+  .app-logo {
+    height: 32px;
+    flex-shrink: 0;
+  }
+  .header-title-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    min-width: 0;
+  }
+  .header-title {
+    font-size: 15px;
+    line-height: 1.15;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .header-brand {
+    font-size: 10.5px;
+    line-height: 1.2;
+    white-space: nowrap;
+    letter-spacing: 1px;
+    opacity: 0.8;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 1px;
+  }
+  .header-right {
+    width: auto;
+    flex-shrink: 0;
+    gap: 6px;
+  }
   .desktop-search {
     display: none;
   }
@@ -749,245 +689,329 @@ watch(() => route.query.itemId, async (newId) => {
   }
 }
 
-.global-search-box {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
-.search-icon-img {
-  position: absolute;
-  left: 12px;
-  width: 18px;
-  height: 18px;
-  filter: var(--icon-filter);
-  pointer-events: none;
-  flex-shrink: 0;
-}
-
-.global-search-input {
-  width: 100%;
-  height: 36px;
-  padding: 6px 32px 6px 40px;
-  border: 1px solid var(--input-border);
-  border-radius: 20px;
-  font-size: 13px;
-  background: var(--input-bg);
-  color: var(--input-text);
-  box-sizing: border-box;
-  transition: all 0.2s ease;
-}
-
-.global-search-input:focus {
-  outline: none;
-  border-color: var(--input-border-focus);
-  background: var(--card-bg);
-}
-
-.clear-btn {
-  position: absolute;
-  right: 10px;
-  background: transparent;
-  border: none;
-  color: var(--text-sub);
-  cursor: pointer;
-  font-size: 12px;
-  padding: 4px;
-}
-
-.global-search-dropdown {
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 0;
-  right: 0;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  z-index: 9000;
-  max-height: 320px;
-  overflow-y: auto;
-}
-
-.search-empty {
-  padding: 14px;
-  text-align: center;
-  font-size: 13px;
-  color: var(--text-sub);
-}
-
-.search-result-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.search-result-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  cursor: pointer;
-/* border-bottom: 1px solid var(--border-color); */
-  transition: background-color 0.15s ease;
-}
-
-.search-result-item:last-child {
-  border-bottom: none;
-}
-
-.search-result-item:hover {
-  background: var(--hover-bg);
-}
-
-.item-type-badge {
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 10px;
-  font-weight: 700;
-  background: rgba(156, 163, 175, 0.12);
-  color: #6b7280;
-}
-
-.item-type-badge.role {
-  background: rgba(59, 130, 246, 0.12);
-  color: var(--primary);
-}
-
-.item-type-badge.equip {
-  background: rgba(147, 51, 234, 0.12);
-  color: #9333ea;
-}
-
-.item-type-badge.item {
-  background: rgba(99, 102, 241, 0.12);
-  color: #6366f1;
-}
-
-.item-type-badge.pet {
-  background: rgba(217, 119, 6, 0.12);
-  color: #d97706;
-}
-
-.item-type-badge.achievement {
-  background: rgba(16, 185, 129, 0.12);
-  color: #10b981;
-}
-
-.item-type-badge.recipe {
-  background: rgba(245, 158, 11, 0.12);
-  color: #f59e0b;
-}
-
-.item-type-badge.monster {
-  background: rgba(239, 68, 68, 0.12);
-  color: #ef4444;
-}
-
-.item-name {
-  font-size: 14px;
-  font-weight: 700;
-  flex: 1;
-}
-
-.item-tag {
-  font-size: 11px;
-  color: var(--text-sub);
-}
-
-.item-tags-flex {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.category-tag-pill {
-  color: var(--primary);
-  background: #3b82f614;
-  border: 1px solid #3b82f62e;
-  border-radius: 4px;
-  padding: 3px 10px;
-  font-size: 11px;
-  font-weight: 700;
-  box-shadow: 0 1px 2px #00000005;
-  white-space: nowrap;
-}
-
-.app-main {
-  flex: 0 1 800px;
-  width: 100%;
-  max-width: 800px;
-  overflow: hidden;
-  position: relative;
-}
-
-/* 桌面端/移动端显示控制 (仅用于 Web 端的响应式降级) */
-@media (min-width: 769px) {
-  .mobile-only {
-    display: none !important;
-  }
-}
-@media (max-width: 768px) {
-  .desktop-only {
-    display: none !important;
-  }
-}
-
-/* 整体排版行 (3列布局保证中间内容完美居中) */
-.main-layout-row {
-  display: flex;
-  flex: 1;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-}
-
-/* 桌面端左侧容器 */
-.desktop-sidebar-container {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end; /* 使侧边栏贴靠在中间内容的左侧 */
-  padding-right: 0px;
-  overflow-y: auto;
-}
-
-/* 桌面端右侧空白占位 */
-.desktop-right-spacer {
-  flex: 1;
-}
-
 .header-right {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 8px;
-  flex-shrink: 0;
+  width: auto;
 }
 
 .icon-btn {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  font-size: 16px;
-  color: var(--text-main);
+  background: rgba(70, 52, 36, 0.85);
+  border: 1px solid rgba(143, 115, 81, 0.65);
+  color: var(--paper, #dfceb3);
   cursor: pointer;
   width: 36px;
   height: 36px;
-  border-radius: 10px;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  box-shadow: inset 0 1px 0 rgba(223, 206, 179, 0.15), 0 2px 4px rgba(0, 0, 0, 0.3);
 }
-
 .icon-btn:hover {
-  background: var(--hover-bg);
-  border-color: var(--primary);
+  background: rgba(85, 117, 116, 0.5);
+  border-color: var(--accent-bright, #7a9a99);
 }
 
-.theme-icon-img {
-  width: 20px;
-  height: 20px;
+.theme-icon-img,
+.setting-icon-img {
+  width: 19px;
+  height: 19px;
   object-fit: contain;
-  filter: var(--icon-filter);
+  filter: brightness(0) saturate(100%) invert(88%) sepia(16%) saturate(380%) hue-rotate(345deg) brightness(96%) contrast(88%);
+  opacity: 0.95;
+  transition: opacity 0.2s ease;
+}
+.icon-btn:hover .theme-icon-img,
+.icon-btn:hover .setting-icon-img {
+  opacity: 1;
+  filter: brightness(0) saturate(100%) invert(95%) sepia(12%) saturate(300%) hue-rotate(345deg) brightness(102%) contrast(92%);
+}
+
+/* ====== 设置下拉菜单（羊皮纸面板） ====== */
+.settings-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.settings-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+.settings-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 176px;
+  z-index: 1001;
+  padding: 6px;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
+  animation: dropdownIn 0.2s ease-out;
+}
+@keyframes dropdownIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 10px;
+  cursor: pointer;
+  color: var(--text-main, #3e2a14);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 3px;
+  border-bottom: 1px dashed var(--border-faint, rgba(143, 115, 81, 0.25));
+  transition: all 0.15s ease;
+}
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+.dropdown-item:hover {
+  background-color: var(--hover-bg, rgba(85, 117, 116, 0.14));
+  color: var(--accent-ink, #557574);
+}
+.dropdown-item .item-icon {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  filter: var(--icon-filter, invert(1));
+}
+
+/* ====== 移动端悬浮导航按钮（木质） ====== */
+.nav-fab-btn {
+  position: fixed;
+  right: 20px;
+  bottom: calc(80px + var(--safe-bottom));
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--wood-soft, #463424), var(--wood, #2b1f15));
+  border: 2px solid var(--border-color, #8f7351);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(223, 206, 179, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  z-index: 4000;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-fab-btn span {
+  display: block;
+  width: 19px;
+  height: 2px;
+  background-color: var(--paper, #dfceb3);
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+.nav-fab-btn:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-bright, #7a9a99);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+.nav-fab-btn:active {
+  transform: translateY(-2px);
+  filter: brightness(0.9);
+}
+
+/* ====== 主区域布局（三列等高 grid，严格与 ui模板.html 对齐：左 250 / 中 1fr / 右 300，间距 20px，顶部留白 30px） ====== */
+.app-main {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 1025px) {
+  .mobile-only {
+    display: none !important;
+  }
+  .desktop-only {
+    display: block;
+  }
+}
+@media (max-width: 1024px) {
+  .desktop-only,
+  .desktop-sidebar-container,
+  .desktop-right-container {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+}
+
+.main-layout-row {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr) 300px;
+  gap: 20px;
+  flex: 1;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 30px 20px 20px 20px;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  min-height: 0;
+}
+
+.desktop-sidebar-container {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.desktop-right-container {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 移动端/平板端：彻底隐藏左右侧边栏与右侧信息区，中间主视图全屏铺满 */
+@media (max-width: 1024px) {
+  .main-layout-row {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: 100% !important;
+    flex: 1 !important;
+    min-height: 0 !important;
+    min-width: 0 !important;
+    padding: 8px 8px calc(8px + var(--safe-bottom, 0px)) 8px !important;
+    margin: 0 !important;
+    gap: 0 !important;
+    overflow: hidden !important;
+  }
+  .app-main {
+    width: 100% !important;
+    height: 100% !important;
+    flex: 1 !important;
+    min-height: 0 !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+}
+
+/* 右侧页面信息面板（模板 .infobox 风格）：与左侧导航栏等高（height: 100%） */
+.page-info-panel {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.info-title-bar {
+  background-color: var(--border-color, #8f7351);
+  color: var(--paper, #dfceb3);
+  text-align: center;
+  padding: 10px 14px;
+  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 2px;
+  border-bottom: 2px solid #5c4327;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+.info-title-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+.info-cover-image {
+  width: 100%;
+  height: 110px;
+  background-image: url('/ui/map_w1_bg.png');
+  background-position: center;
+  background-size: cover;
+  border-bottom: 1px solid var(--border-color, #8f7351);
+}
+.info-body {
+  padding: 14px 16px;
+  flex: 1;
+  overflow-y: auto;
+}
+.info-meta-rows {
+  margin-bottom: 14px;
+}
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--border-soft, rgba(143, 115, 81, 0.45));
+  font-size: 13px;
+}
+.info-row:last-child {
+  border-bottom: none;
+}
+.info-label {
+  font-weight: 700;
+  color: var(--text-muted, #6b5134);
+}
+.info-value {
+  color: var(--text-main, #3e2a14);
+  font-weight: 600;
+}
+.info-section {
+  margin-top: 4px;
+}
+.info-section-title {
+  margin: 8px 0 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted, #6b5134);
+  border-bottom: 1px solid var(--border-color, #8f7351);
+  padding-bottom: 5px;
+  letter-spacing: 1px;
+}
+.info-note {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--text-muted, #6b5134);
+  line-height: 1.65;
+}
+
+/* 全局消息弹窗文本 */
+.message-content {
+  text-align: center;
+  padding: 10px 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-main);
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 </style>

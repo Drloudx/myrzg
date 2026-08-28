@@ -1,4 +1,4 @@
-import { getResourceBaseUrl, CLOUD_URL } from './env';
+import { getResourceBaseUrl, CLOUD_URL } from './env.js';
 
 /**
  * 智能资源获取器
@@ -10,9 +10,11 @@ export async function fetchWithFallback(relativePath) {
   const targetUrl = baseUrl ? `${baseUrl}/${relativePath}` : relativePath;
 
   try {
-    // 强制加入时间戳防止缓存（仅限 JSON 数据）
+    // 生产环境不再加时间戳：静态数据走 CDN/浏览器 HTTP 缓存，重复访问不重复下载；
+    // 仅本地 dev 保留时间戳，避免开发时缓存旧数据。
     const isData = relativePath.endsWith('.json');
-    const urlWithQuery = isData ? `${targetUrl}?t=${Date.now()}` : targetUrl;
+    const isDev = typeof import.meta !== 'undefined' && !!import.meta.env && !!import.meta.env.DEV;
+    const urlWithQuery = isData && isDev ? `${targetUrl}?t=${Date.now()}` : targetUrl;
     
     const response = await fetch(urlWithQuery);
     if (!response.ok) {

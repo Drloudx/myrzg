@@ -1,68 +1,62 @@
 <template>
-  <BaseModal
+  <UiModal
     :visible="modelValue"
     title="版本检查"
-    @close="closeModal"
+    max-width="420px"
+    teleport-to="body"
+    @update:visible="closeModal"
   >
-    <div class="modal-body">
-      <!-- 顶部信息：已改为居中对齐 -->
-      <div class="version-info">
-        <img src="/ui/logo.png" alt="Logo" class="version-logo" />
-        <h2 class="app-name">深渊之歌助手</h2>
-        <p class="current-version">当前版本: {{ currentVersion }}</p>
-      </div>
+    <div class="version-info">
+      <img src="/ui/logo.png" alt="Logo" class="version-logo" />
+      <h2 class="app-name">深渊之歌助手</h2>
+      <p class="current-version">当前版本: {{ currentVersion }}</p>
+    </div>
 
-      <!-- 状态盒子：居中对齐 -->
-      <div class="status-box">
-        <div v-if="isChecking" class="checking-state">
-          正在检查更新...
+    <!-- 状态盒子 -->
+    <div class="status-box paper-panel-solid">
+      <UiEmptyState v-if="isChecking" type="loading" text="正在检查更新..." />
+      <div v-else-if="updateInfo" class="update-available">
+        <div class="update-icon">!</div>
+        <div class="update-text">
+          <span class="update-title">发现新版本: {{ updateInfo.version }}</span>
+          <span class="update-desc" v-if="updateInfo._needsApkUpdate">
+            本次包含底层的更新，建议立即更新
+          </span>
+          <span class="update-desc" v-else>
+            {{ updateInfo.body || '有新的功能更新或问题修复。' }}
+          </span>
         </div>
-        <div v-else-if="updateInfo" class="update-available">
-          <div class="update-icon">!</div>
-          <div class="update-text">
-            <span class="update-title">发现新版本: {{ updateInfo.version }}</span>
-            <span class="update-desc" v-if="updateInfo._needsApkUpdate">
-              本次包含底层的更新，建议立即更新
-            </span>
-            <span class="update-desc" v-else>
-              {{ updateInfo.body || '有新的功能更新或问题修复。' }}
-            </span>
-          </div>
-        </div>
-        <div v-else class="up-to-date">
-          <div class="check-icon">✓</div>
-          <span>当前已是最新版本</span>
-        </div>
+      </div>
+      <div v-else class="up-to-date">
+        <div class="check-icon">✓</div>
+        <span>当前已是最新版本</span>
       </div>
     </div>
 
-    <!-- 底部按钮：居中对齐 -->
     <template #footer>
-      <div class="modal-footer-wrapper">
-        <button
-          v-if="updateInfo"
-          class="confirm-btn"
-          @click="handleUpdate"
-        >
-          立即更新
-        </button>
-        <button
-          v-else
-          class="confirm-btn"
-          @click="performCheck"
-          :disabled="isChecking"
-        >
-          {{ isChecking ? '检查中...' : '重新检查' }}
-        </button>
-      </div>
+      <UiButton
+        v-if="updateInfo"
+        variant="primary"
+        @click="handleUpdate"
+      >
+        立即更新
+      </UiButton>
+      <UiButton
+        v-else
+        variant="secondary"
+        :disabled="isChecking"
+        @click="performCheck"
+      >
+        {{ isChecking ? '检查中...' : '重新检查' }}
+      </UiButton>
     </template>
-  </BaseModal>
+  </UiModal>
 </template>
 
 <script setup>
 import { ref, watch, onMounted } from 'vue'
-import BaseModal from './BaseModal.vue'
-import { checkHotUpdate, applyHotUpdate } from '../utils/hotupdate'
+import { UiModal, UiButton, UiEmptyState } from './ui/index.js'
+import { checkHotUpdate } from '../utils/hotupdate'
 import { App as CapApp } from '@capacitor/app'
 import { isNative } from '../utils/env'
 
@@ -95,11 +89,8 @@ const getLocalVersion = async () => {
   }
   const webVer = localStorage.getItem('local_web_version')
 
-  // 如果 webVer 存在，且是 4 位的（例如 1.0.0.1），则直接显示 webVer。
-  // 如果没有 webVer，就用 nativeVer + .0
-  if (webVer && webVer.split('.').length === 4) {
-    currentVersion.value = webVer
-  } else if (webVer) {
+  // 有 webVer 直接显示（无论 3 位还是 4 位），否则用 nativeVer + .0
+  if (webVer) {
     currentVersion.value = webVer
   } else {
     currentVersion.value = `${nativeVer}.0`
@@ -146,86 +137,67 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* 覆盖容器或基础设定 */
-.modal-body {
-  padding: 16px 24px;
-}
-
-/* 顶部信息区域：居中对齐 */
 .version-info {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   display: flex;
   flex-direction: column;
-  align-items: center; /* 改为 center 居中对齐 */
-  text-align: center;  /* 改为 center 居中文本 */
+  align-items: center;
+  text-align: center;
 }
 .version-logo {
-  width: 70%;
-  height: 70%;
-  border-radius: 12px;
-  margin-bottom: 12px;
-  object-fit: cover;
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  object-fit: contain;
+  border: 2px solid var(--border-color, #8f7351);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 .app-name {
   margin: 0 0 4px 0;
-  font-size: 18px;
-  color: #333;
-  font-weight: bold;
-}
-.dark-mode .app-name {
-  color: #fff;
+  font-size: 17px;
+  color: var(--text-main, #3e2a14);
+  font-weight: 700;
+  letter-spacing: 2px;
 }
 .current-version {
   margin: 0;
-  font-size: 14px;
-  color: #999;
+  font-size: 13px;
+  color: var(--text-muted, #6b5134);
+  font-style: italic;
 }
 
-/* 状态盒子区域：容器内居中 */
 .status-box {
-  background: #f9f9f9;
-  border-radius: 8px;
   padding: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.dark-mode .status-box {
-  background: rgba(255, 255, 255, 0.05);
-}
-.checking-state {
-  color: #666;
-}
-.dark-mode .checking-state {
-  color: #aaa;
+  min-height: 76px;
 }
 
-/* 已是最新版本区域：内容居中 */
 .up-to-date {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #333;
+  color: var(--text-main, #3e2a14);
   font-size: 15px;
-}
-.dark-mode .up-to-date {
-  color: #eee;
+  font-weight: 600;
 }
 .check-icon {
   width: 22px;
   height: 22px;
-  background: #4caf50;
+  background: var(--q2, #2b7a2b);
   color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: 8px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* 更新提示区域 */
 .update-available {
   display: flex;
   align-items: flex-start;
@@ -235,7 +207,7 @@ onMounted(() => {
 .update-icon {
   width: 24px;
   height: 24px;
-  background: #ff9800;
+  background: var(--q5, #b0610c);
   color: white;
   border-radius: 50%;
   display: flex;
@@ -244,44 +216,27 @@ onMounted(() => {
   margin-right: 12px;
   flex-shrink: 0;
   font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 .update-text {
   display: flex;
   flex-direction: column;
+  gap: 3px;
+  min-width: 0;
 }
 .update-title {
-  color: #ff9800;
-  font-weight: bold;
-  margin-bottom: 4px;
+  color: var(--q5, #b0610c);
+  font-weight: 700;
+}
+.dark-mode .update-title {
+  color: var(--q5, #d99a45);
 }
 .update-desc {
   font-size: 12px;
-  color: #ef4444;
+  color: var(--danger, #8b0000);
+  line-height: 1.5;
 }
-
-/* 底部按钮区域：居中 */
-.modal-footer-wrapper {
-  display: flex;
-  justify-content: center;
-  padding: 16px 0;
-}
-.confirm-btn {
-  background: #4285f4;
-  color: white;
-  border: none;
-  padding: 10px 32px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  min-width: 120px;
-  transition: opacity 0.2s;
-}
-.confirm-btn:hover {
-  opacity: 0.9;
-}
-.confirm-btn:disabled {
-  background: #a0cfff;
-  cursor: not-allowed;
+.dark-mode .update-desc {
+  color: #e06a6a;
 }
 </style>

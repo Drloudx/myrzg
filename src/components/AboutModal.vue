@@ -1,5 +1,5 @@
 <script setup>
-import BaseModal from './BaseModal.vue'
+import { UiModal, UiButton, UiTag } from './ui/index.js'
 
 defineProps({
   modelValue: {
@@ -16,13 +16,15 @@ const close = () => {
 </script>
 
 <template>
-  <BaseModal
+  <UiModal
     :visible="modelValue"
     title="关于我们"
-    @close="close"
+    max-width="420px"
+    teleport-to="body"
+    @update:visible="close"
   >
     <div class="author-section">
-      <img src="/ui/author_avatar.jpg" class="about-logo" />
+      <img src="/ui/author_avatar.jpg" class="about-logo" alt="作者头像" />
       <h4 class="author-name">云汐渚梦</h4>
       <div class="social-links">
         <a href="https://www.taptap.cn/user/34448185?share_id=06714cbc47ff&utm_medium=share&utm_source=copylink" target="_blank" class="social-item taptap">
@@ -36,8 +38,8 @@ const close = () => {
       </div>
     </div>
 
-    <div class="credits-section">
-      <div class="credits-title">感谢名单</div>
+    <div class="credits-section paper-panel-solid">
+      <div class="credits-title">—— 感谢名单 ——</div>
       <div class="credits-list">
         <div class="credit-item">
           <span class="credit-name">测试1</span>
@@ -61,51 +63,50 @@ const close = () => {
         </div>
       </div>
     </div>
-    
+
     <template #footer>
-      <button class="modal-btn-confirm" @click="close">关闭</button>
+      <UiButton variant="primary" @click="close">关闭</UiButton>
     </template>
-  </BaseModal>
+  </UiModal>
 </template>
 
 <style scoped>
-.about-modal-card {
-  max-width: 450px;
-  max-height: 90vh;
-  overflow-y: auto;
-}
 .author-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 .about-logo {
   width: 64px;
   height: 64px;
-  border-radius: 12px;
-  margin-bottom: 12px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color, #8f7351);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 .author-name {
-  margin: 0 0 12px 0;
+  margin: 0 0 10px 0;
   font-size: 18px;
+  font-weight: 700;
   color: var(--text-main);
+  letter-spacing: 2px;
 }
 .social-links {
   display: flex;
-  gap: 16px;
+  gap: 14px;
 }
 .social-item {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
+  padding: 5px 12px;
   border-radius: 20px;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
   transition: all 0.2s;
+  border: 1px solid transparent;
 }
 .social-icon {
   width: 18px;
@@ -119,45 +120,57 @@ const close = () => {
   color: white;
 }
 .taptap {
-  background: #00cccc20;
-  color: #008a8a;
+  background: rgba(0, 153, 153, 0.12);
+  color: #007777;
+  border-color: rgba(0, 153, 153, 0.35);
 }
-.taptap .social-icon { background: #00cccc; }
+.taptap .social-icon { background: #008a8a; }
 .bilibili {
-  background: #fb729920;
-  color: #e83e6d;
+  background: rgba(251, 114, 153, 0.12);
+  color: #c23b62;
+  border-color: rgba(251, 114, 153, 0.35);
 }
 .bilibili .social-icon { background: #fb7299; }
+.social-item:hover {
+  text-decoration: none;
+  filter: brightness(1.05);
+}
 
 .credits-section {
-  background: var(--bg);
-  padding: 16px;
-  border-radius: 12px;
+  padding: 14px;
 }
 .credits-title {
-  font-size: 14px;
-  font-weight: bold;
-  color: var(--text-sub);
-  margin-bottom: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 10px;
   text-align: center;
+  letter-spacing: 2px;
 }
 .credits-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 .credit-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
   font-size: 13px;
+  padding-bottom: 7px;
+  border-bottom: 1px dashed var(--border-faint);
+}
+.credit-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
 }
 .credit-name {
   color: var(--text-main);
   font-weight: 600;
 }
 .credit-desc {
-  color: var(--text-sub);
+  color: var(--text-muted);
   font-size: 12px;
 }
 </style>
