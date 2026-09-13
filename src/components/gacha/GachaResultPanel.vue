@@ -1,9 +1,11 @@
 <template>
-  <GachaStage :backdrop="getImageUrl('/images/uipanel/herogachashowpanel/bg.png')">
-    <!-- 背板：游戏结果页背后是揭晓同一张暗色殿堂底图（1700×1220，中央带纹章）——
-         此前用纯色渐变，用户指认「没有背景」。这里铺 `bg.png`，再叠 `Rconer` / `Rconer2`
-         两张原图（prefab 里 α0.2549 / 0.0510 的同尺寸压角层）。 -->
-    <div class="g-abs g-layer-bg result-backdrop" :style="gachaPos(0, 0)">
+  <!-- 整页演出用 fit="height"（游戏 NGUI UIRoot 按高度缩放）：画布精确铺满视口，
+       背景（bg.png 1700×1220）整幅覆盖后不再出现「画布内暗、画布外亮」的矩形接缝。 -->
+  <GachaStage :backdrop="getImageUrl('/images/uipanel/herogachashowpanel/bg.png')" fit="height">
+    <!-- 背板：整屏层用 inset:0，且**不能挂 g-abs**（它的 translate(-50%,-50%) 会把
+         inset 盒子推出左上，只剩部分覆盖——画面出现半屏明暗矩形接缝）；
+         bg.png 铺满整个画布；Rconer / Rconer2（prefab α0.2549 / 0.0510）按原尺寸居中叠加。 -->
+    <div class="g-layer-bg result-backdrop">
       <img :src="getImageUrl('/images/uipanel/herogachashowpanel/bg.png')" alt="" class="result-backdrop__bg" />
       <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/Rconer.png')" alt="" class="result-backdrop__corner" />
       <img
@@ -36,14 +38,6 @@
           alt=""
         />
         <img class="rd__portrait" :src="getImageUrl(cardFace(item))" :alt="item.name" />
-        <!-- 重复获得底衬：`gacha_card_reget` 240×68 @(0,-48)（prefab `fragmentBg`，
-             重复获得时由 fragmentEndAni 淡入；新角色不显示）。 -->
-        <img
-          v-if="!item.isNew"
-          class="rd__reget"
-          :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_card_reget.png')"
-          alt=""
-        />
         <img
           class="rd__frame"
           :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/gacha_card_frame${cardQuality(item)}.png`)"
@@ -62,14 +56,14 @@
           :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/gacha_card_atr${item.element}.png`)"
           alt=""
         />
-        <!-- 新角色：`gacha_card_new` 60×24 ×scale3 @(0,-48)，坐在底衬位（居中） -->
+        <!-- 新角色：`gacha_card_new` 60×24（tween scale 3→1 终态原尺寸）@(0,-48) 下缘居中 -->
         <img
           v-if="item.isNew"
           class="rd__new"
           :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_card_new.png')"
           alt="新"
         />
-        <!-- 重复获得：碎片图标 108×108 @(-10,8) + ×N 计数 20px @(18,-40)
+        <!-- 重复获得：碎片图标 108×108 原尺寸 @(-10,8) + ×N 计数 20px @(18,-40)
              （prefab `fragment` / `fragmentCnt`；碎片图取 `icon.Replace("at","chara")+"_p"`） -->
         <template v-else-if="fragmentCount(item)">
           <span class="rd__frag">
@@ -288,21 +282,27 @@ onMounted(schedulePopupSounds)
 </script>
 
 <style scoped>
-/* 结果页背板：揭晓同一张殿堂底图（`bg.png` 1684×1204）+ Rconer/Rconer2 压角层。
-   底图整幅铺满（多余部分裁掉），保证中央纹章与四条斜纹都在画面内。 */
+/* 结果页背板：整屏层（inset:0 铺满画布 = 视口），bg.png cover 铺满，无矩形接缝；
+   Rconer/Rconer2 1700×1220 按原尺寸居中（超出画布部分无裁切、被视口裁掉）。 */
 .result-backdrop {
-  width: 1534px;
-  height: 750px;
-  overflow: hidden;
+  position: absolute;
+  inset: 0;
 }
 
-.result-backdrop__bg,
+.result-backdrop__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .result-backdrop__corner {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 1684px;
-  height: 1204px;
+  width: 1700px;
+  height: 1220px;
   transform: translate(-50%, -50%);
   object-fit: fill;
 }
@@ -349,18 +349,8 @@ onMounted(schedulePopupSounds)
 
 .rd__base { width: 100%; height: 100%; object-fit: contain; }
 
-/* 重复获得底衬 `gacha_card_reget` 240×68 @(0,-48) */
-.rd__reget {
-  position: absolute;
-  left: 50%;
-  top: 68.75%;
-  width: 93.75%;
-  height: 26.56%;
-  transform: translate(-50%, -50%);
-  object-fit: fill;
-  pointer-events: none;
-  animation: reveal-fade-in 0.3s ease-out both;
-}
+/* 重复获得底衬 `gacha_card_reget`：源码 `fragmentBg.alpha` 初始化 0 后从未抬起，
+   实机结算截图也无此层 —— 不渲染（此前误加的「阴影罩子」已删除）。 */
 
 /* 卡面 `heroIcon` = `gacha_at*.png` 200×200 居中 */
 .rd__portrait {
@@ -388,20 +378,22 @@ onMounted(schedulePopupSounds)
 .rd__class { left: 76.56%; top: 65.63%; }
 .rd__atr { left: 89.84%; top: 52.34%; }
 
-/* 新角色角标：`gacha_card_new` 60×24 ×scale3 = 180×72 @(0,-48)（坐在 reget 底衬位，居中） */
+/* 新角色角标：`gacha_card_new` 60×24（ExtentionTweenPlay scale 3→1，终态原尺寸）
+   @(0,-48)，下缘居中 */
 .rd__new {
   position: absolute;
   left: 50%;
   top: 68.75%;
-  width: 70.31%;
-  height: 28.13%;
+  width: 23.44%;
+  height: 9.38%;
   transform: translate(-50%, -50%);
   object-fit: contain;
   pointer-events: none;
   animation: reveal-star-pop 0.45s ease-out both;
 }
 
-/* 重复获得：碎片图标 108×108 @(-10,8) + ×N 20px @(18,-40) */
+/* 重复获得：碎片图标 108×108 原尺寸（游戏内「碎片宽/星条宽」≈ 111/96，与 prefab 一致）
+   @(-10,8) —— 此前放大到 84% 是误测，覆盖了整个卡面 */
 .rd__frag {
   position: absolute;
   left: 46.09%;
