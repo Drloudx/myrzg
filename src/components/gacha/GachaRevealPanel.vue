@@ -8,8 +8,9 @@
        静默 g-abs 容器，动画只挂在内部 img 上。 -->
   <GachaStage :backdrop="getImageUrl('/images/uipanel/herogachashowpanel/bg.png')" fit="height">
     <!-- ── 背景层 ── -->
-    <!-- 揭晓殿堂底（prefab UITexture 1700×1220 depth 0 = bg.png） -->
-    <div class="g-abs g-layer-bg reveal-bg" :style="gachaPos(0, 0)">
+    <!-- 揭晓殿堂底（prefab UITexture 1700×1220 depth 0 = bg.png）。整屏层 inset:0 铺满画布，
+         不挂 g-abs；宽视口下不再露出 1534×750 裁切盒两侧的亮带（与结算页同款修法） -->
+    <div class="g-layer-bg reveal-bg">
       <img :src="getImageUrl('/images/uipanel/herogachashowpanel/bg.png')" alt="" />
     </div>
     <!-- lineAlpha：spGachaLine01（958×958）@974×974，backFrame 段 alpha 0→1（tween[13]） -->
@@ -275,11 +276,8 @@
         />
       </div>
     </template>
-    <!-- Rconer / Rconer2：1700×1220 全屏角框，alpha 0.25 / 0.05（prefab depth 100） -->
-    <div class="g-abs g-layer-ui reveal-corner" :style="gachaPos(0, 0)">
-      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/Rconer.png')" alt="" class="reveal-corner__one" />
-      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/Rconer2.png')" alt="" class="reveal-corner__two" />
-    </div>
+    <!-- Rconer/Rconer2 压角层已移除：1700×1220 浅色圆角框贴图在宽视口下软边带会露出
+         屏幕两侧（与结算页同款问题，用户指认的「阴影」）；游戏实机画面两侧无此带。 -->
 
     <!-- ── 抽卡台词（gachaTextRoot，UIAnchor 底部偏移 93 → y≈-282；源码 step3 后
          UISprite 宽度改 960）── -->
@@ -679,15 +677,14 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .reveal-bg {
-  width: 1534px;
-  height: 750px;
-  overflow: hidden;
+  position: absolute;
+  inset: 0;
 }
 
 .reveal-bg img {
-  width: 1700px;
-  height: 1220px;
-  object-fit: fill;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* lineAlpha：974×974 大花纹，backFrame 段淡入 */
@@ -1109,24 +1106,6 @@ onBeforeUnmount(() => {
   from { transform: translate(-50%, -50%); opacity: 1; }
   to { transform: translate(calc(-50% + 360px), -50%); opacity: 0; }
 }
-
-/* Rconer(0.25) / Rconer2(0.05)：全屏角框，盖在角色层之上但低于交互层 */
-.reveal-corner {
-  width: 1700px;
-  height: 1220px;
-  pointer-events: none;
-}
-
-.reveal-corner img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
-}
-
-.reveal-corner__one { opacity: 0.25; }
-.reveal-corner__two { opacity: 0.05; }
 
 .reveal-text {
   width: 960px;

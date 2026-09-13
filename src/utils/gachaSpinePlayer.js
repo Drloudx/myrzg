@@ -114,6 +114,10 @@ export function createSpineScene(canvas, layers, options = {}) {
   let last = performance.now()
   let rafId = 0
   const actors = []
+  /** 本场景创建的 GPU 纹理。`renderer.dispose()` 只释放渲染器自身的 shader/buffer，
+   *  不会释放图集的 GLTexture —— 揭晓每换一个角色就重建一次场景，
+   *  不在这里释放的话每次泄漏一整张贴图，多次抽卡后显存耗尽会把整个窗口挂死。 */
+  const gpuTextures = []
 
   async function init() {
     for (const def of layers) {
@@ -126,7 +130,9 @@ export function createSpineScene(canvas, layers, options = {}) {
         const objectUrl = URL.createObjectURL(blob)
         try {
           const source = def.premultiply ? await loadPremultipliedCanvas(objectUrl) : await loadImage(objectUrl)
-          page.setTexture(new GLTexture(gl, source))
+          const texture = new GLTexture(gl, source)
+          page.setTexture(texture)
+          gpuTextures.push(texture)
         } finally {
           URL.revokeObjectURL(objectUrl)
         }
@@ -245,6 +251,10 @@ export function createSpineScene(canvas, layers, options = {}) {
       disposed = true
       cancelAnimationFrame(rafId)
       try { renderer.dispose() } catch { /* 已释放则忽略 */ }
+      for (const texture of gpuTextures) {
+        try { texture.dispose() } catch { /* 已释放则忽略 */ }
+      }
+      gpuTextures.length = 0
     }
   }
 
