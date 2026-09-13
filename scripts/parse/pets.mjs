@@ -10,6 +10,7 @@ export function buildPetsFile() {
     petRes: readJson('pet/pet.json'),
     petLevelRes: readJson('pet/petLevel.json'),
     petSettingRes: readJson('pet/petSetting.json'),
+    playerLevelRes: readJson('playerLevel.json'),
     skillRes: readJson('skill.json'),
     skillTriggerRes: readJson('skillTrigger.json')
   }

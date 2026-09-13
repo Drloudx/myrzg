@@ -60,12 +60,18 @@ export function buildRecipeData(maps) {
     if (itemEntry.useActionPara2 && itemEntry.useActionPara2.buff) {
       buffId = itemEntry.useActionPara2.buff
     }
+    let buffName = ''
     let buffDes = ''
+    let effectStacks = 0
+    let maxEffectStacks = 0
     if (buffId && buffDict[buffId]) {
       const bObj = buffDict[buffId]
+      buffName = bObj.buffName || ''
       if (bObj.buffDes) {
         buffDes = bObj.buffDes.replace(/\{([^}]+)\}/g, '$1')
       }
+      effectStacks = Number(bObj.para?.startLayNum || bObj.para?.maxLayPara || 0)
+      maxEffectStacks = Number(bObj.para?.maxLayPara || effectStacks || 0)
     }
 
     // 5. Source Info Link
@@ -79,7 +85,10 @@ export function buildRecipeData(maps) {
       categoryTags,
       ingredients,
       buffId,
+      buffName,
       buffDes,
+      effectStacks,
+      maxEffectStacks,
       sourceInfo
     }
   })

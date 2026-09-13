@@ -1,0 +1,133 @@
+.hil-scene {
+  --mascot-eyes-origin: 120px 108px;
+}
+.hil-head { transform-origin: 136px 145px; }
+.rig-sword { transform-origin: 160px 180px; transform: var(--rig-accessory-transform, none); }
+.hil-figure[data-model="034"] .rig-sword { transform-origin: 168px 150px; }
+.rig-cape { transform-origin: 125px 147px; transform: var(--rig-accessory-transform, none); }
+.rig-satchel { transform-origin: 88px 180px; transform: var(--rig-accessory-transform, none); }
+.rig-skirt { transform-origin: 123px 200px; transform: var(--rig-accessory-transform, none); }
+.hil-hair-left { transform-origin: var(--rig-hair-left-origin, 73px 86px); }
+.hil-hair-right { transform-origin: var(--rig-hair-right-origin, 168px 86px); }
+.rig-hair-left { transform-origin: var(--rig-hair-left-origin, 73px 86px); transform: var(--rig-accessory-transform, none); }
+.rig-hair-right { transform-origin: var(--rig-hair-right-origin, 168px 86px); transform: var(--rig-accessory-transform, none); }
+.hil-right-forearm { transform-origin: 0 0; }
+.hil-swing-pendulum { transform-origin: 160px 25px; }
+.hil-shin { transform-origin: 0 0; }
+.hil-reel { transform-origin: 88px 225px; }
+.hil-reeling-hand { transform-origin: 0 0; }
+.hil-rod-hand { transform-origin: 0 0; }
+.hil-facing { transform-origin: 123px 240px; }
+.hil-fishing-front.is-stowed .hil-line-end { transform: translate(34px, -136px); }
+.hil-fishing-front.is-stowed .hil-water-effects { opacity: 0; }
+.mascot-thumb { transform-origin: -5px 3px; }
+.hil-caught-fish, .hil-splash { opacity: 0; }
+.hil-water-ring { transform-box: fill-box; transform-origin: center; }
+.hil-scene .idle-body:not(.hil-standing) { animation: none; }
+/* Reduced-motion users see a complete, readable pose, not an incomplete animation frame. */
+.hil-figure[data-pose="think"] .hil-right-forearm { transform: rotate(0deg); }
+.hil-figure[data-pose="think"] .hil-head { transform: rotate(4deg); }
+@media (prefers-reduced-motion: no-preference) {
+  .hil-scene .hil-standing { transform-origin: 120px 337px; animation: hil-breath 5s ease-in-out infinite; }
+  .hil-hair-left { animation: hil-hair-left 5s ease-in-out infinite; }
+  .hil-hair-right { animation: hil-hair-right 5s ease-in-out infinite; }
+  .hil-figure[data-pose="think"] .hil-right-forearm { animation: hil-hand-to-chin 10s ease-in-out infinite; }
+  .hil-figure[data-pose="think"] .hil-head { animation: hil-think-head 10s ease-in-out infinite; }
+  .hil-figure[data-pose="think"] .hil-thinking-hand .mascot-finger-index { animation: hil-think-finger 10s ease-in-out infinite; }
+  .hil-figure[data-pose="think"] .hil-thinking-hand .mascot-thumb { animation: hil-think-thumb 10s ease-in-out infinite; }
+  .hil-figure[data-pose="think"] .hil-pupils { animation: hil-think-gaze 10s ease-in-out infinite; }
+  .mascot-art[data-rigged="true"] .mascot-thought-bubble { animation: hil-thought 10s ease-in-out infinite; }
+  .hil-scene[data-scene="swing"] .hil-swing-pendulum { animation: hil-swing 5.6s ease-in-out infinite; }
+  .hil-figure[data-pose="swing"] .hil-shin-left { animation: hil-kick-left 5.6s ease-in-out infinite; }
+  .hil-figure[data-pose="swing"] .hil-shin-right { animation: hil-kick-right 5.6s ease-in-out infinite; }
+  .hil-figure[data-pose="swing"] .hil-hair { animation-duration: 5.6s; animation-delay: -.35s; }
+  .hil-figure[data-pose="swing"] .hil-head { animation: hil-swing-look 5.6s ease-in-out infinite; }
+  .hil-swing-shadow { transform-origin: 160px 380px; animation: hil-shadow 5.6s ease-in-out infinite; }
+  .hil-rod { animation: hil-rod-bend 12s ease-in-out infinite; }
+  .hil-fishing-line { animation: hil-line-follow 12s ease-in-out infinite; }
+  .hil-bobber { animation: hil-float 12s ease-in-out infinite; }
+  .hil-caught-fish { animation: hil-catch 12s ease-in-out infinite; }
+  .hil-splash { animation: hil-splash 12s ease-in-out infinite; }
+  .hil-water-ring { animation: hil-ripple 3s ease-out infinite; }
+  .hil-reel { animation: hil-reel 12s ease-in-out infinite; }
+  .hil-reeling-hand { animation: hil-reel-hand 12s ease-in-out infinite; }
+  .hil-rod-hand { animation: hil-adjust-grip 12s ease-in-out infinite; }
+  .hil-figure[data-pose="fish"] .hil-pupils { animation: hil-fishing-gaze 12s ease-in-out infinite; }
+  .hil-figure[data-pose="fish"] .hil-head { animation: hil-watch-float 12s ease-in-out infinite; }
+  .sidebar-mascot .mascot-art .hil-scene[data-rigged="true"] *, .mascot-art[data-rigged="true"] .mascot-thought-bubble {
+    animation-play-state: var(--mascot-play-state, running);
+  }
+}
+.hil-scene[data-rigged="true"]:not([data-stage="loop"]) * { animation: none; }
+.hil-scene:not([data-stage="loop"]) .hil-right-forearm,
+.hil-scene:not([data-stage="loop"]) .hil-head { transform: none; }
+.hil-model-placement, .rig-upper, .rig-forearm, .rig-wrist, .rig-thigh, .rig-shin {
+  transform-origin: 0 0;
+  transform-box: view-box;
+}
+@keyframes hil-breath { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(1.004); } }
+@keyframes hil-hair-left { 0%,100% { transform: rotate(.6deg); } 50% { transform: rotate(-1.3deg); } }
+@keyframes hil-hair-right { 0%,100% { transform: rotate(-.6deg); } 50% { transform: rotate(1.3deg); } }
+@keyframes hil-hand-to-chin {
+  0%, 25%, 55%, 100% { transform: rotate(0deg); }
+  35%, 45% { transform: rotate(1deg); }
+  75%, 85% { transform: rotate(-1deg); }
+}
+@keyframes hil-think-head {
+  0%, 25%, 60%, 100% { transform: rotate(4deg); }
+  35%, 45% { transform: rotate(5deg); }
+  75%, 85% { transform: rotate(2deg); }
+}
+@keyframes hil-thought {
+  0%, 100% { opacity: 0; transform: translateY(3px) scale(.85); }
+  15%, 85% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes hil-think-finger {
+  0%, 25%, 55%, 100% { d: path('M7-1Q9 2 8 7'); }
+  35%, 45%, 75%, 85% { d: path('M7-1Q5 3 5 6'); }
+}
+@keyframes hil-think-thumb { 0%,25%,55%,100% { transform: rotate(0); } 35%,45%,75%,85% { transform: rotate(-12deg); } }
+@keyframes hil-think-gaze {
+  0%, 15%, 55%, 100% { transform: translate(0, 0); }
+  25%, 40% { transform: translate(-2px, -1px); }
+  70%, 85% { transform: translate(2px, -.5px); }
+}
+@keyframes hil-adjust-grip { 0%,24%,45%,70%,100% { transform: rotate(0); } 30%,36% { transform: rotate(6deg); } 80%,88% { transform: rotate(-4deg); } }
+@keyframes hil-fishing-gaze { 0%,60%,100% { transform: translate(1px, 1px); } 26%,36% { transform: translate(-1px, 1px); } 78%,88% { transform: translate(2px, -1px); } }
+@keyframes hil-swing { 0%,100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+@keyframes hil-kick-left { 0%,100% { transform: rotate(-9deg); } 50% { transform: rotate(12deg); } }
+@keyframes hil-kick-right { 0%,100% { transform: rotate(-4deg); } 50% { transform: rotate(9deg); } }
+@keyframes hil-swing-look { 0%,100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
+@keyframes hil-shadow { 0%,100% { transform: translateX(17px) scaleX(.85); } 50% { transform: translateX(-17px) scaleX(.85); } 25%,75% { transform: scaleX(1); } }
+@keyframes hil-rod-bend {
+  0%, 69%, 100% { d: path('M106 210Q166 150 216 150'); }
+  76% { d: path('M106 210Q171 151 219 157'); }
+  82% { d: path('M106 210Q164 141 212 143'); }
+  88% { d: path('M106 210Q154 130 204 128'); }
+  94% { d: path('M106 210Q163 141 210 141'); }
+}
+@keyframes hil-line-follow {
+  0%, 69%, 100% { d: path('M216 150Q203 227 180 310'); }
+  76% { d: path('M219 157Q201 235 180 314'); }
+  82% { d: path('M212 143Q194 224 180 305'); }
+  88% { d: path('M204 128Q192 207 180 284'); }
+  94% { d: path('M210 141Q196 221 180 303'); }
+}
+@keyframes hil-float {
+  0%, 69%, 100% { transform: translateY(0); }
+  76% { transform: translateY(4px); }
+  82% { transform: translateY(-5px); }
+  88% { transform: translateY(-26px); }
+  94% { transform: translateY(-7px); }
+}
+@keyframes hil-catch {
+  0%, 80%, 97%, 100% { opacity: 0; transform: translateY(0); }
+  82% { opacity: 1; transform: translateY(-5px); }
+  88% { opacity: 1; transform: translateY(-26px); }
+  94% { opacity: 1; transform: translateY(-7px); }
+}
+@keyframes hil-splash { 0%,79%,87%,95%,100% { opacity: 0; } 82%,94% { opacity: 1; } }
+@keyframes hil-ripple { from { opacity: .7; transform: scale(.5); } to { opacity: 0; transform: scale(1.5); } }
+@keyframes hil-reel { 0%,78%,100% { transform: rotate(0); } 92%,96% { transform: rotate(-360deg); } }
+@keyframes hil-reel-hand { 0%,78%,96%,100% { transform: rotate(0); } 82%,90% { transform: rotate(-9deg); } 86%,94% { transform: rotate(6deg); } }
+@keyframes hil-watch-float { 0%,65%,100% { transform: rotate(3deg); } 78% { transform: rotate(6deg); } 87%,92% { transform: rotate(-2deg); } }

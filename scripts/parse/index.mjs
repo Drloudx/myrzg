@@ -18,6 +18,9 @@ import * as search from './search.mjs'
 import * as affixes from './affixes.mjs'
 import * as exchange from './exchange.mjs'
 import { buildItemsFile } from './items.mjs'
+import { buildRunesFile } from './runes.mjs'
+import { buildFurnitureFile } from './furniture.mjs'
+import { buildFacilitiesFile } from './facilities.mjs'
 import { buildTasksFile } from './tasks.mjs'
 import { buildHeroesFile } from './heroes.mjs'
 import { buildPetsFile } from './pets.mjs'
@@ -26,18 +29,33 @@ import { buildRecipesFile } from './recipes.mjs'
 import { buildAchievementsFile } from './achievements.mjs'
 import { buildEventsFile } from './events.mjs'
 import { buildPetEggsFile } from './pet-eggs.mjs'
+import { buildGachaFile } from './gacha.mjs'
 import { buildDungeonsFiles } from './dungeons.mjs'
+import * as runtimeTables from './runtime-tables.mjs'
 
 if (!existsSync(parsedDir)) {
   mkdirSync(parsedDir, { recursive: true })
 }
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '../..')
+const TRANSIENT_WRITE_ERRORS = new Set(['EBUSY', 'EPERM', 'EACCES', 'UNKNOWN'])
+const sleepSync = delay => Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, delay)
+const writeFileWithRetry = (target, content) => {
+  for (let attempt = 0; ; attempt += 1) {
+    try {
+      writeFileSync(target, content, 'utf8')
+      return
+    } catch (error) {
+      if (attempt >= 7 || !TRANSIENT_WRITE_ERRORS.has(error?.code)) throw error
+      sleepSync(80 * (attempt + 1))
+    }
+  }
+}
 const writeOutput = ({ file, data }) => {
   const relativeFile = file.replace(/\\/g, '/').replace(/^parsed\//, '')
   const target = join(parsedDir, ...relativeFile.split('/'))
   mkdirSync(dirname(target), { recursive: true })
-  writeFileSync(target, JSON.stringify(data), 'utf8')
+  writeFileWithRetry(target, JSON.stringify(data))
   console.log(`  ✓ ${String(file).padEnd(34)} ${String(sizeOf(data)).padStart(6)} KB`)
 }
 
@@ -50,14 +68,20 @@ console.log('\n── [legacy→new] 场景宝箱（隐藏奖励） ──')
 const hiddenOut = hiddenRewards.build()
 hiddenOut.files.forEach(writeOutput)
 
+console.log('\n── [legacy→new] 副本数据与来源 ──')
+const dungeonOut = buildDungeonsFiles()
+rmSync(join(parsedDir, 'dungeons'), { recursive: true, force: true })
+dungeonOut.files.forEach(writeOutput)
+
 console.log('\n── [legacy→new] 搜索索引 + 物品来源 + 类型文件 ──')
 const searchOut = search.build({
   pvpSources: pvpOut.deps.pvpSources,
   hiddenSources: hiddenOut.deps.hiddenSources,
-  hiddenList: hiddenOut.deps.hiddenList
+  hiddenList: hiddenOut.deps.hiddenList,
+  dungeonSources: dungeonOut.deps.dungeonSources
 })
 searchOut.files.forEach(writeOutput)
-writeFileSync(join(repoRoot, 'src/types/data-types.d.ts'), searchOut.typesContent, 'utf8')
+writeFileWithRetry(join(repoRoot, 'src/types/data-types.d.ts'), searchOut.typesContent)
 console.log('  ✓ src/types/data-types.d.ts 已生成')
 
 console.log('\n── [legacy→new] 装备词缀 ──')
@@ -66,15 +90,21 @@ affixes.build().files.forEach(writeOutput)
 console.log('\n── [legacy→new] 兑换数据 ──')
 exchange.build().files.forEach(writeOutput)
 
+console.log('\n── [runtime-tables] 运行时小表透传（raw → parsed） ──')
+runtimeTables.build().files.forEach(writeOutput)
+
 // ---------- 2. 页面级预解析（items 是 heroes/monsters 依赖表，必须先构建） ----------
 const jobs = [
   { name: 'items', build: () => buildItemsFile(), dependsOnItems: false },
+  { name: 'runes', build: () => buildRunesFile(), dependsOnItems: false },
+  { name: 'furniture', build: () => buildFurnitureFile(), dependsOnItems: false },
+  { name: 'facilities', build: () => buildFacilitiesFile(), dependsOnItems: false },
   { name: 'tasks', build: () => buildTasksFile(), dependsOnItems: false },
   { name: 'recipes', build: () => buildRecipesFile(), dependsOnItems: false },
   { name: 'achievements', build: () => buildAchievementsFile(), dependsOnItems: false },
   { name: 'events', build: () => buildEventsFile(), dependsOnItems: false },
   { name: 'pet-eggs', build: () => buildPetEggsFile(), dependsOnItems: false },
-  { name: 'dungeons', build: () => buildDungeonsFiles(), dependsOnItems: false },
+  { name: 'gacha', build: () => buildGachaFile(), dependsOnItems: false },
   { name: 'pets', build: () => buildPetsFile(), dependsOnItems: false },
   { name: 'heroes', build: () => buildHeroesFile(itemData), dependsOnItems: true },
   { name: 'monsters', build: () => buildMonstersFile(itemData), dependsOnItems: true }
@@ -89,6 +119,7 @@ for (const job of jobs) {
   const startedAt = Date.now()
   const output = job.build()
   if (job.name === 'dungeons') rmSync(join(parsedDir, 'dungeons'), { recursive: true, force: true })
+  if (job.name === 'monsters') rmSync(join(parsedDir, 'monster-encounters'), { recursive: true, force: true })
   if (job.name === 'items') itemData = output.data
   const files = output.files || [output]
   files.forEach(writeOutput)

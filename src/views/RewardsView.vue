@@ -3,36 +3,71 @@
 
     <!-- 筛选区：半透明羊皮纸面板（分类 / 状态 / 子状态 分段页签） -->
     <div class="filter-sticky-bar rewards-filter-sticky paper-panel">
+      <UiSearchInput v-model="searchQuery" placeholder="搜索奖励、物品、地图或说明..." />
+
       <!-- 主分类（Row 1） -->
       <div class="control-row-1">
-        <UiSegmentedTabs
-          v-model="currentMainCat"
-          :options="mainCategories.map(cat => ({ value: cat.id, label: cat.name }))"
-        />
+        <UiFilterRow label="板块：">
+          <UiFilterPill
+            v-for="cat in mainCategories"
+            :key="cat.id"
+            :active="currentMainCat === cat.id"
+            @click="currentMainCat = cat.id"
+          >{{ cat.name }}</UiFilterPill>
+        </UiFilterRow>
       </div>
 
       <!-- PVP 子分类（Row 2） -->
       <div class="control-row-2" v-if="currentMainCat === 'pvp'">
-        <UiSegmentedTabs
-          v-model="currentSubCat"
-          :options="pvpSubCategories.map(sub => ({ value: sub.id, label: sub.name }))"
-        />
+        <UiFilterRow label="类型：">
+          <UiFilterPill
+            v-for="sub in pvpSubCategories"
+            :key="sub.id"
+            :active="currentSubCat === sub.id"
+            @click="currentSubCat = sub.id"
+          >{{ sub.name }}</UiFilterPill>
+        </UiFilterRow>
       </div>
 
       <!-- 隐藏物品地图子分类（Row 2） -->
       <div class="control-row-2" v-if="currentMainCat === 'hidden'">
-        <UiSegmentedTabs
-          v-model="currentHiddenCat"
-          :options="hiddenMapCategories.map(mapName => ({ value: mapName, label: mapName }))"
-        />
+        <UiFilterRow label="地图：">
+          <UiFilterPill
+            v-for="option in hiddenMapOptions"
+            :key="option.value"
+            :active="currentHiddenCat === option.value"
+            @click="currentHiddenCat = option.value"
+          >{{ option.label }}</UiFilterPill>
+        </UiFilterRow>
+      </div>
+
+      <UiFilterRow v-if="currentMainCat === 'hidden'" label="状态：">
+        <UiFilterPill
+          v-for="status in hiddenStatusOptions"
+          :key="status.value"
+          :active="currentHiddenStatus === status.value"
+          @click="currentHiddenStatus = status.value"
+        >
+          {{ status.label }}
+        </UiFilterPill>
+      </UiFilterRow>
+
+      <div v-if="currentMainCat === 'hidden'" class="hidden-count">
+        共有 <span class="count-num">{{ mapHiddenRewards.length }}</span> 个点位
+        <span class="hidden-count__divider">·</span>
+        已收集 <span class="count-num">{{ hiddenCollectedCount }}</span> / {{ mapHiddenRewards.length }}
       </div>
 
       <!-- 兑换三级分类（Row 3） -->
       <div class="control-row-3" v-if="currentMainCat === 'pvp' && currentSubCat === 'exchange'">
-        <UiSegmentedTabs
-          v-model="currentExchangeCat"
-          :options="Object.keys(pvpRewards?.exchange || {}).map(subCat => ({ value: subCat, label: subCat === 's1' ? 'S1 兑换' : subCat + ' 兑换' }))"
-        />
+        <UiFilterRow label="赛季：">
+          <UiFilterPill
+            v-for="subCat in Object.keys(pvpRewards?.exchange || {})"
+            :key="subCat"
+            :active="currentExchangeCat === subCat"
+            @click="currentExchangeCat = subCat"
+          >{{ subCat === 's1' ? 'S1 兑换' : `${subCat} 兑换` }}</UiFilterPill>
+        </UiFilterRow>
       </div>
     </div>
 
@@ -40,15 +75,47 @@
     <UiEmptyState v-if="loading" type="loading" text="正在装配奖励数据..." />
 
     <!-- 主内容区 -->
-    <div v-else-if="pvpRewards" class="rewards-content" id="rewardsScroll">
+    <div v-else-if="pvpRewards" class="rewards-content" id="rewardsScroll" data-main-scroll>
 
       <template v-if="currentMainCat === 'pvp'">
 
+        <!-- 挑战赛规则 -->
+        <div v-if="currentSubCat === 'rules' && pvpRewards.rules && matchesRewardQuery(pvpRewards.rules, '挑战赛 赛事 赛区 规则 追加挑战')" class="pvp-rules-container">
+          <UiSection title="挑战赛规则">
+            <div class="pvp-rule-copy">
+              <p v-for="(line, index) in ruleLines(pvpRewards.rules.sessionDescription)" :key="index">
+                {{ line }}
+              </p>
+            </div>
+            <div class="pvp-purchase-rule">
+              <span>追加挑战</span>
+              <strong>
+                {{ pvpRewards.rules.purchase.price }} 氪金 / {{ pvpRewards.rules.purchase.count }} 次，
+                每日最多 {{ pvpRewards.rules.purchase.dailyMax }} 次
+              </strong>
+            </div>
+          </UiSection>
+
+          <UiSection title="赛区规则">
+            <div class="pvp-area-grid">
+              <article v-for="area in pvpRewards.rules.areas" :key="area.name" class="pvp-area-rule">
+                <div class="pvp-area-rule__head">
+                  <h4>{{ area.name }}</h4>
+                  <span v-if="area.specialDescription">{{ area.specialDescription }}</span>
+                  <span v-else>{{ area.modeDescription }}</span>
+                </div>
+                <p>{{ area.description }}</p>
+              </article>
+            </div>
+          </UiSection>
+        </div>
+        <UiEmptyState v-if="currentSubCat === 'rules' && !matchesRewardQuery(pvpRewards.rules, '挑战赛 赛事 赛区 规则 追加挑战')" text="未找到匹配的赛事规则" />
+
         <!-- 兑换奖励 -->
         <div v-if="currentSubCat === 'exchange'" class="reward-list-container">
-          <div v-if="pvpRewards.exchange[currentExchangeCat]" class="exchange-trade-list">
+          <div v-if="filteredPvpExchanges.length" class="exchange-trade-list">
             <UiExchangeTrade
-              v-for="ex in pvpRewards.exchange[currentExchangeCat]"
+              v-for="ex in filteredPvpExchanges"
               :key="ex.id"
               :id="`pvpExchange-${ex.id}`"
               :title="pvpExchangeTitle(ex)"
@@ -58,13 +125,17 @@
               @item-click="openItem"
             />
           </div>
+          <UiEmptyState v-else text="未找到匹配的兑换奖励" />
         </div>
 
         <!-- 段位奖励 -->
         <div v-if="currentSubCat === 'tier'" class="reward-list-container">
-          <UiListRow v-for="tier in pvpRewards.tier" :key="tier.id" :id="`tier-${tier.id}`">
+          <UiListRow v-for="tier in filteredPvpTiers" :key="tier.id" :id="`tier-${tier.id}`">
             <div class="row-left">
-              <span class="row-title">{{ tier.name }}</span>
+              <div class="tier-heading">
+                <span class="row-title">{{ tier.name }}</span>
+                <span class="tier-score">所需积分 {{ tier.score }}</span>
+              </div>
             </div>
             <template #right>
               <div class="row-right flex-start">
@@ -89,11 +160,12 @@
               </div>
             </template>
           </UiListRow>
+          <UiEmptyState v-if="!filteredPvpTiers.length" text="未找到匹配的段位奖励" />
         </div>
 
         <!-- 排名奖励 -->
         <div v-if="currentSubCat === 'rank'" class="reward-list-container">
-          <UiListRow v-for="rank in pvpRewards.rank" :key="rank.start" :id="`rank-${rank.start}`">
+          <UiListRow v-for="rank in filteredPvpRanks" :key="rank.start" :id="`rank-${rank.start}`">
             <div class="row-left">
               <span class="row-title">{{ rank.end === -1 ? `${rank.start}名以后` : `${rank.start}-${rank.end}名` }}</span>
             </div>
@@ -120,13 +192,17 @@
               </div>
             </template>
           </UiListRow>
+          <UiEmptyState v-if="!filteredPvpRanks.length" text="未找到匹配的排名奖励" />
         </div>
 
         <!-- 战斗结算 -->
         <div v-if="currentSubCat === 'battle'" class="reward-list-container">
-          <UiListRow v-if="pvpRewards.battle.win" id="battle-win">
+          <UiListRow v-if="pvpRewards.battle.win && matchesRewardQuery(pvpRewards.battle.win, '战斗胜利')" id="battle-win">
             <div class="row-left">
-              <span class="row-title win-title">战斗胜利</span>
+              <div class="tier-heading">
+                <span class="row-title win-title">战斗胜利</span>
+                <span class="tier-score battle-score battle-score--win">积分 +{{ pvpRewards.battle.win.score }}</span>
+              </div>
             </div>
             <template #right>
               <div class="row-right flex-start">
@@ -152,9 +228,12 @@
             </template>
           </UiListRow>
 
-          <UiListRow v-if="pvpRewards.battle.fail" id="battle-fail">
+          <UiListRow v-if="pvpRewards.battle.fail && matchesRewardQuery(pvpRewards.battle.fail, '战斗失败 不获得积分')" id="battle-fail">
             <div class="row-left">
-              <span class="row-title fail-title">战斗失败</span>
+              <div class="tier-heading">
+                <span class="row-title fail-title">战斗失败</span>
+                <span class="tier-score battle-score battle-score--fail">不获得积分</span>
+              </div>
             </div>
             <template #right>
               <div class="row-right flex-start">
@@ -179,6 +258,7 @@
               </div>
             </template>
           </UiListRow>
+          <UiEmptyState v-if="!hasFilteredBattleRewards" text="未找到匹配的战斗奖励" />
         </div>
 
       </template>
@@ -187,11 +267,16 @@
       <template v-else-if="currentMainCat === 'hidden'">
         <div class="reward-list-container">
           <UiListRow
-            v-for="(group, idx) in groupedHiddenRewards"
-            :key="idx"
-            :id="`hidden-${group.roomId}`"
+            v-for="group in groupedHiddenRewards"
+            :key="group.id || group.roomId"
+            :id="`hidden-${group.id || group.roomId}`"
+            class="hidden-list-row"
+            :class="{ 'is-collected': isHiddenCollected(group) }"
           >
-            <div class="hidden-row-title">{{ group.areaName }} - {{ group.roomName }}</div>
+            <div class="hidden-row-head">
+              <div class="hidden-row-title">{{ group.areaName }} - {{ group.roomName }}</div>
+              <UiCollectionToggle :active="isHiddenCollected(group)" @toggle="toggleHiddenCollected(group)" />
+            </div>
             <div class="hidden-row-info">
               <span class="row-title">{{ group.collectName }}</span>
               <span v-if="group.collectTip" class="collect-tip">{{ group.collectTip }}</span>
@@ -232,10 +317,10 @@
       <!-- 育室槽位消耗 -->
       <template v-else-if="currentMainCat === 'slot_cost'">
         <div class="reward-list-container">
-          <UiListRow>
+          <UiListRow v-if="slotCosts && matchesRewardQuery(slotCosts, '培育室 槽位 扩张 银币 金币 冒险等级')">
             <div class="slot-cost-title">培育室槽位扩张费用</div>
 
-            <div class="slot-costs-grid-layout" v-if="slotCosts">
+            <div class="slot-costs-grid-layout">
               <!-- 银币扩建 -->
               <div class="slot-column-card">
                 <h4 class="slot-column-title">银币扩建</h4>
@@ -266,8 +351,8 @@
                 </div>
               </div>
             </div>
-            <UiEmptyState v-else text="暂无育室槽位数据" />
           </UiListRow>
+          <UiEmptyState v-else :text="slotCosts ? '未找到匹配的育室槽位数据' : '暂无育室槽位数据'" />
         </div>
       </template>
 
@@ -280,10 +365,17 @@
     <UiBackToTop scroll-container="#rewardsScroll" />
 
     <!-- 点位预览图全屏查看 -->
-    <div v-if="prevImgModal.visible" class="prev-img-overlay" @click="closePrevImg">
-      <img :src="prevImgModal.url" class="prev-img-full" alt="点位预览大图" @click.stop />
-      <div class="prev-img-close" @click="closePrevImg">✕</div>
-    </div>
+    <UiModal
+      v-model:visible="prevImgModal.visible"
+      title="点位预览"
+      max-width="1100px"
+      scroll-id="rewardPreviewScroll"
+      teleport-to="body"
+      :close-on-overlay="true"
+      @close="closePrevImg"
+    >
+      <img :src="prevImgModal.url" class="prev-img-full" alt="点位预览大图" decoding="async" />
+    </UiModal>
   </div>
 </template>
 
@@ -291,12 +383,16 @@
 import { ref, onMounted, watch, nextTick, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
-  UiSegmentedTabs,
+  UiCollectionToggle,
   UiEmptyState,
+  UiFilterPill,
+  UiFilterRow,
   UiListRow,
   UiExchangeTrade,
   UiRewardCard,
-  UiTag,
+  UiModal,
+  UiSection,
+  UiSearchInput,
   UiBackToTop
 } from '../components/ui/index.js'
 import { fetchWithFallback } from '../utils/request.js'
@@ -305,9 +401,12 @@ import { getImageUrl } from '../utils/env'
 import { isBlacklisted } from '../config/blacklist.js'
 import { fetchPetData } from '../utils/petParser'
 import { REWARD_MODE_INFO } from '../utils/gameMappings'
+import { resolveScrollTarget } from '../utils/scrollTarget.js'
+import { useAppStateStore } from '../stores/appState.js'
 
 const route = useRoute()
 const router = useRouter()
+const appStateStore = useAppStateStore()
 const loading = ref(true)
 const pvpRewards = ref(null)
 
@@ -323,23 +422,168 @@ const pvpSubCategories = [
   { id: 'exchange', name: '兑换奖励' },
   { id: 'tier', name: '段位奖励' },
   { id: 'rank', name: '排名奖励' },
-  { id: 'battle', name: '战斗结算' }
+  { id: 'battle', name: '战斗结算' },
+  { id: 'rules', name: '赛事规则' }
 ]
 const currentSubCat = ref('exchange')
 const currentExchangeCat = ref('s1')
+const routeTabsReady = ref(false)
+const searchQuery = ref(typeof route.query.q === 'string' ? route.query.q : '')
 
 const hiddenRewardsData = ref([])
 const currentHiddenCat = ref('')
+const currentHiddenStatus = ref('all')
 const slotCosts = ref(null)
+
+const hiddenStatusOptions = [
+  { value: 'all', label: '全部' },
+  { value: 'collected', label: '已收集' },
+  { value: 'uncollected', label: '未收集' }
+]
 
 const hiddenMapCategories = computed(() => {
   const maps = new Set(hiddenRewardsData.value.map(h => h.bigMapName))
   return Array.from(maps)
 })
 
-const groupedHiddenRewards = computed(() => {
+const hiddenMapOptions = computed(() => [
+  { value: 'all', label: '全部' },
+  ...hiddenMapCategories.value.map(mapName => ({ value: mapName, label: mapName }))
+])
+
+const mapHiddenRewards = computed(() => {
+  if (currentHiddenCat.value === 'all') return hiddenRewardsData.value
   return hiddenRewardsData.value.filter(h => h.bigMapName === currentHiddenCat.value)
 })
+
+const groupedHiddenRewards = computed(() => {
+  let groups = mapHiddenRewards.value
+  if (currentHiddenStatus.value === 'collected') groups = groups.filter(isHiddenCollected)
+  if (currentHiddenStatus.value === 'uncollected') groups = groups.filter(group => !isHiddenCollected(group))
+  return groups.filter(group => matchesRewardQuery(group))
+})
+
+const hiddenProgressId = group => {
+  const relationId = [group.roomId, group.collectId, group.rewardId].filter(Boolean).join('|')
+  return relationId || group.id || group.roomId
+}
+
+const isHiddenCollected = group => {
+  const collectedIds = appStateStore.collectedHiddenRewardIds
+  return Array.isArray(collectedIds) && collectedIds.includes(hiddenProgressId(group))
+}
+
+const toggleHiddenCollected = group => {
+  appStateStore.toggleHiddenRewardCollected(hiddenProgressId(group))
+}
+
+const hiddenCollectedCount = computed(() => {
+  return mapHiddenRewards.value.filter(isHiddenCollected).length
+})
+
+const queryText = value => {
+  const resolved = Array.isArray(value) ? value[0] : value
+  return typeof resolved === 'string' ? resolved : ''
+}
+
+const rewardSearchText = value => {
+  const parts = []
+  const visit = entry => {
+    if (entry === null || entry === undefined) return
+    if (Array.isArray(entry)) {
+      entry.forEach(visit)
+      return
+    }
+    if (typeof entry === 'object') {
+      if (entry.typeId) {
+        const item = getCachedItem(entry.typeId)
+        if (item?.name) parts.push(item.name)
+      }
+      Object.values(entry).forEach(visit)
+      return
+    }
+    parts.push(String(entry))
+  }
+  visit(value)
+  return parts.join(' ').toLowerCase()
+}
+
+const matchesRewardQuery = (value, extra = '') => {
+  const query = searchQuery.value.trim().toLowerCase()
+  return !query || `${extra} ${rewardSearchText(value)}`.toLowerCase().includes(query)
+}
+
+const filteredPvpExchanges = computed(() =>
+  (pvpRewards.value?.exchange?.[currentExchangeCat.value] || []).filter(exchange => matchesRewardQuery(exchange, pvpExchangeTitle(exchange)))
+)
+const filteredPvpTiers = computed(() =>
+  (pvpRewards.value?.tier || []).filter(tier => matchesRewardQuery(tier, tier.name))
+)
+const filteredPvpRanks = computed(() =>
+  (pvpRewards.value?.rank || []).filter(rank => matchesRewardQuery(rank, `${rank.start} ${rank.end} 排名`))
+)
+const hasFilteredBattleRewards = computed(() =>
+  (pvpRewards.value?.battle?.win && matchesRewardQuery(pvpRewards.value.battle.win, '战斗胜利'))
+  || (pvpRewards.value?.battle?.fail && matchesRewardQuery(pvpRewards.value.battle.fail, '战斗失败 不获得积分'))
+)
+
+const applyTabsFromRoute = () => {
+  if (!pvpRewards.value) return
+
+  searchQuery.value = queryText(route.query.q)
+
+  const requestedMain = queryText(route.query.tab)
+  currentMainCat.value = mainCategories.some(cat => cat.id === requestedMain) ? requestedMain : 'pvp'
+
+  if (currentMainCat.value === 'pvp') {
+    const requestedSub = queryText(route.query.sub)
+    currentSubCat.value = pvpSubCategories.some(cat => cat.id === requestedSub) ? requestedSub : 'exchange'
+
+    if (currentSubCat.value === 'exchange') {
+      const exchangeCategories = Object.keys(pvpRewards.value.exchange || {})
+      const requestedSeason = queryText(route.query.season)
+      currentExchangeCat.value = exchangeCategories.includes(requestedSeason)
+        ? requestedSeason
+        : (exchangeCategories[0] || '')
+    }
+  } else if (currentMainCat.value === 'hidden') {
+    const requestedMap = queryText(route.query.map)
+    currentHiddenCat.value = requestedMap === 'all' || hiddenMapCategories.value.includes(requestedMap)
+      ? requestedMap
+      : 'all'
+    const requestedStatus = queryText(route.query.status)
+    currentHiddenStatus.value = hiddenStatusOptions.some(status => status.value === requestedStatus)
+      ? requestedStatus
+      : 'all'
+  }
+}
+
+const syncTabsToRoute = async () => {
+  if (!routeTabsReady.value) return
+
+  const query = { ...route.query, tab: currentMainCat.value }
+  delete query.sub
+  delete query.season
+  delete query.map
+  delete query.status
+  delete query.q
+
+  if (currentMainCat.value === 'pvp') {
+    query.sub = currentSubCat.value
+    if (currentSubCat.value === 'exchange' && currentExchangeCat.value) {
+      query.season = currentExchangeCat.value
+    }
+  } else if (currentMainCat.value === 'hidden' && currentHiddenCat.value) {
+    query.map = currentHiddenCat.value
+    query.status = currentHiddenStatus.value
+  }
+  if (searchQuery.value.trim()) query.q = searchQuery.value.trim()
+
+  const currentQuery = route.query
+  const keys = new Set([...Object.keys(currentQuery), ...Object.keys(query)])
+  const unchanged = [...keys].every(key => queryText(currentQuery[key]) === queryText(query[key]))
+  if (!unchanged) await router.replace({ query })
+}
 
 onMounted(async () => {
   // Ensure item data is loaded so getIcon and getCachedItem work
@@ -377,7 +621,7 @@ onMounted(async () => {
       name: `${h.bigMapName} ${h.areaName} ${h.roomName} ${h.collectName || ''}`
     }))
     if (hiddenRewardsData.value.length > 0) {
-      currentHiddenCat.value = hiddenRewardsData.value[0].bigMapName
+      currentHiddenCat.value = 'all'
     }
   }
 
@@ -390,16 +634,44 @@ onMounted(async () => {
     console.error('Failed to load petSetting for slotCosts', e)
   }
 
+  applyTabsFromRoute()
+  routeTabsReady.value = true
+  await syncTabsToRoute()
   loading.value = false
   setTimeout(() => scrollToTarget(), 300)
 })
 
-const scrollToTarget = () => {
+const waitForRenderableTarget = async (element, timeout = 1500) => {
+  const startedAt = performance.now()
+  while (performance.now() - startedAt < timeout) {
+    const page = element.closest('.page-view-container')
+    if (element.isConnected && element.getBoundingClientRect().height > 0 && (!page || getComputedStyle(page).display !== 'none')) return true
+    await new Promise(resolve => setTimeout(resolve, 50))
+  }
+  return false
+}
+
+const alignTargetInViewport = element => {
+  const scrollTarget = resolveScrollTarget('#rewardsScroll')
+  if (scrollTarget === window) {
+    const top = window.scrollY + element.getBoundingClientRect().top - (window.innerHeight - element.offsetHeight) / 2
+    window.scrollTo({ top: Math.max(0, top), behavior: 'auto' })
+    return
+  }
+
+  const targetRect = element.getBoundingClientRect()
+  const rootRect = scrollTarget.getBoundingClientRect()
+  const top = scrollTarget.scrollTop + targetRect.top - rootRect.top - (scrollTarget.clientHeight - targetRect.height) / 2
+  scrollTarget.scrollTo({ top: Math.max(0, top), behavior: 'auto' })
+}
+
+const scrollToTarget = async () => {
   const { id } = route.query
   if (!id) return
 
   if (String(id).startsWith('hidden-')) {
     currentMainCat.value = 'hidden'
+    currentHiddenStatus.value = 'all'
   } else {
     currentMainCat.value = 'pvp'
   }
@@ -422,23 +694,34 @@ const scrollToTarget = () => {
     if (id === 'pvpFailure') targetId = 'battle-fail'
   } else if (String(id).startsWith('hidden-')) {
     targetId = id
-    const roomId = id.replace('hidden-', '')
-    const rewardGroup = hiddenRewardsData.value.find(h => h.roomId === roomId)
+    // id 可能是唯一条目 id（roomId-摘要）或旧 roomId；匹配时按 id 优先，缺失再回退 roomId。
+    const rawKey = id.replace('hidden-', '')
+    const rewardGroup = hiddenRewardsData.value.find(h => h.id === rawKey || h.roomId === rawKey)
     if (rewardGroup) {
       currentHiddenCat.value = rewardGroup.bigMapName
     }
   }
 
-  nextTick(() => {
-    if (targetId) {
-      const el = document.getElementById(targetId)
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' })
-        el.classList.add('highlight-section')
-        setTimeout(() => el.classList.remove('highlight-section'), 2000)
-      }
-    }
-  })
+  await nextTick()
+  if (!targetId) return
+  const el = document.getElementById(targetId)
+  if (!el || !await waitForRenderableTarget(el)) return
+
+  el.classList.add('highlight-section')
+  // 路由弹窗退场和懒加载图片都可能在首次定位后改变布局，短时间内复核并校正落点。
+  for (const delay of [0, 120, 280, 520]) {
+    if (delay) await new Promise(resolve => setTimeout(resolve, delay))
+    if (route.query.id !== id || !el.isConnected) break
+    alignTargetInViewport(el)
+  }
+  setTimeout(() => el.classList.remove('highlight-section'), 2000)
+
+  // 定位参数是一次性导航指令，消费后移除，避免关闭物品详情时再次触发相同定位。
+  if (route.query.id === id) {
+    const query = { ...route.query }
+    delete query.id
+    await router.replace({ query })
+  }
 }
 
 watch(() => route.query.id, () => {
@@ -446,6 +729,18 @@ watch(() => route.query.id, () => {
     setTimeout(scrollToTarget, 100)
   }
 })
+
+watch(
+  () => [route.query.tab, route.query.sub, route.query.season, route.query.map, route.query.status, route.query.q],
+  () => {
+    if (routeTabsReady.value) applyTabsFromRoute()
+  }
+)
+
+watch(
+  [currentMainCat, currentSubCat, currentExchangeCat, currentHiddenCat, currentHiddenStatus, searchQuery],
+  () => syncTabsToRoute()
+)
 
 const getIcon = (typeId) => {
   const item = getCachedItem(typeId)
@@ -486,6 +781,11 @@ const pvpLimitText = (limit) => {
   return limit.num ? `限购 ${limit.num} 次` : '限购'
 }
 
+const ruleLines = text => String(text || '')
+  .split(/\r?\n/)
+  .map(line => line.trim().replace(/^·\s*/, ''))
+  .filter(Boolean)
+
 const openItem = (typeId) => {
   const item = getCachedItem(typeId)
   if (item) {
@@ -519,11 +819,15 @@ const closePrevImg = () => {
   width: 100%;
 }
 
-.control-row-1 .ui-segmented {
-  width: 100%;
+.hidden-count {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
 }
-.control-row-1 :deep(.ui-segmented__item) {
-  flex: 1;
+
+.hidden-count__divider {
+  padding: 0 4px;
+  color: var(--border-strong);
 }
 
 /* 主内容滚动区 */
@@ -543,6 +847,111 @@ const closePrevImg = () => {
   flex-direction: column;
   gap: 10px;
   padding-bottom: 8px;
+}
+
+.pvp-rules-container {
+  width: 100%;
+  padding: 12px 14px 14px;
+  box-sizing: border-box;
+  background: rgba(223, 206, 179, 0.94);
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(62, 42, 20, 0.16);
+}
+
+:global(.dark-mode) .pvp-rules-container {
+  background: rgba(46, 34, 23, 0.9);
+}
+
+.pvp-rule-copy {
+  display: grid;
+  gap: 8px;
+}
+
+.pvp-rule-copy p {
+  position: relative;
+  margin: 0;
+  padding-left: 16px;
+  color: var(--text-main);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.pvp-rule-copy p::before {
+  content: '';
+  position: absolute;
+  top: 0.68em;
+  left: 2px;
+  width: 6px;
+  height: 6px;
+  background: var(--accent-bright);
+  transform: rotate(45deg);
+}
+
+.pvp-purchase-rule {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-top: 1px dashed var(--border-soft);
+  border-bottom: 1px dashed var(--border-soft);
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.pvp-purchase-rule strong {
+  color: var(--text-main);
+  text-align: right;
+}
+
+.pvp-area-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.pvp-area-rule {
+  min-width: 0;
+  padding: 12px;
+  background: rgba(217, 198, 166, 0.62);
+  border: 1px solid var(--border-faint);
+  border-radius: 6px;
+}
+
+.pvp-area-rule__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 7px;
+  margin-bottom: 7px;
+  border-bottom: 1px solid var(--border-faint);
+}
+
+.pvp-area-rule h4 {
+  margin: 0;
+  color: var(--text-main);
+  font-size: 15px;
+}
+
+.pvp-area-rule__head span {
+  color: var(--accent-ink);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.pvp-area-rule p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+:global(.dark-mode) .pvp-area-rule {
+  background: rgba(35, 26, 17, 0.62);
 }
 
 .exchange-trade-list {
@@ -609,11 +1018,38 @@ const closePrevImg = () => {
   min-width: 80px;
 }
 
+.tier-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.tier-score {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 .win-title {
-  color: var(--q2);
+  color: var(--q2-text);
 }
 
 .fail-title {
+  color: var(--danger);
+}
+
+.battle-score {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.battle-score--win {
+  color: var(--q2-text);
+}
+
+.battle-score--fail {
   color: var(--danger);
 }
 
@@ -632,6 +1068,20 @@ const closePrevImg = () => {
 
 /* 手机端：列表行纵向堆叠 */
 @media (max-width: 640px) {
+  .pvp-area-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pvp-purchase-rule {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .pvp-purchase-rule strong {
+    text-align: left;
+  }
+
   .ui-list-row {
     flex-direction: column;
     align-items: stretch;
@@ -644,16 +1094,42 @@ const closePrevImg = () => {
 
 /* 锚点高亮 */
 .highlight-section {
-  background-color: rgba(122, 154, 153, 0.2) !important;
-  border-color: var(--accent-bright) !important;
-  box-shadow: 0 0 0 2px rgba(122, 154, 153, 0.35) !important;
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 72%, transparent) !important;
 }
 
 /* 被隐藏的物品 */
+.hidden-list-row {
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.hidden-list-row.is-collected {
+  border-color: rgba(122, 154, 153, 0.6);
+  background-color: rgba(223, 206, 179, 0.96);
+}
+
+:global(.dark-mode) .hidden-list-row.is-collected {
+  border-color: rgba(122, 154, 153, 0.45);
+  background-color: rgba(56, 44, 32, 0.85);
+}
+
+.hidden-row-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+}
+
+.hidden-row-head :deep(.ui-collection-toggle) {
+  flex-shrink: 0;
+}
+
 .hidden-row-title {
   font-size: 15px;
   font-weight: 700;
   color: var(--text-main);
+  min-width: 0;
 }
 
 .hidden-row-info {
@@ -673,6 +1149,7 @@ const closePrevImg = () => {
   display: block;
   width: 100%;
   max-width: 520px;
+  aspect-ratio: 16 / 9;
   margin: 6px auto 0;
   border-radius: 4px;
   border: 1px solid var(--border-faint);
@@ -792,48 +1269,11 @@ const closePrevImg = () => {
   object-fit: contain;
 }
 
-/* 点位预览大图遮罩（羊皮纸化） */
-.prev-img-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 2000;
-  background: var(--modal-overlay);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
 .prev-img-full {
-  max-width: 95vw;
-  max-height: 90vh;
+  display: block;
+  width: 100%;
+  max-height: calc(100dvh - var(--safe-top, 0px) - var(--safe-bottom, 0px) - 128px);
   object-fit: contain;
   border-radius: 4px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-}
-
-.prev-img-close {
-  position: fixed;
-  top: 16px;
-  right: 20px;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(223, 206, 179, 0.15);
-  border: 1px solid rgba(223, 206, 179, 0.35);
-  color: var(--paper);
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  user-select: none;
-  transition: background 0.15s ease;
-}
-
-.prev-img-close:hover {
-  background: rgba(223, 206, 179, 0.28);
 }
 </style>

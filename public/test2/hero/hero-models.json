@@ -1,0 +1,556 @@
+{
+  "hero_001": {
+    "name": "希尔",
+    "skeletonName": "Npc_001_girl",
+    "skinName": "skill_off",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_001.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_001_girl",
+    "inputHashes": {
+      "Npc_001_girl.atlas": "418a87c9bb373e27f9aaa62e1deb4c9e09b087c2d91f5a36d2536a39ac07c34a",
+      "Npc_001_girl.png": "236899e987625652b876c428923fa348f31dcbb4a3f629e382302d1847d62cf2",
+      "Npc_001_girl.skel": "ec73df912e3231b6433b51efb173ce183af155c201080c9890db3f4a50da6a95"
+    },
+    "sha256": "6cfcd3c41dc30f63bb2afcb3b8727e14f187cae546d219fa2828534fae028387"
+  },
+  "hero_008": {
+    "name": "夏库塔拉",
+    "skeletonName": "Npc_008",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_008.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_008",
+    "inputHashes": {
+      "Npc_008.atlas": "a642fbf76a7d3b59ebb568fc89e4e69dda6fe53c872ce0273b21fed3cfbe7d2e",
+      "Npc_008.png": "7370068d9a84b28da544b678835359f0e26bcc1d761ec1c9bec381c5fef6c09f",
+      "Npc_008.skel": "6849380c17a34dc5aa3e0f8143a0baae0c3198c4e2865a5f90e67f77b617f3d6"
+    },
+    "sha256": "a20305704c7b264b3e29b9f4a6c8c1c4266e4a05b0b88e475d7b09a4121b86eb"
+  },
+  "hero_031": {
+    "name": "波特温",
+    "skeletonName": "Npc_031",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_031.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_031",
+    "inputHashes": {
+      "Npc_031.atlas": "cfa4348e9507165cb9749d89ac73b656ed1678e50615274095ec327a27c2b55e",
+      "Npc_031.png": "93625695be0ea17b0c8c8861bda1c66589d07bcc1ffdd529693ea64774b5c717",
+      "Npc_031.skel": "27fea883b24995344d0dcea91b8de93144580babdc6b6478c6abe7afbba8b672"
+    },
+    "sha256": "cdc1ff6f30637cbe112e90a79a2c7ebdead14ee4b1ad4717051d3187083e946b"
+  },
+  "hero_025": {
+    "name": "嘉莉缇",
+    "skeletonName": "Npc_025",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_025.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_025",
+    "inputHashes": {
+      "Npc_025.atlas": "6eece8f5660d0d877e3f0e9dcf2d33c8cabb7b3777cf9633f50a2f7df805c136",
+      "Npc_025.png": "208bd950fafd4960813771c8562834964d008e99672130ade976b0725ee8c897",
+      "Npc_025.skel": "ed562eaa132611796760e174ccb41adceb823f8047dab64dec45982836736344"
+    },
+    "sha256": "fc71405a4c40fa372a54f14c2a833795ac3add48cf7279ae5a4d2e688d7411f3"
+  },
+  "hero_027": {
+    "name": "梅莉莉",
+    "skeletonName": "Npc_027",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_027.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_027",
+    "inputHashes": {
+      "Npc_027.atlas": "b342d81cf02526a9c90447a447a2436726602d86c9bb0d0203ea6f91e306c2b7",
+      "Npc_027.png": "84f1d577c26cdeb92ec6f13430fcae168c9ba9e2a9a081d8710d03f7757fa992",
+      "Npc_027.skel": "29b8391c628c220e30e17b9896ed8b3273f8cab10c1c23146913f385a246ebb0"
+    },
+    "sha256": "27f476deeac976b35c2874a6e73b9127970f8949518301ae24c04eaaeb0a436f"
+  },
+  "hero_007": {
+    "name": "拉碧丝",
+    "textureAdjustments": [
+      {
+        "file": "Npc_007.png",
+        "operation": "restore-cropped-sprite-canvas",
+        "left": 1,
+        "right": 1,
+        "top": 153,
+        "bottom": 0
+      }
+    ],
+    "skeletonName": "Npc_007",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_007.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_007",
+    "inputHashes": {
+      "Npc_007.atlas": "9fbe0db808310e14a1018b92784e465514f2892cb268d719fd7edb98cedbf48c",
+      "Npc_007.png": "2ed42ef666451617cde8018a7917492c70c6e0808759acaa30a1b3f7d4fa6542",
+      "Npc_007.skel": "904063db056f2c49d32d386c84cc1d16ac929b630310b046fb42a91f8d063070"
+    },
+    "sha256": "aa563388768750b1392d4312ee43bf20ee014b94819e03067bc86d947fed5d0e"
+  },
+  "hero_015": {
+    "name": "芭杜尔",
+    "skeletonName": "Npc_015",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_015.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_015",
+    "inputHashes": {
+      "Npc_015.atlas": "1986a350697b80abb2029feef6e80ea79f1d8a854d6ff0521ea40ba655d4da50",
+      "Npc_015.png": "c3785e35ba17c5b019e795917b1399d38cdb48bd3a456bd00a1f6d7a594ed2c0",
+      "Npc_015.skel": "a800e6f8d29d5b6b93f6290356bf1147424ff7d719ad6baaf24f04341855343a"
+    },
+    "sha256": "9893c9a54b81efd777bb5659d9ab19216e6c192eeb8279de1d76fc0bc30bddbe"
+  },
+  "hero_012": {
+    "name": "沃夫加",
+    "skeletonName": "Npc_012",
+    "skinName": "normal",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_012.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_012",
+    "inputHashes": {
+      "Npc_012.atlas": "f126f596c7fe09ceee00df502a61a1c4f4f879adebc7b78b550ceb01c98cc1e6",
+      "Npc_012.png": "d6ecba6a8940c523e04b216914cd1bf4d9f1afb27d83461f958f4c6c7be6d1f6",
+      "Npc_012.skel": "214b7ceca2accc9564b5b925ec7b44d742a9034b948ff66860e6820e18df6427"
+    },
+    "sha256": "88aa9132d014ebbdd31d6cf19dda390cdc2c755bfad2a9b85a5fd1f2b94b4198"
+  },
+  "hero_005": {
+    "name": "茜塔",
+    "skeletonName": "Npc_005",
+    "skinName": "normal",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_005.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_005",
+    "inputHashes": {
+      "Npc_005.atlas": "1f87e502580fb1e6bda1a9fb05d5c68225adcec76b2e1a6efdb1ce79983331af",
+      "Npc_005.png": "9a2c9b0f84d4be46f865892001b6dcd769b16ea5713c15b25413c3f7983ad309",
+      "Npc_005.skel": "378dfe11ced5c455ee64456a19c34e255351c3033a2203ecfd61ff907ad1a55a"
+    },
+    "sha256": "ae9ad9755c34500a1efb2265139dd1a96d02589b83d72f7c77da3b4e7494c464"
+  },
+  "hero_055": {
+    "name": "迦南",
+    "skeletonName": "Npc_055",
+    "skinName": "normal",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_055.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_055",
+    "inputHashes": {
+      "Npc_055.atlas": "bd7947a3f91bf65197c0f53aa117ee5c83b3ca5085a17bdc2ef5a37fd90349a1",
+      "Npc_055.png": "ae6505f1e13c4b869c96befee4e8ab809621b84a75ab732b4202deb9abcca45a",
+      "Npc_055.skel": "d27a95e4e174977c1389c6cfce8e15ed193c3fdc054487b5dde1bd6cb49e15ca"
+    },
+    "sha256": "a19db053a0ff2d3e3a31612dcce787a296b405cdc8c4fa9eb3d98ae279fb6f0f"
+  },
+  "hero_014": {
+    "name": "皮塔",
+    "skeletonName": "Npc_014",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_014.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_014",
+    "inputHashes": {
+      "Npc_014.atlas": "58c84301960e7be3a91aacf7f6f1cdc2e17e8971ea9319d7df2d796e03f2de67",
+      "Npc_014.png": "cada146eddfda9923b2ed0410cc8d7543b04f13fe6d1c27a4c9d76e076a53f93",
+      "Npc_014.skel": "c364a8238a3da4682c09edd4a7bfbcb658b6af8212da4b5ff0690b4476688afd"
+    },
+    "sha256": "f6d0b646138908d8c1312749aa99eceff315f0fd28e5de618d906ac6df7064c6"
+  },
+  "hero_009": {
+    "name": "可可娜",
+    "skeletonName": "Npc_009",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_009.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_009",
+    "inputHashes": {
+      "Npc_009.atlas": "d6b755a1a492dbcb25cf2ea57504475cc293c216eb6c6b9a86a8dbe9e10a9c06",
+      "Npc_009.png": "d31ae0a51747dba98312d058968fb56450f3cf0d8f3c09d0ed99cab937fb99c4",
+      "Npc_009.skel": "df5f12966e67d58b59732f5faeb233c0df7dbff1cafd0e4df35be206b6df60a1"
+    },
+    "sha256": "6cf4757bb6b2b65558a56f92b9a3cc0abf87e93bb296618431c4ed9d06e72555"
+  },
+  "hero_019": {
+    "name": "奇瓦",
+    "skeletonName": "Npc_019",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_019.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_019",
+    "inputHashes": {
+      "Npc_019.atlas": "cfa09f2f75c973597b3378d34bd68f0f6b07d842f9a6bed1728379dcda89a024",
+      "Npc_019.png": "ce8b9c2b4c9cbb9d799bc9c8662ac91c328c6e2b91ba73af31fb4a3f8598d33d",
+      "Npc_019.skel": "20c9b673f19dd286413325c7c37a62123652ec059654780515bd1d59631d5b5e"
+    },
+    "sha256": "383dceb69d1798f7876f9e8108a0834ff0004f6edd7cad17d7cdcdf9892fe2fd"
+  },
+  "hero_045": {
+    "name": "艾尔菲帕",
+    "skeletonName": "Npc_045",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_045.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_045",
+    "inputHashes": {
+      "Npc_045.atlas": "ac02db65cdb6d7b07a60f70b9f389ea891e01aaecc77d6df4934546b5f4ac7b2",
+      "npc_045.png": "6d71eb670b49292ef5cf5b0616654ec70789939f6b9e43b5a37dde3a7a26b68f",
+      "Npc_045.skel": "60413e9e75caf89a140790a512f0f7600b4b5b4a983e4c3138ec56c7c59be640"
+    },
+    "sha256": "b5b62203af20b8a05f33e0fcb118f671de11d137ad50e40222ce3c6cb57191ac"
+  },
+  "hero_046": {
+    "name": "迈妮娅",
+    "skeletonName": "Npc_046",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_046.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_046",
+    "inputHashes": {
+      "Npc_046.atlas": "20ee542770848b26af3c06d101c30681d235a9a4ac805e5b028020e935a64804",
+      "Npc_046.png": "22174bbac4bda02dd0c06b27105a712cbd82b8e99ba485c2b824346264eb00b6",
+      "Npc_046.skel": "4f39e97dd07a624cdd71a18e6a6189c84eaeb5b7f48bf5f27d6d4b470a698ea7"
+    },
+    "sha256": "7468b547bede493835c4d3288e31eb41b26f44fcd00f8eab4ed79968c6c4b05e"
+  },
+  "hero_011": {
+    "name": "缇莎",
+    "skeletonName": "Npc_011",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_011.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_011",
+    "inputHashes": {
+      "Npc_011.atlas": "d631fea8f106d8cbb2391fb25c872d329a7a04794fb26bd5e5dd4fd1fa8ce968",
+      "Npc_011.png": "8b9a1f12023f7d99554d5dd710631aaf184593ebe86d4a091aa73119c76d73c8",
+      "Npc_011.skel": "3d86e369d0a494daefb531a6e5ba48b6656aef35dd35c78c69dad71247b98c59"
+    },
+    "sha256": "54330f1d773a50074a5e4f3bfcf5c86a4df60b50eadb957ab908489b0c961ef4"
+  },
+  "new_hero_002": {
+    "name": "米托拉",
+    "skeletonName": "Npc_002_1",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "new_hero_002.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_002_1",
+    "inputHashes": {
+      "Npc_002_1.atlas": "7c5c007b65e43e18f62cee6a5b922c30924aa209d9e50121156e061a44ac8bd2",
+      "Npc_002_1.png": "6c90b23a2a1729e1adeafab1d4d133307a722192bca4e0408f9318413bbd13a0",
+      "Npc_002_1.skel": "5d7c3e0df14499b6776981961deab9110e2d1544e4c8993b0c462c1ba0b2d394"
+    },
+    "sha256": "dc4dcfe809f6c8e7d2e63f5578ffd1a4a90b322f04e5f48b8ce1b9452db5abad"
+  },
+  "hero_023": {
+    "name": "卡夫",
+    "skeletonName": "Npc_023",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_023.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_023",
+    "inputHashes": {
+      "Npc_023.atlas": "44e01c95246582e7f12aa26630b04634b80a89b2d803790ed9ff4acb88cda038",
+      "Npc_023.png": "a4c9be68558ab478ed4b5eebda1db05c669724c4a69133c0a1ffdbf454c8854e",
+      "Npc_023.skel": "adc6410521a4dbcec1ee39adb02627106a59844dfb5146835ec7aff4785e2615"
+    },
+    "sha256": "20b70b1ce2677a7a550a70851137d0fcd649fa34c20ce7d9aacaef9300779b75"
+  },
+  "hero_026": {
+    "name": "贝拉多娜",
+    "skeletonName": "Npc_026",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_026.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_026",
+    "inputHashes": {
+      "Npc_026.atlas": "451727f06ae4b8407277119a6fc70e27ebeaa8ebab6c9807f08f4765c9ff13c2",
+      "Npc_026.png": "b850ae385ed8304891ee54c86401a746761ad156e248fd1e353dea0e07bf5db7",
+      "Npc_026.skel": "d8f9fb563f4295b67f685020ebe5e7e60c150b4bdece797051bf0baffb9bdd91"
+    },
+    "sha256": "9157aed79c439d0bac87ade9f7db04e60ea4870ea9f4c58d75bd743284e4a381"
+  },
+  "hero_037": {
+    "name": "剋",
+    "skeletonName": "Npc_037",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_037.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_037",
+    "inputHashes": {
+      "Npc_037.atlas": "a68226498103dfabebcc0d1a402041cbdc236bcbb5a5b417488ae704d36d1033",
+      "Npc_037.png": "e18c6bd7c5e46597f116fa126ab2216c4219c0a4101392660fb5f806cc59dda3",
+      "Npc_037.skel": "738b0a34a6853504f386c721315c2fc7f5f242b076b0052e271807758e2c7ced"
+    },
+    "sha256": "a2221277b9ec45f56395d8e04d3916afcaf74618eb1185a3784e8a9602e165ac"
+  },
+  "hero_029": {
+    "name": "安娜",
+    "skeletonName": "Npc_029",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_029.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_029",
+    "inputHashes": {
+      "Npc_029.atlas": "72ac346378214cee6491060fd3dfae52f10b3b72555ad50ddb0740f53bdfc1be",
+      "Npc_029.png": "e19ce03399cf2254666c8071c430bf486c315d023625a6fc2d63d6eb8f2c0e1e",
+      "Npc_029.skel": "ea9a9bc542c5e299e9430249965215211045a8603d8309144cfa609584706adc"
+    },
+    "sha256": "4fcfea1e48cf2f8542ec0c46cd219b40a90a912859d404cccfee74b96012a536"
+  },
+  "hero_034": {
+    "name": "露帕·萝特",
+    "skeletonName": "Npc_034",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_034.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_034",
+    "inputHashes": {
+      "Npc_034.atlas": "438946fa09df9b9e673d1185d4ce2dd5156e4dfd2ad8381604a2bfc2cf5eebad",
+      "Npc_034.png": "5cf35d82ecab8b474caa95087f80092ced642c4b7bdd776e60afb272d2c49b96",
+      "Npc_034.skel": "09d23630df7784cf4f7a554d06907bccc5f254fd14587182508b43c666f61a4d"
+    },
+    "sha256": "a82f4244e65a6deade6ab1f6ae5bcbbc62420b228858177e72c564be404c24f7"
+  },
+  "hero_049": {
+    "name": "菲莉娜",
+    "skeletonName": "Npc_049",
+    "skinName": "skill2_off",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_049.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_049",
+    "inputHashes": {
+      "Npc_049.atlas": "1fb8bfba72297a599472d2be9d632c1354c9155a37757a88edf1d45c520217e3",
+      "Npc_049.png": "66c47c51e00d6fc4ede036103196eb9a04b41f6eaadc418e05f3cc7690b4329c",
+      "Npc_049.skel": "b3de9188b15664a851ecabe7aaf241247920c8763b849db65be3497711051ac1"
+    },
+    "sha256": "6648fdd7e8c0e640714de172c406d243e651cda80aa426e0b81711047be8a7a5"
+  },
+  "hero_050": {
+    "name": "米拉贝尔",
+    "skeletonName": "Npc_050",
+    "skinName": "normal",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_050.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_050",
+    "inputHashes": {
+      "Npc_050.atlas": "7fadaa64b9a6377c02aef9fe66426169a914af5885d30e94480edb53ca41b0da",
+      "Npc_050.png": "c07487ec64ff4ce8270702da900f7501f9dc116c75c08a5c2cecba95151f31b6",
+      "Npc_050.skel": "7e85ce49be1717702d834f0900059c060161b3d6b47201bb4fc1bd22751e64c4"
+    },
+    "sha256": "206fff9aa3d965d7c99d48f481407413158f577dcb0e767ed3ac12067cff4584"
+  },
+  "hero_041": {
+    "name": "埃迪蒂",
+    "skeletonName": "Npc_041",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_041.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_041",
+    "inputHashes": {
+      "Npc_041.atlas": "19abadd63d82371dd549f2f9a393ecc1370c107470ffa14f48088453873fc417",
+      "Npc_041.png": "207f55af07af15b4481aa2521c68c81dba996bbb81c150cc14557a2168916cc4",
+      "Npc_041.skel": "acc1a2eeef534262266f145f359c6174f325ba9a7344b81bf8c8912259fb0796"
+    },
+    "sha256": "8a195649b903dfacb2346578c52a0148560f2f8aa6b12eb8091fa2c22e2ef375"
+  },
+  "hero_051": {
+    "name": "阿莱克西娅",
+    "skeletonName": "Npc_051",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_051.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_051",
+    "inputHashes": {
+      "Npc_051.atlas": "fe624a478a0354f1b05417136874803a9bfa0dc6282e73b6e7bf12b25c3d740e",
+      "Npc_051.png": "dc492b545f40792c379d67f45ebc0d4afc5733beef45fe2cce0203353d949efb",
+      "Npc_051.skel": "911fd8a55508ef248603246b1cdc69e9466d6ecbb69445d4206823102876462b"
+    },
+    "sha256": "9cc08dad22542fa1530eca1f7b15cdc0e6cc7904d4271a9c9fb3c96a59288180"
+  },
+  "hero_036": {
+    "name": "贝尔卡",
+    "skeletonName": "Npc_036",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_036.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_036",
+    "inputHashes": {
+      "Npc_036.atlas": "eb68e5d8062315d0fc1f55b37a50175aa855dfca17474dae94bf01ca677cde23",
+      "Npc_036.png": "ea478177f578fb63dffa8f9f270e05e4d451ad661dc82bc74664b6ad09896eae",
+      "Npc_036.skel": "200b0f45c8f15a18fd53621be4f9568dbeeaacaee6f1d84ce04e142e95da51ca"
+    },
+    "sha256": "599de7251462ea42688466a429432086a59b084d1556d77c066958832344c0a6"
+  },
+  "hero_033": {
+    "name": "乌帕·萝特",
+    "skeletonName": "Npc_033",
+    "skinName": "normal",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_033.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_033",
+    "inputHashes": {
+      "Npc_033.atlas": "e981d6a0d507863a59762653a4d99dda102677f2137071d41f1a6ec292bd4ab4",
+      "Npc_033.png": "4b96b52546f4dfc74f952ab24c79c68c084e4924c5d54de762f82921f9fda9ed",
+      "Npc_033.skel": "a521787b601cdca3ccd35c244a8f02d25f6c8c454af5d6f8ce4a07c4bff6f7c6"
+    },
+    "sha256": "bc612a0e568ab12300ac82bd4e4c347721ac5986623558ae1ed8bec609ea920e"
+  },
+  "hero_053": {
+    "name": "艾薇杜尔",
+    "skeletonName": "Npc_053",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_053.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_053",
+    "inputHashes": {
+      "Npc_053.atlas": "2d3e9d68f58e053d57e0e423f5ed62f6b9735a3e8a574f5beef171dfcddc4474",
+      "Npc_053.png": "a6e7f279ef1f09e2211ac45aed05d2173b6ee35145526ea42d8f84da431b7e49",
+      "Npc_053.skel": "8084ce9fcae5d32d02679dcad6701e873532e9096c94656bb05bee91835baf45"
+    },
+    "sha256": "a6f4595020cb406a22ec673f124ea0f34f167753bc3a74d0ad930dd80aab99df"
+  },
+  "hero_062": {
+    "name": "露比特·鲁特",
+    "skeletonName": "Npc_062",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_062.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_062",
+    "inputHashes": {
+      "Npc_062.atlas": "fb30d4b788971fe71698c6baf67adf0a6763cc01c199317f900d7f5afd6817e3",
+      "Npc_062.png": "7b4f2db4e266c8f3ff1204683de4cec8ecf96addd76442b399bf534a04df54ae",
+      "Npc_062.skel": "944891889856c3b43244d7ec2b098fe356a766168b7ef3f00f55b930459ecd44"
+    },
+    "sha256": "65bc6bc943f4a48efb8007eb5cbc834d8d317f51948ac8b9bb605492c579141a"
+  },
+  "hero_064": {
+    "name": "伽拉忒亚",
+    "skeletonName": "Npc_064",
+    "skinName": "fire",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_064.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_064",
+    "inputHashes": {
+      "Npc_064.atlas": "e0c6b70f941e3d762434a82bc816c1b4a3913767d342b2169856e11f9bc308e4",
+      "Npc_064.png": "c91d7c1b8eb5e0b082a46b586683063c5d1f58d4d2bd56377d86924ae4be6cec",
+      "Npc_064.skel": "f697b2ecabd1903f8bf47bac9a6b167111875daec4735cac157e000c56378cb2"
+    },
+    "sha256": "d2089d29d7ac1e17868b287af187104960b5747a497e6fb6db45dd01325cc3b3"
+  },
+  "hero_066": {
+    "name": "奥格",
+    "skeletonName": "Npc_066",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_066.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_066",
+    "inputHashes": {
+      "Npc_066.atlas": "b933c93b40e3e15f6ccb10ab1cc0a6431d987d2d4445dcf4c7d31f079a786292",
+      "Npc_066.png": "aaf40ef3bdfc8c6ea213ed53ae11fc709d07c9e431eeba3839128ca83effd533",
+      "Npc_066.skel": "87ef47d7045e70c3b444db358dea733b2aa7b62a085dd99048238c4cf031389e"
+    },
+    "sha256": "3326a079d992d1b5fd532faa62904d230b69a85269b88977b4ddf330398689ba"
+  },
+  "hero_065": {
+    "name": "乌尔勒",
+    "skeletonName": "Npc_065",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_065.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_065",
+    "inputHashes": {
+      "Npc_065.atlas": "502aac328143241d9bc3ec709b018400a794d4d0ada6a2c3070ed5d1b1da2971",
+      "Npc_065.png": "e257bf54fe30cdbf704a369d495f76b7c72bbb14dd004ea1b530b80c6b31f33b",
+      "Npc_065.skel": "ae63e8266d4e8c765d7c83484f13818c3205e6417d661c7302c84d72bd2ac910"
+    },
+    "sha256": "ae18290827c7995cf33d4c850f3985af3fdf40112d0c6de0b15ae306ea4a0b32"
+  },
+  "hero_043": {
+    "name": "阿娜洛洁",
+    "skeletonName": "Npc_043",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "hero_043.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_043",
+    "inputHashes": {
+      "Npc_043.atlas": "aca14b373f23ce5b70aa9e03ecd29f3fc4c91ac4c825cacc118277cc78408d53",
+      "Npc_043.png": "cfae8a65b746f6638ea615520c085a67dbd2ac1ce706b7b17bf29003eaa9b5fd",
+      "Npc_043.skel": "bd7c3c080c0f1f4c90c8153ca264bdc9fb5b182cacebfcb1c1d6f3bfde1b9625"
+    },
+    "sha256": "f76bf156d404057696e0d9fddcc59588f70fe08adafab3137f5b5eb14fc9089b"
+  }
+}

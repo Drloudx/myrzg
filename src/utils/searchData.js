@@ -13,7 +13,10 @@ import {
   ITEM_CATEGORY_NAMES,
   resolveItemCategoryTags
 } from './gameMappings.js'
-import { getExchangeSourceMeta, isVisibleExchange } from './exchangeData.js'
+import { buildOfficialExchangeIndex, getExchangeSourceMeta, isVisibleExchange } from './exchangeData.js'
+import { isFurnitureCatalogEntry } from './furnitureData.js'
+import { buildSupplementalItemSources } from './supplementalItemSources.js'
+import { buildRemainingItemSources } from './remainingItemSources.js'
 
 // 成就名防剧透屏蔽（与 clean-data 一致）
 const BLACKLIST_ACHIEVEMENT_NAMES = ['章节宝箱', '通关']
@@ -96,20 +99,22 @@ function buildEventSearchList(maps) {
 }
 
 // ---------- 兑换搜索条目 ----------
-function buildExchangeSearchList(maps) {
+function buildExchangeSearchList(maps, officialExchangeIndex) {
   const exchangeMap = (maps.itemExchangeJson && maps.itemExchangeJson.itemExchange) || {}
   const list = []
   for (const [id, e] of Object.entries(exchangeMap)) {
+    if (!isVisibleExchange(e, officialExchangeIndex)) continue
     const name = e.name || id
+    const meta = getExchangeSourceMeta(e, officialExchangeIndex)
     list.push({
       id,
       type: 'exchange',
       name,
       quality: 3,
       category: '兑换',
-      subTag: e.team || '兑换',
-      categoryTags: ['兑换', e.team || ''],
-      keywords: `${name} 兑换 ${e.des || ''} ${e.team || ''}`.toLowerCase()
+      subTag: meta.categoryLabel,
+      categoryTags: ['兑换', meta.categoryLabel, meta.subLabel],
+      keywords: `${name} 兑换 ${e.des || ''} ${meta.categoryLabel} ${meta.subLabel}`.toLowerCase()
     })
   }
   return list
@@ -129,12 +134,51 @@ function buildHiddenSearchList(hiddenList = []) {
   }))
 }
 
+// ---------- 家具搜索条目 ----------
+function buildFurnitureSearchList(maps) {
+  const furnitureMap = maps.homeItemJson?.furniture || maps.homeItemJson?.datas || maps.homeItemJson || {}
+  const categoryNames = new Map()
+  for (const main of maps.gameSettingJson?.data?.typeSetting?.homeItem_type || []) {
+    categoryNames.set(String(main.type), main.name)
+    for (const sub of main.info || []) categoryNames.set(String(sub.type), sub.name)
+  }
+
+  return Object.values(furnitureMap)
+    .filter(isFurnitureCatalogEntry)
+    .map(furniture => {
+      const categoryIds = (furniture.objType || []).map(String)
+      const mainName = categoryNames.get(categoryIds[0]) || categoryIds[0] || '家具'
+      const subName = categoryNames.get(categoryIds[1]) || categoryIds[1] || ''
+      const skinText = (furniture.skin || [])
+        .flatMap(skin => [skin.name, skin.desc])
+        .filter(Boolean)
+        .join(' ')
+      const sourceText = (furniture.category || []).join(' ')
+      return {
+        id: furniture.typeId,
+        type: 'furniture',
+        name: furniture.name || furniture.typeId,
+        quality: Number(furniture.quality) || 1,
+        category: mainName,
+        subTag: subName,
+        categoryTags: ['家具', mainName, subName].filter(Boolean),
+        keywords: `${furniture.name || ''} 家具 家具图鉴 ${mainName} ${subName} ${sourceText} ${furniture.desc || ''} ${skinText}`.toLowerCase()
+      }
+    })
+}
+
 export function buildSearchData(maps) {
+  const officialExchangeIndex = buildOfficialExchangeIndex({
+    shopRes: maps.shopJson,
+    generalRes: maps.generalJson,
+    packDisplayRes: maps.packDisplayJson,
+    activityListRes: maps.activityListJson
+  })
   const {
     heroJson, itemJson, monJson, fileMonJson, petJson, achievementJson, rewardJson,
     menuJson, buffJson, gameSettingJson,
     randomEventInfoJson, randomEventAreaJson, exploreAreaJson, itemExchangeJson,
-    pvpSources = {}, hiddenSources = {}, hiddenList = []
+    pvpSources = {}, hiddenSources = {}, hiddenList = [], dungeonSources = {}
   } = maps
 
   // ---------- 1. Roles ----------
@@ -158,7 +202,6 @@ export function buildSearchData(maps) {
     if (h && h.name) roleNameById[h.typeId || id] = h.name
   }
   const HERO_FRAGMENT_SPECIALS = {
-    item_59001: '希尔', item_5900101: '希尔', item_5900102: '希尔', item_5900103: '希尔',
     item_59002_1: '米托拉', item_59005: '茜塔', item_59015: '芭杜尔'
   }
   const getFragmentHeroName = (item) => {
@@ -357,8 +400,9 @@ export function buildSearchData(maps) {
     ...monList,
     ...buildTaskSearchList(maps),
     ...buildEventSearchList(maps),
-    ...buildExchangeSearchList(maps),
-    ...buildHiddenSearchList(hiddenList)
+    ...buildExchangeSearchList(maps, officialExchangeIndex),
+    ...buildHiddenSearchList(hiddenList),
+    ...buildFurnitureSearchList(maps)
   ]
 
   // ---------- 8. Item Sources ----------
@@ -375,9 +419,10 @@ export function buildSearchData(maps) {
     reward.items.forEach(group => {
       if (group.rules) {
         group.rules.forEach(rule => {
-          if (rule.typeId && String(rule.typeId).startsWith('item_')) {
-            drops.push({ id: rule.typeId })
-          }
+          const typeId = String(rule.typeId || '')
+          // 奖励不只包含 item_*：皮肤、宠物蛋等也会作为物品进入 item.json。
+          // 以物品表实际存在为准，避免兑换来源漏掉 skin005a 这类正式道具。
+          if (typeId && rawItemData.datas?.[typeId]) drops.push({ id: typeId })
         })
       }
     })
@@ -439,8 +484,8 @@ export function buildSearchData(maps) {
   // 兑换奖励来源：与兑换页共用可见性、一级分类和地图子分类规则。
   const rawExchangeData = maps.itemExchangeJson?.itemExchange || {}
   Object.values(rawExchangeData).forEach(exchange => {
-    if (!isVisibleExchange(exchange)) return
-    const meta = getExchangeSourceMeta(exchange)
+    if (!isVisibleExchange(exchange, officialExchangeIndex)) return
+    const meta = getExchangeSourceMeta(exchange, officialExchangeIndex)
     const drops = getItemsFromReward(exchange.reward)
     drops.forEach(drop => {
       const list = ensureSourceList(drop.id)
@@ -476,6 +521,30 @@ export function buildSearchData(maps) {
     })
   })
 
+  Object.keys(dungeonSources).forEach(itemId => {
+    const list = ensureSourceList(itemId)
+    ;(dungeonSources[itemId] || []).forEach(src => {
+      if (!list.find(x => x.type === src.type && x.id === src.id && x.des === src.des)) {
+        list.push(src)
+      }
+    })
+  })
+
+  for (const [itemId, sources] of Object.entries(buildSupplementalItemSources(maps))) {
+    ensureSourceList(itemId).push(...sources)
+  }
+
+  for (const [itemId, sources] of Object.entries(maps.runeSources || {})) {
+    const synthesisIds = new Set(sources.filter(source => source.type === 'runeSynthesis').map(source => source.id))
+    itemSources[itemId] = ensureSourceList(itemId).filter(source =>
+      !(source.type === 'exchange' && source.category === 'gem' && synthesisIds.has(source.id)))
+    itemSources[itemId].push(...sources)
+  }
+
+  for (const [itemId, sources] of Object.entries(buildRemainingItemSources(maps, itemSources))) {
+    ensureSourceList(itemId).push(...sources)
+  }
+
   // ---------- 9. 黑名单过滤 ----------
   const filteredSearchIndex = searchIndex.filter(item => !isBlacklisted(item))
 
@@ -504,7 +573,7 @@ export interface EquipData {
 
 export interface IndexData {
   id: string;
-  type: 'role' | 'equip' | 'pet' | 'pet_egg' | 'achievement' | 'recipe' | 'item' | 'monster' | 'exchange';
+  type: 'role' | 'equip' | 'pet' | 'pet_egg' | 'achievement' | 'recipe' | 'item' | 'furniture' | 'monster' | 'task' | 'event' | 'explore' | 'exchange' | 'hidden';
   name: string;
   quality: number;
   category: string;

@@ -142,8 +142,8 @@ import {
 import { isBlacklisted } from '../config/blacklist.js'
 import { fetchWithFallback } from '../utils/request.js'
 import { getImageUrl } from '../utils/env.js'
-import { buildRecipeData } from '../utils/recipeData.js'
 import { useLazyList } from '../composables/useLazyList'
+import { alignElementInScrollTarget } from '../utils/scrollTarget.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -163,6 +163,7 @@ const highlightedRecipeId = ref('')
 
 const recipes = ref([])
 const isDataReady = ref(false)
+let highlightTimer = 0
 
 // Preview Modal State
 const previewModal = ref({
@@ -216,7 +217,7 @@ const handleNavigateSource = (sourceInfo) => {
   }
 }
 
-const handleLocateRecipe = (targetId, queryQ) => {
+const handleLocateRecipe = async (targetId, queryQ) => {
   if (!isDataReady.value || !recipes.value.length) return
 
   let match = null
@@ -233,42 +234,42 @@ const handleLocateRecipe = (targetId, queryQ) => {
       filterTag.value = 'all'
     }
 
+    await nextTick()
+    const index = ensureRecipeVisible(match.id)
+    if (index < 0) return
+
     highlightedRecipeId.value = match.id
 
-    nextTick(() => {
-      const el = document.getElementById(`recipe-card-${match.id}`)
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      }
-    })
+    let el = null
+    let aligned = false
+    for (const delay of [0, 120, 280, 520]) {
+      if (delay) await new Promise(resolve => setTimeout(resolve, delay))
+      await nextTick()
+      el = document.getElementById(`recipe-card-${match.id}`)
+      if (!el || !el.isConnected || el.getBoundingClientRect().height <= 0) continue
+      alignElementInScrollTarget(el, '#recipeGridScroll')
+      aligned = true
+    }
+    if (!aligned) return
 
-    setTimeout(() => {
+    if (highlightTimer) clearTimeout(highlightTimer)
+    highlightTimer = window.setTimeout(() => {
       highlightedRecipeId.value = ''
+      highlightTimer = 0
     }, 2800)
+
+    // `id` is a one-time locate command; keep `q` as the user's search state.
+    if (String(route.query.id || '') === String(targetId || '')) {
+      const query = { ...route.query }
+      delete query.id
+      await router.replace({ query })
+    }
   }
 }
 
 onMounted(async () => {
   try {
-    let assembledList = null
-
-    // 优先读取构建期预解析单文件
-    try {
-      const data = await fetchWithFallback('data/parsed/recipes.json')
-      assembledList = data.recipes
-    } catch (e) {
-      console.warn('parsed/recipes.json 不可用，回退到原始多文件加载:', e?.message || e)
-    }
-
-    if (!assembledList) {
-      const [menuJson, itemJson, buffJson, gsJson] = await Promise.all([
-        fetchWithFallback('data/menu.json'),
-        fetchWithFallback('data/item.json'),
-        fetchWithFallback('data/buff.json'),
-        fetchWithFallback('data/gameSetting.json')
-      ])
-      assembledList = buildRecipeData({ menuJson, itemJson, buffJson, gsJson }).recipes
-    }
+    const { recipes: assembledList } = await fetchWithFallback('data/parsed/recipes.json')
 
     // 预解析产物存相对路径，运行时统一过 getImageUrl（原生端会加 CDN 前缀）
     recipes.value = assembledList
@@ -284,7 +285,7 @@ onMounted(async () => {
       handleLocateRecipe(route.query.id, route.query.q)
     }
   } catch (err) {
-    console.error('Fetch recipes/item/buff/gameSetting data error:', err)
+    console.error('Fetch parsed recipes data error:', err)
     isDataReady.value = true
   }
 })
@@ -294,22 +295,19 @@ watch([filterTag, searchQuery], () => {
   const query = {}
   if (filterTag.value !== 'all') query.tag = filterTag.value
   if (searchQuery.value.trim()) query.q = searchQuery.value.trim()
+  if (route.query.id) query.id = route.query.id
   router.replace({ query })
 })
 
-// Watch route.query for external changes
-watch(
-  () => route.query,
-  (newQuery) => {
-    if (newQuery.q !== undefined && newQuery.q !== searchQuery.value) {
-      searchQuery.value = newQuery.q || ''
-    }
-    if (newQuery.id || newQuery.q) {
-      handleLocateRecipe(newQuery.id, newQuery.q)
-    }
-  },
-  { deep: true }
-)
+// Search remains persistent state; only a new `id` is a locate command.
+watch(() => route.query.q, newQuery => {
+  if (newQuery !== undefined && newQuery !== searchQuery.value) {
+    searchQuery.value = newQuery || ''
+  }
+})
+watch(() => route.query.id, (newId, oldId) => {
+  if (newId && newId !== oldId) handleLocateRecipe(newId, route.query.q)
+})
 
 const filteredRecipes = computed(() => {
   return recipes.value.filter(recipe => {
@@ -332,19 +330,17 @@ const filteredRecipes = computed(() => {
   })
 })
 
-const { displayedItems: displayedRecipes } = useLazyList(filteredRecipes, 60, '#recipeGridScroll')
+const { displayedItems: displayedRecipes, ensureItemVisible } = useLazyList(filteredRecipes, 60, '#recipeGridScroll')
+
+const ensureRecipeVisible = matcher => {
+  const index = filteredRecipes.value.findIndex(item => String(item.id) === String(matcher))
+  return ensureItemVisible(index)
+}
 </script>
 
 <style scoped>
-/* ===== 页面特有布局（筛选面板 / 单列卡片流） ===== */
-.filter-panel {
-  margin: 0 0 12px 0;
-  padding: 10px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex-shrink: 0;
-}
+/* ===== 页面特有布局（筛选面板继承全局 / 单列卡片流） ===== */
+/* .filter-panel 全局定义于 theme.css（padding 12px 14px），页面不重复覆盖 */
 
 .filter-control-row {
   display: flex;

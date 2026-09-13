@@ -74,7 +74,7 @@ const clear = () => emit('update:modelValue', '')
   box-sizing: border-box;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   box-shadow: inset 0 2px 4px rgba(43, 31, 21, 0.12);
-  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-family: var(--font-ui);
 }
 .ui-search__input::placeholder {
   color: var(--text-faint, #8a6d4d);

@@ -22,7 +22,7 @@ export interface EquipData {
 
 export interface IndexData {
   id: string;
-  type: 'role' | 'equip' | 'pet' | 'pet_egg' | 'achievement' | 'recipe' | 'item' | 'monster' | 'exchange';
+  type: 'role' | 'equip' | 'pet' | 'pet_egg' | 'achievement' | 'recipe' | 'item' | 'furniture' | 'monster' | 'task' | 'event' | 'explore' | 'exchange' | 'hidden';
   name: string;
   quality: number;
   category: string;

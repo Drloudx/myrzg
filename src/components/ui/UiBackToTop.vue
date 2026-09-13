@@ -17,33 +17,28 @@
 <script setup>
 /**
  * UiBackToTop —— 回到顶部悬浮按钮（木质圆钮）
- * scrollContainer: CSS 选择器（如 "#itemsGridScroll"），缺省监听 window 滚动
+ * scrollContainer: CSS 选择器（如 "#itemsGridScroll"）；桌面列表进入文档流后自动回退到 App 原生滚动根
  */
 import { ref, onMounted, onUnmounted } from 'vue'
+import { getScrollMetrics, resolveScrollTarget } from '../../utils/scrollTarget.js'
 
 const props = defineProps({
   scrollContainer: { type: String, default: '' }
 })
 
 const isVisible = ref(false)
-let scrollTarget = null
 let ticking = false
 
 const getScrollTarget = () => {
-  if (!scrollTarget && props.scrollContainer) {
-    scrollTarget = document.querySelector(props.scrollContainer)
-  }
-  return scrollTarget
+  return resolveScrollTarget(props.scrollContainer)
 }
 
 const handleScroll = (e) => {
   if (ticking) return
   ticking = true
   window.requestAnimationFrame(() => {
-    const el = getScrollTarget() || (e && e.target ? e.target : window)
-    const scrollTop = el && el.scrollTop !== undefined
-      ? el.scrollTop
-      : (window.scrollY || document.documentElement.scrollTop || 0)
+    const el = getScrollTarget()
+    const { scrollTop } = getScrollMetrics(el)
     isVisible.value = scrollTop > 100
     ticking = false
   })
@@ -51,7 +46,7 @@ const handleScroll = (e) => {
 
 const scrollToTop = () => {
   const el = getScrollTarget()
-  if (el) {
+  if (el && el !== window) {
     el.scrollTo({ top: 0, behavior: 'smooth' })
   } else {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -63,7 +58,6 @@ onMounted(() => {
 })
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll, true)
-  scrollTarget = null
 })
 </script>
 
@@ -72,15 +66,16 @@ onUnmounted(() => {
   position: fixed;
   right: 20px;
   bottom: calc(24px + var(--safe-bottom, 0px));
-  width: 44px;
-  height: 44px;
+  width: var(--floating-control-size, 44px);
+  height: var(--floating-control-size, 44px);
+  box-sizing: border-box;
   border-radius: 50%;
-  background: linear-gradient(180deg, var(--wood-soft, #463424), var(--wood, #2b1f15));
-  color: var(--paper, #dfceb3);
-  border: 2px solid var(--border-color, #8f7351);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(223, 206, 179, 0.25);
+  background: var(--floating-control-background, linear-gradient(180deg, #463424, #2b1f15));
+  color: var(--on-wood-text);
+  border: var(--floating-control-border, 2px solid #8f7351);
+  box-shadow: var(--floating-control-shadow, 0 4px 12px rgba(0, 0, 0, 0.4));
   cursor: pointer;
-  z-index: 900;
+  z-index: var(--floating-control-z, 6002);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -95,9 +90,14 @@ onUnmounted(() => {
 .ui-btt-fade-enter-from, .ui-btt-fade-leave-to {
   opacity: 0;
 }
-@media (min-width: 800px) {
+@media (min-width: 1025px) and (max-width: 1400px) {
   .ui-back-to-top {
-    right: calc(50% - 400px);
+    right: 270px;
+  }
+}
+@media (min-width: 1401px) {
+  .ui-back-to-top {
+    right: calc((100vw - 1400px) / 2 + 270px);
   }
 }
 @media (hover: hover) {

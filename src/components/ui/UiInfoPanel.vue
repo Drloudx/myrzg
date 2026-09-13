@@ -33,7 +33,7 @@ defineProps({
   color: var(--paper, #dfceb3);
   text-align: center;
   padding: 9px 14px;
-  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-family: var(--font-ui);
   font-weight: 700;
   font-size: 15px;
   letter-spacing: 1.5px;

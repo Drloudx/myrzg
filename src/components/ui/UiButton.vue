@@ -33,7 +33,7 @@ const emit = defineEmits(['click'])
   gap: 6px;
   border-radius: 4px;
   cursor: pointer;
-  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-family: var(--font-ui);
   font-weight: 700;
   letter-spacing: 0.5px;
   transition: all 0.18s ease;

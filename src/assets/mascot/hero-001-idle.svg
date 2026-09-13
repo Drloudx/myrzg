@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 360" fill="none" class="mascot-illustration" data-character="001" style="--mascot-eyes-origin:120px 108px;--mascot-left-origin:73px 86px;--mascot-right-origin:168px 86px" aria-hidden="true" focusable="false">
+  <ellipse cx="122" cy="336" rx="43" ry="6" fill="#574d3a" opacity=".14"/>
+  <g stroke="#525250" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <g class="idle-body idle-motion">
+      <!-- Three soft tied sections on each side, rather than straight twin tails. -->
+      <g class="idle-hair-left idle-motion" data-hil-part="hairLeft">
+        <path d="M88 53C63 39 37 56 35 79Q29 94 42 108Q16 111 18 142Q10 159 26 176Q13 190 19 206L7 216L24 213Q15 233 38 246L25 272Q52 287 81 268L65 244Q91 229 81 205Q85 186 65 175Q84 155 73 128L66 110Q88 105 94 84Z" fill="#a8bfc0"/>
+        <path d="M77 61C49 65 41 87 49 103C29 117 22 142 33 160C37 170 46 174 54 172Q35 155 46 136L58 114Q84 103 82 79Z" fill="#cad8d3" stroke="none"/>
+        <path d="M37 181C22 194 26 219 41 231Q25 201 56 183L66 181L68 172L39 169Z" fill="#c3d3cf" stroke="none"/>
+        <path d="M51 244L39 269L49 278L64 275L56 248Z" fill="#c9d8d3" stroke="none"/>
+        <path d="M69 64Q48 81 49 99M58 119Q31 142 44 163M62 189Q40 210 49 232M49 251L42 266M60 250L68 264" stroke="#849fA4" stroke-width="2.5"/>
+        <path d="M35 169Q45 178 65 174M38 244Q49 250 64 244" stroke="#768d92" stroke-width="5"/>
+        <path d="M38 169Q51 175 63 172M42 244L58 246" stroke="#b7cbc8" stroke-width="1.8"/>
+      </g>
+      <g class="idle-hair-right idle-motion" data-hil-part="hairRight">
+        <path d="M152 50Q181 41 198 61Q209 72 204 90L215 93L203 100Q222 113 223 135Q231 150 219 165L232 168L218 176Q233 193 225 218L235 240Q216 259 185 254L184 234Q164 226 163 206Q158 186 173 171Q152 158 160 137L167 113Q152 94 152 50Z" fill="#a8bfc0"/>
+        <path d="M175 56Q199 70 195 90Q200 80 191 68ZM182 109Q208 131 203 157Q218 145 207 124ZM184 184Q204 201 196 224Q213 211 202 189Z" fill="#cfdbd5" stroke="none"/>
+        <path d="M173 60Q194 78 187 97M179 117Q204 140 191 161M185 181Q213 207 199 228M197 236L201 246M211 233L221 242" stroke="#819da3" stroke-width="2.6"/>
+        <path d="M174 170Q193 174 215 166M187 234L222 227" stroke="#778f93" stroke-width="5"/>
+        <path d="M180 169Q197 171 210 167M192 233L217 229" stroke="#c6d6d0" stroke-width="1.6"/>
+      </g>
+      <!-- Canvas satchel, ivory stockings and slouched boots. -->
+      <g data-hil-part="satchel">
+      <path d="M82 215Q64 219 70 249Q72 267 91 267L100 251L95 216Z" fill="#766853"/>
+      <path d="M72 230L90 232L94 247L85 255L73 248Z" fill="#a59672"/>
+      <path d="M76 233L79 249M87 234L87 248" stroke="#514b40"/>
+      </g>
+      <g data-hil-part="legs">
+      <path d="M95 247L122 249L114 293L88 302L86 285Z" fill="#ece7d5"/>
+      <path d="M133 248L155 245L158 284L149 298L130 289Z" fill="#ece7d5"/>
+      <path d="M96 263L105 266L107 262L119 264M133 261L145 258L147 262L155 260" stroke="#bba16e" stroke-width="2.5"/>
+      <path d="M91 279L99 289L112 285L109 293L91 300Z" fill="#c9c5b7" stroke="none"/>
+      <path d="M136 277L142 285L157 282L149 292L133 288Z" fill="#cec9b7" stroke="none"/>
+      <path d="M85 288Q98 299 116 289L112 307L103 311L102 326Q99 337 88 335Q78 333 82 321L80 305Z" fill="#6d6050"/>
+      <path d="M88 300L103 304L93 312M86 319L95 321" stroke="#8b7b62" stroke-width="3"/>
+      <path d="M131 285Q145 294 159 283L156 303L149 308L148 322Q143 332 133 325L130 306Z" fill="#6d6050"/>
+      <path d="M136 300L150 298L140 309M136 316L143 317" stroke="#8b7b62" stroke-width="3"/>
+      </g>
+      <g data-hil-part="torso">
+      <path d="M91 216L155 216L165 250L148 260L127 258L122 251L118 259L88 256L82 245Z" fill="#79604e"/>
+      <path d="M91 238Q124 244 158 238M125 240L124 252" stroke="#4f433a" stroke-width="2"/>
+      <!-- Cream sleeves, high mustard collar and diagonal leather harness. -->
+      <path d="M95 144L144 142L158 168L152 211L160 230L88 231L91 193L84 166Z" fill="#514b41"/>
+      <path d="M112 148L135 151L142 197L110 203L103 177Z" fill="#eee8d7"/>
+      <path d="M123 164L121 181L131 188L118 192" stroke="#c2bda9" stroke-width="1.7"/>
+      <g class="hil-original-arm" data-hil-part="leftArm">
+      <path d="M90 153Q76 157 72 180L59 219L80 228L99 175Z" fill="#ece5d3"/>
+      <path d="M77 182L74 207L67 216M84 184L80 211" stroke="#b7b7aa" stroke-width="2.5"/>
+      <path d="M58 215L80 224L85 239Q84 251 77 254L67 250L64 253L52 245L50 231Z" fill="#75674f"/>
+      <path d="M60 218L62 231L69 226" stroke="#b9a66c" stroke-width="2.5"/>
+      </g>
+      <path class="hil-original-shoulder" d="M82 150L98 162L91 177L73 172L72 162Z" fill="#4b5c64"/>
+      <path class="hil-original-shoulder" d="M143 151L155 148L169 167L156 179L145 166Z" fill="#4b5c64"/>
+      <g class="pose-idle-arm">
+      <path d="M157 176L168 169L177 211L164 219L150 186Z" fill="#ece5d3"/>
+      <path d="M164 180L167 202L174 208" stroke="#bab8a7"/>
+      </g>
+      <g class="pose-idle-arm">
+      <path d="M167 209L180 214L187 236Q184 249 174 244L169 247L161 239L157 222Z" fill="#75674f"/>
+      <path d="M168 214L171 225L177 219" stroke="#b9a66c" stroke-width="2.5"/>
+      </g>
+      <path d="M141 142L154 151L91 220L82 214Z" fill="#6e5d44"/>
+      <path d="M143 151L90 211" stroke="#a19169" stroke-width="1.5"/>
+      <path d="M91 208L154 202L159 213L92 220Z" fill="#3d4243"/>
+      <path d="M123 204L132 205L130 218L125 221L119 216L119 207" stroke="#c0a25f" stroke-width="3"/>
+      <path d="M96 226L149 217L152 236L97 244Z" fill="#42525d"/>
+      <path d="M101 229L144 222L147 234L102 240Z" stroke="#a4a086" stroke-width="1.3"/>
+      <path d="M92 222L96 243M153 218L157 235" stroke="#a7704d" stroke-width="5"/>
+      <circle cx="105" cy="231" r="1.3" fill="#d4c59a" stroke="none"/>
+      <circle cx="141" cy="225" r="1.3" fill="#d4c59a" stroke="none"/>
+      </g>
+      <!-- Rounded face and blunt silver-blue fringe. -->
+      <g class="pose-head" data-hil-part="head">
+      <path d="M76 73Q77 40 119 36Q159 33 176 64L172 109Q166 133 130 137Q93 141 80 119Z" fill="#94aeb3"/>
+      <path d="M86 82Q116 64 154 82L161 102Q161 130 129 137Q99 139 86 116Z" fill="#f2cdb2"/>
+      <path d="M86 103Q87 124 109 130L111 136Q91 132 83 118Z" fill="#dca98e" stroke="none"/>
+      <g class="idle-eyes idle-motion">
+        <path d="M103 105Q111 98 119 104L118 114Q113 121 107 116Z" fill="#f9eddb" stroke="none"/>
+        <path d="M138 100Q146 93 153 99L152 109Q147 116 141 111Z" fill="#f9eddb" stroke="none"/>
+        <ellipse cx="112" cy="109" rx="5.5" ry="8.7" fill="#b45e53" stroke="none"/>
+        <ellipse cx="146" cy="104" rx="5.4" ry="8.5" fill="#b45e53" stroke="none"/>
+        <path d="M108 112Q113 109 116 113L115 117L110 117ZM142 107Q147 104 150 108L148 112L143 111Z" fill="#ed9473" stroke="none"/>
+        <ellipse cx="113" cy="106" rx="2.1" ry="4.5" fill="#8c4946" stroke="none"/>
+        <ellipse cx="147" cy="101" rx="2.1" ry="4.5" fill="#8c4946" stroke="none"/>
+        <circle cx="109" cy="103" r="2.2" fill="#fff4df" stroke="none"/>
+        <circle cx="144" cy="98" r="2.1" fill="#fff4df" stroke="none"/>
+        <path d="M102 104Q109 97 118 102M138 99Q145 93 153 97" stroke="#83524a" stroke-width="2.7"/>
+      </g>
+      <path d="M103 94L117 93M140 88L150 88" stroke="#a28d7c" stroke-width="1.5"/>
+      <path d="M118 35Q145 28 165 45Q177 48 182 64L190 67L174 70L174 94L158 93L157 73L154 96L142 99L139 71L138 99L123 102L121 72L119 99L106 101L100 90Q101 115 109 126Q89 120 82 102Q74 107 78 123Q60 108 68 86Q63 67 75 54Q89 38 118 35Z" fill="#abc1c2"/>
+      <path d="M111 41Q82 60 82 86Q82 105 94 117Q75 100 80 74Q85 51 111 41Z" fill="#d0ddD6" stroke="none"/>
+      <path d="M118 44Q104 68 106 89M127 43L132 88M141 45Q157 66 158 85M152 48Q168 61 170 73" stroke="#8ca7ad" stroke-width="2"/>
+      <path d="M113 49L110 64M138 45L144 57" stroke="#d2ded7" stroke-width="3"/>
+      <path d="M126 37Q138 30 132 20Q145 28 135 39" fill="#a9bfc0"/>
+      <path d="M75 52L83 54" stroke="#a98e52" stroke-width="4"/>
+      <!-- The collar hides the mouth, as in the reference. -->
+      <path d="M84 129Q118 138 163 117L161 142Q150 159 119 166Q92 163 78 149Z" fill="#a68b4f"/>
+      <path d="M84 130Q122 141 163 118L159 125Q121 146 83 136Z" fill="#c1a464"/>
+      <path d="M124 140L125 159M151 130L148 147" stroke="#766846" stroke-width="1.6"/>
+      <path d="M83 144L107 153L100 160L85 154Z" fill="#8d7545" stroke="none"/>
+      <circle cx="129" cy="145" r="1.9" fill="#dac68c"/>
+      <circle cx="130" cy="154" r="1.7" fill="#dac68c"/>
+      </g>
+      <g class="pose-think-arm" display="none">
+        <path d="M155 169Q171 169 176 185L179 200Q176 211 167 207L145 172L151 159L162 162L166 184L163 179Z" fill="#ece5d3"/>
+        <path d="M170 182L173 199L155 173" stroke="#bab8a7"/>
+        <path d="M146 169L161 163L159 151L152 141Q148 136 144 141L141 138Q136 138 136 143L134 147L127 148Q123 152 129 156L143 160Z" fill="#75674f"/>
+        <path d="M138 145L145 147M136 151L145 152M146 142L149 150" stroke="#b9a66c" stroke-width="1.6"/>
+        <path d="M145 165L159 160" stroke="#c8b586" stroke-width="3"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -38,13 +38,16 @@
 
     <!-- 加载 / 错误 -->
     <UiEmptyState v-if="!isDataReady" type="loading" text="正在装配任务数据..." />
-    <UiEmptyState v-else-if="errorMessage" type="error" :text="errorMessage" />
+    <UiEmptyState v-else-if="errorMessage" type="error" :text="errorMessage">
+      <template #action><UiButton @click="loadTasks">重试</UiButton></template>
+    </UiEmptyState>
 
-    <!-- 任务列表区（单列宽卡片流，懒加载每批 60 项） -->
-    <UiCardGrid v-else id="tasksGridScroll" wide>
+    <!-- 单列窗口化，按实际内容测量每张任务卡片高度。 -->
+    <UiVirtualGrid v-else ref="taskGrid" id="tasksGridScroll" class="tasks-card-grid" :items="filteredTasks" :estimate-size="150" wide>
+      <template #default="{ item }">
       <UiListRow
-        v-for="item in displayedTasks"
         :key="item.id"
+        :data-task-id="item.id"
         class="task-list-row"
         clickable
         @click="openDetail(item)"
@@ -85,9 +88,9 @@
           <span class="task-card-arrow">›</span>
         </template>
       </UiListRow>
-
-      <UiEmptyState v-if="filteredTasks.length === 0" text="未找到符合条件的任务" />
-    </UiCardGrid>
+      </template>
+      <template #empty><UiEmptyState text="未找到符合条件的任务" /></template>
+    </UiVirtualGrid>
 
     <UiBackToTop scroll-container="#tasksGridScroll" />
 
@@ -132,21 +135,26 @@
           </blockquote>
         </UiSection>
 
+        <!-- 完成后直接加入当前任务列表，与仅开放接取资格的 unlockTask 分开。 -->
+        <UiSection v-if="selectedTask.addTasks.length" title="后续任务" class="task-follow-up-section">
+          <div class="task-follow-up-list chip-group">
+            <UiTag v-for="task in selectedTask.addTasks" :key="task.id">{{ task.name }}</UiTag>
+          </div>
+        </UiSection>
+
         <!-- 解锁信息 -->
-        <UiSection title="解锁信息">
-          <UiInfoRow label="解锁任务">
-            <span v-if="selectedTask.unlockTasks.length" class="chip-group">
+        <UiSection v-if="selectedTask.unlockTasks.length || selectedTask.unlockStages.length" title="解锁信息" class="task-unlock-section">
+          <UiInfoRow v-if="selectedTask.unlockTasks.length" label="解锁任务">
+            <span class="chip-group">
               <UiTag v-for="ut in selectedTask.unlockTasks" :key="ut.id">{{ ut.name === ut.id ? ut.id : ut.name }}</UiTag>
             </span>
-            <span v-else>无</span>
           </UiInfoRow>
-          <UiInfoRow label="解锁关卡">
-            <span v-if="selectedTask.unlockStages.length" class="chip-group">
+          <UiInfoRow v-if="selectedTask.unlockStages.length" label="解锁关卡">
+            <span class="chip-group">
               <UiTag v-for="us in selectedTask.unlockStages" :key="us.id">
                 {{ us.label }}<template v-if="us.sub">（{{ us.sub }}）</template>
               </UiTag>
             </span>
-            <span v-else>无</span>
           </UiInfoRow>
         </UiSection>
 
@@ -156,7 +164,7 @@
             <UiRewardCard
               v-for="(rw, rIdx) in selectedTask.reward.entries"
               :key="rIdx"
-              :rule="{ targetName: rw.name, targetImg: getImageUrl(rw.icon), min: rw.count, max: rw.count, typeId: rw.typeId }"
+              :rule="{ targetName: rw.name, targetImg: getImageUrl(rw.icon), targetQuality: rw.quality, min: rw.count, max: rw.count, typeId: rw.typeId }"
               @click="goToItem(rw.typeId)"
             />
             <UiTag v-for="(txt, tIdx) in selectedTask.reward.text" :key="'t' + tIdx" class="reward-text-chip">{{ txt }}</UiTag>
@@ -214,13 +222,14 @@
                     <span
                       v-for="mon in step.monsters"
                       :key="mon.id"
-                      class="monster-chip clickable"
-                      :title="`${mon.name}（点击查看怪物）`"
-                      @click="goToMonster(mon.id)"
+                      class="monster-chip"
+                      :class="{ clickable: mon.hasMonsterDetail }"
+                      :title="mon.hasMonsterDetail ? `${mon.name}（点击查看怪物）` : mon.name"
+                      @click="mon.hasMonsterDetail && goToMonster(mon.id)"
                     >
                       <img
                         v-if="mon.icon"
-                        :src="getImageUrl(`/images/MonstersView/${mon.icon}.png`)"
+                        :src="getImageUrl(`/images/PicHandBookPanel_Atlas/${mon.icon}.png`)"
                         class="monster-icon"
                         loading="lazy"
                         @error="handleImgError"
@@ -274,14 +283,13 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, shallowRef, computed, nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import DialogLines from '../components/TaskDialogLines.vue'
 import {
   UiSearchInput,
   UiFilterRow,
   UiFilterPill,
-  UiCardGrid,
   UiListRow,
   UiEmptyState,
   UiBackToTop,
@@ -295,8 +303,9 @@ import {
 } from '../components/ui/index.js'
 import { loadTaskData } from '../utils/taskParser'
 import { TASK_TYPE_LABELS, cleanDialogueLine } from '../utils/gameMappings'
-import { getImageUrl, getResourceBaseUrl } from '../utils/env'
-import { useLazyList } from '../composables/useLazyList'
+import { getImageUrl, handleImageFallback } from '../utils/env'
+import { fetchWithFallback } from '../utils/request.js'
+import UiVirtualGrid from '../components/ui/UiVirtualGrid.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -305,10 +314,12 @@ const router = useRouter()
 // 改成 false 则显示已下架任务（卡片上仍带灰色“已下架”徽标）
 const HIDE_CLOSED_TASKS = true
 
-const tasks = ref([])
+const tasks = shallowRef([])
 const subOptions = ref({})
 const isDataReady = ref(false)
 const errorMessage = ref('')
+const taskGrid = ref(null)
+let loadOperation = 0
 
 const filterType = ref(route.query.type || 'all')
 const filterSub = ref(route.query.sub || null)
@@ -352,16 +363,12 @@ const filteredTasks = computed(() => {
   })
 })
 
-const { displayedItems: displayedTasks } = useLazyList(filteredTasks, 20, '#tasksGridScroll')
-
 const selectType = (key) => {
   filterType.value = key
   filterSub.value = null
 }
 
-const handleImgError = (e) => {
-  e.target.style.opacity = '0.25'
-}
+const handleImgError = handleImageFallback
 
 // ---------- 详情 ----------
 const openDetail = (item) => {
@@ -405,12 +412,9 @@ const toggleDialog = async (key, dialogId) => {
   if (!dialogContent.value[key]) {
     dialogLoading.value[key] = true
     try {
-      const baseUrl = getResourceBaseUrl()
       const tryFetch = async (name) => {
         try {
-          const res = await fetch(`${baseUrl}/data/taskDialogs/${encodeURIComponent(name)}.json?t=${Date.now()}`)
-          if (!res.ok) return null
-          return await res.json()
+          return await fetchWithFallback(`data/taskDialogs/${encodeURIComponent(name)}.json`)
         } catch (e) {
           return null
         }
@@ -448,9 +452,13 @@ const toggleDialog = async (key, dialogId) => {
 
 
 // ---------- 加载 ----------
-onMounted(async () => {
+const loadTasks = async () => {
+  const operation = ++loadOperation
+  errorMessage.value = ''
+  isDataReady.value = false
   try {
     const data = await loadTaskData()
+    if (operation !== loadOperation) return
     tasks.value = HIDE_CLOSED_TASKS ? data.tasks.filter((t) => !t.close) : data.tasks
     subOptions.value = data.subOptions
     isDataReady.value = true
@@ -458,14 +466,22 @@ onMounted(async () => {
     const taskId = route.query.task
     if (taskId) {
       const item = data.tasks.find((t) => t.id === taskId)
-      if (item) openDetail(item)
+      if (item) {
+        await nextTick()
+        await taskGrid.value?.scrollToItem(item.id)
+        if (operation === loadOperation && route.query.task === taskId) openDetail(item)
+      }
     }
   } catch (err) {
+    if (operation !== loadOperation) return
     console.error('加载任务数据失败:', err)
-    errorMessage.value = '加载失败：' + (err && err.message ? err.message : err)
+    errorMessage.value = '任务数据加载失败，请重试'
     isDataReady.value = true
   }
-})
+}
+
+onMounted(loadTasks)
+onBeforeUnmount(() => { loadOperation += 1 })
 
 watch([filterType, filterSub, searchQuery], () => {
   const query = {}
@@ -480,7 +496,12 @@ watch([filterType, filterSub, searchQuery], () => {
 watch(
   () => route.query.task,
   (val) => {
-    if (!val || !isDataReady.value) return
+    if (!val) {
+      detailVisible.value = false
+      selectedTask.value = null
+      return
+    }
+    if (!isDataReady.value) return
     const item = tasks.value.find((t) => t.id === val)
     if (item) openDetail(item)
   }
@@ -488,15 +509,6 @@ watch(
 </script>
 
 <style scoped>
-/* ---------- 筛选面板（半透明羊皮纸容器） ---------- */
-.filter-panel {
-  margin: 0 0 12px 0;
-  padding: 10px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
 .tasks-counter {
   font-size: 13px;
   font-weight: 600;
@@ -506,15 +518,13 @@ watch(
 }
 
 /* ---------- 任务列表（UiCardGrid 内通栏行布局） ---------- */
-.tasks-grid-scroll :deep(.ui-card-grid) {
+.tasks-card-grid :deep(.ui-card-grid) {
+  grid-template-columns: minmax(0, 1fr);
   align-content: flex-start;
   gap: 6px;
 }
-.tasks-grid-scroll :deep(.ui-list-row) {
-  background-color: rgba(223, 206, 179, 0.92);
-}
-.dark-mode .tasks-grid-scroll :deep(.ui-list-row) {
-  background-color: rgba(63, 48, 32, 0.84);
+.tasks-card-grid :deep(.ui-list-row) {
+  background-color: var(--panel-list-background);
 }
 .task-list-row {
   grid-column: 1 / -1;
@@ -671,6 +681,11 @@ watch(
   align-items: center;
   gap: 4px;
   text-align: left;
+}
+.task-follow-up-list {
+  min-height: 30px;
+  padding: 1px 2px 7px;
+  box-sizing: border-box;
 }
 .info-slot {
   display: flex;

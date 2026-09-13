@@ -30,125 +30,11 @@ export const STEP_TYPE_NAMES = {
 // ---------- 副本难度（stepPosition[2]） ----------
 export const DIFFICULTY = { '1': '简单', '2': '普通', '3': '困难' }
 
-// ---------- 基础货币/经验图标（源码 Const.cs + item.json） ----------
-export const BASE_REWARD_ICONS = {
-  money: 'item_00001', // 银币
-  ke: 'item_00002', // 氪金
-  payKe: 'item_00003', // 神晶
-  exp: 'item_00004', // 营地经验值
-  ti: 'item_00005', // 体力
-  heroExp: 'item_00006', // 伙伴经验值
-  equipExp: 'item_00007', // 装备强化经验
-  speed: 'item_00008' // 加速点
-}
-export const BASE_REWARD_NAMES = {
-  money: '银币',
-  ke: '氪金',
-  payKe: '神晶',
-  exp: '营地经验值',
-  ti: '体力',
-  heroExp: '伙伴经验值',
-  equipExp: '装备强化经验',
-  speed: '加速点'
-}
-
-// 基础货币/经验的完整图片路径（统一 /images 前缀，页面禁止再各自写死）
-const baseRewardIconPath = (iconId) => `/images/Common_ItemIcon/${iconId}.png`
-export const BASE_REWARD_PATHS = Object.fromEntries(
-  Object.entries(BASE_REWARD_ICONS).map(([key, id]) => [key, baseRewardIconPath(id)])
-)
-
-// 奖励 rule.mode -> 展示信息（怪物/角色/物品解析、成就页、奖励页共用）
-export const REWARD_MODE_INFO = {
-  money: { id: 'item_00001', name: BASE_REWARD_NAMES.money, icon: BASE_REWARD_PATHS.money },
-  randomMoney: { id: 'item_00001', name: BASE_REWARD_NAMES.money, icon: BASE_REWARD_PATHS.money },
-  ke: { id: 'item_00002', name: BASE_REWARD_NAMES.ke, icon: BASE_REWARD_PATHS.ke }
-}
-
-// 通用奖励对象解析（成就页、图鉴等共用）：从 reward.json 条目自动解析出标准奖励条目
-export function parseRewardObject(r, itemMap = {}) {
-  if (!r) return { rewards: [], rewardItemNames: [] }
-  const rewards = []
-  const rewardItemNames = []
-
-  // 1. 基础货币与经验（自动遍历 BASE_REWARD_ICONS，统一走全局映射）
-  for (const [field, iconId] of Object.entries(BASE_REWARD_ICONS)) {
-    const val = r[field]
-    if (val && val > 0) {
-      rewards.push({
-        typeId: iconId,
-        name: BASE_REWARD_NAMES[field],
-        count: val,
-        icon: BASE_REWARD_PATHS[field]
-      })
-    }
-  }
-
-  // 2. 道具条目 items
-  if (Array.isArray(r.items)) {
-    for (const it of r.items) {
-      if (it && Array.isArray(it.rules)) {
-        for (const rule of it.rules) {
-          if (rule && rule.typeId) {
-            const count = rule.min || rule.max || it.num || 1
-            const matchedItem = itemMap[rule.typeId]
-            const name = (matchedItem && matchedItem.name) || rule.typeId
-            rewards.push({
-              typeId: rule.typeId,
-              name,
-              count,
-              icon: `/images/Common_ItemIcon/${(matchedItem && matchedItem.img) || rule.typeId}.png`
-            })
-            if (matchedItem && matchedItem.name) {
-              rewardItemNames.push(matchedItem.name)
-            }
-          }
-        }
-      }
-    }
-  }
-
-  return { rewards, rewardItemNames }
-}
-
-// 任务/事件类奖励解析（tasks/events 共用，输出 { entries, text }；原 taskParser/eventData 各自副本收敛于此）
-export function parseRewardEntries(rewardMap, itemMap, rewardId) {
-  if (!rewardId) return { entries: [], text: [] }
-  const r = rewardMap[rewardId] || {}
-  const entries = []
-  const text = []
-  const arr = (v) => (Array.isArray(v) ? v : [])
-
-  for (const [field, iconId] of Object.entries(BASE_REWARD_ICONS)) {
-    const val = r[field]
-    if (val > 0) {
-      entries.push({
-        kind: field,
-        name: BASE_REWARD_NAMES[field],
-        count: val,
-        typeId: iconId,
-        icon: BASE_REWARD_PATHS[field]
-      })
-    }
-  }
-
-  for (const it of arr(r.items)) {
-    for (const rule of arr(it && it.rules)) {
-      if (rule && rule.typeId) {
-        const item = itemMap[rule.typeId]
-        const count = rule.min || rule.max || it.num || 1
-        entries.push({
-          kind: 'item',
-          name: (item && item.name) || rule.typeId,
-          count,
-          typeId: rule.typeId,
-          icon: `/Common_ItemIcon/${(item && item.img) || rule.typeId}.png`
-        })
-      }
-    }
-  }
-  return { entries, text }
-}
+// Reward definitions live with the pure parser to avoid circular dependencies.
+export {
+  BASE_REWARD_ICONS, BASE_REWARD_NAMES, BASE_REWARD_PATHS, REWARD_MODE_INFO,
+  parseRewardObject, parseRewardEntries
+} from './acquisitionRules.js'
 
 // ---------- 角色/魔物 职业与元素映射（角色图鉴、魔物图鉴、搜索索引共用） ----------
 export const JOB_NAMES = {
@@ -188,6 +74,15 @@ export const RARITY_NAMES = {
   5: '传说'
 }
 export const getRarityName = (r) => RARITY_NAMES[r] || RARITY_NAMES[1]
+
+// 装备属性预览按钮使用的游戏品质简称（与 ItemBagPanel 品质顺序一致）
+export const EQUIP_QUALITY_LABELS = {
+  1: '白',
+  2: '绿',
+  3: '蓝',
+  4: '紫',
+  5: '橙'
+}
 
 // ---------- 物品分类完整映射（单一真相来源：包含 gameSetting.json 缺漏的二级分类） ----------
 // 来源：源码 Item.cs (isSeed=16, isFoodMat=13, isPotion=31, isFood=32, isBattleItem=33)
@@ -428,20 +323,7 @@ const Q_BG_FALLBACK = {
   4: 'rgba(238,98,241,0.19)',
   5: 'rgba(255,182,77,0.24)'
 }
-export function getQualityColors(quality) {
-  const q = Number(quality) || 1
-  let color = ''
-  let background = ''
-  if (typeof document !== 'undefined' && document.documentElement) {
-    const cs = getComputedStyle(document.documentElement)
-    color = cs.getPropertyValue(`--q${q}`).trim()
-    background = cs.getPropertyValue(`--q${q}-bg`).trim()
-  }
-  return {
-    color: color || Q_COLOR_FALLBACK[q] || Q_COLOR_FALLBACK[1],
-    background: background || Q_BG_FALLBACK[q] || Q_BG_FALLBACK[1]
-  }
-}
+// getQualityColors 已删除：品质色渲染统一走 theme.css 的 .quality-text-N / 变量，此函数无调用方（死代码）。
 
 // ---------- 大地图名（c0~c5_map -> 地图名；也支持 c0~c5 / C0~C5 归一化） ----------
 export const MAP_NAMES = {
@@ -470,6 +352,7 @@ export const STAT_NAMES = {
   crit: '暴击率',
   critRes: '暴击抗性',
   critDam: '暴击伤害',
+  cirtDam: '暴击伤害', // item.json 历史拼写，语义与 critDam 相同
   atkRange: '攻击距离',
   atkFloatMin: '伤害浮动下限',
   atkFloatMax: '伤害浮动上限',
@@ -583,19 +466,14 @@ export function cleanDialogueLine(text) {
   let result = cleanDialogueBase(text)
   // 主角称呼：默认男主称呼（女主称呼），如 {callName4} -> 大哥哥（大姐姐）
   for (const [k, v] of Object.entries(CALL_NAME_REPLACE)) {
-    result = result.split(k).join(v)
+    result = result.split(k).join(v).split(`[${k.slice(1, -1)}]`).join(v)
   }
   return result
 }
 
-// 邮件内容清洗（角色档案专用：主角称呼替换 + 邮筒占位 + 删除隐藏标记）
+// 角色档案与伙伴邮箱共用：对白清洗和称呼映射 + 邮筒占位。
 export function cleanMailContent(text) {
-  if (!text) return ''
-  let result = text
-  for (const [re, rep] of NAME_TEXT_REPLACERS) {
-    result = result.replace(re, rep)
-  }
-  return result.replace(/\{邮筒\}/g, '邮筒').replace(/\[hide\]/g, '')
+  return cleanDialogueLine(text).replace(/\{邮筒\}/g, '邮筒')
 }
 
 // ---------- 怪物头像（与怪物图鉴 MonstersView 同一套规则：avatar→colect、小写、跳过默认皮肤后缀） ----------
@@ -604,6 +482,8 @@ export const SKIP_SKINS = ['default', 'nomal', 'normal', 'kuangbao', 'crazy', 's
 export function getMonsterIcon(icon, skinName = '') {
   if (!icon) return ''
   const lowerIcon = String(icon).toLowerCase()
+  // The handbook names the juvenile spider sprite with the original `_s` suffix.
+  if (lowerIcon === 'avatar_mon_013_baby') return 'colect_mon_013_s'
   const lowerSkin = String(skinName || '').toLowerCase().replace(/\//g, '_')
   const shouldSkip = SKIP_SKINS.includes(lowerSkin) || !lowerSkin
   if (lowerIcon.startsWith('avatar')) {
@@ -612,6 +492,7 @@ export function getMonsterIcon(icon, skinName = '') {
   }
   return lowerIcon
 }
+
 
 // ---------- 二级分类排序 ----------
 export function chapterSortKey(label) {

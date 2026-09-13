@@ -3,6 +3,7 @@
  * 规则来源：txt/任务提示词_完整版.txt（已按源码核实）
  */
 import { fetchWithFallback } from './request.js'
+import { createCachedLoader } from './resourceClient.js'
 import {
   TASK_TYPE_LABELS,
   TASK_TYPE_ORDER,
@@ -28,7 +29,7 @@ const firstNonEmpty = (list) => list.find((x) => x && x.trim())
 let cachedTaskData = null
 
 /**
- * 构建期纯函数：由 17 个原始 JSON 对象生成任务图鉴最终数据。
+ * 构建期纯函数：由 18 个原始 JSON 对象生成任务图鉴最终数据。
  * 不依赖网络与浏览器，Node 构建脚本（scripts/parse/*.mjs）与浏览器共用。
  */
 export function buildTaskData(maps) {
@@ -43,6 +44,7 @@ export function buildTaskData(maps) {
     rewardJson,
     itemJson,
     monJson,
+    fileMonJson,
     conditionJson,
     roomCollectJson,
     roomCollectTypeJson,
@@ -60,6 +62,13 @@ export function buildTaskData(maps) {
   const battleMap = battleJson.datas || {}
   const itemMap = itemJson.datas || {}
   const monMap = monJson.datas || {}
+  const officialMonsterSkeletons = new Set((fileMonJson?.monFile || [])
+    .filter((entry) => !entry.hide)
+    .map((entry) => {
+      const monster = monMap[entry.monTypeId]
+      return monster?.viewData?.skeletonName || monster?.typeId || ''
+    })
+    .filter(Boolean))
   const rewardMap = rewardJson.datas || {}
   const conditionMap = conditionJson.gameConditions || {}
   const collectMap = roomCollectJson.datas || {}
@@ -326,7 +335,8 @@ export function buildTaskData(maps) {
           return {
             id,
             name: (mm && mm.name) || id,
-            icon: mm ? getMonsterIcon(mm.icon, mm.viewData && mm.viewData.skinName) : ''
+            icon: mm ? getMonsterIcon(mm.icon, mm.viewData && mm.viewData.skinName) : '',
+            hasMonsterDetail: !!mm && officialMonsterSkeletons.has(mm.viewData?.skeletonName || mm.typeId)
           }
         })
         if (p.num) push('数量', `${p.num} 只`)
@@ -342,13 +352,14 @@ export function buildTaskData(maps) {
             id: typeId,
             uid: p.uid,
             name: mm.name || p.uid,
-            icon: getMonsterIcon(mm.icon, mm.viewData && mm.viewData.skinName)
+            icon: getMonsterIcon(mm.icon, mm.viewData && mm.viewData.skinName),
+            hasMonsterDetail: officialMonsterSkeletons.has(mm.viewData?.skeletonName || mm.typeId)
           }]
           if (mm.monDes) push('说明', mm.monDes)
         } else if (p.uid) {
           // 极少数遗留 uid（如 main_002_jiazhu）查不到，从步骤名里提取怪名兜底
           const nameMatch = /(?:击败|狩猎|讨伐|解决|消灭|干掉)(.+)/.exec(s.stepName || '')
-          monsters = [{ id: p.uid, name: (nameMatch && nameMatch[1].trim()) || p.uid, icon: '' }]
+          monsters = [{ id: p.uid, name: (nameMatch && nameMatch[1].trim()) || p.uid, icon: '', hasMonsterDetail: false }]
         }
         if (p.dialog) dialogs.push({ label: '剧情', meta: dlgMeta(p.dialog) })
         break
@@ -496,6 +507,9 @@ export function buildTaskData(maps) {
         dialog: getTaskDialog,
         condition: parseCondition(getTask.condition)
       },
+      addTasks: arr(t.addTask)
+        .map((id) => ({ id, name: taskNameMap[id] || id, close: !!taskMap[id]?.close }))
+        .filter((task) => task.id && !task.close),
       unlockTasks: arr(t.unlockTask).map((id) => ({ id, name: taskNameMap[id] || id })).filter(Boolean),
       unlockStages: parseUnlockStages(t.unlockStage),
       steps: arr(t.steps).map((s, i) => parseStep(s, i + 1)),
@@ -530,85 +544,16 @@ export function buildTaskData(maps) {
   return { tasks: rawTasks, subOptions, stats, TYPE_LABELS: TASK_TYPE_LABELS }
 }
 
-async function loadRawTaskMaps() {
-  const [
-    taskJson,
-    levelStageJson,
-    levelRoomJson,
-    areaJson,
-    instanceJson,
-    battleJson,
-    roomJson,
-    rewardJson,
-    itemJson,
-    monJson,
-    conditionJson,
-    roomCollectJson,
-    roomCollectTypeJson,
-    newOrderJson,
-    heroJson,
-    dialogIndexJson,
-    dialogSegmentsJson
-  ] = await Promise.all([
-    fetchWithFallback('data/task.json'),
-    fetchWithFallback('data/levelStage.json'),
-    fetchWithFallback('data/levelRoom.json'),
-    fetchWithFallback('data/area.json'),
-    fetchWithFallback('data/instance.json'),
-    fetchWithFallback('data/battle.json'),
-    fetchWithFallback('data/room.json'),
-    fetchWithFallback('data/reward.json'),
-    fetchWithFallback('data/item.json'),
-    fetchWithFallback('data/mon.json'),
-    fetchWithFallback('data/condition.json'),
-    fetchWithFallback('data/roomCollect.json'),
-    fetchWithFallback('data/roomCollectType.json'),
-    fetchWithFallback('data/委托订单newOrder.json'),
-    fetchWithFallback('data/hero/hero.json'),
-    fetchWithFallback('data/parsed/dialogIndex.json'),
-    fetchWithFallback('data/parsed/dialogSegments.json')
-  ])
-  return {
-    taskJson,
-    levelStageJson,
-    levelRoomJson,
-    areaJson,
-    instanceJson,
-    battleJson,
-    roomJson,
-    rewardJson,
-    itemJson,
-    monJson,
-    conditionJson,
-    roomCollectJson,
-    roomCollectTypeJson,
-    newOrderJson,
-    heroJson,
-    dialogIndexJson,
-    dialogSegmentsJson
-  }
-}
-
 /**
- * 任务图鉴数据加载：优先读取构建期预解析的 parsed/tasks.json（单文件、免运行时解析），
- * 预解析文件缺失时回退到原始 17 文件加载 + 运行时解析。
+ * 任务图鉴数据加载：读取构建期预解析的 parsed/tasks.json。
  */
-export async function loadTaskData() {
+export const loadTaskData = createCachedLoader(async () => {
   if (cachedTaskData) return cachedTaskData
 
-  try {
-    const parsed = await fetchWithFallback('data/parsed/tasks.json')
-    cachedTaskData = parsed
-    return parsed
-  } catch (e) {
-    console.warn('parsed/tasks.json 不可用，回退到原始多文件加载:', e?.message || e)
-  }
-
-  const maps = await loadRawTaskMaps()
-  const data = buildTaskData(maps)
-  cachedTaskData = data
-  return data
-}
+  const parsed = await fetchWithFallback('data/parsed/tasks.json')
+  cachedTaskData = parsed
+  return parsed
+})
 
 function formatEntrustLabel(cKey, areaMap) {
   // 委托分类 C0~C5 -> 统一使用全局地图映射，页面不再各自读取/维护名称。

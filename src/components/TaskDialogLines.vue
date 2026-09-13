@@ -47,7 +47,7 @@ defineProps({
   gap: 5px;
   max-height: 60vh;
   overflow-y: auto;
-  overscroll-behavior: contain;
+  overscroll-behavior-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 .dialog-line {

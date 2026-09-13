@@ -1,12 +1,17 @@
-import { getResourceBaseUrl } from './env.js'
 import { fetchWithFallback } from './request.js'
-import { fetchItemData, getItemImageUrl } from './itemParser.js'
-import { JOB_NAMES, ELEMENT_NAMES, REWARD_MODE_INFO, getCleanSkillName } from './gameMappings.js'
+import { createCachedLoader } from './resourceClient.js'
+import { getItemImageUrl, roundToEven } from './itemParser.js'
+import { resolvePlayablePlayerLevelCap } from './levelConfig.js'
+import { JOB_NAMES, ELEMENT_NAMES, BASE_REWARD_ICONS, REWARD_MODE_INFO, getCleanSkillName } from './gameMappings.js'
+import { buildSkillMechanics, buildTalentMechanics } from './heroMechanics.js'
+import { buildPartnerMailboxes, parseHeroMail } from './partnerMailData.js'
 
 let cachedHeroes = null
+let cachedMailboxes = null
 let cachedHeroLevel = null
 let cachedHeroRank = null
 let cachedHeroConsume = null
+let cachedPlayerLevelCap = 1
 
 /**
  * 构建期纯函数：由原始 JSON 对象（含 fetchItemData 产物）生成角色图鉴最终数据。
@@ -14,10 +19,10 @@ let cachedHeroConsume = null
  */
 export function buildHeroData(maps) {
   const {
-    heroRes, archivesRes, behaviorRes, levelRes, mailRes, rankRes,
+    heroRes, archivesRes, behaviorRes, levelRes, playerLevelRes, mailRes, rankRes,
     skillUpgradeRes, talkRes, starRes, consumeRes, skillRes, skillTriggerRes,
-    taskRes, dialogSegmentsRes, dialogIndexRes,
-    items, lanDict, rewards
+    taskRes, dialogSegmentsRes, dialogIndexRes, generalRes, buffRes,
+    skinRes = {}, items, lanDict, rewards
   } = maps
 
   const heroDatas = heroRes.datas || heroRes || {}
@@ -25,6 +30,7 @@ export function buildHeroData(maps) {
   const behaviorDatas = behaviorRes.datas || behaviorRes || {}
   const levelDatas = levelRes.heroLevel || levelRes || {}
   const mailDatas = mailRes.datas || mailRes || {}
+  const mailContext = { mailDatas, archivesDatas, rewards, items }
   const rankDatas = rankRes.heroRank || rankRes || {}
   const skillUpgradeDatas = skillUpgradeRes.datas || skillUpgradeRes || {}
   const talkDatas = talkRes.hero || talkRes || {}
@@ -33,6 +39,42 @@ export function buildHeroData(maps) {
   const consumeDatas = consumeRes.datas || consumeRes || {}
   const skillDatas = skillRes.datas || skillRes || {}
   const skillTriggerDatas = skillTriggerRes.datas || skillTriggerRes || {}
+  const generalDatas = generalRes?.datas || generalRes || {}
+  const buffDatas = buffRes?.datas || buffRes || {}
+  const skinDatas = skinRes?.datas || skinRes || {}
+
+  const skinsByHero = {}
+  Object.values(skinDatas).forEach(skin => {
+    if (!skin?.show || !skin.heroTypeId || !skin.name || !skin.img) return
+    const heroSkins = skinsByHero[skin.heroTypeId] || []
+    heroSkins.push({
+      id: skin.typeId,
+      name: skin.name,
+      from: skin.from || '',
+      img: skin.img,
+      modelImage: maps.skinModelImages?.[skin.typeId] || '',
+      icon: skin.icon || '',
+      quality: Number(skin.quality) || 0,
+      attributes: Object.entries(skin.attrAdd || {}).map(([key, value]) => ({
+        key,
+        baseValue: Number(value?.baseValue) || 0,
+        percent: Number(value?.percent) || 0
+      })).filter(attribute => attribute.baseValue || attribute.percent)
+    })
+    skinsByHero[skin.heroTypeId] = heroSkins
+  })
+
+  const jobTraitsByJob = {}
+  Object.entries(generalDatas.jobPaBuffConfDes || {}).forEach(([jobId, entries]) => {
+    jobTraitsByJob[jobId] = (entries || []).map((entry, index) => {
+      const buff = entry.buff ? buffDatas[entry.buff] : null
+      return {
+        id: entry.buff || `job-${jobId}-${index + 1}`,
+        name: buff?.buffName || entry.name || '',
+        des: buff?.buffDes || entry.des || ''
+      }
+    }).filter(trait => trait.name && trait.des)
+  })
 
     // 任务名索引（角色档案的剧情任务显示任务名）与剧情分段索引
     const taskNameMap = {}
@@ -94,7 +136,7 @@ export function buildHeroData(maps) {
         const skillId = h.normalAttack
         const s = skillDatas[skillId]
         if (s) {
-          parsedSkills.push(processSkillInfo(skillId, s, 'normal', rare, element, skillUpgradeDatas.skillOne, consumeDatas, items))
+          parsedSkills.push(processSkillInfo(skillId, s, 'normal', rare, element, skillUpgradeDatas.skillOne, consumeDatas, items, buffDatas))
         }
       }
 
@@ -104,7 +146,7 @@ export function buildHeroData(maps) {
           const s = skillDatas[skillId]
           if (s) {
             const upgradeList = idx === 0 ? skillUpgradeDatas.skillOne : skillUpgradeDatas.skillTwo
-            parsedSkills.push(processSkillInfo(skillId, s, 'active', rare, element, upgradeList, consumeDatas, items))
+            parsedSkills.push(processSkillInfo(skillId, s, 'active', rare, element, upgradeList, consumeDatas, items, buffDatas))
           }
         })
       }
@@ -154,7 +196,8 @@ export function buildHeroData(maps) {
                 levelData.push({
                   level: parseInt(lvlKey),
                   name: lvlVal.skillName || trigger.skillName || '被动天赋',
-                  des: lvlVal.des || ''
+                  des: lvlVal.des || '',
+                  mechanics: buildTalentMechanics({ skillId, trigger: lvlVal, buffDatas })
                 })
               })
             }
@@ -182,7 +225,7 @@ export function buildHeroData(maps) {
           unlockFav: arch.unlockFavValue || 0,
           type: arch.type || 0,
           reward: arch.reward ? parseReward(arch.reward, rewards, items) : null,
-          mail: arch.mailTypeId ? processMail(arch.mailTypeId, mailDatas, rewards, items) : null,
+          mail: arch.mailTypeId ? parseHeroMail(arch.mailTypeId, mailContext) : null,
           taskTypeId,
           taskName: taskNameMap[taskTypeId] || '',
           dialogs: resolveTaskDialogs(taskTypeId),
@@ -266,6 +309,7 @@ export function buildHeroData(maps) {
         rare,
         job,
         jobName,
+        jobTraits: jobTraitsByJob[String(job)] || [],
         element,
         elementName,
         itemFavor: favorItems,
@@ -273,6 +317,7 @@ export function buildHeroData(maps) {
         skills: parsedSkills,
         starSkills,
         talentSkills,
+        skins: skinsByHero[typeId] || [],
         archives,
         behavior: {
           chat: chatLines,
@@ -294,97 +339,41 @@ export function buildHeroData(maps) {
 
     return {
       heroes: processedHeroes,
+      mailboxes: buildPartnerMailboxes({ heroDatas, ...mailContext }),
       heroLevel: levelRes,
       heroRank: rankRes,
+      playerLevelCap: resolvePlayablePlayerLevelCap(playerLevelRes),
       consumeDatas
     }
 }
 
-async function loadRawHeroMaps() {
-  const baseUrl = getResourceBaseUrl()
-  const [
-    heroRes,
-    archivesRes,
-    behaviorRes,
-    levelRes,
-    mailRes,
-    rankRes,
-    skillUpgradeRes,
-    talkRes,
-    starRes,
-    consumeRes,
-    skillRes,
-    skillTriggerRes,
-    taskRes,
-    dialogSegmentsRes,
-    dialogIndexRes
-  ] = await Promise.all([
-    fetch(`${baseUrl}/data/hero/hero.json`).then(r => r.json()),
-    fetch(`${baseUrl}/data/hero/heroArchives.json`).then(r => r.json()),
-    fetch(`${baseUrl}/data/hero/heroBehavior.json`).then(r => r.json()),
-    fetch(`${baseUrl}/data/hero/heroLevel.json`).then(r => r.json()),
-    fetch(`${baseUrl}/data/hero/heroMail.json`).then(r => r.json()),
-    fetch(`${baseUrl}/data/hero/heroRank.json`).then(r => r.json()),
-    fetch(`${baseUrl}/data/hero/heroSkillUpgrade.json`).then(r => r.json()),
-    fetch(`${baseUrl}/data/hero/heroTalk.json`).then(r => r.json()),
-    fetch(`${baseUrl}/data/hero/heroStar.json`).then(r => r.json()),
-    fetch(`${baseUrl}/data/consume.json`).then(r => r.json()),
-    fetch(`${baseUrl}/data/skill.json`).then(r => r.json()),
-    fetch(`${baseUrl}/data/skillTrigger.json`).then(r => r.json()),
-    fetch(`${baseUrl}/data/task.json`).then(r => r.json()),
-    fetch(`${baseUrl}/data/parsed/dialogSegments.json`).then(r => r.json()),
-    fetch(`${baseUrl}/data/parsed/dialogIndex.json`).then(r => r.json())
-  ])
-  return {
-    heroRes, archivesRes, behaviorRes, levelRes, mailRes, rankRes,
-    skillUpgradeRes, talkRes, starRes, consumeRes, skillRes, skillTriggerRes,
-    taskRes, dialogSegmentsRes, dialogIndexRes
-  }
-}
-
 /**
- * 角色图鉴数据加载：优先读取构建期预解析的 parsed/heroes.json（单文件、免运行时解析），
- * 预解析文件缺失时回退到原始多文件加载 + 运行时解析。
+ * 角色图鉴数据加载：读取构建期预解析的 parsed/heroes.json。
  */
-export async function fetchHeroData() {
+export const fetchHeroData = createCachedLoader(async () => {
   if (cachedHeroes) {
     return {
       heroes: cachedHeroes,
+      mailboxes: cachedMailboxes,
       heroLevel: cachedHeroLevel,
       heroRank: cachedHeroRank,
+      playerLevelCap: cachedPlayerLevelCap,
       consumeDatas: cachedHeroConsume
     }
   }
 
-  try {
-    const parsed = await fetchWithFallback('data/parsed/heroes.json')
-    cachedHeroes = parsed.heroes
-    cachedHeroLevel = parsed.heroLevel
-    cachedHeroRank = parsed.heroRank
-    cachedHeroConsume = parsed.consumeDatas
-    return parsed
-  } catch (e) {
-    console.warn('parsed/heroes.json 不可用，回退到原始多文件加载:', e?.message || e)
-  }
-
-  try {
-    // We need core items, lanDict, and rewards for translation and reward parsing
-    const { items, lanDict, rewards } = await fetchItemData()
-    const rawMaps = await loadRawHeroMaps()
-    const data = buildHeroData({ ...rawMaps, items, lanDict, rewards })
-    cachedHeroes = data.heroes
-    cachedHeroLevel = data.heroLevel
-    cachedHeroRank = data.heroRank
-    cachedHeroConsume = data.consumeDatas
-    return data
-  } catch (err) {
-    console.error('Failed to parse hero data:', err)
-    throw err
-  }
-}
+  const parsed = await fetchWithFallback('data/parsed/heroes.json')
+  cachedHeroes = parsed.heroes
+  cachedMailboxes = parsed.mailboxes
+  cachedHeroLevel = parsed.heroLevel
+  cachedHeroRank = parsed.heroRank
+  cachedPlayerLevelCap = parsed.playerLevelCap || 1
+  cachedHeroConsume = parsed.consumeDatas
+  return parsed
+})
 
 // Help process active skills and normal attacks
-function processSkillInfo(skillId, s, type, rare, element, upgradeList, consumeDatas, items) {
+function processSkillInfo(skillId, s, type, rare, element, upgradeList, consumeDatas, items, buffDatas) {
   // Extract multiplier and damage type for normal attacks
   let power = 100
   let isPhy = true
@@ -414,7 +403,8 @@ function processSkillInfo(skillId, s, type, rare, element, upgradeList, consumeD
         name: lvlVal.skillName || s.skillName || '',
         des: customDes,
         cd: lvlVal.cd !== undefined ? lvlVal.cd : (s.cd || 0),
-        cost: lvlVal.cost !== undefined ? lvlVal.cost : (s.cost || 0)
+        cost: lvlVal.cost !== undefined ? lvlVal.cost : (s.cost || 0),
+        mechanics: buildSkillMechanics({ skillId, type, levelValue: lvlVal, buffDatas })
       })
     })
     // Restrict skill level max to 12
@@ -471,20 +461,6 @@ function processSkillInfo(skillId, s, type, rare, element, upgradeList, consumeD
   }
 }
 
-// Mail parsing
-function processMail(mailId, mailDatas, rewards, items) {
-  const mail = mailDatas[mailId]
-  if (!mail) return null
-  return {
-    id: mailId,
-    title: mail.title || '',
-    content: mail.content || '',
-    reward: mail.reward ? parseReward(mail.reward, rewards, items) : null,
-    taskTypeId: mail.taskTypeId || '',
-    getTaskText: mail.getTaskText || ''
-  }
-}
-
 // Reward list parsing helper
 function parseReward(rewardId, rewards, items) {
   if (!rewardId || !rewards) return null
@@ -492,6 +468,10 @@ function parseReward(rewardId, rewards, items) {
   if (!rewardData || !rewardData.items) return null
 
   const parsedItems = []
+  const currencyQuality = mode => items.find(item => item.typeId === BASE_REWARD_ICONS[mode])?.quality || 1
+  // Legacy reward configs put currencies on the reward root instead of in items.rules.
+  if (Number(rewardData.money) > 0) parsedItems.push({ id: 'money', name: REWARD_MODE_INFO.money.name, img: REWARD_MODE_INFO.money.icon, quality: currencyQuality('money'), count: Number(rewardData.money), chance: 1 })
+  if (Number(rewardData.ke) > 0) parsedItems.push({ id: 'ke', name: REWARD_MODE_INFO.ke.name, img: REWARD_MODE_INFO.ke.icon, quality: currencyQuality('ke'), count: Number(rewardData.ke), chance: 1 })
   rewardData.items.forEach(group => {
     group.rules.forEach(rule => {
       if (rule.mode === 'item') {
@@ -508,7 +488,7 @@ function parseReward(rewardId, rewards, items) {
           id: 'money',
           name: REWARD_MODE_INFO.money.name,
           img: REWARD_MODE_INFO.money.icon,
-          quality: 1,
+          quality: currencyQuality('money'),
           chance: rule.chance || 1
         })
       } else if (rule.mode === 'ke') {
@@ -516,7 +496,7 @@ function parseReward(rewardId, rewards, items) {
           id: 'ke',
           name: REWARD_MODE_INFO.ke.name,
           img: REWARD_MODE_INFO.ke.icon,
-          quality: 1,
+          quality: currencyQuality('ke'),
           chance: rule.chance || 1
         })
       }
@@ -551,7 +531,7 @@ export function calculateStats(unitData, level, rank, heroLevelConfig, heroRankC
 
   growthFields.forEach(field => {
     const baseVal = unitData[field] || 0
-    results[field] = Math.round(baseVal * multiplier)
+    results[field] = roundToEven(baseVal * multiplier)
   })
 
   // Copy non-growth attributes

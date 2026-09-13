@@ -1,17 +1,19 @@
-import { getResourceBaseUrl } from './env.js'
 import { fetchWithFallback } from './request.js'
+import { createCachedLoader } from './resourceClient.js'
 import { ELEMENT_NAMES, getCleanSkillName } from './gameMappings.js'
+import { resolvePlayablePlayerLevelCap } from './levelConfig.js'
 
 let cachedPets = null
 let cachedPetLevel = null
 let cachedPetSetting = null
+let cachedPlayerLevelCap = 1
 
 /**
  * 构建期纯函数：由原始 JSON 对象生成魔物图鉴最终数据。
  * 不依赖网络与浏览器，Node 构建脚本（scripts/parse/*.mjs）与浏览器共用。
  */
 export function buildPetData(maps) {
-  const { petRes, petLevelRes, petSettingRes, skillRes, skillTriggerRes } = maps
+  const { petRes, petLevelRes, petSettingRes, playerLevelRes, skillRes, skillTriggerRes } = maps
 
   const petDatas = petRes.datas || petRes || {}
   const petLevelDatas = petLevelRes.petLevel || petLevelRes || {}
@@ -77,7 +79,7 @@ export function buildPetData(maps) {
             type: 'trait',
             name: getCleanSkillName(rawName),
             icon: `/images/PetPanel/pet_skill_${starDisplay}.png`, // Frame border
-            innerIcon: `/images/PicHandBookPanel/${pet.monImg}.png`, // Cropped inner face
+            innerIcon: `/images/PicHandBookPanel_Atlas/${pet.monImg}.png`, // Cropped inner face
             levelData,
             maxLevel: levelData.length
           })
@@ -162,60 +164,28 @@ export function buildPetData(maps) {
   return {
     pets: processedPets,
     petLevel: petLevelDatas,
-    petSetting: petSettingDatas
+    petSetting: petSettingDatas,
+    playerLevelCap: resolvePlayablePlayerLevelCap(playerLevelRes)
   }
 }
 
-async function loadRawPetMaps() {
-  const baseUrl = getResourceBaseUrl()
-  const [
-    petRes,
-    petLevelRes,
-    petSettingRes,
-    skillRes,
-    skillTriggerRes
-  ] = await Promise.all([
-    fetch(`${baseUrl}/data/pet/pet.json`).then(r => r.json()),
-    fetch(`${baseUrl}/data/pet/petLevel.json`).then(r => r.json()),
-    fetch(`${baseUrl}/data/pet/petSetting.json`).then(r => r.json()),
-    fetch(`${baseUrl}/data/skill.json`).then(r => r.json()),
-    fetch(`${baseUrl}/data/skillTrigger.json`).then(r => r.json())
-  ])
-  return { petRes, petLevelRes, petSettingRes, skillRes, skillTriggerRes }
-}
-
 /**
- * 魔物图鉴数据加载：优先读取构建期预解析的 parsed/pets.json（单文件、免运行时解析），
- * 预解析文件缺失时回退到原始多文件加载 + 运行时解析。
+ * 魔物图鉴数据加载：读取构建期预解析的 parsed/pets.json。
  */
-export async function fetchPetData() {
+export const fetchPetData = createCachedLoader(async () => {
   if (cachedPets) {
     return {
       pets: cachedPets,
       petLevel: cachedPetLevel,
-      petSetting: cachedPetSetting
+      petSetting: cachedPetSetting,
+      playerLevelCap: cachedPlayerLevelCap
     }
   }
 
-  try {
-    const parsed = await fetchWithFallback('data/parsed/pets.json')
-    cachedPets = parsed.pets
-    cachedPetLevel = parsed.petLevel
-    cachedPetSetting = parsed.petSetting
-    return parsed
-  } catch (e) {
-    console.warn('parsed/pets.json 不可用，回退到原始多文件加载:', e?.message || e)
-  }
-
-  try {
-    const maps = await loadRawPetMaps()
-    const data = buildPetData(maps)
-    cachedPets = data.pets
-    cachedPetLevel = data.petLevel
-    cachedPetSetting = data.petSetting
-    return data
-  } catch (err) {
-    console.error('Failed to parse pet data:', err)
-    throw err
-  }
-}
+  const parsed = await fetchWithFallback('data/parsed/pets.json')
+  cachedPets = parsed.pets
+  cachedPetLevel = parsed.petLevel
+  cachedPetSetting = parsed.petSetting
+  cachedPlayerLevelCap = parsed.playerLevelCap || 1
+  return parsed
+})

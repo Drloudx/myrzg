@@ -14,45 +14,18 @@
    ========================================================================== */
 
 /* ====== 0. 字体引入 ====== */
-/* 游戏主字体：源码中的 TextMeshPro 使用 MYR2SansRegular/Bold SDF。
-   网页直接使用对应源字体，避免依赖外部字体服务。 */
-@font-face {
-  font-family: 'MYR2Sans';
-  src: url('/fonts/MYR2SansRegular.ttf') format('truetype');
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'MYR2Sans';
-  src: url('/fonts/MYR2SansBold.ttf') format('truetype');
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-}
-
-/* 本地 HarmonyOS 字体（保留原 @font-face，文件缺失时自动回落） */
-@font-face {
-  font-family: 'HarmonyOS_Bold';
-  src: url('/fonts/HarmonyOS_Sans_Bold.ttf') format('truetype');
-  font-weight: bold;
-}
-@font-face {
-  font-family: 'HarmonyOS_Regular';
-  src: url('/fonts/HarmonyOS_Sans_Regular.ttf') format('truetype');
-  font-weight: normal;
-}
-/* 浏览器 UI 渲染使用同一族的常规/粗体文件，避免小字号由 MYR2Sans TTF 栅格化产生毛刺。 */
+/* Vite 将 /fonts/ 解析到 public/fonts/；使用实际的 SC 中文字体文件名。
+   同一字体族按字重选择文件；缺字回退到设备系统字体。 */
 @font-face {
   font-family: 'HarmonyOS';
-  src: url('/fonts/HarmonyOS_Sans_Regular.ttf') format('truetype');
+  src: url('/fonts/HarmonyOS_Sans_SC_Regular.ttf') format('truetype');
   font-style: normal;
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: 'HarmonyOS';
-  src: url('/fonts/HarmonyOS_Sans_Bold.ttf') format('truetype');
+  src: url('/fonts/HarmonyOS_Sans_SC_Bold.ttf') format('truetype');
   font-style: normal;
   font-weight: 700;
   font-display: swap;
@@ -60,12 +33,20 @@
 
 /* ====== 1. 羊皮纸主题 CSS 变量 ====== */
 :root {
+  --font-ui: 'HarmonyOS', 'Microsoft YaHei', 'PingFang SC', 'Noto Sans CJK SC', sans-serif;
   /* 移动端沉浸式安全区（保留） */
   --safe-top: max(env(safe-area-inset-top), 0px);
   --safe-bottom: max(env(safe-area-inset-bottom), 0px);
   --safe-left: env(safe-area-inset-left, 0px);
   --safe-right: env(safe-area-inset-right, 0px);
   --header-height: 60px;
+  --floating-control-size: 44px;
+  --floating-control-z: 6002;
+  --navigation-overlay-z: 6000;
+  --navigation-panel-z: 6001;
+  --floating-control-background: linear-gradient(180deg, var(--wood-soft), var(--wood));
+  --floating-control-border: 2px solid var(--border-color);
+  --floating-control-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(223, 206, 179, 0.25);
 
   /* —— 羊皮纸主题核心色 —— */
   --paper-dark: #bba282;              /* 外围深色羊皮纸 */
@@ -87,6 +68,15 @@
   --danger: #8b0000;                  /* 深红（危险/极高） */
   --danger-soft: rgba(139, 0, 0, 0.10);
   --gold: #8a6a1f;                    /* 暗金（强调） */
+  --panel-list-background: rgba(223, 206, 179, 0.92);
+  --segmented-active-bg: linear-gradient(180deg, #f0e3c6, #dcc8a4);
+  --segmented-active-color: var(--text-main);
+  --segmented-text: rgba(223, 206, 179, 0.65);
+  --segmented-text-hover: #dfceb3;
+  --segmented-border: #17100a;
+  --on-wood-text: #dfceb3;
+  --on-image-text: #fff5e1;
+  --on-image-text-muted: rgba(255, 245, 225, 0.86);
 
   /* —— 兼容旧变量别名（旧代码仍可工作） —— */
   --bg: var(--paper-dark);
@@ -163,6 +153,11 @@
   --danger: #d24545;
   --danger-soft: rgba(210, 69, 69, 0.16);
   --gold: #c9a24b;
+  --panel-list-background: rgba(63, 48, 32, 0.84);
+  --segmented-active-bg: linear-gradient(180deg, #5a4a33, #473a28);
+  --segmented-active-color: #f2e6cc;
+  --segmented-text: #bca983;
+  --segmented-text-hover: #eaddc2;
 
   --bg: var(--paper-dark);
   --bg-color: var(--paper-dark);
@@ -219,10 +214,13 @@ html, body {
   color: var(--text-main);
   /* 地图背景：像模板一样铺在 body，向下避开顶栏 */
   background-image: url('/ui/map_w1_bg.png');
-  background-size: cover;
+  /* Keep the page and sticky masks on the exact same fixed crop. */
+  --page-bg-width: max(100vw, calc(100dvh * 2.2297619));
+  --page-bg-height: max(100dvh, calc(100vw / 2.2297619));
+  background-size: var(--page-bg-width) var(--page-bg-height);
   background-position: center calc(var(--header-height, 60px) + var(--safe-top, 0px));
   background-attachment: fixed;
-  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-family: var(--font-ui);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -241,13 +239,13 @@ html, body {
   flex-direction: column;
 }
 
-/* 标题字体：HarmonyOS 粗体，MYR2Sans 仅作游戏字形回退 */
+/* 标题沿用同一字体栈的粗体。 */
 h1, h2, h3, h4, h5, h6,
 .app-title,
 .section-title,
 .panel-title,
 .card-name {
-  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-family: var(--font-ui);
   font-weight: 700;
   color: inherit;
 }
@@ -284,6 +282,8 @@ input, textarea, select {
   max-height: 55vh;
   overflow-y: auto;
   box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
 }
 
 .modal-body [class*="-list"] {
@@ -328,7 +328,7 @@ input, textarea, select {
 
 /* 页面大标题（模板 .content h1：双线分隔、居中） */
 .wiki-page-title {
-  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-family: var(--font-ui);
   font-size: 24px;
   font-weight: 700;
   text-align: center;
@@ -366,7 +366,7 @@ input, textarea, select {
   font-weight: 700;
   line-height: 1.5;
   color: #fdf6e3;
-  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-family: var(--font-ui);
 }
 .badge-1 { background: var(--q1); }
 .badge-2 { background: var(--q2); }
@@ -547,7 +547,7 @@ input, textarea, select {
   cursor: pointer;
   transition: all 0.2s;
   letter-spacing: 1px;
-  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-family: var(--font-ui);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 .modal-btn-confirm:hover {
@@ -701,7 +701,7 @@ input, textarea, select {
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.15s ease;
-  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-family: var(--font-ui);
 }
 .filter-btn:hover {
   color: var(--text-main);
@@ -720,9 +720,17 @@ input, textarea, select {
 .filter-btn.quality-text-5.active { background: var(--q5); color: #2b1f15 !important; }
 
 /* ====== 8. 滚动条（羊皮纸质感） ====== */
+* {
+  scrollbar-color: var(--border-color) rgba(43, 31, 21, 0.12);
+}
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
+}
+::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
 }
 ::-webkit-scrollbar-track {
   background: rgba(43, 31, 21, 0.12);
@@ -730,8 +738,8 @@ input, textarea, select {
 }
 ::-webkit-scrollbar-thumb {
   background: var(--border-color);
-  border-radius: 4px;
   border: 1px solid rgba(43, 31, 21, 0.25);
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--wood-soft);

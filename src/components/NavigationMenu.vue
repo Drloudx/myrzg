@@ -4,7 +4,7 @@
     <template v-if="menuMode === 'side'">
       <div v-if="isOpen && !isDesktop" class="nav-mask" @click="handleClose"></div>
       <Transition :name="isDesktop ? '' : 'slide-side'">
-        <div v-if="isOpen || isDesktop" class="side-panel" :class="{ 'desktop-panel': isDesktop }">
+        <div v-if="isOpen || isDesktop" class="side-panel" :class="{ 'desktop-panel': isDesktop, 'corner-nails': isDesktop }">
           <div v-if="!isDesktop" class="side-header">
             <div class="side-header-title">
               <h2>功能导航</h2>
@@ -12,7 +12,12 @@
             </div>
             <button class="close-btn" @click="handleClose">✕</button>
           </div>
-          <div class="side-body paper-panel corner-nails" :class="{ 'is-mobile': !isDesktop }">
+          <div
+            ref="sideBodyRef"
+            class="side-body paper-panel"
+            :class="{ 'is-mobile': !isDesktop, 'corner-nails': !isDesktop }"
+            @scroll="syncSideScrollState"
+          >
             <div class="side-category-title">导航目录</div>
 
             <!-- 使用 v-for 统一渲染侧边栏列表 -->
@@ -28,6 +33,8 @@
               <span class="arrow">›</span>
             </div>
           </div>
+          <span v-if="isDesktop && canScrollUp" class="side-scroll-cue side-scroll-cue--up" aria-hidden="true"></span>
+          <span v-if="isDesktop && canScrollDown" class="side-scroll-cue side-scroll-cue--down" aria-hidden="true"></span>
         </div>
       </Transition>
     </template>
@@ -91,12 +98,16 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getImageUrl } from '../utils/env.js'
 
 const props = defineProps({
   isOpen: Boolean,
+  items: {
+    type: Array,
+    default: null
+  },
   menuMode: {
     type: String,
     default: 'side' // 'side', 'bottom', 'top'
@@ -112,15 +123,49 @@ const route = useRoute()
 const router = useRouter()
 
 const currentRoute = computed(() => route.path)
+const sideBodyRef = ref(null)
+const canScrollUp = ref(false)
+const canScrollDown = ref(false)
+let sideBodyResizeObserver = null
+
+const syncSideScrollState = () => {
+  const el = sideBodyRef.value
+  if (!el || !props.isDesktop) {
+    canScrollUp.value = false
+    canScrollDown.value = false
+    return
+  }
+
+  canScrollUp.value = el.scrollTop > 1
+  canScrollDown.value = (
+    el.scrollHeight > el.clientHeight + 1 &&
+    el.scrollTop + el.clientHeight < el.scrollHeight - 1
+  )
+}
 
 // --- 统一配置导航数据 ---
-const navList = [
+const defaultNavList = [
+  { name: '物品图鉴', path: '/items', icon: '/ui/item_00002.png' },
+  { name: '家具图鉴', path: '/furniture', icon: '/ui/zw.png' },
+  { name: '设施功能', path: '/facilities', icon: '/ui/zw.png' },
   { name: '角色图鉴', path: '/heroes', icon: '/ui/class_icon_s_zs.png' },
+  { name: '伙伴邮件', path: '/partner-mails', icon: '/ui/mail_list_new_task_pt.png' },
   { name: '魔物图鉴', path: '/pets', icon: '/ui/colect_mon_072.png' },
+  { name: '装备图鉴', path: '/equip', icon: '/ui/item_442001.png' },
+  { name: '符石图鉴', path: '/runes', icon: '/images/Common_ItemIcon/item_19310.png' },
   { name: '菜谱查询', path: '/recipes', icon: '/ui/item_30047.png' },
   { name: '魔物收益', path: '/petseggs', icon: '/ui/pet_079.png' },
-  { name: '成就查询', path: '/achievement', icon: '/ui/achv_icon_adv.png' }
+  { name: '成就查询', path: '/achievement', icon: '/ui/achv_icon_adv.png' },
+  { name: '怪物图鉴', path: '/monsters', icon: '/ui/colect_mon_052.png' },
+  { name: '任务图鉴', path: '/tasks', icon: '/images/TaskPanel/task_tag1.png' },
+  { name: '事件图鉴', path: '/events', icon: '/ui/zw.png' },
+  { name: '副本图鉴', path: '/dungeons', icon: '/ui/zw.png' },
+  { name: '兑换', path: '/exchange', icon: '/ui/zw.png' },
+  { name: '模拟招募', path: '/gacha', icon: '/images/HeroPoolPanel_Atlas/gacha_at_chara062_0.png' },
+  { name: '其他', path: '/rewards', icon: '/ui/zw.png' }
 ]
+
+const navList = computed(() => props.items || defaultNavList)
 
 const handleClose = () => {
   emit('close')
@@ -132,6 +177,22 @@ const handleNavigate = (path) => {
   }
   handleClose()
 }
+
+onMounted(() => {
+  nextTick(() => {
+    syncSideScrollState()
+    if ('ResizeObserver' in window && sideBodyRef.value) {
+      sideBodyResizeObserver = new ResizeObserver(syncSideScrollState)
+      sideBodyResizeObserver.observe(sideBodyRef.value)
+    }
+  })
+  window.addEventListener('resize', syncSideScrollState)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', syncSideScrollState)
+  sideBodyResizeObserver?.disconnect()
+})
 </script>
 
 <style scoped>
@@ -186,7 +247,7 @@ const handleNavigate = (path) => {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   background: var(--modal-overlay, rgba(24, 14, 6, 0.5));
-  z-index: 3500;
+  z-index: var(--navigation-overlay-z, 6000);
 }
 
 /* --- 1. 侧边栏样式（模板 sidebar 风格） --- */
@@ -197,7 +258,7 @@ const handleNavigate = (path) => {
   right: 0;
   width: 62%;
   max-width: 270px;
-  z-index: 3501;
+  z-index: var(--navigation-panel-z, 6001);
   display: flex;
   flex-direction: column;
 }
@@ -226,7 +287,7 @@ const handleNavigate = (path) => {
 .side-header-title h2 {
   margin: 0;
   font-size: 17px;
-  color: var(--paper, #dfceb3);
+  color: var(--on-wood-text);
   font-weight: 700;
   letter-spacing: 2px;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
@@ -245,7 +306,7 @@ const handleNavigate = (path) => {
   border: 1px solid rgba(223, 206, 179, 0.35);
   border-radius: 4px;
   font-size: 15px;
-  color: var(--paper, #dfceb3);
+  color: var(--on-wood-text);
   cursor: pointer;
   width: 28px;
   height: 28px;
@@ -262,6 +323,7 @@ const handleNavigate = (path) => {
 .side-body {
   flex: 1;
   overflow-y: auto;
+  overscroll-behavior-y: contain;
   padding: 14px 12px;
   border-radius: 0;
   border: none;
@@ -279,6 +341,55 @@ const handleNavigate = (path) => {
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.35), inset 0 0 20px rgba(135, 107, 72, 0.12);
   box-sizing: border-box;
   overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.side-panel.desktop-panel .side-body::-webkit-scrollbar { display: none; }
+.side-panel.desktop-panel.corner-nails::before,
+.side-panel.desktop-panel.corner-nails::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #5c4327;
+  box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.3);
+  z-index: 4;
+  pointer-events: none;
+}
+.side-panel.desktop-panel.corner-nails::before { top: 8px; left: 8px; }
+.side-panel.desktop-panel.corner-nails::after { right: 8px; bottom: 8px; }
+
+.side-scroll-cue {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  left: 2px;
+  height: 34px;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--paper, #dfceb3) 82%);
+}
+.side-scroll-cue::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid var(--accent-ink, #557574);
+  border-bottom: 2px solid var(--accent-ink, #557574);
+  transform: translateX(-50%) rotate(45deg);
+}
+.side-scroll-cue--up {
+  top: 2px;
+  bottom: auto;
+  background: linear-gradient(to top, transparent, var(--paper, #dfceb3) 82%);
+}
+.side-scroll-cue--up::after {
+  top: 8px;
+  bottom: auto;
+  transform: translateX(-50%) rotate(225deg);
 }
 
 .side-category-title {
@@ -288,7 +399,7 @@ const handleNavigate = (path) => {
   padding: 6px 10px 8px;
   border-bottom: 2px solid var(--border-color, #8f7351);
   margin-bottom: 10px;
-  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-family: var(--font-ui);
   letter-spacing: 2px;
 }
 
@@ -368,7 +479,7 @@ const handleNavigate = (path) => {
   max-height: 82vh;
   display: flex;
   flex-direction: column;
-  z-index: 3501;
+  z-index: var(--navigation-panel-z, 6001);
   box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.35);
   box-sizing: border-box;
 }
@@ -474,7 +585,7 @@ const handleNavigate = (path) => {
   border-color: #17100a;
 }
 .grid-item.active .grid-item-name {
-  color: var(--paper, #dfceb3);
+  color: var(--on-wood-text);
   font-weight: 700;
 }
 
@@ -486,7 +597,7 @@ const handleNavigate = (path) => {
   background: var(--modal-overlay, rgba(24, 14, 6, 0.45));
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
-  z-index: 3501;
+  z-index: var(--navigation-panel-z, 6001);
 }
 
 .top-panel {

@@ -5,6 +5,7 @@
  */
 import { buildHeroData } from '../../src/utils/heroParser.js'
 import { readJson } from './shared.mjs'
+import { loadSkinModelImages } from './skin-models.mjs'
 
 export function buildHeroesFile(itemData) {
   const rawMaps = {
@@ -12,6 +13,7 @@ export function buildHeroesFile(itemData) {
     archivesRes: readJson('hero/heroArchives.json'),
     behaviorRes: readJson('hero/heroBehavior.json'),
     levelRes: readJson('hero/heroLevel.json'),
+    playerLevelRes: readJson('playerLevel.json'),
     mailRes: readJson('hero/heroMail.json'),
     rankRes: readJson('hero/heroRank.json'),
     skillUpgradeRes: readJson('hero/heroSkillUpgrade.json'),
@@ -22,10 +24,14 @@ export function buildHeroesFile(itemData) {
     skillTriggerRes: readJson('skillTrigger.json'),
     taskRes: readJson('task.json'),
     dialogSegmentsRes: readJson('parsed/dialogSegments.json'),
-    dialogIndexRes: readJson('parsed/dialogIndex.json')
+    dialogIndexRes: readJson('parsed/dialogIndex.json'),
+    generalRes: readJson('general.json'),
+    buffRes: readJson('buff.json'),
+    skinRes: readJson('skin.json')
   }
   const data = buildHeroData({
     ...rawMaps,
+    skinModelImages: loadSkinModelImages(rawMaps.skinRes),
     items: itemData.items,
     lanDict: itemData.lanDict,
     rewards: itemData.rewards

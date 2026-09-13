@@ -1,0 +1,318 @@
+Npc_015.png
+size:716,716
+filter:Linear,Linear
+scale:0.16
+acce A01
+bounds:671,90,11,34
+rotate:90
+acce A02
+bounds:687,453,11,36
+acce A03
+bounds:403,179,13,32
+rotate:90
+acce B01
+bounds:429,8,5,41
+rotate:90
+acce B02
+bounds:181,84,5,43
+acce B03
+bounds:567,43,4,48
+arm B
+bounds:574,97,16,36
+arm B_back
+bounds:650,108,17,35
+arm F
+bounds:611,435,28,46
+arm F_back
+bounds:683,493,19,34
+offsets:1,0,20,34
+belt01
+bounds:548,435,59,46
+belt01_back
+bounds:369,272,59,45
+body
+bounds:523,135,35,57
+body_back
+bounds:643,425,40,56
+offsets:0,0,40,59
+breast B
+bounds:650,88,16,17
+rotate:90
+breast F
+bounds:636,28,23,21
+offsets:1,0,24,21
+rotate:90
+breast armor B
+bounds:439,180,10,12
+breast armor F
+bounds:661,33,18,16
+rotate:90
+buffEffect_poison1_2
+bounds:645,55,22,21
+offsets:0,1,22,22
+rotate:90
+cloth B
+bounds:648,531,19,62
+rotate:90
+cloth B_back
+bounds:524,196,19,66
+cloth F
+bounds:482,548,27,71
+cloth F_back
+bounds:269,4,28,76
+cloth mid
+bounds:513,548,18,74
+rotate:90
+cloth mid_back
+bounds:460,546,18,73
+ear B
+bounds:614,115,30,32
+rotate:90
+ear B_back
+bounds:637,300,44,38
+offsets:0,0,45,38
+ear F
+bounds:637,258,44,38
+offsets:0,0,45,38
+ear F_back
+bounds:614,81,30,32
+offsets:0,0,31,32
+rotate:90
+face attack
+bounds:610,55,31,22
+face dead
+bounds:587,199,32,25
+face hurt
+bounds:547,196,36,24
+offsets:0,0,36,28
+face idle
+bounds:603,331,36,24
+rotate:90
+forearm B
+bounds:506,438,38,47
+forearm B_back
+bounds:626,380,41,56
+rotate:90
+forearm C
+bounds:432,272,47,51
+forearm D
+bounds:544,286,51,41
+forearm F
+bounds:584,228,35,54
+forearm F_1
+bounds:547,224,33,58
+forearm F_2
+bounds:631,342,34,52
+rotate:90
+forearm F_back
+bounds:591,537,33,53
+rotate:90
+fx_ring_006
+bounds:4,552,158,160
+offsets:2,0,160,160
+gasA
+bounds:4,405,149,143
+offsets:5,3,161,153
+gasB
+bounds:64,5,115,113
+offsets:8,10,128,127
+rotate:90
+hair back01
+bounds:302,546,73,154
+rotate:90
+hair back01_back
+bounds:157,406,74,142
+hair back04
+bounds:166,553,132,159
+hair back04_back
+bounds:4,254,135,147
+hair back05
+bounds:134,131,56,118
+hair back05_back
+bounds:4,4,56,116
+hair front01
+bounds:483,266,57,61
+hair front03
+bounds:453,95,40,57
+rotate:90
+hair front04
+bounds:543,331,31,56
+rotate:90
+hair front05
+bounds:479,4,14,46
+rotate:90
+hair front06
+bounds:373,327,105,79
+rotate:90
+hair front07
+bounds:520,40,43,51
+head
+bounds:464,196,56,66
+horn B
+bounds:653,607,59,48
+horn B1_back
+bounds:566,485,60,48
+horn F1
+bounds:194,84,64,87
+offsets:0,1,66,88
+rotate:90
+horn F1_back
+bounds:285,181,65,87
+leaf flower B01
+bounds:276,321,93,111
+leaf flower F01
+bounds:299,436,106,115
+rotate:90
+leaf on hair 01
+bounds:479,22,69,37
+rotate:90
+leaf on hair 03
+bounds:612,4,16,15
+leaf tail B-A01
+bounds:301,4,77,60
+rotate:90
+leaf tail B-B01
+bounds:429,17,74,46
+rotate:90
+leaf tail B-C01
+bounds:403,196,72,57
+rotate:90
+leaf tail B-D01
+bounds:514,95,56,36
+leaf tail F-A01
+bounds:365,4,78,60
+rotate:90
+leaf tail F-B01
+bounds:395,95,80,54
+rotate:90
+leaf tail F-C01
+bounds:453,139,66,53
+leaf tail F-D01
+bounds:580,574,64,52
+leaf topA01
+bounds:675,210,37,43
+offsets:0,0,38,43
+leaf topA04
+bounds:513,570,63,56
+leaf topB01
+bounds:418,438,104,84
+rotate:90
+leaf topC01
+bounds:4,124,126,126
+leg B1
+bounds:685,284,27,54
+leg B1_back
+bounds:543,366,37,65
+offsets:0,0,45,104
+leg B2
+bounds:673,141,32,40
+leg B2_back
+bounds:529,4,32,45
+rotate:90
+leg B3
+bounds:687,425,24,18
+rotate:90
+leg B3_back
+bounds:686,394,27,20
+rotate:90
+leg F1
+bounds:584,371,38,60
+offsets:0,0,45,101
+leg F1_back
+bounds:562,137,28,55
+leg F2
+bounds:623,220,34,46
+rotate:90
+leg F2_back
+bounds:578,6,30,40
+leg F3
+bounds:687,366,24,20
+rotate:90
+leg F3_back
+bounds:594,102,24,16
+rotate:90
+leg armor B
+bounds:181,4,40,76
+leg armor B_back
+bounds:276,272,45,89
+offsets:0,0,46,89
+rotate:90
+leg armor F
+bounds:354,179,45,89
+leg armor F_back
+bounds:225,4,40,76
+offsets:2,0,42,76
+neck leaf
+bounds:235,411,37,21
+neck leaf_back
+bounds:675,185,37,21
+normalAxe
+bounds:235,436,60,113
+offsets:2,2,64,117
+normalPick
+bounds:194,152,87,113
+offsets:3,4,93,121
+potion01
+bounds:685,257,23,27
+rotate:90
+potion02
+bounds:612,23,20,28
+shadow
+bounds:143,253,148,47
+offsets:3,2,154,51
+rotate:90
+shoulder B
+bounds:506,489,56,55
+shoulder B_back
+bounds:653,659,59,53
+shoulder F
+bounds:575,50,43,31
+rotate:90
+shoulder F_back
+bounds:599,286,41,34
+rotate:90
+skull
+bounds:632,4,16,15
+staff01
+bounds:302,623,187,89
+staff02
+bounds:594,130,16,65
+staff03
+bounds:614,149,32,44
+staff04
+bounds:623,197,48,19
+offsets:0,0,49,19
+staff05
+bounds:650,147,19,46
+staff06
+bounds:630,485,42,49
+rotate:90
+staff_lightA
+bounds:285,85,58,92
+offsets:2,2,61,96
+staff_lightB
+bounds:687,342,20,23
+offsets:2,1,24,26
+rotate:90
+waeapon_trail1_2/waeapon_trail1_2_01
+bounds:347,86,89,44
+offsets:57,34,256,256
+rotate:90
+waeapon_trail1_2/waeapon_trail1_2_02
+bounds:493,630,156,82
+offsets:64,34,256,256
+waeapon_trail1_2/waeapon_trail1_2_03
+bounds:194,269,133,78
+offsets:86,34,256,256
+rotate:90
+waeapon_trail1_2/waeapon_trail1_2_04
+bounds:456,331,103,83
+offsets:112,33,256,256
+rotate:90
+waeapon_trail1_2/waeapon_trail1_2_05
+bounds:648,554,49,64
+offsets:162,45,256,256
+rotate:90
+waeapon_trail1_2/waeapon_trail1_2_06
+bounds:671,105,34,32
+offsets:170,48,256,256

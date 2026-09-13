@@ -11,7 +11,15 @@ export function build() {
     rewardRes: readJson('reward.json'),
     consumeRes: readJson('consume.json'),
     itemRes: readJson('item.json'),
-    equipGroupRes: readJson('equipGroup.json')
+    skinRes: readJson('skin.json'),
+    heroRes: readJson('hero/hero.json'),
+    equipGroupRes: readJson('equipGroup.json'),
+    shopRes: readJson('shop.json'),
+    generalRes: readJson('general.json'),
+    packDisplayRes: readJson('packDisplay.json'),
+    activityListRes: readJson('activityList.json'),
+    conditionRes: readJson('condition.json'),
+    taskRes: readJson('task.json')
   })
   return {
     files: [{ file: 'parsed/parsed-exchange.json', data }]

@@ -6,7 +6,7 @@
       <UiSearchInput v-model="searchQuery" placeholder="搜索成就名称、描述或道具..." />
 
       <!-- 分类筛选行 -->
-      <UiFilterRow label="分类：">
+      <UiFilterRow label="分类1：">
         <UiFilterPill
           v-for="cat in categoryOptions"
           :key="cat.key"
@@ -64,26 +64,13 @@
             <div class="ach-card-name-row">
               <span class="ach-card-name">{{ item.name }}</span>
             </div>
-            <div class="ach-card-des">{{ item.des || '（无描述）' }}</div>
+            <div class="ach-card-des">{{ item.requirementText || item.des || '（无达成条件）' }}</div>
           </div>
         </div>
 
         <template #right>
           <div class="ach-card-right">
-            <!-- 收集状态切换开关（与参考图一致的圆角胶囊滑块） -->
-            <button
-              type="button"
-              class="ach-switch-toggle"
-              :class="{ 'is-active': isCollected(item.id) }"
-              :title="isCollected(item.id) ? '已收集 (点击取消)' : '未收集 (点击标记)'"
-              @click.stop="toggleCollected(item.id)"
-            >
-              <span class="switch-track">
-                <span class="switch-icon left">✓</span>
-                <span class="switch-handle"></span>
-                <span class="switch-icon right">✕</span>
-              </span>
-            </button>
+            <UiCollectionToggle :active="isCollected(item.id)" @toggle="toggleCollected(item.id)" />
 
             <!-- 奖励图标列表（横排展示 × 数量） -->
             <div v-if="item.rewards && item.rewards.length" class="ach-card-rewards">
@@ -121,13 +108,33 @@
       :z-index="3000"
     >
       <div v-if="detailModal.item" class="ach-modal-body">
-        <UiSection title="基础信息">
-          <UiInfoRow label="分类" :value="getCategoryName(detailModal.item.category)" />
-          <UiInfoRow label="奖励编号" :value="detailModal.item.rewardId" />
+        <UiSection title="基础信息" class="ach-info-section">
+          <UiInfoRow label="分类">
+            <span class="ach-category-badge">{{ getCategoryName(detailModal.item.category) }}</span>
+          </UiInfoRow>
         </UiSection>
 
-        <UiSection v-if="detailModal.item.des" title="描述">
-          <p class="ach-modal-des">{{ detailModal.item.des }}</p>
+        <UiSection v-if="detailModal.item.requirementText" title="达成条件">
+          <p class="ach-condition-text">{{ detailModal.item.requirementText }}</p>
+        </UiSection>
+
+        <UiSection
+          v-if="detailModal.item.previousAchievements?.length || detailModal.item.nextAchievements?.length"
+          title="成就阶段"
+          class="ach-info-section"
+        >
+          <UiInfoRow
+            v-if="detailModal.item.previousAchievements?.length"
+            label="解锁前置"
+          >
+            <span class="ach-stage-name">{{ formatAchievementNames(detailModal.item.previousAchievements) }}</span>
+          </UiInfoRow>
+          <UiInfoRow
+            v-if="detailModal.item.nextAchievements?.length"
+            label="完成后解锁"
+          >
+            <span class="ach-stage-name">{{ formatAchievementNames(detailModal.item.nextAchievements) }}</span>
+          </UiInfoRow>
         </UiSection>
 
         <UiSection v-if="detailModal.item.rewards && detailModal.item.rewards.length" title="奖励">
@@ -139,6 +146,7 @@
               :rule="{
                 targetName: rw.name || (rw.typeId ? '物品 ' + rw.typeId : '奖励'),
                 targetImg: rw.icon,
+                targetQuality: rw.quality,
                 min: rw.count,
                 max: rw.count,
                 typeId: rw.typeId
@@ -161,6 +169,7 @@ import { useAppStateStore } from '../stores/appState'
 import {
   UiBackToTop,
   UiCardGrid,
+  UiCollectionToggle,
   UiEmptyState,
   UiFilterPill,
   UiFilterRow,
@@ -174,8 +183,8 @@ import {
 import { isBlacklisted } from '../config/blacklist.js'
 import { fetchWithFallback } from '../utils/request.js'
 import { getImageUrl } from '../utils/env.js'
-import { buildAchievementData } from '../utils/achievementData.js'
 import { useLazyList } from '../composables/useLazyList'
+import { alignElementInScrollTarget } from '../utils/scrollTarget.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -204,6 +213,7 @@ const highlightedAchId = ref('')
 
 const achievements = ref([])
 const isDataReady = ref(false)
+let highlightTimer = 0
 
 // 成就详情弹窗状态（按迁移契约第4条新增：卡面点击打开全屏详情）
 const detailModal = ref({ visible: false, item: null })
@@ -216,6 +226,8 @@ const getCategoryName = (cat) => {
   const found = categoryOptions.find(o => o.key === cat)
   return found ? found.label : (cat || '未知')
 }
+
+const formatAchievementNames = items => items.map(item => item.name).join('、')
 
 // 奖励卡点击 → 通过全局 itemId 查询打开物品详情
 const handleRewardClick = (rw) => {
@@ -251,7 +263,7 @@ const handleImgError = (e) => {
   e.target.style.opacity = '0.3'
 }
 
-const handleLocateAchievement = (targetId, queryQ) => {
+const handleLocateAchievement = async (targetId, queryQ) => {
   if (!isDataReady.value || !achievements.value.length) return
 
   let match = null
@@ -272,41 +284,42 @@ const handleLocateAchievement = (targetId, queryQ) => {
       filterStatus.value = 'all'
     }
 
+    await nextTick()
+    const index = ensureAchievementVisible(match.id)
+    if (index < 0) return
+
     highlightedAchId.value = match.id
 
-    nextTick(() => {
-      const el = document.getElementById(`ach-card-${match.id}`)
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      }
-    })
+    let el = null
+    let aligned = false
+    for (const delay of [0, 120, 280, 520]) {
+      if (delay) await new Promise(resolve => setTimeout(resolve, delay))
+      await nextTick()
+      el = document.getElementById(`ach-card-${match.id}`)
+      if (!el || !el.isConnected || el.getBoundingClientRect().height <= 0) continue
+      alignElementInScrollTarget(el, '#achGridScroll')
+      aligned = true
+    }
+    if (!aligned) return
 
-    setTimeout(() => {
+    if (highlightTimer) clearTimeout(highlightTimer)
+    highlightTimer = window.setTimeout(() => {
       highlightedAchId.value = ''
+      highlightTimer = 0
     }, 2800)
+
+    // `id` is a one-time locate command; keep `q` as the user's search state.
+    if (String(route.query.id || '') === String(targetId || '')) {
+      const query = { ...route.query }
+      delete query.id
+      await router.replace({ query })
+    }
   }
 }
 
 onMounted(async () => {
   try {
-    let assembled = null
-
-    // 优先读取构建期预解析单文件
-    try {
-      const data = await fetchWithFallback('data/parsed/achievements.json')
-      assembled = data.achievements
-    } catch (e) {
-      console.warn('parsed/achievements.json 不可用，回退到原始多文件加载:', e?.message || e)
-    }
-
-    if (!assembled) {
-      const [achRes, rewRes, itemRes] = await Promise.all([
-        fetchWithFallback('data/achievement.json'),
-        fetchWithFallback('data/reward.json'),
-        fetchWithFallback('data/item.json')
-      ])
-      assembled = buildAchievementData({ achJson: achRes, rewJson: rewRes, itemJson: itemRes }).achievements
-    }
+    const { achievements: assembled } = await fetchWithFallback('data/parsed/achievements.json')
 
     // 黑名单过滤（与原组装后行为一致）
     achievements.value = assembled.filter(a => !isBlacklisted(a))
@@ -317,7 +330,7 @@ onMounted(async () => {
       handleLocateAchievement(route.query.id, route.query.q)
     }
   } catch (err) {
-    console.error('Fetch achievement/reward/item data error:', err)
+    console.error('Fetch parsed achievements data error:', err)
     isDataReady.value = true
   }
 })
@@ -328,22 +341,19 @@ watch([filterStatus, filterCategory, searchQuery], () => {
   if (filterStatus.value !== 'all') query.status = filterStatus.value
   if (filterCategory.value !== 'all') query.category = filterCategory.value
   if (searchQuery.value.trim()) query.q = searchQuery.value.trim()
+  if (route.query.id) query.id = route.query.id
   router.replace({ query })
 })
 
-// Watch route.query for external changes (e.g. global search routing while on achievement page)
-watch(
-  () => route.query,
-  (newQuery) => {
-    if (newQuery.q !== undefined && newQuery.q !== searchQuery.value) {
-      searchQuery.value = newQuery.q || ''
-    }
-    if (newQuery.id || newQuery.q) {
-      handleLocateAchievement(newQuery.id, newQuery.q)
-    }
-  },
-  { deep: true }
-)
+// Search remains persistent state; only a new `id` is a locate command.
+watch(() => route.query.q, newQuery => {
+  if (newQuery !== undefined && newQuery !== searchQuery.value) {
+    searchQuery.value = newQuery || ''
+  }
+})
+watch(() => route.query.id, (newId, oldId) => {
+  if (newId && newId !== oldId) handleLocateAchievement(newId, route.query.q)
+})
 
 const filteredAchievements = computed(() => {
   return achievements.value.filter(item => {
@@ -369,19 +379,17 @@ const filteredAchievements = computed(() => {
   })
 })
 
-const { displayedItems: displayedAchievements } = useLazyList(filteredAchievements, 20, '#achGridScroll')
+const { displayedItems: displayedAchievements, ensureItemVisible } = useLazyList(filteredAchievements, 20, '#achGridScroll')
+
+const ensureAchievementVisible = matcher => {
+  const index = filteredAchievements.value.findIndex(item => String(item.id) === String(matcher))
+  return ensureItemVisible(index)
+}
 </script>
 
 <style scoped>
-/* ===== 页面特有布局（筛选面板 / 单列卡片流） ===== */
-.filter-panel {
-  margin: 0 0 12px 0;
-  padding: 10px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex-shrink: 0;
-}
+/* ===== 页面特有布局（筛选面板继承全局 / 单列卡片流） ===== */
+/* .filter-panel 全局定义于 theme.css（padding 12px 14px），页面不重复覆盖 */
 
 .collection-counter {
   font-size: 13px;
@@ -475,7 +483,7 @@ const { displayedItems: displayedAchievements } = useLazyList(filteredAchievemen
   font-size: 16px;
   font-weight: 700;
   color: var(--text-main, #3e2a14);
-  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-family: var(--font-ui);
   letter-spacing: 0.5px;
   line-height: 1.3;
 }
@@ -499,85 +507,6 @@ const { displayedItems: displayedAchievements } = useLazyList(filteredAchievemen
 }
 
 /* 收集状态切换胶囊滑块（仿图中的圆润开关） */
-.ach-switch-toggle {
-  background: transparent;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  outline: none;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.switch-track {
-  position: relative;
-  width: 54px;
-  height: 28px;
-  border-radius: 14px;
-  background: rgba(110, 95, 80, 0.38);
-  border: 1.5px solid var(--border-soft, #8f7351);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 8px;
-  box-sizing: border-box;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.25);
-}
-
-.ach-switch-toggle.is-active .switch-track {
-  background: #745234;
-  border-color: #543922;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-.dark-mode .ach-switch-toggle.is-active .switch-track {
-  background: #876241;
-  border-color: #4a3522;
-}
-
-.switch-handle {
-  position: absolute;
-  top: 2.5px;
-  left: 3px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #ffffff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.ach-switch-toggle.is-active .switch-handle {
-  transform: translateX(25px);
-}
-
-.switch-icon {
-  font-size: 11px;
-  font-weight: 800;
-  user-select: none;
-  line-height: 1;
-  transition: opacity 0.2s ease;
-}
-
-.switch-icon.left {
-  color: #ffffff;
-  opacity: 0;
-}
-
-.switch-icon.right {
-  color: rgba(255, 255, 255, 0.85);
-  opacity: 1;
-}
-
-.ach-switch-toggle.is-active .switch-icon.left {
-  opacity: 1;
-}
-
-.ach-switch-toggle.is-active .switch-icon.right {
-  opacity: 0;
-}
-
 /* 奖励图标流 */
 .ach-card-rewards {
   display: flex;
@@ -604,7 +533,7 @@ const { displayedItems: displayedAchievements } = useLazyList(filteredAchievemen
   font-size: 13px;
   font-weight: 700;
   color: var(--text-main, #3e2a14);
-  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-family: var(--font-ui);
 }
 
 /* 全局搜索定位高亮脉冲（主题青描边） */
@@ -632,17 +561,74 @@ const { displayedItems: displayedAchievements } = useLazyList(filteredAchievemen
   gap: 2px;
 }
 
-.ach-modal-des {
+.ach-condition-text {
   margin: 0;
+  padding: 10px 12px;
+  border-left: 3px solid var(--accent-bright, #7a9a99);
+  border-radius: 0 3px 3px 0;
+  background: rgba(122, 154, 153, 0.10);
   font-size: 14px;
   line-height: 1.75;
   color: var(--text-main);
   white-space: pre-wrap;
 }
 
+.ach-info-section :deep(.ui-info-row__label) {
+  width: 96px;
+  box-sizing: border-box;
+}
+
+.ach-info-section :deep(.ui-info-row__value) {
+  text-align: left;
+  word-break: break-word;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  color: var(--accent-ink, #2f4a49);
+}
+
+.ach-category-badge,
+.ach-stage-name {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  box-sizing: border-box;
+  border: 1px solid var(--border-soft, rgba(143, 115, 81, 0.45));
+  border-radius: 3px;
+  background: rgba(122, 154, 153, 0.10);
+}
+
+.ach-category-badge {
+  padding: 3px 12px;
+  color: var(--accent-ink, #2f4a49);
+}
+
+.ach-stage-name {
+  max-width: 100%;
+  padding: 3px 10px;
+  color: var(--text-main, #3e2a14);
+  line-height: 1.5;
+  white-space: normal;
+}
+
+.dark-mode .ach-condition-text,
+.dark-mode .ach-category-badge,
+.dark-mode .ach-stage-name {
+  background: rgba(122, 154, 153, 0.14);
+}
+
 .reward-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 8px;
+}
+
+@media (max-width: 640px) {
+  .ach-info-section :deep(.ui-info-row__label) {
+    width: 88px;
+  }
+
+  .ach-condition-text {
+    padding: 9px 10px;
+  }
 }
 </style>

@@ -1,163 +1,114 @@
-﻿<template>
-  <UiModal
-    :visible="visible"
-    :title="currentForm?.name || monster?.name || '怪物详情'"
-    max-width="820px"
-    scroll-id="monsterModalScroll"
-    :z-index="2000"
-    @update:visible="handleClose"
-  >
-    <div v-if="renderError" class="error-state">
-      渲染错误: {{ renderError }}
-    </div>
-    <template v-else>
-      <!-- ID 复制标签 -->
-      <div v-if="monster" class="id-line">
-        <UiTag tone="wood" class="copy-tag" @click="copyId(currentForm?.id)" :title="'点击复制 ID'">
-          ID: {{ currentForm?.id }}
-        </UiTag>
-      </div>
+<template>
+  <UiModal :visible="visible" :title="currentForm?.name || monster?.name || '怪物详情'" max-width="860px" scroll-id="monsterModalScroll" :z-index="2000" @update:visible="handleClose">
+    <UiEmptyState v-if="loading" type="loading" text="正在加载怪物详情..." />
+    <UiEmptyState v-else-if="loadError" type="error" :text="loadError">
+      <template #action><UiButton @click="loadMonster">重新加载</UiButton></template>
+    </UiEmptyState>
+    <div v-else-if="renderError" class="error-state">渲染错误: {{ renderError }}</div>
+    <template v-else-if="monster && currentForm">
+      <div class="id-line"><UiTag tone="wood" class="copy-tag" title="点击复制 ID" @click="copyId(currentForm.id)">ID: {{ currentForm.id }}</UiTag></div>
 
-      <!-- 顶部立绘区 -->
-      <div class="portrait-section paper-panel corner-nails" v-if="monster">
+      <div class="portrait-section paper-panel corner-nails">
         <div class="portrait-box">
-          <span class="portrait-label">{{ currentForm?.tabLabel || '当前形态' }}</span>
-          <UiTag v-if="monster.label || currentForm?.category" tone="accent" class="portrait-element">
-            {{ monster.label || currentForm?.category }}
-          </UiTag>
-          <img
-            v-show="showPortrait"
-            :src="portraitUrl"
-            :alt="currentForm?.name || monster.name"
-            class="portrait-img"
-            @error="handlePortraitError"
-            @load="handlePortraitLoad"
-          />
+          <UiTag tone="accent" class="portrait-relation">{{ currentForm.relationType || currentForm.tabLabel || '本体' }}</UiTag>
+          <img :src="portraitUrl" :alt="currentForm.name || monster.name" class="portrait-img" data-image-fallback="custom" @error="handlePortraitError" />
         </div>
-
-        <!-- 出没地点标签 -->
-        <div class="tags-row" v-if="monster.place?.length > 0">
-          <UiTag v-for="p in monster.place" :key="p" tone="default">{{ p }}</UiTag>
-        </div>
-
-        <!-- 描述 -->
-        <div class="monster-desc" v-if="monster.text">
-          {{ monster.text }}
-        </div>
+        <div v-if="monster.place?.length" class="tags-row"><UiTag v-for="place in monster.place" :key="place" tone="default">{{ place }}</UiTag></div>
+        <p v-if="monster.text" class="monster-desc">{{ monster.text }}</p>
       </div>
 
-      <!-- 形态切换页签 -->
-      <div class="forms-tabs" v-if="allForms.length > 1">
-        <UiTabs v-model="currentFormIndex" :options="formTabOptions" />
+      <div v-if="allForms.length > 1" class="forms-tabs"><UiTabs v-model="currentFormIndex" :options="formTabOptions" /></div>
+
+      <div v-if="currentForm.transform" class="variant-context variant-context--transform">
+        <div class="variant-context__item"><span>变身前</span><strong>{{ currentForm.transform.fromName }}</strong></div>
+        <div class="variant-context__item"><span>变身条件</span><strong>{{ currentForm.transform.condition }}</strong><small v-if="currentForm.transform.reverseCondition">恢复：{{ currentForm.transform.reverseCondition }}</small></div>
+        <div class="variant-context__item variant-context__item--current"><span>当前状态</span><strong>{{ currentForm.transform.currentStage === 'after' ? '变身后' : '变身前' }}</strong></div>
+        <div class="variant-context__item"><span>变身后</span><strong>{{ currentForm.transform.toName }}</strong></div>
       </div>
 
-      <!-- 形态内容 -->
-      <div class="form-content" v-if="currentForm">
-        <!-- 1. 战斗面板 -->
-        <UiSection v-if="currentForm.rawStats" title="战斗面板">
-          <!-- 目标等级滑块 -->
-          <div class="slider-group paper-panel-solid">
-            <div class="slider-header">
-              <span class="slider-title">目标等级</span>
-              <span class="slider-val">Lv.{{ currentLevel }} / 101</span>
-            </div>
-            <input
-              type="range"
-              min="1"
-              max="101"
-              v-model.number="currentLevel"
-              class="calc-range-slider"
-            />
-          </div>
+      <div v-if="towerAppearances.length" class="variant-context variant-context--tower">
+        <template v-for="tower in towerAppearances" :key="tower.towerId">
+          <div class="variant-context__item"><span>出现位置</span><strong>{{ tower.towerName }}</strong></div>
+          <div class="variant-context__item"><span>出现楼层</span><strong>{{ formatTowerFloors(tower.floors) }}</strong></div>
+        </template>
+      </div>
 
-          <h4 class="attr-subheading">基础属性（随等级成长）</h4>
-          <div class="attr-grid">
-            <div class="attr-cell" v-for="stat in growableStats" :key="stat.key">
-              <span class="attr-k">{{ stat.label }}</span>
-              <span class="attr-values-row">
-                <span class="attr-val-base">{{ stat.baseVal }}</span>
-                <span class="attr-arrow">→</span>
-                <span class="attr-val-calc">{{ stat.calcVal }}</span>
-              </span>
+      <div class="form-content">
+        <UiSection title="等级属性估算">
+          <div class="level-slider paper-panel-solid">
+            <div class="level-slider__header">
+              <span>当前等级</span>
+              <strong>Lv.{{ currentLevel }}</strong>
             </div>
+            <input v-model.number="currentLevel" class="level-slider__input" type="range" min="1" max="101" aria-label="等级属性估算" />
           </div>
-
-          <template v-if="nonGrowableStats.length > 0">
-            <h4 class="attr-subheading">其他属性（固定值）</h4>
-            <div class="attr-grid">
-              <div class="attr-cell" v-for="stat in nonGrowableStats" :key="stat.key">
-                <span class="attr-k">{{ stat.label }}</span>
-                <span class="attr-v">{{ stat.value }}</span>
-              </div>
-            </div>
-          </template>
-
-          <div class="tags-row" v-if="currentForm.keyList && currentForm.keyList.length > 0">
-            <UiTag v-for="k in currentForm.keyList" :key="k" tone="gold">{{ k }}</UiTag>
-          </div>
+          <UiStatGrid :items="growthStats" />
+          <UiStatGrid v-if="fixedStats.length" class="fixed-stat-grid" :items="fixedStats" />
+          <div v-if="currentForm.keyList?.length" class="tags-row tags-row--left"><UiTag v-for="tag in currentForm.keyList" :key="tag" tone="gold">{{ tag }}</UiTag></div>
         </UiSection>
 
-        <!-- 2. 弱点属性 -->
-        <UiSection v-if="currentForm.weakAttDes" title="弱点属性">
-          <p class="text-desc" v-html="formatWeakAtt(currentForm.weakAttDes)"></p>
-        </UiSection>
+        <UiSection v-if="currentForm.weakAttDes" title="弱点与抗性"><p class="text-desc" v-html="formatHighlightedText(currentForm.weakAttDes)"></p></UiSection>
 
-        <!-- 3. 可能携带效果 -->
-        <UiSection v-if="currentForm.buffs?.length > 0" title="可能携带效果">
-          <div class="skill-list">
-            <div class="skill-item" v-for="buff in (currentForm.buffs || [])" :key="buff?.id || Math.random()">
-              <div v-if="buff">
-                <div class="skill-header">
-                  <span class="skill-name">{{ buff.nameAdd }}{{ buff.name }}</span>
-                </div>
-                <div class="skill-desc">{{ buff.des }}</div>
-                <div class="skill-mechanics" v-if="buff.muPower || buff.baseDamage || buff.repelForce || buff.rectRange || (buff.addBuffs && buff.addBuffs.length > 0)">
-                  <UiTag v-if="buff.muPower" tone="danger">倍率{{ buff.damageType ? '(' + formatDamageType(buff.damageType) + ')' : '' }}: {{ Math.round(buff.muPower * 100) }}%</UiTag>
-                  <UiTag v-if="buff.baseDamage" tone="danger">基础伤害: {{ buff.baseDamage }}</UiTag>
-                  <UiTag v-if="buff.repelForce" tone="gold">隐藏击退: {{ buff.repelForce }}</UiTag>
-                  <UiTag v-if="buff.rectRange" tone="gold">判定范围: {{ buff.rectRange }}</UiTag>
-                  <UiTag v-if="buff.addBuffs && buff.addBuffs.length > 0" tone="danger">附加状态: {{ buff.addBuffs.join(', ') }}</UiTag>
+        <UiSection v-if="currentForm.skills?.length" title="技能机制">
+          <div class="mechanic-list">
+            <article v-for="skill in currentForm.skills" :key="skill.id" class="mechanic-card">
+              <header class="mechanic-head">
+                <div class="mechanic-title"><UiTag :tone="skill.kind === '普攻' ? 'default' : 'accent'">{{ skill.kind }}</UiTag><strong>{{ skill.name }}</strong></div>
+                <span v-if="skill.cooldown > 0" class="mechanic-meta">冷却 {{ skill.cooldown }} 秒</span>
+              </header>
+              <p v-if="skill.des" class="mechanic-desc" v-html="formatHighlightedText(skill.des)"></p>
+              <p v-if="skill.summary" class="mechanic-summary">{{ skill.summary }}</p>
+              <div v-if="skill.damageHits?.length" class="hit-list">
+                <div v-for="(hit, index) in skill.damageHits" :key="`${skill.id}-${index}`" class="hit-row">
+                  <span>第 {{ index + 1 }} 段</span><span>{{ formatDamageType(hit.type) }} {{ Math.round(hit.multiplier * 100) }}%<template v-if="hit.count > 1"> ×{{ hit.count }}</template></span>
+                  <span v-if="hit.baseDamage">基础伤害 {{ hit.baseDamage }}</span><span v-if="hit.repelForce">击退 {{ hit.repelForce }}</span><span v-if="hit.stagger">硬直 {{ hit.stagger }} 秒</span>
                 </div>
               </div>
-            </div>
-          </div>
-        </UiSection>
-
-        <!-- 4. 技能组 -->
-        <UiSection v-if="currentForm.skills?.length > 0" title="技能组">
-          <div class="skill-list">
-            <div class="skill-item" v-for="skill in (currentForm.skills || [])" :key="skill?.id || Math.random()">
-              <div v-if="skill">
-                <div class="skill-header">
-                  <span class="skill-name">{{ skill.name }}</span>
-                  <span class="skill-cost" v-if="skill.cost > 0">消耗: {{ skill.cost }}</span>
-                </div>
-                <div class="skill-desc">{{ skill.des }}</div>
-                <div class="skill-mechanics" v-if="(skill.muPowers && skill.muPowers.length > 0) || skill.baseDamage || skill.repelForce || skill.repelTime">
-                  <UiTag v-if="skill.muPowers && skill.muPowers.length > 0" tone="danger">倍率: {{ skill.muPowers.map(m => (m.type ? formatDamageType(m.type) : '') + Math.round(m.val * 100) + '%').join(' / ') }}</UiTag>
-                  <UiTag v-if="skill.baseDamage" tone="danger">基础伤害: {{ skill.baseDamage }}</UiTag>
-                  <UiTag v-if="skill.repelForce" tone="gold">击退力: {{ skill.repelForce }}</UiTag>
-                  <UiTag v-if="skill.repelTime" tone="gold">硬直时长: {{ skill.repelTime }}s</UiTag>
+              <div class="mechanic-tags">
+                <UiTag v-for="range in (skill.ranges || []).filter(item => !['moveGridRange', 'moveDis'].includes(item.key))" :key="`${range.key}-${range.value}`" tone="default">{{ formatRangeLabel(range.key) }} {{ range.value }}</UiTag>
+                <UiTag v-for="buff in skill.addBuffs || []" :key="buff.id" tone="danger">附加 {{ buff.name }}</UiTag>
+                <UiTag v-for="summon in skill.summons || []" :key="`${summon.monsterId}-${summon.name}`" tone="gold">{{ formatSummon(summon) }}</UiTag>
+                <UiTag v-if="skill.trap" tone="danger">{{ formatTrap(skill.trap) }}</UiTag>
+              </div>
+              <div v-if="skill.addBuffs?.some(buff => buff.description || buff.duration > 0)" class="linked-effect-list">
+                <div v-for="buff in skill.addBuffs.filter(item => item.description || item.duration > 0)" :key="`${buff.id}-effect`" class="linked-effect-row">
+                  <strong>{{ buff.name }}</strong><span>{{ formatSkillBuffEffect(buff) }}</span>
                 </div>
               </div>
-            </div>
+            </article>
           </div>
         </UiSection>
 
-        <!-- 5. 战利品掉落 -->
-        <UiSection v-if="activeRewards?.length > 0" title="战利品掉落">
-          <div v-for="(group, gIdx) in activeRewards" :key="gIdx" class="reward-pool paper-panel-solid">
-            <div class="reward-items">
-              <UiRewardCard
-                v-for="(r, rIdx) in (group.rules || [])"
-                :key="rIdx"
-                :rule="r ? { ...r, targetImg: getImageUrl(r.targetImg), min: group.min, max: group.max } : {}"
-                :clickable="!!(r && (r.mode === 'item' || r.mode === 'equipGroup') && r.targetId)"
-                @click="r && handleRewardClick(r)"
-              />
-            </div>
+        <UiSection v-if="currentForm.buffs?.length" :title="buffSectionTitle">
+          <div class="mechanic-list">
+            <article v-for="buff in currentForm.buffs" :key="buff.id" class="mechanic-card">
+              <header class="mechanic-head">
+                <div class="mechanic-title"><UiTag :tone="currentForm.buffs.length === 1 ? 'accent' : 'gold'">{{ buff.selectionType }}</UiTag><strong>{{ buff.nameAdd }}{{ buff.name }}</strong></div>
+                <span v-if="currentForm.buffs.length > 1" class="mechanic-meta">占比 {{ formatPercent(buff.probability) }}</span>
+              </header>
+              <p v-if="buff.des && buff.des !== 'noneButEft'" class="mechanic-desc" v-html="formatHighlightedText(buff.des)"></p>
+              <div class="mechanic-tags">
+                <UiTag v-if="buff.duration > 0" tone="default">持续 {{ buff.duration }} 秒</UiTag><UiTag v-if="buff.stackable" tone="gold">可叠加{{ buff.maxStacks ? ` · 最多 ${buff.maxStacks} 层` : '' }}</UiTag>
+                <UiTag v-if="buff.triggerLabel" tone="default">{{ buff.triggerLabel }}</UiTag>
+                <UiTag v-if="buff.triggerInterval > 0" tone="default">触发间隔 {{ buff.triggerInterval }} 秒</UiTag><UiTag v-if="buff.damageReduction" tone="accent">伤害倍率 {{ formatSignedPercent(buff.damageReduction) }} / 层</UiTag>
+                <UiTag v-if="buff.speedChange" tone="accent">移速变化 {{ formatSignedPercent(buff.speedChange) }}</UiTag><UiTag v-if="buff.muPower" tone="danger">{{ formatDamageType(buff.damageType) }} {{ Math.round(buff.muPower * 100) }}%</UiTag>
+                <UiTag v-if="buff.rectRange" tone="default">范围 {{ buff.rectRange }}</UiTag><UiTag v-if="buff.addBuffs?.length" tone="danger">附加 {{ buff.addBuffs.join('、') }}</UiTag>
+              </div>
+              <div v-if="buff.linkedEffects?.length" class="linked-effect-list">
+                <div v-for="effect in buff.linkedEffects" :key="effect.id" class="linked-effect-row">
+                  <strong>{{ effect.name }}</strong><span>{{ formatLinkedBuffEffect(effect) }}</span>
+                </div>
+              </div>
+            </article>
           </div>
         </UiSection>
+
+        <UiSection v-for="section in configuredRewardSections" :key="section.title" :title="section.title">
+          <div v-for="(group, groupIndex) in section.groups" :key="groupIndex" class="reward-pool"><div class="reward-items">
+            <UiRewardCard v-for="(rule, ruleIndex) in group.rules || []" :key="ruleIndex" :rule="rewardCardRule(rule, group)" :clickable="isRewardClickable(rule)" @click="handleRewardClick(rule)" />
+          </div></div>
+        </UiSection>
+
       </div>
     </template>
     <UiBackToTop scroll-container="#monsterModalScroll" />
@@ -165,506 +116,225 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onErrorCaptured, onMounted } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import { UiModal, UiSection, UiTag, UiTabs, UiRewardCard, UiBackToTop } from './ui/index.js'
-import { getImageUrl } from '../utils/env'
-import { fetchMonsterData, fetchMonsterLevelStrength, fetchFullMonsterHandbook } from '../utils/monsterParser'
-import { translateStatName } from '../utils/gameMappings'
+import { computed, onBeforeUnmount, onErrorCaptured, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { UiBackToTop, UiButton, UiEmptyState, UiModal, UiRewardCard, UiSection, UiStatGrid, UiTabs, UiTag } from './ui/index.js'
+import { getImageUrl, handleImageFallback } from '../utils/env'
+import { fetchMonsterData, fetchMonsterLevelStrength } from '../utils/monsterParser'
+import { formatHighlightedText, translateStatName } from '../utils/gameMappings'
 
-const props = defineProps({
-  visible: Boolean
-})
-
+defineProps({ visible: Boolean })
 const emit = defineEmits(['update:visible'])
-
 const router = useRouter()
 const route = useRoute()
-
 const monster = ref(null)
 const currentFormIndex = ref(0)
-const renderError = ref(null)
-
 const levelStrengthMap = ref({})
 const currentLevel = ref(1)
+const renderError = ref(null)
 const portraitUrl = ref('')
-const showPortrait = ref(true)
+const loading = ref(false)
+const loadError = ref('')
+let loadOperation = 0
 
-onMounted(async () => {
-  try {
-    levelStrengthMap.value = await fetchMonsterLevelStrength()
-  } catch (err) {
-    console.error('Failed to load monster level strength:', err)
+onErrorCaptured(error => { renderError.value = error.message || String(error); console.error('MonsterDetailModal render error:', error); return false })
+
+const loadMonster = async () => {
+  const operation = ++loadOperation
+  const newId = route.query.id
+  loadError.value = ''
+  renderError.value = null
+  if (route.path !== '/monsters' || !newId) {
+    monster.value = null
+    loading.value = false
+    emit('update:visible', false)
+    return
   }
-})
-
-onErrorCaptured((err) => {
-  renderError.value = err.message || String(err)
-  console.error('MonsterDetailModal render error:', err)
-  return false
-})
-
-watch(() => route.query.id, async (newId) => {
-  if (newId && route.path.includes('monsters')) {
-    const [mons, fullMons] = await Promise.all([
-      fetchMonsterData(),
-      fetchFullMonsterHandbook()
-    ])
-    
+  loading.value = true
+  emit('update:visible', true)
+  try {
+    const [officialMonsters, levelStrength] = await Promise.all([fetchMonsterData(), fetchMonsterLevelStrength()])
+    if (operation !== loadOperation) return
+    levelStrengthMap.value = levelStrength
     let foundMonster = null
     let foundFormIndex = 0
-    
-    const searchMonster = (m) => {
-      const forms = m.forms || []
-      const summons = m.summons || []
-      const allF = [...forms, ...summons]
-      const idx = allF.findIndex(f => f.id === newId)
-      if (idx !== -1) {
-        foundMonster = m
-        foundFormIndex = idx
-        return true
-      }
-      return false
+    for (const entry of officialMonsters) {
+      const index = [...(entry.forms || []), ...(entry.summons || [])].findIndex(form => form.id === newId)
+      if (index < 0) continue
+      foundMonster = entry
+      foundFormIndex = index
+      break
     }
-
-    const isFound = mons.some(searchMonster) || fullMons.some(searchMonster)
-    if (isFound && foundMonster) {
-      monster.value = foundMonster
-      currentFormIndex.value = foundFormIndex
-      emit('update:visible', true)
-    }
-  }
-}, { immediate: true })
-
-const handleClose = () => {
-  emit('update:visible', false)
-  if (route.query.id) {
-    const newQuery = { ...route.query }
-    delete newQuery.id
-    router.replace({ query: newQuery })
+    if (!foundMonster) throw new Error('未找到该怪物，请返回列表重新选择。')
+    monster.value = foundMonster
+    currentFormIndex.value = foundFormIndex
+  } catch (error) {
+    if (operation === loadOperation) loadError.value = error.message || '怪物数据暂时不可用，请重试。'
+  } finally {
+    if (operation === loadOperation) loading.value = false
   }
 }
+watch(() => [route.path, route.query.id], loadMonster, { immediate: true })
+onBeforeUnmount(() => { loadOperation += 1 })
 
-const allForms = computed(() => {
-  if (!monster.value) return []
-  const forms = monster.value.forms || []
-  const summons = monster.value.summons || []
-  return [...forms, ...summons]
-})
-
-const formTabOptions = computed(() =>
-  allForms.value.map((f, idx) => ({ value: idx, label: f.tabLabel || f.name || '形态' + (idx + 1) }))
-)
-
-const currentForm = computed(() => {
-  if (!allForms.value.length) return null
-  return allForms.value[currentFormIndex.value]
-})
-
-// 形态页签切换时同步 URL（与 selectForm 行为一致）
-watch(currentFormIndex, (idx) => {
-  const form = allForms.value[idx]
-  if (form) {
-    router.replace({ query: { ...route.query, id: form.id } })
+const allForms = computed(() => monster.value ? [...(monster.value.forms || []), ...(monster.value.summons || [])] : [])
+const currentForm = computed(() => allForms.value[currentFormIndex.value] || null)
+const towerAppearances = computed(() => currentForm.value?.towerAppearances?.length
+  ? currentForm.value.towerAppearances
+  : (currentForm.value?.towerBossAppearances || []))
+const formTabOptions = computed(() => allForms.value.map((form, index) => ({ value: index, label: form.tabLabel || form.name || `形态${index + 1}` })))
+const formatDisplayStat = (key, raw, growth = {}) => {
+  const percentKeys = new Set(['crit', 'critRes', 'critDam', 'atkFloatMin', 'atkFloatMax', 'rebDam', 'vampire', 'cureAdd'])
+  return {
+    label: translateStatName(key),
+    value: key in growth
+      ? growth[key].toLocaleString('zh-CN')
+      : (percentKeys.has(key) ? `${Number(raw[key]) < 2 ? Math.round(Number(raw[key]) * 100) : raw[key]}%` : raw[key])
+  }
+}
+const statGroups = computed(() => {
+  const raw = currentForm.value?.rawStats || {}
+  const coefficient = Number(levelStrengthMap.value[String(currentLevel.value)]?.coefficient || 1)
+  const growth = { maxHp: Math.floor(Number(raw.maxHp || 0) * coefficient), phyAtk: Math.floor(Number(raw.phyAtk || 0) * coefficient), magicAtk: Math.floor(Number(raw.magicAtk || 0) * coefficient), phyDef: Math.floor(Number(raw.phyDef || 0) * coefficient), magicDef: Math.floor(Number(raw.magicDef || 0) * coefficient) }
+  const growthKeys = ['maxHp', 'phyAtk', 'magicAtk', 'phyDef', 'magicDef']
+  const fixedKeys = ['crit', 'critRes', 'critDam', 'atkRange', 'atkFloatMin', 'atkFloatMax', 'runSpeed', 'repelRes', 'phyAtkPen', 'magicAtkPen', 'rebDam', 'vampire', 'cureAdd']
+  return {
+    growth: growthKeys.filter(key => Number(raw[key] || growth[key] || 0) !== 0).map(key => formatDisplayStat(key, raw, growth)),
+    fixed: fixedKeys.filter(key => Number(raw[key] || 0) !== 0).map(key => formatDisplayStat(key, raw))
   }
 })
+const growthStats = computed(() => statGroups.value.growth)
+const fixedStats = computed(() => statGroups.value.fixed)
 
-watch(currentForm, (newForm) => {
-  if (newForm) {
-    currentLevel.value = newForm.level || 1
-    showPortrait.value = true
-    portraitUrl.value = getImageUrl(`/images/MonstersView/${newForm.portraitName || 'colect_mon_' + newForm.id}.png`)
-  }
+const buffSectionTitle = computed(() => currentForm.value?.buffs?.length > 1 ? '随机携带效果' : '固有效果')
+const configuredRewardSections = computed(() => {
+  const sections = []
+  if (monster.value?.baseRewards?.length) sections.push({ title: '图鉴战利品', groups: monster.value.baseRewards })
+  if (currentForm.value?.collectRewards?.length && JSON.stringify(currentForm.value.collectRewards) !== JSON.stringify(monster.value?.baseRewards || [])) sections.push({ title: '怪物配置奖励', groups: currentForm.value.collectRewards })
+  return sections
+})
+watch(currentFormIndex, index => { const form = allForms.value[index]; if (form) router.replace({ query: { ...route.query, id: form.id } }) })
+watch(currentForm, form => {
+  if (!form) return
+  currentLevel.value = Number(form.level || 1)
+  portraitUrl.value = getImageUrl(form.portraitPath)
 }, { immediate: true })
 
-const handlePortraitLoad = () => {
-  showPortrait.value = true
-}
-
-const handlePortraitError = (e) => {
-  const currentSrc = e.target.src
-  const cleanBaseId = monster.value?.id ? String(monster.value.id).replace('hero_', '') : ''
-  const variantId = currentForm.value?.id || ''
-
-  // 1. If MonstersView/colect_mon_... fails, try PicHandBookPanel/colect_mon_...
-  if (currentSrc.includes('/images/MonstersView/')) {
-    e.target.src = currentSrc.replace('/images/MonstersView/', '/images/PicHandBookPanel/')
-    return
-  }
-
-  // 2. Try spelling variant (colect_mon_xxx -> colectr_mon_xxx) in both dirs
-  if (currentSrc.includes('colect_mon_')) {
-    e.target.src = currentSrc.replace('colect_mon_', 'colectr_mon_')
-    return
-  }
-  if (currentSrc.includes('/images/MonstersView/') && currentSrc.includes('colectr_mon_')) {
-    e.target.src = currentSrc.replace('/images/MonstersView/', '/images/PicHandBookPanel/')
-    return
-  }
-
-  // 3. If variant's colect_mon/colectr_mon failed in both dirs, try base monster's colect_mon
-  if ((currentSrc.includes('colect_') || currentSrc.includes('colectr_')) && variantId && variantId !== cleanBaseId && cleanBaseId) {
-    portraitUrl.value = getImageUrl(`/images/MonstersView/colect_mon_${cleanBaseId}.png`)
-    return
-  }
-
-  // 4. If base colect_mon failed, try form's raw icon
+const handleClose = () => { emit('update:visible', false); if (route.query.id) { const query = { ...route.query }; delete query.id; router.replace({ query }) } }
+const copyId = id => { if (id) navigator.clipboard.writeText(id).catch(error => console.error('Failed to copy ID:', error)) }
+const handlePortraitError = event => {
+  const baseId = String(monster.value?.id || '').replace('hero_', '')
   const rawIcon = currentForm.value?.icon || monster.value?.icon
-  if (rawIcon) {
-    portraitUrl.value = getImageUrl(`/images/MonstersView/${rawIcon}.png`)
-    return
+  const names = [baseId && `colect_mon_${baseId}`, rawIcon].filter(Boolean)
+  const candidates = names.flatMap(name => [name, name.replace('colect_mon_', 'colectr_mon_')])
+    .map(name => getImageUrl(`/images/PicHandBookPanel_Atlas/${name}.png`))
+  handleImageFallback(event, { source: portraitUrl.value, candidates })
+}
+const rewardCardRule = (rule, group) => ({ ...rule, targetImg: getImageUrl(rule.targetImg), min: group.min, max: group.max })
+const isRewardClickable = rule => !!rule?.targetId && ['item', 'equipGroup', 'equip'].includes(rule.mode)
+const handleRewardClick = rule => { if (isRewardClickable(rule)) router.push({ query: { ...route.query, itemId: rule.targetId } }) }
+const formatPercent = value => { const percent = Number(value || 0) * 100; return `${percent.toFixed(percent % 1 ? 1 : 0)}%` }
+const formatTowerFloors = floors => `第 ${(floors || []).join('、')} 层`
+const formatSignedPercent = value => `${Number(value) > 0 ? '+' : ''}${Math.round(Number(value) * 100)}%`
+const formatSummon = summon => {
+  const details = [summon.randomPool
+    ? `从${summon.poolNames.join(' / ')}中随机召唤 ${summon.count} 只${summon.allowDuplicates ? '（可重复）' : ''}`
+    : `召唤 ${summon.name} x${summon.count}`]
+  if (summon.maxCount > 0) details.push(`场上最多 ${summon.maxCount} 只`)
+  if (summon.delay > 0) details.push(`延迟 ${summon.delay} 秒`)
+  if (summon.hpPercent > 0) details.push(`继承生命 ${Math.round(summon.hpPercent * 1000) / 10}%`)
+  if (summon.atkPercent > 0) details.push(`继承攻击 ${Math.round(summon.atkPercent * 1000) / 10}%`)
+  if (summon.defPercent > 0) details.push(`继承防御 ${Math.round(summon.defPercent * 1000) / 10}%`)
+  if (summon.duration > 0) details.push(`持续 ${summon.duration} 秒`)
+  return details.join(' · ')
+}
+const formatSkillBuffEffect = buff => [
+  buff.description,
+  buff.duration > 0 ? `持续 ${buff.duration} 秒` : ''
+].filter(Boolean).join(' · ')
+const formatTrap = trap => [
+  '持续性陷阱',
+  trap.duration > 0 ? `持续 ${trap.duration} 秒` : '',
+  trap.interval > 0 ? `每 ${trap.interval} 秒` : ''
+].filter(Boolean).join(' · ')
+const formatLinkedBuffEffect = effect => {
+  const details = []
+  if (effect.healPercent || effect.healBase) {
+    const interval = effect.interval > 0 ? `每 ${effect.interval} 秒` : ''
+    const scale = effect.healType === 'maxHp' ? '最大生命' : ''
+    const amount = effect.healPercent ? `${Math.round(effect.healPercent * 1000) / 10}%${scale}` : `${effect.healBase} 点生命`
+    details.push(`${interval}恢复 ${amount}`.trim())
+  } else if (effect.damageMultiplier || effect.damageBase) {
+    const interval = effect.interval > 0 ? `每 ${effect.interval} 秒` : ''
+    const element = ({ fire: '火属性', water: '水属性', wind: '风属性', earth: '地属性' })[effect.elementType] || ''
+    const amount = effect.damageMultiplier ? `${Math.round(effect.damageMultiplier * 1000) / 10}%${element}${formatDamageType(effect.damageType)}` : `基础伤害 ${effect.damageBase}`
+    details.push(`${interval}造成 ${amount}`.trim())
+  } else if (effect.description) {
+    details.push(effect.description)
   }
-
-  // 5. Otherwise hide
-  showPortrait.value = false
+  if (effect.duration > 0) details.push(`持续 ${effect.duration} 秒`)
+  if (effect.radius > 0) details.push(`半径 ${effect.radius}`)
+  return details.join(' · ')
 }
-
-const selectForm = (idx) => {
-  currentFormIndex.value = idx
-  const form = allForms.value[idx]
-  if (form) {
-    router.replace({ query: { ...route.query, id: form.id } })
-  }
-}
-
-const copyId = (id) => {
-  if (!id) return
-  navigator.clipboard.writeText(id).then(() => {
-    alert('已复制 ID: ' + id)
-  }).catch(err => {
-    console.error('Failed to copy ID:', err)
-  })
-}
-
-const activeRewards = computed(() => {
-  if (currentForm.value?.collectRewards?.length > 0) {
-    return currentForm.value.collectRewards
-  }
-  return monster.value?.baseRewards || []
-})
-
-const growableStats = computed(() => {
-  if (!currentForm.value || !currentForm.value.rawStats) return []
-  const raw = currentForm.value.rawStats
-  const coef = levelStrengthMap.value[String(currentLevel.value)]?.coefficient || 1.0
-  const keys = ['maxHp', 'phyAtk', 'magicAtk', 'phyDef', 'magicDef']
-  
-  return keys.map(key => {
-    const baseVal = raw[key] || 0
-    if (baseVal === 0) return null
-    return {
-      key,
-      label: translateStatName(key),
-      baseVal,
-      calcVal: Math.floor(baseVal * coef)
-    }
-  }).filter(Boolean)
-})
-
-const nonGrowableStats = computed(() => {
-  if (!currentForm.value || !currentForm.value.rawStats) return []
-  const raw = currentForm.value.rawStats
-  const keys = [
-    'crit', 'critRes', 'critDam', 'atkRange', 'atkFloatMin', 'atkFloatMax',
-    'runSpeed', 'repelRes', 'phyAtkPen', 'magicAtkPen', 'rebDam', 'vampire', 'cureAdd'
-  ]
-  
-  return keys.map(key => {
-    const val = raw[key] || 0
-    if (val === 0) return null
-    return {
-      key,
-      label: translateStatName(key),
-      value: val
-    }
-  }).filter(Boolean)
-})
-
-const handleImgError = (e) => {
-  e.target.style.display = 'none'
-}
-
-const handleRewardClick = (rule) => {
-  if ((rule.mode === 'item' || rule.mode === 'equipGroup') && rule.targetId) {
-    router.push({ query: { ...route.query, itemId: rule.targetId } })
-  }
-}
-
-const formatWeakAtt = (text) => {
-  if (!text) return ''
-  return text.replace(/\{([^}]+)\}/g, '<span class="quality-text-2">$1</span>')
-}
-
-const formatDamageType = (type) => {
-  const map = {
-    'magicAtk': '魔法',
-    'phyAtk': '物理',
-    'realAtk': '真实',
-    'cure': '治疗'
-  }
-  return map[type] || type || ''
-}
+const formatDamageType = type => ({ magicAtk: '魔法伤害', phyAtk: '物理伤害', realAtk: '真实伤害', cure: '治疗' }[type] || '伤害')
+const formatRangeLabel = key => ({ rectRange: '矩形范围', radius: '半径', raduis: '半径', range: '范围', checkRange: '判定范围', hit1CheckRange: '第一段范围', hit2CheckRange: '第二段范围', sectorAngle: '扇形角度', moveDis: '位移距离', moveGridRange: '随机位移', atkLenth: '攻击长度', atkWidth: '攻击宽度' }[key] || '范围')
 </script>
 
 <style scoped>
-.id-line {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 10px;
-}
-.copy-tag {
-  cursor: pointer;
-  user-select: none;
-}
-.copy-tag:active {
-  opacity: 0.6;
-}
-
-/* 立绘区 */
-.portrait-section {
-  padding: 18px 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 16px;
-}
-.portrait-box {
-  position: relative;
-  width: 100%;
-  max-width: 260px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: rgba(43, 31, 21, 0.08);
-  border-radius: 6px;
-  border: 1px dashed var(--border-color, #8f7351);
-  padding: 14px 12px;
-  box-shadow: inset 0 2px 8px rgba(43, 31, 21, 0.2);
-}
-.portrait-label {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  font-size: 11px;
-  padding: 2px 8px;
-  border-radius: 3px;
-  background: var(--wood, #2b1f15);
-  color: var(--paper, #dfceb3);
-  font-weight: 700;
-  z-index: 2;
-}
-.portrait-element {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  z-index: 2;
-}
-.portrait-img {
-  max-height: 190px;
-  max-width: 100%;
-  object-fit: contain;
-  margin-top: 12px;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
-}
-.tags-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-  margin-top: 12px;
-}
-.monster-desc {
-  font-size: 14px;
-  color: var(--text-main, #3e2a14);
-  line-height: 1.75;
-  margin-top: 14px;
-  text-align: justify;
-  background: rgba(43, 31, 21, 0.07);
-  border: 1px solid var(--border-faint, rgba(143, 115, 81, 0.25));
-  padding: 12px 14px;
-  border-radius: 4px;
-  width: 100%;
-  box-sizing: border-box;
-  text-indent: 2em;
-}
-
-/* 形态页签 */
-.forms-tabs {
-  margin-bottom: 14px;
-}
-
-.form-content {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding-bottom: 20px;
-}
-
-/* 滑块 */
-.slider-group {
-  padding: 12px 14px;
-  margin-bottom: 12px;
-}
-.slider-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-.slider-title {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text-main, #3e2a14);
-}
-.slider-val {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--accent-ink, #557574);
-}
-.dark-mode .slider-val {
-  color: var(--accent-bright, #93b3b2);
-}
-.calc-range-slider {
-  width: 100%;
-  cursor: pointer;
-  accent-color: var(--accent-bright, #7a9a99);
-  height: 6px;
-}
-
-/* 属性 */
-.attr-subheading {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text-muted, #6b5134);
-  margin: 14px 0 8px;
-  border-left: 3px solid var(--accent-bright, #7a9a99);
-  padding-left: 8px;
-}
-.attr-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-}
-.attr-cell {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 11px;
-  background: rgba(43, 31, 21, 0.07);
-  border: 1px solid var(--border-faint, rgba(143, 115, 81, 0.25));
-  border-radius: 3px;
-  font-size: 13px;
-  min-width: 0;
-}
-.attr-k {
-  color: var(--text-muted, #6b5134);
-  font-weight: 600;
-  white-space: nowrap;
-}
-.attr-v {
-  font-weight: 700;
-  color: var(--text-main, #3e2a14);
-}
-.attr-values-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-weight: 700;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
-.attr-val-base {
-  color: var(--text-faint, #8a6d4d);
-  text-decoration: line-through;
-  font-size: 12px;
-}
-.attr-arrow {
-  color: var(--text-faint, #8a6d4d);
-}
-.attr-val-calc {
-  color: var(--accent-ink, #557574);
-}
-.dark-mode .attr-val-calc {
-  color: var(--accent-bright, #93b3b2);
-}
-
-.text-desc {
-  font-size: 14px;
-  color: var(--text-main, #3e2a14);
-  line-height: 1.7;
-  margin: 0;
-}
-
-/* 技能 */
-.skill-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.skill-item {
-  border-bottom: 1px dashed var(--border-soft, rgba(143, 115, 81, 0.45));
-  padding-bottom: 12px;
-}
-.skill-item:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-.skill-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 4px;
-}
-.skill-name {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text-main, #3e2a14);
-}
-.skill-cost {
-  font-size: 12px;
-  color: var(--accent-ink, #557574);
-  font-weight: 700;
-}
-.dark-mode .skill-cost {
-  color: var(--accent-bright, #93b3b2);
-}
-.skill-desc {
-  font-size: 13px;
-  color: var(--text-muted, #6b5134);
-  line-height: 1.65;
-}
-.skill-mechanics {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-top: 6px;
-}
-
-/* 掉落 */
-.reward-pool {
-  padding: 12px;
-  margin-bottom: 10px;
-}
-.reward-pool:last-child {
-  margin-bottom: 0;
-}
-.reward-items {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-}
-
-.error-state {
-  text-align: center;
-  padding: 40px;
-  color: var(--danger, #8b0000);
-}
-
+.id-line { display: flex; justify-content: flex-end; margin-bottom: 10px; }
+.copy-tag { cursor: pointer; user-select: none; }
+.portrait-section { display: flex; flex-direction: column; align-items: center; margin-bottom: 16px; padding: 18px 14px; }
+.portrait-box { position: relative; display: grid; width: min(100%, 300px); min-height: 210px; place-items: center; padding: 14px; border: 1px dashed var(--border-color); border-radius: 6px; background: rgba(43, 31, 21, 0.08); box-shadow: inset 0 2px 8px rgba(43, 31, 21, 0.2); }
+.portrait-relation { position: absolute; top: 8px; left: 8px; z-index: 1; }
+.portrait-img { max-width: 100%; max-height: 190px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35)); }
+.monster-desc { box-sizing: border-box; width: 100%; margin: 14px 0 0; padding: 12px 14px; border: 1px solid var(--border-faint); border-radius: 4px; background: rgba(43, 31, 21, 0.07); color: var(--text-main); font-size: 14px; line-height: 1.75; text-align: justify; text-indent: 2em; }
+.forms-tabs { margin-bottom: 14px; }
+.variant-context { display: grid; margin: -2px 0 14px; overflow: hidden; border: 1px solid var(--border-color); border-radius: 4px; background: rgba(233, 220, 195, 0.66); box-shadow: inset 0 1px rgba(255, 255, 255, 0.28); }
+.variant-context--transform { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.variant-context--tower { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.variant-context--tower .variant-context__item:nth-child(odd) { border-left: 0; }
+.variant-context--tower .variant-context__item:nth-child(n + 3) { border-top: 1px solid var(--border-faint); }
+.variant-context__item { display: flex; min-width: 0; min-height: 58px; align-items: flex-start; justify-content: center; flex-direction: column; gap: 4px; padding: 9px 12px; border-left: 1px solid var(--border-faint); }
+.variant-context__item:first-child { border-left: 0; }
+.variant-context__item span { color: var(--text-muted); font-size: 11px; font-weight: 700; }
+.variant-context__item strong { overflow-wrap: anywhere; color: var(--text-main); font-size: 13px; line-height: 1.45; }
+.variant-context__item small { color: var(--text-muted); font-size: 10px; line-height: 1.35; }
+.variant-context__item--current { background: var(--hover-bg); }
+.variant-context__item--current strong { color: var(--accent-ink); }
+.form-content { display: flex; flex-direction: column; gap: 2px; padding-bottom: 20px; }
+.level-slider { margin-bottom: 12px; padding: 12px 14px; }
+.level-slider__header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 9px; color: var(--text-main); font-size: 13px; font-weight: 700; }
+.level-slider__header strong { color: var(--accent-ink); }
+.level-slider__input { width: 100%; height: 6px; margin: 0; cursor: pointer; accent-color: var(--accent-bright); }
+.fixed-stat-grid { margin-top: 8px; }
+.tags-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 12px; }
+.tags-row--left { justify-content: flex-start; }
+.text-desc { margin: 0; color: var(--text-main); font-size: 14px; line-height: 1.7; }
+.mechanic-list { display: grid; gap: 10px; }
+.mechanic-card { padding: 12px 14px; border: 1px solid var(--border-faint); border-radius: 5px; background: rgba(233, 220, 195, 0.44); }
+.mechanic-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.mechanic-title { display: flex; align-items: center; gap: 8px; min-width: 0; color: var(--text-main); font-size: 14px; }
+.mechanic-title strong { word-break: break-word; }
+.mechanic-meta { flex-shrink: 0; color: var(--accent-ink); font-size: 12px; font-weight: 700; }
+.mechanic-desc, .mechanic-summary { margin: 8px 0 0; color: var(--text-muted); font-size: 13px; line-height: 1.65; }
+.mechanic-summary { color: var(--text-main); }
+.mechanic-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+.linked-effect-list { display: grid; gap: 5px; margin-top: 9px; }
+.linked-effect-row { display: flex; align-items: baseline; gap: 8px; padding: 6px 9px; border-left: 3px solid var(--accent-bright); background: rgba(43, 31, 21, 0.06); color: var(--text-muted); font-size: 12px; line-height: 1.55; }
+.linked-effect-row strong { flex-shrink: 0; color: var(--text-main); }
+.hit-list { display: grid; gap: 5px; margin-top: 9px; }
+.hit-row { display: flex; flex-wrap: wrap; gap: 6px 12px; padding: 6px 9px; border-left: 3px solid var(--accent-bright); background: rgba(43, 31, 21, 0.06); color: var(--text-muted); font-size: 12px; }
+.hit-row span:first-child { color: var(--text-main); font-weight: 700; }
+.reward-pool { margin-bottom: 8px; }
+.reward-items { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.error-state { padding: 40px; color: var(--danger); text-align: center; }
 @media (max-width: 600px) {
-  .attr-grid, .reward-items {
-    grid-template-columns: 1fr;
-  }
+  .variant-context--transform { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .variant-context--transform .variant-context__item:nth-child(3) { border-left: 0; border-top: 1px solid var(--border-faint); }
+  .variant-context--transform .variant-context__item:nth-child(4) { border-top: 1px solid var(--border-faint); }
+  .mechanic-head { align-items: stretch; flex-direction: column; gap: 6px; }
+  .mechanic-meta { align-self: flex-start; }
+  .reward-items { grid-template-columns: 1fr; }
+  .form-content :deep(.ui-stat-grid) { grid-template-columns: 1fr; }
 }
 </style>

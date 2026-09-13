@@ -15,6 +15,7 @@
     <!-- 状态盒子 -->
     <div class="status-box paper-panel-solid">
       <UiEmptyState v-if="isChecking" type="loading" text="正在检查更新..." />
+      <UiEmptyState v-else-if="checkError" type="error" :text="checkError" />
       <div v-else-if="updateInfo" class="update-available">
         <div class="update-icon">!</div>
         <div class="update-text">
@@ -56,9 +57,7 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue'
 import { UiModal, UiButton, UiEmptyState } from './ui/index.js'
-import { checkHotUpdate } from '../utils/hotupdate'
-import { App as CapApp } from '@capacitor/app'
-import { isNative } from '../utils/env'
+import { checkHotUpdate, getCurrentWebVersion } from '../utils/hotupdate'
 
 const props = defineProps({
   modelValue: {
@@ -69,46 +68,29 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'request-update'])
 
-const currentVersion = ref('1.0.0.0')
+const currentVersion = ref('读取中...')
 const isChecking = ref(false)
 const updateInfo = ref(null)
+const checkError = ref('')
 
 const closeModal = () => {
   emit('update:modelValue', false)
 }
 
-const getLocalVersion = async () => {
-  let nativeVer = '1.0.0'
-  if (isNative) {
-    try {
-      const info = await CapApp.getInfo()
-      nativeVer = info.version || '1.0.0'
-    } catch (e) {
-      console.warn(e)
-    }
-  }
-  const webVer = localStorage.getItem('local_web_version')
-
-  // 有 webVer 直接显示（无论 3 位还是 4 位），否则用 nativeVer + .0
-  if (webVer) {
-    currentVersion.value = webVer
-  } else {
-    currentVersion.value = `${nativeVer}.0`
-  }
-}
-
 const performCheck = async () => {
+  if (isChecking.value) return
   isChecking.value = true
   updateInfo.value = null
-
-  await getLocalVersion()
+  checkError.value = ''
 
   try {
+    currentVersion.value = await getCurrentWebVersion()
     const info = await checkHotUpdate()
     if (info) {
       updateInfo.value = info
     }
   } catch (err) {
+    checkError.value = '暂时无法检查更新，请稍后重试。'
     console.error('Check update failed:', err)
   } finally {
     isChecking.value = false

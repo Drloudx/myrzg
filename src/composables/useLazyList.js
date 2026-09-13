@@ -1,4 +1,5 @@
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { getScrollMetrics, isScrollEventFromTarget, resolveScrollTarget } from '../utils/scrollTarget.js'
 
 /**
  * 通用无限滚动懒加载 composable
@@ -33,6 +34,22 @@ export function useLazyList(sourceListRef, pageSize = 60, scrollContainerSelecto
     displayCount.value = pageSize
   }
 
+  // Ensure a lazily rendered item has a DOM node before callers try to locate it.
+  const ensureItemVisible = matcherOrIndex => {
+    const source = sourceListRef.value || []
+    const index = typeof matcherOrIndex === 'number'
+      ? matcherOrIndex
+      : source.findIndex(matcherOrIndex)
+    if (index < 0 || index >= source.length) return -1
+
+    const requiredCount = Math.min(
+      source.length,
+      Math.ceil((index + 1) / pageSize) * pageSize
+    )
+    if (displayCount.value < requiredCount) displayCount.value = requiredCount
+    return index
+  }
+
   // 监听数据源变化（搜索、分类筛选切换），自动重置
   watch(sourceListRef, () => {
     reset()
@@ -45,21 +62,18 @@ export function useLazyList(sourceListRef, pageSize = 60, scrollContainerSelecto
     if (ticking) return
     ticking = true
     window.requestAnimationFrame(() => {
-      const target = e?.target
-      if (target && target.scrollHeight) {
-        // 如果是特定选择器，且当前滚动的元素不匹配则跳过（除非是根节点或未指定）
-        if (scrollContainerSelector && target.id && !scrollContainerSelector.includes(target.id) && target !== document.documentElement && target !== document.body) {
-          // 容器不匹配，不拦截
-        } else {
-          const scrollTop = target.scrollTop !== undefined ? target.scrollTop : (window.scrollY || 0)
-          const scrollHeight = target.scrollHeight || document.documentElement.scrollHeight
-          const clientHeight = target.clientHeight || window.innerHeight
+      const scopedContainer = scrollContainerSelector
+        ? document.querySelector(scrollContainerSelector)
+        : null
+      if (scopedContainer && scopedContainer.offsetParent === null) {
+        ticking = false
+        return
+      }
 
-          // 距离底部 300px 阈值时触发加载更多
-          if (scrollTop + clientHeight >= scrollHeight - 300) {
-            loadMore()
-          }
-        }
+      const activeTarget = resolveScrollTarget(scopedContainer)
+      if (isScrollEventFromTarget(e, activeTarget)) {
+        const { scrollTop, scrollHeight, clientHeight } = getScrollMetrics(activeTarget)
+        if (scrollTop + clientHeight >= scrollHeight - 300) loadMore()
       }
       ticking = false
     })
@@ -79,6 +93,7 @@ export function useLazyList(sourceListRef, pageSize = 60, scrollContainerSelecto
     displayedItems,
     hasMore,
     loadMore,
-    reset
+    reset,
+    ensureItemVisible
   }
 }

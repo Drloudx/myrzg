@@ -32,3 +32,27 @@ venv/
 # pytest等工具缓存
 .pytest_cache/
 .coverage
+
+# Playwright 测试产物
+test-results/
+playwright-report/
+
+# 测试工具（一次性资源提取脚本，不进应用/构建）
+测试工具/
+
+# 一次性排查/探针脚本与残留（dev only）
+test-monsters.js
+test-*.mjs
+probe-*.mjs
+verify-*.mjs
+shot-*.mjs
+trace-*.mjs
+repro-*.mjs
+scripts/dev/scratch/
+
+# 未使用的重复地图资源
+/map_w1_bg.png
+/public/ui/test_map_w1_bg.png
+
+# 原始素材全部构建产物，不进repo/构建产物，请看 scripts/dev/sync-raw.mjs 从Config_decrypted读取
+/raw/

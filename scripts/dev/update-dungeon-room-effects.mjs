@@ -1,13 +1,13 @@
 /**
- * 从完整游戏配置提取副本女神房与泉水房效果，写回网页使用的精简房间表。
+ * 从完整游戏配置提取副本女神房与泉水房效果，写回 raw/ 中的派生房间表。
  * 用法：npm run data:dungeons:effects -- [Config_decrypted 目录]
  */
 import { readFileSync, writeFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
+import { configRoot as defaultConfigRoot, rawRoot } from './maintenance-paths.mjs'
 
-const repoRoot = resolve(import.meta.dirname, '../..')
-const configRoot = resolve(process.argv[2] || 'E:/Desktop/羊2/Config_decrypted')
-const outputPath = join(repoRoot, 'public/data/dungeonBattleRooms.json')
+const configRoot = resolve(process.argv[2] || defaultConfigRoot)
+const outputPath = join(rawRoot, 'dungeonBattleRooms.json')
 
 const readJson = path => JSON.parse(readFileSync(path, 'utf8'))
 const roomMap = readJson(join(configRoot, 'room.json'))

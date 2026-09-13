@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 360" fill="none" class="mascot-illustration" data-character="034" style="--mascot-eyes-origin:130px 105px;--mascot-left-origin:81px 96px;--mascot-right-origin:168px 140px" aria-hidden="true" focusable="false">
+  <ellipse cx="126" cy="337" rx="45" ry="6" fill="#64514c" opacity=".14"/>
+  <g stroke="#635767" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <g class="idle-body idle-motion">
+      <g class="idle-hair-left idle-motion" data-rig-part="hairLeft">
+        <path d="M82 84Q58 127 48 162Q38 193 55 211L64 207L67 188L105 144L113 99Z" fill="#a8a0b6"/>
+        <path d="M77 125Q51 160 52 187Q58 199 65 188" stroke="#d6cbd7" stroke-width="4"/>
+        <path d="M79 143Q68 174 61 179L70 181L83 166" stroke="#837c95" stroke-width="2.7"/>
+        <path d="M86 234Q59 284 19 293Q42 321 81 314L142 287L127 260Z" fill="#b398a6"/>
+        <path d="M26 296Q70 304 100 284" stroke="#d6b6bd" stroke-width="3"/>
+      </g>
+      <g class="idle-hair-right idle-motion" data-rig-part="hairRight">
+        <path d="M154 99Q180 118 183 163L175 200L158 198L134 151Z" fill="#aba2b6"/>
+        <path d="M161 142L171 184" stroke="#d3c6d3" stroke-width="3"/>
+        <path d="M98 156L170 159L173 227L191 271L169 280L148 264L114 281L66 279L46 265L72 210Z" fill="#3f4b68"/>
+        <path d="M79 195L67 254L93 262L106 234M162 203L178 265L159 256" stroke="#68718a" stroke-width="3"/>
+        <path d="M49 259Q44 267 54 271L60 270L64 277L71 274L76 279L84 276L89 281L99 278M168 266L174 273L180 272L185 276L193 270" stroke="#e5dece" stroke-width="7"/>
+      </g>
+      <!-- Cream stockings, mint cuffs and tiny heels. -->
+      <path d="M100 240L127 246L119 284L104 300L89 288Z" fill="#efd0b8"/>
+      <path d="M137 241L159 239L159 280L145 295L131 279Z" fill="#efd0b8"/>
+      <path d="M97 264L124 269L116 308L94 312L88 293Z" fill="#e1e0d8"/>
+      <path d="M133 264L158 262L159 296L148 309L130 302Z" fill="#e1e0d8"/>
+      <path d="M96 278L106 288L115 287M140 277L149 287" stroke="#b3b6b2" stroke-width="2.2"/>
+      <path d="M91 307L113 309L113 323L105 334L93 334L86 325Z" fill="#a8a6bc"/>
+      <path d="M132 300L154 301L162 316Q160 330 147 330L132 322Z" fill="#a8a6bc"/>
+      <path d="M89 301L115 305L116 315L107 315L104 320L98 315L88 314Z" fill="#a3c8c3"/>
+      <path d="M132 293L157 294L160 306L151 307L148 313L142 307L131 307Z" fill="#a3c8c3"/>
+      <path d="M89 320L96 326L94 332M143 315L147 323L156 322" stroke="#eee6e4" stroke-width="3"/>
+      <g data-rig-part="torso">
+      <!-- Little blue dress and fur-trimmed mantle. -->
+      <path d="M95 139L150 138L164 184L159 242L140 253L126 247L114 256L90 244L88 185Z" fill="#53617b"/>
+      <path d="M103 164L143 161L148 201L113 212L94 196Z" fill="#e6e3d4"/>
+      <path d="M118 178L132 170L144 180L133 190Z" fill="#e4c8ad"/>
+      <path d="M110 146L113 173L121 176L124 161L132 173L143 173L144 144Z" fill="#f1eadb"/>
+      <path d="M112 155Q125 163 141 153" stroke="#a6bdb7" stroke-width="3"/>
+      <path d="M92 211L147 208L162 241L147 249L137 240L125 252L111 244L100 250L85 238Z" fill="#adc7c0"/>
+      <path d="M107 218L101 239L111 244M126 216L125 241M141 216L150 238" stroke="#729ca0" stroke-width="2.2"/>
+      <path d="M107 202L145 199L147 211L102 216Z" fill="#665578"/>
+      <path d="M123 204L132 200L140 205L135 213L125 212Z" fill="#d7dccd"/>
+      <path d="M83 145L101 136L111 155L101 180L75 176L73 158Z" fill="#444f6c"/>
+      <path d="M149 140L172 150L174 181L153 184L140 163Z" fill="#444f6c"/>
+      <path d="M97 137Q128 148 156 133L161 145Q128 156 92 146Z" fill="#e9e2d2"/>
+      <path d="M91 146Q126 158 161 146L160 155L95 157Z" fill="#45415f"/>
+      <path d="M127 149L134 151L133 159L127 160L122 155Z" fill="#9fc5bf"/>
+      <path d="M126 161L131 170L137 162" fill="#b8d6cb"/>
+      </g>
+      <g class="pose-idle-arm">
+      <path d="M77 177L101 178L111 208L98 222L80 211L67 189Z" fill="#ede8da"/>
+      <path d="M72 184L87 190L100 205L90 206Z" fill="#9bc0ba"/>
+      <path d="M99 207L114 203L122 214L113 225L99 226L92 218Z" fill="#a5c9c2"/>
+      </g>
+<g data-rig-part="sword">
+      <!-- Staff held diagonally, with a broad gold cradle and faceted blue stone. -->
+      <path d="M 167.640 151.304 L 174.041 151.154 L 170.961 299.944 L 165.079 302.269 L 161.989 297.030 Z" fill="#98adb5"/>
+      <path d="M 166.585 293.173 L 170.238 162.178" stroke="#d3ded7" stroke-width="1.5"/>
+      <path d="M 161.785 161.439 L 143.470 159.836 L 142.228 133.465 L 141.382 110.677 L 156.210 103.457 L 174.155 109.285 L 167.930 123.647 L 170.827 147.324 Z" fill="#bdac77"/>
+      <path d="M 146.525 116.805 L 149.721 153.285 L 156.246 151.727 L 160.340 113.045" stroke="#e4d09a" stroke-width="3"/>
+      <path d="M 146.375 110.404 L 136.117 105.957 L 131.837 89.967 L 139.471 75.729 L 151.262 78.890 L 157.962 91.543 L 158.139 105.755 Z" fill="#a4ced8"/>
+      <path d="M 131.837 89.967 L 141.602 100.049 L 136.117 105.957 L 146.375 110.404 L 152.354 98.860 L 139.471 75.729 Z" fill="#cee7df" stroke="none"/>
+      <path d="M 142.369 99.406 L 155.541 94.880 L 151.535 83.883 L 145.010 85.441 Z" fill="#7cacc5" stroke="none"/>
+      <path d="M 141.382 110.677 L 158.139 105.755 L 168.890 104.566 L 168.916 112.376 L 155.867 115.493 L 145.512 120.266 Z" fill="#d3bf89"/>
+      <path d="M 171.637 121.842 Q 171.065 104.046 188.490 107.700 L 195.711 122.528 L 191.264 132.786 L 180.636 132.566 L 178.365 142.305 L 166.724 145.545 L 162.718 134.548 Z" fill="#eee7e0"/>
+      <path d="M 186.368 123.840 L 201.672 143.634 L 203.530 162.961 L 212.379 167.285 L 219.151 162.908 L 210.125 144.374 L 193.782 120.230" fill="#c4bac6"/>
+      <path d="M 193.069 136.493 L 192.919 130.092 L 206.418 146.179 L 207.607 156.930" stroke="#f0e9df" stroke-width="4"/>
+      </g>
+      <path d="M162 182L177 177L180 189L168 204L154 201L151 191Z" fill="#afd0c7"/>
+      <path d="M153 184L161 176L166 178L171 173L178 177L175 186L169 190L164 197L156 194Z" fill="#f0cdb2"/>
+      <path d="M159 183L169 186M164 179L174 181" stroke="#bd9582" stroke-width="1.4"/>
+      <!-- Lavender bob, hood and pink petal-like ribbons. -->
+      <g class="pose-head" data-rig-part="head">
+      <path d="M78 95L65 72L74 44Q96 21 128 27Q166 24 181 59L181 97L161 127L93 132Z" fill="#747b97"/>
+      <path d="M77 63Q91 31 123 34L121 43Q95 40 88 72ZM136 35Q166 40 169 62L158 59L150 43Z" fill="#d9d2c8"/>
+      <path d="M84 82Q111 60 151 75Q166 84 163 110Q158 136 132 142Q101 141 86 123Q80 105 84 82Z" fill="#f0ccb5"/>
+      <path d="M102 97L114 97M138 94L151 96" stroke="#9f8580" stroke-width="1.5"/>
+      <g class="idle-eyes idle-motion">
+        <path d="M98 101Q107 96 117 102L115 115Q107 120 100 114Z M136 99Q146 95 154 101L151 114Q143 118 137 112Z" fill="#7c657d"/>
+        <path d="M104 104Q109 101 113 104L112 114L106 115Z M141 102Q146 99 150 102L148 112L142 113Z" fill="#514657" stroke="none"/>
+        <circle cx="105" cy="106" r="1.8" fill="#efe8df" stroke="none"/><circle cx="141" cy="103" r="1.8" fill="#efe8df" stroke="none"/>
+        <path d="M99 103L116 102M136 101L152 99" stroke="#63515c" stroke-width="2.5"/>
+      </g>
+      <path d="M123 129L127 129" stroke="#a77b79" stroke-width="1.5"/>
+      <path d="M80 80Q75 52 108 45Q140 38 160 59Q176 78 164 99L153 96L152 74Q149 96 139 98L133 90L133 68Q129 94 121 100L111 94L114 72Q108 98 98 101L93 94Q89 109 103 117Q86 120 79 100Z" fill="#b4aabd"/>
+      <path d="M111 52Q93 68 93 87M126 51L122 73M141 56L146 79" stroke="#d6cedc" stroke-width="4"/>
+      <path d="M74 72L60 66L59 90L76 101L84 92ZM173 68L184 71L181 96L168 103L166 88Z" fill="#a5a0b6"/>
+      <path d="M76 70L70 57L82 52L93 64L85 71L90 79L80 86L73 78Z" fill="#e6e1d4"/>
+      <path d="M167 67L177 59L182 66L176 76L179 81L170 88L162 80Z" fill="#e6e1d4"/>
+      <path d="M78 105Q61 95 58 109Q67 128 93 120L87 129L79 143L96 136L106 123Z" fill="#d5a3aa"/>
+      <path d="M67 111L81 110L87 116L71 118ZM89 132L96 126L92 134Z" fill="#f3d9cd" stroke="none"/>
+      <path d="M164 107Q180 98 185 111Q182 125 166 125L177 142L161 136L153 119Z" fill="#d5a3aa"/>
+      <path d="M165 114L179 110L176 118L168 120M164 127L169 135" stroke="#f3d9cd" stroke-width="3"/>
+      <path d="M112 45Q118 23 144 17Q145 33 126 49L117 54ZM149 43Q170 34 185 45Q176 62 159 58L149 52Z" fill="#d5a3aa"/>
+      <path d="M124 38L136 27L133 36L124 44ZM162 45L176 45L168 51Z" fill="#f5d9cd" stroke="none"/>
+      </g>
+      <g class="pose-think-arm" display="none">
+        <path d="M81 174L97 179L87 191L102 162L113 164L106 188L94 206Q87 215 78 203L72 188Z" fill="#ede8da"/>
+        <path d="M79 183L82 202L99 178" stroke="#9bc0ba" stroke-width="3"/>
+        <path d="M98 170L95 159L106 151L117 158L116 171L109 176Z" fill="#a5c9c2"/>
+        <path d="M101 159L98 151L102 140Q104 133 108 135L111 139L119 135Q125 134 126 139Q128 144 120 147L113 148L112 159Z" fill="#f0cdb2"/>
+        <path d="M105 141L105 150M113 142L122 139M113 145L120 143" stroke="#bd9582" stroke-width="1.3"/>
+      </g>
+    </g>
+  </g>
+</svg>
