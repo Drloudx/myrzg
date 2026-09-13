@@ -1,0 +1,242 @@
+Npc_025.png
+size:560,560
+filter:Linear,Linear
+scale:0.16
+armB
+bounds:402,5,26,36
+rotate:90
+armF
+bounds:327,71,28,39
+arrow
+bounds:323,302,90,68
+offsets:0,0,90,69
+arrow 1
+bounds:4,393,108,57
+arrow_back
+bounds:174,260,84,67
+arrowburst1_1/arrowburst1_1_01
+bounds:262,237,53,30
+offsets:17,24,77,77
+arrowburst1_1/arrowburst1_1_02
+bounds:137,96,57,31
+offsets:13,23,77,77
+arrowburst1_1/arrowburst1_1_03
+bounds:116,384,54,31
+offsets:16,23,77,77
+arrowburst1_1/arrowburst1_1_04
+bounds:87,4,53,28
+offsets:17,25,77,77
+rotate:90
+axe/normalAxe
+bounds:440,329,60,113
+offsets:2,2,64,117
+rotate:90
+axe/normalPick
+bounds:175,387,87,113
+offsets:3,4,93,121
+rotate:90
+body
+bounds:113,291,57,89
+body_back
+bounds:322,238,60,78
+rotate:90
+bowknot
+bounds:301,465,20,15
+rotate:90
+bowknot B
+bounds:340,23,25,44
+bowstring
+bounds:92,169,74,51
+bowstring 1
+bounds:4,165,74,46
+offsets:0,0,74,51
+bowstring 111
+bounds:173,205,74,51
+bowstring 1_back
+bounds:453,516,101,40
+offsets:0,0,102,41
+bowstring_back
+bounds:174,331,104,52
+breast
+bounds:462,101,33,21
+rotate:90
+cat paw black
+bounds:310,114,29,27
+offsets:0,1,29,28
+cat paw white
+bounds:343,114,29,27
+offsets:0,1,29,28
+ceossbow
+bounds:323,464,126,92
+ceossbow_back
+bounds:4,454,167,102
+offsets:0,0,167,105
+cloth
+bounds:442,23,32,32
+cloth_back
+bounds:402,35,34,36
+offsets:0,0,35,36
+ear B
+bounds:4,119,63,42
+ear F
+bounds:481,214,72,50
+face attack
+bounds:376,115,41,29
+offsets:1,0,42,29
+face dead
+bounds:440,59,35,28
+offsets:1,0,37,28
+rotate:90
+face hurt
+bounds:292,376,38,27
+offsets:2,0,42,27
+rotate:90
+face idle
+bounds:421,138,41,29
+offsets:1,0,42,29
+face idle close
+bounds:430,98,36,28
+offsets:0,4,38,33
+rotate:90
+face idle close2
+bounds:282,344,37,28
+offsets:0,3,39,34
+face idle2
+bounds:369,26,41,29
+offsets:1,0,42,29
+rotate:90
+face tongue
+bounds:359,71,39,28
+offsets:1,0,42,29
+rotate:90
+hair back01
+bounds:417,290,35,79
+rotate:90
+hair back02
+bounds:280,114,26,41
+hair back03
+bounds:4,330,59,105
+rotate:90
+hair front01
+bounds:404,258,28,73
+rotate:90
+hair front02
+bounds:4,22,60,45
+rotate:90
+hair front03
+bounds:4,275,51,91
+rotate:90
+hair front04
+bounds:323,374,86,113
+rotate:90
+hand 2 F
+bounds:280,71,39,43
+offsets:1,1,41,44
+rotate:90
+hand 3 F
+bounds:500,297,28,54
+offsets:1,2,30,57
+rotate:90
+hand B1
+bounds:302,22,34,45
+offsets:1,0,35,46
+hand B2
+bounds:87,61,36,45
+offsets:0,0,36,46
+rotate:90
+hand B3
+bounds:220,8,50,39
+offsets:0,0,50,40
+rotate:90
+hand B5
+bounds:292,418,27,43
+offsets:1,0,28,44
+hand B_back
+bounds:263,21,35,45
+handF
+bounds:136,62,30,50
+offsets:0,2,30,52
+rotate:90
+handF_back1
+bounds:119,5,33,52
+handF_back2
+bounds:116,419,31,55
+rotate:90
+head
+bounds:99,224,63,70
+rotate:90
+head_back
+bounds:478,145,68,65
+head_back1
+bounds:198,62,48,49
+rotate:90
+legB
+bounds:156,6,28,52
+legB1
+bounds:188,6,28,52
+legB1_back
+bounds:500,268,25,54
+rotate:90
+legB_back
+bounds:251,70,25,50
+legF
+bounds:390,171,32,63
+rotate:90
+legF1
+bounds:217,124,31,59
+offsets:2,0,33,59
+rotate:90
+legF1_back
+bounds:4,86,29,61
+rotate:90
+legF_back
+bounds:53,22,30,60
+pbArrow3_add
+bounds:175,478,26,122
+offsets:5,3,37,128
+rotate:90
+quiver B
+bounds:417,335,19,35
+offsets:0,2,19,37
+quiver F
+bounds:4,215,84,56
+scar B
+bounds:319,182,67,52
+scarf F
+bounds:404,207,70,47
+shadow
+bounds:175,508,144,48
+offsets:1,1,149,50
+star
+bounds:391,75,36,35
+rotate:90
+switch
+bounds:301,489,17,15
+tail
+bounds:453,393,119,92
+rotate:90
+thighB
+bounds:71,101,30,62
+offsets:0,1,30,63
+rotate:90
+thighB1
+bounds:310,148,30,63
+rotate:90
+thighB1_back
+bounds:150,131,30,63
+rotate:90
+thighB_back
+bounds:82,135,30,64
+rotate:90
+thighF
+bounds:251,197,36,64
+rotate:90
+thighF1
+bounds:282,271,36,69
+thighF1_back
+bounds:240,159,34,66
+offsets:0,2,34,68
+rotate:90
+thighF_back
+bounds:170,165,36,66
+rotate:90

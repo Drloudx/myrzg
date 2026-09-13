@@ -1,17 +1,14 @@
 /**
  * 场景宝箱（隐藏奖励）预解析（新风格，替代原 scripts/parse-hidden-rewards.js）
  * 产物：parsed-hidden.json（奖励页运行时）、parsed-hidden-sources.json（构建期合并进 item-sources）
- * 注意：场景定位优先完整版 room主.json（含采集物引用），缺失回退精简版 room.json
+ * 数据源：raw/room.json 为 Config_decrypted 原始完整房间表（battleData 含 monRounds/spObj/npcList），
+ *        隐藏奖励定位用其 spObj（采集物引用）；由 buildHiddenRewards 在遍历时自取所需字段。
  */
 import { buildHiddenRewards } from '../../src/utils/hiddenRewardsData.js'
-import { readJson, publicDataDir } from './shared.mjs'
-import { existsSync } from 'node:fs'
-import { join } from 'node:path'
+import { readJson } from './shared.mjs'
 
 export function build() {
-  const roomRes = existsSync(join(publicDataDir, 'room主.json'))
-    ? readJson('room主.json')
-    : readJson('room.json')
+  const roomRes = readJson('room.json')
 
   const { hidden, sources } = buildHiddenRewards({
     rewardRes: readJson('reward.json'),

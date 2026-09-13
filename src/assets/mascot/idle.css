@@ -1,0 +1,54 @@
+/* Shared motion for hand-drawn SVGs. Each drawing supplies its own group pivots. */
+.mascot-illustration .idle-body {
+  transform-origin: var(--mascot-body-origin, 120px 318px);
+  animation: mascot-breathe 4.8s ease-in-out infinite;
+}
+.mascot-illustration .idle-hair-left {
+  transform-origin: var(--mascot-left-origin, 76px 116px);
+  animation: mascot-sway-left 4.8s ease-in-out infinite;
+}
+.mascot-illustration .idle-hair-right {
+  transform-origin: var(--mascot-right-origin, 172px 114px);
+  animation: mascot-sway-right 4.8s ease-in-out infinite;
+}
+.mascot-illustration .idle-eyes {
+  transform-origin: var(--mascot-eyes-origin, 120px 116px);
+  animation: mascot-blink 7.4s linear infinite;
+}
+.mascot-illustration .idle-ear {
+  transform-origin: var(--mascot-ear-origin, 172px 63px);
+  animation: mascot-ear 14.8s ease-in-out infinite;
+}
+.mascot-illustration .idle-pendant {
+  transform-origin: var(--mascot-pendant-origin, 130px 172px);
+  animation: mascot-pendant 4.8s ease-in-out infinite;
+}
+.mascot-illustration .idle-motion { animation-play-state: var(--mascot-play-state, running); }
+@keyframes mascot-breathe {
+  0%, 100% { transform: translateY(0) scaleY(1); }
+  50% { transform: translateY(-1px) scaleY(1.007); }
+}
+@keyframes mascot-sway-left {
+  0%, 100% { transform: rotate(.8deg); }
+  50% { transform: rotate(-1deg); }
+}
+@keyframes mascot-sway-right {
+  0%, 100% { transform: rotate(-.6deg); }
+  55% { transform: rotate(1.1deg); }
+}
+@keyframes mascot-blink {
+  0%, 43%, 47%, 100% { transform: scaleY(1); }
+  44.5%, 45.5% { transform: scaleY(.07); }
+}
+@keyframes mascot-ear {
+  0%, 72%, 79%, 100% { transform: rotate(0); }
+  74% { transform: rotate(5deg); }
+  76% { transform: rotate(-2deg); }
+}
+@keyframes mascot-pendant {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mascot-illustration .idle-motion { animation: none; }
+}

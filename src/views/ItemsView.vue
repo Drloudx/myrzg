@@ -51,19 +51,24 @@
       </UiFilterRow>
     </div>
 
-    <!-- 列表区（桌面端精准一行 7 列，懒加载每批 60 项） -->
-    <UiCardGrid id="itemsGridScroll" class="items-card-grid" v-if="isDataReady">
-      <UiItemCard
-        v-for="item in displayedItems"
-        :key="item.typeId"
-        :img="getImageUrl(getItemImageUrl(item))"
-        :name="item.name"
-        :quality="item.quality"
-        @click="handleItemClick(item)"
-        @img-error="handleImgError"
-      />
-      <UiEmptyState v-if="filteredItems.length === 0" text="无匹配物品" />
-    </UiCardGrid>
+    <!-- 按行窗口化，列数沿用响应式网格样式。 -->
+    <UiVirtualGrid ref="itemGrid" id="itemsGridScroll" class="items-card-grid" v-if="isDataReady" :items="filteredItems" item-key="typeId">
+      <template #default="{ item }">
+        <UiItemCard
+          :key="item.typeId"
+          :data-item-id="item.typeId"
+          :img="getImageUrl(getItemImageUrl(item))"
+          :name="item.name"
+          :quality="item.quality"
+          @click="handleItemClick(item)"
+          @img-error="handleImageFallback"
+        />
+      </template>
+      <template #empty><UiEmptyState text="无匹配物品" /></template>
+    </UiVirtualGrid>
+    <UiEmptyState v-else-if="errorMessage" type="error" :text="errorMessage">
+      <template #action><UiButton @click="loadItems">重试</UiButton></template>
+    </UiEmptyState>
     <UiEmptyState v-else type="loading" text="数据加载中..." />
 
     <UiBackToTop scroll-container="#itemsGridScroll" />
@@ -71,17 +76,17 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { fetchItemData, getItemImageUrl } from '../utils/itemParser'
-import { getImageUrl } from '../utils/env'
-import { openItemDetail } from '../utils/itemModalState'
+import { ref, shallowRef, computed, nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
+import { compareItemsByCategoryQuality, fetchItemData, getItemImageUrl, isVisibleEquipItem } from '../utils/itemParser'
+import { getImageUrl, handleImageFallback } from '../utils/env'
+import { itemModalState } from '../utils/itemModalState'
 import { isBlacklisted } from '../config/blacklist.js'
 import { getRarityName } from '../utils/gameMappings'
 import { useRoute, useRouter } from 'vue-router'
-import { useLazyList } from '../composables/useLazyList'
+import UiVirtualGrid from '../components/ui/UiVirtualGrid.vue'
 import {
   UiBackToTop,
-  UiCardGrid,
+  UiButton,
   UiEmptyState,
   UiFilterPill,
   UiFilterRow,
@@ -92,9 +97,13 @@ import {
 const route = useRoute()
 const router = useRouter()
 
-const allItems = ref([])
+const allItems = shallowRef([])
 const categoryTree = ref([])
 const isDataReady = ref(false)
+const errorMessage = ref('')
+const itemGrid = ref(null)
+let loadOperation = 0
+let initialDetailId = route.query.itemId || null
 
 const searchQuery = ref('')
 const selectedMain = ref(null)
@@ -102,19 +111,32 @@ const selectedSub = ref(null)
 const selectedMini = ref(null)
 const selectedRarity = ref(null)
 
-onMounted(async () => {
-  const data = await fetchItemData()
-  allItems.value = data.items
-  categoryTree.value = data.categoryTree
-  isDataReady.value = true
-  
-  // 处理全局 URL 唤起
-  if (route.query.itemId && categoryTree.value.length) {
-    const targetItem = allItems.value.find(i => i.typeId === route.query.itemId)
-    if (targetItem) {
-      openItemDetail(targetItem, categoryTree.value)
-    }
+const loadItems = async () => {
+  const operation = ++loadOperation
+  errorMessage.value = ''
+  isDataReady.value = false
+  try {
+    const data = await fetchItemData()
+    if (operation !== loadOperation) return
+    allItems.value = data.items
+    categoryTree.value = data.categoryTree
+    isDataReady.value = true
+  } catch (error) {
+    if (operation === loadOperation) errorMessage.value = '物品数据加载失败，请重试'
   }
+}
+
+onMounted(loadItems)
+onBeforeUnmount(() => { loadOperation += 1 })
+
+watch(() => itemModalState.visible, async visible => {
+  if (visible || !initialDetailId || !isDataReady.value) return
+  const targetId = initialDetailId
+  initialDetailId = null
+  await nextTick()
+  // A shared link has no earlier list position; wait for modal restoration first.
+  await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))
+  await itemGrid.value?.scrollToItem(targetId)
 })
 
 // 监听级联切换重置下级
@@ -136,7 +158,13 @@ const selectMini = (val) => {
 const subCategoryTree = computed(() => {
   if (selectedMain.value === null) return []
   const mainNode = categoryTree.value.find(c => String(c.type) === String(selectedMain.value))
-  const list = mainNode?.info ? [...mainNode.info] : []
+  const list = mainNode?.info ? mainNode.info
+    .filter(sub => !(String(selectedMain.value) === '2' && String(sub.type) === '24'))
+    .map(sub => (
+      String(selectedMain.value) === '5' && String(sub.type) === '51'
+        ? { ...sub, name: '配方' }
+        : sub
+    )) : []
   if (String(selectedMain.value) === '2') {
     list.unshift({ type: 'fav_gift', name: '好感礼物' })
   }
@@ -149,19 +177,48 @@ const miniCategoryTree = computed(() => {
   return subNode?.info || []
 })
 
-const handleImgError = (e) => {
-  e.target.style.opacity = '0.3'
+const isCollectionFormula = (item) => {
+  return String(item?.category?.[1] || '') === '51'
+    || item?.useAction === 'unlockMenu'
+    || item?.useAction === 'unlockFormula'
+}
+
+const isCollectionFurniture = (item) => {
+  return ['unlockHomeItem', 'unlockHomeItemSkin'].includes(item?.useAction)
+    && item?.homeItemUnlocks?.some(unlock => unlock.catalogVisible)
+}
+
+const getCollectionSortGroup = (item) => {
+  const name = String(item?.name || '')
+  const subCategory = String(item?.category?.[1] || '')
+
+  if (name.startsWith('指名契约书')) return 0
+  if (name.includes('碎片') || item?.useAction === 'getHeroStar') return 1
+  if (isCollectionFormula(item)) return 2
+  if (isCollectionFurniture(item)) return 3
+  if (subCategory === '54') return 4
+  if (subCategory === '55' || item?.useAction === 'unlockHeroSkin') return 5
+  return 6
+}
+
+const getCollectionSubtypeSortGroup = (item) => {
+  if (!isCollectionFormula(item)) return 0
+  if (String(item?.category?.[1] || '') === '51' || item?.useAction === 'unlockMenu') return 0
+  if (item?.useAction === 'unlockFormula') return 1
+  return 2
 }
 
 const filteredItems = computed(() => {
   if (!isDataReady.value) return []
   return allItems.value.filter(item => {
+    // equipGroup 的 show_* 仅用于奖励池预览，不是玩家背包物品。
+    if (String(item.typeId || '').startsWith('show_')) return false
+
     // 黑名单过滤
     if (isBlacklisted(item)) return false
 
-    // 开发者调试开关：隐藏没有图标的物品（img 字段为空）
-    // 如果需要开启此功能，取消下面一行的注释即可
-    if (!item.img) return false
+    // 家具图纸在游戏 NewItemTips 中使用 BuildItem 图集，部分正式图纸没有 item.img。
+    if (!item.img && !isCollectionFurniture(item)) return false
 
     // 搜索过滤
     if (searchQuery.value) {
@@ -178,6 +235,9 @@ const filteredItems = computed(() => {
     }
 
     // 分类过滤
+    // 装备分类遵循游戏图鉴的 hide/equipLevel 规则，避免混入测试装备。
+    if (item.category && String(item.category[0]) === '4' && !isVisibleEquipItem(item)) return false
+
     if (selectedMain.value !== null) {
       if (!item.category || String(item.category[0]) !== String(selectedMain.value)) return false
       
@@ -186,6 +246,10 @@ const filteredItems = computed(() => {
           const isFavGift = (item.favValue !== undefined && item.favValue !== 0 && item.favValue !== 1) && 
                             (item.useDes && item.useDes.includes('好感'))
           if (!isFavGift) return false
+        } else if (String(selectedMain.value) === '5' && String(selectedSub.value) === '51') {
+          if (!isCollectionFormula(item)) return false
+        } else if (String(selectedMain.value) === '5' && String(selectedSub.value) === '52') {
+          if (!isCollectionFurniture(item)) return false
         } else {
           if (String(item.category[1]) !== String(selectedSub.value)) return false
           
@@ -203,56 +267,35 @@ const filteredItems = computed(() => {
     const cat0B = b.category && b.category[0] ? Number(b.category[0]) : 0
     if (cat0A !== cat0B) return cat0A - cat0B
 
-    // 2. 中类 (Category 1)
-    const cat1A = a.category && a.category[1] ? Number(a.category[1]) : 0
-    const cat1B = b.category && b.category[1] ? Number(b.category[1]) : 0
-    if (cat1A !== cat1B) return cat1A - cat1B
+    // 收集类原表中大量条目缺少中类，按实际用途分组，避免契约、碎片和家具混排。
+    if (cat0A === 5) {
+      const groupDiff = getCollectionSortGroup(a) - getCollectionSortGroup(b)
+      if (groupDiff) return groupDiff
 
-    // 3. 小类 (Category 2)
-    const cat2A = a.category && a.category[2] ? Number(a.category[2]) : 0
-    const cat2B = b.category && b.category[2] ? Number(b.category[2]) : 0
-    if (cat2A !== cat2B) return cat2A - cat2B
+      const subtypeDiff = getCollectionSubtypeSortGroup(a) - getCollectionSubtypeSortGroup(b)
+      if (subtypeDiff) return subtypeDiff
 
-    // 4. 品质 (Quality) - 从高到低
-    const qualA = a.quality || 0
-    const qualB = b.quality || 0
-    if (qualA !== qualB) return qualB - qualA
+      const qualityDiff = Number(b.quality || 0) - Number(a.quality || 0)
+      if (qualityDiff) return qualityDiff
 
-    // 5. ID (typeId)
-    const idA = a.typeId || ''
-    const idB = b.typeId || ''
-    const idCmp = idA.localeCompare(idB)
-    if (idCmp !== 0) return idCmp
+      const idDiff = String(a.typeId || '').localeCompare(String(b.typeId || ''))
+      if (idDiff) return idDiff
 
-    // 6. 同 id 再按名称（中文拼音兜底）
-    const nameA = a.name || ''
-    const nameB = b.name || ''
-    return nameA.localeCompare(nameB, 'zh-Hans-CN')
+      return String(a.name || '').localeCompare(String(b.name || ''), 'zh-Hans-CN')
+    }
+
+    return compareItemsByCategoryQuality(a, b)
   })
 })
 
-const { displayedItems } = useLazyList(filteredItems, 60, '#itemsGridScroll')
-
 const handleItemClick = (item) => {
+  initialDetailId = null
   // Update URL to trigger App.vue watcher and open modal, keeping it in sync
   router.push({ query: { ...route.query, itemId: item.typeId } })
 }
 </script>
 
 <style scoped>
-/* 筛选面板：半透明羊皮纸容器（底色/描边由 theme.css .paper-panel 提供） */
-.filter-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 12px 14px;
-  margin: 0 0 12px 0;
-  flex-shrink: 0;
-  max-height: 55vh;
-  overflow-y: auto;
-  box-sizing: border-box;
-}
-
 /* 物品网格：桌面端精准 7 列布局 */
 .items-card-grid :deep(.ui-card-grid) {
   grid-template-columns: repeat(7, 1fr);

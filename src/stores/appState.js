@@ -12,11 +12,16 @@ const toggleInList = (list, id) => {
 
 export const useAppStateStore = defineStore('appState', {
   state: () => ({
-    collectedAchievementIds: []
+    collectedAchievementIds: [],
+    collectedHiddenRewardIds: []
   }),
   actions: {
     toggleAchievementCollected(achId) {
       toggleInList(this.collectedAchievementIds, achId)
+    },
+    toggleHiddenRewardCollected(rewardId) {
+      if (!Array.isArray(this.collectedHiddenRewardIds)) this.collectedHiddenRewardIds = []
+      toggleInList(this.collectedHiddenRewardIds, rewardId)
     }
   },
   persist: true

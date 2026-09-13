@@ -1,71 +1,41 @@
 /**
  * 任务图鉴数据维护脚本
- * - 把 Config_decrypted 中缺失/过期的数据文件同步到 public/data
+ * - 默认只读校验；--apply 时将缺失的完整 battle/room/condition 原表补入 raw/
+ * - 更新已有原表需显式 --apply --replace，不在维护阶段裁剪原始表
  * - 从 GAoNano_decrypted 复制任务剧情到 public/data/taskDialogs（去重）
  * - 校验任务引用解析率，输出统计 + unresolved.json
  *
- * 用法：node scripts/check-task-data.mjs
+ * 用法：node scripts/dev/check-task-data.mjs [--apply] [--replace] [--config 目录] [--dialogs 目录]
  */
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { parseArgs } from 'node:util'
+import { configRoot, dialogRoot, gameSourceRoot, publicDataRoot, rawRoot } from './maintenance-paths.mjs'
+import { applyRawSyncPlan, createRawSyncPlan } from './raw-sync.mjs'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const ROOT = path.resolve(__dirname, '..')
-const SRC = 'E:\\Desktop\\html\\myrzg\\Config_decrypted'
-const GAO = 'E:\\Desktop\\html\\myrzg\\GAoNano_decrypted'
-const FILELIST = 'E:\\Desktop\\html\\myrzg\\源码\\CDN最新配置\\json\\GAoNano\\GAoNanoFileList.json'
-const DATA = path.join(ROOT, 'public', 'data')
+const { values } = parseArgs({ options: {
+  apply: { type: 'boolean' }, replace: { type: 'boolean' },
+  config: { type: 'string' }, dialogs: { type: 'string' }, filelist: { type: 'string' }
+} })
+const APPLY = !!values.apply
+const SRC = path.resolve(values.config || configRoot)
+const GAO = path.resolve(values.dialogs || dialogRoot)
+const FILELIST = path.resolve(values.filelist || path.join(gameSourceRoot, 'CDN最新配置/json/GAoNano/GAoNanoFileList.json'))
+const DATA = publicDataRoot
+const RAW = rawRoot
 
 const readJson = (p) => JSON.parse(fs.readFileSync(p, 'utf-8'))
 const writeJson = (p, obj) => {
+  if (!APPLY) return
   fs.mkdirSync(path.dirname(p), { recursive: true })
   fs.writeFileSync(p, JSON.stringify(obj, null, 2), 'utf-8')
 }
 
-// ---------- 1. 生成任务页用到的精简数据表 ----------
-// battle.json：任务页只用 name / para.movieMode / layers[].layerDatas[].name
-const battleFull = readJson(path.join(SRC, 'battle.json')).datas
-const battleTrim = { datas: {} }
-for (const [id, b] of Object.entries(battleFull)) {
-  const layers = (b.layers || []).map((lay) => ({
-    layerDatas: (lay.layerDatas || []).map((ld) => ({ name: ld.name || '' }))
-  }))
-  battleTrim.datas[id] = {
-    name: b.name || id,
-    para: (b.para && { movieMode: !!b.para.movieMode }) || {},
-    layers
-  }
-}
-writeJson(path.join(DATA, 'battle.json'), battleTrim)
-console.log(`[trim] battle.json -> ${(fs.statSync(path.join(DATA, 'battle.json')).size / 1048576).toFixed(2)} MB`)
-
-// room.json：任务页只用来解析 NPC 名 + hunterUid 反查怪物，
-// 保留 battleData.npcList(uid/npcName/npcDes/npcView) 和 monRounds.mons(monId/typeId)
-const roomFull = readJson(path.join(SRC, 'room.json')) // 顶层即场景表，无 datas 包裹
-const roomTrim = {}
-for (const [id, r] of Object.entries(roomFull)) {
-  const npcList = ((r.battleData || {}).npcList || [])
-    .filter((n) => n && n.uid)
-    .map((n) => ({ uid: n.uid, npcName: n.npcName || '', npcDes: n.npcDes || '', npcView: n.npcView || '' }))
-  const monRounds = ((r.battleData || {}).monRounds || [])
-    .map((round) => ({
-      mons: (round.mons || [])
-        .filter((mn) => mn && mn.monId)
-        .map((mn) => ({ monId: mn.monId, typeId: mn.typeId || '' }))
-    }))
-    .filter((round) => round.mons.length)
-  roomTrim[id] = { battleData: { npcList, monRounds } }
-}
-writeJson(path.join(DATA, 'room.json'), roomTrim)
-console.log(`[trim] room.json -> ${(fs.statSync(path.join(DATA, 'room.json')).size / 1048576).toFixed(2)} MB`)
-
-// condition.json：任务页需要，缺失则整表复制
-const condTarget = path.join(DATA, 'condition.json')
-if (!fs.existsSync(condTarget)) {
-  fs.copyFileSync(path.join(SRC, 'condition.json'), condTarget)
-  console.log('[sync] condition.json 已复制')
-}
+// ---------- 1. 预览/同步完整原始表；裁剪仅属于构建后的派生数据 ----------
+const rawPlan = createRawSyncPlan({ sourceRoot: SRC, targetRoot: RAW, replace: !!values.replace, files: ['battle.json', 'room.json', 'condition.json'] })
+for (const entry of rawPlan) console.log(`[${entry.action}] ${entry.sourceName} -> raw/${entry.targetName}`)
+if (APPLY) applyRawSyncPlan(rawPlan)
+else console.log('[preview] 只读检查；--apply 补缺，--apply --replace 显式更新完整原表。')
 
 // ---------- 2. 收集任务引用的剧情 id ----------
 const task = readJson(path.join(SRC, 'task.json')).datas
@@ -81,7 +51,7 @@ for (const t of Object.values(task)) {
 
 // ---------- 3. 复制剧情脚本（去重，保留原文件名） ----------
 const dialogDir = path.join(DATA, 'taskDialogs')
-fs.mkdirSync(dialogDir, { recursive: true })
+if (APPLY) fs.mkdirSync(dialogDir, { recursive: true })
 let copiedDialog = 0
 const missingDialogs = []
 
@@ -89,7 +59,7 @@ const missingDialogs = []
 const copyIfMissing = (src, target) => {
   if (!fs.existsSync(src)) return false
   if (!fs.existsSync(target)) {
-    fs.copyFileSync(src, target)
+    if (APPLY) fs.copyFileSync(src, target)
     copiedDialog++
   }
   return true
@@ -143,7 +113,7 @@ for (const id of dialogIds) {
     missingDialogs.push(id)
   }
 }
-console.log(`[dialog] 唯一剧情 id：${dialogIds.size}，新增复制：${copiedDialog}，缺失文件：${missingDialogs.length}`)
+console.log(`[dialog] 唯一剧情 id：${dialogIds.size}，${APPLY ? '新增复制' : '待复制'}：${copiedDialog}，缺失文件：${missingDialogs.length}`)
 if (missingDialogs.length) {
   console.log('[dialog] 缺失（多为纯文本目标，如“提交 1 个xxx。”）：')
   console.log('  ' + missingDialogs.slice(0, 30).join('、'))
@@ -158,7 +128,7 @@ if (fs.existsSync(FILELIST)) {
     if (f && f.type === 'script' && f.name) dialogIndex[f.name] = f.des || ''
   }
   writeJson(path.join(DATA, 'parsed', 'dialogIndex.json'), dialogIndex)
-  console.log(`[dialog] 剧情名称索引已生成（${Object.keys(dialogIndex).length} 条）-> public/data/parsed/dialogIndex.json`)
+  console.log(`[dialog] 剧情名称索引${APPLY ? '已生成' : '预览'}（${Object.keys(dialogIndex).length} 条）-> public/data/parsed/dialogIndex.json`)
 }
 
 // ---------- 3.6 生成分段事件索引（基名 -> 段列表，用于好感度剧情按段分开展示） ----------
@@ -177,7 +147,7 @@ for (const id of dialogIds) {
   if (segs.length >= 2) segmentIndex[baseId] = segs
 }
 writeJson(path.join(DATA, 'parsed', 'dialogSegments.json'), segmentIndex)
-console.log(`[dialog] 分段事件索引已生成（${Object.keys(segmentIndex).length} 个事件）-> public/data/parsed/dialogSegments.json`)
+console.log(`[dialog] 分段事件索引${APPLY ? '已生成' : '预览'}（${Object.keys(segmentIndex).length} 个事件）-> public/data/parsed/dialogSegments.json`)
 
 // ---------- 4. 基础引用解析率校验 ----------
 const levelStage = readJson(path.join(SRC, 'levelStage.json')).datas
@@ -240,4 +210,4 @@ writeJson(path.join(DATA, 'parsed', 'task-unresolved.json'), {
 console.log(`[check] 任务总数 ${Object.keys(task).length}，删除 demo ${demoCount.demo}，删除伙伴档案 ${demoCount.pa}，保留已下架 ${demoCount.close}`)
 console.log(`[check] 引用总数 ${refTotal}，未命中 ${refMiss}`)
 console.log(`[check] stepType 分布：`, Object.fromEntries([...stepTypes.entries()].sort()))
-console.log(`[check] 报告已写入 public/data/parsed/task-unresolved.json`)
+console.log(APPLY ? '[check] 报告已写入 public/data/parsed/task-unresolved.json' : '[check] 只读检查完成，未写入表、剧情或报告。')

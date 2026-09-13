@@ -80,6 +80,7 @@ const typeLabel = (type) => {
     achievement: '成就',
     recipe: '料理',
     item: '物品',
+    furniture: '家具',
     pet: '魔物',
     pet_egg: '魔物蛋',
     monster: '怪物',
@@ -134,7 +135,7 @@ const subTagLabel = (item) => {
   color: var(--paper, #dfceb3);
   box-sizing: border-box;
   transition: all 0.2s ease;
-  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-family: var(--font-ui);
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35);
 }
 .global-search-input::placeholder {
@@ -222,6 +223,7 @@ const subTagLabel = (item) => {
 .item-type-badge.role { background: rgba(23, 93, 140, 0.15); color: var(--q3); }
 .item-type-badge.equip { background: rgba(126, 42, 168, 0.15); color: var(--q4); }
 .item-type-badge.item { background: rgba(85, 117, 116, 0.18); color: var(--accent-ink, #557574); }
+.item-type-badge.furniture { background: rgba(176, 97, 12, 0.15); color: var(--q5-text, #b15d00); }
 .item-type-badge.pet, .item-type-badge.pet_egg { background: rgba(176, 97, 12, 0.15); color: var(--q5); }
 .item-type-badge.achievement { background: rgba(43, 122, 43, 0.15); color: var(--q2); }
 .item-type-badge.recipe { background: rgba(176, 97, 12, 0.18); color: var(--q5); }

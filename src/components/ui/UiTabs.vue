@@ -1,6 +1,16 @@
 <template>
   <div class="ui-tabs-shell" :class="{ 'is-scrollable': canScroll, 'is-at-end': isAtEnd }">
-    <div ref="tabsRef" class="ui-tabs" role="tablist" @scroll="syncScrollState">
+    <div
+      ref="tabsRef"
+      class="ui-tabs"
+      :class="{ 'is-dragging': isDragging }"
+      role="tablist"
+      @scroll="syncScrollState"
+      @pointerdown="handlePointerDown"
+      @pointermove="handlePointerMove"
+      @pointerup="finishPointerDrag"
+      @pointercancel="cancelPointerDrag"
+    >
       <button
         v-for="opt in options"
         :key="opt.value"
@@ -8,7 +18,7 @@
         role="tab"
         class="ui-tabs__item"
         :class="{ 'is-active': modelValue === opt.value }"
-        @click="emit('update:modelValue', opt.value)"
+        @click="selectOption(opt.value)"
       >
         {{ opt.label }}
       </button>
@@ -33,6 +43,12 @@ const emit = defineEmits(['update:modelValue'])
 const tabsRef = ref(null)
 const canScroll = ref(false)
 const isAtEnd = ref(true)
+const isDragging = ref(false)
+let dragPointerId = null
+let dragStartX = 0
+let dragStartScrollLeft = 0
+let dragMoved = false
+let suppressNextClick = false
 
 const syncScrollState = () => {
   const el = tabsRef.value
@@ -57,6 +73,54 @@ const revealActiveTab = () => {
     el.scrollBy({ left: activeRect.right - containerRect.right + 12, behavior: 'smooth' })
   }
   requestAnimationFrame(syncScrollState)
+}
+
+const handlePointerDown = event => {
+  const el = tabsRef.value
+  if (!el || !canScroll.value || event.pointerType !== 'mouse' || event.button !== 0) return
+  dragPointerId = event.pointerId
+  dragStartX = event.clientX
+  dragStartScrollLeft = el.scrollLeft
+  dragMoved = false
+}
+
+const handlePointerMove = event => {
+  const el = tabsRef.value
+  if (!el || dragPointerId !== event.pointerId) return
+  const deltaX = event.clientX - dragStartX
+  if (!dragMoved && Math.abs(deltaX) < 4) return
+  if (!dragMoved) el.setPointerCapture(event.pointerId)
+  dragMoved = true
+  suppressNextClick = true
+  isDragging.value = true
+  event.preventDefault()
+  el.scrollLeft = dragStartScrollLeft - deltaX
+}
+
+const finishPointerDrag = event => {
+  const el = tabsRef.value
+  if (!el || dragPointerId !== event.pointerId) return
+  if (el.hasPointerCapture(event.pointerId)) el.releasePointerCapture(event.pointerId)
+  dragPointerId = null
+  isDragging.value = false
+  syncScrollState()
+  if (dragMoved) window.setTimeout(() => { suppressNextClick = false }, 0)
+}
+
+const cancelPointerDrag = event => {
+  if (dragPointerId !== event.pointerId) return
+  dragPointerId = null
+  dragMoved = false
+  suppressNextClick = false
+  isDragging.value = false
+}
+
+const selectOption = value => {
+  if (suppressNextClick) {
+    suppressNextClick = false
+    return
+  }
+  emit('update:modelValue', value)
 }
 
 onMounted(() => {
@@ -87,6 +151,10 @@ watch(() => [props.modelValue, props.options.length], () => nextTick(revealActiv
   scrollbar-width: none;
 }
 .ui-tabs::-webkit-scrollbar { display: none; }
+.ui-tabs-shell.is-scrollable .ui-tabs,
+.ui-tabs-shell.is-scrollable .ui-tabs__item { cursor: grab; }
+.ui-tabs.is-dragging,
+.ui-tabs.is-dragging .ui-tabs__item { cursor: grabbing; user-select: none; }
 .ui-tabs-shell.is-scrollable:not(.is-at-end)::after {
   content: '';
   position: absolute;
@@ -120,7 +188,7 @@ watch(() => [props.modelValue, props.options.length], () => nextTick(revealActiv
   color: var(--text-muted, #6b5134);
   cursor: pointer;
   white-space: nowrap;
-  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-family: var(--font-ui);
   transition: color 0.15s ease;
 }
 .ui-tabs__item:hover {

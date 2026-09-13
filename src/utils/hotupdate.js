@@ -1,125 +1,117 @@
-import { CapacitorUpdater } from '@capgo/capacitor-updater';
-import { App } from '@capacitor/app';
-import { isNative, CLOUD_URL } from './env';
+import { CapacitorUpdater } from '@capgo/capacitor-updater'
+import { App } from '@capacitor/app'
+import { isNative, CLOUD_URL } from './env.js'
+import { fetchJsonWithTimeout } from './resourceClient.js'
 
-// 游戏前端内核的热更 manifest (以 JSON 形式托管在云端)
-const HOTUPDATE_MANIFEST_URL = `${CLOUD_URL}/update/hotupdate.json`;
+const HOTUPDATE_MANIFEST_URL = `${CLOUD_URL}/update/hotupdate.json`
+const GITEE_RELEASE_URL = 'https://gitee.com/api/v5/repos/ccyconner/myrzg/releases/latest'
+const isVersion = value => typeof value === 'string' && /^v?\d+(?:\.\d+){1,3}$/.test(value)
+const isDownloadUrl = value => {
+  try { return new URL(value).protocol === 'https:' } catch (_) { return false }
+}
 
-/**
- * 比较两个版本号，v1 > v2 返回 1，v1 < v2 返回 -1，相等返回 0
- */
-const compareVersions = (v1, v2) => {
-  const p = (v) => (v || '').replace('v', '').split('.').map(Number);
-  const a = p(v1), b = p(v2);
-  for (let i = 0; i < 4; i++) {
-    if ((a[i] || 0) > (b[i] || 0)) return 1;
-    if ((a[i] || 0) < (b[i] || 0)) return -1;
+export function compareVersions(v1, v2) {
+  const parts = version => String(version || '').replace(/^v/, '').split('.').map(Number)
+  const a = parts(v1), b = parts(v2)
+  for (let index = 0; index < 4; index++) {
+    if ((a[index] || 0) > (b[index] || 0)) return 1
+    if ((a[index] || 0) < (b[index] || 0)) return -1
   }
-  return 0;
-};
+  return 0
+}
 
-/**
- * 检查是否有热更新可用
- */
-export const checkHotUpdate = async () => {
-  if (!isNative) {
-    console.log('[HotUpdate] 非 Android 原生环境，跳过热更检查');
-    return null;
+const validateManifest = manifest => {
+  if (!isVersion(manifest?.version) || !isDownloadUrl(manifest?.downloadUrl)) {
+    throw new Error('更新信息不完整，请稍后重试。')
+  }
+  return true
+}
+
+export function createHotUpdateClient({
+  updater = CapacitorUpdater,
+  app = App,
+  native = isNative,
+  readJson = fetchJsonWithTimeout,
+  storage = () => globalThis.localStorage,
+  logger = console
+} = {}) {
+  let checking = null
+
+  async function getCurrentWebVersion() {
+    if (!native) return '1.0.0'
+    const current = await updater.current()
+    const version = current.bundle?.id === 'builtin'
+      ? current.native || (await app.getInfo()).version
+      : current.bundle?.version
+    if (!isVersion(version)) throw new Error('无法确认当前更新版本，请重启应用。')
+    return version
   }
 
-  try {
-    // 强制每次冷启动时先通知插件加载完成，防止插件在后台被杀死后无法重置状态
-    await CapacitorUpdater.notifyAppReady();
-    
-    // 1. 先检查 Gitee API 是否有底包 (APK) 大更新
+  async function check() {
+    await updater.notifyAppReady()
+    const currentWebVersion = await getCurrentWebVersion()
+    // This compatibility key describes the running bundle, never a pending download.
+    try { storage()?.setItem('local_web_version', currentWebVersion) } catch (error) { logger.warn('Version storage unavailable:', error) }
+
     try {
-      const appInfo = await App.getInfo();
-      const nativeVersion = appInfo.version || '1.0.0';
-      console.log('[HotUpdate] 本地原生 APK 版本:', nativeVersion);
-
-      const giteeUrl = 'https://gitee.com/api/v5/repos/ccyconner/myrzg/releases/latest';
-      const giteeResp = await fetch(`${giteeUrl}?t=${Date.now()}`);
-      
-      if (giteeResp.ok) {
-        const giteeData = await giteeResp.json();
-        const giteeVersion = giteeData.tag_name || '';
-        
-        if (giteeVersion && compareVersions(giteeVersion, nativeVersion) > 0) {
-          const apkAsset = giteeData.assets?.find(a => a.browser_download_url?.endsWith('.apk'));
-          if (apkAsset) {
-            console.log('[HotUpdate] 发现新版 APK:', giteeVersion);
-            return {
-              version: giteeVersion,
-              _needsApkUpdate: true,
-              downloadUrl: apkAsset.browser_download_url,
-              body: giteeData.body || '包含底层的更新，建议立即更新。',
-              _currentVer: nativeVersion
-            };
-          }
+      const nativeVersion = (await app.getInfo()).version
+      const release = await readJson(`${GITEE_RELEASE_URL}?t=${Date.now()}`, { timeoutMs: 6000, cache: 'no-store' })
+      if (isVersion(release?.tag_name) && compareVersions(release.tag_name, nativeVersion) > 0) {
+        const assets = Array.isArray(release.assets) ? release.assets : []
+        const apk = assets.find(asset => isDownloadUrl(asset?.browser_download_url)
+          && new URL(asset.browser_download_url).pathname.endsWith('.apk'))
+        if (apk) return {
+          version: release.tag_name,
+          _needsApkUpdate: true,
+          downloadUrl: apk.browser_download_url,
+          body: release.body || '包含底层更新，建议更新。',
+          _currentVer: nativeVersion
         }
       }
-    } catch (giteeErr) {
-      console.warn('[HotUpdate] Gitee 检查失败:', giteeErr);
+    } catch (error) {
+      logger.warn('APK update check failed:', error)
     }
 
-    // 2. 如果没有底包更新，检查云端 hotupdate.json 看是否有热更新小包
-    const currentWebVer = localStorage.getItem('local_web_version') || '1.0.0';
-    console.log('[HotUpdate] 本地生效的 Web 版本:', currentWebVer);
+    const manifest = await readJson(`${HOTUPDATE_MANIFEST_URL}?t=${Date.now()}`, {
+      timeoutMs: 8000,
+      cache: 'no-store',
+      validate: validateManifest
+    })
+    validateManifest(manifest)
+    return compareVersions(manifest.version, currentWebVersion) > 0
+      ? { ...manifest, _currentVer: currentWebVersion, _needsApkUpdate: false }
+      : null
+  }
 
-    const resp = await fetch(`${HOTUPDATE_MANIFEST_URL}?t=${Date.now()}`);
-    if (!resp.ok) throw new Error(`HTTP error! status: ${resp.status}`);
-    const manifest = await resp.json();
-    
-    console.log('[HotUpdate] 远程最新热更版本:', manifest.version);
+  function checkHotUpdate() {
+    if (!native) return Promise.resolve(null)
+    if (!checking) checking = check().finally(() => { checking = null })
+    return checking
+  }
 
-    if (compareVersions(manifest.version, currentWebVer) > 0) {
-      console.log('[HotUpdate] 发现热更新:', manifest.version);
-      manifest._currentVer = currentWebVer;
-      manifest._needsApkUpdate = false;
-      return manifest;
+  async function applyHotUpdate(manifest, onProgress) {
+    if (!native) return
+    validateManifest(manifest)
+    let listener
+    let versionInfo
+    try {
+      listener = await updater.addListener('download', info => {
+        const percent = Math.max(0, Math.min(100, Math.round(Number(info?.percent) || 0)))
+        onProgress?.(percent)
+      })
+      versionInfo = await updater.download({ url: manifest.downloadUrl, version: manifest.version })
+      if (!versionInfo?.id) throw new Error('更新包下载结果不完整，请重试。')
+    } finally {
+      // set() reloads the WebView, so cleanup must finish before activation begins.
+      try { await listener?.remove() } catch (error) { logger.warn('Update listener cleanup failed:', error) }
     }
-    
-    console.log('[HotUpdate] 已经是最新版本');
-    return null;
-  } catch (e) {
-    console.warn('[HotUpdate] check failed:', e);
-    return null;
+    await updater.set({ id: versionInfo.id })
   }
-};
 
-/**
- * 执行热更新下载并应用
- */
-export const applyHotUpdate = async (manifest, onProgress) => {
-  if (!isNative) return;
+  return { checkHotUpdate, applyHotUpdate, getCurrentWebVersion }
+}
 
-  try {
-    // 监听下载进度
-    const listener = CapacitorUpdater.addListener('download', (info) => {
-      onProgress && onProgress(Math.round(info.percent));
-    });
-
-    console.log('[HotUpdate] 开始下载热更包...');
-    
-    // 1. 下载 Zip 压缩包（插件自动在底层解压到沙盒私有目录）
-    const versionInfo = await CapacitorUpdater.download({
-      url: manifest.downloadUrl,
-      version: manifest.version,
-    });
-
-    console.log('[HotUpdate] 下载解压完成', versionInfo);
-    
-    // 移除监听
-    listener.remove();
-
-    // 2. 记录版本号
-    localStorage.setItem('local_web_version', manifest.version);
-
-    // 3. 应用热更并重新加载 (插件会自动处理挂载路由到原生私有目录)
-    await CapacitorUpdater.set({ id: versionInfo.id });
-
-  } catch (e) {
-    console.error('[HotUpdate] 升级失败:', e);
-    throw e;
-  }
-};
+const client = createHotUpdateClient()
+export const checkHotUpdate = client.checkHotUpdate
+export const applyHotUpdate = client.applyHotUpdate
+export const getCurrentWebVersion = client.getCurrentWebVersion

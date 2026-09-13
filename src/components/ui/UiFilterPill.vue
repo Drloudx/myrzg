@@ -39,10 +39,10 @@ const emit = defineEmits(['click'])
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.15s ease;
-  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-family: var(--font-ui);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
-.ui-filter-pill:hover:not(.is-disabled) {
+.ui-filter-pill:hover:not(.is-disabled):not(.is-active) {
   color: var(--text-main, #3e2a14);
   border-color: var(--border-soft, rgba(143, 115, 81, 0.45));
 }

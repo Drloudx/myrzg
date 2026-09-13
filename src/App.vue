@@ -1,5 +1,10 @@
 <template>
-  <div class="app-container" :class="{ 'dark-theme': isDarkMode }">
+  <div
+    ref="appScrollRoot"
+    class="app-container"
+    :class="{ 'dark-theme': isDarkMode, 'is-native-shell': isNative, 'is-mail-reader': route.path === '/partner-mails', 'is-gacha-stage': isGachaFullscreen }"
+    @scroll.passive="scheduleStickyClipping"
+  >
     <!-- 顶部木质导航条 -->
     <header class="app-header">
       <div class="header-content">
@@ -87,7 +92,7 @@
     <div class="main-layout-row">
       <!-- 电脑端左侧导航 -->
       <div v-if="!isNative" class="desktop-sidebar-container desktop-only">
-        <NavigationMenu :is-desktop="true" menu-mode="side" />
+        <NavigationMenuLite :is-desktop="true" menu-mode="side" />
       </div>
 
       <main class="app-main" @click="isSearchOpen = false">
@@ -100,8 +105,9 @@
         <router-view />
       </main>
 
-      <!-- 右侧页面信息面板（模板 infobox 风格）：放页面标题 + 概况 + 备注区 -->
-      <div v-if="!isNative" class="desktop-right-container desktop-only">
+      <!-- 右侧页面信息面板（模板 infobox 风格）：放页面标题 + 概况 + 备注区。
+           卡池页是固定设计分辨率的游戏画面，隐藏右栏把宽度让给设计画布。 -->
+      <div v-if="!isNative && route.path !== '/gacha'" class="desktop-right-container desktop-only">
         <aside class="page-info-panel paper-panel corner-nails">
           <div class="info-title-bar">
             <span class="info-title-text">{{ pageTitle }}</span>
@@ -128,20 +134,21 @@
                 点击卡片可查看详细属性、词条与来源关系。
               </p>
             </div>
+            <SidebarMascot v-if="mascotDesktop" />
           </div>
         </aside>
       </div>
     </div>
 
-    <!-- 移动端导航悬浮按钮 -->
-    <div class="nav-fab-btn" :class="{ 'mobile-only': !isNative }" @click.stop="isNavOpen = !isNavOpen" title="功能导航">
+    <!-- 移动端导航悬浮按钮（模拟招募为整页游戏画面，不显示） -->
+    <button v-if="!isGachaFullscreen" type="button" class="nav-fab-btn" :class="{ 'mobile-only': !isNative }" @click.stop="isNavOpen = !isNavOpen" title="功能导航" aria-label="功能导航">
       <span></span>
       <span></span>
       <span></span>
-    </div>
+    </button>
 
-    <!-- 侧边导航栏 -->
-    <NavigationMenu :class="{ 'mobile-only': !isNative }" :is-open="isNavOpen" :menu-mode="menuMode" @close="isNavOpen = false" />
+    <!-- 侧边导航栏（模拟招募为整页游戏画面，不显示） -->
+    <NavigationMenuLite v-if="!isGachaFullscreen" :class="{ 'mobile-only': !isNative }" :is-open="isNavOpen" :menu-mode="menuMode" @close="isNavOpen = false" />
       
     <!-- 全局弹窗 -->
     <UpdateModal ref="updateModalRef" />
@@ -149,19 +156,33 @@
     <NoticeModal v-model="showNoticeModal" />
     <VersionCheckModal v-model="showVersionCheckModal" @request-update="handleRequestUpdate" />
     <AboutModal v-model="showAboutModal" />
-    
-    <BaseModal 
-      :visible="showMessageModal" 
-      :title="messageTitle" 
-      @close="onMessageModalClose(false)"
+    <UiModal
+      :visible="!!itemLoadError"
+      title="物品详情加载失败"
+      max-width="480px"
+      scroll-id="itemLoadErrorScroll"
+      teleport-to="body"
+      @update:visible="dismissItemLoadError"
     >
-      <div class="message-content">
-        {{ messageText }}
-      </div>
+      <div class="message-content">{{ itemLoadError }}</div>
       <template #footer>
-        <button class="modal-btn-confirm" @click="onMessageModalClose(false)">确定</button>
+        <UiButton @click="loadGlobalItem(route.query.itemId)">重新加载</UiButton>
       </template>
-    </BaseModal>
+    </UiModal>
+    
+    <UiModal
+      v-model:visible="showMessageModal"
+      :title="messageTitle"
+      max-width="480px"
+      :z-index="12000"
+      teleport-to="body"
+      @close="onMessageModalClose"
+    >
+      <div class="message-content">{{ messageText }}</div>
+      <template #footer>
+        <UiButton @click="onMessageModalClose">确定</UiButton>
+      </template>
+    </UiModal>
     
     <input
       type="file"
@@ -174,61 +195,83 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, defineAsyncComponent, nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { Capacitor } from '@capacitor/core'
-import { App as CapApp } from '@capacitor/app'
-import { StatusBar, Style } from '@capacitor/status-bar'
-import NavigationMenu from './components/NavigationMenu.vue'
+import NavigationMenuLite from './components/NavigationMenuLite.vue'
 import GlobalSearchBox from './components/GlobalSearchBox.vue'
 import UpdateModal from './components/UpdateModal.vue'
 import MenuModeModal from './components/MenuModeModal.vue'
 import NoticeModal from './components/NoticeModal.vue'
 import VersionCheckModal from './components/VersionCheckModal.vue'
 import AboutModal from './components/AboutModal.vue'
-import BaseModal from './components/BaseModal.vue'
+import { UiButton, UiModal } from './components/ui/index.js'
 import ItemDetailModal from './components/ItemDetailModal.vue'
 import { itemModalState, openItemDetail } from './utils/itemModalState'
 import { fetchItemData } from './utils/itemParser'
+import { resetModalScrollCoordinator } from './utils/modalScrollCoordinator.js'
 
 import { isBlacklisted } from './config/blacklist.js'
-import { fetchWithFallback } from './utils/request.js'
-import { Share } from '@capacitor/share'
-import { Filesystem, Directory, Encoding } from '@capacitor/filesystem'
-import { getImageUrl, isNative } from './utils/env.js'
+import { getImageUrl, handleImageFallback, isNative } from './utils/env.js'
+import { useBackupData } from './composables/app/useBackupData.js'
+import { useGlobalSearch } from './composables/app/useGlobalSearch.js'
+import { useNativeShell } from './composables/app/useNativeShell.js'
+import { useOverlay } from './composables/useOverlay.js'
 
 const route = useRoute()
 const router = useRouter()
 
+// Load the decorative SVG only when the desktop information panel can be shown.
+const SidebarMascot = defineAsyncComponent(() => import('./components/SidebarMascot.vue'))
+const mascotDesktop = ref(false)
+let mascotViewport
+const updateMascotViewport = () => { mascotDesktop.value = !isNative && mascotViewport.matches }
+onMounted(() => {
+  mascotViewport = window.matchMedia('(min-width: 1025px) and (min-height: 700px)')
+  updateMascotViewport()
+  mascotViewport.addEventListener('change', updateMascotViewport)
+})
+onBeforeUnmount(() => mascotViewport?.removeEventListener('change', updateMascotViewport))
+
 const PAGE_TITLES = {
   '/items': '物品图鉴',
+  '/furniture': '家具图鉴',
+  '/facilities': '设施功能',
   '/equip': '装备图鉴',
+  '/runes': '符石图鉴',
   '/heroes': '角色图鉴',
+  '/partner-mails': '伙伴邮件',
   '/pets': '魔物图鉴',
   '/monsters': '怪物图鉴',
-  '/recipes': '料理图鉴',
-  '/rewards': '魔物收益',
+  '/recipes': '菜谱查询',
+  '/rewards': '其他',
   '/achievement': '成就查询',
   '/tasks': '任务图鉴',
   '/events': '事件图鉴',
-  '/exchange': '兑换图鉴',
-  '/petseggs': '魔物蛋图鉴',
+  '/exchange': '兑换',
+  '/petseggs': '魔物收益',
   '/dungeons': '副本图鉴',
-  '/other': '其他'
+  '/gacha': '模拟招募'
 }
 
 const pageTitle = computed(() => {
   return PAGE_TITLES[route.path] || route.meta?.title || '资源库'
 })
 
+/** 模拟招募是整页游戏画面：隐藏 Wiki 顶栏与左右栏，画布独占视口（背板由页面自己提供）。 */
+const isGachaFullscreen = computed(() => route.path === '/gacha')
+
 const isNavOpen = ref(false)
-const isDarkMode = ref(false)
-const globalQuery = ref('')
-const isSearchOpen = ref(false)
-const searchIndex = ref([])
+const { globalQuery, isSearchOpen, filteredSearchIndex, handleSearchFocus, handleSelectSearchResult } = useGlobalSearch(route, router)
+const { isDarkMode, toggleDarkMode } = useNativeShell()
 
 // 新增设置菜单和弹窗状态
 const isSettingsOpen = ref(false)
+useOverlay(isNavOpen, { priority: 6001, close: () => { isNavOpen.value = false } })
+useOverlay(() => isSearchOpen.value && !!globalQuery.value.trim(), {
+  priority: 11000,
+  close: () => { isSearchOpen.value = false; document.activeElement?.blur() }
+})
+useOverlay(isSettingsOpen, { priority: 11001, close: () => { isSettingsOpen.value = false } })
 const showMenuModeModal = ref(false)
 const showNoticeModal = ref(false)
 const showVersionCheckModal = ref(false)
@@ -239,7 +282,150 @@ const messageText = ref('')
 const messageCallback = ref(null)
 
 const menuMode = ref(localStorage.getItem('menuMode') || 'side')
-const universalFileInput = ref(null)
+const appScrollRoot = ref(null)
+let stickyClipFrame = 0
+let pendingClearRaf = 0
+
+/**
+ * 页面切换期间顶住滚动范围：切页瞬间记录旧页滚动高度（此刻旧 DOM 仍在），
+ * 写入 .main-layout-row 的 --route-pending-h 行内变量作为临时 min-height，
+ * 新页加载骨架消失（loading/error 空态移除）后撤销，避免加载间隙滚动条拇指闪变。
+ */
+const setRoutePending = () => {
+  const root = appScrollRoot.value
+  const row = document.querySelector('.main-layout-row')
+  if (!root || !row || window.innerWidth < 1025) return
+  const h = Math.max(root.scrollHeight, 1)
+  row.style.setProperty('--route-pending-h', `${h}px`)
+  row.classList.add('is-route-pending')
+  if (pendingClearRaf) cancelAnimationFrame(pendingClearRaf)
+  const started = performance.now()
+  const poll = () => {
+    const page = document.querySelector('.page-view-container')
+    const done = !page || !page.querySelector('.ui-empty-state--loading, .ui-empty-state--error')
+    if (done || performance.now() - started > 4000) {
+      document.querySelectorAll('.main-layout-row.is-route-pending').forEach(r => r.classList.remove('is-route-pending'))
+      pendingClearRaf = 0
+      return
+    }
+    pendingClearRaf = requestAnimationFrame(poll)
+  }
+  pendingClearRaf = requestAnimationFrame(poll)
+}
+
+const setClipTop = (element, boundary) => {
+  if (!element) return
+  const clipTop = Math.max(0, boundary - element.getBoundingClientRect().top)
+  element.style.setProperty('--sticky-clip-top', `${clipTop}px`)
+}
+
+const updateStickyClipping = () => {
+  stickyClipFrame = 0
+  if (window.innerWidth < 1025) return
+
+  document.querySelectorAll('.page-view-container').forEach(page => {
+    const filter = page.querySelector(':scope > .filter-panel, :scope > .filter-sticky-bar, :scope > [class*="-filter-panel"]')
+    if (!filter) return
+    const boundary = filter.getBoundingClientRect().bottom
+    page.querySelectorAll('[data-main-scroll]').forEach(content => setClipTop(content, boundary))
+  })
+
+  document.querySelectorAll('.ui-modal-overlay:not(.is-teleported)').forEach(modal => {
+    const header = modal.querySelector('.ui-modal-header')
+    const body = modal.querySelector('.ui-modal-body')
+    if (header && body) setClipTop(body, header.getBoundingClientRect().bottom)
+  })
+
+  syncInlineModalAlignment()
+}
+
+/**
+ * 内嵌弹窗兜底对齐：弹窗打开且页面在顶部时，把弹窗/中间容器高度
+ * 强算为「两栏底边 - 弹窗顶部」，保证与左右两栏底边齐平。底层页面
+ * 的显示隐藏由 UiModal 的统一 CSS 生命周期接管，避免关闭过渡时闪现。
+ */
+const syncInlineModalAlignment = () => {
+  if (window.innerWidth < 1025) return
+  const root = appScrollRoot.value
+  const rightCol = document.querySelector('.desktop-right-container')
+  const appMain = document.querySelector('.app-main')
+  const overlay = appMain?.querySelector(':scope > .ui-modal-host > .ui-modal-overlay:not(.is-teleported)')
+  const pv = appMain ? appMain.querySelector('.page-view-container') : null
+  const modalOpen = !!overlay
+  // 页面级弹窗（角色/事件/副本等，UiModal 渲染在 .page-view-container 内部）由 CSS 接管，
+  // JS 不干预。跨路由时旧 App 弹窗可能仍在退场，必须先清掉它留在新页面上的行内隐藏。
+  const pageOverlay = pv?.querySelector(':scope > .ui-modal-host > .ui-modal-overlay:not(.is-teleported)')
+  if (pageOverlay) {
+    if (overlay) overlay.style.removeProperty('min-height')
+    if (appMain?.style.minHeight) appMain.style.removeProperty('min-height')
+    return
+  }
+  if (modalOpen && root && root.scrollTop <= 2 && rightCol && overlay && appMain) {
+    // 用 appMain.top（稳定值）而非 overlay.top（进入动画 translateY 期间会偏移）计算目标高度
+    const h = Math.max(rightCol.getBoundingClientRect().bottom - appMain.getBoundingClientRect().top, 1)
+    overlay.style.minHeight = `${h}px`
+    appMain.style.minHeight = `${h}px`
+  } else {
+    if (overlay) overlay.style.removeProperty('min-height')
+    if (appMain && appMain.style.minHeight) appMain.style.removeProperty('min-height')
+  }
+}
+
+const scheduleStickyClipping = () => {
+  if (stickyClipFrame) return
+  stickyClipFrame = window.requestAnimationFrame(updateStickyClipping)
+}
+
+let bootLoadingRaf = 0
+let mainObserver = null
+const handleGlobalImageError = event => {
+  if (!(event.target instanceof HTMLImageElement) || event.target.closest('[data-image-fallback="custom"]')) return
+  handleImageFallback(event)
+  // Legacy handlers used to hide failed images; let the shared fallback finish first.
+  event.stopImmediatePropagation()
+}
+
+onMounted(() => {
+  document.addEventListener('error', handleGlobalImageError, true)
+  window.addEventListener('resize', scheduleStickyClipping, { passive: true })
+  scheduleStickyClipping()
+  // 中间区内容变化（弹窗开合/列表渲染/懒加载）→ 节流重算三栏对齐与 sticky 剪裁
+  const mainEl = document.querySelector('.app-main')
+  if (mainEl && 'MutationObserver' in window) {
+    mainObserver = new MutationObserver(() => scheduleStickyClipping())
+    mainObserver.observe(mainEl, { childList: true, subtree: true })
+  }
+  // 首屏：骨架期隐藏滚动条（gutter 仍占位不横跳），首个页面数据就绪后以终态尺寸亮出
+  const rootEl = appScrollRoot.value
+  if (rootEl && window.innerWidth >= 1025) {
+    rootEl.classList.add('is-boot-loading')
+    const started = performance.now()
+    let doneFrames = 0
+    const reveal = () => {
+      // 必须「页面已挂载 且 无 loading/error 骨架」才算就绪：
+      // router-view 初始解析空窗期页面尚未出现，不能误判为就绪（否则骨架期滚动条就可见了）
+      const page = document.querySelector('.page-view-container')
+      const ready = page && !page.querySelector('.ui-empty-state--loading, .ui-empty-state--error')
+      if (ready) doneFrames++
+      else doneFrames = 0
+      if (doneFrames >= 2 || performance.now() - started > 4000) {
+        rootEl.classList.remove('is-boot-loading')
+        return
+      }
+      bootLoadingRaf = requestAnimationFrame(reveal)
+    }
+    bootLoadingRaf = requestAnimationFrame(reveal)
+  }
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('error', handleGlobalImageError, true)
+  window.removeEventListener('resize', scheduleStickyClipping)
+  if (stickyClipFrame) window.cancelAnimationFrame(stickyClipFrame)
+  if (pendingClearRaf) cancelAnimationFrame(pendingClearRaf)
+  if (bootLoadingRaf) cancelAnimationFrame(bootLoadingRaf)
+  if (mainObserver) mainObserver.disconnect()
+})
 
 const showMessage = (text, title = '提示', callback = null) => {
   messageTitle.value = title
@@ -257,83 +443,11 @@ const onMessageModalClose = () => {
 }
 
 const toggleSettings = () => {
+  isSearchOpen.value = false
   isSettingsOpen.value = !isSettingsOpen.value
 }
 
-const handleExportData = async () => {
-  try {
-    const appState = JSON.parse(localStorage.getItem('appState') || '{}')
-    
-    const data = {
-      timestamp: Date.now(),
-      version: '1.0',
-      type: 'myrzg_backup',
-      data: {
-        appState
-      }
-    }
-    const jsonStr = JSON.stringify(data)
-    const fileName = `myrzg_backup_${new Date().getTime()}.json`
-
-    if (isNative) {
-      const result = await Filesystem.writeFile({
-        path: fileName,
-        data: jsonStr,
-        directory: Directory.Cache,
-        encoding: Encoding.UTF8
-      })
-      await Share.share({
-        title: '导出深渊之歌数据',
-        url: result.uri,
-        dialogTitle: '保存或分享数据备份'
-      })
-    } else {
-      const blob = new Blob([jsonStr], { type: 'application/json' })
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = fileName
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      URL.revokeObjectURL(url)
-    }
-  } catch (error) {
-    console.error('导出失败:', error)
-    showMessage('导出失败: ' + error.message, '错误')
-  }
-}
-
-const triggerUniversalImport = () => {
-  if (universalFileInput.value) {
-    universalFileInput.value.click()
-  }
-}
-
-const handleUniversalImport = (event) => {
-  const file = event.target.files[0]
-  if (!file) return
-
-  const reader = new FileReader()
-  reader.onload = (e) => {
-    try {
-      const parsed = JSON.parse(e.target.result)
-      if (parsed.type !== 'myrzg_backup') {
-        throw new Error('无效的备份文件')
-      }
-      if (parsed.data && parsed.data.appState) {
-        localStorage.setItem('appState', JSON.stringify(parsed.data.appState))
-      }
-      showMessage('数据导入成功，即将刷新页面', '成功', () => {
-        location.reload()
-      })
-    } catch (err) {
-      showMessage('导入失败: ' + err.message, '错误')
-    }
-  }
-  reader.readAsText(file)
-  event.target.value = '' // reset input
-}
+const { universalFileInput, handleExportData, triggerUniversalImport, handleUniversalImport } = useBackupData(showMessage)
 
 const updateModalRef = ref(null)
 
@@ -343,198 +457,50 @@ const handleRequestUpdate = (info) => {
   }
 }
 
-const isIndexLoaded = ref(false)
+watch(() => route.path, () => {
+  // Reset the shared page scroll before the old view is unmounted so route changes do not jump.
+  resetModalScrollCoordinator()
+  if (appScrollRoot.value) appScrollRoot.value.scrollTop = 0
+  setRoutePending()
+  nextTick(scheduleStickyClipping)
+}, { flush: 'sync' })
 
-const fetchSearchIndex = async () => {
-  if (isIndexLoaded.value) return
-  try {
-    const res = await fetchWithFallback('data/parsed/search-index.json')
-    searchIndex.value = res
-    isIndexLoaded.value = true
-  } catch (err) {
-    console.error('Fetch search-index.json error:', err)
-  }
+const itemLoadError = ref('')
+let itemLoadOperation = 0
+const dismissItemLoadError = () => {
+  itemLoadError.value = ''
+  const query = { ...route.query }
+  delete query.itemId
+  router.replace({ query })
 }
-
-const handleSearchFocus = () => {
-  isSearchOpen.value = true
-  fetchSearchIndex()
-}
-
-const filteredSearchIndex = computed(() => {
-  if (!globalQuery.value.trim()) return []
-  const q = globalQuery.value.trim().toLowerCase()
-  const qParts = q.split(/\s+/).filter(Boolean)
-  const validTypes = ['recipe', 'achievement', 'pet', 'pet_egg', 'item', 'role', 'equip', 'monster', 'task', 'event', 'explore', 'exchange', 'hidden']
-  const results = searchIndex.value.filter(item => 
-    validTypes.includes(item.type) && 
-    !isBlacklisted(item) && 
-    item.keywords && 
-    // 多词查询：每个词都需命中（AND），解决「辛普拉 长子」这类带空格查询失败的问题
-    qParts.every(part => item.keywords.includes(part))
-  )
-
-  // Sort results to prioritize exact matches and prefix matches
-  results.sort((a, b) => {
-    const aName = (a.name || '').toLowerCase()
-    const bName = (b.name || '').toLowerCase()
-    
-    const aExact = aName === q ? 1 : 0
-    const bExact = bName === q ? 1 : 0
-    if (aExact !== bExact) return bExact - aExact
-    
-    const aStarts = aName.startsWith(q) ? 1 : 0
-    const bStarts = bName.startsWith(q) ? 1 : 0
-    if (aStarts !== bStarts) return bStarts - aStarts
-    
-    const aContains = aName.includes(q) ? 1 : 0
-    const bContains = bName.includes(q) ? 1 : 0
-    if (aContains !== bContains) return bContains - aContains
-    
-    return 0
-  })
-
-  return results
-})
-
-const handleSelectSearchResult = async (item) => {
-  isSearchOpen.value = false
-  
-  // Force close any open modals by clearing query
-  await router.push({ path: route.path, query: {} })
-  
-  // Wait a short delay for closing animation, then open the new one
-  setTimeout(() => {
-    if (item.type === 'item') {
-      // If it's an item, add itemId to query while maintaining the current path
-      router.push({ query: { itemId: item.id } })
-      globalQuery.value = ''
-      return
-    }
-
-    if (item.type === 'equip') {
-      // If it's an equipment, redirect to /equip and open detail modal
-      router.push({ path: '/equip', query: { itemId: item.id } })
-      globalQuery.value = ''
-      return
-    }
-
-    if (item.type === 'task') {
-      router.push({ path: '/tasks', query: { task: item.id } })
-      globalQuery.value = ''
-      return
-    }
-    if (item.type === 'event') {
-      router.push({ path: '/events', query: { event: item.id } })
-      globalQuery.value = ''
-      return
-    }
-    if (item.type === 'explore') {
-      router.push({ path: '/events', query: { tab: 'explore', explore: item.id } })
-      globalQuery.value = ''
-      return
-    }
-    if (item.type === 'exchange') {
-      router.push({ path: '/exchange' })
-      globalQuery.value = ''
-      return
-    }
-    if (item.type === 'hidden') {
-      router.push({ path: '/rewards' })
-      globalQuery.value = ''
-      return
-    }
-
-    let targetPath = '/'
-    if (item.type === 'pet') targetPath = '/pets'
-    else if (item.type === 'pet_egg') targetPath = '/petseggs'
-    else if (item.type === 'achievement') targetPath = '/achievement'
-    else if (item.type === 'recipe') targetPath = '/recipes'
-    else if (item.type === 'monster') targetPath = '/monsters'
-    else if (item.type === 'role') targetPath = '/heroes'
-    
-    router.push({
-      path: targetPath,
-      query: { id: item.id, q: item.name }
-    })
-    globalQuery.value = ''
-  }, 150)
-}
-
-const syncNativeStatusBar = async (isDark) => {
-  if (Capacitor.isNativePlatform()) {
-    try {
-      await StatusBar.setStyle({
-        style: isDark ? Style.Dark : Style.Light
-      })
-    } catch (e) {
-      console.warn('Native status bar sync skipped:', e)
-    }
-  }
-}
-
-const toggleDarkMode = () => {
-  isDarkMode.value = !isDarkMode.value
-  if (isDarkMode.value) {
-    document.documentElement.classList.add('dark-mode')
-    localStorage.setItem('theme', 'dark')
-  } else {
-    document.documentElement.classList.remove('dark-mode')
-    localStorage.setItem('theme', 'light')
-  }
-  syncNativeStatusBar(isDarkMode.value)
-}
-
-onMounted(() => {
-  const savedTheme = localStorage.getItem('theme')
-  if (savedTheme === 'dark') {
-    isDarkMode.value = true
-    document.documentElement.classList.add('dark-mode')
-  } else {
-    isDarkMode.value = false
-    document.documentElement.classList.remove('dark-mode')
-  }
-  syncNativeStatusBar(isDarkMode.value)
-
-  // 处理原生 Android 物理返回键/侧滑返回
-  if (Capacitor.isNativePlatform()) {
-    CapApp.addListener('backButton', ({ canGoBack }) => {
-      // 1. 如果菜单开着，先关菜单
-      if (isNavOpen.value) {
-        isNavOpen.value = false
-        return
-      }
-      // 2. 如果搜索栏开着，清空搜索栏
-      if (isSearchOpen.value && globalQuery.value) {
-        globalQuery.value = ''
-        return
-      }
-      
-      // 3. 如果在首页（无论是默认的还是明确在 / 路径），则退出软件
-      if (route.path === '/' || route.path === '/recipes' || !canGoBack) {
-        CapApp.exitApp()
-      } else {
-        // 否则返回上一页
-        router.back()
-      }
-    })
-  }
-})
-
-// 全局唤起监听
-watch(() => route.query.itemId, async (newId) => {
+const loadGlobalItem = async newId => {
+  const operation = ++itemLoadOperation
+  itemLoadError.value = ''
   if (newId) {
+    // 在覆盖式详情打开（app-main 被锁为视口高度、页面被钳到顶部）之前，先捕获列表滚动位置，
+    // 关闭时用它把列表滚回点击处。否则 app-main 被钳制后捕获到的 scrollTop 会被钳到 0。
+    const savedScroll = appScrollRoot.value?.scrollTop ?? 0
     try {
       const { items, categoryTree } = await fetchItemData()
+      // The detail can be closed before the async data request resolves. Do
+      // not let that stale request reopen the modal after itemId was removed.
+      if (operation !== itemLoadOperation || route.query.itemId !== newId) return
       const item = items.find(i => i.typeId === newId)
-      if (item) {
-        openItemDetail(item, categoryTree)
+      if (item && !isBlacklisted(item)) {
+        openItemDetail(item, categoryTree, savedScroll)
+      } else {
+        dismissItemLoadError()
       }
     } catch (e) {
       console.error('Failed to global invoke item:', e)
+      if (operation === itemLoadOperation && route.query.itemId === newId) {
+        itemLoadError.value = '物品数据暂时不可用，请检查网络后重试。'
+      }
     }
   }
-}, { immediate: true })
+}
+watch(() => route.query.itemId, loadGlobalItem, { immediate: true })
+onBeforeUnmount(() => { itemLoadOperation += 1 })
 </script>
 
 <style scoped>
@@ -559,10 +525,30 @@ watch(() => route.query.itemId, async (newId) => {
   border-bottom: 3px solid var(--accent-bright, #7a9a99);
 }
 
+@media (min-width: 1025px) {
+  .app-container {
+    display: block;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: none;
+    scrollbar-gutter: stable;
+  }
+  /* 首屏骨架期隐藏滚动条（gutter 仍占位），首个页面数据就绪后以终态尺寸亮出，避免刷新时滚动条短闪 */
+  .app-container.is-boot-loading {
+    overflow-y: hidden;
+  }
+  .app-header {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    max-width: none;
+  }
+}
+
 .header-content {
   display: flex;
   flex-direction: column;
-  padding: 0 20px;
+  padding: 0 max(20px, env(safe-area-inset-right, 0px)) 0 max(20px, env(safe-area-inset-left, 0px));
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
@@ -604,13 +590,13 @@ watch(() => route.query.itemId, async (newId) => {
   font-size: 17px;
   font-weight: 700;
   margin: 0;
-  color: var(--paper, #dfceb3);
+  color: var(--on-wood-text);
   letter-spacing: 2px;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-family: var(--font-ui);
 }
 
 .header-brand {
@@ -633,7 +619,7 @@ watch(() => route.query.itemId, async (newId) => {
 
 @media (max-width: 768px) {
   .header-content {
-    padding: 0 12px;
+    padding: 0 max(12px, env(safe-area-inset-right, 0px)) 0 max(12px, env(safe-area-inset-left, 0px));
   }
   .header-top-row {
     display: flex;
@@ -700,7 +686,7 @@ watch(() => route.query.itemId, async (newId) => {
 .icon-btn {
   background: rgba(70, 52, 36, 0.85);
   border: 1px solid rgba(143, 115, 81, 0.65);
-  color: var(--paper, #dfceb3);
+  color: var(--on-wood-text);
   cursor: pointer;
   width: 36px;
   height: 36px;
@@ -794,41 +780,42 @@ watch(() => route.query.itemId, async (newId) => {
   position: fixed;
   right: 20px;
   bottom: calc(80px + var(--safe-bottom));
-  width: 44px;
-  height: 44px;
+  width: var(--floating-control-size, 44px);
+  height: var(--floating-control-size, 44px);
+  box-sizing: border-box;
+  padding: 0;
+  appearance: none;
   border-radius: 50%;
-  background: linear-gradient(180deg, var(--wood-soft, #463424), var(--wood, #2b1f15));
-  border: 2px solid var(--border-color, #8f7351);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(223, 206, 179, 0.3);
+  background: var(--floating-control-background, linear-gradient(180deg, #463424, #2b1f15));
+  border: var(--floating-control-border, 2px solid #8f7351);
+  box-shadow: var(--floating-control-shadow, 0 4px 12px rgba(0, 0, 0, 0.4));
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 4px;
-  z-index: 4000;
+  z-index: var(--floating-control-z, 6002);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
   -webkit-tap-highlight-color: transparent;
 }
 .nav-fab-btn span {
   display: block;
   width: 19px;
   height: 2px;
-  background-color: var(--paper, #dfceb3);
+  background-color: var(--on-wood-text);
   border-radius: 2px;
   transition: all 0.2s;
 }
 .nav-fab-btn:hover {
-  transform: translateY(-4px);
   border-color: var(--accent-bright, #7a9a99);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(180deg, var(--wood, #2b1f15), var(--wood-deep, #1e150d));
 }
 .nav-fab-btn:active {
-  transform: translateY(-2px);
   filter: brightness(0.9);
 }
 
-/* ====== 主区域布局（三列等高 grid，严格与 ui模板.html 对齐：左 250 / 中 1fr / 右 300，间距 20px，顶部留白 30px） ====== */
+/* ====== 主区域布局（三列等高 grid，严格与 ui模板.html 对齐：左 250 / 中 1fr / 右 300，间距 20px，顶部留白 33px = sticky 吸附位一致，切换页面不跳动） ====== */
 .app-main {
   width: 100%;
   height: 100%;
@@ -838,6 +825,38 @@ watch(() => route.query.itemId, async (newId) => {
   min-height: 0;
   display: flex;
   flex-direction: column;
+}
+
+@media (min-width: 1025px) {
+  .app-main {
+    display: block;
+    height: auto;
+    min-height: calc(100dvh - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
+    overflow: visible;
+  }
+  .app-main :deep(.page-view-container) {
+    height: auto;
+    min-height: inherit;
+    overflow: visible;
+  }
+  .app-main :deep([data-main-scroll]) {
+    flex: none;
+    height: auto !important;
+    max-height: none !important;
+    overflow-y: visible !important;
+    overscroll-behavior: auto;
+    clip-path: inset(var(--sticky-clip-top, 0px) 0 0);
+  }
+  .app-main :deep(.page-view-container > .filter-panel),
+  .app-main :deep(.page-view-container > .filter-sticky-bar),
+  .app-main :deep(.page-view-container > [class*="-filter-panel"]) {
+    position: sticky;
+    top: calc(var(--header-height, 60px) + var(--safe-top, 0px) + 33px);
+    z-index: 30;
+    overflow: visible;
+    background-color: var(--paper);
+    box-shadow: 0 8px 18px rgba(43, 31, 21, 0.3), inset 0 0 20px rgba(135, 107, 72, 0.1);
+  }
 }
 
 @media (min-width: 1025px) {
@@ -875,6 +894,16 @@ watch(() => route.query.itemId, async (newId) => {
   min-height: 0;
 }
 
+.is-native-shell .main-layout-row {
+  grid-template-columns: minmax(0, 1fr);
+}
+.is-native-shell .header-top-row {
+  grid-template-columns: minmax(180px, 250px) minmax(0, 1fr) auto;
+}
+.is-native-shell :deep(.ui-back-to-top) {
+  right: 20px;
+}
+
 .desktop-sidebar-container {
   width: 100%;
   height: 100%;
@@ -893,6 +922,30 @@ watch(() => route.query.itemId, async (newId) => {
   flex-direction: column;
 }
 
+@media (min-width: 1025px) {
+  .main-layout-row {
+    align-items: start;
+    flex: none;
+    /* 基线=视口高：内容不超一屏时页面无人工溢出（无滚动条）；切页/首屏保护由 is-route-pending/is-boot-loading 负责 */
+    min-height: calc(100dvh - var(--safe-top, 0px));
+    padding-top: calc(33px + var(--header-height, 60px) + var(--safe-top, 0px));
+    overflow: visible;
+  }
+  /* Facility panels end at the same baseline as the fixed side information panels. */
+  .main-layout-row:has(.facilities-page) { padding-bottom: 0; }
+  /* 切页瞬间临时顶住旧页高度：见 setRoutePending()，新页加载完成即撤销 */
+  .main-layout-row.is-route-pending {
+    min-height: var(--route-pending-h, calc(100dvh - var(--safe-top, 0px)));
+  }
+  .desktop-sidebar-container,
+  .desktop-right-container {
+    position: sticky;
+    top: calc(var(--header-height, 60px) + var(--safe-top, 0px) + 33px);
+    height: calc(100dvh - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
+    max-height: calc(100dvh - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
+  }
+}
+
 /* 移动端/平板端：彻底隐藏左右侧边栏与右侧信息区，中间主视图全屏铺满 */
 @media (max-width: 1024px) {
   .main-layout-row {
@@ -903,7 +956,7 @@ watch(() => route.query.itemId, async (newId) => {
     flex: 1 !important;
     min-height: 0 !important;
     min-width: 0 !important;
-    padding: 8px 8px calc(8px + var(--safe-bottom, 0px)) 8px !important;
+    padding: 8px max(8px, env(safe-area-inset-right, 0px)) calc(8px + var(--safe-bottom, 0px)) max(8px, env(safe-area-inset-left, 0px)) !important;
     margin: 0 !important;
     gap: 0 !important;
     overflow: hidden !important;
@@ -920,6 +973,87 @@ watch(() => route.query.itemId, async (newId) => {
   }
 }
 
+/* 邮件是固定三栏阅读器：覆盖桌面通用的 height:auto / overflow:visible。
+   高度使用与两侧栏相同的公式，筛选栏占用多少，阅读器就使用剩余空间。 */
+.app-container.is-mail-reader { overflow: hidden; }
+@media (min-width: 1025px) {
+  .is-mail-reader .main-layout-row {
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .is-mail-reader .app-main {
+    display: flex;
+    height: calc(100dvh - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
+    min-height: 0;
+    overflow: hidden;
+  }
+  .is-mail-reader .app-main :deep(.partner-mails-page) {
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .is-mail-reader .app-main :deep(.partner-mails-page > .filter-panel) {
+    position: static;
+    max-height: 50%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+/* 模拟招募：整页游戏画面。隐藏 Wiki 顶栏 / 左导航 / 右信息栏，主视图区独占整个视口，
+   画布由 `GachaStage` 等比缩放居中，背板由页面自己的模糊主视觉铺满（见 assets/gacha.css）。
+   注意：`.main-layout-row` 是 `grid-template-columns: 250px 1fr 300px`，只把左右栏
+   `display:none` 不够——唯一剩下的子元素会落进第一列 250px（画布会被压到 250/1534 缩放），
+   因此这里必须把行布局改成单列 flex。 */
+.app-container.is-gacha-stage {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+  /* 桌面端基础规则为页面滚动预留了 scrollbar-gutter: stable，
+     整页游戏画面不需要它，否则右边缘会留出一条露出页面背景的槽宽 */
+  scrollbar-gutter: auto;
+  max-width: none;
+}
+
+.is-gacha-stage .app-header,
+.is-gacha-stage .desktop-sidebar-container,
+.is-gacha-stage .desktop-right-container,
+.is-gacha-stage > .nav-fab-btn {
+  display: none !important;
+}
+
+.is-gacha-stage .main-layout-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  min-height: 0;
+  margin: 0;
+  /* 移动端媒体查询（≤1024px）给行容器加了 `padding: 8px + safe-area !important`
+     的 Wiki 页边距，横屏手机的刘海/手势条会让左右各留出几十像素、露出 body 的
+     羊皮纸背景；整页游戏画面必须用 !important 归零（桌面端无此竞争，行为不变）。 */
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.is-gacha-stage .app-main {
+  display: flex;
+  flex-flow: column;
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  visibility: visible;
+}
+
 /* 右侧页面信息面板（模板 .infobox 风格）：与左侧导航栏等高（height: 100%） */
 .page-info-panel {
   width: 100%;
@@ -934,10 +1068,10 @@ watch(() => route.query.itemId, async (newId) => {
 }
 .info-title-bar {
   background-color: var(--border-color, #8f7351);
-  color: var(--paper, #dfceb3);
+  color: var(--on-wood-text);
   text-align: center;
   padding: 10px 14px;
-  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-family: var(--font-ui);
   font-weight: 700;
   font-size: 17px;
   letter-spacing: 2px;
@@ -961,7 +1095,14 @@ watch(() => route.query.itemId, async (newId) => {
 .info-body {
   padding: 14px 16px;
   flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
+}
+.info-body > .info-meta-rows,
+.info-body > .info-section {
+  flex-shrink: 0;
 }
 .info-meta-rows {
   margin-bottom: 14px;

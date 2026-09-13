@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 360" fill="none" class="mascot-illustration" data-character="049" style="--mascot-eyes-origin:160px 123px;--mascot-left-origin:131px 97px;--mascot-right-origin:189px 103px;--mascot-body-origin:161px 318px" aria-hidden="true" focusable="false">
+  <!-- Center the torso at x=123; tuck the long tail down to retain the complete silhouette. -->
+  <g class="mascot-composition" transform="translate(-40 0)">
+  <ellipse cx="163" cy="337" rx="43" ry="6" fill="#6b503b" opacity=".14"/>
+  <g stroke="#70563c" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+    <g class="idle-body idle-motion">
+      <!-- Broad feather-like tail and the spiky golden mane define the silhouette. -->
+      <g class="idle-hair-left idle-motion" data-rig-part="hairLeft">
+        <g class="mascot-tail">
+        <path d="M 120.867 166.717 Q 74.635 162.767 61.098 201.712 L 43.174 251.509 L 53.581 247.423 L 51.496 261.694 L 64.879 246.831 L 68.295 257.981 L 77.814 236.948 L 84.056 247.950 L 92.088 225.579 L 99.967 227.290 L 100.195 204.620 L 108.819 193.547 L 105.924 178.829 L 121.385 176.603 Z" fill="#969260"/>
+        <path d="M 52.538 254.559 L 63.843 227.059 L 69.720 204.093 L 86.969 181.947 L 109.865 172.958 L 87.487 191.832 L 80.568 221.934 L 71.570 239.400 L 69.714 231.000 L 62.128 248.391 Z" fill="#657a70" stroke="none"/>
+        <path d="M 68.450 233.899 Q 74.034 191.829 102.877 174.740 M 73.809 201.046 L 76.926 220.001 M 85.110 187.001 L 90.383 206.550" stroke="#c4af69" stroke-width="2.3"/>
+        </g>
+        <path d="M130 88Q106 87 104 59L115 50L105 46Q80 64 92 99Q99 117 118 122L106 157L126 209Q116 231 122 248L112 256L128 253Q122 276 101 274L108 289L124 299L148 289L171 260L166 166Z" fill="#c29848"/>
+        <path d="M96 67Q93 93 114 104M120 216Q134 244 133 260Q135 278 117 286" stroke="#e7bf63" stroke-width="4"/>
+        <path d="M108 270L123 277L132 271L136 260L146 281L130 294L114 289Z" fill="#e0b45b" stroke="none"/>
+      </g>
+      <g class="idle-hair-right idle-motion" data-rig-part="hairRight">
+        <path d="M179 88Q204 86 201 62L195 59L207 54Q228 71 217 102L229 100L219 116L231 121L217 130L227 142L213 145L209 195L221 212L210 218L219 241L210 241L220 263L203 266L208 284L188 276L177 245L183 186Z" fill="#c49a4a"/>
+        <path d="M208 72Q218 93 201 108M205 194L207 215L198 215L209 249L200 246L202 263" stroke="#e4ba5c" stroke-width="3.5"/>
+      </g>
+      <g data-rig-part="satchel">
+      <!-- Arrow fletching and a strapped quiver behind the left shoulder. -->
+      <path d="M99 191L121 178L160 226L146 244L134 240Z" fill="#9f7750"/>
+      <path d="M121 191L135 215L149 225" stroke="#cfaa6b" stroke-width="3"/>
+      <path d="M129 209L80 166M137 207L90 162M137 201L96 152M130 216L74 182" stroke="#a08e6c" stroke-width="3"/>
+      <path d="M97 173L76 161L82 175L106 188M105 171L86 157L92 173L114 184M108 165L93 147L96 163L118 184M96 185L72 175L78 186L110 198" fill="#ddd9bf"/>
+      <path d="M96 180L103 182M100 175L108 179M104 166L111 174M96 190L105 194" stroke="#a16b5b" stroke-width="3"/>
+      </g>
+      <g data-rig-part="skirt">
+      <!-- Fur-lined open coat, exposed knees and tawny paw boots. -->
+      <path d="M140 197L195 197L206 229L202 292L188 310L168 284L140 295L123 282L130 239Z" fill="#526065"/>
+      <path d="M145 224L193 224L194 242L167 249L138 243Z" fill="#725c40"/>
+      </g>
+      <path d="M145 242L163 245L157 288L143 294L131 279Z" fill="#f1c9a4"/>
+      <path d="M169 242L187 239L192 278L181 291L166 278Z" fill="#edc39c"/>
+      <path d="M169 250L188 251L190 258L170 257Z" fill="#846951"/>
+      <path d="M173 252L181 254L178 258" stroke="#c4b38b" stroke-width="1.4"/>
+      <path d="M132 276L155 287L155 312L146 335L127 335L122 324Z" fill="#ba9555"/>
+      <path d="M165 278L188 278L201 313L190 332L171 333L163 318Z" fill="#ba9555"/>
+      <path d="M127 283L141 292L138 301L152 299L149 311L136 310L140 321L128 317L123 324" stroke="#d8d3ac" stroke-width="5"/>
+      <path d="M170 285L182 288L188 299L177 302L185 311L171 308L173 320" stroke="#d8d3ac" stroke-width="5"/>
+      <path d="M128 329L130 334M136 328L138 334M145 324L145 330M177 326L177 332M185 325L186 330M192 321L193 326" stroke="#816444" stroke-width="1.8"/>
+      <g data-rig-part="torso">
+      <path d="M135 165L160 156L186 166L185 206L194 226L178 240L142 233L133 219Z" fill="#ebc49f"/>
+      <path d="M136 174L149 173L158 184L167 175L184 177L180 197L165 205L153 198L141 201Z" fill="#814d38"/>
+      <path d="M139 176L151 187L163 182L176 189L184 182M146 198L153 191L164 197L176 193" stroke="#d7b779" stroke-width="2.1"/>
+      <path d="M162 200L161 213L155 217M168 203L171 214L168 220" stroke="#a47751" stroke-width="1.4"/>
+      <path d="M137 222L149 216L164 223L182 217L192 224L182 235L163 230L145 237Z" fill="#78553b"/>
+      <path d="M154 221L161 230L170 224L164 219ZM178 220L184 227L180 233" fill="#d4ad64"/>
+      <path d="M143 231L135 258L140 260L132 297L122 296L128 255L129 234Z" fill="#a96654"/>
+      <path d="M131 242L136 244L134 252L129 251Z" fill="#ceb070"/>
+      <path d="M191 234L211 244L212 261L194 255L184 240Z" fill="#977452"/>
+      <!-- Fluffy collar and cuffs; hands rest at the waist. -->
+      <path d="M139 158L146 151L153 155L159 149L165 156L174 150L178 157L186 156L188 163L180 169L173 165L165 171L156 165L147 168L138 165Z" fill="#dfdcc0"/>
+      </g>
+      <path d="M133 170L119 181L123 197L142 188L152 174L145 168Z" fill="#ebc8a6"/>
+      <path class="pose-idle-arm" d="M186 171L202 180L199 199L184 204L178 191Z" fill="#eac39d"/>
+      <path d="M120 186L117 195L122 199L120 207L127 208L130 215L138 210L145 213L148 205L154 202L148 195L142 195L139 188L131 193L129 184Z" fill="#d6d5b7"/>
+      <path class="pose-idle-arm" d="M182 185L189 181L193 187L201 186L204 195L201 201L192 200L189 207L181 203L176 199Z" fill="#d6d5b7"/>
+      <path d="M143 207L151 211L150 220L141 224L136 219L137 212Z" fill="#f1cca8"/>
+      <path class="pose-idle-arm" d="M183 203L188 209L185 218L178 220L173 215L175 207Z" fill="#f1cca8"/>
+      <path d="M142 216L147 218" stroke="#b38967" stroke-width="1.4"/>
+      <path class="pose-idle-arm" d="M179 213L183 214" stroke="#b38967" stroke-width="1.4"/>
+      <!-- The upward swept locks are hair, not rigid horns. -->
+      <g class="pose-head" data-rig-part="head">
+      <path d="M120 108L110 99L118 91L107 83L121 82L119 66L134 74L130 60L138 53L149 23L151 48L160 42L156 65L168 57L178 28L177 54L187 47L181 72L201 81L195 99L206 108L191 127L185 150L142 158L118 138Z" fill="#d8b260"/>
+      <path d="M140 65L149 38L146 64L135 82L122 82L127 95L120 94L130 108M174 47L169 75L180 86" stroke="#efd28a" stroke-width="3"/>
+      <path d="M131 110Q148 89 177 106L185 126Q180 148 161 154Q140 155 131 139Z" fill="#ecc8a5"/>
+      <path d="M145 118L153 115M169 114L178 116" stroke="#9d774b" stroke-width="1.4"/>
+      <g class="idle-eyes idle-motion">
+        <path d="M141 124L154 120L154 130L147 134L141 129ZM168 120L179 118L178 128L172 131L167 126Z" fill="#9c7445"/>
+        <path d="M144 129L152 126L150 131L146 132ZM170 126L177 122L175 128L172 129Z" fill="#ddb879" stroke="none"/>
+        <ellipse cx="149" cy="124" rx="2" ry="3.8" fill="#604334" stroke="none"/><ellipse cx="174" cy="121" rx="2" ry="3.8" fill="#604334" stroke="none"/>
+        <circle cx="145" cy="123" r="1.7" fill="#f8e5ba" stroke="none"/><circle cx="171" cy="120" r="1.7" fill="#f8e5ba" stroke="none"/>
+        <path d="M140 122L154 119M167 119L180 116" stroke="#694638" stroke-width="2.4"/>
+      </g>
+      <path d="M154 144Q160 147 165 141" stroke="#9f7052" stroke-width="1.5"/>
+      <path d="M143 115Q132 132 140 144L149 144L145 155L134 153L138 164L123 156L128 144L116 140L120 129L111 122L124 113Z" fill="#d6b267"/>
+      <path d="M180 105Q197 113 191 131L201 132L190 146L194 153L180 156L182 144L172 148L183 134L178 129Z" fill="#d6b267"/>
+      <path d="M130 133L127 145L136 148M190 124L185 138" stroke="#f0d58d" stroke-width="2.8"/>
+      <path d="M141 94Q159 76 174 97L183 103L178 118L165 126L157 113L153 96L151 122L142 126L140 112L130 119L129 104Z" fill="#e0bd71"/>
+      <path d="M155 90L162 95L169 113M142 99L136 111" stroke="#f4d991" stroke-width="3"/>
+      <path d="M142 95Q127 87 127 71Q142 72 149 84ZM173 87Q181 72 194 71Q193 91 179 99Z" fill="#b7a374"/>
+      <path d="M132 76L137 88L143 87ZM189 77L182 88L180 88Z" fill="#eee1b4" stroke="none"/>
+      <path d="M129 91L143 95M179 96L192 94" stroke="#6d6f77" stroke-width="4"/>
+      <path d="M136 93L138 97M185 94L186 98" stroke="#b96951" stroke-width="3"/>
+      <path d="M150 74L159 69L171 75L167 81L155 83Z" fill="#b99753"/>
+      </g>
+      <g class="pose-think-arm" display="none">
+        <path d="M186 173Q204 177 206 194Q205 205 197 205L172 171L181 161L194 183L190 176Z" fill="#eac39d"/>
+        <path d="M197 186L200 198L181 175" stroke="#b38967" stroke-width="1.5"/>
+        <path d="M171 174L167 164L172 160L170 155L179 155L184 151L186 158L193 160L190 168L183 168L181 176Z" fill="#d6d5b7"/>
+        <path d="M174 157L170 152L162 154Q156 154 155 149Q157 144 163 146L169 144L173 140Q178 139 180 145L183 155Z" fill="#f1cca8"/>
+        <path d="M161 149L170 150M173 145L176 151" stroke="#b38967" stroke-width="1.3"/>
+      </g>
+    </g>
+  </g>
+  </g>
+</svg>

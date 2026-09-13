@@ -10,6 +10,7 @@ export function buildEventsFile() {
     eventJson: readJson('randomEventInfo.json'),
     areaJson: readJson('randomEventArea.json'),
     rewardJson: readJson('reward.json'),
+    consumeJson: readJson('consume.json'),
     itemJson: readJson('item.json'),
     mapJson: readJson('area.json'),
     exploreJson: readJson('exploreArea.json'),

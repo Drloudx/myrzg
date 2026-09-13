@@ -1,17 +1,35 @@
 <template>
   <div class="page-view-container dungeon-page">
-    <div class="dungeon-filter paper-panel">
-      <UiSegmentedTabs :model-value="mapFilter" :options="mapOptions" @update:model-value="mapFilter = $event" />
+    <div class="dungeon-filter-panel paper-panel">
       <UiSearchInput v-model="searchQuery" placeholder="搜索副本、关卡或掉落物品..." />
+      <UiFilterRow label="地图：">
+        <UiFilterPill
+          v-for="option in mapOptions"
+          :key="option.key"
+          :active="mapFilter === option.key"
+          @click="mapFilter = option.key"
+        >{{ option.label }}</UiFilterPill>
+      </UiFilterRow>
       <div class="dungeon-count">共 <span class="count-num">{{ filteredDungeons.length }}</span> 个副本，<span class="count-num">{{ battleCount }}</span> 个关卡<span v-if="storyBattleCount">，另有 <span class="count-num">{{ storyBattleCount }}</span> 个剧情入口</span></div>
     </div>
 
     <UiEmptyState v-if="!isReady" type="loading" text="正在装配副本数据..." />
     <UiEmptyState v-else-if="filteredDungeons.length === 0" text="未找到符合条件的副本" />
 
-    <div v-else id="dungeonGrid" class="dungeon-scroll">
+    <div v-else id="dungeonGrid" class="dungeon-scroll" data-main-scroll>
       <section v-for="dungeon in filteredDungeons" :key="dungeon.id" class="dungeon-card paper-panel">
-        <div class="dungeon-card__cover" :style="coverStyle(dungeon)">
+        <div class="dungeon-card__cover">
+          <img
+            v-if="dungeon.background"
+            class="dungeon-card__cover-image"
+            v-lazy-cover="getImageUrl(dungeon.background)"
+            alt=""
+            width="1680"
+            height="1000"
+            loading="lazy"
+            decoding="async"
+            @error="handleImageFallback"
+          />
           <div class="dungeon-card__cover-shade"></div>
           <div class="dungeon-card__heading">
             <div>
@@ -81,6 +99,7 @@
       :title="selectedBattle ? selectedBattle.name : '副本关卡详情'"
       max-width="1100px"
       scroll-id="dungeonDetailScroll"
+      :restore-scroll-top="detailSavedScrollTop"
       @close="closeBattle"
     >
       <UiEmptyState v-if="detailLoading" type="loading" text="正在加载关卡详情..." />
@@ -106,87 +125,12 @@
 
         <UiSection v-if="selectedBattle.routes?.length" title="随机房间路线">
           <p class="drop-note drop-note--room-intro">路线来自游戏副本配置：每次进入会先随机选择布局，再从节点的候选房间中随机确定实际房间。点击节点查看该位置可能遇到的内容。</p>
-          <div class="route-layout-tabs" role="tablist" aria-label="随机布局">
-            <button
-              v-for="(layer, index) in selectedBattle.routes"
-              :key="layer.id"
-              type="button"
-              class="route-layout-tab"
-              :class="{ 'route-layout-tab--active': selectedRouteIndex === index }"
-              role="tab"
-              :aria-selected="selectedRouteIndex === index"
-              @click="selectRouteLayer(index)"
-            >
-              {{ routeLabel(index) }}<small>{{ routeChance(layer) }}</small>
-            </button>
-          </div>
-          <div v-if="selectedRouteLayer" class="route-map-shell">
-            <div class="route-map-toolbar" role="group" aria-label="地图缩放控制">
-              <button type="button" title="缩小地图" aria-label="缩小地图" :disabled="routeZoom <= 0.7" @click="zoomRouteBy(-0.1)">−</button>
-              <output aria-label="当前地图缩放比例">{{ Math.round(routeZoom * 100) }}%</output>
-              <button type="button" title="放大地图" aria-label="放大地图" :disabled="routeZoom >= 2.4" @click="zoomRouteBy(0.1)">+</button>
-              <button type="button" title="恢复默认视图" aria-label="恢复默认视图" @click="resetRouteMap">↺</button>
-            </div>
-            <div
-              class="route-map-scroll"
-              ref="routeMapScrollRef"
-              @wheel="handleRouteWheel"
-              @dblclick="handleRouteDoubleClick"
-              @touchstart="handleRouteTouchStart"
-              @touchmove="handleRouteTouchMove"
-              @touchend="handleRouteTouchEnd"
-              @touchcancel="handleRouteTouchEnd"
-              @pointerdown="handleRoutePointerDown"
-              @pointermove="handleRoutePointerMove"
-              @pointerup="handleRoutePointerUp"
-              @pointercancel="handleRoutePointerUp"
-            >
-              <div class="route-map-space" :style="routeMapSpaceStyle(displayRouteLayer)">
-                <div class="route-map" :style="routeMapStyle(displayRouteLayer)">
-                <svg class="route-map__links" :viewBox="`0 0 ${displayRouteLayer.size.w} ${displayRouteLayer.size.h}`" preserveAspectRatio="none" aria-hidden="true">
-                  <polyline
-                    v-for="(link, index) in displayRouteLayer.links"
-                    :key="`route-link-${index}`"
-                    :points="link.points"
-                    class="route-map__link"
-                    :class="{ 'route-map__link--active': isRouteLinkActive(link) }"
-                  />
-                </svg>
-                <div
-                  v-for="node in displayRouteLayer.nodes"
-                  :key="node.id"
-                  class="route-node-group"
-                  :style="routeNodeStyle(node, displayRouteLayer)"
-                >
-                  <button
-                    v-if="node.variantOptions?.length > 1"
-                    type="button"
-                    class="route-node-expand"
-                    :aria-label="isRouteNodeExpanded(node) ? '收起候选房间' : `展开 ${node.variantOptions.length} 个候选房间`"
-                    @click.stop="toggleRouteNodeExpanded(node.id)"
-                  >
-                    {{ isRouteNodeExpanded(node) ? '−' : '+' }}
-                  </button>
-                  <button
-                    v-for="(variant, variantIndex) in visibleRouteVariants(node)"
-                    :key="`${node.id}-${variant.typeId}`"
-                    type="button"
-                    class="route-node"
-                    :class="routeNodeClass(node, variant.typeId)"
-                    :aria-label="routeNodeLabel(node, variant)"
-                    @click="selectRouteRoom(node.id, variant.typeId)"
-                  >
-                    <img v-if="routeIconPath(variant)" :src="routeIconPath(variant)" alt="" />
-                    <span v-else class="route-node__fallback" :aria-label="variantIndex === 0 ? routeIconGlyph(node) : '房间图标'">
-                      {{ variantIndex === 0 ? routeIconGlyph(node) : '' }}
-                    </span>
-                    <i v-if="node.candidates && variantIndex === 0" class="route-node__random">{{ node.candidates + 1 }}</i>
-                  </button>
-                </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <DungeonRouteMap
+            v-model:route-index="selectedRouteIndex"
+            v-model:room-id="selectedRouteRoomId"
+            v-model:variant-id="selectedRouteVariantId"
+            :routes="selectedBattle.routes"
+          />
           <div v-if="selectedRouteRoom" class="route-room-detail">
             <div class="route-room-detail__heading">
               <div>
@@ -269,7 +213,7 @@
                   </template>
                   <p v-else-if="variant.notFightRoom" class="room-variant__line">非战斗房间</p>
                   <p v-if="variant.npcCount" class="room-variant__line">NPC：{{ variant.npcCount }} 个</p>
-                  <div v-for="collection in sortedCollections(variant.collections)" :key="`${variant.typeId}-${collection.collectTypeId}`" class="room-collection">
+                  <div v-for="collection in sortedCollections(variant.collections)" :key="`${variant.typeId}-${collection.collectTypeId}`" :data-source-entry="`${variant.typeId}:${collection.collectTypeId}`" class="room-collection">
                     <div class="room-collection__heading">
                       <span>{{ collection.name }}<template v-if="collection.count > 1"> ×{{ collection.count }}</template></span>
                       <small v-if="collection.consume">{{ collectConsumeText(collection) }}</small>
@@ -291,7 +235,7 @@
                     <p v-else class="room-variant__line">已配置交互，奖励表未提供可展示条目</p>
                   </div>
                   <div v-for="monster in variant.monsters" :key="`${variant.typeId}-${monster.typeId}-drop`">
-                    <div v-for="drop in monster.drops" :key="`${monster.typeId}-${drop.collectTypeId}`" class="room-collection room-collection--monster">
+                    <div v-for="drop in monster.drops" :key="`${monster.typeId}-${drop.collectTypeId}`" :data-source-entry="`${variant.typeId}:${monster.typeId}:${drop.collectTypeId}`" class="room-collection room-collection--monster">
                       <div class="room-collection__heading"><span>{{ monster.name }} 自动掉落</span><small v-if="drop.dropRate">{{ (drop.dropRate * 100).toFixed(0) }}%</small></div>
                       <div v-if="drop.reward.length" class="reward-pools room-reward-pools">
                         <div v-for="group in rewardGroups(drop.reward)" :key="`${drop.collectTypeId}-pool-${group.index}`" class="reward-pool">
@@ -310,10 +254,17 @@
           </div>
         </UiSection>
 
-        <UiSection v-if="specialDropTotal" v-model:open="specialDropsOpen" title="特殊掉落" collapsible class="special-drops">
+        <div v-if="specialDropTotal" ref="specialDropsAnchorRef" class="special-drops-anchor">
+        <UiSection v-model:open="specialDropsOpen" title="特殊掉落" collapsible class="special-drops">
           <UiSegmentedTabs v-model="specialDropTab" :options="SPECIAL_DROP_TABS" class="special-drops__tabs" />
           <div v-if="activeSpecialDrops.length" class="special-drop-list">
-            <article v-for="entry in activeSpecialDrops" :key="`${entry.specialCategory}-${entry.typeId}`" class="special-drop-card">
+            <article
+              v-for="entry in activeSpecialDrops"
+              :key="`${entry.specialCategory}-${entry.typeId}`"
+              class="special-drop-card"
+              :class="{ 'special-drop-card--focused': isFocusedSpecialDrop(entry) }"
+              :data-drop-entry="entry.typeId"
+            >
               <div class="special-drop-card__heading">
                 <strong>{{ entry.name }}</strong>
                 <UiTag :tone="specialDropTone(entry)">{{ SPECIAL_DROP_TABS.find(tab => tab.key === entry.specialCategory)?.label }}</UiTag>
@@ -346,8 +297,9 @@
           </div>
           <UiEmptyState v-else text="当前关卡没有此类特殊掉落" />
         </UiSection>
+        </div>
 
-        <UiSection v-model:open="settlementDropsOpen" title="通关结算掉落" collapsible>
+        <UiSection v-model:open="settlementDropsOpen" title="通关结算掉落" data-source-entry="settlement" collapsible>
           <div v-if="selectedBattle.reward.length" class="reward-pools">
             <div v-for="group in rewardGroups(selectedBattle.reward)" :key="`reward-pool-${group.index}`" class="reward-pool">
               <div class="reward-pool__heading"><strong>奖励池 {{ group.index + 1 }}</strong><small>{{ rewardGroupLabel(group) }}</small></div>
@@ -389,7 +341,7 @@
           <p class="drop-note drop-note--inline">源码中 `showReward` 用于进入副本前的奖励预览，实际结算使用上方 `reward`。</p>
         </UiSection>
 
-        <UiSection v-if="selectedBattle.firstReward.length" title="首次通关奖励">
+        <UiSection v-if="selectedBattle.firstReward.length" title="首次通关奖励" data-source-entry="first">
           <div class="reward-pools">
             <div v-for="group in rewardGroups(selectedBattle.firstReward)" :key="`first-pool-${group.index}`" class="reward-pool">
               <div class="reward-pool__heading"><strong>奖励池 {{ group.index + 1 }}</strong><small>{{ rewardGroupLabel(group) }}</small></div>
@@ -414,11 +366,13 @@
 </template>
 
 <script setup>
-import { computed, nextTick, onMounted, ref, shallowRef, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   UiBackToTop,
   UiEmptyState,
+  UiFilterPill,
+  UiFilterRow,
   UiInfoRow,
   UiModal,
   UiRewardCard,
@@ -428,8 +382,35 @@ import {
   UiTag
 } from '../components/ui/index.js'
 import { fetchWithFallback } from '../utils/request.js'
-import { getImageUrl } from '../utils/env.js'
+import DungeonRouteMap from '../components/dungeons/DungeonRouteMap.vue'
+import { getImageUrl, handleImageFallback } from '../utils/env.js'
 import { BASE_REWARD_PATHS, MAP_NAMES } from '../utils/gameMappings.js'
+import { resolveScrollTarget } from '../utils/scrollTarget.js'
+
+const coverObservers = new WeakMap()
+const observeCover = (image, source) => {
+  coverObservers.get(image)?.disconnect()
+  if (!('IntersectionObserver' in window)) {
+    image.src = source
+    return
+  }
+  // Browser-native lazy loading can prefetch this entire two-column page.
+  const observer = new IntersectionObserver(entries => {
+    if (!entries.some(entry => entry.isIntersecting)) return
+    image.src = source
+    observer.disconnect()
+    coverObservers.delete(image)
+  }, { rootMargin: '360px 0px' })
+  coverObservers.set(image, observer)
+  observer.observe(image)
+}
+const vLazyCover = {
+  mounted: (image, binding) => observeCover(image, binding.value),
+  updated: (image, binding) => {
+    if (binding.value !== binding.oldValue) observeCover(image, binding.value)
+  },
+  unmounted: image => coverObservers.get(image)?.disconnect()
+}
 
 const route = useRoute()
 const router = useRouter()
@@ -438,6 +419,10 @@ const isReady = ref(false)
 const mapFilter = ref(route.query.map || 'all')
 const searchQuery = ref(route.query.q || '')
 const detailVisible = ref(false)
+// 打开详情前捕获 .app-container 的真实滚动位置，作为 UiModal 的 restoreScrollTop，关闭时恢复。
+// 覆盖式详情打开会锁 app-main 为视口高、浏览器把 scrollTop 钳到 0/18；此时如果依赖内部 lastScrollTop
+// 会被钳制值污染。因此在"用户点击打开那一瞬"（detailVisible=true 之前）捕获真实值。
+const detailSavedScrollTop = ref(0)
 const selectedDungeon = ref(null)
 const selectedBattle = shallowRef(null)
 const detailLoading = ref(false)
@@ -445,24 +430,15 @@ const detailError = ref('')
 const selectedRouteIndex = ref(0)
 const selectedRouteRoomId = ref('')
 const selectedRouteVariantId = ref('')
-const DEFAULT_ROUTE_ZOOM = 0.7
-const routeZoom = ref(DEFAULT_ROUTE_ZOOM)
-const routeMapScrollRef = ref(null)
+const specialDropsAnchorRef = ref(null)
+const focusedSpecialDropEntry = ref('')
 const storyOpenState = ref({})
-const expandedRouteNodes = ref(new Set())
 const specialDropsOpen = ref(false)
 const settlementDropsOpen = ref(false)
 const previewDropsOpen = ref(false)
 const specialDropTab = ref('chest')
-let routeTouchGesture = null
-let routeTouchPan = null
-let routeTouchFrame = 0
-let routeTouchRequest = null
-let routeTouchMomentumFrame = 0
-let routePointerDrag = null
-let routeZoomFrame = 0
-let routeZoomRequest = null
 let detailRequestId = 0
+let specialDropHighlightTimer = 0
 const battleDetailCache = new Map()
 const SPECIAL_DROP_TABS = [
   { key: 'chest', label: '箱子' },
@@ -502,7 +478,6 @@ const mapOptions = computed(() => [
 const battleCount = computed(() => filteredDungeons.value.reduce((sum, dungeon) => sum + dungeon.battles.length, 0))
 const storyBattleCount = computed(() => filteredDungeons.value.reduce((sum, dungeon) => sum + (dungeon.storyBattles?.length || 0), 0))
 const selectedRouteLayer = computed(() => selectedBattle.value?.routes?.[selectedRouteIndex.value] || null)
-const displayRouteLayer = computed(() => orientRouteLayer(selectedRouteLayer.value))
 const selectedRouteNode = computed(() => selectedRouteLayer.value?.nodes?.find(item => item.id === selectedRouteRoomId.value) || null)
 const selectedRouteRoom = computed(() => {
   const node = selectedRouteNode.value
@@ -564,6 +539,13 @@ const specialDropGroups = computed(() => {
 })
 const specialDropTotal = computed(() => SPECIAL_DROP_TABS.reduce((sum, tab) => sum + specialDropGroups.value[tab.key].length, 0))
 const activeSpecialDrops = computed(() => specialDropGroups.value[specialDropTab.value] || [])
+const specialDropContains = (entry, typeId) => {
+  if (!typeId) return false
+  return specialDropSources(entry).some(source => (source.reward || []).some(reward => reward.typeId === typeId))
+}
+const isFocusedSpecialDrop = entry => {
+  return entry?.typeId === focusedSpecialDropEntry.value
+}
 const displayRoomCards = computed(() => {
   const rooms = selectedBattle.value?.rooms || []
   const roomId = selectedRouteNode.value?.roomId
@@ -623,17 +605,109 @@ const loadBattleDetail = (battle) => {
 }
 
 const initializeBattleDetail = (battle) => {
+  focusedSpecialDropEntry.value = ''
+  if (specialDropHighlightTimer) clearTimeout(specialDropHighlightTimer)
+  specialDropHighlightTimer = 0
   selectedBattle.value = battle
   selectedRouteIndex.value = 0
   selectedRouteRoomId.value = battle.routes?.[0]?.startRoomId || battle.routes?.[0]?.nodes?.[0]?.id || ''
   selectedRouteVariantId.value = battle.routes?.[0]?.nodes?.find(node => node.id === selectedRouteRoomId.value)?.variantOptions?.[0]?.typeId || ''
-  routeZoom.value = DEFAULT_ROUTE_ZOOM
-  expandedRouteNodes.value = new Set()
   specialDropsOpen.value = false
   settlementDropsOpen.value = false
   previewDropsOpen.value = false
   specialDropTab.value = SPECIAL_DROP_TABS.find(tab => specialDropGroups.value[tab.key].length)?.key || 'chest'
-  queueRouteViewportReset()
+}
+
+const findRequestedDropTarget = (requestedItem, requestedEntry) => {
+  const scrollRoot = document.getElementById('dungeonDetailScroll')
+  if (['rooms', 'settlement', 'first'].includes(String(route.query.dropTab))) {
+    return [...(scrollRoot?.querySelectorAll('[data-source-entry]') || [])]
+      .find(element => element.dataset.sourceEntry === requestedEntry) || null
+  }
+  const cards = [...(scrollRoot?.querySelectorAll('[data-drop-entry]') || [])]
+  if (requestedEntry) return cards.find(element => element.dataset.dropEntry === requestedEntry) || null
+  return cards.find(element => {
+    const entry = activeSpecialDrops.value.find(item => item.typeId === element.dataset.dropEntry)
+    return specialDropContains(entry, requestedItem)
+  }) || null
+}
+
+const alignRequestedDrop = element => {
+  const scrollTarget = resolveScrollTarget('#dungeonDetailScroll')
+  if (scrollTarget === window) {
+    const top = window.scrollY + element.getBoundingClientRect().top - Math.max(12, (window.innerHeight - element.offsetHeight) / 2)
+    window.scrollTo({ top: Math.max(0, top), behavior: 'auto' })
+    return
+  }
+
+  const targetRect = element.getBoundingClientRect()
+  const rootRect = scrollTarget.getBoundingClientRect()
+  const top = scrollTarget.scrollTop + targetRect.top - rootRect.top - Math.max(12, (scrollTarget.clientHeight - targetRect.height) / 2)
+  scrollTarget.scrollTo({ top: Math.max(0, top), behavior: 'auto' })
+}
+
+const focusRequestedDrop = async () => {
+  const requestedItem = String(route.query.drop || '')
+  const requestedEntry = String(route.query.dropEntry || '')
+  if ((!requestedItem && !requestedEntry) || !selectedBattle.value) return
+
+  const requestedTab = String(route.query.dropTab || 'chest')
+  const isDirectReward = ['rooms', 'settlement', 'first'].includes(requestedTab)
+  if (requestedTab === 'rooms') {
+    const room = selectedBattle.value.rooms?.find(room => room.variants.some(variant => requestedEntry.startsWith(`${variant.typeId}:`)))
+    const variant = room?.variants.find(variant => requestedEntry.startsWith(`${variant.typeId}:`))
+    const routeIndex = selectedBattle.value.routes?.findIndex(layer => layer.nodes?.some(node => node.roomId === room?.roomId
+      && node.variantOptions?.some(option => option.typeId === variant?.typeId))) ?? -1
+    if (routeIndex >= 0) {
+      selectedRouteIndex.value = routeIndex
+      selectedRouteRoomId.value = selectedBattle.value.routes[routeIndex].nodes.find(node => node.roomId === room.roomId).id
+      await nextTick()
+      selectedRouteVariantId.value = variant.typeId
+    } else {
+      // Some configured reward rooms have no route-map node; show the matching room without a stale filter.
+      selectedRouteRoomId.value = ''
+      selectedRouteVariantId.value = variant?.typeId || ''
+    }
+  }
+  specialDropTab.value = SPECIAL_DROP_TABS.some(tab => tab.key === requestedTab) ? requestedTab : 'chest'
+  specialDropsOpen.value = !isDirectReward
+  if (requestedTab === 'settlement') settlementDropsOpen.value = true
+  await nextTick()
+
+  const requestedDrop = isDirectReward ? null : requestedEntry
+    ? activeSpecialDrops.value.find(entry => entry.typeId === requestedEntry)
+    : activeSpecialDrops.value.find(entry => specialDropContains(entry, requestedItem))
+  focusedSpecialDropEntry.value = requestedDrop?.typeId || ''
+  if (specialDropHighlightTimer) clearTimeout(specialDropHighlightTimer)
+  let aligned = false
+
+  // 跨路由时旧物品弹窗仍在退场，页面可能短暂不可渲染；多次重新取节点并校正定位。
+  for (const delay of [0, 120, 280, 520]) {
+    if (delay) await new Promise(resolve => setTimeout(resolve, delay))
+    if (String(route.query.drop || '') !== requestedItem || String(route.query.dropEntry || '') !== requestedEntry) return
+    await nextTick()
+    const target = findRequestedDropTarget(requestedItem, requestedEntry) || (!isDirectReward && specialDropsAnchorRef.value)
+    const page = target?.closest('.page-view-container')
+    if (!target?.isConnected || target.getBoundingClientRect().height <= 0 || (page && getComputedStyle(page).display === 'none')) continue
+    alignRequestedDrop(target)
+    aligned = true
+  }
+
+  if (aligned && String(route.query.drop || '') === requestedItem && String(route.query.dropEntry || '') === requestedEntry) {
+    const query = { ...route.query }
+    delete query.drop
+    delete query.dropTab
+    delete query.dropEntry
+    await router.replace({ query })
+  }
+
+  if (focusedSpecialDropEntry.value) {
+    const highlightedEntry = focusedSpecialDropEntry.value
+    specialDropHighlightTimer = window.setTimeout(() => {
+      if (focusedSpecialDropEntry.value === highlightedEntry) focusedSpecialDropEntry.value = ''
+      specialDropHighlightTimer = 0
+    }, 2000)
+  }
 }
 
 const openBattle = async (dungeon, battle, syncUrl = true) => {
@@ -642,6 +716,8 @@ const openBattle = async (dungeon, battle, syncUrl = true) => {
   selectedBattle.value = battle
   detailLoading.value = true
   detailError.value = ''
+  // 在覆盖式详情打开（app-main 被锁、scrollTop 被钳）之前捕获列表位置，关闭时经 restoreScrollTop 恢复。
+  detailSavedScrollTop.value = document.querySelector('.app-container')?.scrollTop || 0
   detailVisible.value = true
   if (syncUrl) router.replace({ query: { ...route.query, battle: battle.id } })
   try {
@@ -653,7 +729,11 @@ const openBattle = async (dungeon, battle, syncUrl = true) => {
     console.error('加载副本关卡详情失败:', error)
     detailError.value = '关卡详情加载失败，请稍后重试'
   } finally {
-    if (requestId === detailRequestId) detailLoading.value = false
+    if (requestId === detailRequestId) {
+      detailLoading.value = false
+      await nextTick()
+      await focusRequestedDrop()
+    }
   }
 }
 
@@ -667,16 +747,24 @@ const closeBattle = () => {
   selectedRouteIndex.value = 0
   selectedRouteRoomId.value = ''
   selectedRouteVariantId.value = ''
-  routeZoom.value = DEFAULT_ROUTE_ZOOM
-  expandedRouteNodes.value = new Set()
+  focusedSpecialDropEntry.value = ''
+  if (specialDropHighlightTimer) clearTimeout(specialDropHighlightTimer)
+  specialDropHighlightTimer = 0
   specialDropsOpen.value = false
   settlementDropsOpen.value = false
   previewDropsOpen.value = false
   specialDropTab.value = 'chest'
   const query = { ...route.query }
   delete query.battle
+  delete query.drop
+  delete query.dropTab
+  delete query.dropEntry
   router.replace({ query })
 }
+
+onBeforeUnmount(() => {
+  if (specialDropHighlightTimer) clearTimeout(specialDropHighlightTimer)
+})
 
 const goToItem = (typeId) => {
   if (!typeId || typeId === '随机装备') return
@@ -797,359 +885,21 @@ const handleStorySummaryClick = (dungeonId, count, event) => {
   event.preventDefault()
   setStoryOpen(dungeonId, false)
 }
-const coverStyle = (dungeon) => dungeon.background ? { backgroundImage: `url(${getImageUrl(dungeon.background)})` } : {}
 
-const selectRouteLayer = (index) => {
-  selectedRouteIndex.value = index
-  const layer = selectedBattle.value?.routes?.[index]
-  selectedRouteRoomId.value = layer?.startRoomId || layer?.nodes?.[0]?.id || ''
-  selectedRouteVariantId.value = layer?.nodes?.find(node => node.id === selectedRouteRoomId.value)?.variantOptions?.[0]?.typeId || ''
-  routeZoom.value = DEFAULT_ROUTE_ZOOM
-  expandedRouteNodes.value = new Set()
-  queueRouteViewportReset()
-}
-
-const selectRouteRoom = (roomId, variantId = '') => {
-  if (!roomId) return
-  selectedRouteRoomId.value = roomId
-  selectedRouteVariantId.value = variantId || selectedRouteLayer.value?.nodes?.find(node => node.id === roomId)?.variantOptions?.[0]?.typeId || ''
-}
-
-const MIN_ROUTE_ZOOM = 0.7
-const MAX_ROUTE_ZOOM = 2.4
-const clampRouteZoom = (value) => Math.min(MAX_ROUTE_ZOOM, Math.max(MIN_ROUTE_ZOOM, Number(value) || 1))
-const setRouteZoom = (value) => {
-  routeZoom.value = Number(clampRouteZoom(value).toFixed(2))
-}
-const ROUTE_MAP_WIDTH = 1400
-const routeMapDimensions = (layer) => {
-  const sourceWidth = Math.max(1, Number(layer?.size?.w || 1600))
-  const sourceHeight = Math.max(1, Number(layer?.size?.h || 1000))
-  return { width: ROUTE_MAP_WIDTH, height: Math.round(ROUTE_MAP_WIDTH * sourceHeight / sourceWidth) }
-}
-const zoomRouteAt = (value, clientX, clientY) => {
-  routeZoomRequest = { value, clientX, clientY }
-  if (routeZoomFrame) return
-  routeZoomFrame = requestAnimationFrame(() => {
-    routeZoomFrame = 0
-    const request = routeZoomRequest
-    routeZoomRequest = null
-    const container = routeMapScrollRef.value
-    const previousZoom = routeZoom.value
-    if (!container || !request) {
-      if (request) setRouteZoom(request.value)
-      return
-    }
-    const rect = container.getBoundingClientRect()
-    const focusX = Number.isFinite(request.clientX) ? request.clientX - rect.left : rect.width / 2
-    const focusY = Number.isFinite(request.clientY) ? request.clientY - rect.top : rect.height / 2
-    const contentX = container.scrollLeft + focusX
-    const contentY = container.scrollTop + focusY
-    setRouteZoom(request.value)
-    nextTick(() => {
-      const ratio = routeZoom.value / previousZoom
-      container.scrollLeft = Math.max(0, contentX * ratio - focusX)
-      container.scrollTop = Math.max(0, contentY * ratio - focusY)
-    })
-  })
-}
-const routeMapStyle = (layer) => ({
-  width: `${routeMapDimensions(layer).width}px`,
-  height: `${routeMapDimensions(layer).height}px`,
-  transform: `scale(${routeZoom.value})`
-})
-const routeMapSpaceStyle = (layer) => {
-  const dimensions = routeMapDimensions(layer)
-  return {
-    width: `${dimensions.width * routeZoom.value}px`,
-    height: `${dimensions.height * routeZoom.value}px`
-  }
-}
-
-const resetRouteViewport = () => {
-  const container = routeMapScrollRef.value
-  if (!container) return
-  container.scrollLeft = 0
-  container.scrollTop = Math.max(0, container.scrollHeight - container.clientHeight)
-}
-const queueRouteViewportReset = () => {
-  nextTick(() => requestAnimationFrame(resetRouteViewport))
-}
-
-const handleRouteWheel = (event) => {
-  if (!event.ctrlKey && !event.metaKey) return
-  event.preventDefault()
-  const nextZoom = clampRouteZoom(routeZoom.value + (event.deltaY < 0 ? 0.1 : -0.1))
-  if (nextZoom === routeZoom.value) return
-  zoomRouteAt(nextZoom, event.clientX, event.clientY)
-}
-const zoomRouteBy = (amount) => {
-  const container = routeMapScrollRef.value
-  const rect = container?.getBoundingClientRect()
-  zoomRouteAt(
-    routeZoom.value + amount,
-    rect ? rect.left + rect.width / 2 : undefined,
-    rect ? rect.top + rect.height / 2 : undefined
-  )
-}
-const resetRouteMap = () => {
-  routeZoom.value = DEFAULT_ROUTE_ZOOM
-  queueRouteViewportReset()
-}
-const handleRouteDoubleClick = (event) => {
-  if (event.target?.closest?.('.route-node, .route-node-expand, .route-map-toolbar')) return
-  event.preventDefault()
-  zoomRouteAt(routeZoom.value + 0.2, event.clientX, event.clientY)
-}
-const touchDistance = (touches) => {
-  if (!touches || touches.length < 2) return 0
-  const [first, second] = touches
-  return Math.hypot(second.clientX - first.clientX, second.clientY - first.clientY)
-}
-const touchMidpoint = (touches) => {
-  const [first, second] = touches
-  return { x: (first.clientX + second.clientX) / 2, y: (first.clientY + second.clientY) / 2 }
-}
-const stopRouteTouchMomentum = () => {
-  if (routeTouchMomentumFrame) cancelAnimationFrame(routeTouchMomentumFrame)
-  routeTouchMomentumFrame = 0
-}
-const startRouteTouchMomentum = (state) => {
-  let velocityX = Number(state?.velocityX || 0)
-  let velocityY = Number(state?.velocityY || 0)
-  const container = state?.container
-  if (!container || Math.max(Math.abs(velocityX), Math.abs(velocityY)) < 0.35) return
-  const step = () => {
-    velocityX *= 0.9
-    velocityY *= 0.9
-    const previousLeft = container.scrollLeft
-    const previousTop = container.scrollTop
-    container.scrollLeft += velocityX
-    container.scrollTop += velocityY
-    if (container.scrollLeft === previousLeft) velocityX = 0
-    if (container.scrollTop === previousTop) velocityY = 0
-    if (Math.max(Math.abs(velocityX), Math.abs(velocityY)) >= 0.35) routeTouchMomentumFrame = requestAnimationFrame(step)
-    else routeTouchMomentumFrame = 0
-  }
-  routeTouchMomentumFrame = requestAnimationFrame(step)
-}
-const handleRouteTouchStart = (event) => {
-  const container = routeMapScrollRef.value
-  if (!container) return
-  stopRouteTouchMomentum()
-  if (event.touches.length === 1) {
-    const touch = event.touches[0]
-    routeTouchGesture = null
-    routeTouchPan = {
-      container,
-      x: touch.clientX,
-      y: touch.clientY,
-      time: performance.now(),
-      velocityX: 0,
-      velocityY: 0
-    }
-    return
-  }
-  if (event.touches.length !== 2) return
-  const midpoint = touchMidpoint(event.touches)
-  routeTouchPan = null
-  routeTouchGesture = {
-    distance: touchDistance(event.touches),
-    zoom: routeZoom.value,
-    midpoint,
-    left: container.scrollLeft,
-    top: container.scrollTop
-  }
-}
-const handleRouteTouchMove = (event) => {
-  if (event.touches.length === 1 && routeTouchPan?.container) {
-    event.preventDefault()
-    const touch = event.touches[0]
-    const now = performance.now()
-    const deltaX = routeTouchPan.x - touch.clientX
-    const deltaY = routeTouchPan.y - touch.clientY
-    const elapsed = Math.max(1, now - routeTouchPan.time)
-    routeTouchPan.container.scrollLeft += deltaX
-    routeTouchPan.container.scrollTop += deltaY
-    routeTouchPan.velocityX = deltaX / elapsed * 16
-    routeTouchPan.velocityY = deltaY / elapsed * 16
-    routeTouchPan.x = touch.clientX
-    routeTouchPan.y = touch.clientY
-    routeTouchPan.time = now
-    return
-  }
-  if (event.touches.length !== 2 || !routeTouchGesture?.distance) return
-  event.preventDefault()
-  routeTouchRequest = {
-    start: routeTouchGesture,
-    midpoint: touchMidpoint(event.touches),
-    zoom: routeTouchGesture.zoom * (touchDistance(event.touches) / routeTouchGesture.distance)
-  }
-  if (routeTouchFrame) return
-  routeTouchFrame = requestAnimationFrame(() => {
-    routeTouchFrame = 0
-    const request = routeTouchRequest
-    routeTouchRequest = null
-    const container = routeMapScrollRef.value
-    if (!request || !container) return
-    setRouteZoom(request.zoom)
-    nextTick(() => {
-      const rect = container.getBoundingClientRect()
-      const ratio = routeZoom.value / request.start.zoom
-      const startX = request.start.midpoint.x - rect.left
-      const startY = request.start.midpoint.y - rect.top
-      const currentX = request.midpoint.x - rect.left
-      const currentY = request.midpoint.y - rect.top
-      container.scrollLeft = Math.max(0, (request.start.left + startX) * ratio - currentX)
-      container.scrollTop = Math.max(0, (request.start.top + startY) * ratio - currentY)
-    })
-  })
-}
-const handleRouteTouchEnd = (event) => {
-  if (event.touches?.length >= 2) return
-  if (event.touches?.length === 1) {
-    const touch = event.touches[0]
-    const container = routeMapScrollRef.value
-    routeTouchGesture = null
-    routeTouchPan = container ? {
-      container,
-      x: touch.clientX,
-      y: touch.clientY,
-      time: performance.now(),
-      velocityX: 0,
-      velocityY: 0
-    } : null
-    return
-  }
-  const touchPan = routeTouchPan
-  routeTouchPan = null
-  routeTouchGesture = null
-  startRouteTouchMomentum(touchPan)
-}
-const handleRoutePointerDown = (event) => {
-  if (event.pointerType === 'touch' || event.button !== 0 || !routeMapScrollRef.value || event.target?.closest?.('.route-node, .route-node-expand')) return
-  const container = routeMapScrollRef.value
-  routePointerDrag = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, left: container.scrollLeft, top: container.scrollTop }
-  container.setPointerCapture?.(event.pointerId)
-}
-const handleRoutePointerMove = (event) => {
-  if (!routePointerDrag || event.pointerId !== routePointerDrag.pointerId) return
-  const container = routeMapScrollRef.value
-  if (!container) return
-  container.scrollLeft = routePointerDrag.left - (event.clientX - routePointerDrag.x)
-  container.scrollTop = routePointerDrag.top - (event.clientY - routePointerDrag.y)
-}
-const handleRoutePointerUp = (event) => {
-  if (routePointerDrag?.pointerId === event.pointerId) routePointerDrag = null
-}
-
-const routeVariantPriority = (variant) => {
-  const text = `${variant?.kind || ''} ${variant?.name || ''}`
-  if (/宝箱|箱子/.test(text)) return 60
-  if (/白兔|白商人|白商/.test(text)) return 50
-  if (/黑商|黑兔|黑商人/.test(text)) return 40
-  if (/蛋|孵化/.test(text)) return 30
-  if (/采集|矿|草|花|蘑菇|水晶|硫磺|冰莲/.test(text)) return 20
-  return 10
-}
-const routePrimaryVariant = (node) => [...(node?.variantOptions || [])]
-  .sort((a, b) => routeVariantPriority(b) - routeVariantPriority(a) || String(a.typeId).localeCompare(String(b.typeId)))[0]
-const isRouteNodeExpanded = (node) => expandedRouteNodes.value.has(node?.id)
-const toggleRouteNodeExpanded = (nodeId) => {
-  if (!nodeId) return
-  const next = new Set(expandedRouteNodes.value)
-  if (next.has(nodeId)) next.delete(nodeId)
-  else next.add(nodeId)
-  expandedRouteNodes.value = next
-}
-const visibleRouteVariants = (node) => isRouteNodeExpanded(node) ? node.variantOptions : [routePrimaryVariant(node)].filter(Boolean)
-
-const orientRouteLayer = (layer) => {
-  if (!layer?.nodes?.length) return layer
-
-  // Preserve the game's original graph geometry. Normalize and flip the
-  // source canvas so the entrance is lower-left and the exit is upper-right;
-  // every edge remains a single straight segment between its real endpoints.
-  const sourceNodes = layer.nodes.map(node => ({ ...node, sourceX: Number(node.x || 0), sourceY: Number(node.y || 0) }))
-  const start = sourceNodes.find(node => node.id === layer.startRoomId) || sourceNodes[0]
-  const end = sourceNodes.find(node => node.id === layer.endRoom) || sourceNodes[sourceNodes.length - 1]
-  const sourceSpanX = Number(end.sourceX - start.sourceX) || 1
-  const sourceSpanY = Number(end.sourceY - start.sourceY) || 1
-  const innerWidth = 1100
-  const innerHeight = 680
-  const project = node => {
-    // Keep branches outside the entrance/exit span instead of flattening them.
-    const progressX = (node.sourceX - start.sourceX) / sourceSpanX
-    const progressY = (node.sourceY - start.sourceY) / sourceSpanY
-    return {
-      x: progressX * innerWidth,
-      y: (1 - progressY) * innerHeight,
-      gridCol: Math.round(progressX * 12),
-      gridRow: Math.round((1 - progressY) * 12)
-    }
-  }
-  const rawNodes = sourceNodes.map(node => ({ ...node, ...project(node) }))
-  const minX = Math.min(...rawNodes.map(node => node.x))
-  const maxX = Math.max(...rawNodes.map(node => node.x))
-  const minY = Math.min(...rawNodes.map(node => node.y))
-  const maxY = Math.max(...rawNodes.map(node => node.y))
-  const paddingX = 150
-  const paddingY = 110
-  const width = Math.max(900, Math.ceil(maxX - minX + paddingX * 2))
-  const height = Math.max(560, Math.ceil(maxY - minY + paddingY * 2))
-  const nodes = rawNodes.map(node => ({
-    ...node,
-    x: Math.round(node.x - minX + paddingX),
-    y: Math.round(node.y - minY + paddingY)
-  }))
-  const nodeMap = new Map(nodes.map(node => [node.id, node]))
-  const links = (layer.links || []).flatMap(link => {
-    const from = nodeMap.get(link.rooms?.[0])
-    const to = nodeMap.get(link.rooms?.[1])
-    if (!from || !to) return []
-    return [{ ...link, x1: from.x, y1: from.y, x2: to.x, y2: to.y, points: `${from.x},${from.y} ${to.x},${to.y}` }]
-  })
-  return { ...layer, size: { w: width, h: height }, nodes, links }
-}
-
-const routeNodeStyle = (node, layer) => ({
-  left: `${(Number(node.x || 0) / Math.max(1, Number(layer?.size?.w || 1600))) * 100}%`,
-  top: `${(Number(node.y || 0) / Math.max(1, Number(layer?.size?.h || 1000))) * 100}%`
-})
-
-const routeIconPath = (node) => {
-  const icon = Number(node?.icon || 0)
-  return icon > 0 ? getImageUrl(`/instancepanel/MapPanelAtlas/map_r_fb_${String(icon).padStart(2, '0')}.png`) : ''
-}
-
-const routeChance = (layer) => {
-  const layers = selectedBattle.value?.routes || []
-  const total = layers.reduce((sum, item) => sum + Number(item.chance || 0), 0)
-  if (layers.length === 1) return '固定布局'
-  return total > 0 && Number(layer?.chance || 0) > 0 ? `约 ${(Number(layer.chance) / total * 100).toFixed(0)}%` : '未配置权重'
-}
-const routeLabel = (index) => ['路线一', '路线二', '路线三'][index] || `路线${index + 1}`
 const candidateLabel = (option) => selectedRouteRoom.value?.variants?.find(variant => variant.typeId === option?.typeId)?.name || '未命名候选'
-const routeIconGlyph = (node) => node?.id === selectedRouteLayer.value?.startRoomId ? '起' : node?.id === selectedRouteLayer.value?.endRoom ? '终' : '?'
-const routeNodeLabel = (node, variant) => `${variant?.name || node?.label || '房间'}${node?.candidates ? `，${node.candidates + 1} 个候选` : ''}`
-const routeNodeClass = (node, variantId) => ({
-  'route-node--start': node?.id === selectedRouteLayer.value?.startRoomId,
-  'route-node--end': node?.id === selectedRouteLayer.value?.endRoom,
-  'route-node--selected': node?.id === selectedRouteRoomId.value && variantId === selectedRouteVariantId.value,
-  'route-node--random': node?.candidates > 0
-})
-const isRouteLinkActive = (link) => link?.rooms?.includes(selectedRouteRoomId.value)
 const routeRoomTone = (room) => room?.kind?.includes('宝箱') ? 'gold' : room?.kind === 'BOSS' ? 'danger' : room?.kind === '事件' ? 'accent' : 'default'
 
 watch([mapFilter, searchQuery], () => {
   const query = {}
   if (mapFilter.value !== 'all') query.map = mapFilter.value
   if (searchQuery.value.trim()) query.q = searchQuery.value.trim()
-  if (route.query.battle) query.battle = route.query.battle
+  for (const key of ['battle', 'drop', 'dropTab', 'dropEntry']) {
+    if (route.query[key]) query[key] = route.query[key]
+  }
   router.replace({ query })
 })
 
-watch(() => route.query.battle, (battleId) => {
+watch(() => [route.query.battle, route.query.drop, route.query.dropTab, route.query.dropEntry], async ([battleId]) => {
   if (!isReady.value) return
   if (!battleId) {
     if (detailVisible.value) closeBattle()
@@ -1157,23 +907,23 @@ watch(() => route.query.battle, (battleId) => {
   }
   const match = findBattle(battleId)
   if (match && selectedBattle.value?.id !== battleId) openBattle(match.dungeon, match.battle, false)
+  else if (match && !detailLoading.value) await focusRequestedDrop()
 })
 </script>
 
 <style scoped>
-.dungeon-filter { margin: 0 0 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
-.dungeon-filter :deep(.ui-segmented) { width: 100%; }
-.dungeon-filter :deep(.ui-segmented__item) { flex: 1; }
+.dungeon-filter-panel { margin: 0 0 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
 .dungeon-count { color: var(--text-muted); font-size: 13px; font-weight: 600; }
 .dungeon-scroll { flex: 1; overflow-y: auto; min-height: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; grid-auto-rows: max-content; gap: 14px; padding-bottom: 14px; }
 .dungeon-card { overflow: visible; min-width: 0; align-self: start; }
-.dungeon-card__cover { min-height: 156px; position: relative; background: linear-gradient(135deg, var(--wood-soft), var(--wood)); background-size: cover; background-position: center; color: var(--paper); padding: 16px; display: flex; flex-direction: column; justify-content: flex-end; }
+.dungeon-card__cover { min-height: 156px; position: relative; background: linear-gradient(135deg, var(--wood-soft), var(--wood)); background-size: cover; background-position: center; color: var(--on-image-text); padding: 16px; display: flex; flex-direction: column; justify-content: flex-end; }
+.dungeon-card__cover-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .dungeon-card__cover-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(28, 18, 10, .16), rgba(28, 18, 10, .88)); }
 .dungeon-card__heading, .dungeon-card__description { position: relative; z-index: 1; }
 .dungeon-card__heading { display: flex; align-items: center; }
 .dungeon-card__heading h2 { margin: 0; font-size: 18px; letter-spacing: 1px; }
-.dungeon-card__heading p { margin: 4px 0 0; font-size: 12px; color: rgba(255, 245, 225, .82); }
-.dungeon-card__description { margin: 12px 0 0; font-size: 12px; line-height: 1.6; color: rgba(255, 245, 225, .86); }
+.dungeon-card__heading p { margin: 4px 0 0; font-size: 12px; color: var(--on-image-text-muted); }
+.dungeon-card__description { margin: 12px 0 0; font-size: 12px; line-height: 1.6; color: var(--on-image-text-muted); }
 .dungeon-battle-list { padding: 4px 10px 8px; }
 .story-battles { margin: 0 10px 10px; border-top: 1px solid var(--border-soft); }
 .story-battles--empty { opacity: .72; }
@@ -1234,7 +984,8 @@ watch(() => route.query.battle, (battleId) => {
 .special-drops__tabs { width: 100%; margin-bottom: 9px; }
 .special-drops__tabs :deep(.ui-segmented__item) { flex: 1; }
 .special-drop-list { display: flex; flex-direction: column; gap: 8px; }
-.special-drop-card { min-width: 0; border: 1px solid var(--border-soft); border-left: 3px solid var(--accent); border-radius: 5px; background: var(--paper-soft); padding: 9px 10px; }
+.special-drop-card { min-width: 0; border: 1px solid var(--border-soft); border-radius: 5px; background: var(--paper-soft); padding: 9px 10px; }
+.special-drop-card--focused { border-color: var(--gold); box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 72%, transparent); }
 .special-drop-card__heading, .special-drop-source__heading { display: flex; align-items: center; gap: 7px; min-width: 0; }
 .special-drop-card__heading > strong { flex: 1; min-width: 0; color: var(--text-main); font-size: 13px; }
 .special-drop-sources { display: flex; flex-direction: column; gap: 9px; margin-top: 7px; }
@@ -1242,42 +993,12 @@ watch(() => route.query.battle, (battleId) => {
 .special-drop-source__heading { justify-content: space-between; color: var(--text-main); font-size: 12px; }
 .special-drop-source__heading small { color: var(--text-muted); font-size: 11px; font-weight: 600; }
 .special-drop-card__empty { margin: 7px 0 0; color: var(--text-muted); font-size: 12px; }
-.route-layout-tabs { display: flex; gap: 6px; overflow-x: auto; padding: 1px 0 8px; }
-.route-layout-tab { flex: 0 0 auto; border: 1px solid var(--border-soft); border-radius: 4px; background: var(--paper-soft); color: var(--text-muted); padding: 6px 10px; font-size: 12px; font-weight: 700; cursor: pointer; }
-.route-layout-tab small { display: block; margin-top: 2px; color: var(--text-sub); font-size: 10px; font-weight: 600; }
-.route-layout-tab--active { border-color: var(--accent); background: var(--hover-bg); color: var(--text-main); }
-.route-map-shell { position: relative; }
-.route-map-toolbar { position: absolute; z-index: 5; top: 10px; left: 10px; display: grid; grid-template-columns: 30px 46px 30px 30px; align-items: center; gap: 4px; padding: 4px; border: 1px solid var(--border-soft); border-radius: 5px; background: var(--paper-solid); box-shadow: 0 2px 8px rgba(0, 0, 0, .22); }
-.route-map-toolbar button { width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid var(--border-soft); border-radius: 4px; background: var(--paper-soft); color: var(--text-main); padding: 0; font-size: 17px; font-weight: 800; line-height: 1; cursor: pointer; }
-.route-map-toolbar button:hover:not(:disabled) { border-color: var(--accent); background: var(--hover-bg); }
-.route-map-toolbar button:disabled { opacity: .38; cursor: default; }
-.route-map-toolbar output { color: var(--text-main); font-size: 11px; font-weight: 800; text-align: center; }
-.route-map-scroll { position: relative; width: 100%; height: clamp(360px, 54vh, 620px); overflow: hidden; padding: 2px 0 8px; touch-action: none; overscroll-behavior: auto; cursor: grab; user-select: none; border: 1px solid var(--border-soft); border-radius: 6px; background: var(--paper-dark); }
-.route-map-scroll { scrollbar-width: none; -ms-overflow-style: none; }
-.route-map-scroll::-webkit-scrollbar { display: none; }
-.route-map-scroll:active { cursor: grabbing; }
-.route-map-space { position: relative; min-width: 100%; min-height: 100%; }
-.route-map { position: absolute; left: 0; top: 0; transform-origin: top left; overflow: visible; border: 0; border-radius: 0; background-color: transparent; box-shadow: none; }
-.route-map__links { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.route-map__link { fill: none; stroke: rgba(220, 196, 147, .42); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
-.route-map__link--active { stroke: var(--accent); stroke-width: 12; }
-.route-node-group { position: absolute; z-index: 1; transform: translate(-50%, -50%); display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; max-width: 190px; }
-.route-node-expand { position: absolute; z-index: 3; top: -18px; left: 50%; width: 20px; height: 20px; transform: translateX(-50%); display: grid; place-items: center; border: 1px solid rgba(84, 62, 34, .45); border-radius: 50%; background: var(--paper-soft); color: var(--text-main); font-size: 14px; font-weight: 800; line-height: 1; padding: 0; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,.25); }
-.route-node-expand:hover { border-color: var(--accent); color: var(--accent-ink); }
-.route-node { position: relative; width: 42px; height: 42px; flex: 0 0 42px; display: grid; place-items: center; border: 2px solid rgba(246, 227, 185, .76); border-radius: 50%; background: var(--paper-soft); color: var(--text-main); padding: 0; cursor: pointer; box-shadow: 0 2px 7px rgba(0,0,0,.35); transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease; }
-.route-node:hover, .route-node--selected { transform: scale(1.12); border-color: var(--accent); box-shadow: 0 0 0 3px rgba(85,117,116,.26), 0 3px 10px rgba(0,0,0,.38); }
-.route-node img { width: 36px; height: 36px; object-fit: contain; pointer-events: none; }
-.route-node span { font-size: 12px; font-weight: 800; }
-.route-node__fallback { width: 10px; height: 10px; border: 2px solid var(--accent); border-radius: 50%; background: var(--paper-solid); }
-.route-node--start { border-color: #65bb8c; }
-.route-node--end { border-color: var(--rarity-legend); }
-.route-node--random { background: var(--paper-solid); }
-.route-node__random { position: absolute; right: -5px; top: -7px; display: grid; place-items: center; width: 14px; height: 14px; border: 1px solid var(--paper-solid); border-radius: 50%; background: var(--accent); color: #fff; font-size: 10px; font-style: normal; line-height: 1; }
 .route-room-detail { margin-top: 8px; border: 1px solid var(--border-soft); border-radius: 6px; background: var(--paper-soft); padding: 10px; }
 .route-room-detail__heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
 .route-room-detail__eyebrow { color: var(--text-muted); font-size: 10px; font-weight: 700; }
 .route-room-detail h3 { margin: 2px 0 0; color: var(--text-main); font-size: 15px; }
 .route-room-detail__candidates { margin: 7px 0 0; color: var(--text-muted); font-size: 12px; line-height: 1.55; }
+
 .route-room-detail__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 9px; }
 .route-room-detail__grid > div { min-width: 0; border-top: 1px dashed var(--border-soft); padding-top: 7px; }
 .route-room-detail__grid strong, .route-room-detail__drops > strong { color: var(--text-main); font-size: 11px; }
@@ -1288,6 +1009,9 @@ watch(() => route.query.battle, (battleId) => {
 .route-room-detail__options { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 8px; margin-top: 8px; border-top: 1px dashed var(--border-soft); padding-top: 7px; color: var(--text-muted); font-size: 11px; }
 .route-room-detail__options strong { color: var(--text-main); }
 .route-room-detail__options span { padding: 2px 5px; border: 1px solid var(--border-soft); border-radius: 3px; background: var(--paper-solid); }
+@media (max-width: 1024px) {
+  .dungeon-scroll { padding-bottom: calc(88px + var(--floating-control-size, 44px) + var(--safe-bottom, 0px)); }
+}
 @media (max-width: 760px) {
   .dungeon-scroll { display: flex; flex-direction: column; gap: 10px; }
   .dungeon-card { width: 100%; align-self: stretch; }
@@ -1297,7 +1021,6 @@ watch(() => route.query.battle, (battleId) => {
   .reward-grid { grid-template-columns: 1fr; }
   .room-reward-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .dungeon-card__heading h2 { font-size: 16px; }
-  .route-map-scroll { height: clamp(320px, 48vh, 440px); }
   .route-room-detail__grid { grid-template-columns: 1fr; }
 }
 </style>

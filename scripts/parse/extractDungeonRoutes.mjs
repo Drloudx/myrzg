@@ -1,12 +1,14 @@
 /**
  * 从解密版 battle.json 提取副本路线图所需的最小字段。
- * 原始配置保留在外部解包目录；网页只发布路线坐标、连线和房间候选。
+ * 原始配置保留在外部解包目录；提取结果写 raw/，再由 dungeons 预处理发布。
  */
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
+import { configRoot, rawRoot } from '../dev/maintenance-paths.mjs'
 
-const sourcePath = process.argv[2] || 'E:/Desktop/羊2/Config_decrypted/battle.json'
-const outputPath = process.argv[3] || resolve(process.cwd(), 'public/data/dungeonBattleRoutes.json')
+const sourcePath = resolve(process.argv[2] || resolve(configRoot, 'battle.json'))
+const outputPath = resolve(process.argv[3] || resolve(rawRoot, 'dungeonBattleRoutes.json'))
+if (sourcePath === outputPath) throw new Error('The extracted routes must not overwrite the original battle table')
 const source = JSON.parse(readFileSync(sourcePath, 'utf8'))
 const routes = {}
 

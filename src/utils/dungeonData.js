@@ -1,4 +1,6 @@
 import { BASE_REWARD_ICONS, BASE_REWARD_NAMES, BASE_REWARD_PATHS, getMapName, MAP_NAMES } from './gameMappings.js'
+import { isBlacklisted } from '../config/blacklist.js'
+import { isInternalSource } from './supplementalItemSources.js'
 
 const asMap = (value) => value && typeof value === 'object' ? value : {}
 const asArray = (value) => Array.isArray(value) ? value : []
@@ -14,7 +16,7 @@ const consumeCost = (consume) => consume ? {
 const NON_STANDARD_INSTANCE_IDS = new Set(['dungeonD'])
 
 function buildRewardEntries(reward, itemMap, source = null, equipConfig = null) {
-  if (!reward) return []
+  if (!reward || isInternalSource([reward.tip, ...(reward.category || [])].join(' '))) return []
   const entries = []
 
   for (const [field, iconId] of Object.entries(BASE_REWARD_ICONS)) {
@@ -38,10 +40,11 @@ function buildRewardEntries(reward, itemMap, source = null, equipConfig = null) 
     const rules = asArray(group && group.rules)
     const totalChance = rules.reduce((sum, rule) => sum + Number(rule?.chance || 0), 0)
     const groupRate = Number(group?.rate ?? 1)
-    const groupCount = Number(group?.num || 1)
+    const groupCount = Number(group?.num ?? 1)
+    if (!(groupRate > 0 && groupCount > 0 && totalChance > 0)) continue
 
     for (const rule of rules) {
-      if (!rule) continue
+      if (!rule || !(Number(rule.chance) > 0) || Number(rule.max ?? rule.min ?? 1) <= 0) continue
       const mode = rule.mode || 'item'
       if (mode === 'equipGroup') {
         const equipGroup = equipConfig?.equipGroups?.[rule.equipTypeGroup]
@@ -411,6 +414,86 @@ export function buildDungeonData({ instanceJson, battleJson, battleRoomsJson, ba
     })
 
   return { dungeons, mapNames: MAP_NAMES }
+}
+
+// 将副本中实际会给到玩家的具体物品/固定装备回写到全局来源索引。
+// equipGroup 展开的是随机池，不代表某件装备必然作为固定奖励出现，因此不在
+// 物品详情的“来源”里伪造具体装备来源；普通物品、魔物蛋和货币也要回写。
+export function buildDungeonItemSources(dungeons = []) {
+  const sources = {}
+  const seen = new Set()
+  const formatProbability = value => `${(Number(value || 0) * 100).toFixed(1)}%`
+  const add = (entry, context) => {
+    const typeId = String(entry?.typeId || '')
+    if (!/^(item_|pet_)/.test(typeId) || entry.ruleMode === 'equipGroup' || isBlacklisted(entry)
+      || !(entry.max > 0) || !(entry.actualProb > 0)) return
+    const sourceKey = `${typeId}|${context.id}|${context.des}`
+    const probability = Number(entry?.cumulativeProb ?? entry?.actualProb ?? 0)
+    if (seen.has(sourceKey)) return
+    seen.add(sourceKey)
+    if (!sources[typeId]) sources[typeId] = []
+    const source = {
+      type: 'dungeon',
+      id: context.id,
+      name: context.name,
+      des: context.dropTab === 'chest' && probability > 0
+        ? `${context.des} · 箱内综合概率 ${formatProbability(probability)}`
+        : context.des,
+      dropTab: context.dropTab || '',
+      dropEntry: context.dropEntry || ''
+    }
+    sources[typeId].push(source)
+  }
+  const addReward = (entries, context) => {
+    for (const entry of entries || []) add(entry, context)
+  }
+
+  for (const dungeon of dungeons || []) {
+    const battles = [...(dungeon.battles || []), ...(dungeon.storyBattles || [])]
+    for (const battle of battles) {
+      const base = {
+        id: battle.id,
+        name: `${dungeon.name} · ${battle.name}`
+      }
+      addReward(battle.reward, { ...base, des: '通关结算奖励', dropTab: 'settlement', dropEntry: 'settlement' })
+      addReward(battle.firstReward, { ...base, des: '首次通关奖励', dropTab: 'first', dropEntry: 'first' })
+
+      for (const room of battle.rooms || []) {
+        for (const variant of room.variants || []) {
+          const variantName = variant.name || variant.kind || '房间'
+          for (const monster of variant.monsters || []) {
+            for (const drop of monster.drops || []) {
+              addReward(drop.reward, {
+                ...base,
+                des: `${variant.source?.candidate ? '随机候选房间 · ' : ''}${variantName} · ${monster.name || '怪物'}掉落`,
+                dropTab: 'rooms', dropEntry: `${variant.typeId}:${monster.typeId}:${drop.collectTypeId}`
+              })
+            }
+          }
+          for (const collection of variant.collections || []) {
+            const collectionName = collection.name || '房间奖励'
+            const sourceName = /宝箱/.test(collectionName)
+              ? collectionName
+              : variantName === collectionName ? collectionName : `${variantName} · ${collectionName}`
+            const tier = collectionName.includes('金')
+              ? 3
+              : collectionName.includes('银')
+                ? 2
+                : collectionName.includes('铜')
+                  ? 1
+                  : 0
+            addReward(collection.reward, {
+              ...base,
+              des: sourceName,
+              dropTab: tier ? 'chest' : 'rooms',
+              dropEntry: tier ? `chest-${tier}` : `${variant.typeId}:${collection.collectTypeId}`
+            })
+          }
+        }
+      }
+    }
+  }
+  return sources
 }
 
 export function getDungeonSummary(dungeon) {

@@ -1,0 +1,56 @@
+/* Each SVG owns its bent elbow, raised forearm and chin-resting hand paths. */
+.mascot-art[data-action="think"] .pose-idle-arm { display: none; }
+.mascot-art[data-action="think"] .pose-think-arm { display: inline; }
+.mascot-art[data-action="think"] .pose-head {
+  transform-origin: var(--think-chin, 136px 145px);
+  transform: rotate(var(--think-tilt, 6deg));
+}
+.mascot-art[data-action="think"] [data-character="049"] { --think-chin: 165px 153px; --think-tilt: -6deg; }
+.mascot-art[data-action="think"] [data-character="034"] { --think-chin: 120px 139px; --think-tilt: -6deg; }
+.mascot-art[data-action="think"] [data-character="053"] { --think-chin: 144px 156px; --think-tilt: 2deg; }
+.mascot-art[data-action="think"] [data-character="062"] { --think-chin: 141px 151px; --think-tilt: 4deg; }
+.mascot-thought-bubble {
+  position: absolute;
+  top: 8%;
+  right: 8%;
+  width: 22px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--border-color);
+  border-radius: 50%;
+  background: var(--paper-soft);
+  color: var(--text-main);
+  font: 700 19px/1 var(--font-ui);
+  transform-origin: bottom left;
+  pointer-events: none;
+}
+.mascot-thought-bubble::before,
+.mascot-thought-bubble::after {
+  content: '';
+  position: absolute;
+  background: var(--paper-soft);
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+}
+.mascot-thought-bubble::before { width: 5px; height: 5px; bottom: -6px; left: 0; }
+.mascot-thought-bubble::after { width: 2px; height: 2px; bottom: -11px; left: -4px; }
+@media (prefers-reduced-motion: no-preference) {
+  .mascot-art[data-action="think"] .pose-head {
+    animation: mascot-think-head 8s ease-in-out infinite;
+    animation-play-state: var(--mascot-play-state, running);
+  }
+  .mascot-thought-bubble {
+    animation: mascot-think-question 8s ease-in-out infinite;
+    animation-play-state: var(--mascot-play-state, running);
+  }
+}
+/* The chin remains at the supporting hand while the head shifts gently around it. */
+@keyframes mascot-think-head {
+  0%, 100% { transform: rotate(var(--think-tilt, 6deg)); }
+  38%, 65% { transform: rotate(calc(var(--think-tilt, 6deg) + 1.5deg)); }
+}
+@keyframes mascot-think-question {
+  0%, 12%, 94%, 100% { opacity: 0; transform: translateY(3px) scale(.85); }
+  25%, 75% { opacity: 1; transform: translateY(0) scale(1); }
+}

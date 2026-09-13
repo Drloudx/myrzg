@@ -21,7 +21,7 @@
         <slot name="extra" />
       </div>
     </div>
-    <div class="ui-item-card__name" :class="quality ? `quality-text-${quality}` : ''">
+    <div v-if="showName" class="ui-item-card__name" :class="quality ? `quality-text-${quality}` : ''">
       {{ name }}
     </div>
   </div>
@@ -37,6 +37,7 @@ import { getImageUrl } from '../../utils/env'
 const props = defineProps({
   name: { type: String, default: '' },
   img: { type: String, default: '' },
+  showName: { type: Boolean, default: true },
   quality: { type: [Number, String], default: 0 }
 })
 const emit = defineEmits(['click', 'img-error'])
@@ -113,7 +114,7 @@ const getQualityFrame = (q) => {
   padding: 1px 0;
   min-height: 21px;
   border: 4px solid transparent;
-  border-image-source: url('/images/PicHandBookPanel/colect_list_mx.png');
+  border-image-source: url('/images/PicHandBookPanel_Atlas/colect_list_mx.png');
   border-image-slice: 20 32 fill;
   border-image-width: 4px 8px;
   border-image-outset: 0;
@@ -134,7 +135,7 @@ const getQualityFrame = (q) => {
 
 .dark-mode .ui-item-card__name {
   background: transparent;
-  border-image-source: url('/images/PicHandBookPanel/colect_list_mx.png');
+  border-image-source: url('/images/PicHandBookPanel_Atlas/colect_list_mx.png');
   color: #eaddc2;
 }
 

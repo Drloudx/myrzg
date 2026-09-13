@@ -16,7 +16,18 @@ export function buildPvpData(maps) {
     exchange: {},
     tier: [],
     rank: [],
-    battle: { win: null, fail: null }
+    battle: { win: null, fail: null },
+    rules: null
+  }
+
+  const replacePvpTokens = (text, replacements = {}) => {
+    if (!text) return ''
+    return String(text)
+      .replace(/\{([^}]+)\}/g, (_, token) => (
+        Object.prototype.hasOwnProperty.call(replacements, token)
+          ? replacements[token]
+          : token
+      ))
   }
 
   const itemSources = {}
@@ -39,6 +50,63 @@ export function buildPvpData(maps) {
   const normalizeItems = (data) => {
     if (!data) return []
     return extractSpecialItems(data).concat(data.items || [])
+  }
+
+  const firstRewardCount = data => {
+    for (const group of normalizeItems(data)) {
+      for (const rule of (group?.rules || [])) {
+        const value = rule?.num ?? rule?.min ?? rule?.max ?? group?.num
+        if (value !== undefined && value !== null) return Number(value)
+      }
+    }
+    return 0
+  }
+
+  // Keep the player-facing challenge rules from the same config that drives the
+  // game UI. Internal IDs and the old season timestamp are intentionally omitted.
+  const pvpWinData = rawReward['pvpWin'] || {}
+  const pvpFailData = rawReward['pvpFailure'] || {}
+  const winRewardCount = firstRewardCount(pvpWinData)
+  const failRewardCount = firstRewardCount(pvpFailData)
+  if (rawPvp.sessionDes || rawPvp.sessionAreaDes || rawPvp.pvpArea) {
+    const areaValues = Object.values(rawPvp.pvpArea || {})
+    const hpScale = Number(rawPvp.hpScale) || 0
+    const areaCount = areaValues.length
+    const areas = areaValues.map(area => {
+      const specialStar = Number(area?.spPara?.star?.[0])
+      const areaDes = replacePvpTokens(area.des, {
+        '6': hpScale,
+        '3': Number.isFinite(specialStar) ? specialStar : area.maxStar
+      })
+      return {
+        name: area.areaName,
+        description: areaDes,
+        modeDescription: area.modeDes || '',
+        specialDescription: area.spDes || ''
+      }
+    })
+    pvpRewards.rules = {
+      dailyChallenges: Number(rawPvp.pvpDayNum) || 0,
+      winScore: Number(rawPvp.winScore) || 0,
+      winRewardCount,
+      failRewardCount,
+      hpScale,
+      purchase: {
+        price: Number(rawPvp.pvpAddKePrice) || 0,
+        count: Number(rawPvp.pvpDayKeAddNum) || 0,
+        dailyMax: Number(rawPvp.pvpDayKeAddMax) || 0
+      },
+      sessionDescription: replacePvpTokens(rawPvp.sessionDes, {
+        '6': Number(rawPvp.pvpDayNum) || 0,
+        '3': failRewardCount || 3,
+        '15': Number(rawPvp.winScore) || 0,
+        '5': winRewardCount || 0,
+        '挑战赛纪念币': '挑战赛纪念币',
+        '最高段位赛区': '最高段位所在赛区',
+        '赛季结算奖励': '赛季结算奖励'
+      }),
+      areas
+    }
   }
 
   Object.values(rawExchange).forEach(ex => {
@@ -84,6 +152,7 @@ export function buildPvpData(maps) {
       pvpRewards.tier.push({
         id: tier.type,
         name: tier.name,
+        score: Number(tier.score) || 0,
         typeOrder: parseInt(tier.type) || 0,
         rewardItems: normalizeItems(rewardData)
       })
@@ -129,9 +198,10 @@ export function buildPvpData(maps) {
   }
 
   // 4. Process Battle Rewards
-  const pvpWinData = rawReward['pvpWin'] || {}
-  const pvpFailData = rawReward['pvpFailure'] || {}
-  pvpRewards.battle.win = { rewardItems: normalizeItems(pvpWinData) }
+  pvpRewards.battle.win = {
+    score: Number(rawPvp.winScore) || 0,
+    rewardItems: normalizeItems(pvpWinData)
+  }
   const winItems = normalizeItems(pvpWinData)
   if (winItems.length > 0) {
     winItems.forEach(group => {
@@ -144,7 +214,7 @@ export function buildPvpData(maps) {
       }
     })
   }
-  pvpRewards.battle.fail = { rewardItems: normalizeItems(pvpFailData) }
+  pvpRewards.battle.fail = { score: 0, rewardItems: normalizeItems(pvpFailData) }
   const failItems = normalizeItems(pvpFailData)
   if (failItems.length > 0) {
     failItems.forEach(group => {

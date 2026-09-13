@@ -35,7 +35,7 @@ defineEmits(['click'])
   font-weight: 600;
   line-height: 1.5;
   white-space: nowrap;
-  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-family: var(--font-ui);
 }
 .ui-tag--default {
   background: rgba(43, 31, 21, 0.12);

@@ -36,7 +36,7 @@ defineProps({
   width: 60px;
   min-width: 60px;
   flex-shrink: 0;
-  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
+  font-family: var(--font-ui);
   letter-spacing: 0.5px;
   text-align: left;
 }

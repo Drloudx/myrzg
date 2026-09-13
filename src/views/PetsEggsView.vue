@@ -3,16 +3,28 @@
 
     <!-- 筛选区：半透明羊皮纸面板（池子星级 + 孵化行动 + 显示字段 + 表头） -->
     <div class="filter-sticky-bar pet-filter-sticky paper-panel">
-      <!-- Row 1: 全宽 池子/星级 分段页签 -->
-      <div class="control-row-1">
-        <UiSegmentedTabs v-model="activeRow1Filter" :options="row1Options" />
-      </div>
+      <UiSearchInput v-model="searchQuery" placeholder="搜索魔物名称、星级或收益数据..." />
 
-      <!-- Row 2: 孵化行动分段页签 + 重置 -->
-      <div class="control-row-2">
-        <UiSegmentedTabs v-model="activeRow2Filter" :options="row2Options" />
-        <UiButton size="sm" variant="secondary" @click="resetFilters">重置</UiButton>
-      </div>
+      <UiFilterRow label="分类：">
+        <UiFilterPill
+          v-for="option in row1Options"
+          :key="option.value"
+          :active="activeRow1Filter === option.value"
+          @click="activeRow1Filter = option.value"
+        >{{ option.label }}</UiFilterPill>
+      </UiFilterRow>
+
+      <UiFilterRow label="建议：">
+        <UiFilterPill
+          v-for="option in row2Options"
+          :key="option.value"
+          :active="activeRow2Filter === option.value"
+          @click="activeRow2Filter = option.value"
+        >{{ option.label }}</UiFilterPill>
+        <template #right>
+          <UiButton size="sm" variant="secondary" @click="resetFilters">重置</UiButton>
+        </template>
+      </UiFilterRow>
 
       <!-- 显示字段折叠面板 -->
       <UiAccordion v-model="isFieldPanelOpen" :title="`显示字段 (已选 ${selectedFields.length} 项)`">
@@ -35,14 +47,14 @@
 
       <!-- 表头行（木色条，按标准字段顺序） -->
       <div class="table-header-row">
-        <div class="th-cell th-name" @click="toggleSort('name')">
+        <div class="th-cell th-name" :class="{ 'is-active': isSortActive('name') }" @click="toggleSort('name')">
           名称 <span class="sort-icon">{{ getSortIcon('name') }}</span>
         </div>
         <div
           v-for="fKey in activeOrderedFields"
           :key="fKey"
           class="th-cell"
-          :class="`th-${fKey}`"
+          :class="[`th-${fKey}`, { 'is-active': isSortActive(fKey) }]"
           @click="toggleSort(fKey)"
         >
           {{ getFieldLabel(fKey) }} <span class="sort-icon">{{ getSortIcon(fKey) }}</span>
@@ -54,7 +66,7 @@
     <UiEmptyState v-if="!isDataReady" type="loading" text="正在拉取并解析魔物蛋数据..." />
 
     <!-- 表格主体（懒加载每批 60 项） -->
-    <div v-else class="pet-table-scroll" id="petTableGrid">
+    <div v-else class="pet-table-scroll" id="petTableGrid" data-main-scroll>
       <div class="pet-table-container paper-panel">
         <div
           v-for="pet in displayedPets"
@@ -66,7 +78,7 @@
           <div class="td-cell td-name">
             <div class="egg-icon-wrapper">
               <img
-                :src="getImageUrl(`/pet/eggs/${pet.eggImg}.png`)"
+                :src="getImageUrl(`/eggs/${pet.eggImg}.png`)"
                 :alt="pet.name"
                 class="egg-img"
                 loading="lazy"
@@ -126,7 +138,7 @@
           <template #media>
             <img
               v-if="detailModal.pet.eggImg"
-              :src="getImageUrl(`/pet/eggs/${detailModal.pet.eggImg}.png`)"
+              :src="getImageUrl(`/eggs/${detailModal.pet.eggImg}.png`)"
               :alt="detailModal.pet.name"
               class="detail-egg-img"
               loading="lazy"
@@ -135,30 +147,48 @@
           <UiInfoRow label="星级">
             <UiTag :quality="detailModal.pet.quality">{{ detailModal.pet.displayStar }}星</UiTag>
           </UiInfoRow>
-          <UiInfoRow label="推荐">
+          <UiInfoRow label="默认建议">
             <UiTag :tone="detailModal.pet.recommendationKey === 'sell' ? 'danger' : (detailModal.pet.recommendationKey === 'feed' ? 'accent' : 'gold')">
               {{ detailModal.pet.recommendationText }}
             </UiTag>
           </UiInfoRow>
           <UiInfoRow label="孵化时长" :value="detailModal.pet.formattedTime" />
+          <UiInfoRow label="对应魔物">
+            <UiButton
+              class="pet-atlas-link"
+              variant="link"
+              size="sm"
+              @click="openPetAtlas"
+            >
+              <img
+                v-if="detailModal.pet.avatarImg"
+                :src="getImageUrl(`/images/HeadIconAtals/${detailModal.pet.avatarImg}.png`)"
+                :alt="detailModal.pet.name"
+                class="pet-atlas-avatar"
+                @error="handleImgError"
+              />
+              <span class="pet-atlas-name">{{ detailModal.pet.name }}</span>
+              <span aria-hidden="true">›</span>
+            </UiButton>
+          </UiInfoRow>
         </UiInfoPanel>
 
         <UiSection title="孵化收益数据">
           <UiInfoRow label="孵化时长" :value="detailModal.pet.formattedTime" />
-          <UiInfoRow label="出售金币">
-            <span class="gold-val">{{ detailModal.pet.sellPrice }} 金币</span>
+          <UiInfoRow label="出售银币">
+            <span class="gold-val">{{ detailModal.pet.sellPrice }} 银币</span>
           </UiInfoRow>
           <UiInfoRow label="喂养经验">
             <span class="exp-val">{{ detailModal.pet.exp }} 经验</span>
           </UiInfoRow>
-          <UiInfoRow label="分钟金币率">
-            <span class="value-highlight">{{ (detailModal.pet.goldPerMin || 0).toFixed(2) }} 金币/分</span>
+          <UiInfoRow label="分钟银币率">
+            <span class="value-highlight">{{ (detailModal.pet.goldPerMin || 0).toFixed(2) }} 银币/分</span>
           </UiInfoRow>
           <UiInfoRow label="分钟经验率">
             <span class="value-highlight">{{ (detailModal.pet.expPerMin || 0).toFixed(2) }} 经验/分</span>
           </UiInfoRow>
-          <UiInfoRow label="金效 (售价 ÷ 经验)" :value="(detailModal.pet.goldEff || 0).toFixed(2)" />
-          <UiInfoRow label="经效 (经验 ÷ 售价)" :value="(detailModal.pet.expEff || 0).toFixed(4)" />
+          <UiInfoRow label="银经比 (售价 ÷ 经验)" :value="(detailModal.pet.goldEff || 0).toFixed(2)" />
+          <UiInfoRow label="经银比 (经验 ÷ 售价)" :value="(detailModal.pet.expEff || 0).toFixed(4)" />
         </UiSection>
 
       </template>
@@ -174,13 +204,15 @@
 import { ref, computed, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
-  UiSegmentedTabs,
   UiAccordion,
   UiButton,
   UiEmptyState,
+  UiFilterPill,
+  UiFilterRow,
   UiModal,
   UiInfoPanel,
   UiInfoRow,
+  UiSearchInput,
   UiSection,
   UiTag,
   UiBackToTop
@@ -241,18 +273,19 @@ const getInitialRow2 = () => {
 
 const activeRow1Filter = ref(getInitialRow1())
 const activeRow2Filter = ref(getInitialRow2())
+const searchQuery = ref(typeof route.query.q === 'string' ? route.query.q : '')
 const isFieldPanelOpen = ref(false)
 
 // Display Field Control Panel Checkboxes Order Definitions
 const allFields = [
   { key: 'eggTime', label: '时间' },
-  { key: 'sellPrice', label: '金币' },
+  { key: 'sellPrice', label: '银币' },
   { key: 'exp', label: '经验' },
-  { key: 'goldPerMin', label: '金币/分' },
+  { key: 'goldPerMin', label: '银币/分' },
   { key: 'expPerMin', label: '经验/分' },
-  { key: 'goldEff', label: '金效' },
-  { key: 'expEff', label: '经效' },
-  { key: 'recommend', label: '优先级' }
+  { key: 'goldEff', label: '银经比' },
+  { key: 'expEff', label: '经银比' },
+  { key: 'recommend', label: '建议' }
 ]
 
 // Default selected fields
@@ -270,13 +303,6 @@ const pets = ref([])
 const isDataReady = ref(false)
 const detailModal = ref({ visible: false, pet: {} })
 
-const formatEggTime = (seconds) => {
-  const mins = Math.floor(seconds / 60)
-  const secs = Math.floor(seconds % 60)
-  if (mins === 0) return `${secs}秒`
-  return secs > 0 ? `${mins}分钟${secs}秒` : `${mins}分钟`
-}
-
 const getFieldLabel = (key) => {
   const match = allFields.find(f => f.key === key)
   return match ? match.label : key
@@ -285,6 +311,7 @@ const getFieldLabel = (key) => {
 const resetFilters = () => {
   activeRow1Filter.value = '全部'
   activeRow2Filter.value = '全部'
+  searchQuery.value = ''
   selectedFields.value = ['sellPrice', 'exp', 'recommend']
   sortState.value = { field: 'star', dir: 'desc' }
 }
@@ -301,22 +328,10 @@ const getSortIcon = (field) => {
   if (sortState.value.field !== field && !(field === 'star' && sortState.value.field === 'name')) return '↑↓'
   return sortState.value.dir === 'desc' ? '↓' : '↑'
 }
+const isSortActive = field => sortState.value.field === field || (field === 'name' && sortState.value.field === 'star')
 
 const handleImgError = (e) => {
   e.target.style.display = 'none'
-}
-
-// Decision Rule for Recommendation Tag (卖 / 喂 / 按需选择)
-const calcRecommendation = (sellPrice, exp) => {
-  if (!exp || exp === 0) return { key: 'sell', text: '卖' }
-  const ratio = sellPrice / exp
-  if (ratio > 3.0) {
-    return { key: 'sell', text: '卖' }
-  } else if (ratio < 2.2) {
-    return { key: 'feed', text: '喂' }
-  } else {
-    return { key: 'optional', text: '按需选择' }
-  }
 }
 
 onMounted(async () => {
@@ -328,17 +343,17 @@ onMounted(async () => {
       const data = await fetchWithFallback('data/parsed/pet-eggs.json')
       processed = data.pets
     } catch (e) {
-      console.warn('parsed/pet-eggs.json 不可用，回退到原始多文件加载:', e?.message || e)
+      console.warn('parsed/pet-eggs.json 不可用，回退到 parsed/pet.json:', e?.message || e)
     }
 
     if (!processed) {
-      const res = await fetchWithFallback('data/pet.json')
+      const res = await fetchWithFallback('data/parsed/pet.json')
       processed = buildPetEggsData({ petJson: res }).pets
     }
 
     pets.value = processed
   } catch (err) {
-    console.error('Fetch /data/pet.json error:', err)
+    console.error('Fetch /data/parsed/pet.json error:', err)
   } finally {
     isDataReady.value = true
     if (route.query.id) {
@@ -349,13 +364,14 @@ onMounted(async () => {
 })
 
 // Bidirectional URL Query State Sync
-watch([activeRow1Filter, activeRow2Filter], () => {
+watch([activeRow1Filter, activeRow2Filter, searchQuery], () => {
   const query = {}
   if (activeRow1Filter.value === '金币池') query.pool = 'gold'
   else if (activeRow1Filter.value === '氪金池') query.pool = 'premium'
   else if (activeRow1Filter.value !== '全部') query.tag = activeRow1Filter.value
 
   if (activeRow2Filter.value !== '全部') query.tag = activeRow2Filter.value
+  if (searchQuery.value.trim()) query.q = searchQuery.value.trim()
 
   if (detailModal.value.visible && detailModal.value.pet?.id) {
     query.id = detailModal.value.pet.id
@@ -365,9 +381,15 @@ watch([activeRow1Filter, activeRow2Filter], () => {
 
 // Watch router query for external routing
 watch(() => route.query, (newQuery) => {
+  const nextSearch = typeof newQuery.q === 'string' ? newQuery.q : ''
+  if (nextSearch !== searchQuery.value) searchQuery.value = nextSearch
   if (newQuery.id && isDataReady.value) {
     const match = pets.value.find(p => p.id === String(newQuery.id))
     if (match) openDetail(match)
+  } else if (!newQuery.id && detailModal.value.visible) {
+    // Keep browser back/forward and external query edits in sync with the modal.
+    detailModal.value.visible = false
+    detailModal.value.pet = {}
   }
 })
 
@@ -386,6 +408,25 @@ const filteredPets = computed(() => {
     // 2. Row 2 filter (全部 | 卖 | 喂 | 按需选择)
     if (activeRow2Filter.value !== '全部') {
       if (pet.recommendationText !== activeRow2Filter.value) return false
+    }
+
+    if (searchQuery.value.trim()) {
+      const query = searchQuery.value.trim().toLowerCase()
+      const searchText = [
+        pet.name,
+        pet.id,
+        pet.des,
+        `${pet.displayStar}星`,
+        pet.recommendationText,
+        pet.formattedTime,
+        pet.sellPrice,
+        pet.exp,
+        pet.goldPerMin?.toFixed(2),
+        pet.expPerMin?.toFixed(2),
+        pet.goldEff?.toFixed(2),
+        pet.expEff?.toFixed(4)
+      ].filter(value => value !== undefined && value !== null).join(' ').toLowerCase()
+      if (!searchText.includes(query)) return false
     }
 
     return true
@@ -435,6 +476,12 @@ const closeDetail = () => {
   const query = { ...route.query }
   delete query.id
   router.replace({ query })
+}
+
+const openPetAtlas = () => {
+  const petId = detailModal.value.pet?.id
+  if (!petId) return
+  router.push({ path: '/pets', query: { id: petId } })
 }
 </script>
 
@@ -530,18 +577,18 @@ const closeDetail = () => {
   font-weight: bold;
 }
 
-/* 表头行：木色条 */
+/* 排序表头与筛选面板共用羊皮纸色，避免形成突兀的深色横条。 */
 .table-header-row {
   display: flex;
   align-items: center;
   padding: 8px 12px;
   font-size: 13px;
   font-weight: 700;
-  color: var(--paper);
-  background: linear-gradient(180deg, var(--wood-soft), var(--wood));
-  border: 1px solid #17100a;
+  color: var(--text-muted);
+  background: var(--paper-soft);
+  border: 1px solid var(--border-soft);
   border-radius: 4px;
-  box-shadow: inset 0 1px 0 rgba(223, 206, 179, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 1px 3px rgba(62, 42, 20, 0.12);
   user-select: none;
   flex-shrink: 0;
 }
@@ -555,7 +602,13 @@ const closeDetail = () => {
   gap: 4px;
   cursor: pointer;
   min-width: 0;
+  padding: 4px 6px;
+  border-radius: 3px;
+  box-sizing: border-box;
+  transition: color 0.15s ease, background-color 0.15s ease;
 }
+.th-cell:hover { background: var(--hover-bg); color: var(--text-main); }
+.th-cell.is-active { background: rgba(122, 154, 153, 0.16); color: var(--accent-ink); }
 
 .th-name {
   flex: 1.4;
@@ -657,6 +710,24 @@ const closeDetail = () => {
   object-fit: contain;
 }
 
+.pet-atlas-link {
+  padding: 2px 6px;
+  text-decoration: none;
+}
+
+.pet-atlas-avatar {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 2px rgba(43, 31, 21, 0.32));
+}
+
+.pet-atlas-name {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .gold-val {
   color: var(--gold);
   font-weight: 700;
@@ -666,4 +737,5 @@ const closeDetail = () => {
   color: var(--q4);
   font-weight: 700;
 }
+
 </style>

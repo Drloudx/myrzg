@@ -1,0 +1,32 @@
+{
+  "hero_005_skin01": {
+    "skeletonName": "Npc_005_1",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "/images/skin-models/hero_005_skin01.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_005_1",
+    "inputHashes": {
+      "Npc_005_1.atlas": "2eb88afda21ede748bdde3d38817309226bf8ca51a6550052425c0bb51c78af5",
+      "Npc_005_1.png": "3c5e52b41bc67423231eefd11e5a7ad607ad2b721b0fde044ac6cf4cde1f00ae",
+      "Npc_005_1.skel": "9a01436b2c7aff55063f2ecbb3d98e23ba05a8332c862d0abb1601746e1dd760"
+    },
+    "sha256": "3f9f89d8f63d1261380ceea7df2bbc11f2df58f45ace4b24feeff1a58ffce9a9"
+  },
+  "hero_036_skin01": {
+    "skeletonName": "Npc_036_1",
+    "skinName": "default",
+    "animation": "idle_front",
+    "frameTime": 0,
+    "spineVersion": "4.0.09",
+    "image": "/images/skin-models/hero_036_skin01.png",
+    "source": "4.24路资源包/assets/res/spine/model/npc/npc_036_1",
+    "inputHashes": {
+      "Npc_036_1.atlas": "ba4aa0fd0d0cfd10fd7604f2765b4bc3f6e5503191f291b9dbe860d5ffc43396",
+      "Npc_036_1.png": "2707e08552989ce39142130f68819e936d13044d27f212348ee3bc9d95f8e396",
+      "Npc_036_1.skel": "34b6561d26bd1f96ea07185125ceea3d9b7fb1253a595a7f0609f7421a1ce5d4"
+    },
+    "sha256": "ac366670c7d456d424ae2c50433fbae929c2dd4df8ee80bd52e8f7342e5182b8"
+  }
+}

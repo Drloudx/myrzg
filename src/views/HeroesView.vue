@@ -3,7 +3,7 @@
 
     <!-- 筛选区（羊皮纸面板） -->
     <div class="filter-panel paper-panel">
-      <UiSearchInput v-model="searchQuery" placeholder="搜索角色名称、称号、关键词..." />
+      <UiSearchInput v-model="searchQuery" placeholder="搜索角色、技能、档案、互动文本（支持中英文/数字；空格=且、=或）..." />
 
       <!-- 稀有度 -->
       <UiFilterRow label="稀有度：">
@@ -54,6 +54,9 @@
             :src="getImageUrl(`/images/HeroBagPanel/card_${hero.rare}_botm.png`)"
             class="bag-card-background"
             alt="background"
+            loading="lazy"
+            decoding="async"
+            @error="handleCardImgError"
           />
 
           <!-- Frame Background -->
@@ -61,6 +64,9 @@
             :src="getImageUrl(`/images/HeroBagPanel/card_${hero.rare}.png`)"
             class="bag-card-frame"
             alt="frame"
+            loading="lazy"
+            decoding="async"
+            @error="handleCardImgError"
           />
 
           <!-- Character Avatar -->
@@ -69,6 +75,7 @@
             :alt="hero.name"
             class="bag-card-avatar"
             loading="lazy"
+            decoding="async"
             @error="handleCardImgError"
           />
 
@@ -77,6 +84,9 @@
             :src="getImageUrl(`/images/HeroBagPanel/card_atr_${getElementSlug(hero.element)}.png`)"
             class="bag-card-element"
             :title="hero.elementName"
+            loading="lazy"
+            decoding="async"
+            @error="handleCardImgError"
           />
 
           <!-- Class Icon (Top-Right) -->
@@ -84,6 +94,9 @@
             :src="getImageUrl(`/images/HeroBagPanel/class_icon_s_${getJobSlug(hero.job)}.png`)"
             class="bag-card-job"
             :title="hero.jobName"
+            loading="lazy"
+            decoding="async"
+            @error="handleCardImgError"
           />
 
           <!-- Bottom Card Info Overlay -->
@@ -93,9 +106,12 @@
 
           <!-- Nameplate Star Icon (Bottom-Left Diamond) -->
           <img
-            :src="getImageUrl('/PicHandBookPanel/colect_star.png')"
+            :src="getImageUrl('/PicHandBookPanel_Atlas/colect_star.png')"
             class="bag-card-name-star"
             alt="star"
+            loading="lazy"
+            decoding="async"
+            @error="handleCardImgError"
           />
         </div>
       </div>
@@ -123,9 +139,22 @@
 
       <template v-if="selectedHero">
         <!-- TOP SECTION: Standup portrait -->
-        <div class="portrait-section paper-panel corner-nails">
+        <div class="portrait-section paper-panel corner-nails" :class="{ 'portrait-section--protagonist': isProtagonist }">
+          <template v-if="isProtagonist">
+            <UiButton class="protagonist-portrait-toggle" size="sm" variant="secondary"
+              :aria-label="protagonistGender === 'female' ? '切换男主' : '切换女主'"
+              @click="protagonistGender = protagonistGender === 'female' ? 'male' : 'female'">
+              {{ protagonistGender === 'female' ? '切换男主' : '切换女主' }}
+            </UiButton>
+            <div v-for="portrait in protagonistPortraits" :key="portrait.gender"
+              class="protagonist-portrait-slot" :class="{ 'is-selected': protagonistGender === portrait.gender }">
+              <img :src="getImageUrl(portrait.image)" :alt="portrait.label"
+                class="chara-portrait-img" @error="handlePortraitImgError" />
+            </div>
+          </template>
           <img
-            :src="getImageUrl(`/images/chara/${selectedHero.img}.png`)"
+            v-else
+            :src="getImageUrl(`/images/chara/l/${selectedHero.img}.png`)"
             :alt="selectedHero.name"
             class="chara-portrait-img"
             @error="handlePortraitImgError"
@@ -134,10 +163,21 @@
 
         <!-- Badges & Favorite Gifts Row -->
         <div class="hero-badges-row-container">
-          <UiTag tone="default" class="badge job-badge">
-            <img :src="getImageUrl(`/images/HeroBagPanel/class_icon_s_${getJobSlug(selectedHero.job)}.png`)" class="badge-icon" />
-            {{ selectedHero.jobName }}
-          </UiTag>
+          <button
+            type="button"
+            class="job-badge-button"
+            :class="{ 'is-expanded': isJobDetailExpanded }"
+            :aria-expanded="isJobDetailExpanded"
+            aria-controls="hero-job-traits"
+            :title="`${isJobDetailExpanded ? '收起' : '查看'}${selectedHero.jobName}职业特性`"
+            @click="isJobDetailExpanded = !isJobDetailExpanded"
+          >
+            <UiTag tone="default" class="badge job-badge">
+              <img :src="getImageUrl(`/images/HeroBagPanel/class_icon_s_${getJobSlug(selectedHero.job)}.png`)" class="badge-icon" />
+              {{ selectedHero.jobName }}
+              <span class="job-badge-chevron" aria-hidden="true"></span>
+            </UiTag>
+          </button>
           <UiTag tone="accent" class="badge element-badge">
             <img :src="getImageUrl(`/images/HeroGachaShowPanel/spGachaTag${getSpGachaElementSlug(selectedHero.element)}03.png`)" class="badge-icon" />
             {{ selectedHero.elementName }}属性
@@ -163,16 +203,38 @@
           </div>
         </div>
 
+        <Transition name="job-traits">
+          <section
+            v-if="isJobDetailExpanded && selectedHero.jobTraits?.length"
+            id="hero-job-traits"
+            class="job-traits-panel"
+            :aria-label="`${selectedHero.jobName}职业特性`"
+          >
+            <div class="job-traits-heading">
+              <img
+                :src="getImageUrl(`/images/HeroBagPanel/class_icon_s_${getJobSlug(selectedHero.job)}.png`)"
+                class="job-traits-icon"
+                alt=""
+              />
+              <div>
+                <span class="job-traits-kicker">职业特性</span>
+                <strong>{{ selectedHero.jobName }}</strong>
+              </div>
+            </div>
+            <div class="job-traits-list">
+              <div v-for="trait in selectedHero.jobTraits" :key="trait.id" class="job-trait-item">
+                <div class="job-trait-name">{{ trait.name }}</div>
+                <p class="job-trait-description" v-html="formatSkillDescription(trait.des)"></p>
+              </div>
+            </div>
+          </section>
+        </Transition>
+
         <!-- MIDDLE SECTION: Tabs Navigation -->
         <div class="detail-tabs">
           <UiTabs
             v-model="activeTab"
-            :options="[
-              { value: 'skills', label: '技能星阶' },
-              { value: 'calculator', label: '基础属性' },
-              { value: 'archives', label: '角色档案' },
-              { value: 'voicelines', label: '互动' }
-            ]"
+            :options="heroDetailTabs"
           />
         </div>
 
@@ -233,25 +295,41 @@
 
               <!-- Levels sliders for skill -->
               <div class="skill-level-slider-container" v-if="currentSelectedSkill.type !== 'normal' && currentSelectedSkill.levelData?.length > 1">
-                <div class="slider-row">
+                <div class="dual-slider-labels">
                   <span class="lvl-slider-label">当前等级: Lv.{{ currentSkillLevel }}</span>
+                  <span class="lvl-slider-label">目标等级: Lv.{{ targetSkillLevel }}</span>
+                </div>
+                <div
+                  class="dual-level-slider"
+                  :style="skillSliderStyle"
+                  :aria-label="`技能等级范围，当前等级 ${currentSkillLevel}，目标等级 ${targetSkillLevel}`"
+                  role="group"
+                  @click="handleSkillTrackClick"
+                >
+                  <span class="dual-slider-track" aria-hidden="true"></span>
+                  <span class="dual-slider-fill" aria-hidden="true"></span>
                   <input
                     type="range"
                     min="1"
-                    max="12"
+                    :max="skillLevelMax"
                     v-model.number="currentSkillLevel"
-                    class="lvl-range-slider"
+                    class="dual-slider-input dual-slider-input--current"
+                    aria-label="当前技能等级"
+                    @input="handleCurrentSkillLevelInput"
                   />
-                </div>
-                <div class="slider-row mt-2">
-                  <span class="lvl-slider-label">目标等级: Lv.{{ targetSkillLevel }}</span>
                   <input
                     type="range"
-                    :min="currentSkillLevel"
-                    max="12"
+                    min="1"
+                    :max="skillLevelMax"
                     v-model.number="targetSkillLevel"
-                    class="lvl-range-slider"
+                    class="dual-slider-input dual-slider-input--target"
+                    aria-label="目标技能等级"
+                    @input="handleTargetSkillLevelInput"
                   />
+                </div>
+                <div class="dual-slider-scale" aria-hidden="true">
+                  <span>Lv.1</span>
+                  <span>Lv.{{ skillLevelMax }}</span>
                 </div>
               </div>
 
@@ -259,6 +337,53 @@
               <div class="skill-des-box" v-if="currentSelectedSkillLevelDetail">
                 <div class="lvl-subname">{{ currentSelectedSkillLevelDetail.name }}</div>
                 <p class="lvl-des-txt" v-html="formatSkillDescription(currentSelectedSkillLevelDetail.des)"></p>
+              </div>
+
+              <!-- Combat settlement summary -->
+              <div v-if="currentSkillMechanics" class="skill-mechanics-box">
+                <div class="mechanics-row mechanics-settlement-row">
+                  <span class="mechanics-label">结算</span>
+                  <UiTag v-if="currentSkillMechanics.damage?.formLabel" tone="default">{{ currentSkillMechanics.damage.formLabel }}</UiTag>
+                  <UiTag v-for="label in currentSkillMechanics.damage?.typeLabels" :key="`type-${label}`" tone="danger">{{ label }}</UiTag>
+                  <UiTag v-for="label in currentSkillMechanics.damage?.elementLabels" :key="`element-${label}`" tone="accent">{{ label }}属性</UiTag>
+                  <UiTag v-if="currentSkillMechanics.damage?.crit && currentSkillMechanics.damage.crit !== 'na'" :tone="critTone(currentSkillMechanics.damage.crit)">{{ critLabel(currentSkillMechanics.damage.crit) }}</UiTag>
+                </div>
+                <div v-if="currentSkillMechanics.outcomeLabels?.length && !(currentSkillMechanics.outcomeLabels.length === 1 && currentSkillMechanics.outcomeLabels[0] === '伤害')" class="mechanics-row">
+                  <span class="mechanics-label">效果类型</span>
+                  <span class="mechanics-text">{{ currentSkillMechanics.outcomeLabels.join('、') }}</span>
+                </div>
+                <div v-if="currentSkillMechanics.damage?.scalingLabels?.length" class="mechanics-row">
+                  <span class="mechanics-label">加成基准</span>
+                  <span class="mechanics-text">{{ currentSkillMechanics.damage.scalingLabels.join('、') }}</span>
+                </div>
+                <div v-if="currentSkillMechanics.effectScalingLabels?.length && currentSkillMechanics.outcomeLabels?.some(label => label !== '伤害')" class="mechanics-row">
+                  <span class="mechanics-label">效果基准</span>
+                  <span class="mechanics-text">{{ currentSkillMechanics.effectScalingLabels.join('、') }}</span>
+                </div>
+                <div v-if="currentSkillMechanics.bonuses?.applies?.length" class="mechanics-row">
+                  <span class="mechanics-label">加成生效</span>
+                  <span class="mechanics-text">{{ currentSkillMechanics.bonuses.applies.map(mechanicsLabel).join(' · ') }}</span>
+                </div>
+                <div v-if="currentSkillMechanics.features?.length" class="mechanics-row">
+                  <span class="mechanics-label">攻击特性</span>
+                  <span class="mechanics-text">{{ currentSkillMechanics.features.join(' · ') }}</span>
+                </div>
+                <div v-if="currentSkillMechanics.effects?.length" class="mechanics-row">
+                  <span class="mechanics-label">附加效果</span>
+                  <span class="mechanics-text">{{ currentSkillMechanics.effects.join(' · ') }}</span>
+                </div>
+                <div v-if="currentSkillMechanics.bonuses?.excludes?.length" class="mechanics-row mechanics-muted-row">
+                  <span class="mechanics-label">不生效</span>
+                  <span class="mechanics-text">{{ currentSkillMechanics.bonuses.excludes.map(mechanicsLabel).join(' · ') }}</span>
+                </div>
+                <div v-if="currentSkillMechanics.conditions?.length" class="mechanics-row mechanics-condition-row">
+                  <span class="mechanics-label">条件变化</span>
+                  <span class="mechanics-text">{{ currentSkillMechanics.conditions.join('；') }}</span>
+                </div>
+                <div v-if="currentSkillMechanics.notes?.length" class="mechanics-row mechanics-note-row">
+                  <span class="mechanics-label">实际说明</span>
+                  <span class="mechanics-text">{{ currentSkillMechanics.notes.join('；') }}</span>
+                </div>
               </div>
 
               <!-- Upgrade Cost Info -->
@@ -270,10 +395,18 @@
                 </div>
                 <div class="cost-items-list" v-if="skillUpgradeRangeSummary.items?.length > 0">
                   <span class="cost-label">消耗道具:</span>
-                  <div class="cost-item-pill" v-for="item in skillUpgradeRangeSummary.items" :key="item.id">
+                  <button
+                    v-for="item in skillUpgradeRangeSummary.items"
+                    :key="item.id"
+                    type="button"
+                    class="cost-item-pill"
+                    :data-item-id="item.id"
+                    :title="`${item.name}（点击查看物品）`"
+                    @click="openItemDetail(item.id)"
+                  >
                     <img :src="getImageUrl(item.img)" class="cost-item-img" />
                     <span class="cost-item-name" :class="`quality-text-${item.quality}`">{{ item.name }} x{{ item.num }}</span>
-                  </div>
+                  </button>
                 </div>
               </div>
             </div>
@@ -321,7 +454,7 @@
                     <div class="shard-cost-pills" v-if="lvl.cost > 0">
                       <span class="shard-cost-label">消耗专属碎片:</span>
                       <span class="shard-cost-value">
-                        <img :src="getImageUrl(`/images/HeroInfoPanel/${selectedHero.img}_p.png`)" class="shard-item-img-small" />
+                        <img :src="getImageUrl(`/images/HeroInfoPanel_Atlas/${selectedHero.img}_p.png`)" class="shard-item-img-small" />
                         {{ lvl.cost }}
                       </span>
                     </div>
@@ -337,7 +470,7 @@
                   <li>
                     满命（全部点满）后，再次抽到重复角色多余的专属碎片会自动转化为通用货币：
                     <span class="limit-crystal">
-                      <img src="/images/Common_ItemIcon/item_20026.png" class="crystal-icon" />
+                      <img :src="getImageUrl('/Common_ItemIcon/item_20026.png')" class="crystal-icon" />
                       记忆结晶 x{{ selectedHero.starLimitInfo.rewardItemNum }}
                     </span>。
                   </li>
@@ -355,30 +488,18 @@
               <div class="input-slider-group paper-panel-solid">
                 <div class="slider-header">
                   <span class="slider-title">目标等级</span>
-                  <span class="slider-val">{{ calcLevel }} / 80</span>
+                  <span class="slider-val">{{ calcLevel }} / {{ maxHeroLevel }} · 等级突破 {{ calcRank }} 次</span>
                 </div>
                 <input
                   type="range"
                   min="1"
-                  max="80"
-                  v-model="calcLevel"
+                  :max="maxHeroLevel"
+                  v-model.number="calcLevel"
                   class="calc-range-slider"
-                  @input="handleCalcLevelChange"
                 />
-              </div>
-
-              <div class="input-slider-group paper-panel-solid mt-3">
-                <div class="slider-header">
-                  <span class="slider-title">突破品阶</span>
-                  <span class="slider-val">品阶 {{ calcRank }} (突破等级上限: {{ getRankMaxLevel(calcRank) }})</span>
-                </div>
-                <div class="rank-selector-buttons">
-                  <UiFilterPill
-                    v-for="r in 6"
-                    :key="r - 1"
-                    :active="calcRank === (r - 1)"
-                    @click="setCalcRank(r - 1)"
-                  >品阶 {{ r - 1 }}</UiFilterPill>
+                <div class="level-growth-summary">
+                  <span>每级基础属性 +{{ formatRate(heroLevelGrowthRate) }}</span>
+                  <span>每次突破基础属性 +{{ formatRate(heroBreakthroughRate) }}</span>
                 </div>
               </div>
             </div>
@@ -394,13 +515,8 @@
                 >
                   <span class="attr-calc-label">{{ translateAttributeKey(field) }}</span>
                   <div class="attr-values-row">
-                    <span class="attr-val-base">{{ selectedHero.unitData[field] || 0 }}</span>
-                    <span class="attr-arrow">→</span>
                     <span class="attr-val-calc">{{ computedStats[field] }}</span>
                   </div>
-                  <span class="attr-diff-pill" v-if="computedStats[field] - (selectedHero.unitData[field] || 0) > 0">
-                    +{{ computedStats[field] - (selectedHero.unitData[field] || 0) }}
-                  </span>
                 </div>
               </div>
 
@@ -446,277 +562,34 @@
               <div class="breakthrough-mats-box mt-3" v-if="computedCosts.breakthroughItems?.length > 0">
                 <div class="mats-subtitle">突破所需材料汇总:</div>
                 <div class="mats-flex-row">
-                  <div
+                  <button
                     v-for="item in computedCosts.breakthroughItems"
                     :key="item.id"
+                    type="button"
                     class="mat-item-pill"
+                    :data-item-id="item.id"
+                    :title="`${item.name}（点击查看物品）`"
+                    @click="openItemDetail(item.id)"
                   >
                     <img :src="getImageUrl(item.img)" class="mat-item-img" />
                     <span class="mat-item-name" :class="`quality-text-${item.quality}`">{{ item.name }} x{{ item.num }}</span>
-                  </div>
+                  </button>
                 </div>
               </div>
             </div>
           </UiSection>
         </div>
 
-        <!-- TAB CONTENT: ARCHIVES -->
-        <div v-if="activeTab === 'archives'" class="tab-pane-content">
-          <UiSection title="角色档案">
-            <div class="archives-list">
-              <div
-                v-for="arch in selectedHero.archives"
-                :key="arch.title"
-                class="archive-item-card paper-panel-solid"
-              >
-                <!-- Regular biography or stats buff card -->
-                <div v-if="arch.type !== 1">
-                  <div class="archive-card-header">
-                    <h4 class="archive-title">{{ arch.title }}</h4>
-                    <span class="fav-unlock-tag">
-                      好感要求: <span class="unlock-fav-val">{{ arch.unlockFav }}</span>
-                    </span>
-                  </div>
-                  <!-- Description text -->
-                  <div class="archive-desc-box">
-                    <p class="archive-desc-txt">{{ arch.desc }}</p>
-                  </div>
+        <HeroStoryPanels
+          v-if="activeTab === 'archives' || activeTab === 'voicelines'"
+          :hero="selectedHero"
+          :active-tab="activeTab"
+        />
 
-                  <!-- Unlock permanent buff attributes (if type 3) -->
-                  <div class="archive-buff-banner" v-if="arch.type === 3 && Object.keys(arch.stats).length > 0">
-                    <span class="buff-title">解锁属性增益:</span>
-                    <div class="buff-stats-flex">
-                      <UiTag
-                        v-for="(val, statKey) in arch.stats"
-                        :key="statKey"
-                        tone="accent"
-                      >{{ translateAttributeKey(statKey) }} +{{ val }}</UiTag>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Story task card (type === 1) -->
-                <div v-else>
-                  <div class="archive-card-header">
-                    <div class="title-side-group">
-                      <UiTag tone="danger">剧情</UiTag>
-                      <h4 class="archive-title inline">{{ arch.taskName || arch.title }}</h4>
-                    </div>
-                    <span class="fav-unlock-tag">
-                      好感要求: <span class="unlock-fav-val">{{ arch.unlockFav }}</span>
-                    </span>
-                  </div>
-
-                  <!-- Archive Desc -->
-                  <div class="archive-desc-box mb-2">
-                    <p class="archive-desc-txt">{{ arch.desc }}</p>
-                  </div>
-
-                  <!-- Task Gate -->
-                  <div class="story-task-gate mb-2" v-if="arch.taskDesc">
-                    <span class="gate-label">任务目标:</span>
-                    <p class="gate-txt">{{ cleanDialogueLine(arch.taskDesc) }}</p>
-                  </div>
-
-                  <!-- Mail Letter Content if attached -->
-                  <div class="mail-body-inline-box mb-2" v-if="arch.mail">
-                    <div class="mail-inline-header">✉ 专属信件:《{{ arch.mail.title }}》</div>
-                    <p class="mail-inline-content">{{ cleanMailContent(arch.mail.content) }}</p>
-                  </div>
-
-                  <!-- Story Rewards -->
-                  <div class="story-reward-box mb-2" v-if="arch.reward?.items?.length > 0">
-                    <span class="reward-lbl">通关剧情奖励:</span>
-                    <div class="reward-items-flex">
-                      <div
-                        v-for="item in arch.reward.items"
-                        :key="item.id"
-                        class="mail-r-item-pill"
-                      >
-                        <img :src="getImageUrl(item.img)" class="mail-r-item-img" />
-                        <span class="mail-r-item-name" :class="`quality-text-${item.quality}`">{{ item.name }}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- INLINE DIALOGUE TRANSCRIPT -->
-                  <div class="story-dialogue-inline-list mt-2" v-if="arch.dialogs.length">
-                    <template v-for="(seg, segIdx) in arch.dialogs" :key="seg.id">
-                      <button
-                        class="toggle-dialogue-btn"
-                        :class="{ 'seg-mid': segIdx > 0 }"
-                        @click="toggleDialogueInline(seg.id)"
-                      >
-                        <span class="btn-left">
-                          {{ isDialogueExpanded(seg.id) ? '▲ 收起剧情文本' : '▼ 展开剧情文本' }}
-                          <span class="seg-label" v-if="arch.dialogs.length > 1">
-                            （第 {{ segIdx + 1 }}/{{ arch.dialogs.length }} 段）
-                          </span>
-                        </span>
-                        <span class="btn-right" v-if="seg.name">{{ seg.name }}</span>
-                      </button>
-
-                      <div v-if="isDialogueExpanded(seg.id)" class="dialogue-lines-container">
-                        <div v-if="loadingDialogs[seg.id]" class="dialogue-loading-indicator">
-                          剧情读取中，请稍候...
-                        </div>
-                        <DialogLines v-else-if="dialogsCache[seg.id]?.length > 0" :lines="dialogsCache[seg.id]" />
-                        <div v-else class="dialogue-error-indicator">
-                          剧情读取失败。
-                        </div>
-                      </div>
-                    </template>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </UiSection>
-        </div>
-
-        <!-- TAB CONTENT: INTERACTION (互动) -->
-        <div v-if="activeTab === 'voicelines'" class="tab-pane-content">
-          <!-- Interaction voice subtabs -->
-          <div class="voice-subtabs">
-            <UiTabs
-              v-model="voiceSubTab"
-              :options="[
-                { value: 'chat', label: '好感对话' },
-                { value: 'heroEvent', label: '营地事件' },
-                { value: 'explore', label: '局内探索' },
-                { value: 'touch', label: '摸头' },
-                { value: 'walk', label: '路过' },
-                { value: 'ziyanziyu', label: '自言自语' }
-              ]"
-            />
-          </div>
-
-          <!-- 好感对话 Tab -->
-          <UiSection v-if="voiceSubTab === 'chat'" title="好感对话">
-            <div class="explore-voice-list">
-              <div
-                v-for="(chat, cIdx) in selectedHero.behavior.chat"
-                :key="cIdx"
-                class="voice-group-card paper-panel-solid inline-dialogue-task"
-              >
-                <div class="voice-group-title header-between">
-                  <span class="fav-requirement-label">好感度要求: {{ chat.min }}-{{ chat.max }}</span>
-                  <UiButton variant="secondary" size="sm" @click="toggleDialogueInline(chat.dialog)">
-                    {{ isDialogueExpanded(chat.dialog) ? '▲ 收起对话' : '▼ 展开对话' }}
-                  </UiButton>
-                </div>
-
-                <div v-if="isDialogueExpanded(chat.dialog)" class="dialogue-lines-container inline-chat">
-                  <div v-if="loadingDialogs[chat.dialog]" class="dialogue-loading-indicator">
-                    对话读取中...
-                  </div>
-                  <DialogLines v-else-if="dialogsCache[chat.dialog]?.length > 0" :lines="dialogsCache[chat.dialog]" />
-                  <div v-else class="dialogue-error-indicator">
-                    无法加载对话文本。
-                  </div>
-                </div>
-              </div>
-            </div>
-          </UiSection>
-
-          <!-- 营地事件 Tab -->
-          <UiSection v-if="voiceSubTab === 'heroEvent'" title="营地事件">
-            <div class="explore-voice-list">
-              <div
-                v-for="(evt, eIdx) in selectedHero.behavior.heroEvent"
-                :key="eIdx"
-                class="voice-group-card paper-panel-solid inline-dialogue-task"
-              >
-                <div class="voice-group-title header-between">
-                  <span class="event-title-label">事件: {{ evt.title }} (触发天数: 第 {{ evt.day }} 天)</span>
-                  <UiButton variant="secondary" size="sm" @click="toggleDialogueInline(evt.dialog)">
-                    {{ isDialogueExpanded(evt.dialog) ? '▲ 收起剧情' : '▼ 展开剧情' }}
-                  </UiButton>
-                </div>
-
-                <div v-if="isDialogueExpanded(evt.dialog)" class="dialogue-lines-container inline-chat">
-                  <div v-if="loadingDialogs[evt.dialog]" class="dialogue-loading-indicator">
-                    剧情读取中...
-                  </div>
-                  <DialogLines v-else-if="dialogsCache[evt.dialog]?.length > 0" :lines="dialogsCache[evt.dialog]" />
-                  <div v-else class="dialogue-error-indicator">
-                    无法加载剧情文本。
-                  </div>
-                </div>
-              </div>
-            </div>
-          </UiSection>
-
-          <!-- Exploration Voice Tab -->
-          <UiSection v-if="voiceSubTab === 'explore'" title="局内探索">
-            <div class="explore-voice-list">
-              <div
-                v-for="(group, key) in exploreVoiceGroups"
-                :key="key"
-                class="voice-group-card paper-panel-solid"
-              >
-                <div class="voice-group-title">{{ group.label }}</div>
-                <div class="voice-lines-container">
-                  <div
-                    v-for="(line, idx) in group.lines"
-                    :key="idx"
-                    class="voice-line-item"
-                  >
-                    <span class="line-idx">台词 #{{ idx + 1 }}</span>
-                    <p class="line-content-txt">{{ line }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </UiSection>
-
-          <!-- Touch Voice Tab -->
-          <UiSection v-if="voiceSubTab === 'touch'" title="摸头">
-            <div class="voicelines-grid">
-              <div
-                v-for="(line, idx) in selectedHero.behavior.touch"
-                :key="idx"
-                class="voiceline-card paper-panel-solid static-v-card"
-              >
-                <div class="v-card-header">
-                  <span class="fav-requirement-label">好感度要求: {{ line.min }}-{{ line.max }}</span>
-                </div>
-                <p class="v-text-content">"{{ line.text }}"</p>
-              </div>
-            </div>
-          </UiSection>
-
-          <!-- Daily Walk/Pass-by Voice Tab (路过) -->
-          <UiSection v-if="voiceSubTab === 'walk'" title="路过">
-            <div class="voicelines-grid">
-              <div
-                v-for="(line, idx) in selectedHero.behavior.walk"
-                :key="idx"
-                class="voiceline-card paper-panel-solid static-v-card"
-              >
-                <div class="v-card-header">
-                  <span class="fav-requirement-label">好感度要求: {{ line.min }}-{{ line.max }}</span>
-                </div>
-                <p class="v-text-content">"{{ line.text }}"</p>
-              </div>
-            </div>
-          </UiSection>
-
-          <!-- 自言自语 Tab -->
-          <UiSection v-if="voiceSubTab === 'ziyanziyu'" title="自言自语">
-            <div class="voicelines-grid">
-              <div
-                v-for="(line, idx) in selectedHero.behavior.ziyanziyu"
-                :key="idx"
-                class="voiceline-card paper-panel-solid static-v-card"
-              >
-                <div class="v-card-header">
-                  <span class="fav-requirement-label">好感度要求: {{ line.min }}-{{ line.max }}</span>
-                </div>
-                <p class="v-text-content">"{{ line.text }}"</p>
-              </div>
-            </div>
-          </UiSection>
-        </div>
+        <HeroSkinsPanel
+          v-if="activeTab === 'skins'"
+          :skins="selectedHero.skins"
+        />
       </template>
 
       <UiBackToTop scroll-container="#heroModalScroll" />
@@ -729,9 +602,10 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { getImageUrl, getResourceBaseUrl } from '../utils/env'
+import { getImageUrl } from '../utils/env'
 import { fetchItemData } from '../utils/itemParser'
 import { fetchHeroData, calculateStats, calculateUpgradeCosts } from '../utils/heroParser'
+import { MECHANICS_CRIT_LABELS, MECHANICS_LABELS } from '../utils/heroMechanics.js'
 import { isBlacklisted } from '../config/blacklist.js'
 import { useLazyList } from '../composables/useLazyList'
 import {
@@ -741,11 +615,10 @@ import {
   ELEMENT_SLUGS,
   ELEMENT_SLUGS_LOWER,
   formatHighlightedText,
-  cleanDialogueBase,
-  cleanMailContent,
   translateStatName
 } from '../utils/gameMappings'
-import DialogLines from '../components/TaskDialogLines.vue'
+import HeroStoryPanels from '../components/heroes/HeroStoryPanels.vue'
+import HeroSkinsPanel from '../components/heroes/HeroSkinsPanel.vue'
 import {
   UiBackToTop,
   UiButton,
@@ -767,6 +640,7 @@ const router = useRouter()
 const allHeroes = ref([])
 const heroLevelConfig = ref(null)
 const heroRankConfig = ref(null)
+const playerLevelCap = ref(1)
 const itemsCache = ref([])
 const consumeCache = ref({})
 const isDataReady = ref(false)
@@ -781,24 +655,125 @@ const selectedElement = ref(null)
 // Detail modal states
 const detailVisible = ref(false)
 const selectedHero = ref(null)
-const activeTab = ref('skills') // 'skills', 'calculator', 'archives', 'voicelines'
+// ExtentionMethod.SetSexHeroImg: hero_001 的男版立绘为 chara001b_0。
+const isProtagonist = computed(() => selectedHero.value?.id === 'hero_001')
+const protagonistGender = ref('female')
+const protagonistPortraits = [
+  { gender: 'female', label: '希尔（女主）', image: '/images/chara/l/chara001_0.png' },
+  { gender: 'male', label: '希尔（男主）', image: '/images/chara/l/chara001b_0.png' }
+]
+const activeTab = ref('skills')
 
 // Tab specific states
 const activeSkillIndex = ref(0)
 const currentSkillLevel = ref(1)
 const activeStarIndex = ref(0)
 const calcLevel = ref(1)
-const calcRank = ref(0)
-
-const voiceSubTab = ref('chat') // 'chat', 'heroEvent', 'explore', 'touch', 'walk', 'ziyanziyu'
-
-// Inline dialogue states
-const dialogsCache = ref({})
-const loadingDialogs = ref({})
-const expandedDialogs = ref(new Set())
+const isJobDetailExpanded = ref(false)
 
 // Job names mapping array
 const jobsList = Object.values(JOB_NAMES)
+const heroDetailTabs = computed(() => {
+  const tabs = [
+    { value: 'skills', label: '技能星阶' },
+    { value: 'calculator', label: '基础属性' },
+    { value: 'archives', label: '角色档案' },
+    { value: 'voicelines', label: '互动' }
+  ]
+  if (selectedHero.value?.skins?.length) {
+    tabs.splice(3, 0, { value: 'skins', label: '皮肤' })
+  }
+  return tabs
+})
+
+// 角色页搜索使用页面可见文本汇总，不把图片路径、内部 ID 等实现字段暴露为搜索结果。
+// 这样新增技能/档案字段时，只要页面能展示该文本，搜索也会自动覆盖。
+const SEARCH_IGNORED_KEYS = new Set([
+  'id', 'key', 'icon', 'img', 'vocal', 'face', 'dialog', 'taskTypeId',
+  'consumeKey', 'typeId', 'sourceRefs', 'reviewStatus', 'spType', 'type'
+])
+
+// 机制标签没有单独的英文表，搜索时补充常用英文别名，中文页面文本仍是唯一展示来源。
+const SEARCH_LABEL_ALIASES = {
+  '物理': 'physical phy',
+  '魔法': 'magic magical spell',
+  '真实': 'true real',
+  '水': 'water',
+  '火': 'fire flame',
+  '风': 'wind',
+  '地': 'earth',
+  '物理攻击': 'physical attack phy atk',
+  '魔法攻击': 'magic attack magic atk spell power',
+  '普通攻击': 'normal attack basic attack',
+  '技能伤害': 'skill damage ability damage',
+  '伤害': 'damage',
+  '持续伤害': 'damage over time dot',
+  '护盾': 'shield',
+  '治疗': 'heal healing',
+  '召唤': 'summon',
+  '属性增益': 'buff boost',
+  '属性削弱': 'debuff',
+  '属性继承': 'inherit inheritance',
+  '伤害减免': 'damage reduction damage taken reduction',
+  '控制': 'control crowd control cc',
+  '暴击': 'crit critical',
+  '最大生命': 'max hp maximum health',
+  '物理穿透': 'physical penetration armor penetration',
+  '魔法穿透': 'magic penetration',
+  '范围': 'area aoe',
+  '多段': 'multi hit multihit',
+  '持续': 'duration',
+  '反伤': 'reflect counter damage',
+  '近卫': 'vanguard guard',
+  '守护': 'defender tank guard 护卫',
+  '秘术': 'mage caster',
+  '射手': 'archer ranged',
+  '突袭': 'assassin rogue',
+  '支援': 'support healer'
+}
+
+const getSearchAliases = (value, mapped = '') => {
+  const labels = [value, mapped].filter(Boolean)
+  return labels
+    .flatMap(label => [label, SEARCH_LABEL_ALIASES[label] || ''])
+    .filter(Boolean)
+    .join(' ')
+}
+
+const collectHeroSearchText = (value, key = '', seen = new Set()) => {
+  if (value == null || SEARCH_IGNORED_KEYS.has(key)) return ''
+
+  if (typeof value === 'string') {
+    const mapped = MECHANICS_LABELS[value]
+    return getSearchAliases(value, mapped)
+  }
+
+  // 数值也是页面可见信息（等级、星级、百分比等），允许直接搜索数字。
+  if (typeof value === 'number') return String(value)
+  if (typeof value !== 'object') return ''
+  if (seen.has(value)) return ''
+  seen.add(value)
+
+  if (Array.isArray(value)) {
+    return value.map(item => collectHeroSearchText(item, '', seen)).join(' ')
+  }
+
+  return Object.entries(value)
+    .map(([childKey, childValue]) => collectHeroSearchText(childValue, childKey, seen))
+    .join(' ')
+}
+
+const heroSearchTextCache = new WeakMap()
+const getHeroSearchText = hero => {
+  if (!hero || typeof hero !== 'object') return ''
+  const cached = heroSearchTextCache.get(hero)
+  if (cached) return cached
+
+  const rarityText = `${hero.rare ?? ''}星 ${hero.rare ?? ''} star rarity`
+  const text = `${rarityText} ${collectHeroSearchText(hero)}`.toLowerCase()
+  heroSearchTextCache.set(hero, text)
+  return text
+}
 
 onMounted(async () => {
   try {
@@ -809,14 +784,10 @@ onMounted(async () => {
     allHeroes.value = parsedData.heroes
     heroLevelConfig.value = parsedData.heroLevel
     heroRankConfig.value = parsedData.heroRank
+    playerLevelCap.value = Number(parsedData.playerLevelCap) || 1
     
-    // 累计计算器所需消耗表：优先使用预解析 heroes.json 内置的 consumeDatas，缺失再回退原始拉取
-    if (parsedData.consumeDatas) {
-      consumeCache.value = parsedData.consumeDatas
-    } else {
-      const consumeRes = await fetch(`${getResourceBaseUrl()}/data/consume.json`).then(r => r.json())
-      consumeCache.value = consumeRes.datas || consumeRes || {}
-    }
+    // 累计计算器所需消耗表已内置在预解析 heroes.json 中。
+    consumeCache.value = parsedData.consumeDatas || {}
 
     isDataReady.value = true
 
@@ -844,18 +815,15 @@ function openFromQueryId(id) {
   const found = allHeroes.value.find(h => h.id === id)
   if (found) {
     selectedHero.value = found
+    protagonistGender.value = 'female'
     detailVisible.value = true
     // Reset tabs
-    activeTab.value = 'skills'
+    activeTab.value = route.query.tab === 'skins' && found.skins?.length ? 'skins' : 'skills'
     activeSkillIndex.value = 0
     currentSkillLevel.value = 1
     activeStarIndex.value = 0
     calcLevel.value = 1
-    calcRank.value = 0
-    voiceSubTab.value = 'chat'
-    
-    // Clear expanded dialogs cache on hero switch
-    expandedDialogs.value.clear()
+    isJobDetailExpanded.value = false
   }
 }
 
@@ -882,14 +850,15 @@ const filteredHeroes = computed(() => {
 
   // Text search
   if (searchQuery.value.trim()) {
-    const q = searchQuery.value.trim().toLowerCase()
-    result = result.filter(h => 
-      h.name.toLowerCase().includes(q) || 
-      (h.name2 && h.name2.toLowerCase().includes(q)) ||
-      (h.des && h.des.toLowerCase().includes(q)) ||
-      h.jobName.toLowerCase().includes(q) ||
-      h.elementName.toLowerCase().includes(q)
-    )
+    // 空格表示“且”，同一组中的“、/逗号/|”表示“或”。
+    const termGroups = searchQuery.value.trim().toLowerCase()
+      .split(/\s+/)
+      .map(group => group.split(/[、,，|/]+/).filter(Boolean))
+      .filter(group => group.length)
+    result = result.filter(hero => {
+      const searchText = getHeroSearchText(hero)
+      return termGroups.every(group => group.some(term => searchText.includes(term)))
+    })
   }
 
   return result
@@ -921,6 +890,7 @@ function closeHeroDetail() {
   delete newQuery.id
   router.replace({ query: newQuery })
   detailVisible.value = false
+  isJobDetailExpanded.value = false
   selectedHero.value = null
 }
 
@@ -952,6 +922,38 @@ const currentSelectedSkill = computed(() => {
 
 // Update skill level selection range
 const targetSkillLevel = ref(1)
+
+const skillLevelMax = computed(() => Math.max(
+  1,
+  Number(currentSelectedSkill.value?.maxLevel || currentSelectedSkill.value?.levelData?.length || 1)
+))
+
+const skillSliderStyle = computed(() => {
+  const max = skillLevelMax.value
+  const position = level => max <= 1 ? 0 : ((Number(level) - 1) / (max - 1)) * 100
+  return {
+    '--skill-level-start': `${position(currentSkillLevel.value)}%`,
+    '--skill-level-end': `${position(targetSkillLevel.value)}%`
+  }
+})
+
+const handleCurrentSkillLevelInput = event => {
+  const next = Number(event.target.value)
+  currentSkillLevel.value = Math.min(next, Number(targetSkillLevel.value))
+}
+
+const handleTargetSkillLevelInput = event => {
+  const next = Number(event.target.value)
+  targetSkillLevel.value = Math.max(next, Number(currentSkillLevel.value))
+}
+
+const handleSkillTrackClick = event => {
+  if (event.target instanceof HTMLInputElement) return
+  const rect = event.currentTarget.getBoundingClientRect()
+  const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width))
+  const level = Math.round(ratio * (skillLevelMax.value - 1)) + 1
+  targetSkillLevel.value = Math.max(level, Number(currentSkillLevel.value))
+}
 
 watch(currentSkillLevel, (newVal) => {
   const cur = parseInt(newVal)
@@ -1005,6 +1007,10 @@ const skillUpgradeRangeSummary = computed(() => {
 
 const formatSkillDescription = formatHighlightedText
 
+const mechanicsLabel = key => MECHANICS_LABELS[key] || key
+const critLabel = value => MECHANICS_CRIT_LABELS[value] || value
+const critTone = value => ({ yes: 'default', no: 'danger', conditional: 'accent', guaranteed: 'gold', unknown: 'default', na: 'default' }[value] || 'default')
+
 const currentSelectedSkillLevelDetail = computed(() => {
   const skill = currentSelectedSkill.value
   if (!skill || !skill.levelData) return null
@@ -1012,59 +1018,54 @@ const currentSelectedSkillLevelDetail = computed(() => {
   return detail || skill.levelData[0] || null
 })
 
+const currentSkillMechanics = computed(() => currentSelectedSkillLevelDetail.value?.mechanics || null)
+
 // Star skill selected
 const currentSelectedStarSkill = computed(() => {
   if (!selectedHero.value || !selectedHero.value.starSkills) return null
   return selectedHero.value.starSkills[activeStarIndex.value] || null
 })
 
-// Voicelines lists
-const exploreVoiceGroups = computed(() => {
-  if (!selectedHero.value || !selectedHero.value.behavior?.explore) return {}
-  const exp = selectedHero.value.behavior.explore
-  return {
-    start: { label: '开启探索', lines: exp.start || [] },
-    fight: { label: '遭遇战斗', lines: exp.fight || [] },
-    win: { label: '战斗胜利', lines: exp.win || [] },
-    exploreTalk: { label: '局内闲聊', lines: exp.exploreTalk || [] },
-    loopEnd: { label: '区域探索结束', lines: exp.loopEnd || [] },
-    readyGoHome: { label: '准备返回营地', lines: exp.readyGoHome || [] },
-    over: { label: '安全抵达营地', lines: exp.over || [] },
-    roomFinishMember: { label: '房间结束(队员)', lines: exp.roomFinishMember || [] },
-    roomFinishLeader: { label: '房间结束(队长)', lines: exp.roomFinishLeader || [] },
-    getGift: { label: '收到赠礼', lines: exp.getGift || [] },
-    gacha: { label: '抽卡获取', lines: exp.gacha || [] }
-  }
+// Calculator logic// Calculator logic
+const heroRankOptions = computed(() => {
+  const rankMap = heroRankConfig.value?.heroRank || {}
+  return Object.values(rankMap)
+    .filter(rank => Number.isFinite(Number(rank?.rank)) && Number(rank?.heroMaxLevel) > 0)
+    .map(rank => Number(rank.rank))
+    .sort((a, b) => a - b)
 })
 
-// Calculator logic
-function getRankMaxLevel(rank) {
-  const map = { 0: 10, 1: 20, 2: 30, 3: 40, 4: 50, 5: 60 }
-  return map[rank] || 80
+const maxHeroLevel = computed(() => {
+  const rankMap = heroRankConfig.value?.heroRank || {}
+  const rankMax = Math.max(1, ...heroRankOptions.value.map(rank => Number(rankMap[String(rank)]?.heroMaxLevel || 1)))
+  return Math.min(rankMax, playerLevelCap.value)
+})
+
+const calcRank = computed(() => {
+  const level = Number(calcLevel.value || 1)
+  const rankMap = heroRankConfig.value?.heroRank || {}
+  for (const rank of heroRankOptions.value) {
+    if (level < Number(rankMap[String(rank)]?.heroMaxLevel || 0)) return rank
+  }
+  return heroRankOptions.value.at(-1) || 0
+})
+
+const growthFields = ['maxHp', 'phyAtk', 'magicAtk', 'phyDef', 'magicDef']
+
+const formatGrowthValue = value => {
+  const rounded = Math.round(Number(value || 0) * 100) / 100
+  return Number.isInteger(rounded) ? String(rounded) : String(rounded).replace(/0+$/, '').replace(/\.$/, '')
 }
 
-function handleCalcLevelChange() {
-  const maxLvl = getRankMaxLevel(calcRank.value)
-  // Adjust rank if level exceeds limits
-  if (calcLevel.value > maxLvl) {
-    // Find matching rank
-    for (let r = 5; r >= 0; r--) {
-      if (calcLevel.value > getRankMaxLevel(r)) {
-        calcRank.value = Math.min(r + 1, 5)
-        break
-      }
-    }
-  }
-}
+const formatRate = rate => `${formatGrowthValue(Number(rate || 0) * 100)}%`
 
-function setCalcRank(rank) {
-  calcRank.value = rank
-  // Adjust level limit
-  const maxLvl = getRankMaxLevel(rank)
-  if (calcLevel.value > maxLvl) {
-    calcLevel.value = maxLvl
-  }
-}
+const heroLevelGrowthRate = computed(() => Number(heroLevelConfig.value?.attUp || 0))
+const heroBreakthroughRate = computed(() => {
+  const rates = heroRankOptions.value
+    .map(rank => Number(heroRankConfig.value?.heroRank?.[String(rank)]?.attUp || 0))
+    .filter(rate => rate > 0)
+  return rates[0] || 0
+})
 
 // Renders only clean, numeric attributes in computedStats
 const calculatorAttributes = computed(() => {
@@ -1074,8 +1075,6 @@ const calculatorAttributes = computed(() => {
   const exclude = ['level', 'name', 'name2', 'spType', 'tags', 'addSp']
   return Object.keys(unit).filter(key => !exclude.includes(key))
 })
-
-const growthFields = ['maxHp', 'phyAtk', 'magicAtk', 'phyDef', 'magicDef']
 
 // Growing attributes (maxHp, phyAtk, magicAtk, phyDef, magicDef)
 const growingAttributesList = computed(() => {
@@ -1116,59 +1115,7 @@ function translateAttributeKey(key) {
   return translateStatName(key)
 }
 
-// Inline dialogue loading and rendering
-// 每个剧情分段（如 fav_hero_011_1_0）独立加载自己的剧本文件
-const toggleDialogueInline = async (scriptId) => {
-  if (!scriptId) return
-  if (expandedDialogs.value.has(scriptId)) {
-    expandedDialogs.value.delete(scriptId)
-  } else {
-    expandedDialogs.value.add(scriptId)
-    // If not loaded, fetch from local dialogue catalog
-    if (!dialogsCache.value[scriptId]) {
-      loadingDialogs.value[scriptId] = true
-      try {
-        const baseUrl = getResourceBaseUrl()
-        const res = await fetch(`${baseUrl}/data/dialogs/${scriptId}.json`)
-        const direct = res.ok ? await res.json() : null
-        const listExps = direct ? direct.exps || [] : []
-
-        dialogsCache.value[scriptId] = listExps.filter(e => e.key === 'text' || e.key === 'option').map(e => {
-          if (e.key === 'option') {
-            return {
-              isOption: true,
-              options: (e.para.options || []).map(o => cleanDialogueLine(o.text))
-            }
-          }
-          const cleanedText = cleanDialogueLine(e.para.text || '')
-          if (!cleanedText) return null
-          
-          let sp = e.para.charaName || ''
-          if (sp === '主角' || sp === '[myName]' || sp === '{myName}') {
-            sp = '小工匠'
-          }
-          return {
-            isOption: false,
-            speaker: sp,
-            text: cleanedText
-          }
-        }).filter(Boolean)
-      } catch (err) {
-        console.error('Failed to load dialogue script:', err)
-      } finally {
-        loadingDialogs.value[scriptId] = false
-      }
-    }
-  }
-}
-
-const isDialogueExpanded = (scriptId) => {
-  return expandedDialogs.value.has(scriptId)
-}
-
-const cleanDialogueLine = cleanDialogueBase
-
-// Favorite Gifts computed property
+// Favorite Gifts computed property// Favorite Gifts computed property
 const heroFavoriteGifts = computed(() => {
   if (!selectedHero.value || !selectedHero.value.itemFavor || !Array.isArray(selectedHero.value.itemFavor)) return []
   
@@ -1181,8 +1128,13 @@ const heroFavoriteGifts = computed(() => {
   })).sort((a, b) => b.value - a.value)
 })
 
+const openItemDetail = (itemId) => {
+  if (!itemId) return
+  router.push({ query: { ...route.query, itemId } })
+}
+
 const handleGiftClick = (giftId) => {
-  router.push({ query: { ...route.query, itemId: giftId } })
+  openItemDetail(giftId)
 }
 </script>
 
@@ -1192,18 +1144,6 @@ const handleGiftClick = (giftId) => {
   height: 100%;
   display: flex;
   flex-direction: column;
-}
-
-.filter-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 12px 14px;
-  margin: 0 0 12px 0;
-  flex-shrink: 0;
-  max-height: 55vh;
-  overflow-y: auto;
-  box-sizing: border-box;
 }
 
 /* 英雄卡网格：网格内通栏自定义列（卡面为游戏原图比例） */
@@ -1356,6 +1296,37 @@ const handleGiftClick = (giftId) => {
   object-fit: contain;
   filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.4));
 }
+.portrait-section--protagonist {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  height: 340px;
+}
+.protagonist-portrait-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  height: 100%;
+}
+.protagonist-portrait-slot .chara-portrait-img {
+  width: 90%;
+  height: 340px;
+}
+.protagonist-portrait-toggle { display: none; }
+@media (max-width: 640px) {
+  .portrait-section--protagonist {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .protagonist-portrait-slot:not(.is-selected) { display: none; }
+  .protagonist-portrait-toggle {
+    display: inline-flex;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 1;
+    min-height: 32px;
+  }
+}
 
 /* 徽章行 */
 .hero-badges-row-container {
@@ -1365,6 +1336,117 @@ const handleGiftClick = (giftId) => {
   gap: 8px;
   margin-bottom: 14px;
   justify-content: center;
+}
+.job-badge-button {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.job-badge-button:focus-visible {
+  outline: 2px solid var(--accent-ink, #557574);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.job-badge-button .job-badge {
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+.job-badge-button:hover .job-badge,
+.job-badge-button.is-expanded .job-badge {
+  border-color: var(--accent-ink, #557574);
+  background: rgba(85, 117, 116, 0.12);
+  box-shadow: 0 2px 5px rgba(43, 31, 21, 0.16);
+}
+.job-badge-chevron {
+  width: 6px;
+  height: 6px;
+  margin: -3px 1px 0 4px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.18s ease, margin 0.18s ease;
+}
+.job-badge-button.is-expanded .job-badge-chevron {
+  margin-top: 3px;
+  transform: rotate(225deg);
+}
+.job-traits-panel {
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr);
+  gap: 16px;
+  margin: -2px 0 14px;
+  padding: 13px 14px;
+  border: 1px solid var(--border-soft, rgba(143, 115, 81, 0.45));
+  border-radius: 4px;
+  background: rgba(85, 117, 116, 0.07);
+  box-shadow: 0 1px 3px rgba(43, 31, 21, 0.1);
+}
+.job-traits-heading {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  gap: 9px;
+  color: var(--text-main, #3e2a14);
+}
+.job-traits-icon {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+.job-traits-heading strong,
+.job-traits-kicker {
+  display: block;
+}
+.job-traits-heading strong {
+  margin-top: 2px;
+  font-size: 14px;
+}
+.job-traits-kicker {
+  color: var(--text-muted, #6b5134);
+  font-size: 11px;
+}
+.job-traits-list {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+.job-trait-item + .job-trait-item {
+  padding-top: 10px;
+  border-top: 1px dashed var(--border-faint, rgba(143, 115, 81, 0.25));
+}
+.job-trait-name {
+  margin-bottom: 4px;
+  color: var(--text-main, #3e2a14);
+  font-size: 13px;
+  font-weight: 700;
+}
+.job-trait-description {
+  margin: 0;
+  color: var(--text-muted, #6b5134);
+  font-size: 13px;
+  line-height: 1.65;
+}
+.job-traits-enter-active,
+.job-traits-leave-active {
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+.job-traits-enter-from,
+.job-traits-leave-to {
+  opacity: 0;
+  transform: translateY(-5px);
+}
+@media (max-width: 560px) {
+  .job-traits-panel {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px;
+  }
+  .job-traits-heading {
+    justify-self: center;
+  }
 }
 .badge-icon {
   width: 16px;
@@ -1533,18 +1615,112 @@ const handleGiftClick = (giftId) => {
 .skill-level-slider-container {
   margin-bottom: 10px;
 }
-.slider-row {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 8px;
-}
 .lvl-slider-label {
   font-size: 13px;
   font-weight: 700;
   color: var(--text-muted, #6b5134);
 }
-.lvl-range-slider,
+.dual-slider-labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.dual-level-slider {
+  position: relative;
+  height: 28px;
+  margin: 0 8px;
+  cursor: pointer;
+}
+.dual-slider-track,
+.dual-slider-fill {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 6px;
+  border-radius: 999px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.dual-slider-track {
+  background: var(--border-color, #8f7351);
+}
+.dual-slider-fill {
+  left: var(--skill-level-start);
+  right: calc(100% - var(--skill-level-end));
+  background: var(--accent-bright, #7a9a99);
+}
+.dual-slider-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 28px;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+  cursor: pointer;
+}
+.dual-slider-input--current {
+  z-index: 2;
+}
+.dual-slider-input--target {
+  z-index: 3;
+}
+.dual-slider-input:focus-visible {
+  outline: none;
+}
+.dual-slider-input::-webkit-slider-runnable-track {
+  height: 6px;
+  background: transparent;
+}
+.dual-slider-input::-webkit-slider-thumb {
+  width: 16px;
+  height: 16px;
+  margin-top: -5px;
+  appearance: none;
+  border: 2px solid var(--paper-soft, #e9dcc3);
+  border-radius: 50%;
+  background: var(--accent-bright, #7a9a99);
+  box-shadow: 0 1px 4px rgba(43, 31, 21, 0.3);
+  pointer-events: auto;
+  cursor: grab;
+}
+.dual-slider-input:active::-webkit-slider-thumb {
+  cursor: grabbing;
+  box-shadow: 0 2px 7px rgba(43, 31, 21, 0.38);
+}
+.dual-slider-input::-moz-range-track {
+  height: 6px;
+  background: transparent;
+}
+.dual-slider-input::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--paper-soft, #e9dcc3);
+  border-radius: 50%;
+  background: var(--accent-bright, #7a9a99);
+  box-shadow: 0 1px 4px rgba(43, 31, 21, 0.3);
+  pointer-events: auto;
+  cursor: grab;
+}
+.dual-slider-input:active::-moz-range-thumb {
+  cursor: grabbing;
+  box-shadow: 0 2px 7px rgba(43, 31, 21, 0.38);
+}
+.dual-slider-input:focus-visible::-webkit-slider-thumb,
+.dual-slider-input:focus-visible::-moz-range-thumb {
+  outline: 2px solid var(--accent-ink, #557574);
+  outline-offset: 2px;
+}
+.dual-slider-scale {
+  display: flex;
+  justify-content: space-between;
+  margin: 2px 8px 0;
+  color: var(--text-muted, #6b5134);
+  font-size: 11px;
+}
 .calc-range-slider {
   width: 100%;
   cursor: pointer;
@@ -1575,6 +1751,54 @@ const handleGiftClick = (giftId) => {
   line-height: 1.7;
   color: var(--text-main, #3e2a14);
   white-space: pre-wrap;
+}
+
+.skill-mechanics-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: -2px 0 10px;
+  padding: 9px 12px;
+  border-left: 3px solid var(--accent-bright, #7a9a99);
+  background: rgba(122, 154, 153, 0.08);
+  border-radius: 3px;
+}
+.mechanics-row {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 9px;
+  min-width: 0;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.mechanics-label {
+  flex: 0 0 auto;
+  min-width: 62px;
+  color: var(--text-muted, #6b5134);
+  font-weight: 700;
+}
+.mechanics-text {
+  min-width: 0;
+  color: var(--text-main, #3e2a14);
+  overflow-wrap: anywhere;
+}
+.mechanics-muted-row .mechanics-text {
+  color: var(--text-muted, #6b5134);
+}
+.mechanics-condition-row {
+  color: var(--gold, #8a6a1f);
+}
+.mechanics-note-row {
+  color: var(--text-muted, #6b5134);
+}
+@media (max-width: 640px) {
+  .skill-mechanics-box {
+    padding: 8px 10px;
+  }
+  .mechanics-label {
+    min-width: 56px;
+  }
 }
 
 /* 升级消耗 */
@@ -1617,6 +1841,7 @@ const handleGiftClick = (giftId) => {
 }
 .cost-item-pill,
 .mat-item-pill {
+  appearance: none;
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -1625,7 +1850,23 @@ const handleGiftClick = (giftId) => {
   border-radius: 4px;
   padding: 4px 8px;
   font-size: 12px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  font-family: inherit;
+  line-height: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+.cost-item-pill:hover,
+.mat-item-pill:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+.cost-item-pill:focus-visible,
+.mat-item-pill:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 .cost-item-img,
 .mat-item-img {
@@ -1757,10 +1998,21 @@ const handleGiftClick = (giftId) => {
   font-weight: 700;
   color: var(--accent-ink, #557574);
 }
-.rank-selector-buttons {
+.level-growth-summary {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 9px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+@media (max-width: 520px) {
+  .level-growth-summary {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
 }
 
 .output-subheading {
@@ -1783,8 +2035,9 @@ const handleGiftClick = (giftId) => {
 }
 .attr-calc-card {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
   padding: 9px 12px;
   background: rgba(43, 31, 21, 0.07);
   border: 1px solid var(--border-faint, rgba(143, 115, 81, 0.25));
@@ -1802,14 +2055,6 @@ const handleGiftClick = (giftId) => {
   font-weight: 700;
   font-size: 13px;
 }
-.attr-val-base {
-  color: var(--text-faint, #8a6d4d);
-  text-decoration: line-through;
-  font-size: 12px;
-}
-.attr-arrow {
-  color: var(--text-faint, #8a6d4d);
-}
 .attr-val-calc {
   color: var(--text-main, #3e2a14);
   font-weight: 700;
@@ -1817,16 +2062,6 @@ const handleGiftClick = (giftId) => {
 .static-color {
   color: var(--text-main, #3e2a14);
 }
-.attr-diff-pill {
-  align-self: flex-start;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--q2, #2b7a2b);
-  background: rgba(43, 122, 43, 0.14);
-  border-radius: 3px;
-  padding: 1px 6px;
-}
-
 .calculator-costs {
   padding: 14px;
 }
@@ -1878,294 +2113,4 @@ const handleGiftClick = (giftId) => {
   gap: 6px;
 }
 
-/* ====== 档案 ====== */
-.archives-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.archive-item-card {
-  padding: 12px 14px;
-}
-.archive-card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-.title-side-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.archive-title {
-  margin: 0;
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--text-main, #3e2a14);
-  letter-spacing: 1px;
-}
-.archive-title.inline {
-  display: inline;
-}
-.fav-unlock-tag {
-  font-size: 12px;
-  color: var(--text-muted, #6b5134);
-}
-.unlock-fav-val {
-  font-weight: 700;
-  color: var(--gold, #8a6a1f);
-}
-.archive-desc-box {
-  background: rgba(43, 31, 21, 0.06);
-  border-left: 3px solid var(--border-color, #8f7351);
-  border-radius: 0 4px 4px 0;
-  padding: 8px 12px;
-  margin-bottom: 8px;
-}
-.archive-desc-txt {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.75;
-  color: var(--text-main, #3e2a14);
-  text-align: justify;
-  white-space: pre-wrap;
-}
-.archive-buff-banner {
-  background: rgba(122, 154, 153, 0.14);
-  border: 1px solid rgba(122, 154, 153, 0.4);
-  border-radius: 4px;
-  padding: 8px 12px;
-}
-.buff-title {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--accent-ink, #557574);
-  margin-right: 8px;
-}
-.buff-stats-flex {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 6px;
-}
-
-/* 剧情卡 */
-.story-task-gate {
-  background: rgba(43, 31, 21, 0.06);
-  border: 1px solid var(--border-faint, rgba(143, 115, 81, 0.25));
-  border-radius: 4px;
-  padding: 8px 12px;
-}
-.gate-label {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--text-muted, #6b5134);
-}
-.gate-txt {
-  margin: 4px 0 0;
-  font-size: 13px;
-  line-height: 1.7;
-  color: var(--text-main, #3e2a14);
-}
-.mail-body-inline-box {
-  background: var(--paper-solid, #d9c6a6);
-  border: 1px solid var(--border-soft, rgba(143, 115, 81, 0.45));
-  border-radius: 4px;
-  padding: 10px 14px;
-  box-shadow: inset 0 2px 5px rgba(43, 31, 21, 0.12);
-}
-.mail-inline-header {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text-main, #3e2a14);
-  margin-bottom: 6px;
-}
-.mail-inline-content {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.75;
-  color: var(--text-main, #3e2a14);
-  white-space: pre-wrap;
-}
-.story-reward-box {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.reward-lbl {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text-muted, #6b5134);
-}
-.reward-items-flex {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-.mail-r-item-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  background: var(--paper-soft, #e9dcc3);
-  border: 1px solid var(--border-faint, rgba(143, 115, 81, 0.25));
-  border-radius: 4px;
-  padding: 4px 8px;
-  font-size: 12px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-}
-.mail-r-item-img {
-  width: 22px;
-  height: 22px;
-  object-fit: contain;
-}
-.mail-r-item-name {
-  font-weight: 700;
-  color: var(--text-main, #3e2a14);
-}
-
-/* 对话展开按钮 */
-.toggle-dialogue-btn {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  width: 100%;
-  background: var(--wood, #2b1f15);
-  color: var(--paper, #dfceb3);
-  border: 1px solid #17100a;
-  border-radius: 4px;
-  padding: 8px 12px;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 700;
-  font-family: 'HarmonyOS', 'Microsoft YaHei', 'MYR2Sans', sans-serif;
-  transition: all 0.15s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  letter-spacing: 0.5px;
-}
-.toggle-dialogue-btn:hover {
-  background: var(--wood-soft, #463424);
-}
-.toggle-dialogue-btn.seg-mid {
-  margin-top: 6px;
-}
-.btn-left {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.seg-label {
-  font-size: 11px;
-  color: rgba(223, 206, 179, 0.7);
-}
-.btn-right {
-  font-size: 12px;
-  color: rgba(223, 206, 179, 0.8);
-}
-.dialogue-lines-container {
-  margin-top: 8px;
-}
-.dialogue-loading-indicator,
-.dialogue-error-indicator {
-  font-size: 13px;
-  color: var(--text-muted, #6b5134);
-  padding: 8px 0;
-  font-style: italic;
-}
-.dialogue-error-indicator {
-  color: var(--danger, #8b0000);
-}
-
-/* ====== 互动语音 ====== */
-.voice-subtabs {
-  margin-bottom: 12px;
-}
-.explore-voice-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.voice-group-card {
-  padding: 12px 14px;
-}
-.voice-group-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text-main, #3e2a14);
-  margin-bottom: 8px;
-  border-bottom: 1px dashed var(--border-soft, rgba(143, 115, 81, 0.45));
-  padding-bottom: 6px;
-}
-.voice-group-title.header-between {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
-  border-bottom: none;
-  padding-bottom: 0;
-  margin-bottom: 0;
-}
-.fav-requirement-label {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--gold, #8a6a1f);
-}
-.event-title-label {
-  font-size: 13px;
-  color: var(--text-main, #3e2a14);
-}
-.voice-lines-container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.voice-line-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 6px 10px;
-  background: rgba(43, 31, 21, 0.06);
-  border-radius: 4px;
-}
-.line-idx {
-  flex-shrink: 0;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--accent-ink, #557574);
-  padding-top: 2px;
-}
-.line-content-txt {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.7;
-  color: var(--text-main, #3e2a14);
-}
-.voicelines-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-}
-@media (max-width: 600px) {
-  .voicelines-grid {
-    grid-template-columns: 1fr;
-  }
-}
-.voiceline-card {
-  padding: 12px 14px;
-}
-.v-card-header {
-  margin-bottom: 6px;
-}
-.v-text-content {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.7;
-  color: var(--text-main, #3e2a14);
-  font-style: italic;
-}
 </style>

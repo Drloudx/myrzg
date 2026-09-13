@@ -1,12 +1,14 @@
 <template>
-  <div class="ui-card-grid-scroll" :id="id">
-    <div class="ui-card-grid" :class="{ 'is-wide': wide, 'is-small': small }">
+  <div ref="scrollElement" class="ui-card-grid-scroll" :id="id" data-main-scroll>
+    <div ref="gridElement" class="ui-card-grid" :class="{ 'is-wide': wide, 'is-small': small }" :style="contentStyle">
       <slot />
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
+
 /**
  * UiCardGrid —— 数据网格滚动容器（替代旧 .data-grid-scroll / .items-grid）
  * id 传给滚动容器，供 UiBackToTop 定位
@@ -15,8 +17,13 @@
 defineProps({
   id: { type: String, default: '' },
   wide: { type: Boolean, default: false },
-  small: { type: Boolean, default: false }
+  small: { type: Boolean, default: false },
+  contentStyle: { type: Object, default: null }
 })
+
+const scrollElement = ref(null)
+const gridElement = ref(null)
+defineExpose({ scrollElement, gridElement })
 </script>
 
 <style scoped>

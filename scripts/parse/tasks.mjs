@@ -17,10 +17,11 @@ export function buildTasksFile() {
     rewardJson: readJson('reward.json'),
     itemJson: readJson('item.json'),
     monJson: readJson('mon.json'),
+    fileMonJson: readJson('fileMon.json'),
     conditionJson: readJson('condition.json'),
     roomCollectJson: readJson('roomCollect.json'),
     roomCollectTypeJson: readJson('roomCollectType.json'),
-    newOrderJson: readJson('委托订单newOrder.json'),
+    newOrderJson: readJson('newOrder.json'),
     heroJson: readJson('hero/hero.json'),
     dialogIndexJson: readJson('parsed/dialogIndex.json'),
     dialogSegmentsJson: readJson('parsed/dialogSegments.json')

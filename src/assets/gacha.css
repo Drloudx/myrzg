@@ -1,0 +1,382 @@
+﻿/**
+ * 卡池页面皮肤（游戏原素材）。
+ *
+ * 适用范围：仅 `/gacha` 模拟招募页面及其业务组件（`src/components/gacha/`）。
+ * 与 `assets/theme.css`（羊皮纸 Wiki 设计系统）并行：本文件负责「还原游戏 UI」所需的
+ * 设计画布、9 宫格切片、游戏文本色与演出关键帧；颜色与品质色仍优先复用 theme.css 变量。
+ *
+ * 坐标约定：设计画布 1534×750、原点在画面中心（见 `utils/gachaLayout.js`）。
+ * 9 宫格切片值取自图集元数据 `mSprites[].border*`（`4.24路资源包/.../uiprefab/*_Atlas.json`），
+ * 不是目测值；修改必须在图集元数据中复核。
+ */
+
+:root {
+  /* 游戏 Const.cs 的 ColorString，仅用于游戏皮肤文本 */
+  --gacha-ink: #f8eedc;        /* ColorString[1] 米白正文 */
+  --gacha-ink-gold: #cfba96;   /* ColorString[2] 米金 */
+  --gacha-gold: #ffd270;       /* ColorString[3] 倒计时 */
+  --gacha-ink-dim: #a59175;    /* ColorString[5] 弱化 */
+  --gacha-brown: #533e26;      /* ColorString[10] 深棕（浅底文本） */
+  --gacha-brown-gold: #a36f0a; /* ColorString[15] 暗金 */
+  --gacha-danger: #cb462b;     /* ColorString[7] 不足/危险 */
+  --gacha-quality-1: #cfba96;
+  --gacha-quality-2: #a7c037;
+  --gacha-quality-3: #3fa2ff;
+  --gacha-quality-4: #ee62f1;
+  --gacha-quality-5: #ffb64d;
+  --gacha-card-radius: 8px;
+}
+
+/* 整页背板：模糊放大的主视觉，铺满画布之外的留白，避免出现硬边黑框 */
+.gacha-bleed {
+  position: absolute;
+  inset: -6%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: blur(26px) brightness(0.45) saturate(1.15);
+  transform: scale(1.06);
+  pointer-events: none;
+}
+
+/* 竖屏提示：非阻塞，不接管点击，也不改变画布构图 */
+.gacha-rotate-hint {
+  position: absolute;
+  left: 50%;
+  bottom: calc(10px + var(--safe-bottom, 0px));
+  transform: translateX(-50%);
+  max-width: min(92%, 520px);
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(12, 8, 4, 0.78);
+  border: 1px solid rgba(248, 238, 220, 0.28);
+  text-align: center;
+  pointer-events: none;
+}
+
+.gacha-rotate-hint .g-text {
+  white-space: normal;
+  line-height: 1.4;
+}
+
+/* 盖在卡池页之上的整屏覆盖层（概率详情 / 记录查询 / 揭晓 / 结果一览）。
+   每个面板各有自己的 `GachaStage`，若与卡池面板同时留在文档流里，第二个画布会被
+   排到 100% 高度之外、被 `.gacha-page` 裁掉——所以覆盖层必须绝对定位。 */
+.gacha-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+/* ---------- 画布 ---------- */
+
+.gacha-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  background: #0b0703;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 叠加在卡池页之上的弹层舞台：底色透明，露出下面的卡池页（游戏 heroPoolTip 行为） */
+.gacha-stage--clear {
+  background: transparent;
+}
+
+/* fit:'height'（游戏 UIRoot 口径）：画布按高度缩放撑满，宽出视口的部分对称裁切；
+   舞台背景在 contain 下露出信箱边、height 下被画布完全覆盖（内容层自带动宽素材） */
+.gacha-canvas--fill {
+  flex: 0 0 auto;
+}
+
+/* HUD 层：舞台（视口）坐标，不随画布缩放；抽卡演出的分享/跳过等屏幕边按钮挂这里 */
+.gacha-hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.gacha-hud > * {
+  pointer-events: auto;
+}
+
+.gacha-canvas {
+  position: relative;
+  width: 1534px;
+  height: 750px;
+  flex: 0 0 auto;
+  transform-origin: center center;
+  font-family: var(--font-ui);
+  color: var(--gacha-ink);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 绝对定位 + 居中：位置由内联 style 的 calc(50% ± Npx) 提供 */
+.g-abs {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+/* 内联图片会在基线下方留出几像素间隙，把 `.g-abs` 容器撑高，
+   使 translate(-50%,-50%) 的居中点相对图片上移（整页缩放下可差 3px 以上）。
+   所有卡池层的图片都改为块级，保证容器高度等于图片高度。 */
+.g-abs > img {
+  display: block;
+}
+
+/* 层叠顺序：背景 0-9 / 主体美术 10-19 / 装饰 20-39 / 面板 40-59 / 交互 60-79 / 弹层 80+ */
+.g-layer-bg { z-index: 1; }
+.g-layer-art { z-index: 10; }
+.g-layer-deco { z-index: 20; }
+.g-layer-ui { z-index: 40; }
+.g-layer-interactive { z-index: 60; }
+.g-layer-overlay { z-index: 80; }
+
+/* ---------- 9 宫格切片（值取自图集元数据 border*） ---------- */
+
+.g-slice {
+  border-style: solid;
+  border-width: 0;
+  border-color: transparent;
+  image-rendering: auto;
+}
+
+.g-slice--tab { border-image: url('/images/HeroPoolPanel_Atlas/gacha_page.png') 0 60 0 60 fill / 0 60px stretch; }
+.g-slice--tab-on { border-image: url('/images/HeroPoolPanel_Atlas/gacha_page_on.png') 0 60 0 60 fill / 0 60px stretch; }
+.g-slice--tab-sp { border-image: url('/images/HeroPoolPanel_Atlas/gacha_page_sp.png') 0 60 0 60 fill / 0 60px stretch; }
+.g-slice--btn-y { border-image: url('/images/Common_Atlas/com_btn_Y_sp.png') 0 60 0 60 fill / 0 60px stretch; }
+.g-slice--btn-n { border-image: url('/images/Common_Atlas/com_btn_N_sp.png') 0 60 0 60 fill / 0 60px stretch; }
+.g-slice--info { border-image: url('/images/Common_Atlas/com_info_botm.png') 0 15 0 15 fill / 0 15px stretch; }
+.g-slice--top-item { border-image: url('/images/Common_Atlas/com_top_item.png') 0 20 0 20 fill / 0 20px stretch; }
+.g-slice--txt-botm4 { border-image: url('/images/Common_Atlas/com_txt_botm4.png') 4 4 4 4 fill / 4px stretch; }
+.g-slice--txt-botm5 { border-image: url('/images/Common_Atlas/com_txt_botm5.png') 16 4 16 4 fill / 16px 4px stretch; }
+.g-slice--btn-mini { border-image: url('/images/Common_Atlas/com_btn_mini.png') 0 24 0 24 fill / 0 24px stretch; }
+.g-slice--chara-change { border-image: url('/images/HeroInfoPanel_Atlas/chara_btn_change.png') 0 24 0 24 fill / 0 24px stretch; }
+.g-slice--chara-change-press { border-image: url('/images/HeroInfoPanel_Atlas/chara_btn_change_press.png') 0 24 0 24 fill / 0 24px stretch; }
+.g-slice--record-1 { border-image: url('/images/TipsManager_Atlas/item_info_color1.png') 0 8 0 8 fill / 0 8px stretch; }
+.g-slice--record-2 { border-image: url('/images/TipsManager_Atlas/item_info_color2.png') 0 8 0 8 fill / 0 8px stretch; }
+.g-slice--record-3 { border-image: url('/images/TipsManager_Atlas/item_info_color3.png') 0 8 0 8 fill / 0 8px stretch; }
+.g-slice--record-4 { border-image: url('/images/TipsManager_Atlas/item_info_color4.png') 0 8 0 8 fill / 0 8px stretch; }
+.g-slice--record-5 { border-image: url('/images/TipsManager_Atlas/item_info_color5.png') 0 8 0 8 fill / 0 8px stretch; }
+
+/* ---------- 游戏文本 ---------- */
+
+.g-text {
+  font-family: var(--font-ui);
+  font-size: 18px;
+  line-height: 1.35;
+  color: var(--gacha-ink);
+  white-space: nowrap;
+  /* 游戏文本无阴影（用户指认浅底上发脏），不加 text-shadow */
+}
+
+.g-text--sm { font-size: 16px; }
+.g-text--xs { font-size: 14px; }
+/* prefab 里 20px 的档：货币 Label、×N、或、记录行 */
+.g-text--md { font-size: 20px; }
+.g-text--lg { font-size: 22px; }
+.g-text--gold { color: var(--gacha-gold); }
+.g-text--dim { color: var(--gacha-ink-dim); }
+.g-text--brown { color: var(--gacha-brown); }
+.g-text--danger { color: var(--gacha-danger); }
+.g-text--center { text-align: center; }
+
+/* ---------- 交互 ---------- */
+
+.g-hit {
+  cursor: pointer;
+  transition: filter 0.12s ease, transform 0.12s ease;
+}
+
+.g-hit:hover { filter: brightness(1.12); }
+/* 注意：`.g-hit` 既用在 `.g-abs`（靠 translate 居中）元素上，也用在流内元素（flex 项）上。
+   位移只能给 `.g-abs` 的那一类，否则按下时非居中元素会被整体挪走半个自身尺寸
+   （表现为「按钮飞起来」）。通用反馈只保留亮度。 */
+.g-hit:active { filter: brightness(0.9); }
+.g-abs.g-hit:active { transform: translate(-50%, -50%) scale(0.97); }
+.g-hit--disabled { cursor: default; filter: grayscale(0.5) brightness(0.7); }
+.g-hit--disabled:hover { filter: grayscale(0.5) brightness(0.7); }
+
+.g-focusable:focus-visible {
+  outline: 2px solid var(--gacha-gold);
+  outline-offset: 3px;
+}
+
+/* ---------- 演出关键帧（对应源码 tween/粒子，用 CSS 近似） ---------- */
+
+@keyframes gacha-ring-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes gacha-breathe {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.65; }
+}
+
+/* 角饰呼吸：对应源码 TweenAlpha 1↔0.275（style=2 ping-pong） */
+@keyframes gacha-breathe-strong {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.275; }
+}
+
+@keyframes gacha-scale-in {
+  from { transform: scale(1.2); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes gacha-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes gacha-star-pop {
+  0% { transform: scale(0.4); opacity: 0; }
+  60% { transform: scale(1.18); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes gacha-shine-sweep {
+  0% { transform: translateX(-120%) rotate(8deg); opacity: 0; }
+  25% { opacity: 0.9; }
+  100% { transform: translateX(120%) rotate(8deg); opacity: 0; }
+}
+
+@keyframes gacha-card-flip-in {
+  0% { transform: scale(0.6) rotateY(-90deg); opacity: 0; }
+  70% { transform: scale(1.06) rotateY(0deg); opacity: 1; }
+  100% { transform: scale(1) rotateY(0deg); opacity: 1; }
+}
+
+@keyframes gacha-rise-in {
+  0% { transform: translateY(26px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes gacha-glow-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.04); }
+}
+
+/* 减少动态效果：保留静态姿势，关闭关键帧（与全站约定一致） */
+@media (prefers-reduced-motion: reduce) {
+  .gacha-canvas *,
+  .gacha-canvas *::before,
+  .gacha-canvas *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ---------- 货币条与抽取消耗行（卡池列表页与招募结果一览共用，数据见 utils/gachaCurrency.js） ---------- */
+
+/* 整行：右锚定、槽间距 14（prefab 底牌之间约 16px 空隙） */
+.currency-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* 槽：高度固定为底牌高 28，图标(36)/「+」(40) 允许溢出，底牌才不会被撑高 */
+.currency-slot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding-right: 2px;
+}
+
+/* 底牌：铺满槽盒（槽盒高 28 = 底牌高）。注意不要加 translateY(-50%)——
+   槽内 icon/label/add 都以槽盒为中心溢出居中，底牌再用 transform 上移半高
+   就会整体偏高约 15px（用户报告「阴影和数据没对齐」的根因）。 */
+.currency-slot__bg {
+  position: absolute;
+  inset: 0;
+}
+
+.currency-slot__icon {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+
+.currency-slot__label {
+  position: relative;
+  font-size: 20px;
+  text-align: left;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+
+.currency-slot__add {
+  position: relative;
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  padding: 0;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  z-index: 5;
+}
+
+.currency-slot__add img { width: 40px; height: 40px; }
+.currency-slot__add:active { filter: brightness(1.2); }
+
+/* 抽取消耗行：`gacha_btn_tag`（64×32，深棕核心、四周软渐变，border 全 0 整图拉伸）
+   作底板，位于按钮中心上方 52（y=-264）。软边约占总高 15%，可见底边距按钮顶边约
+   4px（几何底边与按钮顶边相切）。整条 pointer-events:none，重叠部分的点击穿透到
+   下方按键；宽度随内容增长、最小 292（与按钮同宽，游戏实测），数字加长时不裁切。 */
+.draw-cost {
+  min-width: 292px;
+  height: 34px;
+  padding: 0 18px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transform: translate(-50%, -50%);
+  z-index: 61;
+  white-space: nowrap;
+}
+
+/* 底板：铺满整条，置于内容之下 */
+.draw-cost__plate {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.draw-cost__or {
+  /* prefab UILabel：「或」= #cfba96（ColorString[2]），非弱化棕 */
+  color: #cfba96;
+}
+
+.draw-cost__icon {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.draw-cost .g-text {
+  position: relative;
+}

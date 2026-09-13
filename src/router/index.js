@@ -3,6 +3,11 @@ import { closeItemDetail } from '../utils/itemModalState'
 
 const routes = [
   {
+    path: '/runes',
+    name: 'runes',
+    component: () => import('../views/RunesView.vue')
+  },
+  {
     path: '/',
     redirect: '/recipes'
   },
@@ -25,6 +30,16 @@ const routes = [
     path: '/items',
     name: 'items',
     component: () => import('../views/ItemsView.vue')
+  },
+  {
+    path: '/furniture',
+    name: 'furniture',
+    component: () => import('../views/FurnitureView.vue')
+  },
+  {
+    path: '/facilities',
+    name: 'facilities',
+    component: () => import('../views/FacilitiesView.vue')
   },
   {
     path: '/monsters',
@@ -52,6 +67,11 @@ const routes = [
     component: () => import('../views/HeroesView.vue')
   },
   {
+    path: '/partner-mails',
+    name: 'partner-mails',
+    component: () => import('../views/PartnerMailsView.vue')
+  },
+  {
     path: '/tasks',
     name: 'tasks',
     component: () => import('../views/TasksView.vue')
@@ -70,7 +90,12 @@ const routes = [
     path: '/dungeons',
     name: 'dungeons',
     component: () => import('../views/DungeonsView.vue')
-  }
+  },
+  {
+    path: '/gacha',
+    name: 'gacha',
+    component: () => import('../views/GachaView.vue')
+  },
 ]
 
 const router = createRouter({

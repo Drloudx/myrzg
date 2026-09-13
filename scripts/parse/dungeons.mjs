@@ -1,5 +1,5 @@
 /** 副本图鉴预解析：轻量索引 + 按关卡拆分的详情文件。 */
-import { buildDungeonData } from '../../src/utils/dungeonData.js'
+import { buildDungeonData, buildDungeonItemSources } from '../../src/utils/dungeonData.js'
 import { readJson } from './shared.mjs'
 
 const compactReward = (entry = {}) => ({
@@ -191,6 +191,8 @@ export function buildDungeonsFiles() {
     }
   })
 
+  const dungeonSources = buildDungeonItemSources(fullData.dungeons)
   files.unshift({ file: 'parsed/dungeons.json', data: { dungeons, mapNames: fullData.mapNames } })
-  return { files }
+  files.push({ file: 'parsed/parsed-dungeon-sources.json', data: dungeonSources })
+  return { files, deps: { dungeonSources } }
 }

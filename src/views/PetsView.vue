@@ -41,7 +41,7 @@
               alt=""
             />
             <img
-              :src="getImageUrl(`/images/PicHandBookPanel/${pet.monImg}.png`)"
+              :src="getImageUrl(`/images/PicHandBookPanel_Atlas/${pet.monImg}.png`)"
               :alt="pet.name"
               class="pet-card-avatar"
               loading="lazy"
@@ -86,7 +86,7 @@
               </div>
 
               <img
-                :src="getImageUrl(`/images/PicHandBookPanel/${selectedPet.monImg}.png`)"
+                :src="getImageUrl(`/images/PicHandBookPanel_Atlas/${selectedPet.monImg}.png`)"
                 :alt="selectedPet.name"
                 class="pet-portrait-img"
                 @error="handleImgError"
@@ -104,7 +104,7 @@
               </div>
 
               <img
-                :src="getImageUrl(`/images/PicHandBookPanel/${selectedPet.monImg}_a.png`)"
+                :src="getImageUrl(`/images/PicHandBookPanel_Atlas/${selectedPet.monImg}_a.png`)"
                 :alt="selectedPet.name"
                 class="pet-portrait-img"
                 @error="handleImgError"
@@ -389,7 +389,7 @@
 
             <!-- 等级数值模拟 -->
             <UiSection title="等级数值模拟">
-              <div class="level-slider-block">
+              <div class="level-slider-block paper-panel-solid">
                 <div class="slider-labels">
                   <span class="slider-title">目标等级:</span>
                   <span class="slider-value">Lv.{{ calcLevel }}</span>
@@ -397,10 +397,13 @@
                 <input
                   type="range"
                   min="1"
-                  max="100"
+                  :max="playerLevelCap"
                   v-model.number="calcLevel"
                   class="range-slider-m"
                 />
+                <div class="pet-level-growth-summary">
+                  <span>每级基础属性 + 当前成长值</span>
+                </div>
               </div>
 
               <!-- Exp cumulative and slime equivalent -->
@@ -412,15 +415,14 @@
                 <div class="exp-slime-row">
                   <span>约等于绿色史莱姆数量:</span>
                   <div class="slime-chip">
-                    <img :src="getImageUrl('/images/PicHandBookPanel/colect_mon_072.png')" class="mini-slime-icon" alt="" />
+                    <img :src="getImageUrl('/images/PicHandBookPanel_Atlas/colect_mon_072.png')" class="mini-slime-icon" alt="" />
                     <span>×{{ (cumulativeLevelExp / 125).toFixed(1) }} </span>
                   </div>
                 </div>
               </div>
 
-              <!-- Dual-Column Stats Display -->
+              <!-- Current-level stats -->
               <div class="pet-base-stats-grid">
-                <!-- Row 1: 生命 & 生命成长 -->
                 <div class="pet-attr-cell">
                   <span class="attr-label">生命</span>
                   <span class="attr-val">{{ Math.floor(selectedPet.hp + growthHp * calcLevel) }}</span>
@@ -434,8 +436,6 @@
                     </span>
                   </div>
                 </div>
-
-                <!-- Row 2: 攻击 & 攻击成长 -->
                 <div class="pet-attr-cell">
                   <span class="attr-label">攻击</span>
                   <span class="attr-val">{{ Math.floor(selectedPet.atk + growthAtk * calcLevel) }}</span>
@@ -449,8 +449,6 @@
                     </span>
                   </div>
                 </div>
-
-                <!-- Row 3: 防御 & 防御成长 -->
                 <div class="pet-attr-cell">
                   <span class="attr-label">防御</span>
                   <span class="attr-val">{{ Math.floor(selectedPet.def + growthDef * calcLevel) }}</span>
@@ -464,8 +462,6 @@
                     </span>
                   </div>
                 </div>
-
-                <!-- Row 4: 敏捷 & 敏捷成长 -->
                 <div class="pet-attr-cell">
                   <span class="attr-label">敏捷</span>
                   <span class="attr-val">{{ Math.floor(selectedPet.dex + growthDex * calcLevel) }}</span>
@@ -520,6 +516,7 @@ const router = useRouter()
 const allPets = ref([])
 const petLevelData = ref(null)
 const petSetting = ref(null)
+const playerLevelCap = ref(1)
 const isDataReady = ref(false)
 const detailVisible = ref(false)
 const selectedPet = ref(null)
@@ -553,6 +550,7 @@ onMounted(async () => {
     allPets.value = data.pets
     petLevelData.value = data.petLevel
     petSetting.value = data.petSetting
+    playerLevelCap.value = Number(data.playerLevelCap) || 1
     isDataReady.value = true
 
     // Check URL Query parameter for auto-open
@@ -775,15 +773,7 @@ const handleImgError = (e) => {
   height: 100%;
 }
 
-/* ====== 筛选面板（半透明羊皮纸容器） ====== */
-.filter-panel {
-  padding: 12px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex-shrink: 0;
-  margin: 0 0 12px 0;
-}
+/* ====== 筛选面板：继承 theme.css 全局 .filter-panel（padding 12px 14px，搜索框与其余图鉴页面一致） ====== */
 
 /* ====== 魔物卡牌网格（大幅面 5 列精致展示） ====== */
 .pets-card-grid :deep(.ui-card-grid) {
@@ -982,16 +972,11 @@ const handleImgError = (e) => {
 .element-3 { color: var(--q2); }   /* 风 - 绿 */
 .element-4 { color: var(--q5); }   /* 地 - 棕 */
 
-/* ====== 详情页签包装（吸顶） ====== */
+/* ====== 详情页签包装 ====== */
 .detail-tabs-wrap {
   width: calc(100% - 32px);
   max-width: calc(800px - 32px);
   margin: 0 auto 16px;
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  background: var(--paper);
-  border-radius: 6px 6px 0 0;
   box-sizing: border-box;
 }
 
@@ -1204,11 +1189,28 @@ const handleImgError = (e) => {
 .rank-badge.rank-a, .growth-rank-badge.rank-a { background: var(--q4); }
 .rank-badge.rank-s, .growth-rank-badge.rank-s { background: var(--q5); }
 
-/* 等级模拟输出网格（带字母徽章，页特有） */
+.pet-level-growth-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 3px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+/* 等级模拟输出网格 */
 .pet-base-stats-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 8px;
+  margin-top: 10px;
+}
+
+@media (max-width: 520px) {
+  .pet-level-growth-summary {
+    justify-content: flex-start;
+  }
 }
 
 .pet-attr-cell {
@@ -1292,6 +1294,7 @@ const handleImgError = (e) => {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  padding: 11px 13px;
 }
 
 .slider-labels {

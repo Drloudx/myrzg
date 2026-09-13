@@ -3,26 +3,29 @@
 
     <!-- 筛选区：半透明羊皮纸面板 -->
     <div class="events-filter-panel paper-panel">
-      <!-- 顶部页签：随机事件 / 探索区域 -->
-      <UiSegmentedTabs
-        :model-value="activeTab"
-        :options="tabOptions"
-        @update:model-value="selectTab"
-      />
-
-      <!-- 地图筛选（与其他页面分段标签一致：均分占满，手机端自动适配） -->
-      <UiSegmentedTabs
-        v-if="mapOptions.length > 1"
-        :model-value="filterMap"
-        :options="mapOptions"
-        @update:model-value="selectMap"
-      />
-
       <!-- 搜索 -->
       <UiSearchInput
         v-model="searchQuery"
         :placeholder="activeTab === 'random' ? '搜索事件名称、描述...' : '搜索探索区域名称、描述...'"
       />
+
+      <UiFilterRow label="类型：">
+        <UiFilterPill
+          v-for="option in tabOptions"
+          :key="option.key"
+          :active="activeTab === option.key"
+          @click="selectTab(option.key)"
+        >{{ option.label }}</UiFilterPill>
+      </UiFilterRow>
+
+      <UiFilterRow v-if="mapOptions.length > 1" label="地图：">
+        <UiFilterPill
+          v-for="option in mapOptions"
+          :key="option.key"
+          :active="filterMap === option.key"
+          @click="selectMap(option.key)"
+        >{{ option.label }}</UiFilterPill>
+      </UiFilterRow>
 
       <!-- 数量计数 -->
       <div class="collection-counter">
@@ -72,10 +75,7 @@
         <!-- 徽标行 -->
         <div class="detail-badges">
           <UiTag v-if="selectedItem.badgeText" :quality="selectedItem.quality">{{ selectedItem.badgeText }}</UiTag>
-          <template v-if="activeTab === 'random'">
-            <UiTag tone="accent">CD {{ selectedItem.cd }}s</UiTag>
-          </template>
-          <template v-else>
+          <template v-if="activeTab !== 'random'">
             <UiTag tone="accent">Lv.{{ selectedItem.level }}</UiTag>
             <UiTag :quality="selectedItem.quality">{{ qualityName(selectedItem.quality) }}</UiTag>
           </template>
@@ -97,13 +97,14 @@
           <UiInfoRow label="事件描述" :value="selectedItem.des || '（无描述）'" />
           <UiInfoRow v-if="selectedItem.buttonText" label="交互按钮" :value="selectedItem.buttonText" />
           <UiInfoRow label="出现地图">
-            <template v-if="selectedItem.mapNames.length">
+            <div v-if="selectedItem.mapNames.length" class="event-map-tags">
               <UiTag v-for="(m, mi) in selectedItem.mapNames" :key="mi" tone="default">{{ m }}</UiTag>
-            </template>
+            </div>
             <template v-else>未知</template>
           </UiInfoRow>
-          <UiInfoRow v-if="selectedItem.chance > 0" label="刷新概率" :value="`${selectedItem.chance}%`" />
-          <UiInfoRow label="冷却时间" :value="`${selectedItem.cd} 秒`" />
+          <UiInfoRow v-if="selectedItem.chance > 0" label="刷新权重" :value="selectedItem.chance" />
+          <UiInfoRow v-if="selectedItem.groupCooldown > 0" label="同组刷新冷却" :value="formatDuration(selectedItem.groupCooldown)" />
+          <UiInfoRow label="交互消耗" :value="selectedItem.consumeText || '无'" />
         </UiSection>
 
         <!-- 探索区域信息 -->
@@ -131,7 +132,7 @@
               :rule="{
                 targetName: rw.name,
                 targetImg: getImageUrl(rw.icon),
-                targetQuality: 0,
+                targetQuality: rw.quality,
                 min: rw.count,
                 max: rw.count,
                 typeId: rw.typeId
@@ -156,26 +157,26 @@ import {
   UiBackToTop,
   UiCardGrid,
   UiEmptyState,
+  UiFilterPill,
+  UiFilterRow,
   UiInfoRow,
   UiItemCard,
   UiModal,
   UiRewardCard,
   UiSearchInput,
   UiSection,
-  UiSegmentedTabs,
   UiTag
 } from '../components/ui/index.js'
 import { fetchWithFallback } from '../utils/request.js'
 import { getImageUrl } from '../utils/env'
 import { isBlacklisted } from '../config/blacklist.js'
 import { getRarityName } from '../utils/gameMappings'
-import { buildEventData } from '../utils/eventData.js'
 import { useLazyList } from '../composables/useLazyList'
 
 const route = useRoute()
 const router = useRouter()
 
-const activeTab = ref(route.query.tab === 'explore' ? 'explore' : 'random')
+const activeTab = ref(route.query.explore || route.query.tab === 'explore' ? 'explore' : 'random')
 const tabOptions = [
   { key: 'random', label: '随机事件' },
   { key: 'explore', label: '探索区域' }
@@ -199,6 +200,13 @@ const handleImgError = (e) => {
 
 // 品质名称统一走 gameMappings.getRarityName（官方体系：普通/稀少/珍贵/罕见/传说）
 const qualityName = (q) => getRarityName(q)
+const formatDuration = seconds => {
+  const value = Number(seconds || 0)
+  if (value <= 0) return '无'
+  if (value % 3600 === 0) return `${value} 秒（${value / 3600} 小时）`
+  if (value % 60 === 0) return `${value} 秒（${value / 60} 分钟）`
+  return `${value} 秒`
+}
 
 // ---------- 筛选选项（全部大地图 c1~c5，黑名单地图是否隐藏由全局 blacklist.js 决定） ----------
 const mapOptions = computed(() => {
@@ -213,39 +221,12 @@ const mapOptions = computed(() => {
 })
 
 // ---------- 奖励解析已收敛到 gameMappings.parseRewardEntries（见 eventData.js） ----------
-
-// 消耗道具解析（consume.json: explore001 = 200G）
-const CONSUME_MONEY = { explore001: 200, explore002: 400, explore003: 600 }
-const consumeText = (consumeId) => {
-  const money = CONSUME_MONEY[consumeId]
-  return money ? `${money}G` : (consumeId || '')
-}
+// 消耗文案已由构建期 eventData.js 解析进 selectedItem.consumeText，此处不再复制。
 
 // ---------- 加载 ----------
 onMounted(async () => {
   try {
-    let built = null
-
-    // 优先读取构建期预解析单文件
-    try {
-      const data = await fetchWithFallback('data/parsed/events.json')
-      built = data
-    } catch (e) {
-      console.warn('parsed/events.json 不可用，回退到原始多文件加载:', e?.message || e)
-    }
-
-    if (!built) {
-      const [eventJson, areaJson, rewardJson, itemJson, mapJson, exploreJson, monJson] = await Promise.all([
-        fetchWithFallback('data/randomEventInfo.json'),
-        fetchWithFallback('data/randomEventArea.json'),
-        fetchWithFallback('data/reward.json'),
-        fetchWithFallback('data/item.json'),
-        fetchWithFallback('data/area.json'),
-        fetchWithFallback('data/exploreArea.json'),
-        fetchWithFallback('data/mon.json')
-      ])
-      built = buildEventData({ eventJson, areaJson, rewardJson, itemJson, mapJson, exploreJson, monJson })
-    }
+    const built = await fetchWithFallback('data/parsed/events.json')
 
     // 大地图名索引（c1_map -> 秋日荒野），供「全部 / 大地图」筛选行使用
     mapNameMap.value = built.mapNameMap || {}
@@ -261,17 +242,7 @@ onMounted(async () => {
 
     isDataReady.value = true
 
-    // ?event=/?explore= 直达详情
-    const eventId = route.query.event
-    if (eventId) {
-      const item = events.value.find(e => e.id === eventId)
-      if (item) openDetail(item)
-    }
-    const exploreId = route.query.explore
-    if (exploreId) {
-      const item = explores.value.find(e => e.id === exploreId)
-      if (item) openDetail(item)
-    }
+    syncDetailFromRoute()
   } catch (err) {
     console.error('加载事件数据失败:', err)
     errorMessage.value = '加载失败：' + (err && err.message ? err.message : err)
@@ -281,7 +252,6 @@ onMounted(async () => {
 
 // ---------- 列表与筛选 ----------
 const currentList = computed(() => activeTab.value === 'random' ? events.value : explores.value)
-const listCount = computed(() => currentList.value.length)
 
 const filteredList = computed(() => {
   return currentList.value.filter(item => {
@@ -298,6 +268,7 @@ const filteredList = computed(() => {
     return true
   })
 })
+const listCount = computed(() => filteredList.value.length)
 
 const { displayedItems: displayedList } = useLazyList(filteredList, 60, '#eventsGridScroll')
 
@@ -312,7 +283,10 @@ const selectMap = (key) => {
 }
 
 watch([activeTab, filterMap, searchQuery], () => {
-  const query = {}
+  const query = { ...route.query }
+  delete query.tab
+  delete query.map
+  delete query.q
   if (activeTab.value !== 'random') query.tab = activeTab.value
   if (filterMap.value !== 'all') query.map = filterMap.value
   if (searchQuery.value.trim()) query.q = searchQuery.value.trim()
@@ -326,7 +300,9 @@ const openDetail = (item) => {
   selectedItem.value = item
   detailVisible.value = true
   const key = activeTab.value === 'random' ? 'event' : 'explore'
-  router.replace({ query: { ...route.query, [key]: item.id } })
+  const query = { ...route.query, [key]: item.id }
+  delete query[key === 'event' ? 'explore' : 'event']
+  router.replace({ query })
 }
 
 const closeDetail = () => {
@@ -343,19 +319,22 @@ const goToItem = (typeId) => {
   router.push({ query: { ...route.query, itemId: typeId } })
 }
 
+// 路由是详情身份的唯一来源；同步时不再次写路由，避免跨页直达时相互覆盖。
+const syncDetailFromRoute = () => {
+  if (!isDataReady.value) return
+  const { event: eventId, explore: exploreId, tab } = route.query
+  activeTab.value = exploreId || tab === 'explore' ? 'explore' : 'random'
+  selectedItem.value = exploreId
+    ? explores.value.find(item => item.id === exploreId) || null
+    : eventId ? events.value.find(item => item.id === eventId) || null : null
+  if (eventId && !exploreId) activeTab.value = 'random'
+  detailVisible.value = !!selectedItem.value
+}
+
 // 外部修改 event/explore 参数时同步打开/关闭详情
 watch(
   () => [route.query.event, route.query.explore, route.query.tab],
-  ([eventId, exploreId, tab]) => {
-    if (!isDataReady.value) return
-    if (eventId && tab !== 'explore') {
-      const item = events.value.find(e => e.id === eventId)
-      if (item) openDetail(item)
-    } else if (exploreId) {
-      const item = explores.value.find(e => e.id === exploreId)
-      if (item) openDetail(item)
-    }
-  }
+  syncDetailFromRoute
 )
 </script>
 
@@ -370,14 +349,6 @@ watch(
   flex-direction: column;
   gap: 10px;
   flex-shrink: 0;
-}
-
-/* 分段页签在筛选区内均分占满（手机端自动适配） */
-.events-filter-panel :deep(.ui-segmented) {
-  width: 100%;
-}
-.events-filter-panel :deep(.ui-segmented__item) {
-  flex: 1;
 }
 
 .collection-counter {
@@ -422,6 +393,13 @@ watch(
   gap: 8px;
   margin-bottom: 2px;
 }
+
+.event-map-tags {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 6px;
+}
 .event-hero-section {
   text-align: center;
 }
@@ -434,8 +412,8 @@ watch(
   display: block;
 }
 .reward-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 8px;
 }
 .no-reward {

@@ -4,7 +4,8 @@
     :title="item?.name || '物品详情'"
     max-width="820px"
     scroll-id="itemModalScroll"
-    :z-index="3000"
+    :z-index="5000"
+    :restore-scroll-top="itemModalState.savedScrollTop"
     @update:visible="handleClose"
   >
     <template v-if="item">
@@ -30,6 +31,35 @@
       <p class="desc-text">{{ item.desc }}</p>
     </UiSection>
 
+    <UiSection v-if="potionInfo" title="药水毒性">
+      <UiInfoRow label="药水毒性" :value="potionInfo.toxicity" />
+      <UiInfoRow label="毒性上限" :value="potionInfo.toxicityCap" />
+      <UiInfoRow label="距毒性上限" :value="potionInfo.remainingFromZero" />
+      <UiInfoRow
+        v-if="potionInfo.toxicity > 0 && potionInfo.researchReduction > 0"
+        :label="`${potionInfo.researchName}后`"
+        :value="`${potionInfo.toxicityWithResearch} 毒性（降低 ${formatPercent(potionInfo.researchReduction)}）`"
+      />
+      <p v-if="potionInfo.toxicity > 0" class="parameter-note">当前毒性达到上限后，无法继续使用有毒药水。</p>
+    </UiSection>
+
+    <UiSection v-if="seedInfo" title="种植参数">
+      <UiInfoRow label="成熟时间" :value="seedInfo.formattedGrowTime" />
+      <UiInfoRow v-if="seedInfo.harvest" label="基础收获" :value="formatHarvest(seedInfo.harvest)" />
+      <UiInfoRow
+        v-for="harvest in seedInfo.researchHarvests"
+        :key="harvest.level"
+        :label="`${seedInfo.researchName} Lv.${harvest.level}`"
+        :value="formatHarvest(harvest)"
+      />
+    </UiSection>
+
+    <UiSection v-if="petEggInfo" title="孵化与收益">
+      <UiInfoRow label="孵化时长" :value="petEggInfo.formattedEggTime" />
+      <UiInfoRow label="出售金币" :value="`${petEggInfo.sellPrice} 金币`" />
+      <UiInfoRow label="喂养经验" :value="`${petEggInfo.feedExp} 经验`" />
+    </UiSection>
+
     <!-- 装备属性 -->
     <UiSection v-if="item.itemType === 2 && item.equip" title="装备属性">
       <div class="equip-meta-list">
@@ -47,7 +77,7 @@
           <span class="meta-label">品质属性:</span>
           <div class="equip-quality-toggles">
             <UiFilterPill
-              v-for="(name, q) in {1: '白', 2: '绿', 3: '蓝', 4: '紫', 5: '橙'}"
+              v-for="(name, q) in EQUIP_QUALITY_LABELS"
               :key="q"
               :quality="Number(q)"
               :active="selectedAttrQuality == q"
@@ -59,13 +89,85 @@
         </div>
       </div>
 
-      <UiStatGrid v-if="computedUnitData" :items="computedUnitItems" />
+      <div v-if="equipEnhanceConfig.maxLevel > 0" class="equip-enhance-control paper-panel-solid">
+        <div class="equip-enhance-header">
+          <span>强化等级</span>
+          <strong>+{{ selectedEnhanceLevel }} / +{{ equipEnhanceConfig.maxLevel }}</strong>
+        </div>
+        <input
+          v-model.number="selectedEnhanceLevel"
+          class="equip-enhance-slider"
+          type="range"
+          min="0"
+          :max="equipEnhanceConfig.maxLevel"
+          step="1"
+          aria-label="装备强化等级"
+        />
+        <div class="equip-enhance-summary">
+          <span>每级基础属性 +{{ enhanceRatePercent }}%</span>
+          <span>当前 +{{ enhanceBonusPercent }}%</span>
+        </div>
+      </div>
+
+      <UiStatGrid v-if="computedUnitItems.length" :items="computedUnitItems" />
     </UiSection>
 
-    <!-- 使用效果 / 内容展示 -->
+    <UiSection v-if="facilityCraftingRecipes.length" title="设施制作">
+      <div v-for="recipe in facilityCraftingRecipes" :key="recipe.id" class="smithing-recipe paper-panel-solid">
+        <div class="smithing-recipe__head">
+          <span>{{ recipe.facilityName }} {{ recipe.level }} 级制作</span>
+          <UiButton variant="link" size="sm" @click="handleFacilityNavigate(recipe)">查看设施</UiButton>
+        </div>
+        <p v-if="recipe.makeTime" class="smithing-recipe__output">制作时间：{{ formatCraftingDuration(recipe.makeTime) }}</p>
+        <div class="smithing-recipe__materials">
+          <span class="smithing-recipe__label">制作材料</span>
+          <div class="reward-grid">
+            <UiRewardCard
+              v-for="material in recipe.materials"
+              :key="material.typeId"
+              :rule="{ targetName: material.name, targetImg: getImageUrl(material.img), targetQuality: material.quality, min: material.num, max: material.num, typeId: material.typeId }"
+              :clickable="!!material.typeId"
+              @click="handleSmithingMaterialClick(material.typeId)"
+            />
+          </div>
+        </div>
+      </div>
+    </UiSection>
+
+    <UiSection v-if="smithingRecipes.length" title="锻造台打造">
+      <div v-for="recipe in smithingRecipes" :key="recipe.exchangeId" class="smithing-recipe paper-panel-solid">
+        <div class="smithing-recipe__head">
+          <span>第 {{ recipe.equipLevel }} 阶装备打造</span>
+          <UiButton variant="link" size="sm" @click="handleSmithingNavigate(recipe)">查看锻造台</UiButton>
+        </div>
+        <div class="smithing-recipe__meta">
+          <span>品质概率</span>
+          <span v-for="chance in recipe.qualityChances" :key="chance.quality" :class="`quality-text-${chance.quality}`">
+            {{ EQUIP_QUALITY_LABELS[chance.quality] || `品质${chance.quality}` }} {{ formatChance(chance.chance) }}
+          </span>
+        </div>
+        <p class="smithing-recipe__output">
+          {{ recipe.outputMode === 'equipGroup' ? '同类装备池中随机产出，品质按以上概率决定。' : '打造该装备，品质按以上概率决定。' }}
+        </p>
+        <div class="smithing-recipe__materials">
+          <span class="smithing-recipe__label">制作材料</span>
+          <div class="reward-grid">
+            <UiRewardCard
+              v-for="material in recipe.materials"
+              :key="material.typeId"
+              :rule="{ targetName: material.name, targetImg: getImageUrl(material.img), targetQuality: material.quality, min: material.num, max: material.num, typeId: material.typeId }"
+              :clickable="!!material.typeId"
+              @click="handleSmithingMaterialClick(material.typeId)"
+            />
+          </div>
+        </div>
+      </div>
+    </UiSection>
+
+    <!-- 使用效果 / 料理效果 / 内容展示 -->
     <UiSection
-      v-if="item.useDes || recipeInfo || bookContent"
-      :title="(bookContent && !item.useDes && !recipeInfo) ? '内容展示' : '使用效果'"
+      v-if="displayUseDes || recipeInfo || bookContent || isRecipeItem"
+      :title="effectSectionTitle"
     >
       <!-- 书籍内容 -->
       <div v-if="bookContent" class="book-content-box paper-panel-solid">
@@ -74,27 +176,42 @@
         </template>
       </div>
 
-      <p v-if="item.useDes" class="use-des" v-html="formatUseDes(item.useDes)"></p>
-      
-      <div v-if="recipeInfo" class="recipe-container">
-        <div class="recipe-title">配方</div>
-        <div class="recipe-ingredients-mini" v-if="recipeInfo.ingredients && recipeInfo.ingredients.length">
-          <div
-            v-for="(ing, idx) in recipeInfo.ingredients"
-            :key="idx"
-            class="ingredient-chip"
-            @click="handleIngredientClick(ing.typeId)"
-          >
-            <img :src="ing.icon" :alt="ing.name" class="ing-icon-img" loading="lazy" />
-            <span class="ing-name">{{ ing.name }}</span>
-            <span class="ing-count">× {{ ing.count }}</span>
-          </div>
+      <template v-if="recipeInfo">
+        <p v-if="recipeInfo.buffDes" class="use-des" v-html="formatUseDes(recipeInfo.buffDes)"></p>
+        <div v-if="recipeInfo.effectStacks > 0" class="recipe-effect-stacks">
+          <span>效果层数</span>
+          <strong>{{ recipeInfo.effectStacks }}</strong>
+        </div>
+      </template>
+      <p v-else-if="displayUseDes" class="use-des" v-html="formatUseDes(displayUseDes)"></p>
+    </UiSection>
+
+    <UiSection v-if="skinUnlock?.attributes?.length" title="皮肤属性">
+      <div class="skin-attribute-list">
+        <div v-for="attribute in skinUnlock.attributes" :key="attribute.key" class="skin-attribute-row">
+          <span>{{ translateStatName(attribute.key) }}</span>
+          <strong>{{ formatSkinAttribute(attribute) }}</strong>
         </div>
       </div>
-      
-      <!-- 预览图 -->
-      <div v-if="recipeInfo && PREVIEW_AVAILABLE_IDS.has(recipeInfo.typeId)" class="recipe-preview-box">
-        <div class="recipe-title">预览图</div>
+    </UiSection>
+
+    <UiSection v-if="recipeInfo" title="配方">
+      <div class="recipe-ingredients-mini" v-if="recipeInfo.ingredients && recipeInfo.ingredients.length">
+        <div
+          v-for="(ing, idx) in recipeInfo.ingredients"
+          :key="idx"
+          class="ingredient-chip"
+          @click="handleIngredientClick(ing.typeId)"
+        >
+          <img :src="ing.icon" :alt="ing.name" class="ing-icon-img" loading="lazy" />
+          <span class="ing-name">{{ ing.name }}</span>
+          <span class="ing-count">× {{ ing.count }}</span>
+        </div>
+      </div>
+    </UiSection>
+
+    <UiSection v-if="recipeInfo && PREVIEW_AVAILABLE_IDS.has(recipeInfo.typeId)" title="预览图">
+      <div class="recipe-preview-box">
         <img :src="getImageUrl(`/menu_prev/${recipeInfo.typeId}_prev.png`)" alt="预览图" class="recipe-prev-img" />
       </div>
     </UiSection>
@@ -102,28 +219,11 @@
     <!-- 符石效果 -->
     <UiSection v-if="runeEffect" :title="'符石效果：' + runeEffect.skillName">
       <div class="rune-effect-box paper-panel-solid" v-html="runeEffect.desHtml"></div>
+      <UiInfoRow label="适用部位" :value="runeEffect.positionLabels.join('、')" />
     </UiSection>
 
     <!-- 宝箱/奖励掉落 -->
-    <UiSection v-if="rewardDrops && rewardDrops.length > 0" title="使用效果">
-      <div v-for="(group, idx) in rewardDrops" :key="idx" class="reward-group paper-panel-solid">
-        <div class="group-title">
-          <UiTag v-if="group.isSelect" tone="gold">[自选池] 从以下奖励中自选 1 个</UiTag>
-          <UiTag v-else-if="group.rate < 1" tone="gold">[概率池] {{ (group.rate * 100).toFixed(1) }}% 概率从以下奖励中抽取 1 个</UiTag>
-          <UiTag v-else tone="gold">[必出池] 从以下奖励中抽取 1 个</UiTag>
-          <span v-if="group.num > 1 && !group.isSelect" class="pool-num">(抽取 {{ group.num }} 次)</span>
-        </div>
-        <div class="reward-grid">
-          <UiRewardCard
-            v-for="(rule, rIdx) in group.rules"
-            :key="rIdx"
-            :rule="{ ...rule, targetImg: getImageUrl(rule.targetImg) }"
-            :clickable="!!rule.typeId"
-            @click="handleRewardClick(rule)"
-          />
-        </div>
-      </div>
-    </UiSection>
+    <AcquisitionRewards :acquisition="acquisition" @item-click="handleRewardClick" />
 
     <!-- 装备组展示 -->
     <UiSection v-if="equipGroupItems && equipGroupItems.length > 0 && !isEquipsPage" title="包含内容">
@@ -170,9 +270,88 @@
       </div>
     </UiSection>
 
-    <!-- 解锁内容 -->
-    <UiSection v-if="unlockText" title="解锁内容">
-      <p class="unlock-text">{{ unlockText }}</p>
+    <!-- 用途 / 解锁内容 -->
+    <UiSection v-if="unlockText || homeItemUnlocks.length" :title="usageSectionTitle">
+      <div v-if="homeItemUnlocks.length" class="home-item-unlock-list">
+        <UiButton
+          v-for="unlock in homeItemUnlocks"
+          :key="`${unlock.action}:${unlock.typeId}:${(unlock.skinIds || []).join(',')}`"
+          class="home-item-unlock-link"
+          variant="secondary"
+          @click="handleHomeItemNavigate(unlock)"
+        >
+          <span class="home-item-unlock-icon" :class="`quality-bg-${Number(unlock.quality) || 1}`">
+            <img
+              v-if="unlock.icon"
+              :src="getImageUrl(`/BuildItem/${unlock.icon}.png`)"
+              :alt="unlock.name"
+              loading="lazy"
+            />
+          </span>
+          <span class="home-item-unlock-copy">
+            <strong>{{ unlock.name }}</strong>
+            <small v-if="unlock.skinNames?.length">
+              {{ unlock.action === 'unlockHomeItemSkin' ? '解锁外观' : '同时解锁外观' }}：{{ unlock.skinNames.join('、') }}
+            </small>
+            <small v-else>解锁家具</small>
+          </span>
+          <span class="home-item-unlock-action">查看家具</span>
+        </UiButton>
+      </div>
+      <div v-else-if="heroUnlock" class="unlock-hero-usage">
+        <span>解锁角色：</span>
+        <UiButton class="unlock-hero-link" variant="link" size="sm" @click="handleHeroNavigate">
+          <img
+            v-if="heroUnlock.heroIcon"
+            :src="getImageUrl(`/images/HeadIconAtals/${heroUnlock.heroIcon}.png`)"
+            :alt="heroUnlock.heroName"
+            class="unlock-hero-icon"
+          />
+          <span class="unlock-hero-name">{{ heroUnlock.heroName }}</span>
+          <span aria-hidden="true">›</span>
+        </UiButton>
+      </div>
+      <div v-else-if="skinUnlock" class="unlock-hero-usage">
+        <span>解锁皮肤：</span>
+        <UiButton class="unlock-hero-link" variant="link" size="sm" @click="handleSkinNavigate">
+          <img
+            v-if="item.img"
+            :src="getImageUrl(getItemImageUrl(item))"
+            :alt="skinUnlock.skinName"
+            class="unlock-hero-icon"
+          />
+          <span class="unlock-hero-name">{{ skinUnlock.skinName }}</span>
+          <span class="unlock-skin-owner">{{ skinUnlock.heroName }}</span>
+          <span aria-hidden="true">›</span>
+        </UiButton>
+      </div>
+      <p v-else class="unlock-text">{{ unlockText }}</p>
+      <div v-if="heroStarUsage" class="star-usage-list">
+        <div v-for="stage in heroStarUsage.stages" :key="stage.stage" class="star-usage-row">
+          <span class="star-usage-label">星阶 {{ stage.stage }}</span>
+          <span class="star-usage-value">{{ stage.costs.join('、') }}</span>
+        </div>
+        <div class="star-usage-total">
+          <span>全部所需</span>
+          <strong>{{ heroStarUsage.total }}</strong>
+        </div>
+      </div>
+    </UiSection>
+
+    <UiSection v-if="skinUnlock" title="皮肤立绘">
+      <div class="skin-portrait-preview" :class="[skinUnlock.quality ? `quality-border-${skinUnlock.quality}` : '', { 'has-model': skinUnlock.modelImage }]">
+        <div class="skin-preview-pane">
+          <img
+            :src="getImageUrl(`/images/chara/l/${skinUnlock.img}.png`)"
+            :alt="`${skinUnlock.skinName}立绘`"
+            loading="lazy"
+          />
+        </div>
+        <div v-if="skinUnlock.modelImage" class="skin-preview-pane skin-preview-pane--model">
+          <img :src="getImageUrl(skinUnlock.modelImage)" :alt="`${skinUnlock.skinName}小人模型`"
+            loading="lazy" decoding="async" @error="handleImageFallback" />
+        </div>
+      </div>
     </UiSection>
 
     <!-- 基础信息 -->
@@ -181,7 +360,12 @@
     </UiSection>
 
     <!-- 获取途径 -->
-    <UiSection v-if="!isEquipsPage" title="获取途径">
+    <UiSection title="获取途径">
+      <div v-if="sharedResourcesLoading" class="empty-tip" role="status">来源与配方加载中...</div>
+      <div v-else-if="sharedResourcesError" class="resource-load-error" role="alert">
+        <p>{{ sharedResourcesError }}</p>
+        <UiButton variant="secondary" size="sm" @click="loadSharedResources">重新加载</UiButton>
+      </div>
       <div v-if="hasItemSources" class="source-list">
         <UiAccordion
           v-for="group in groupedSources"
@@ -217,7 +401,7 @@
         </div>
       </div>
 
-      <div v-else class="origin-placeholder">
+      <div v-else-if="!sharedResourcesLoading && !sharedResourcesError" class="origin-placeholder">
         <p class="empty-tip">数据未补充...</p>
       </div>
     </UiSection>
@@ -228,14 +412,16 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { getImageUrl } from '../utils/env'
-import { translateJobArray, translateAttr, translateCategory, parseItemUnlocks, getItemImageUrl, parseItemRewards, getCachedItem, getCachedItemDict, parseRuneEffect, parseEquipGroup, parseEquipSuit, parseItemAffixes } from '../utils/itemParser'
-import { pushItemDetail, popItemDetail } from '../utils/itemModalState'
+import { getImageUrl, handleImageFallback } from '../utils/env'
+import { translateJobArray, translateAttr, translateCategory, parseItemUnlocks, getItemImageUrl, getItemAcquisition, getCachedItem, parseRuneEffect, parseEquipGroup, parseEquipSuit, parseItemAffixes, calculateEquipAttributeRange, buildEquipAttributeItems, getEquipEnhanceConfig } from '../utils/itemParser'
+import AcquisitionRewards from './AcquisitionRewards.vue'
+import { getRuneSourceTarget } from '../utils/runeData.js'
+import { pushItemDetail, popItemDetail, itemModalState } from '../utils/itemModalState'
 import { fetchWithFallback } from '../utils/request.js'
-import { PREVIEW_AVAILABLE_IDS, buildRecipeIngredients } from '../utils/recipeUtils'
-import { formatHighlightedText } from '../utils/gameMappings.js'
+import { PREVIEW_AVAILABLE_IDS } from '../utils/recipeUtils'
+import { formatHighlightedText, EQUIP_QUALITY_LABELS, translateStatName } from '../utils/gameMappings.js'
 import { compareExchangeSources } from '../utils/exchangeData.js'
 import { UiModal, UiSection, UiTag, UiInfoRow, UiButton, UiFilterPill, UiStatGrid, UiRewardCard, UiAccordion, UiBackToTop } from './ui/index.js'
 
@@ -258,17 +444,65 @@ const emit = defineEmits(['update:visible'])
 
 const route = useRoute()
 const router = useRouter()
+let bodyScrollOperation = 0
+let bodyScrollFrame = 0
 
 const isEquipsPage = computed(() => route.path === '/equip')
 
+const cancelBodyScrollRestore = () => {
+  bodyScrollOperation += 1
+  if (!bodyScrollFrame) return
+  cancelAnimationFrame(bodyScrollFrame)
+  bodyScrollFrame = 0
+}
+
+const getModalBody = () => document.getElementById('itemModalScroll')
+
+const setModalBodyScroll = async (top, expectedTypeId) => {
+  cancelBodyScrollRestore()
+  const operation = bodyScrollOperation
+  const normalizedTop = Math.max(0, Number(top) || 0)
+
+  await nextTick()
+  const restore = () => {
+    if (
+      operation !== bodyScrollOperation ||
+      !props.visible ||
+      props.item?.typeId !== expectedTypeId
+    ) return
+
+    getModalBody()?.scrollTo({ top: normalizedTop, behavior: 'auto' })
+  }
+
+  restore()
+  bodyScrollFrame = requestAnimationFrame(() => {
+    bodyScrollFrame = 0
+    restore()
+  })
+}
+
+const openNestedItem = targetItem => {
+  if (!targetItem) return
+
+  const currentBodyScrollTop = getModalBody()?.scrollTop || 0
+  pushItemDetail(targetItem, currentBodyScrollTop)
+  setModalBodyScroll(0, targetItem.typeId)
+}
+
 const handleClose = () => {
-  if (!popItemDetail()) {
-    emit('update:visible', false)
-      if (route && route.query.itemId) {
-        const newQuery = { ...route.query }
-        delete newQuery.itemId
-        router.replace({ query: newQuery })
-      }
+  const previous = popItemDetail()
+  if (previous) {
+    setModalBodyScroll(previous.bodyScrollTop, previous.item.typeId)
+    return
+  }
+
+  cancelBodyScrollRestore()
+
+  emit('update:visible', false)
+  if (route && route.query.itemId) {
+    const newQuery = { ...route.query }
+    delete newQuery.itemId
+    router.replace({ query: newQuery })
   }
 }
 
@@ -295,6 +529,95 @@ const unlockText = computed(() => {
   return parseItemUnlocks(props.item)
 })
 
+const heroStarUsage = computed(() => props.item?.heroStarUsage || null)
+const heroUnlock = computed(() => props.item?.heroUnlock || null)
+const skinUnlock = computed(() => props.item?.skinUnlock || null)
+const homeItemUnlocks = computed(() => (props.item?.homeItemUnlocks || [])
+  .filter(unlock => unlock?.typeId && unlock.catalogVisible !== false))
+const potionInfo = computed(() => props.item?.potionInfo || null)
+const seedInfo = computed(() => props.item?.seedInfo || null)
+const petEggInfo = computed(() => props.item?.petEggInfo || null)
+const smithingRecipes = computed(() => props.item?.smithing?.recipes || [])
+const facilityCraftingRecipes = computed(() => props.item?.facilityCrafting || [])
+const usageSectionTitle = computed(() =>
+  heroStarUsage.value || heroUnlock.value ? '用途' : '解锁内容'
+)
+
+const handleHomeItemNavigate = unlock => {
+  if (!unlock?.typeId) return
+  router
+    .push({ path: '/furniture', query: { id: unlock.typeId } })
+    .finally(() => emit('update:visible', false))
+}
+
+const handleHeroNavigate = () => {
+  const heroTypeId = heroUnlock.value?.heroTypeId
+  if (!heroTypeId) return
+  router.push({ path: '/heroes', query: { id: heroTypeId } })
+}
+
+const handleSkinNavigate = () => {
+  const heroTypeId = skinUnlock.value?.heroTypeId
+  if (!heroTypeId) return
+  router.push({ path: '/heroes', query: { id: heroTypeId, tab: 'skins' } })
+}
+
+const handleSmithingNavigate = recipe => {
+  router.push({
+    path: '/facilities',
+    query: {
+      facility: 'blacksmith',
+      mode: 'equipment',
+      level: recipe?.equipLevel || 1,
+      item: props.item?.typeId || undefined
+    }
+  }).finally(() => emit('update:visible', false))
+}
+
+const handleFacilityNavigate = recipe => {
+  if (!recipe?.facility) return
+  router.push({
+    path: '/facilities',
+    query: {
+      facility: recipe.facility,
+      mode: 'crafting',
+      level: recipe.level || 1,
+      item: props.item?.typeId || undefined
+    }
+  }).finally(() => emit('update:visible', false))
+}
+
+const handleSmithingMaterialClick = typeId => {
+  const targetItem = getCachedItem(typeId)
+  if (targetItem) openNestedItem(targetItem)
+}
+
+const formatChance = chance => `${Number((Number(chance || 0) * 100).toFixed(1))}%`
+const formatCraftingDuration = seconds => {
+  const value = Number(seconds) || 0
+  if (value < 60) return `${value} 秒`
+  const minutes = Math.floor(value / 60)
+  const remain = value % 60
+  return `${minutes} 分${remain ? `${remain} 秒` : ''}`
+}
+
+const formatSkinAttribute = attribute => {
+  const values = []
+  if (attribute.baseValue) values.push(`+${attribute.baseValue}`)
+  if (attribute.percent) {
+    const percent = Math.abs(attribute.percent) <= 1 ? attribute.percent * 100 : attribute.percent
+    values.push(`+${Number(percent.toFixed(2))}%`)
+  }
+  return values.join(' / ')
+}
+
+const formatPercent = value => `${Number((Number(value) * 100).toFixed(2))}%`
+const formatHarvest = harvest => {
+  if (!harvest) return ''
+  const quantity = harvest.min === harvest.max ? `${harvest.min}` : `${harvest.min}～${harvest.max}`
+  return `${harvest.name} × ${quantity}`
+}
+
 const runeEffect = computed(() => {
   return parseRuneEffect(props.item)
 })
@@ -308,55 +631,32 @@ const suitInfo = computed(() => {
 })
 
 // === 装备属性计算 ===
-const QUALITY_ADDITION = {
-  1: { permin: 0.9, permax: 0.95 },
-  2: { permin: 0.95, permax: 1.0 },
-  3: { permin: 1.0, permax: 1.1 },
-  4: { permin: 1.1, permax: 1.2 },
-  5: { permin: 1.3, permax: 1.35 },
-  6: { permin: 1.45, permax: 1.45 }
-}
-const EQUIP_LEVEL_ADDITION = {
-  1: 1.0, 2: 1.25, 3: 1.5, 4: 1.75, 5: 2.0
-}
-const MULTIPLIER_ATTRS = new Set(['phyAtk', 'magicAtk', 'phyDef', 'magicDef', 'maxHp'])
-
 const selectedAttrQuality = ref(5)
+const selectedEnhanceLevel = ref(0)
+const equipEnhanceConfig = computed(() => getEquipEnhanceConfig())
+const enhanceRatePercent = computed(() => Math.round(equipEnhanceConfig.value.attUp * 100))
+const enhanceBonusPercent = computed(() => Math.round(selectedEnhanceLevel.value * equipEnhanceConfig.value.attUp * 100))
 
 watch(() => props.item, (newVal) => {
   if (newVal) {
     selectedAttrQuality.value = 5
+    selectedEnhanceLevel.value = 0
   }
 }, { immediate: true })
 
 const computedUnitData = computed(() => {
-  if (!props.item?.equip?.unitData) return null;
-  const rawData = props.item.equip.unitData;
-  const equipLevel = props.item.equip.equipLevel || 1;
-  
-  const levelMult = EQUIP_LEVEL_ADDITION[equipLevel] || 1.0;
-  const qualData = QUALITY_ADDITION[selectedAttrQuality.value] || QUALITY_ADDITION[1];
-  const minMult = levelMult * qualData.permin;
-  const maxMult = levelMult * qualData.permax;
-
-  const result = {};
-  for (const [key, val] of Object.entries(rawData)) {
-    if (MULTIPLIER_ATTRS.has(key)) {
-      const minVal = Math.floor(val * minMult);
-      const maxVal = Math.floor(val * maxMult);
-      result[key] = minVal === maxVal ? `+${minVal}` : `+${minVal}~${maxVal}`;
-    } else {
-      result[key] = `+${val}`;
-    }
-  }
-  return result;
+  return calculateEquipAttributeRange(
+    props.item,
+    selectedAttrQuality.value,
+    selectedEnhanceLevel.value
+  )
 })
 
 const computedUnitItems = computed(() => {
   if (!computedUnitData.value) return []
-  return Object.entries(computedUnitData.value).map(([key, val]) => ({
-    label: translateAttr(key),
-    value: val,
+  return buildEquipAttributeItems(computedUnitData.value).map(attribute => ({
+    label: translateAttr(attribute.key),
+    value: attribute.min === attribute.max ? `+${attribute.min}` : `+${attribute.min}~${attribute.max}`,
     tone: 2
   }))
 })
@@ -366,15 +666,13 @@ const affixGroups = computed(() => {
   return parseItemAffixes(props.item)
 })
 
-const rewardDrops = computed(() => {
-  return parseItemRewards(props.item)
-})
+const acquisition = computed(() => getItemAcquisition(props.item))
 
 const handleRewardClick = (rule) => {
   if (rule.typeId) {
     const targetItem = getCachedItem(rule.typeId)
     if (targetItem) {
-      pushItemDetail(targetItem)
+      openNestedItem(targetItem)
     }
   }
 }
@@ -401,7 +699,7 @@ watch(bookEventId, async (newVal) => {
   if (newVal) {
     if (!diaryData.value) {
       try {
-        const res = await fetchWithFallback('data/diary.json')
+        const res = await fetchWithFallback('data/parsed/diary.json')
         diaryData.value = res || {}
       } catch (e) {
         console.error('Failed to load diary.json', e)
@@ -434,35 +732,87 @@ watch(bookEventId, async (newVal) => {
 
 const globalItemSources = ref({})
 
-onMounted(async () => {
-  try {
-    const menuRes = await fetchWithFallback('data/menu.json')
-    menuDict.value = menuRes?.datas || {}
-  } catch (e) {
-    console.error('Failed to load menu.json', e)
-  }
-  
-  try {
-    const srcRes = await fetchWithFallback('data/parsed/item-sources.json')
-    globalItemSources.value = srcRes || {}
-  } catch (e) {
-    console.error('Failed to load item-sources.json', e)
-  }
-})
+// Failed resources remain retryable; successful resources are cached by request.js.
+let sharedResourcesLoaded = false
+let sharedResourcesPending = null
+const sharedResourcesLoading = ref(false)
+const sharedResourcesError = ref('')
+const loadSharedResources = () => {
+  if (sharedResourcesLoaded) return Promise.resolve()
+  if (sharedResourcesPending) return sharedResourcesPending
+  sharedResourcesLoading.value = true
+  sharedResourcesError.value = ''
+  sharedResourcesPending = Promise.all([
+    fetchWithFallback('data/parsed/recipes.json').then(data => {
+      menuDict.value = Object.fromEntries(data.recipes.map(recipe => [recipe.id, recipe]))
+    }),
+    fetchWithFallback('data/parsed/item-sources.json').then(data => { globalItemSources.value = data })
+  ]).then(() => {
+    sharedResourcesLoaded = true
+  }).catch(error => {
+    sharedResourcesError.value = '部分来源或配方暂时无法加载，请重试。'
+    console.error('Failed to load item detail resources:', error)
+  }).finally(() => {
+    sharedResourcesPending = null
+    sharedResourcesLoading.value = false
+  })
+  return sharedResourcesPending
+}
+
+watch(() => props.visible, (v) => { if (v) loadSharedResources() }, { immediate: true })
 
 const currentItemSources = computed(() => {
-  if (!props.item?.typeId || !globalItemSources.value) return []
-  return globalItemSources.value[props.item.typeId] || []
+  if (!props.item?.typeId) return []
+  const sources = [...(globalItemSources.value?.[props.item.typeId] || [])]
+  const recipe = smithingRecipes.value[0]
+  if (recipe) {
+    sources.unshift({
+      type: 'smithing',
+      id: recipe.facilityId || 'sysBlacksmith',
+      name: recipe.facilityName || '锻造台',
+      des: `第 ${recipe.equipLevel} 阶装备打造`
+    })
+  }
+  for (const facilityRecipe of facilityCraftingRecipes.value) {
+    sources.unshift({
+      type: 'facility',
+      id: facilityRecipe.facilityId,
+      facility: facilityRecipe.facility,
+      name: facilityRecipe.facilityName,
+      level: facilityRecipe.level,
+      des: `${facilityRecipe.level} 级制作`
+    })
+  }
+  return sources
 })
 
 const groupedSources = computed(() => {
   const groups = {
     achievement: { name: '成就', sources: [] },
     task: { name: '任务', sources: [] },
+    event: { name: '随机事件', sources: [] },
+    explore: { name: '探索区域', sources: [] },
+    collect: { name: '采集', sources: [] },
+    plant: { name: '种植', sources: [] },
+    camp: { name: '营地升级', sources: [] },
+    activity: { name: '活动奖励', sources: [] },
+    signIn: { name: '签到奖励', sources: [] },
+    firstReward: { name: '关卡首通', sources: [] },
+    guide: { name: '新手引导', sources: [] },
+    container: { name: '礼包与道具', sources: [] },
+    dailyPlan: { name: '日常计划', sources: [] },
+    gacha: { name: '招募与贩售', sources: [] },
+    tower: { name: '塔层奖励', sources: [] },
+    dismantle: { name: '装备分解', sources: [] },
     pvp: { name: '挑战赛', sources: [] },
     monster: { name: '怪物掉落', sources: [] },
     recipe: { name: '配方制作', sources: [] },
     exchange: { name: '兑换', sources: [] },
+    runeAppraisal: { name: '符石鉴定', sources: [] },
+    runeSynthesis: { name: '符石合成', sources: [] },
+    dungeon: { name: '副本掉落', sources: [] },
+    smithing: { name: '锻造台制作', sources: [] },
+    facility: { name: '设施制作', sources: [] },
     hidden: { name: '被隐藏的物品', sources: [] },
     other: { name: '其他', sources: [] }
   }
@@ -477,6 +827,18 @@ const groupedSources = computed(() => {
 
   // 兑换来源按兑换页分类顺序排列，委托兑换内部复用地图映射顺序。
   groups.exchange.sources.sort(compareExchangeSources)
+
+  // 保留关卡首次出现顺序；同一关卡内部按金、银、铜宝箱排列。
+  const dungeonBattleOrder = new Map()
+  groups.dungeon.sources.forEach((source, index) => {
+    if (!dungeonBattleOrder.has(source.id)) dungeonBattleOrder.set(source.id, index)
+  })
+  const chestOrder = { 'chest-3': 0, 'chest-2': 1, 'chest-1': 2 }
+  groups.dungeon.sources.sort((a, b) => {
+    const battleDiff = dungeonBattleOrder.get(a.id) - dungeonBattleOrder.get(b.id)
+    if (battleDiff) return battleDiff
+    return (chestOrder[a.dropEntry] ?? 99) - (chestOrder[b.dropEntry] ?? 99)
+  })
   
   return Object.values(groups).filter(g => g.sources.length > 0)
 })
@@ -493,73 +855,122 @@ watch(currentItemSources, () => {
 const hasItemSources = computed(() => currentItemSources.value.length > 0)
 
 const canNavigateToSource = (src) => {
-  return ['monster', 'achievement', 'recipe', 'pvp', 'hidden', 'task', 'exchange'].includes(src.type)
+  if (getRuneSourceTarget(src)) return true
+  return ['monster', 'achievement', 'recipe', 'pvp', 'hidden', 'task', 'exchange', 'dungeon', 'smithing', 'facility', 'event', 'explore', 'plant', 'camp', 'container'].includes(src.type)
 }
 
 const handleSourceClick = (src) => {
   if (!canNavigateToSource(src)) return
-  
-  // Close the item modal and clear itemId from url
-  emit('update:visible', false)
-  if (route && route.query.itemId) {
-    const newQuery = { ...route.query }
-    delete newQuery.itemId
-    router.replace({ query: newQuery })
-  }
-  
-  setTimeout(() => {
-    let targetPath = '/'
-    let targetQuery = {}
-    
-    if (src.type === 'monster') targetPath = '/monsters'
-    else if (src.type === 'achievement') targetPath = '/achievement'
-    else if (src.type === 'recipe') {
-      targetPath = '/recipes'
-      targetQuery = { id: src.id || '' }
-    }
-    else if (src.type === 'pvp') {
-      targetPath = '/rewards'
-      targetQuery = { id: src.id || '' }
-    }
-    else if (src.type === 'hidden') {
-      targetPath = '/rewards'
-      targetQuery = { id: `hidden-${src.id}` }
-    }
-    else if (src.type === 'task') {
-      targetPath = '/tasks'
-      targetQuery = { task: src.id || '' }
-    }
-    else if (src.type === 'exchange') {
-      targetPath = '/exchange'
-      targetQuery = {
-        cat: src.category || 'entrust',
-        sub: src.sub || undefined
-      }
-    }
 
-    router.push({ path: targetPath, query: Object.keys(targetQuery).length ? targetQuery : undefined })
-  }, 300)
+  let targetPath = '/'
+  let targetQuery = {}
+
+  const runeTarget = getRuneSourceTarget(src)
+  if (runeTarget) {
+    targetPath = runeTarget.path
+    targetQuery = runeTarget.query
+  }
+  else if (src.type === 'monster') {
+    targetPath = '/monsters'
+    targetQuery = { id: src.id }
+  }
+  else if (src.type === 'event' || src.type === 'explore') {
+    targetPath = '/events'
+    targetQuery = { [src.type]: src.id }
+  }
+  else if (src.type === 'plant' || src.type === 'container') {
+    const seed = getCachedItem(src.type === 'container' ? src.sourceItemId : src.seedId)
+    if (seed) openNestedItem(seed)
+    return
+  }
+  else if (src.type === 'camp') {
+    targetPath = '/facilities'
+    targetQuery = { facility: 'camp', mode: 'building', building: src.building, level: src.level }
+  }
+  else if (src.type === 'achievement') targetPath = '/achievement'
+  else if (src.type === 'recipe') {
+    targetPath = '/recipes'
+    targetQuery = { id: src.id || '' }
+  }
+  else if (src.type === 'pvp') {
+    targetPath = '/rewards'
+    targetQuery = { id: src.id || '' }
+  }
+  else if (src.type === 'hidden') {
+    targetPath = '/rewards'
+    targetQuery = { id: `hidden-${src.id}` }
+  }
+  else if (src.type === 'task') {
+    targetPath = '/tasks'
+    targetQuery = { task: src.id || '' }
+  }
+  else if (src.type === 'exchange') {
+    targetPath = '/exchange'
+    targetQuery = {
+      cat: src.category || 'entrust',
+      sub: src.sub || undefined
+    }
+  }
+  else if (src.type === 'dungeon') {
+    targetPath = '/dungeons'
+    targetQuery = {
+      battle: src.id || '',
+      drop: src.itemId || props.item?.typeId || '',
+      dropTab: src.dropTab || 'chest',
+      dropEntry: src.dropEntry || ''
+    }
+  }
+  else if (src.type === 'smithing') {
+    targetPath = '/facilities'
+    targetQuery = { facility: 'blacksmith', mode: 'equipment', level: smithingRecipes.value[0]?.equipLevel || 1, item: props.item?.typeId || '' }
+  }
+  else if (src.type === 'facility') {
+    targetPath = '/facilities'
+    targetQuery = { facility: src.facility || 'workbench', mode: 'crafting', level: src.level || 1, item: props.item?.typeId || '' }
+  }
+
+  router
+    .push({ path: targetPath, query: Object.keys(targetQuery).length ? targetQuery : undefined })
+    .finally(() => emit('update:visible', false))
 }
 
 const recipeInfo = computed(() => {
   if (!props.item?.typeId) return null
-  const m = menuDict.value[props.item.typeId]
-  if (!m) return null
+  const recipe = menuDict.value[props.item.typeId]
+  if (!recipe) return null
 
-  const ingredients = buildRecipeIngredients(m, getCachedItemDict()).map(ing => ({
+  const ingredients = (recipe.ingredients || []).map(ing => ({
     ...ing,
     icon: getImageUrl(ing.icon)
   }))
 
-  return { ...m, ingredients }
+  return { ...recipe, typeId: recipe.id, ingredients }
+})
+
+// 料理的 useDes 是旧版展示文案，实际结算和现版本界面均以绑定 Buff 为准。
+const isRecipeItem = computed(() => {
+  const buffId = props.item?.useActionPara2?.buff || ''
+  return !!recipeInfo.value || buffId.startsWith('cook_')
+})
+const displayUseDes = computed(() => isRecipeItem.value ? '' : (props.item?.useDes || ''))
+const effectSectionTitle = computed(() => {
+  if (isRecipeItem.value) return '料理效果'
+  if (bookContent.value && !displayUseDes.value) return '内容展示'
+  return '使用效果'
 })
 
 const handleIngredientClick = (typeId) => {
   const targetItem = getCachedItem(typeId)
   if (targetItem) {
-    pushItemDetail(targetItem)
+    openNestedItem(targetItem)
   }
 }
+
+watch(() => props.visible, visible => {
+  if (!visible) cancelBodyScrollRestore()
+})
+
+onBeforeUnmount(cancelBodyScrollRestore)
 </script>
 
 <style scoped>
@@ -573,6 +984,13 @@ const handleIngredientClick = (typeId) => {
   padding: 16px;
   margin-bottom: 18px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+}
+
+.parameter-note {
+  margin: 8px 2px 0;
+  color: var(--text-muted, #6b5134);
+  font-size: 12px;
+  line-height: 1.6;
 }
 .icon-wrapper {
   width: 76px;
@@ -653,6 +1071,87 @@ const handleIngredientClick = (typeId) => {
   gap: 6px;
   flex-wrap: wrap;
 }
+.equip-enhance-control {
+  margin: 0 0 12px;
+  padding: 11px 13px;
+}
+.equip-enhance-header,
+.equip-enhance-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.smithing-recipe {
+  padding: 11px 12px;
+  margin-bottom: 10px;
+}
+.smithing-recipe:last-child {
+  margin-bottom: 0;
+}
+.smithing-recipe__head,
+.smithing-recipe__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.smithing-recipe__head {
+  justify-content: space-between;
+  color: var(--text-main, #3e2a14);
+  font-size: 14px;
+  font-weight: 700;
+}
+.smithing-recipe__meta {
+  margin-top: 5px;
+  color: var(--text-muted, #6b5134);
+  font-size: 13px;
+}
+.smithing-recipe__meta > span:not(:first-child) {
+  font-weight: 700;
+}
+.smithing-recipe__output {
+  margin: 5px 0 0;
+  color: var(--text-muted, #6b5134);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.smithing-recipe__materials {
+  margin-top: 10px;
+}
+.smithing-recipe__label {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--text-muted, #6b5134);
+  font-size: 13px;
+  font-weight: 700;
+}
+.smithing-recipe .reward-grid {
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+}
+.equip-enhance-header {
+  margin-bottom: 9px;
+  color: var(--text-main, #3e2a14);
+  font-size: 13px;
+  font-weight: 700;
+}
+.equip-enhance-header strong {
+  color: var(--accent-ink, #557574);
+}
+.equip-enhance-slider {
+  display: block;
+  width: 100%;
+  height: 6px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--accent-bright, #7a9a99);
+}
+.equip-enhance-summary {
+  margin-top: 9px;
+  color: var(--text-muted, #6b5134);
+  font-size: 12px;
+}
 
 /* 使用效果 */
 .use-des {
@@ -678,18 +1177,95 @@ const handleIngredientClick = (typeId) => {
   margin-bottom: 0;
 }
 
-/* 配方 */
-.recipe-container {
+/* 料理效果 / 配方 */
+.recipe-effect-stacks {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 7px 2px;
+  border-bottom: 1px dashed var(--border-soft, rgba(143, 115, 81, 0.45));
+  color: var(--text-muted, #6b5134);
+  font-size: 14px;
+  font-weight: 700;
+}
+.recipe-effect-stacks strong {
+  color: var(--accent-ink, #557574);
+}
+.skin-attribute-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 12px;
 }
-.recipe-title {
-  font-size: 13px;
-  font-weight: 700;
+.skin-attribute-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 2px;
+  border-bottom: 1px dashed var(--border-soft, rgba(143, 115, 81, 0.45));
   color: var(--text-muted, #6b5134);
-  letter-spacing: 1px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.skin-attribute-row:last-child {
+  border-bottom: 0;
+}
+.skin-attribute-row strong {
+  color: var(--accent-ink, #557574);
+}
+.unlock-skin-owner {
+  color: var(--text-muted, #6b5134);
+  font-size: 12px;
+  font-weight: 400;
+}
+.skin-portrait-preview {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 360px;
+  overflow: hidden;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  background: rgba(122, 154, 153, 0.08);
+}
+.skin-portrait-preview.has-model {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.skin-preview-pane {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-width: 0;
+}
+.skin-preview-pane--model {
+  align-items: center;
+  align-self: stretch;
+  padding: 12px;
+}
+.skin-portrait-preview img {
+  display: block;
+  width: min(100%, 520px);
+  height: 440px;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 4px 10px rgba(43, 31, 21, 0.3));
+}
+.skin-preview-pane--model img {
+  width: min(100%, 280px);
+  height: 300px;
+  object-position: center;
+}
+@media (max-width: 560px) {
+  .skin-portrait-preview {
+    min-height: 300px;
+  }
+  .skin-portrait-preview img {
+    height: 360px;
+  }
+  .skin-portrait-preview.has-model { min-height: 250px; }
+  .has-model .skin-preview-pane img { height: 250px; }
+  .has-model .skin-preview-pane--model img { height: 210px; }
 }
 .recipe-ingredients-mini {
   display: flex;
@@ -731,11 +1307,7 @@ const handleIngredientClick = (typeId) => {
   color: var(--accent-bright, #93b3b2);
 }
 .recipe-preview-box {
-  margin-top: 12px;
   text-align: left;
-}
-.recipe-preview-box .recipe-title {
-  margin-bottom: 8px;
 }
 .recipe-prev-img {
   max-width: 100%;
@@ -756,24 +1328,6 @@ const handleIngredientClick = (typeId) => {
 }
 
 /* 奖励 */
-.reward-group {
-  padding: 12px;
-  margin-bottom: 10px;
-}
-.reward-group:last-child {
-  margin-bottom: 0;
-}
-.group-title {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 10px;
-}
-.pool-num {
-  font-size: 12px;
-  color: var(--text-muted, #6b5134);
-}
 .reward-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -852,6 +1406,138 @@ const handleIngredientClick = (typeId) => {
   line-height: 1.75;
   color: var(--text-main, #3e2a14);
   white-space: pre-wrap;
+}
+
+.home-item-unlock-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.home-item-unlock-link {
+  width: 100%;
+  min-height: 66px;
+  display: grid;
+  grid-template-columns: 50px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 7px;
+  text-align: left;
+}
+
+.home-item-unlock-icon {
+  width: 50px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.home-item-unlock-icon img {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+}
+
+.home-item-unlock-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.home-item-unlock-copy strong,
+.home-item-unlock-copy small {
+  overflow-wrap: anywhere;
+}
+
+.home-item-unlock-copy strong {
+  color: var(--text-main, #3e2a14);
+  font-size: 14px;
+}
+
+.home-item-unlock-copy small {
+  color: var(--text-muted, #6b5134);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.home-item-unlock-action {
+  color: var(--accent-ink, #557574);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .home-item-unlock-link {
+    grid-template-columns: 46px minmax(0, 1fr);
+  }
+
+  .home-item-unlock-icon {
+    width: 46px;
+  }
+
+  .home-item-unlock-action {
+    grid-column: 2;
+  }
+}
+
+.unlock-hero-usage {
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+  color: var(--text-main, #3e2a14);
+  font-size: 14px;
+}
+
+.unlock-hero-link {
+  padding: 2px 6px;
+  text-decoration: none;
+}
+
+.unlock-hero-icon {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 2px rgba(43, 31, 21, 0.32));
+}
+
+.unlock-hero-name {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.star-usage-list {
+  margin-top: 10px;
+  border-top: 1px solid var(--border-faint, rgba(143, 115, 81, 0.25));
+}
+.star-usage-row,
+.star-usage-total {
+  display: grid;
+  grid-template-columns: minmax(72px, auto) minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  min-height: 38px;
+  padding: 6px 2px;
+  border-bottom: 1px solid var(--border-faint, rgba(143, 115, 81, 0.2));
+  font-size: 14px;
+}
+.star-usage-label,
+.star-usage-total span {
+  color: var(--text-secondary, #735c42);
+}
+.star-usage-value,
+.star-usage-total strong {
+  color: var(--text-main, #3e2a14);
+  text-align: right;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.star-usage-total {
+  border-bottom: 0;
 }
 
 /* 获取途径 */

@@ -50,22 +50,25 @@
       />
       <UiEmptyState v-if="filteredItems.length === 0" text="无匹配装备" />
     </UiCardGrid>
+    <UiEmptyState v-else-if="loadError" type="error" text="装备数据暂时不可用">
+      <template #action><UiButton @click="loadItems">重新加载</UiButton></template>
+    </UiEmptyState>
     <UiEmptyState v-else type="loading" text="数据加载中..." />
     <UiBackToTop scroll-container="#itemsGridScroll" />
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { fetchItemData, getItemImageUrl } from '../utils/itemParser'
+import { compareItemsByCategoryQuality, fetchItemData, getItemImageUrl, isVisibleEquipItem } from '../utils/itemParser'
 import { getImageUrl } from '../utils/env'
-import { openItemDetail } from '../utils/itemModalState'
 import { isBlacklisted } from '../config/blacklist.js'
 import { getRarityName } from '../utils/gameMappings'
 import { useLazyList } from '../composables/useLazyList'
 import {
   UiBackToTop,
+  UiButton,
   UiCardGrid,
   UiEmptyState,
   UiFilterPill,
@@ -80,32 +83,30 @@ const router = useRouter()
 const allItems = ref([])
 const subCategories = ref([])
 const isDataReady = ref(false)
+const loadError = ref(false)
+let loadOperation = 0
 
 const searchQuery = ref('')
 const selectedSub = ref(null)
 const selectedLevel = ref(null)
 const selectedRarity = ref(null)
 
-onMounted(async () => {
-  const data = await fetchItemData()
-  allItems.value = data.items
-  
-  // 从大分类中找到装备（分类代码为 4），提取其子分类（即部位：武器、防具等）
-  const equipNode = data.categoryTree.find(c => String(c.type) === '4')
-  if (equipNode) {
-    subCategories.value = equipNode.info || []
+const loadItems = async () => {
+  const operation = ++loadOperation
+  loadError.value = false
+  try {
+    const data = await fetchItemData()
+    if (operation !== loadOperation) return
+    allItems.value = data.items
+    subCategories.value = data.categoryTree.find(c => String(c.type) === '4')?.info || []
+    isDataReady.value = true
+  } catch (error) {
+    if (operation === loadOperation) loadError.value = true
+    console.error('Equipment loading failed:', error)
   }
-  
-  isDataReady.value = true
-  
-  // 处理全局 URL 直接唤起
-  if (route.query.itemId && data.categoryTree.length) {
-    const targetItem = allItems.value.find(i => i.typeId === route.query.itemId)
-    if (targetItem) {
-      openItemDetail(targetItem, data.categoryTree)
-    }
-  }
-})
+}
+onMounted(loadItems)
+onBeforeUnmount(() => { loadOperation += 1 })
 
 const handleImgError = (e) => {
   e.target.style.opacity = '0.3'
@@ -114,11 +115,8 @@ const handleImgError = (e) => {
 const filteredItems = computed(() => {
   if (!isDataReady.value) return []
   return allItems.value.filter(item => {
-    // 1. 过滤：只保留分类[0]为“4”（装备）的物品
-    if (!item.category || String(item.category[0]) !== '4') return false
-
-    // 过滤掉装备箱/展示装备组的容器项（以 'show_' 开头的 ID）
-    if (item.typeId && item.typeId.startsWith('show_')) return false
+    // 1. 与游戏 PicHandBookPanel 一致：只保留正式、未隐藏的装备
+    if (!isVisibleEquipItem(item)) return false
 
     // 2. 黑名单过滤
     if (isBlacklisted(item)) return false
@@ -137,7 +135,7 @@ const filteredItems = computed(() => {
 
     // 5. 部位过滤 (category[1] 对应部位类型)
     if (selectedSub.value !== null) {
-      if (String(item.category[1]) !== String(selectedSub.value)) return false
+      if (String(item.category?.[1]) !== String(selectedSub.value)) return false
     }
 
     // 6. 装备品阶过滤 (对应 equip.equipLevel)
@@ -151,24 +149,7 @@ const filteredItems = computed(() => {
     }
 
     return true
-  }).sort((a, b) => {
-    // 排序：先按部位升序，再按品阶降序，接着是品质降序，最后是 ID 排序
-    const cat1A = a.category && a.category[1] ? Number(a.category[1]) : 0
-    const cat1B = b.category && b.category[1] ? Number(b.category[1]) : 0
-    if (cat1A !== cat1B) return cat1A - cat1B
-
-    const lvlA = a.equip ? Number(a.equip.equipLevel) : 0
-    const lvlB = b.equip ? Number(b.equip.equipLevel) : 0
-    if (lvlA !== lvlB) return lvlB - lvlA
-
-    const qualA = a.quality || 0
-    const qualB = b.quality || 0
-    if (qualA !== qualB) return qualB - qualA
-
-    const idA = a.typeId || ''
-    const idB = b.typeId || ''
-    return idA.localeCompare(idB)
-  })
+  }).sort(compareItemsByCategoryQuality)
 })
 
 const { displayedItems } = useLazyList(filteredItems, 60, '#itemsGridScroll')
@@ -179,16 +160,6 @@ const handleItemClick = (item) => {
 </script>
 
 <style scoped>
-/* 搜索/筛选面板：布局微调，面板底色/描边/间距由全局 .paper-panel 与主题变量提供 */
-.filter-panel {
-  margin: 0 0 12px 0;
-  padding: 12px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex-shrink: 0;
-}
-
 /* 装备网格：桌面端精准 7 列布局（与物品图鉴完全统一） */
 .items-card-grid :deep(.ui-card-grid) {
   grid-template-columns: repeat(7, 1fr);
