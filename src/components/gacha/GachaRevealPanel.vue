@@ -6,7 +6,7 @@
        `win → win_idle` → step3 立绘 + 名牌 + 台词。
        注意：`.g-abs` 靠 transform 居中，凡做 transform 动画的元素一律包一层
        静默 g-abs 容器，动画只挂在内部 img 上。 -->
-  <GachaStage :backdrop="getImageUrl('/images/uipanel/herogachashowpanel/bg.png')" fit="height">
+  <GachaStage :backdrop="getImageUrl('/images/uipanel/herogachashowpanel/bg.png')">
     <!-- ── 背景层 ── -->
     <!-- 揭晓殿堂底（prefab UITexture 1700×1220 depth 0 = bg.png）。整屏层 inset:0 铺满画布，
          不挂 g-abs；宽视口下不再露出 1534×750 裁切盒两侧的亮带（与结算页同款修法） -->
@@ -675,6 +675,8 @@ onBeforeUnmount(() => {
   clearTimers()
   chibiLoadSeq += 1
   chibiScene?.dispose()
+  // 揭晓整体卸载时画布一并销毁：主动丢上下文（逐角色切换时不能丢——画布复用同一上下文）
+  chibiScene?.dropContext?.()
   chibiScene = null
 })
 </script>
