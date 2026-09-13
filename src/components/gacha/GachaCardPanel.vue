@@ -57,12 +57,16 @@
     <!-- 等待阶段点击任意处开始翻卡（源码点击 elsa 模型 → SetClickCount → 跳到卡牌段） -->
     <button v-if="phase === 'wait'" class="card-catcher g-focusable" type="button" aria-label="继续" @click="startCards"></button>
 
-    <!-- 跳过：HUD 层（视口锚定） -->
-    <template #hud>
-      <button class="card-skip" type="button" title="跳过" @click="finish">
-        <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_btn_skip.png')" alt="跳过" />
-      </button>
-    </template>
+    <!-- 跳过：prefab 设计坐标 gacha_btn_skip 128×60 @(548,-302)，与蛋池（GachaPetPanel）一致 -->
+    <button
+      class="g-abs g-layer-interactive g-hit g-focusable card-skip"
+      :style="gachaPos(548, -302)"
+      type="button"
+      title="跳过"
+      @click="finish"
+    >
+      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_btn_skip.png')" alt="跳过" />
+    </button>
   </GachaStage>
 </template>
 
@@ -342,20 +346,16 @@ onBeforeUnmount(() => {
   50% { opacity: 1; transform: scale(1.08); }
 }
 
-/* 跳过：HUD 层（视口锚定，约 0.85 缩放同游戏） */
+/* 跳过：prefab 设计坐标（gacha_btn_skip 128×60 @(548,-302)），随画布缩放（同蛋池） */
 .card-skip {
-  position: absolute;
-  right: max(24px, env(safe-area-inset-right) + 12px);
-  bottom: max(30px, env(safe-area-inset-bottom) + 18px);
   border: 0;
-  width: 109px;
-  height: 51px;
+  width: 128px;
+  height: 60px;
   background: none;
   padding: 0;
-  z-index: 60;
 }
 
-.card-skip img { width: 109px; height: 51px; }
+.card-skip img { width: 128px; height: 60px; }
 .card-skip:active img { content: url('/images/HeroGachaShowPanel_Atlas/gacha_btn_skip_press.png'); }
 
 /* 点击推进层：铺满整个窗口，仅在等待阶段挂载 */

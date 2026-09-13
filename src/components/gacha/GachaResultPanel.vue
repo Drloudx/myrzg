@@ -68,9 +68,17 @@
           :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_card_new.png')"
           alt="新"
         />
-        <!-- 重复获得：小拼图碎片图标（sprite 108 ×0.5 ≈ 54px，实机紧挨 ×10 左侧，中心 (-30,-40)）
-             + ×N 计数 20px @(18,-40)（prefab `fragment`/`fragmentCnt`；碎片图取
-             `icon.Replace("at","chara")+"_p"`） -->
+        <!-- 重复获得（prefab `fragmentBg`/`fragment`/`fragmentCnt`，depth 25/26/28）：
+             阴影底衬 `gacha_card_reget` 240×68 @(0,-48) + 小拼图碎片图标（sprite 108 ×0.5 ≈ 54px，
+             实机口径：小图标紧挨 ×10 左侧）+ ×N 计数 20px @(18,-40)。
+             **碎片溢出转化**（源码 `CheckHeroExcit` case "3"）：碎片已达上限时整批转为记忆结晶，
+             图标换结晶道具（`HeroStarCoin` 配置项，本站取 `duplicate.overflow.icon`）、数量为转化数。 -->
+        <template v-else-if="item.converted && item.overflow?.icon">
+          <span class="rd__frag">
+            <img :src="getImageUrl(item.overflow.icon)" :alt="item.overflow.name" />
+          </span>
+          <em class="rd__frag-cnt g-text">×{{ item.overflow.count }}</em>
+        </template>
         <template v-else-if="fragmentCount(item)">
           <span class="rd__frag">
             <img :src="getImageUrl(item.fragment || item.icon)" alt="" />

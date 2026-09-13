@@ -294,12 +294,16 @@
     <!-- 点击推进（HeroGachaShowPanelUI.Click：按稀有度跳段） -->
     <button class="reveal-click-catcher g-focusable" type="button" aria-label="继续" @click="advance"></button>
 
-    <!-- 跳过：HUD 层（视口锚定） -->
-    <template #hud>
-      <button class="reveal-skip" type="button" title="跳过（跳过后只保留 5 星）" @click="skipAll">
-        <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_btn_skip.png')" alt="跳过" />
-      </button>
-    </template>
+    <!-- 跳过：prefab 设计坐标 gacha_btn_skip 128×60 @(548,-302)，与蛋池/翻卡段一致 -->
+    <button
+      class="g-abs g-layer-interactive g-hit g-focusable reveal-skip"
+      :style="gachaPos(548, -302)"
+      type="button"
+      title="跳过（跳过后只保留 5 星）"
+      @click="skipAll"
+    >
+      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_btn_skip.png')" alt="跳过" />
+    </button>
   </GachaStage>
 </template>
 
@@ -1082,19 +1086,17 @@ onBeforeUnmount(() => {
   to { opacity: 1; transform: scale(1); }
 }
 
+/* 跳过：prefab 设计坐标（gacha_btn_skip 128×60 @(548,-302)），随画布缩放（同蛋池/翻卡） */
 .reveal-skip {
-  position: absolute;
-  right: max(24px, env(safe-area-inset-right) + 12px);
-  bottom: max(30px, env(safe-area-inset-bottom) + 18px);
   border: 0;
-  width: 109px;
-  height: 51px;
+  width: 128px;
+  height: 60px;
   background: none;
   padding: 0;
-  z-index: 60;
 }
 
-.reveal-skip img { width: 109px; height: 51px; }
+.reveal-skip img { width: 128px; height: 60px; }
+.reveal-skip:active img { content: url('/images/HeroGachaShowPanel_Atlas/gacha_btn_skip_press.png'); }
 
 /* 换人滑动转场（源码 #43848：台座/小人 0.5s 滑出右侧；g-abs 元素居中靠 transform，
    动画关键帧必须带 -50% 基准） */
