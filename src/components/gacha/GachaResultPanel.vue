@@ -16,21 +16,19 @@
     <!-- 游戏结果页没有标题文本（prefab 只有 22 个 UILabel：×N / 或 / 数字 / 按钮文案），
          本站此前的「招募结果 · 本次共 N 个」会与右上货币条同一行重叠，故移除。 -->
 
-    <!-- 结果一览：**菱形卡 3-4-3 排布**（游戏 `HeroShowPanel` 的实际画面：
-         菱形品质底板 + 卡面 + 品质边框，职业/属性角标在左右上角，连体星条在下，
-         重复获得在卡面右下显示碎片图标 ×N，新角色在左侧显示「新」角标；**不显示名字**）。
-         位置来自源码 `HeroShowUI.InitUI`/`grid` 的 3-4-3 行分布（与备份实现一致：
-         第 0/2 行 3 张居中，第 1 行 4 张错半格，纵向三行）。 -->
-    <div class="g-abs g-layer-ui result-diamonds" :style="gachaPos(0, 20)">
-      <button
+    <!-- 结果一览：**蜂窝错半格网格**（prefab `HeroShowPanel/Scrollview/grid` 真实坐标：
+         中排 4 张 (-420/−140/140/420, 0)、上排 3 张 (-280/0/280, 140)、下排 3 张 (-280/0/280, -140)，
+         列步进 140、行距 140、卡片 256×256（`gacha_card_botm` 原始尺寸），对角相邻互相咬合。
+         卡片序号 0/3/6/9 在中排、1/4/7 在上排、2/5/8 在下排——不是按顺序切行。
+         卡片在游戏里**不可点击**（`HeroShowItem` 无交互），不跳转图鉴。 -->
+    <div class="g-abs g-layer-ui result-diamonds" :style="gachaPos(0, 0)">
+      <div
         v-for="(item, index) in items"
         :key="`${item.typeId}-${index}`"
-        class="result-diamond g-hit g-focusable"
+        class="result-diamond"
         :class="`result-diamond--q${cardQuality(item)}`"
         :style="diamondStyle(index)"
-        type="button"
         :title="`${item.name}（${cardQuality(item)} 星${item.isNew ? ' · 新获得' : ''}）`"
-        @click="emit('open-candidate', item)"
       >
         <img
           class="rd__base"
@@ -38,12 +36,12 @@
           alt=""
         />
         <img class="rd__portrait" :src="getImageUrl(cardFace(item))" :alt="item.name" />
-        <!-- 碎片底衬（用户指认的"阴影"）= `gacha_text.png`（256×88 软边深色底衬）。
-             层级：**压在卡面（角色）之上、边框与角标之下**，碎片图标与 ×N 坐在它上面。 -->
+        <!-- 重复获得底衬：`gacha_card_reget` 240×68 @(0,-48)（prefab `fragmentBg`，
+             重复获得时由 fragmentEndAni 淡入；新角色不显示）。 -->
         <img
           v-if="!item.isNew"
           class="rd__reget"
-          :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_text.png')"
+          :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_card_reget.png')"
           alt=""
         />
         <img
@@ -51,7 +49,7 @@
           :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/gacha_card_frame${cardQuality(item)}.png`)"
           alt=""
         />
-        <!-- 职业 / 属性角标：`gacha_card_class{job}` 左上、`gacha_card_atr{element}` 右上（prefab depth 25） -->
+        <!-- 职业 / 属性角标 64×64：class @(68,-40)、element @(102,-6)（prefab `new/class`、`new/element`） -->
         <img
           v-if="item.job"
           class="rd__class"
@@ -64,25 +62,28 @@
           :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/gacha_card_atr${item.element}.png`)"
           alt=""
         />
-        <!-- 新角色：「新」角标在左侧（gacha_card_new 60×24） -->
+        <!-- 新角色：`gacha_card_new` 60×24 ×scale3 @(0,-48)，坐在底衬位（居中） -->
         <img
           v-if="item.isNew"
           class="rd__new"
           :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_card_new.png')"
           alt="新"
         />
-        <!-- 重复获得：碎片图标 + ×N（源码 case "2" 碎片 / "3" 转星币；数量取本次获得数） -->
-        <span v-else-if="fragmentCount(item)" class="rd__frag">
-          <img :src="getImageUrl(item.fragment || item.icon)" alt="" />
-          <em class="g-text g-text--sm">×{{ fragmentCount(item) }}</em>
-        </span>
+        <!-- 重复获得：碎片图标 108×108 @(-10,8) + ×N 计数 20px @(18,-40)
+             （prefab `fragment` / `fragmentCnt`；碎片图取 `icon.Replace("at","chara")+"_p"`） -->
+        <template v-else-if="fragmentCount(item)">
+          <span class="rd__frag">
+            <img :src="getImageUrl(item.fragment || item.icon)" alt="" />
+          </span>
+          <em class="rd__frag-cnt g-text">×{{ fragmentCount(item) }}</em>
+        </template>
         <!-- 星级：`com_stars_{rare}` 连体星条（3/4/5 星 = 96/120/144×48） -->
         <img
           class="rd__stars"
           :src="getImageUrl(`/images/Common_Atlas/com_stars_${cardQuality(item)}.png`)"
           alt=""
         />
-      </button>
+      </div>
     </div>
 
     <!-- ── BottomRight：OnceButton / TenButton（com_btn_N_sp / com_btn_Y_sp 292×72）。
@@ -198,7 +199,7 @@ const props = defineProps({
   wallet: { type: Object, default: () => ({}) }
 })
 
-const emit = defineEmits(['again', 'close', 'open-candidate', 'topup'])
+const emit = defineEmits(['again', 'close', 'topup'])
 
 const copied = ref(false)
 
@@ -230,22 +231,23 @@ function fragmentCount(item) {
 }
 
 /**
- * 菱形卡位置：**3-4-3 三行错半格**（游戏结果页的排布）。
- * 第 0/2 行各 3 张（x = ±1、0 格），第 1 行 4 张（错开半格）；
- * 单抽只有 1 张时居中。`--index` 供入场动画错帧用。
+ * 蜂窝错半格网格：prefab `Scrollview/grid` 的真实卡位（NGUI +y 向上）。
+ * 中排 4 张（序号 0/3/6/9）、上排 3 张（1/4/7）、下排 3 张（2/5/8），
+ * 列步进 140、行距 140、卡片 256×256；单抽 `heroSingle` 居中 (0,0)。
  */
-const DIAMOND_SIZE = 215
-const COL_STEP = 252
+const DIAMOND_SIZE = 256
+const GRID_POSITIONS = [
+  [-420, 0], [-280, 140], [-280, -140], [-140, 0], [0, 140],
+  [0, -140], [140, 0], [280, 140], [280, -140], [420, 0]
+]
 function diamondStyle(index) {
   const total = props.items.length
-  if (total === 1) return { left: '50%', top: '50%', '--index': '0' }
-  const row = index < 3 ? 0 : index < 7 ? 1 : 2
-  const col = index - [0, 3, 7][row]
-  const offsetX = row === 1 ? (col - 1.5) * COL_STEP : (col - 1) * COL_STEP
-  const offsetY = (1 - row) * 136
+  const [gx, gy] = total === 1 ? [0, 0] : (GRID_POSITIONS[index] ?? [0, 0])
   return {
-    left: `calc(50% + ${offsetX}px)`,
-    top: `calc(50% - ${offsetY}px)`,
+    width: `${DIAMOND_SIZE}px`,
+    height: `${DIAMOND_SIZE}px`,
+    left: `calc(50% + ${gx}px)`,
+    top: `calc(50% - ${gy}px)`,
     '--index': String(index)
   }
 }
@@ -308,24 +310,21 @@ onMounted(schedulePopupSounds)
 .result-backdrop__corner { opacity: 0.2549; }
 .result-backdrop__corner--soft { opacity: 0.051; }
 
-/* 结果区：菱形卡绝对定位（位置由 `diamondStyle()` 给），不是网格流布局 */
+/* 结果区：菱形卡绝对定位（位置由 `diamondStyle()` 给，prefab 蜂窝网格），不是网格流布局 */
 .result-diamonds {
   width: 1534px;
   height: 750px;
   pointer-events: none;
 }
 
-/* 菱形卡：`gacha_card_botm{rare}` 底板 + 卡面 + `gacha_card_frame{rare}` 品质边框。
-   入场 = popUpAni：localScale **(0,1,1) → (1,1,1)**（横向展开），delay 由 `popupDelay()` 给。 */
+/* 菱形卡：`gacha_card_botm{rare}` 256×256 底板 + 200×200 卡面 + `gacha_card_frame{rare}` 224×224 边框。
+   入场 = popUpAni：localScale **(0,1,1) → (1,1,1)**（横向展开），delay 由 `popupDelay()` 给。
+   卡片在游戏里不可点击（`HeroShowItem` 无交互），`pointer-events:none` 防止点击推进时误触。 */
 .result-diamond {
   position: absolute;
-  width: 215px;
-  height: 215px;
   border: 0;
   padding: 0;
-  background: none;
-  cursor: pointer;
-  pointer-events: auto;
+  pointer-events: none;
   transform: translate(-50%, -50%);
   animation: result-diamond-popup 0.4s cubic-bezier(0.22, 1.2, 0.36, 1) calc(var(--index, 0) * 0.15s) both;
   transform-origin: center center;
@@ -337,111 +336,114 @@ onMounted(schedulePopupSounds)
   to { opacity: 1; transform: translate(-50%, -50%) scaleX(1); filter: brightness(1); }
 }
 
-/* 悬停/按下不改变居中基准（`.g-hit:active` 的 transform 会覆盖 translate(-50%,-50%)） */
-.result-diamond:active,
-.result-diamond:hover {
-  transform: translate(-50%, -50%);
-}
-
-/* 5 星卡背后加一圈氛围光（对应源码 rare==5 才开的粒子层） */
-.result-diamond--q5::before {
-  content: '';
-  position: absolute;
-  inset: -8%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 214, 112, 0.3) 0%, transparent 68%);
-  animation: gacha-glow-pulse 2.4s ease-in-out infinite;
-  pointer-events: none;
-}
-
+/* 卡内元素统一以 256 卡片为基准的百分比定位（prefab `HeroShowItem` 子节点）：
+   百分比 = 50% + 坐标/256，尺寸 = 原始像素/256。 */
 .rd__base,
 .rd__frame {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   pointer-events: none;
 }
 
-/* 碎片底衬 = 用户说的"阴影"：`gacha_card_reget`（原图 128×68，显示 240×68）软边深色底衬，
-   压在菱形卡面下方横贯一条（240/256 ≈ 94% 宽、68/256 ≈ 27% 高），α 由动画淡入。 */
+.rd__base { width: 100%; height: 100%; object-fit: contain; }
+
+/* 重复获得底衬 `gacha_card_reget` 240×68 @(0,-48) */
 .rd__reget {
   position: absolute;
   left: 50%;
-  top: 61%;
-  width: 96%;
-  height: 33%;
+  top: 68.75%;
+  width: 93.75%;
+  height: 26.56%;
   transform: translate(-50%, -50%);
   object-fit: fill;
   pointer-events: none;
   animation: reveal-fade-in 0.3s ease-out both;
 }
 
+/* 卡面 `heroIcon` = `gacha_at*.png` 200×200 居中 */
 .rd__portrait {
   position: absolute;
   left: 50%;
-  top: 46%;
-  width: 80%;
-  height: 80%;
+  top: 50%;
+  width: 78.125%;
+  height: 78.125%;
   transform: translate(-50%, -50%);
   object-fit: contain;
   pointer-events: none;
 }
 
-/* 职业 / 属性角标：游戏里在卡面**下方一排**（紧邻星级两侧），不是菱形上角 */
+/* 职业 / 属性角标 64×64：class @(68,-40)、element @(102,-6)（prefab `new/class`、`new/element`） */
 .rd__class,
 .rd__atr {
   position: absolute;
-  top: 55%;
-  width: 20%;
-  height: 20%;
+  width: 25%;
+  height: 25%;
+  transform: translate(-50%, -50%);
   object-fit: contain;
   pointer-events: none;
 }
 
-.rd__class { right: 22%; }
-.rd__atr { right: 3%; }
+.rd__class { left: 76.56%; top: 65.63%; }
+.rd__atr { left: 89.84%; top: 52.34%; }
 
-/* 新角色角标：卡面下排左侧（与碎片同排，替换碎片位） */
+/* 新角色角标：`gacha_card_new` 60×24 ×scale3 = 180×72 @(0,-48)（坐在 reget 底衬位，居中） */
 .rd__new {
-  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.55));
   position: absolute;
-  left: 12%;
-  top: 57%;
-  width: 30%;
-  height: 12%;
+  left: 50%;
+  top: 68.75%;
+  width: 70.31%;
+  height: 28.13%;
+  transform: translate(-50%, -50%);
   object-fit: contain;
   pointer-events: none;
+  animation: reveal-star-pop 0.45s ease-out both;
 }
 
-/* 重复获得：碎片图标 + ×N —— 卡面下排**左侧**，坐在 `gacha_card_reget` 底衬上 */
+/* 重复获得：碎片图标 108×108 @(-10,8) + ×N 20px @(18,-40) */
 .rd__frag {
   position: absolute;
-  left: 14%;
-  top: 56%;
-  display: flex;
-  align-items: center;
-  gap: 2px;
+  left: 46.09%;
+  top: 46.88%;
+  width: 42.19%;
+  height: 42.19%;
+  transform: translate(-50%, -50%);
   pointer-events: none;
 }
 
-.rd__frag img { width: 44px; height: 44px; object-fit: contain; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.55)); }
-.rd__frag em { font-style: normal; color: #fff6e2; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7); }
+.rd__frag img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.55));
+}
 
-/* 星级：`com_stars_{rare}` 连体星条，位于菱形下缘（3/4/5 星 = 96/120/144 × 48） */
+.rd__frag-cnt {
+  position: absolute;
+  left: 57.03%;
+  top: 65.63%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-style: normal;
+  color: #fff6e2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+}
+
+/* 星级：`com_stars_{rare}` 连体星条 @(0,-77)，3/4/5 星 = 96/120/144 × 48 */
 .rd__stars {
   position: absolute;
   left: 50%;
-  bottom: 4%;
-  height: 40px;
-  transform: translateX(-50%);
+  top: 80.08%;
+  height: 18.75%;
+  transform: translate(-50%, -50%);
   pointer-events: none;
 }
 
-.result-diamond--q3 .rd__stars { width: 80px; }
-.result-diamond--q4 .rd__stars { width: 100px; }
-.result-diamond--q5 .rd__stars { width: 120px; }
+.result-diamond--q3 .rd__stars { width: 37.5%; }
+.result-diamond--q4 .rd__stars { width: 46.88%; }
+.result-diamond--q5 .rd__stars { width: 56.25%; }
 
 .result-btn {
   width: 292px;

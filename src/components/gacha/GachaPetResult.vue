@@ -14,16 +14,15 @@
 
     <!-- 结算格：`ItemBagCell` Large（140×140 槽位、128×128 品质框、96×96 图标），
          游戏里一行 **8 格**；魔物蛋不显示数量（源码 `category[0]==6 → SetCnt(0)`），
-         非蛋产物在右下显示数量；星级连体条在**框内顶部**（`(0,39)`）。 -->
+         非蛋产物在右下显示数量；星级连体条在**框内顶部**（`(0,39)`）。
+         结算格在游戏里不可单独点击（点整层 = 补完/关闭），不跳转图鉴。 -->
     <div class="g-abs g-layer-ui tip-grid" :style="gachaPos(0, -10)">
-      <button
+      <div
         v-for="(item, index) in items"
         :key="`${item.typeId}-${index}`"
-        class="tip-cell g-focusable"
+        class="tip-cell"
         :class="[{ 'tip-cell--in': visibleCount > index }, `tip-cell--q${cellQuality(item)}`]"
-        type="button"
         :title="cellTitle(item)"
-        @click.stop="emit('open-candidate', item)"
       >
         <img
           :src="getImageUrl(`/images/ItemBagPanel/item_f_${cellQuality(item)}.png`)"
@@ -37,7 +36,7 @@
           class="tip-cell__stars"
         />
         <span v-if="showCount(item)" class="g-text g-text--sm tip-cell__count">{{ item.count }}</span>
-      </button>
+      </div>
     </div>
   </GachaStage>
 </template>
@@ -67,7 +66,7 @@ const props = defineProps({
   items: { type: Array, default: () => [] }
 })
 
-const emit = defineEmits(['close', 'open-candidate'])
+const emit = defineEmits(['close'])
 
 /** 逐格出现节奏：`SHOW_TIME = 0.1f`（源码常量）。 */
 const SHOW_TIME = 100
@@ -134,12 +133,13 @@ onBeforeUnmount(() => { timers.forEach(id => window.clearTimeout(id)) })
 </script>
 
 <style scoped>
-/* mask：`white` 1534×750、α0.502（源码 UISprite white + mColor.a=0.502）。
-   舞台用 `clear`：**卡池页仍在背后可见**（游戏 GetRewardTip 是盖在卡池页上的弹层）。 */
+/* mask：源码 UISprite `white`、mColor.a=0.502 —— **白 50% 冲洗**盖在仍开着的卡池页上
+   （实机结算截图：背景整体变淡发白，衬托底板），不是压暗。
+   舞台用 `clear`：卡池页仍在背后可见。 */
 .tip-mask {
   width: 1534px;
   height: 750px;
-  background: rgba(6, 4, 2, 0.5);
+  background: rgba(255, 255, 255, 0.502);
   cursor: pointer;
 }
 
@@ -158,13 +158,14 @@ onBeforeUnmount(() => { timers.forEach(id => window.clearTimeout(id)) })
   object-fit: fill;
 }
 
-/* 标题条 `item_get_titel` 220×44（位置在 prefab 中未 dump，按底板左上角内缩摆放） */
+/* 标题条 `item_get_titel` 220×44：实机截图里**水平居中**于底板顶部（»获得物品«） */
 .tip-plate__title {
   position: absolute;
-  left: 96px;
+  left: 50%;
   top: 26px;
   width: 220px;
   height: 44px;
+  transform: translateX(-50%);
 }
 
 .tip-plate__tip {
@@ -197,10 +198,7 @@ onBeforeUnmount(() => { timers.forEach(id => window.clearTimeout(id)) })
   width: 140px;
   height: 140px;
   flex: 0 0 auto;
-  border: 0;
   padding: 0;
-  background: none;
-  cursor: pointer;
   opacity: 0;
   transform: scale(0.6);
 }
