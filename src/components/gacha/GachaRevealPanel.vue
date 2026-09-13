@@ -85,11 +85,9 @@
         v-for="meteor in meteors"
         :key="meteor.key"
         class="g-abs g-layer-deco reveal-meteor"
-        :style="gachaPos(meteor.x, meteor.y)"
+        :style="{ ...gachaPos(meteor.x, meteor.y), '--meteor-delay': `${meteor.delay}s` }"
         aria-hidden="true"
-      >
-        <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaMeteor01.png')" alt="" />
-      </div>
+      ></div>
     </template>
 
     <!-- ── 角色层（游戏 mDepth 40~75）──
@@ -448,10 +446,11 @@ const dustMotes = DUST.map((mote, index) => ({
   }
 }))
 
-/** 5 星流星（`star5FX` 的 meteorFire1 @(-997,-115)、meteorFire2 @(220,-800)）。 */
+/** 5 星流星（`star5FX` 的 meteorFire1 @(-997,-115)、meteorFire2 @(220,-800)）：
+ *  粒子贴图当静态 img 渲染会变成一大块棕色方框，改用 CSS 光痕近似。 */
 const meteors = [
-  { key: 'm1', x: -560, y: 120 },
-  { key: 'm2', x: 320, y: -180 }
+  { key: 'm1', x: -560, y: 120, delay: 0 },
+  { key: 'm2', x: 320, y: -180, delay: 1.1 }
 ]
 /** 职业底图（`classStars` 的 `classTex`）：`spGachaClass0{job}Black` 576×576（scale 1.4）。
  *  `classStarsTweenPlay` 在 2.5s 时把它淡出，但游戏画面里 step3 仍能看到**背景底图上的
@@ -1017,26 +1016,24 @@ onBeforeUnmount(() => {
   100% { transform: translateY(-46px) scale(1); opacity: 0; }
 }
 
+/* 5 星流星：CSS 光痕（细长渐变条沿左上→右下划过），不用粒子贴图静态图 */
 .reveal-meteor {
-  width: 220px;
-  height: 220px;
-  pointer-events: none;
-  animation: reveal-meteor-fly 2.2s linear infinite;
-}
-
-.reveal-meteor img {
-  display: block;
-  width: 220px;
-  height: 220px;
+  width: 260px;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(255, 232, 170, 0) 0%, rgba(255, 232, 170, 0.9) 55%, rgba(255, 246, 220, 0) 100%);
+  filter: drop-shadow(0 0 6px rgba(255, 226, 150, 0.7));
   transform: rotate(-24deg);
-  opacity: 0.85;
+  pointer-events: none;
+  opacity: 0;
+  animation: reveal-meteor-fly 2.2s linear var(--meteor-delay, 0s) infinite;
 }
 
 @keyframes reveal-meteor-fly {
-  0% { transform: translate(-260px, 160px); opacity: 0; }
-  20% { opacity: 0.9; }
-  80% { opacity: 0.7; }
-  100% { transform: translate(300px, -220px); opacity: 0; }
+  0% { transform: rotate(-24deg) translate(-240px, 110px); opacity: 0; }
+  18% { opacity: 0.9; }
+  70% { opacity: 0.55; }
+  100% { transform: rotate(-24deg) translate(300px, -140px); opacity: 0; }
 }
 
 .reveal-name {
