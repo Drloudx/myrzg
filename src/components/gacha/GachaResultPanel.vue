@@ -47,15 +47,16 @@
           :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_card_reget.png')"
           alt=""
         />
-        <!-- 职业 / 属性角标 64×64：class @(68,-40)、element @(102,-6)（prefab `new/class`、`new/element`） -->
+        <!-- 职业 / 属性角标 64×64：class @(68,-40)、element @(102,-6)（prefab `new/class`、`new/element`）。
+             **只在「新获得」时显示**（prefab 里两者都在 `new` 组内，实机截图：重复获得卡无角标） -->
         <img
-          v-if="item.job"
+          v-if="item.isNew && item.job"
           class="rd__class"
           :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/gacha_card_class${item.job}.png`)"
           alt=""
         />
         <img
-          v-if="item.element"
+          v-if="item.isNew && item.element"
           class="rd__atr"
           :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/gacha_card_atr${item.element}.png`)"
           alt=""
@@ -300,6 +301,9 @@ onMounted(schedulePopupSounds)
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* 实机结算背景是亮灰蓝（bg_bottom + bg_toplight 组合的观感），bg.png 原图远暗于此，
+     按实机截图提亮对齐 */
+  filter: brightness(2.1) saturate(0.85);
 }
 
 /* 结果区：菱形卡绝对定位（位置由 `diamondStyle()` 给，prefab 蜂窝网格），不是网格流布局 */
