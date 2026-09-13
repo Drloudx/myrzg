@@ -6,7 +6,7 @@
        开场相机（Timeline 0~2.67s 的 startopen 段）：画面从暗场 + 艾尔莎脸部特写
        （gacha_BG_in 淡入 + 相机推近）拉开到全景桌面，用外层 transform 模拟 3D 相机
        推拉；点击跳段时立即复位。 -->
-  <GachaStage :backdrop="bgUrl" fit="height">
+  <GachaStage :backdrop="bgUrl">
     <div class="card-cam" :class="{ 'card-cam--open': cameraOpen, 'card-cam--done': cameraDone }">
       <div class="g-abs g-layer-bg card-bg" :style="gachaPos(0, 0)">
         <img :src="bgUrl" alt="" />
@@ -210,6 +210,8 @@ onBeforeUnmount(() => {
   // BGM 不在这里停：演出之间要连续（源码 HeroGachaAniPanel.Close 不停 BGM，
   // 由下一段 HeroGachaShowPanel 改播 gacha_show_chara），离开 /gacha 时由页面统一停。
   scene?.dispose()
+  // 画布随面板销毁：主动丢上下文，不等 GC（防 GPU 显存累积挂死）
+  scene?.dropContext?.()
   scene = null
 })
 </script>

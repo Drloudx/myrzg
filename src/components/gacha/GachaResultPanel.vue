@@ -1,7 +1,7 @@
 <template>
-  <!-- 整页演出用 fit="height"（游戏 NGUI UIRoot 按高度缩放）：画布精确铺满视口，
-       背景（bg.png 1700×1220）整幅覆盖后不再出现「画布内暗、画布外亮」的矩形接缝。 -->
-  <GachaStage :backdrop="getImageUrl('/images/uipanel/herogachashowpanel/bg.png')" fit="height">
+  <!-- 结果一览用默认 contain 缩放（与蛋池结算一致）：窄窗口下网格等比缩小完整显示；
+       fit="height" 会把 1096 设计宽的蜂窝网格左右裁掉（开开发者工具的半屏窗口必现）。 -->
+  <GachaStage :backdrop="getImageUrl('/images/uipanel/herogachashowpanel/bg.png')">
     <!-- 背板：整屏层用 inset:0，且**不能挂 g-abs**（它的 translate(-50%,-50%) 会把
          inset 盒子推出左上，只剩部分覆盖——画面出现半屏明暗矩形接缝）；
          bg.png 铺满整个画布。注意**不放 Rconer/Rconer2**：那是 1700×1220 的浅色圆角框贴图，
@@ -40,9 +40,9 @@
           alt=""
         />
         <!-- 重复获得阴影底衬 `gacha_card_reget` 240×68 @(0,-48)（prefab depth 25，压边框、垫角标/碎片；
-             用户确认游戏里有此层） -->
+             碎片与溢出转化的结晶都要垫在这层上（用户确认游戏里有此层）） -->
         <img
-          v-if="!item.isNew && fragmentCount(item)"
+          v-if="!item.isNew && (fragmentCount(item) || item.converted)"
           class="rd__reget"
           :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_card_reget.png')"
           alt=""
@@ -314,21 +314,20 @@ onMounted(schedulePopupSounds)
   filter: brightness(2.1) saturate(0.85);
 }
 
-/* 结果区：菱形卡绝对定位（位置由 `diamondStyle()` 给，prefab 蜂窝网格），不是网格流布局 */
+/* 结果区：菱形卡绝对定位（位置由 `diamondStyle()` 给，prefab 蜂窝网格），不是网格流布局。
+   卡片可被浏览器元素选择器（F12）拾取检查——不在容器上压 pointer-events:none；
+   卡片本身无点击交互，不会影响页面行为。 */
 .result-diamonds {
   width: 1534px;
   height: 750px;
-  pointer-events: none;
 }
 
 /* 菱形卡：`gacha_card_botm{rare}` 256×256 底板 + 200×200 卡面 + `gacha_card_frame{rare}` 224×224 边框。
-   入场 = popUpAni：localScale **(0,1,1) → (1,1,1)**（横向展开），delay 由 `popupDelay()` 给。
-   卡片在游戏里不可点击（`HeroShowItem` 无交互），`pointer-events:none` 防止点击推进时误触。 */
+   入场 = popUpAni：localScale **(0,1,1) → (1,1,1)**（横向展开），delay 由 `popupDelay()` 给。 */
 .result-diamond {
   position: absolute;
   border: 0;
   padding: 0;
-  pointer-events: none;
   transform: translate(-50%, -50%);
   animation: result-diamond-popup 0.4s cubic-bezier(0.22, 1.2, 0.36, 1) calc(var(--index, 0) * 0.15s) both;
   transform-origin: center center;
@@ -348,7 +347,6 @@ onMounted(schedulePopupSounds)
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  pointer-events: none;
 }
 
 .rd__base { width: 100%; height: 100%; object-fit: contain; }
@@ -362,7 +360,6 @@ onMounted(schedulePopupSounds)
   height: 78.125%;
   transform: translate(-50%, -50%);
   object-fit: contain;
-  pointer-events: none;
 }
 
 /* 职业 / 属性角标 64×64：class @(68,-40)、element @(102,-6)（prefab `new/class`、`new/element`） */
@@ -373,7 +370,6 @@ onMounted(schedulePopupSounds)
   height: 25%;
   transform: translate(-50%, -50%);
   object-fit: contain;
-  pointer-events: none;
 }
 
 .rd__class { left: 76.56%; top: 65.63%; }
@@ -389,7 +385,6 @@ onMounted(schedulePopupSounds)
   height: 9.38%;
   transform: translate(-50%, -50%);
   object-fit: contain;
-  pointer-events: none;
   animation: reveal-star-pop 0.45s ease-out both;
 }
 
@@ -402,7 +397,6 @@ onMounted(schedulePopupSounds)
   height: 26.56%;
   transform: translate(-50%, -50%);
   object-fit: fill;
-  pointer-events: none;
   animation: reveal-fade-in 0.3s ease-out both;
 }
 
@@ -415,7 +409,6 @@ onMounted(schedulePopupSounds)
   width: 21.09%;
   height: 21.09%;
   transform: translate(-50%, -50%);
-  pointer-events: none;
 }
 
 .rd__frag img {
@@ -434,7 +427,6 @@ onMounted(schedulePopupSounds)
   font-style: normal;
   color: #fff6e2;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
-  pointer-events: none;
 }
 
 /* 星级：`com_stars_{rare}` 连体星条 @(0,-77)，3/4/5 星 = 96/120/144 × 48 */
@@ -444,7 +436,6 @@ onMounted(schedulePopupSounds)
   top: 80.08%;
   height: 18.75%;
   transform: translate(-50%, -50%);
-  pointer-events: none;
 }
 
 .result-diamond--q3 .rd__stars { width: 37.5%; }

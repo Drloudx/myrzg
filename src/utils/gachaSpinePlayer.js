@@ -255,6 +255,18 @@ export function createSpineScene(canvas, layers, options = {}) {
         try { texture.dispose() } catch { /* 已释放则忽略 */ }
       }
       gpuTextures.length = 0
+    },
+    /**
+     * 主动丢弃 WebGL 上下文（`WEBGL_lose_context`）。画布随面板卸载而销毁的场景
+     * （翻卡/蛋池每次抽卡新建画布）必须在卸载时调用：否则上下文要等 GC 回收，
+     * 反复抽卡会累积几十个大纹理上下文，把 GPU 进程压垮（表现为整窗挂死、无法点击、
+     * 开发者工具卡住，而 JS 主线程仍响应）。揭晓小人的画布跨角色复用同一上下文，
+     * **逐角色 dispose 时不要调用**，只在揭晓整体卸载时调用。
+     */
+    dropContext() {
+      try {
+        gl.getExtension('WEBGL_lose_context')?.loseContext()
+      } catch { /* 忽略 */ }
     }
   }
 
