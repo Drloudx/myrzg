@@ -69,7 +69,6 @@
           v-if="kind === 'pet'"
           :items="revealItems"
           @close="handleResultClose"
-          @open-candidate="openCandidate"
         />
         <GachaResultPanel
           v-else
@@ -79,7 +78,6 @@
           :wallet="wallet"
           @again="handleDraw"
           @close="handleResultClose"
-          @open-candidate="openCandidate"
           @topup="handleTopUp"
         />
       </div>
@@ -430,11 +428,11 @@ function handleDraw(count) {
   stage.value = 'card'
 }
 
-/** 演出结束：进入结果一览（对应 `HeroShowPanel.Open(allHeroList)`）。 */
+/** 演出结束：进入结果一览（对应 `HeroShowPanel.Open(allHeroList)`）。
+ *  BGM 不在这里切：源码结果页打开时继续播 `gacha_show_chara`，
+ *  关闭结果页（`HeroShowPanel.Close`）才回 `gacha_shop`（handleResultClose 已处理）。 */
 function handleRevealFinish() {
   stage.value = 'result'
-  // 结果一览 BGM 回 `gacha_shop`（源码 `HeroShowPanel.Close/Open` 与 `HeroPoolPanel` 一致）
-  playBgm('gacha_shop')
 }
 
 /** 结果/结算面板关闭：回到卡池页；此后 BGM 仍是 `gacha_shop`（同名不重启）。 */

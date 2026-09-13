@@ -27,27 +27,32 @@
     </div>
 
   <!-- ── 出蛋：`eggTex`（蛋贴图 132×138）从袋口下方升起——源码 `WaitShowPet`
-       TweenPosition (0,-360) → (0,+40)、delay 0.14、dur 0.36（OutQuad，`time=0.36`）；
-       落位后容器 `petShowObj` 弹跳 position (0,280)→(0,20) + scale 1.15→1.4，dur 0.25。
+       TweenPosition (0,-360)→(0,+40)、delay 0.14、dur 0.36（OutQuad，`time=0.36`）。
+       动画挂在 `.pet-egg__inner` 包裹层上；蛋图自身保持静态 `translate(-50%,-50%)` 居中
+       —— 关键帧若直接覆盖图片 transform 会丢掉居中基准（曾导致蛋偏移 + 放大变形）。
        层级：源码 `eggTex` depth 7/8 > `eggDi` depth 5 → **蛋压在菱形框之上**，
        所以它必须排在菱形之后（DOM 顺序同层时后者在上）。 ── -->
-  <!-- 上一只：`OnClickNext` 里旧蛋向上飞走淡出（与 open_jump 同时），单独一个节点承载 -->
+  <!-- 上一只：`OnClickNext` 里旧蛋向上飞走淡出（实机视频确认：旧蛋一直可见地
+       升到货架高度再消失，约 0.8s，不是快速淡出） -->
   <div
     v-if="leavingItem"
-    class="g-abs g-layer-art pet-egg pet-egg--leave"
-    :style="{ ...gachaPos(0, 0), zIndex: 12 }"
+    class="g-abs g-layer-art pet-egg"
+    :style="{ ...gachaPos(0, -20), zIndex: 12 }"
   >
-    <img :src="getImageUrl(leavingItem.egg ?? leavingItem.icon ?? '')" alt="" class="pet-egg__img" />
+    <div class="pet-egg__inner pet-egg__inner--leave">
+      <img :src="getImageUrl(leavingItem.egg ?? leavingItem.icon ?? '')" alt="" class="pet-egg__img" />
+    </div>
   </div>
   <div
     v-if="eggVisible"
     :key="'egg-' + cursor"
     class="g-abs g-layer-art pet-egg"
-    :class="`pet-egg--${eggStage}`"
-    :style="{ ...gachaPos(0, 0), zIndex: 12 }"
+    :style="{ ...gachaPos(0, -20), zIndex: 12 }"
   >
-    <div class="pet-egg__shine" :style="starGlowStyle" aria-hidden="true"></div>
-    <img :src="getImageUrl(eggImage)" alt="" class="pet-egg__img" />
+    <div class="pet-egg__inner" :class="`pet-egg__inner--${eggStage}`">
+      <div class="pet-egg__shine" :style="starGlowStyle" aria-hidden="true"></div>
+      <img :src="getImageUrl(eggImage)" alt="" class="pet-egg__img" />
+    </div>
   </div>
 
     <!-- ── 揭晓 UI（petShowUI）：菱形蛋框 → 名牌展开 → 星级逐颗 → 新获得 ── -->
@@ -61,17 +66,17 @@
           class="pet-diamond"
         />
       </div>
-      <!-- 名牌 nameDi：`gacha_egg_name` 374×100 @(0,-183)；α dur0.5 delay0.1，宽度 224→374 展开 -->
-      <div :key="'name-' + cursor" class="g-abs g-layer-ui pet-name" :style="gachaPos(0, -183)">
+      <!-- 名牌 nameDi：`gacha_egg_name` 374×100 @(0,-163)；α dur0.5 delay0.1，宽度 224→374 展开 -->
+      <div :key="'name-' + cursor" class="g-abs g-layer-ui pet-name" :style="gachaPos(0, -163)">
         <img :src="getImageUrl('/images/gacha/ui/gacha_egg_name.png')" alt="" class="pet-name__banner" />
         <p class="g-text pet-name__text">{{ currentItem.name }}</p>
       </div>
-      <!-- 星级：5 个独立 `gacha_star` 72×72，UIGrid cellWidth 40 @(0,-137)。
+      <!-- 星级：5 个独立 `gacha_star` 72×72，UIGrid cellWidth 40 @(0,-120)。
            第 j 颗：「亮星 α0→1 dur0.3 + scale 2→1 dur0.3」与「闪光星 α1→0 dur0.5」，
            delay = 0.10 + j*0.12（0.10/0.22/0.34/0.46/0.58）。
            **只渲染亮起的星并按数量居中**（源码 UIGrid `hideInactive=1` + `Reposition()`：
            隐藏的星不占位，整组以格心为基准居中）。 -->
-      <div :key="'stars-' + cursor" class="g-abs g-layer-ui pet-stars" :style="gachaPos(0, -137)">
+      <div :key="'stars-' + cursor" class="g-abs g-layer-ui pet-stars" :style="gachaPos(0, -120)">
         <div
           v-for="(slot, index) in starSlots"
           :key="index"
@@ -284,11 +289,11 @@ function nextPet() {
     finishAll()
     return
   }
-  // 旧蛋交给独立节点飞走；当前蛋先隐藏，等 startEgg 再挂载（此前用一个计时器隐藏，
-  // 会把已经升起的下一只蛋一起卸掉 → 第二只起「只有菱形没有蛋」）。
+  // 旧蛋交给独立节点飞走（动画 0.8s，节点必须存活到动画结束）；当前蛋先隐藏，
+  // 等 startEgg 再挂载（此前用一个计时器隐藏，会把已经升起的下一只蛋一起卸掉 → 第二只起「只有菱形没有蛋」）。
   leavingItem.value = props.items[cursor.value] ?? null
   eggVisible.value = false
-  later(() => { leavingItem.value = null }, 340)
+  later(() => { leavingItem.value = null }, 850)
   cursor.value += 1
   phase.value = 'opening'
   playSfx('get5')
@@ -425,23 +430,56 @@ onBeforeUnmount(() => {
    蛋图 132×138；rise 段沿 TweenPosition (0,-360)→(0,+40)（delay .14 / dur .36 / OutQuad），
    bounce 段是容器 (0,280)→(0,20) + scale 1.15→1.4（dur .25）。
    注意 CSS 的 y 轴与设计坐标相反：设计 +40 = 屏幕上移 40。 */
+/* 蛋容器：定位在展示位 (0,-20)（SPEC：蛋从袋口弹出后落回展示位 (0,-20)）。
+   升起/落位/飞走动画全部挂在 `.pet-egg__inner` 包裹层，蛋图保持静态居中。 */
 .pet-egg {
   width: 0;
   height: 0;
   pointer-events: none;
 }
 
-.pet-egg--rise {
-  animation: pet-egg-rise 0.36s ease-out 0.14s both;
+.pet-egg__inner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
 }
 
-.pet-egg--bounce,
-.pet-egg--settled {
+/* rise：自袋口 (0,-360) 升到展示位，delay 0.14 / dur 0.36（OutQuad），scale 0.85→1（源码 DOScale 0.8→1） */
+.pet-egg__inner--rise {
+  animation: pet-egg-rise 0.36s cubic-bezier(0, 0, 0.58, 1) 0.14s both;
+}
+
+@keyframes pet-egg-rise {
+  from { transform: translateY(340px) scale(0.85); opacity: 0; }
+  15% { opacity: 1; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* 落位：轻微下沉回弹（petShowObj 弹跳 (0,280)→(0,20) 的收敛近似），scale 1.06→1 */
+.pet-egg__inner--bounce {
   animation: pet-egg-bounce 0.25s ease-out both;
 }
 
-.pet-egg--leave {
-  animation: pet-egg-fly 0.32s ease-in both;
+.pet-egg__inner--settled {
+  transform: none;
+}
+
+@keyframes pet-egg-bounce {
+  from { transform: translateY(-26px) scale(1.06); }
+  to { transform: translateY(0) scale(1); }
+}
+
+/* 翻页：旧蛋向上飞走淡出（实机视频：约 0.8s 升到货架高度，末端才淡出） */
+.pet-egg__inner--leave {
+  animation: pet-egg-fly 0.8s ease-in both;
+}
+
+@keyframes pet-egg-fly {
+  0% { transform: translateY(0); opacity: 1; }
+  55% { opacity: 1; }
+  100% { transform: translateY(-520px); opacity: 0; }
 }
 
 .pet-egg__img {
@@ -451,26 +489,10 @@ onBeforeUnmount(() => {
   display: block;
   width: 132px;
   height: 138px;
-  /* 终位 ≈ 菱形中心略上（源码 `eggTex` localPosition (0,40) 相对 showPetUi，实测游戏里
-     蛋基本居中偏上一点），最终缩放 1.4（容器 1.15→1.4 与蛋自身 DOScale 1.0→1.15 的合成） */
-  transform: translate(-50%, -50%) translateY(-14px) scale(1.22);
-}
-
-@keyframes pet-egg-rise {
-  from { transform: translateY(360px) scale(0.9); opacity: 0; }
-  15% { opacity: 1; }
-  to { transform: translateY(0) scale(1); opacity: 1; }
-}
-
-@keyframes pet-egg-bounce {
-  from { transform: translateY(-260px) scale(1.15); }
-  to { transform: translateY(0) scale(1.4); }
-}
-
-/* 翻页：旧蛋向上飞走淡出（源码 OnClickNext 的上升淡出） */
-@keyframes pet-egg-fly {
-  from { transform: translateY(0); opacity: 1; }
-  to { transform: translateY(-300px); opacity: 0; }
+  /* 终位 = 菱形中心略上（源码 `eggTex` 落点 (0,40) 相对 showPetUi）；**静态居中**，
+     不参与任何关键帧（此前 rise/bounce 关键帧覆盖图片 transform，
+     丢掉 translate(-50%,-50%) 的同时把放大倍数叠到 1.22×1.4 ≈ 1.7 倍 —— 蛋撑满菱形的变形根因） */
+  transform: translate(-50%, -50%) translateY(-20px);
 }
 
 /* 蛋光晕 / 菱形光晕：ShineEft 星色（3★ 蓝 / 4★ 紫 / 5★ 金），
@@ -489,7 +511,14 @@ onBeforeUnmount(() => {
   pointer-events: none;
 }
 
-.pet-egg__shine { top: -40px; width: 240px; height: 240px; }
+/* 光晕包裹层跟随蛋位（蛋静态上移 20px）；落位后光晕让位给菱形框，淡出 */
+.pet-egg__shine { top: -20px; width: 240px; height: 240px; }
+
+.pet-egg__inner--settled .pet-egg__shine {
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+  animation: none;
+}
 
 @keyframes pet-shine-loop {
   0%, 100% { opacity: 0.25; }

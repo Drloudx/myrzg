@@ -135,9 +135,9 @@
     >
       <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaDitai01.png')" alt="" class="reveal-stage" />
     </div>
-    <!-- elementIcon 与 classFrame/classIcon：游戏里贴在**右侧托板**的右上角（随小人一起右移） -->
+    <!-- elementIcon 与 classFrame/classIcon：prefab @(510,122) / @(573,79)（托板右上角，随 step3 定位） -->
     <template v-if="phaseIndex >= 2">
-      <div class="g-abs g-layer-art" :style="{ ...gachaPos(608, 118), zIndex: 15 }">
+      <div class="g-abs g-layer-art" :style="{ ...gachaPos(510, 122), zIndex: 15 }">
         <img
           :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/spGachaTag${elementSlug}03.png`)"
           alt=""
@@ -145,7 +145,7 @@
         />
       </div>
       <template v-if="current.job">
-        <div class="g-abs g-layer-art" :style="{ ...gachaPos(672, 74), zIndex: 15 }">
+        <div class="g-abs g-layer-art" :style="{ ...gachaPos(573, 79), zIndex: 15 }">
           <img
             :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaBlock05.png')"
             alt=""
@@ -190,11 +190,11 @@
         :style="{ animationDelay: `${starTiming.delay + index * starTiming.gap}s` }"
       />
     </div>
-    <!-- stars：星级行。游戏画面里 step3 星级跟着右侧托板走（在托板下方居中），
-         step1/2 则贴在台座上（`stars2` = ((5-rare)*20, -53)，台座在 (0,-116)）。 -->
+    <!-- stars：星级行。prefab `stage(0,-118)` 下的 `stars2(0,-53)` → 绝对 (0,-171)；
+         step3 台座右移 +360 时跟随（`InitStar` 的 x 偏移 (5-rare)*20 只作用于 step1/2）。 -->
     <div
       class="g-abs g-layer-ui reveal-stars"
-      :style="{ ...gachaPos(phaseIndex >= 2 ? 360 : (5 - starCount) * 20, phaseIndex >= 2 ? -300 : -169), opacity: plainStarsVisible ? 1 : 0 }"
+      :style="{ ...gachaPos(phaseIndex >= 2 ? 360 : (5 - starCount) * 20, -171), opacity: plainStarsVisible ? 1 : 0 }"
     >
       <img
         v-for="(star, index) in starCount"
@@ -206,45 +206,43 @@
       />
     </div>
 
-    <!-- ── 文字与徽标层（depth 77~100）：游戏画面里姓名与「属性 · 职业」**居中偏右**，
-         压在立绘右缘── -->
+    <!-- ── 文字与徽标层（depth 77~100）：坐标取 prefab `nameRoot(248,-104)` / `classRoot(246,-126)`
+         的序列化值 —— name 右端 (128,-70)、block (158,-68)、职业/属性标签一排在 y=-126
+         （class 左缘 94 / element 右缘 131）、elementTextBase 底带中心 (104,-126)。 ── -->
     <template v-if="phaseIndex >= 2">
-      <!-- elementTextBase：`spGachaTag{Element}02`（原图 320×320 的深色底带）。
-           游戏里它是一条**通栏横带**托住姓名与「属性 · 职业」，所以按带宽拉伸，不做成方形暗块。 -->
-      <!-- 底带用 CSS 渐变：`spGachaTag*02` 自带「风 ·」等烫字，拉伸会变形 -->
-      <div class="g-abs g-layer-ui reveal-nameband" :style="gachaPos(30, 58)" aria-hidden="true"></div>
-      <!-- classText 128×128 pivot=Left @(30,0)、elementText 64×64 pivot=Right @(196,0) -->
-      <div v-if="current.job" class="g-abs g-layer-ui" :style="gachaPos(46, -16)">
+      <!-- elementTextBase：`spGachaTag{Element}02` 320×320 中心 (104,-126)（软边横带贴图，按原尺寸渲染） -->
+      <div class="g-abs g-layer-ui" :style="gachaPos(104, -126)" aria-hidden="true">
+        <img
+          :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/spGachaTag${elementSlug}02.png`)"
+          alt=""
+          class="reveal-tag-img reveal-tag-img--base"
+        />
+      </div>
+      <!-- classText 128×128 pivot=Left，左缘 94 → 中心 (158,-126) -->
+      <div v-if="current.job" class="g-abs g-layer-ui" :style="gachaPos(158, -126)">
         <img
           :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/spGachaTagClass0${current.job}.png`)"
           alt=""
-          class="reveal-tag-img reveal-tag-img--left"
+          class="reveal-tag-img"
         />
       </div>
-      <div class="g-abs g-layer-ui" :style="gachaPos(214, 96)">
-        <img
-          :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/spGachaTag${elementSlug}03.png`)"
-          alt=""
-          class="reveal-tag-img reveal-tag-img--right"
-        />
-      </div>
-      <!-- 下一行：元素名 tag + 职业 tag（游戏里是「水 · 守护」并排，压在姓名底带上） -->
-      <div class="g-abs g-layer-ui" :style="gachaPos(-30, -16)">
+      <!-- elementText 64×64 pivot=Right，右缘 131 → 中心 (99,-126) -->
+      <div class="g-abs g-layer-ui" :style="gachaPos(99, -126)">
         <img
           :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/spGachaTag${elementSlug}01.png`)"
           alt=""
-          class="reveal-tag-img reveal-tag-img--left"
+          class="reveal-tag-img reveal-tag-img--sm"
         />
       </div>
-      <!-- block 56×56 @(-40,66)、name 48px pivot=Right @(130,66)（名字右端 +130，左侧留出菱形装饰） -->
-      <div class="g-abs g-layer-ui" :style="gachaPos(8, 98)">
+      <!-- block 56×56 @(158,-68)、name 48px pivot=Right 右端 (128,-70) -->
+      <div class="g-abs g-layer-ui" :style="gachaPos(158, -68)">
         <img
           :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaBlock03.png')"
           alt=""
           class="reveal-nameblock"
         />
       </div>
-      <div class="g-abs g-layer-ui g-text reveal-name" :style="gachaPos(178, 96)">{{ current.name }}</div>
+      <div class="g-abs g-layer-ui g-text reveal-name" :style="gachaPos(128, -70)">{{ current.name }}</div>
       <!-- newIcon (464,-108)：gacha_new 144×92 + newIconShine 同位置加色叠加（depth 91~92）。
            `HeroGachaShowPanelUI.InitData`：`iconNew.SetActive(newHero)` —— **只有新角色显示角标**；
            重复获得在揭晓里不显示任何角标（此前本站额外挂的 gacha_reget 取图 404，已移除）。 -->
@@ -565,6 +563,13 @@ function enterStep3() {
   startTypewriter()
 }
 
+/** step2（backFrame 构建）时长：源码 `tween[28].duration` —— 3★ 时 `InitStar` 固定为
+ *  `min(delayWin=1.05, 3)` 秒；4/5★ 取 Spine `win` 动画时长（无逐角色数据，按 3s 上限）。
+ *  十连全 3★ 时每只节省约 2 秒。 */
+function step2Duration() {
+  return starCount.value === 3 ? 1050 : 3000
+}
+
 /** 进入某个结果（InitData + PlayGachaShowAnim）：step1 星级 → step2 backFrame → step3。 */
 function enterResult() {
   clearTimers()
@@ -576,6 +581,7 @@ function enterResult() {
   later(() => { newHeroSkip.value = true }, 1500)
   loadChibi()
   scheduleStarSounds()
+  if (replayMode.value) playSound('get3')
   const { duration, gap } = starTiming.value
   later(() => {
     // Step1Finish → HideStarIE（0.2s 后换普通星级行）→ backFrame 构建（step2）
@@ -585,8 +591,8 @@ function enterResult() {
     }, 200)
     phaseIndex.value = 1
     playSound('card10')
-    // backFrame 主段约 3s（源码 tween[28] = win 动画时长，上限 3s）后进 step3
-    later(enterStep3, 3000)
+    // backFrame 主段（源码 tween[28]）后进 step3
+    later(enterStep3, step2Duration())
   }, (duration + starCount.value * gap) * 1000)
 }
 
@@ -612,7 +618,7 @@ function advance() {
     plainStarsVisible.value = true
     phaseIndex.value = 1
     playSound('card10')
-    later(enterStep3, 3000)
+    later(enterStep3, step2Duration())
     return
   }
   jumpToStep3()
@@ -640,6 +646,9 @@ function nextHero() {
   }, 500)
 }
 
+/** 跳过补展示模式（源码 `ShowRest5StarHeroTime`）：剩余 5★ 逐只重演，每只开头播 `get3`。 */
+const replayMode = ref(false)
+
 /** 跳过：等价 `HeroGachaShowPanel.Skip()` —— 只保留 5 星继续展示，其余直接结束。 */
 function skipAll() {
   const rest = displayItems.value.slice(cursor.value + 1).filter(item => Number(item.rank ?? item.quality) >= 5)
@@ -650,6 +659,7 @@ function skipAll() {
   displayItems.value.splice(cursor.value + 1, displayItems.value.length, ...rest)
   leaving.value = false
   cursor.value += 1
+  replayMode.value = true
   enterResult()
 }
 
@@ -884,9 +894,12 @@ onBeforeUnmount(() => {
   height: 128px;
 }
 
-.reveal-tag-img--320 { width: 320px; height: 320px; }
-.reveal-tag-img--left { transform: translate(0, -50%); }
-.reveal-tag-img--right { transform: translate(-100%, -50%); }
+/* elementTextBase：`spGachaTag{Element}02` 320×320 原尺寸（软边横带含在方形贴图内） */
+.reveal-tag-img--base { width: 320px; height: 320px; }
+
+/* elementText：64×64 */
+.reveal-tag-img--sm { width: 64px; height: 64px; }
+
 /* 同点双层（职业框 + 职业图标）：第二张绝对定位叠加 */
 .reveal-tag-img--stack {
   position: absolute;
@@ -1026,21 +1039,13 @@ onBeforeUnmount(() => {
   100% { transform: translate(300px, -220px); opacity: 0; }
 }
 
-.reveal-nameband {
-  width: 620px;
-  height: 126px;
-  border-radius: 8px;
-  background: linear-gradient(90deg, rgba(16,11,6,0) 0%, rgba(16,11,6,0.42) 16%, rgba(16,11,6,0.42) 84%, rgba(16,11,6,0) 100%);
-  filter: blur(3px);
-  pointer-events: none;
-}
-
 .reveal-name {
   width: 400px;
   font-size: 48px;
   font-weight: 700;
   text-align: right;
-  /* prefab `name`：pivot=Right @(-120,34)，入场自 (0,36) 左滑 dur0.5（heroNameTweenPlay 段 09） */
+  /* prefab `name`：pivot=Right @(-120,34) in nameRoot(248,-104) → 右端 (128,-70)，
+     入场自 (0,36) 左滑 dur0.5（heroNameTweenPlay 段 09） */
   transform: translate(-100%, -50%);
   animation: reveal-name-slide 0.5s ease-out both;
   color: #fff8e8;
