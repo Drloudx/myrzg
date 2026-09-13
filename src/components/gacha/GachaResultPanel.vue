@@ -4,15 +4,11 @@
   <GachaStage :backdrop="getImageUrl('/images/uipanel/herogachashowpanel/bg.png')" fit="height">
     <!-- 背板：整屏层用 inset:0，且**不能挂 g-abs**（它的 translate(-50%,-50%) 会把
          inset 盒子推出左上，只剩部分覆盖——画面出现半屏明暗矩形接缝）；
-         bg.png 铺满整个画布；Rconer / Rconer2（prefab α0.2549 / 0.0510）按原尺寸居中叠加。 -->
+         bg.png 铺满整个画布。注意**不放 Rconer/Rconer2**：那是 1700×1220 的浅色圆角框贴图，
+         宽视口下它的软边带会露出屏幕两侧（用户指认的「边缘阴影」），游戏结算背景
+         （bg_bottom + padmask 组合）里没有这两层。 -->
     <div class="g-layer-bg result-backdrop">
       <img :src="getImageUrl('/images/uipanel/herogachashowpanel/bg.png')" alt="" class="result-backdrop__bg" />
-      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/Rconer.png')" alt="" class="result-backdrop__corner" />
-      <img
-        :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/Rconer2.png')"
-        alt=""
-        class="result-backdrop__corner result-backdrop__corner--soft"
-      />
     </div>
 
     <!-- 游戏结果页没有标题文本（prefab 只有 22 个 UILabel：×N / 或 / 数字 / 按钮文案），
@@ -43,6 +39,14 @@
           :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/gacha_card_frame${cardQuality(item)}.png`)"
           alt=""
         />
+        <!-- 重复获得阴影底衬 `gacha_card_reget` 240×68 @(0,-48)（prefab depth 25，压边框、垫角标/碎片；
+             用户确认游戏里有此层） -->
+        <img
+          v-if="!item.isNew && fragmentCount(item)"
+          class="rd__reget"
+          :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_card_reget.png')"
+          alt=""
+        />
         <!-- 职业 / 属性角标 64×64：class @(68,-40)、element @(102,-6)（prefab `new/class`、`new/element`） -->
         <img
           v-if="item.job"
@@ -63,8 +67,9 @@
           :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_card_new.png')"
           alt="新"
         />
-        <!-- 重复获得：碎片图标 108×108 原尺寸 @(-10,8) + ×N 计数 20px @(18,-40)
-             （prefab `fragment` / `fragmentCnt`；碎片图取 `icon.Replace("at","chara")+"_p"`） -->
+        <!-- 重复获得：小拼图碎片图标（sprite 108 ×0.5 ≈ 54px，实机紧挨 ×10 左侧，中心 (-30,-40)）
+             + ×N 计数 20px @(18,-40)（prefab `fragment`/`fragmentCnt`；碎片图取
+             `icon.Replace("at","chara")+"_p"`） -->
         <template v-else-if="fragmentCount(item)">
           <span class="rd__frag">
             <img :src="getImageUrl(item.fragment || item.icon)" alt="" />
@@ -297,19 +302,6 @@ onMounted(schedulePopupSounds)
   object-fit: cover;
 }
 
-.result-backdrop__corner {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 1700px;
-  height: 1220px;
-  transform: translate(-50%, -50%);
-  object-fit: fill;
-}
-
-.result-backdrop__corner { opacity: 0.2549; }
-.result-backdrop__corner--soft { opacity: 0.051; }
-
 /* 结果区：菱形卡绝对定位（位置由 `diamondStyle()` 给，prefab 蜂窝网格），不是网格流布局 */
 .result-diamonds {
   width: 1534px;
@@ -348,9 +340,6 @@ onMounted(schedulePopupSounds)
 }
 
 .rd__base { width: 100%; height: 100%; object-fit: contain; }
-
-/* 重复获得底衬 `gacha_card_reget`：源码 `fragmentBg.alpha` 初始化 0 后从未抬起，
-   实机结算截图也无此层 —— 不渲染（此前误加的「阴影罩子」已删除）。 */
 
 /* 卡面 `heroIcon` = `gacha_at*.png` 200×200 居中 */
 .rd__portrait {
@@ -392,14 +381,27 @@ onMounted(schedulePopupSounds)
   animation: reveal-star-pop 0.45s ease-out both;
 }
 
-/* 重复获得：碎片图标 108×108 原尺寸（游戏内「碎片宽/星条宽」≈ 111/96，与 prefab 一致）
-   @(-10,8) —— 此前放大到 84% 是误测，覆盖了整个卡面 */
+/* 重复获得阴影底衬 `gacha_card_reget` 240×68 @(0,-48)（用户确认游戏里有此层） */
+.rd__reget {
+  position: absolute;
+  left: 50%;
+  top: 68.75%;
+  width: 93.75%;
+  height: 26.56%;
+  transform: translate(-50%, -50%);
+  object-fit: fill;
+  pointer-events: none;
+  animation: reveal-fade-in 0.3s ease-out both;
+}
+
+/* 小拼图碎片图标：sprite 108 ×0.5 ≈ 54px（转储 fragmentAni 的 0.5 档；实机紧挨 ×10 左侧），
+   中心 (-30,-40) */
 .rd__frag {
   position: absolute;
-  left: 46.09%;
-  top: 46.88%;
-  width: 42.19%;
-  height: 42.19%;
+  left: 38.28%;
+  top: 65.63%;
+  width: 21.09%;
+  height: 21.09%;
   transform: translate(-50%, -50%);
   pointer-events: none;
 }
