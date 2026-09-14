@@ -445,7 +445,6 @@ onMounted(schedulePopupSounds)
 .result-btn {
   width: 292px;
   height: 72px;
-  background: none;
   padding: 0;
   display: flex;
   align-items: center;

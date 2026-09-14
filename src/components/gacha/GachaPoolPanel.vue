@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <GachaStage :backdrop="getImageUrl('/images/gacha/gacha_cardbackground_main_output.png')">
     <!-- ── 背景层：prefab `gacha_pool_BG`（深度 0~3），贴图由 TextureLoad 在 Awake 加载，
          对应关系取自 prefab：BG_main→`gacha_cardbackground_main_output_blur.png`(2048×1024，与
@@ -547,7 +547,6 @@ function upAvatar(candidate) {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: none;
   padding: 0;
   /* prefab UILabel：概率详情/记录查询 = #cfba96（ColorString[2]）18px。
      注意：此元素自带 border-image（g-slice--btn-mini），不能写 `border` 简写——
@@ -749,7 +748,6 @@ function upAvatar(candidate) {
 .draw-btn {
   width: 292px;
   height: 72px;
-  background: none;
   padding: 0;
   box-sizing: border-box;
   display: flex;
