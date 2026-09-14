@@ -268,7 +268,7 @@
       <template v-if="option.exchange">
         <span class="g-text g-text--md draw-cost__or">或</span>
         <img class="draw-cost__icon" :src="getImageUrl(option.exchange.icon)" alt="" />
-        <span class="g-text g-text--md">{{ option.exchange.text }}</span>
+        <span class="g-text g-text--md" :class="{ 'g-text--danger': !option.exchange.enough }">{{ option.exchange.text }}</span>
       </template>
     </div>
 
@@ -524,6 +524,8 @@ function upAvatar(candidate) {
   /* 左边缘锚定（左对齐），不再做水平居中 */
   transform: translateY(-50%);
   white-space: nowrap;
+  /* prefab UILabel #49693: mEffectStyle=2 (Outline), mEffectColor=#000000 */
+  text-shadow: -1px 0 0 #000, 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000;
 }
 
 /* 货币槽：bg 位于 -23（pivot=Left，向右展开），icon @0，Label @61，add @119。
@@ -651,9 +653,10 @@ function upAvatar(candidate) {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  /* 页签名比通用小字大一档，和游戏里一样在牌面上读得清 */
+  /* prefab UILabel #49708: fontSize=26, mColor=#e6d2af */
   font-size: 26px;
   font-weight: 600;
+  color: #e6d2af;
 }
 
 .pool-tab__time-icon {
@@ -691,13 +694,15 @@ function upAvatar(candidate) {
   font-weight: 700;
   text-align: right;
   transform: translate(-100%, -50%);
-  color: var(--gacha-ink);
+  /* prefab UILabel #49806: 指定伙伴 = #cfba96 (ColorString[2]) */
+  color: #cfba96;
 }
 
 /* desc0「概率提升！」与 desc1 同一行、同为 fontSize=28（prefab），此处改为左对齐排在右侧 */
 .up-boost {
   text-align: left;
   transform: translate(-50%, -50%);
+  /* prefab UILabel #49818: 概率提升！ = #f8eedc (ColorString[1]) */
   color: var(--gacha-ink);
 }
 

@@ -118,7 +118,7 @@
         <template v-if="drawOption.exchange">
           <span class="g-text g-text--md draw-cost__or">或</span>
           <img class="draw-cost__icon" :src="getImageUrl(drawOption.exchange.icon)" alt="" />
-          <span class="g-text g-text--md">{{ drawOption.exchange.text }}</span>
+          <span class="g-text g-text--md" :class="{ 'g-text--danger': !drawOption.exchange.enough }">{{ drawOption.exchange.text }}</span>
         </template>
       </div>
     </template>

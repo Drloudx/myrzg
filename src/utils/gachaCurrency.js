@@ -97,7 +97,8 @@ export function buildDrawOptions(pool, wallet, kind) {
     exchange: alternative
       ? {
         icon: alternative.icon,
-        text: `×${(Number(alternative.count) || 0) * count}`
+        text: `×${(Number(alternative.count) || 0) * count}`,
+        enough: (Number(wallet?.[alternative.typeId]) || 0) >= (Number(alternative.count) || 0) * count
       }
       : null
   })
