@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <!-- 游戏中 heroPoolTip 是 HeroPoolPanel 的子面板：打开时卡池页仍在背后可见，
        故舞台底色透明（clear），由根节点遮罩（0.5 黑）统一压暗。
        遮罩必须挂在弹层根（inset 0 盖满整个窗口）——挂在画布内只会盖住 1534×750，
@@ -34,14 +34,19 @@
             @click="emit('open-candidate', candidate)"
           >
             <img :src="getImageUrl(`/images/HeroPoolPanel_Atlas/at_f_${candidate.quality}.png`)" alt="" class="tip-up-slot__frame" />
-            <img :src="getImageUrl(candidate.icon)" :alt="candidate.name" class="tip-up-slot__icon" />
+            <img :src="getImageUrl(upAvatar(candidate))" :alt="candidate.name" class="tip-up-slot__icon" />
+            <!-- 概率提升角标：prefab `heroPoolTip` 下 `chanceUp` = com_up 24×56 @(37.9,0) -->
+            <img :src="getImageUrl('/images/Common_Atlas/com_up.png')" alt="" class="tip-up-slot__badge" />
           </button>
         </template>
-        <!-- ScrollView (-349,72.93)：正文块左上角在设计坐标 (-349,296)，宽 698。
-             定位写在 scoped 类里（内联 style 的优先级更高，会把 left/top 覆盖掉，故此处不传 style）。
-             游戏内无可见的原生滚动条 → 隐藏之；有更多内容时用项目通用的方向提示箭头
-             （同 NavigationMenu 的 side-scroll-cue：渐隐 + 折角箭头）。 -->
-        <div class="tip-scroll-wrap">
+        <!-- ScrollView：
+             源码 `HeroPoolTips.cs`：
+             - 当有 UP 伙伴时，chanceUpObj 激活，raceDescScrollView.panel.topAnchor.absolute = -195
+               文字区域顶端锚定在设计坐标 (-349, 180)，文字显示在分割线（y=221）下方，高 524px；
+             - 当无 UP 伙伴时，chanceUpObj 隐藏，raceDescScrollView.panel.topAnchor.absolute = -79
+               文字区域顶端吸顶在设计坐标 (-349, 296)，高 640px。
+             游戏内无可见的原生滚动条 → 隐藏之；有更多内容时用项目通用的方向提示箭头。 -->
+        <div class="tip-scroll-wrap" :class="{ 'tip-scroll-wrap--up': upCandidates.length > 0 }">
           <div ref="scrollEl" class="tip-scroll" @scroll.passive="updateCues">
             <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="g-text tip-rate__body" v-html="rateHtml"></div>
@@ -150,8 +155,26 @@ const props = defineProps({
   /** 当前卡池（概率详情用）。 */
   pool: { type: Object, default: null },
   /** 模拟记录（记录查询用），按时间倒序。 */
-  records: { type: Array, default: () => [] }
+  records: { type: Array, default: () => [] },
+  /** 伙伴池 'hero' | 魔物池 'pet' */
+  kind: { type: String, default: 'hero' }
 })
+
+/**
+ * 指定伙伴头像：游戏的 `HeroPoolUI` 与 `HeroPoolTips` 用的是 `heroDataById.Icon`
+ * （`at*_0` 圆形面部头像，资源在 `public/images/HeadIconAtals/`），
+ * 与卡池外侧面板完全一致；魔物蛋池则保持蛋自身图标。
+ */
+function upAvatar(candidate) {
+  const typeId = String(candidate?.typeId ?? '')
+  if (props.kind === 'hero' || (!props.kind && typeId.includes('hero'))) {
+    const plain = /^hero_0*(\d+)$/.exec(typeId)
+    if (plain) return `/images/HeadIconAtals/at${String(plain[1]).padStart(3, '0')}_0.png`
+    const variant = /^new_hero_0*(\d+)$/.exec(typeId)
+    if (variant) return `/images/HeadIconAtals/at${String(variant[1]).padStart(3, '0')}_1.png`
+  }
+  return candidate?.icon ?? ''
+}
 
 const emit = defineEmits(['close', 'open-candidate'])
 
@@ -326,12 +349,40 @@ function formatTime(timestamp) {
   justify-content: center;
 }
 
-.tip-up-slot__frame { position: absolute; width: 100px; height: 100px; }
-.tip-up-slot__icon { position: relative; width: 76px; height: 76px; object-fit: contain; }
+/* 层级按 prefab 的 mDepth：`icon` 是 6、外框 `at_f_*` 是 7、角标 `com_up` 是 8
+   → 外框必须压在头像之上，头像微下移 8px 适配圆形开窗 */
+.tip-up-slot__frame {
+  position: absolute;
+  inset: 0;
+  width: 100px;
+  height: 100px;
+  z-index: 2;
+}
 
-/* 正文滚动区：prefab `raceObj/ScrollView`(-349,72.93) 内的 `percTipLabel`
-   mPivot=0(TopLeft)、mWidth=698，即文字块**左上角**落在设计坐标 (-349,296) 并向下排。
-   因此这里不能居中定位，必须按左上角锚定 + 去掉 .g-abs 的 translate。 */
+.tip-up-slot__icon {
+  position: relative;
+  top: 8px;
+  z-index: 1;
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+}
+
+/* com_up 24×56 @(37.9, 0)：贴在头像右侧的「概率」彩色角标 */
+.tip-up-slot__badge {
+  position: absolute;
+  z-index: 3;
+  left: calc(50% + 37.9px);
+  top: 50%;
+  width: 24px;
+  height: 56px;
+  transform: translate(-50%, -50%);
+}
+
+/* 正文滚动区：prefab `raceObj/ScrollView`(-349,72.93)
+   - 无 UP 伙伴：topAnchor=-79 → 设计坐标 (-349, 296)，top: calc(50% - 296px)，高 640px
+   - 有 UP 伙伴：topAnchor=-195 → 设计坐标 (-349, 180)，top: calc(50% - 180px)，高 524px
+   文字完全显示在分割线（y=221）下方，绝无任何遮挡 */
 .tip-scroll-wrap {
   position: absolute;
   z-index: 3;
@@ -339,6 +390,11 @@ function formatTime(timestamp) {
   top: calc(50% - 296px);
   width: 698px;
   height: 640px;
+}
+
+.tip-scroll-wrap--up {
+  top: calc(50% - 180px);
+  height: 524px;
 }
 
 .tip-scroll {

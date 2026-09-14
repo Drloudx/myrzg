@@ -49,6 +49,9 @@ shot-*.mjs
 trace-*.mjs
 repro-*.mjs
 scripts/dev/scratch/
+scratch/
+.html
+.tools/
 
 # 未使用的重复地图资源
 /map_w1_bg.png

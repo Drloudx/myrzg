@@ -7,27 +7,20 @@
        （gacha_BG_in 淡入 + 相机推近）拉开到全景桌面，用外层 transform 模拟 3D 相机
        推拉；点击跳段时立即复位。 -->
   <GachaStage :backdrop="bgUrl">
+    <!-- 开场相机（Timeline startopen 的「由近到远」运镜）：背景与 Spine 演出层同处
+         card-cam 内一起缩放——游戏是整幅 3D 场景推拉，网页没有后处理管线，用整场景
+         transform 缩放近似（scale 1.35 → 1.0，2.4s；点击跳段立即复位）。 -->
     <div class="card-cam" :class="{ 'card-cam--open': cameraOpen, 'card-cam--done': cameraDone }">
       <div class="g-abs g-layer-bg card-bg" :style="gachaPos(0, 0)">
         <img :src="bgUrl" alt="" />
       </div>
-      <!-- 桌面底图（prefab herogachaanipanel 打包的 gacha_cardforeground_output 1680×1000）：
-           elsa 桌面 Spine 内容只覆盖 ±767，宽视口下两侧用它垫底补齐 -->
-      <div class="g-abs g-layer-bg card-desk" :style="gachaPos(0, 0)">
-        <img :src="getImageUrl('/images/gacha/gacha_cardforeground_output.png')" alt="" />
-      </div>
-    </div>
-
-    <!-- Spine 舞台：铺满 1534×750 设计画布，像素尺寸按实际渲染尺寸 × dpr 设置。
-         **不平移缩放**：elsa_rawcard / elsa_rawcard_desk 骨架内部自带背景与桌面贴图，
-         对画布做 transform 放大会露出这些贴图的硬边（表现为画面中间一道「阴影」分界线）。
-         开场推近改由背景/桌面图层（整幅贴图）承担。 -->
-    <div class="card-spine-wrap">
-      <canvas
-        ref="canvasEl"
-        class="card-spine"
-        style="left: calc(50% - 767px); top: calc(50% - 375px)"
-      ></canvas>
+      <!-- Spine 舞台（elsa_rawcard + elsa_rawcard_desk 桌面前景）。
+           注：prefab 打包的 gacha_cardforeground_output.png 静态桌面图不再渲染——它与
+           elsa_rawcard_desk 骨架内容完全重复（实测隐藏后画面零变化），且开场缩放时与
+           Spine 桌面错位形成「双重桌沿」，已移除。 -->
+      <div ref="canvasHost" class="card-spine-wrap"></div>
+      <!-- 桌面底色延展层：消除宽屏/缩放边缘黑边缝隙 -->
+      <div class="card-desk-fill" aria-hidden="true"></div>
     </div>
 
     <!-- 开场暗场（gacha_BG_in：暗场起手，随相机拉开退场）。
@@ -39,23 +32,17 @@
          用常驻暗角 + 轻微过曝 + 开场期的色边近似（WebGL 里没有后处理管线）。 -->
     <div class="card-post" :class="{ 'card-post--open': cameraOpen }" aria-hidden="true"></div>
 
-    <!-- 触摸继续（源码 continueObj）：等待点击阶段显示 -->
-    <div v-if="phase === 'wait'" class="g-abs g-layer-ui g-text card-continue" :style="gachaPos(0, -300)">
+    <!-- 触摸继续（源码 continueObj）：等待与翻卡段都显示——源码 SetClickCount 只隐藏
+         tail_tip，continueObj 要到面板关闭才消失（2026-09-14 实机视频逐帧确认） -->
+    <div v-if="phase === 'wait' || phase === 'cards'" class="g-abs g-layer-ui g-text card-continue" :style="gachaPos(0, -300)">
       · 触摸继续 ·
     </div>
 
-    <!-- tail_tip（源码 tail_tip，elsa_rawcard_tail 158×173）：指向艾尔莎的点击提示，
-         位置按游戏截图（头部右上方），带轻微浮动（Eft_Ani 循环的近似） -->
-    <img
-      v-if="phase === 'wait'"
-      class="g-abs g-layer-ui card-tail"
-      :style="gachaPos(135, 248)"
-      :src="getImageUrl('/images/gacha/spine/elsa_rawcard_tail.png')"
-      alt=""
-    />
+    <!-- tail_tip：游戏实机等待画面没有可见的白色提示贴图（用户实机对照），源码的
+         tail_tip 特效在网页端无法以正常混合还原，只保留其 shining1 提示音。 -->
 
-    <!-- 等待阶段点击任意处开始翻卡（源码点击 elsa 模型 → SetClickCount → 跳到卡牌段） -->
-    <button v-if="phase === 'wait'" class="card-catcher g-focusable" type="button" aria-label="继续" @click="startCards"></button>
+    <!-- 等待阶段或翻卡阶段点击任意处推进（源码点击 elsa 模型 / 触摸继续 → SetClickCount / SkipAni） -->
+    <button v-if="phase === 'wait' || phase === 'cards'" class="card-catcher g-focusable" type="button" aria-label="继续" @click="onCatcherClick"></button>
 
     <!-- 跳过：prefab 设计坐标 gacha_btn_skip 128×60 @(548,-302)，与蛋池（GachaPetPanel）一致 -->
     <button
@@ -91,7 +78,7 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import GachaStage from './GachaStage.vue'
 import { gachaPos } from '../../utils/gachaLayout'
 import { getImageUrl } from '../../utils/env'
-import { createSpineScene } from '../../utils/gachaSpinePlayer'
+import { mountSharedSpineScene, releaseSharedSpineScene } from '../../utils/gachaSpinePlayer'
 import { playBgm, playSfx } from '../../utils/gachaAudio'
 import { HERO_SPINE_ASSETS } from './gachaSpineAssets'
 
@@ -107,7 +94,7 @@ const emit = defineEmits(['done'])
 const phase = ref('enter') // enter（startopen）| wait（等待点击）| cards（翻卡）| out（end）
 const cameraOpen = ref(false) // 相机拉开（startopen 起手即开始过渡）
 const cameraDone = ref(false) // 相机复位（startopen 结束 / 点击跳段时立即置位）
-const canvasEl = ref(null)
+const canvasHost = ref(null)
 let scene = null
 let rareTimer = 0
 let tailTipTimer = 0
@@ -130,7 +117,8 @@ function startCards() {
   clearTailTipTimers()
   playBgm('gacha_show_chara')
   scene?.play('elsa', cardAnimation.value, { onComplete: finishCards })
-  scene?.play('desk', props.rare ? 'surprised' : 'common')
+  // 桌面层在开场时已按稀有度进入 common/surprised 循环（源码 gacha_BG 的 surprised 布尔
+  // 在 SetCardType 一次设定、贯穿整段演出），这里不重播打断循环
   rareTimer = window.setTimeout(() => playSfx(props.rare ? 'card8' : 'card7'), 1200)
 }
 
@@ -154,12 +142,17 @@ function clearTailTipTimers() {
   tailTipEcho = 0
 }
 
-/** 翻卡段播完 → end 段（源码 Timeline 结尾 → StartShowHero）。 */
+/** 翻卡段播完 → 直接进入揭晓面板（源码 HeroGachaAniBGPanel.CallBackEvent -> StartShowHero）。 */
 function finishCards() {
-  if (phase.value !== 'cards') return
-  phase.value = 'out'
-  scene?.play('elsa', 'end', { onComplete: finish })
-  scene?.play('desk', 'end')
+  finish()
+}
+
+function onCatcherClick() {
+  if (phase.value === 'wait') {
+    startCards()
+  } else if (phase.value === 'cards') {
+    finish()
+  }
 }
 
 function finish() {
@@ -170,16 +163,20 @@ function finish() {
 
 onMounted(async () => {
   try {
-    // 画布像素按实际渲染尺寸 × dpr（GachaStage 会做 CSS transform 缩放）
-    const rect = canvasEl.value.getBoundingClientRect()
-    const dpr = Math.min(window.devicePixelRatio || 1, 2)
-    canvasEl.value.width = Math.max(1, Math.round(rect.width * dpr))
-    canvasEl.value.height = Math.max(1, Math.round(rect.height * dpr))
-    scene = await createSpineScene(canvasEl.value, HERO_SPINE_ASSETS.map(def => ({
-      ...def,
-      atlas: getImageUrl(def.atlas),
-      skeleton: getImageUrl(def.skeleton)
-    })), { fit: 'width' })
+    // 共享场景：画布/上下文/纹理跨抽卡复用（mountSharedSpineScene 内部处理尺寸与比例重建）
+    const { canvas, ready } = mountSharedSpineScene(
+      'gacha-hero-card',
+      canvasHost.value,
+      HERO_SPINE_ASSETS.map(def => ({
+        ...def,
+        atlas: getImageUrl(def.atlas),
+        skeleton: getImageUrl(def.skeleton)
+      })),
+      { fit: 'width', zoom: 1.2 },
+      { left: 'calc(50% - 767px)', top: 'calc(50% - 375px)', width: '1534px', height: '750px', position: 'absolute', pointerEvents: 'none' }
+    )
+    scene = await ready
+    scene.resume()
   } catch (error) {
     // 演出不可用（无 WebGL / 资产缺失）：跳过动画直接进揭晓，不阻塞抽卡
     finish()
@@ -187,6 +184,9 @@ onMounted(async () => {
   }
   playBgm('gacha_ready_chara')
   playSfx('card3')
+  // 桌面层按稀有度进入循环（源码 SetCardType：gacha_BG.SetBool("surprised", !common)
+  // 在开场前一次设定、贯穿开场/等待/翻卡）——出 5 星时桌面进 surprised 状态而非 idle/common
+  scene.play('desk', props.rare ? 'surprised' : 'common', { loop: true })
   // 开场相机：暗场 + 脸部特写（scale 2.2）→ 2.4s 拉回全景（startopen 全长 2.67s）
   requestAnimationFrame(() => { cameraOpen.value = true })
   scene.play('elsa', 'startopen', {
@@ -194,14 +194,14 @@ onMounted(async () => {
       if (phase.value !== 'enter') return
       phase.value = 'wait'
       cameraDone.value = true
-      // 等待阶段播 `idle`（坐姿）——`startopen_waitclick` 实际是趴桌仅露头发的过渡姿态，
-      // 与游戏等待画面（图4：坐姿+触摸继续）不符，实机视频/截图对照后改用 idle
-      scene.play('elsa', 'idle', { loop: true })
-      scene.play('desk', 'idle', { loop: true })
+      // 等待阶段播 `startopen_waitclick`（趴到桌子底下、只露头发的姿态，4s 循环）——
+      // 与 Timeline 的 startopen_waitclick 段一致：**这才是等待点击的状态**（2026-09-14
+      // 实机视频逐帧：开场坐姿 2.67s 后自动趴下，触摸继续显示在趴桌阶段；点击后端着
+      // 卡牌从桌下起身直接翻卡）。此前误用坐姿 idle，导致点击后「先趴下再起身」的错序。
+      scene.play('elsa', 'startopen_waitclick', { loop: true })
       scheduleTailTipSound()
     }
   })
-  scene.play('desk', 'idle', { loop: true })
 })
 
 onBeforeUnmount(() => {
@@ -209,9 +209,9 @@ onBeforeUnmount(() => {
   clearTailTipTimers()
   // BGM 不在这里停：演出之间要连续（源码 HeroGachaAniPanel.Close 不停 BGM，
   // 由下一段 HeroGachaShowPanel 改播 gacha_show_chara），离开 /gacha 时由页面统一停。
-  scene?.dispose()
-  // 画布随面板销毁：主动丢上下文，不等 GC（防 GPU 显存累积挂死）
-  scene?.dropContext?.()
+  // 只解除共享引用（引用归零暂停渲染循环），不销毁场景/上下文——
+  // 销毁重建交给 mountSharedSpineScene 的比例变化分支与 disposeSharedSpineScenes。
+  releaseSharedSpineScene('gacha-hero-card')
   scene = null
 })
 </script>
@@ -243,7 +243,8 @@ onBeforeUnmount(() => {
   transform: scale(1);
 }
 
-/* Spine 舞台包裹层：不参与任何缩放 */
+/* 共享画布由 `mountSharedSpineScene` 工厂创建（带不上 scoped 属性），定位用内联样式：
+   left calc(50% - 767px) / top calc(50% - 375px)、1534×750；随 card-cam 一起参与开场缩放。 */
 .card-spine-wrap {
   position: absolute;
   left: 0;
@@ -255,16 +256,21 @@ onBeforeUnmount(() => {
   pointer-events: none;
 }
 
+.card-desk-fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 75px;
+  background: linear-gradient(to top, #14171a 0%, #172a24 45%, #203c33 80%, transparent 100%);
+  z-index: 4;
+  pointer-events: none;
+}
+
 .card-bg img {
   width: 2048px;
   height: 1024px;
   object-fit: cover;
-}
-
-.card-desk img {
-  width: 1700px;
-  height: 1012px;
-  object-fit: fill;
 }
 
 /* 开场暗场（gacha_BG_in）：整屏压暗，相机拉开时退场。
@@ -313,14 +319,9 @@ onBeforeUnmount(() => {
   opacity: 0;
 }
 
-.card-spine {
-  position: absolute;
-  /* 背景图(.g-layer-bg=1)之上、UI 层(40)之下：elsa 与桌面的 Spine 场景层 */
-  z-index: 5;
-  width: 1534px;
-  height: 750px;
-  pointer-events: none;
-}
+/* 共享画布由 `mountSharedSpineScene` 工厂创建（带不上 scoped 属性），定位用内联样式：
+   left calc(50% - 767px) / top calc(50% - 375px)、1534×750——层级在背景图(.g-layer-bg=1)
+   之上、UI 层(40)之下（wrap 的 z-index:5）。
 
 /* 触摸继续：底部居中的米白提示（源码 continueObj，prefab 文本米白系） */
 .card-continue {
@@ -332,20 +333,6 @@ onBeforeUnmount(() => {
 @keyframes card-continue-in {
   from { opacity: 0; }
   to { opacity: 1; }
-}
-
-/* tail_tip：白色闪光提示（源码 tint (1,0.95,0.7) + Eft_Ani 循环 → 金色脉动近似） */
-.card-tail {
-  z-index: 40;
-  width: 158px;
-  height: 173px;
-  filter: sepia(0.5) saturate(1.6) brightness(1.05);
-  animation: card-tail-float 1.6s ease-in-out infinite;
-}
-
-@keyframes card-tail-float {
-  0%, 100% { opacity: 0.55; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.08); }
 }
 
 /* 跳过：prefab 设计坐标（gacha_btn_skip 128×60 @(548,-302)），随画布缩放（同蛋池） */
