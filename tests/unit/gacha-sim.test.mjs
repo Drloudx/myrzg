@@ -102,17 +102,26 @@ test('星级分布与官方概率说明一致（大样本）', () => {
   assert.ok(fourRate > 12.5 && fourRate < 15.5, `4★ 实测 ${fourRate.toFixed(2)}% 偏离综合概率 13.9%`)
 })
 
-test('指定伙伴保底：第 2 次 5 星必为 hero_064', () => {
+test('指定伙伴保底：未命中 UP 伙伴后，下一次 5 星必为 hero_064', () => {
   const random = seeded(7)
   let runtime = createRuntime(upPool)
-  const fiveStars = []
-  for (let index = 0; index < 4000 && fiveStars.length < 2; index += 1) {
+  let lastFiveStarWasNonUp = false
+  let verifiedPity = false
+  for (let index = 0; index < 5000; index += 1) {
     const result = drawOne(upPool, runtime, random)
     runtime = result.runtime
-    if (result.tier.rank === 5) fiveStars.push(result.candidate.typeId)
+    if (result.tier.rank === 5) {
+      if (lastFiveStarWasNonUp) {
+        assert.equal(result.candidate.typeId, 'hero_064', '歪了之后下一次 5★ 必定为 UP 伙伴')
+        verifiedPity = true
+        break
+      }
+      if (result.candidate.typeId !== 'hero_064') {
+        lastFiveStarWasNonUp = true
+      }
+    }
   }
-  assert.equal(fiveStars.length, 2)
-  assert.equal(fiveStars[1], 'hero_064')
+  assert.ok(verifiedPity, '应验证到一次大保底触发')
 })
 
 test('十连返回 10 个结果并推进保底计数', () => {

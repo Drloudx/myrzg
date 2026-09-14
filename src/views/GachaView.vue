@@ -12,10 +12,11 @@
     </template>
 
     <template v-else>
-      <!-- 卡池列表页：结果/结算阶段也保持可见（游戏 `HeroPoolPanel` 全程不关，
-           结算弹层与结果一览都是盖在卡池页之上） -->
+      <!-- 卡池列表页：作为招募底层面板常驻（游戏 `HeroPoolPanel` 全程不关，
+           演出、揭晓、结算与提示等所有弹层均作为覆盖层浮于其上；不使用 v-show 隐藏，
+           避免抽卡结束切回时触发浏览器 CSS 动画重置，导致中间立绘多动一次） -->
       <GachaPoolPanel
-        v-show="stage === 'pool' || stage === 'result'"
+        :inert="stage !== 'pool' && stage !== 'result'"
         v-model:kind="kind"
         :pools="poolsOfKind"
         :pool="currentPool"
@@ -63,11 +64,13 @@
       </div>
 
       <!-- 结果一览：角色池走 `HeroShowPanel`（卡牌阵列）；魔物蛋池走 `GetRewardTip`
-           结算弹层（源码里两条完全不同的结束链路，不能共用同一面板）。 -->
+           结算弹层（源码里两条完全不同的结束链路，不能共用同一面板）。
+           蛋池结算 = 蛋 + 卡池赠品（petPool.reward → mowuPool_1：每抽赠 1 个翼型徽印，
+           源码 `ResponsePetRouterGacha` 把 `data.reward` 聚合进同一结算）。 -->
       <div v-if="stage === 'result'" class="gacha-overlay">
         <GachaPetResult
           v-if="kind === 'pet'"
-          :items="revealItems"
+          :items="petSettlementItems"
           @close="handleResultClose"
         />
         <GachaResultPanel
@@ -88,8 +91,22 @@
           :mode="tipMode"
           :pool="currentPool"
           :records="recordsOfKind"
+          :kind="kind"
           @close="closeTip"
           @open-candidate="openCandidate"
+        />
+      </div>
+
+      <!-- 消耗确认弹窗（ConsumeTips）：当抽卡券不足时提示用货币兑换 -->
+      <div v-if="consumeModalVisible" class="gacha-overlay">
+        <GachaConsumeModal
+          :title="consumeModalData.title"
+          :msg="consumeModalData.msg"
+          :items="consumeModalData.items"
+          :can-afford="consumeModalData.canAfford"
+          :error-msg="consumeModalData.errorMsg"
+          @confirm="handleConfirmConsume"
+          @cancel="handleCancelConsume"
         />
       </div>
     </template>
@@ -117,6 +134,7 @@ import GachaRevealPanel from '../components/gacha/GachaRevealPanel.vue'
 import GachaResultPanel from '../components/gacha/GachaResultPanel.vue'
 import GachaPetResult from '../components/gacha/GachaPetResult.vue'
 import GachaTipPanel from '../components/gacha/GachaTipPanel.vue'
+import GachaConsumeModal from '../components/gacha/GachaConsumeModal.vue'
 import { HERO_SPINE_ASSETS, PET_SPINE_ASSETS } from '../components/gacha/gachaSpineAssets'
 import { UiEmptyState } from '../components/ui/index.js'
 import { fetchWithFallback } from '../utils/request'
@@ -125,8 +143,10 @@ import { BASE_REWARD_ICONS } from '../utils/gameMappings'
 import { getImageUrl } from '../utils/env'
 import { useGachaStateStore } from '../stores/gachaState'
 import { createRuntime, drawMany, getPityConfig, normalizeRuntime, resolveDuplicate } from '../utils/gachaSim'
-import { preloadGachaSpineAssets } from '../utils/gachaSpinePlayer'
+import { calculateExchangePlan } from '../utils/gachaCurrency'
+import { disposeSharedCanvases, disposeSharedSpineScenes, preloadGachaSpineAssets } from '../utils/gachaSpinePlayer'
 import { playBgm, setSoundEnabled, stopBgm, preloadAudio } from '../utils/gachaAudio'
+import { preloadGachaRevealStaticAssets, preloadGachaResultAssets } from '../utils/gachaPreload'
 import '../assets/gacha.css' 
 
 const route = useRoute()
@@ -147,8 +167,28 @@ const drawCount = ref(1)           // 本次抽取次数（翻卡演出与结果
 /** 稀有判定（源码 HeroGachaAniPanel.OpenPanel：结果含 5 星 → surprised 段）。 */
 const hasRareDraw = computed(() => revealItems.value.some(item => Number(item.rank ?? item.quality) >= 5))
 
-/** 蛋池出蛋演出列表（PetGachaAniPanel：按抽取顺序逐只出蛋展示）。 */
+/** 蛋池出蛋演出列表（PetGachaAniPanel：按抽取顺序逐只出蛋展示，**只有蛋**）。 */
 const petShowItems = computed(() => revealItems.value)
+
+/**
+ * 蛋池结算列表（GetRewardTip）：蛋 + 卡池赠品聚合条目。
+ * 源码 `ResponsePetRouterGacha`：`rewardData.reward += data.reward` —— 蛋逐只入列后
+ * 把 `petPool.reward`（mowuPool_1，每抽赠 1 个翼型徽印）整体追加进同一结算，
+ * 徽印按数量聚合成一条（游戏截图：10 连 = 10 蛋 + 翼型徽印 ×10）。
+ */
+const petSettlementItems = computed(() => {
+  const bonus = currentPool.value?.bonus ?? []
+  if (!bonus.length) return revealItems.value
+  const extras = bonus.map(entry => ({
+    typeId: entry.typeId,
+    name: entry.name,
+    quality: Number(entry.quality) || 3,
+    icon: entry.icon,
+    count: (Number(entry.count) || 1) * drawCount.value,
+    isBonus: true
+  }))
+  return [...revealItems.value, ...extras]
+})
 
 /** 复制抽蛋结果摘要（PetGachaAniPanel 的分享按钮，同结果一览口径）。 */
 async function copyShareText() {
@@ -172,6 +212,18 @@ const SIM_TICKET_TOPUP = 10
 
 const soundOn = computed(() => store.soundOn)
 const wallet = computed(() => store.wallet ?? {})
+
+/** 消耗确认弹窗状态（ConsumeTips）：当抽卡券不足时提示用货币兑换 */
+const consumeModalVisible = ref(false)
+const consumeModalData = ref({
+  title: '提示',
+  msg: '',
+  items: [],
+  canAfford: true,
+  errorMsg: '',
+  spendItems: [],
+  drawCount: 0
+})
 
 /**
  * 音效开关：真正作用在播放中的 BGM 上（暂停/续播，**不重启、不换曲**），
@@ -250,9 +302,36 @@ async function load() {
       warm(PET_SPINE_ASSETS)
       warm(HERO_SPINE_ASSETS)
       preloadAudio(['gacha_shop', 'gacha_ready_chara', 'gacha_show_chara', 'gacha_ready_egg', 'gacha_show_egg'])
+      preloadGachaRevealStaticAssets()
     }, 400)
     // 卡池页 BGM（源码 `HeroPoolPanel.Open/Close` 一律播 gacha_shop；同名不重启）
     playBgm('gacha_shop')
+
+    if (import.meta.env.DEV) {
+      window.__gachaStore = store
+      window.__testReveal = (items) => {
+        const fullItems = items.map(item => {
+          const preset = presentation.value[item.typeId] || {}
+          return {
+            typeId: item.typeId,
+            name: item.name || preset.name || '',
+            quality: item.quality ?? (preset.job ? 5 : 3),
+            rank: item.rank ?? (preset.job ? 5 : 3),
+            element: item.element || preset.element || 1,
+            job: item.job || preset.job || 1,
+            portrait: item.portrait || preset.portrait || '',
+            dialogue: item.dialogue || preset.dialogue || '',
+            skeleton: item.skeleton || preset.name || '',
+            skin: item.skin || preset.skin || '',
+            imgPos: item.imgPos || preset.imgPos || null,
+            isNew: true
+          }
+        })
+        revealItems.value = fullItems
+        preloadGachaResultAssets(fullItems)
+        stage.value = 'reveal'
+      }
+    }
   } catch (error) {
     errorMessage.value = `卡池数据加载失败：${error?.message ?? error}`
   }
@@ -368,14 +447,46 @@ function handleBack() {
 /**
  * 抽取：按原表权重与保底推演，写入本地模拟状态后进入揭晓演出。
  * 演出数据补上立绘与台词（角色取 `gacha-presentation.json`，魔物蛋用蛋图）。
+ * 若抽卡券不足，自动计算所需货币并在必要时通过神晶 1:1 折算，弹出 ConsumeTips 确认弹窗。
  */
 function handleDraw(count) {
   const pool = currentPool.value
   if (!pool) return
-  // 模拟钱包扣费：不足则整体不扣，也不进入演出（按钮同时会置灰）
-  const unit = Number(pool.costs?.[0]?.count) || 0
-  const costItem = pool.costs?.[0]
-  if (!costItem || !store.spend([{ typeId: costItem.typeId, count: unit * count }])) {
+
+  const exchangePlan = calculateExchangePlan(pool, store.wallet, count)
+  if (exchangePlan.needExchange) {
+    consumeModalData.value = {
+      title: exchangePlan.title || '提示',
+      msg: exchangePlan.msg || '',
+      items: exchangePlan.items || [],
+      canAfford: exchangePlan.canAfford,
+      errorMsg: exchangePlan.errorMsg || '',
+      spendItems: exchangePlan.spendItems || [],
+      drawCount: count
+    }
+    consumeModalVisible.value = true
+    return
+  }
+
+  executeDrawWithSpend(count, exchangePlan.spendItems)
+}
+
+function handleConfirmConsume() {
+  if (!consumeModalData.value.canAfford) return
+  const count = consumeModalData.value.drawCount
+  const spendItems = consumeModalData.value.spendItems
+  consumeModalVisible.value = false
+  executeDrawWithSpend(count, spendItems)
+}
+
+function handleCancelConsume() {
+  consumeModalVisible.value = false
+}
+
+function executeDrawWithSpend(count, spendItems) {
+  const pool = currentPool.value
+  if (!pool) return
+  if (!store.spend(spendItems)) {
     return
   }
   const state = normalizeRuntime(pool, store.runtimeOf(pool.id) ?? createRuntime(pool))
@@ -425,6 +536,7 @@ function handleDraw(count) {
   revealItems.value = results
   drawCount.value = count
   tipMode.value = ''
+  preloadGachaResultAssets(results)
   stage.value = 'card'
 }
 
@@ -446,6 +558,10 @@ onBeforeUnmount(() => {
   // 只有离开招募页才停 BGM：演出面板之间必须连续（此前每个面板各自播放/停止，
   // 导致同一首 BGM 在切面板时被从头重启）。
   stopBgm()
+  // 离开 /gacha 才统一销毁共享演出场景（画布/上下文/纹理）；抽卡过程中面板卸载
+  // 只解除引用（releaseSharedSpineScene），避免反复建/丢 WebGL 上下文累积显存挂死
+  disposeSharedSpineScenes()
+  disposeSharedCanvases()
 })
 </script>
 

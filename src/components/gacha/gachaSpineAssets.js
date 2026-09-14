@@ -18,11 +18,14 @@ export const HERO_SPINE_ASSETS = [
     key: 'elsa',
     atlas: '/images/gacha/spine/elsa_rawcard.atlas',
     skeleton: '/images/gacha/spine/elsa_rawcard.json',
+    yOffset: 65,
     premultiply: true
   },
   {
     key: 'desk',
     atlas: '/images/gacha/spine/elsa_rawcard_desk.atlas',
-    skeleton: '/images/gacha/spine/elsa_rawcard_desk.json'
+    skeleton: '/images/gacha/spine/elsa_rawcard_desk.json',
+    yOffset: 65,
+    stretchX: 1.25
   }
 ]

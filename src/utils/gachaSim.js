@@ -142,25 +142,29 @@ function resolveCandidate(tier, runtime, random) {
   return pickWeighted(candidates, random, item => item.weight) ?? candidates[0]
 }
 
-/** 更新保底计数：命中某星级则该项清零，其余累加。 */
-function advancePity(pool, runtime, hitRank) {
+/** 更新保底计数：命中某星级则该项清零，其余累加。UP 保底仅在命中最高星级时根据是否命中 UP 更新。 */
+function advancePity(pool, runtime, hitRank, candidate = null) {
   const config = getPityConfig(pool)
   const pity = {}
   for (const tier of config.tiers) {
     pity[tier.rank] = tier.rank === hitRank ? 0 : (runtime.pity[tier.rank] ?? 0) + 1
   }
   const guaranty = config.guaranty
-  const hitGuaranty = Boolean(
-    hitRank === config.topRank &&
-    guaranty?.typeIds?.length &&
-    runtime.guarantyCount + 1 >= (Number(guaranty.safe) || 0)
-  )
+  let nextGuarantyCount = runtime.guarantyCount
+  if (guaranty?.typeIds?.length && hitRank === config.topRank) {
+    const isUp = Boolean(candidate && guaranty.typeIds.includes(candidate.typeId))
+    if (isUp) {
+      nextGuarantyCount = 0
+    } else {
+      nextGuarantyCount = runtime.guarantyCount + 1
+    }
+  }
   const pullsAfter = runtime.totalPulls + 1
   return {
     ...runtime,
     totalPulls: pullsAfter,
     pity,
-    guarantyCount: hitGuaranty ? 0 : runtime.guarantyCount + 1,
+    guarantyCount: nextGuarantyCount,
     firstGuarantyUsed: runtime.firstGuarantyUsed ||
       (config.topFirstSafe > 0 && pullsAfter >= config.topFirstSafe)
   }
@@ -188,7 +192,7 @@ export function drawOne(pool, runtime, random = defaultRandom) {
   return {
     tier,
     candidate,
-    runtime: advancePity(pool, state, tier.rank),
+    runtime: advancePity(pool, state, tier.rank, candidate),
     rank: tier.rank
   }
 }

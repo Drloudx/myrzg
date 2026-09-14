@@ -30,12 +30,15 @@
           class="tip-cell__frame"
         />
         <img :src="getImageUrl(cellIcon(item))" :alt="item.name" class="tip-cell__icon" />
+        <!-- 星条只给**魔物蛋**（源码 `ItemBagCellUI.CheckPetEggItem` 仅 `isPetEgg` 显示，
+             `com_stars_{star+2}`；翼型徽印等非蛋道具不显示星级） -->
         <img
+          v-if="isPetEgg(item)"
           :src="getImageUrl(`/images/Common_Atlas/com_stars_${cellQuality(item)}.png`)"
           alt=""
           class="tip-cell__stars"
         />
-        <span v-if="showCount(item)" class="g-text g-text--sm tip-cell__count">{{ item.count }}</span>
+        <span v-if="showCount(item)" class="tip-cell__count">{{ item.count }}</span>
       </div>
     </div>
   </GachaStage>
@@ -74,9 +77,11 @@ const visibleCount = ref(0)
 const showComplete = ref(false)
 let timers = []
 
-/** 品质（3/4/5）→ 品质框与连体星条档位。 */
+/** 品质（3/4/5）→ 品质框与连体星条档位。
+ *  **必须取 quality**：蛋池的 `rank` 是保底档位 rare1/2/3（1~3），不是显示星级；
+ *  `quality` 才是 3/4/5（蛋=star+2，额外道具=物品品质）。此前 rank 优先导致全蓝框。 */
 function cellQuality(item) {
-  const value = Number(item.rank ?? item.quality ?? 3)
+  const value = Number(item.quality ?? item.rank ?? 3)
   return [3, 4, 5].includes(value) ? value : 3
 }
 
@@ -133,13 +138,14 @@ onBeforeUnmount(() => { timers.forEach(id => window.clearTimeout(id)) })
 </script>
 
 <style scoped>
-/* mask：源码 UISprite `white`、mColor.a=0.502 —— **白 50% 冲洗**盖在仍开着的卡池页上
-   （实机结算截图：背景整体变淡发白，衬托底板），不是压暗。
+/* mask：prefab `GetRewardTip.mask`（UISprite #70307，PathID 与脚本字段一致）：
+   sprite 名叫 "white" 但染色 mColor=rgba(0,0,0,0.502) —— **黑 50% 压暗**卡池页
+   （实机截图：背景变暗、底板与结算格凸显），不是白冲洗。此前按 sprite 名误改成白色。
    舞台用 `clear`：卡池页仍在背后可见。 */
 .tip-mask {
   width: 1534px;
   height: 750px;
-  background: rgba(255, 255, 255, 0.502);
+  background: rgba(0, 0, 0, 0.502);
   cursor: pointer;
 }
 
@@ -190,7 +196,7 @@ onBeforeUnmount(() => { timers.forEach(id => window.clearTimeout(id)) })
   overflow-y: auto;
   overscroll-behavior: contain;
   transform: translate(-50%, -50%);
-  padding: 4px;
+  padding: 4px 4px 14px;
 }
 
 .tip-cell {
@@ -224,35 +230,35 @@ onBeforeUnmount(() => { timers.forEach(id => window.clearTimeout(id)) })
 .tip-cell__icon {
   position: absolute;
   left: 50%;
-  top: 50%;
-  width: 96px;
-  height: 96px;
+  top: 55%;
+  width: 80px;
+  height: 80px;
   transform: translate(-50%, -50%);
   object-fit: contain;
 }
 
-/* 数量：非蛋产物在右下（`ItemBagCellUI.InitTag`：帧右下内缩 14） */
+/* 数量：源码 `ItemBagCellUI.InitTag` Large —— anchor 在帧右下角内缩 14 的点上，
+   位置/字号/颜色/描边按用户实机标注（right/bottom 23、18px #f8eedc、Outline rgb(23,14,7)）。 */
 .tip-cell__count {
   position: absolute;
-  right: 12px;
-  bottom: 10px;
+  right: 23px;
+  bottom: 23px;
+  font-size: 18px;
+  line-height: 20px;
   color: #f8eedc;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  text-shadow: -1px 0 0 #170e07, 1px 0 0 #170e07, 0 -1px 0 #170e07, 0 1px 0 #170e07;
 }
 
-/* 连体星条：Large 档 (0,39)、高 34、宽 68/84/100（`ItemBagCellUI.CheckPetEggItem`） */
+/* 连体星条：Large 框内顶部 (0,19)、高 34（`ItemBagCellUI.CheckPetEggItem`）；
+   宽度不写死，按 com_stars_{n} 原始宽高比自动（96/120/144 × 48 → 68/85/102） */
 .tip-cell__stars {
   position: absolute;
   left: 50%;
-  top: 39px;
+  top: 19px;
   height: 34px;
   transform: translateX(-50%);
   filter: drop-shadow(0 0 3px rgba(255, 215, 100, 0.6));
 }
-
-.tip-cell--q3 .tip-cell__stars { width: 68px; }
-.tip-cell--q4 .tip-cell__stars { width: 84px; }
-.tip-cell--q5 .tip-cell__stars { width: 100px; }
 
 /* 品质闪光：`ItemFlashEffect.StartRewardDisplayEffect` 按品质分级的框外辉光 */
 .tip-cell--q3 .tip-cell__frame { filter: drop-shadow(0 0 6px rgba(63, 162, 255, 0.5)); }

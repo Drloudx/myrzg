@@ -92,7 +92,7 @@
     <div class="main-layout-row">
       <!-- 电脑端左侧导航 -->
       <div v-if="!isNative" class="desktop-sidebar-container desktop-only">
-        <NavigationMenuLite :is-desktop="true" menu-mode="side" />
+        <NavigationMenu :is-desktop="true" menu-mode="side" />
       </div>
 
       <main class="app-main" @click="isSearchOpen = false">
@@ -148,7 +148,7 @@
     </button>
 
     <!-- 侧边导航栏（模拟招募为整页游戏画面，不显示） -->
-    <NavigationMenuLite v-if="!isGachaFullscreen" :class="{ 'mobile-only': !isNative }" :is-open="isNavOpen" :menu-mode="menuMode" @close="isNavOpen = false" />
+    <NavigationMenu v-if="!isGachaFullscreen" :class="{ 'mobile-only': !isNative }" :is-open="isNavOpen" :menu-mode="menuMode" @close="isNavOpen = false" />
       
     <!-- 全局弹窗 -->
     <UpdateModal ref="updateModalRef" />
@@ -197,7 +197,7 @@
 <script setup>
 import { ref, computed, defineAsyncComponent, nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import NavigationMenuLite from './components/NavigationMenuLite.vue'
+import NavigationMenu from './components/NavigationMenu.vue'
 import GlobalSearchBox from './components/GlobalSearchBox.vue'
 import UpdateModal from './components/UpdateModal.vue'
 import MenuModeModal from './components/MenuModeModal.vue'

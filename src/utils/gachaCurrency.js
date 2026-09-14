@@ -87,7 +87,8 @@ export function buildDrawOptions(pool, wallet, kind) {
     count,
     offsetX: count === 1 ? -204 : 87,
     label: count === 1 ? (heroKind ? '招募一次' : '购买一次') : (heroKind ? '招募十次' : '购买十次'),
-    enabled: unit > 0 && hold >= unit * count,
+    // 游戏内招募按钮只要存在卡池即可点击，券不足时点击触发消耗确认弹窗
+    enabled: unit > 0,
     ticket: {
       icon: ticketIcon,
       text: `×${unit * count}`,
@@ -102,3 +103,163 @@ export function buildDrawOptions(pool, wallet, kind) {
   })
   return [build(1), build(10)]
 }
+
+/**
+ * 计算券不足时的货币兑换方案。
+ * 遵循 HeroPoolPanel.cs ClickRecruit 与 ExtentionMethod.ReplaceDescValue 规则：
+ * 1. 若券充足，直接返回无需兑换；
+ * 2. 券不足时计算缺少张数与所需基础替代货币（氪金或银币）；
+ * 3. 若基础货币充足，弹窗提示消耗氪金购买券；
+ * 4. 若基础货币不足且存在二级兑换（如神晶换氪金），按 1:1 汇率由神晶补足差额，
+ *    并生成「是否消耗 {have} 氪金、{need2} 神晶 购买 {num3} 张{name}。」；
+ * 5. 若神晶亦不足，标记 canAfford = false，并在点击确认时提示「神晶数量不足!」。
+ */
+export function calculateExchangePlan(pool, wallet, count) {
+  const costItem = pool?.costs?.[0] ?? null
+  const unit = Number(costItem?.count) || 1
+  const requiredTickets = unit * count
+  const heldTickets = Number(wallet?.[costItem?.typeId]) || 0
+
+  if (heldTickets >= requiredTickets) {
+    return {
+      needExchange: false,
+      spendItems: [{ typeId: costItem.typeId, count: requiredTickets }]
+    }
+  }
+
+  // 缺少券数
+  const missingTickets = requiredTickets - heldTickets
+  const ticketName = costItem?.name ?? '抽卡券'
+
+  // 第一层替代货币（通常为氪金或银币）
+  const exchangeAlternative = pool?.exchangeCosts?.gachaTicketsExchangeRate?.[0] ?? null
+  if (!exchangeAlternative) {
+    return {
+      needExchange: true,
+      canAfford: false,
+      errorMsg: `${ticketName}数量不足!`,
+      title: '提示',
+      msg: `${ticketName}数量不足`,
+      items: [],
+      spendItems: []
+    }
+  }
+
+  const primaryCurrency = exchangeAlternative
+  const pricePerTicket = Number(primaryCurrency.count) || 1
+  const totalPrimaryNeeded = missingTickets * pricePerTicket
+  const heldPrimary = Number(wallet?.[primaryCurrency.typeId]) || 0
+
+  // Case A: 第一层货币充足（如氪金充足）
+  if (heldPrimary >= totalPrimaryNeeded) {
+    const spendItems = []
+    if (heldTickets > 0) {
+      spendItems.push({ typeId: costItem.typeId, count: heldTickets })
+    }
+    spendItems.push({ typeId: primaryCurrency.typeId, count: totalPrimaryNeeded })
+
+    return {
+      needExchange: true,
+      canAfford: true,
+      title: '提示',
+      msg: `是否消耗 {${totalPrimaryNeeded}} ${primaryCurrency.name} 购买 {${missingTickets}} 张${ticketName}。`,
+      items: [
+        {
+          typeId: primaryCurrency.typeId,
+          name: primaryCurrency.name,
+          icon: primaryCurrency.icon,
+          count: totalPrimaryNeeded,
+          quality: primaryCurrency.quality || 5
+        }
+      ],
+      spendItems
+    }
+  }
+
+  // Case B: 第一层货币不足（如氪金不足），检查第二层（神晶 1:1 补足氪金）
+  // 仅在存在 gachaKeExchangeRate 时支持神晶兑换（如银币池不支持神晶折算）
+  const keExchange = pool?.exchangeCosts?.gachaKeExchangeRate?.[0] ?? null
+  if (!keExchange || primaryCurrency.typeId !== 'item_00002') {
+    // 银币或无二级兑换货币不足
+    const spendItems = []
+    if (heldTickets > 0) {
+      spendItems.push({ typeId: costItem.typeId, count: heldTickets })
+    }
+    spendItems.push({ typeId: primaryCurrency.typeId, count: totalPrimaryNeeded })
+
+    return {
+      needExchange: true,
+      canAfford: false,
+      errorMsg: `${primaryCurrency.name}数量不足!`,
+      title: '提示',
+      msg: `是否消耗 {${totalPrimaryNeeded}} ${primaryCurrency.name} 购买 {${missingTickets}} 张${ticketName}。`,
+      items: [
+        {
+          typeId: primaryCurrency.typeId,
+          name: primaryCurrency.name,
+          icon: primaryCurrency.icon,
+          count: totalPrimaryNeeded,
+          quality: primaryCurrency.quality || 5
+        }
+      ],
+      spendItems
+    }
+  }
+
+  // 神晶兑换氪金：用户明确指示 1:1 汇率！
+  const shortageInKe = totalPrimaryNeeded - heldPrimary
+  const neededShenJing = shortageInKe // 1:1
+  const shenJingMeta = keExchange
+  const heldShenJing = Number(wallet?.[shenJingMeta.typeId]) || 0
+  const canAfford = heldShenJing >= neededShenJing
+
+  const spendItems = []
+  if (heldTickets > 0) {
+    spendItems.push({ typeId: costItem.typeId, count: heldTickets })
+  }
+  if (heldPrimary > 0) {
+    spendItems.push({ typeId: primaryCurrency.typeId, count: heldPrimary })
+  }
+  spendItems.push({ typeId: shenJingMeta.typeId, count: neededShenJing })
+
+  let msg = ''
+  const items = []
+
+  if (heldPrimary > 0) {
+    msg = `是否消耗 {${heldPrimary}} ${primaryCurrency.name}、{${neededShenJing}} ${shenJingMeta.name} 购买 {${missingTickets}} 张${ticketName}。`
+    items.push({
+      typeId: primaryCurrency.typeId,
+      name: primaryCurrency.name,
+      icon: primaryCurrency.icon,
+      count: heldPrimary,
+      quality: primaryCurrency.quality || 5
+    })
+    items.push({
+      typeId: shenJingMeta.typeId,
+      name: shenJingMeta.name,
+      icon: shenJingMeta.icon,
+      count: neededShenJing,
+      quality: shenJingMeta.quality || 5
+    })
+  } else {
+    msg = `是否消耗 {${neededShenJing}} ${shenJingMeta.name} 购买 {${missingTickets}} 张${ticketName}。`
+    items.push({
+      typeId: shenJingMeta.typeId,
+      name: shenJingMeta.name,
+      icon: shenJingMeta.icon,
+      count: neededShenJing,
+      quality: shenJingMeta.quality || 5
+    })
+  }
+
+  return {
+    needExchange: true,
+    canAfford,
+    errorMsg: canAfford ? '' : `${shenJingMeta.name}数量不足!`,
+    title: '提示',
+    msg,
+    items,
+    spendItems
+  }
+}
+

@@ -120,12 +120,16 @@ export const useGachaStateStore = defineStore('gachaState', {
       this.records = [record, ...this.records].slice(0, RECORD_LIMIT)
       return record
     },
-    /** 清空指定卡池的模拟进度（保底计数 + 该池记录），并把模拟钱包还原为默认额度。 */
+    /** 清空指定卡池的模拟进度（保底计数 + 该池记录），并把模拟钱包还原为默认额度。
+     *  同时清空拥有/碎片/结晶——否则测过一轮后全部蛋都是「重复获得」，新获得角标
+     *  永远不再出现（用户实测反馈：页面上看不到「新获得」三个字）。 */
     resetPool(poolId) {
       const next = { ...this.runtimeByPool }
       delete next[poolId]
       this.runtimeByPool = next
       this.records = this.records.filter(item => item.poolId !== poolId)
+      this.owned = []
+      this.fragmentsByHero = {}
       this.wallet = this.walletSeed ? { ...this.walletSeed } : null
     },
     /** 清空全部模拟数据（保底、记录、拥有状态、碎片、结晶与钱包）。 */

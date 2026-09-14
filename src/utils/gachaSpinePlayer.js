@@ -111,6 +111,9 @@ export function createSpineScene(canvas, layers, options = {}) {
   const pad = Number(options.pad) > 0 ? Number(options.pad) : 1
   const padding = Number(options.padding) > 0 ? Number(options.padding) : 1.12
   let disposed = false
+  let paused = false
+  /** 渲染循环函数（init 内定义）；pause/resume 在外层 api 上，需要跨作用域引用。 */
+  let frameRunner = null
   let last = performance.now()
   let rafId = 0
   const actors = []
@@ -155,14 +158,27 @@ export function createSpineScene(canvas, layers, options = {}) {
       const state = new AnimationState(new AnimationStateData(data))
       // 与游戏一致的动画过渡（备份实现同款）：切换动画 0.12s 混合，避免跳帧
       state.data.defaultMix = 0.12
-      actors.push({ key: def.key, data, skeleton, state })
+      actors.push({ key: def.key, data, skeleton, state, yOffset: 0 })
     }
     if (!actors.length) throw new Error('没有可渲染的骨架')
 
     // fit:'bounds'：先在首层骨架上套用 initialAnimation（如揭晓小人的 win），按**运行时
     // 包围盒**取景（与 export-skin-models 的取景一致）。骨架数据头部的 setup 包围盒会
     // 被未启用的战斗特效附件（attack_circle 等）撑大，不能用于小人取景。
-    if (options.fit === 'bounds') {
+    if (options.fit === 'stage') {
+      // 抽卡角色小人站台（英雄揭晓 HeroGachaShowPanel）：
+      // 骨架 rootBone 原点 (0,0) 即角色双足接地点，必须绝对锚定在台座上平面中心。
+      // 不能使用 fit: 'bounds'：技能圈/特效等附件会把包围盒偏向一侧并撑大数倍，
+      // 导致小人漂移到台座左下方空地。
+      // Unity 源码：heroAnimRoot pos=(0,-114)，stage pos=(0,-118)，Spine 局部原点(0,0)，
+      // 缩放 0.0016 * 100 * 0.95 = 0.152 px/Spine单位。
+      const vh = Number(options.viewportHeight) > 0 ? Number(options.viewportHeight) : 2400
+      renderer.camera.viewportHeight = vh
+      renderer.camera.viewportWidth = vh * (canvas.width / canvas.height)
+      const groundY = Number(options.groundY) > 0 ? Number(options.groundY) : 202
+      const cy = -((canvas.height - groundY) / canvas.height * 2 - 1) * (vh / 2)
+      renderer.camera.position.set(0, cy, 0)
+    } else if (options.fit === 'bounds') {
       const firstActor = actors[0]
       if (options.initialAnimation && firstActor.data.findAnimation(options.initialAnimation)) {
         firstActor.state.setAnimation(0, options.initialAnimation, false)
@@ -196,8 +212,12 @@ export function createSpineScene(canvas, layers, options = {}) {
       }
       const aspect = canvas.width / canvas.height
       if (options.fit === 'width') {
-        renderer.camera.viewportWidth = sceneRect.width * pad
-        renderer.camera.viewportHeight = sceneRect.width / aspect * pad
+        // `zoom` > 1 = 视野放大（内容变小）：骨架数据头包围盒按宽铺满的默认取景比游戏紧，
+        // 站立姿的头顶会被画布上缘裁掉（用户实机对照）。**底边保持锚定**在数据包围盒下缘
+        // ——桌面层 yOffset 是按最终视口高度换算的，桌沿依旧贴住画布底边。
+        const zoom = Number(options.zoom) > 1 ? Number(options.zoom) : 1
+        renderer.camera.viewportWidth = sceneRect.width * pad * zoom
+        renderer.camera.viewportHeight = sceneRect.width / aspect * pad * zoom
         renderer.camera.position.set(
           sceneRect.x + sceneRect.width / 2,
           sceneRect.y + renderer.camera.viewportHeight / 2,
@@ -215,13 +235,29 @@ export function createSpineScene(canvas, layers, options = {}) {
     }
     renderer.camera.update()
 
+    // 各层整体偏移（`yOffset`，设计像素，正值向下）：游戏桌面在独立的前景 3D 平面
+    // （prefab gacha_BG.foreground），终帧构图桌沿贴画布底边——同一相机渲染时桌面层
+    // 需要单独下移。Skeleton.x/y 是根偏移，在 updateWorldTransform 时叠加，动画不会覆盖。
+    const worldPerDesignPx = renderer.camera.viewportWidth / (canvas.clientWidth || canvas.width || 1)
+    layers.forEach((def, index) => {
+      actors[index].yOffset = -(Number(def.yOffset) || 0) * worldPerDesignPx
+      // `stretchX`：该层随 zoom 同步横向拉伸（Skeleton.scaleX，关于世界原点=画布中线），
+      // 保证桌面这类全宽绘制在拉远后仍盖满画布（内容宽度 < 数据头包围盒宽度）。
+      if (def.stretchX) {
+        actors[index].scaleX = typeof def.stretchX === 'number' ? def.stretchX : (zoom || 1.25)
+        actors[index].skeleton.scaleX = actors[index].scaleX
+      }
+    })
+
     function frame(now) {
-      if (disposed) return
+      if (disposed || paused) return
       const delta = Math.min((now - last) / 1000, 0.1)
       last = now
       for (const actor of actors) {
         actor.state.update(delta)
         actor.state.apply(actor.skeleton)
+        actor.skeleton.y = actor.yOffset
+        if (actor.scaleX) actor.skeleton.scaleX = actor.scaleX
         actor.skeleton.updateWorldTransform()
       }
       gl.clearColor(0, 0, 0, 0)
@@ -231,6 +267,7 @@ export function createSpineScene(canvas, layers, options = {}) {
       renderer.end()
       rafId = requestAnimationFrame(frame)
     }
+    frameRunner = frame
     rafId = requestAnimationFrame(frame)
     return api
   }
@@ -247,8 +284,22 @@ export function createSpineScene(canvas, layers, options = {}) {
       if (onComplete && !loop) entry.listener = { complete: () => onComplete() }
       return true
     },
+    /** 暂停渲染循环（共享场景无人引用时调用；上下文与纹理全部保留）。 */
+    pause() {
+      paused = true
+      cancelAnimationFrame(rafId)
+      rafId = 0
+    },
+    /** 恢复渲染循环（共享场景被再次获取时调用）。 */
+    resume() {
+      if (disposed || !paused || rafId || !frameRunner) return
+      paused = false
+      last = performance.now()
+      rafId = requestAnimationFrame(frameRunner)
+    },
     dispose() {
       disposed = true
+      paused = true
       cancelAnimationFrame(rafId)
       try { renderer.dispose() } catch { /* 已释放则忽略 */ }
       for (const texture of gpuTextures) {
@@ -257,11 +308,9 @@ export function createSpineScene(canvas, layers, options = {}) {
       gpuTextures.length = 0
     },
     /**
-     * 主动丢弃 WebGL 上下文（`WEBGL_lose_context`）。画布随面板卸载而销毁的场景
-     * （翻卡/蛋池每次抽卡新建画布）必须在卸载时调用：否则上下文要等 GC 回收，
-     * 反复抽卡会累积几十个大纹理上下文，把 GPU 进程压垮（表现为整窗挂死、无法点击、
-     * 开发者工具卡住，而 JS 主线程仍响应）。揭晓小人的画布跨角色复用同一上下文，
-     * **逐角色 dispose 时不要调用**，只在揭晓整体卸载时调用。
+     * 主动丢弃 WebGL 上下文（`WEBGL_lose_context`）。只在**整页离开招募页**清理共享
+     * 场景时调用；抽卡过程中不要调用——反复建/丢上下文会让 GPU 进程累积待回收显存，
+     * 几次抽卡后把窗口压垮（表现为整窗挂死、无法点击，而 JS 主线程仍响应）。
      */
     dropContext() {
       try {
@@ -271,4 +320,200 @@ export function createSpineScene(canvas, layers, options = {}) {
   }
 
   return init()
+}
+
+/**
+ * ── 共享演出场景（跨抽卡复用）──
+ * 每次抽卡都新建/销毁 WebGL 上下文 + 重新上传纹理的话：上下文要等 GC 回收，反复
+ * 抽卡会累积待回收显存，几次后整个窗口挂死；而且每抽一次都要重新解析骨架、重新
+ * 上传贴图（用户感知为「每次抽卡结束都把资源卸载了」）。共享场景把画布、上下文、
+ * 纹理和解析好的骨架全部留在内存里，面板挂载/卸载只做 acquire/release（无人引用
+ * 时暂停渲染循环，重新挂载秒开），离开 /gacha 时统一 `disposeSharedSpineScenes`。
+ */
+const sharedScenes = new Map()
+
+/**
+ * 获取（或创建）共享场景并把画布挂到 host。
+ * @returns {{ canvas: HTMLCanvasElement, ready: Promise<object> }}
+ *   `ready` resolve 为场景实例（与 createSpineScene 的 api 一致）；失败时 reject。
+ * 视口宽高比与上次创建差超过 2%（相机取景依赖比例）时整场景重建。
+ */
+export function mountSharedSpineScene(key, host, layers, options = {}, styleCss = {}) {
+  const rect = host.getBoundingClientRect()
+  const dpr = Math.min(window.devicePixelRatio || 1, 2)
+  const width = Math.max(1, Math.round(rect.width * dpr))
+  const height = Math.max(1, Math.round(rect.height * dpr))
+  let entry = sharedScenes.get(key)
+  if (entry) {
+    const aspect = width / height
+    const built = entry.canvas.width / entry.canvas.height
+    if (Math.abs(aspect - built) / aspect > 0.02) {
+      // 窗口比例变了：相机取景失效，整场景按新比例重建
+      entry.scene?.dispose()
+      entry.scene?.dropContext?.()
+      entry.canvas.remove()
+      sharedScenes.delete(key)
+      entry = null
+    } else {
+      if (entry.canvas.width !== width || entry.canvas.height !== height) {
+        entry.canvas.width = width
+        entry.canvas.height = height
+      }
+      entry.refs += 1
+      entry.scene?.resume()
+      if (entry.canvas.parentElement !== host) host.appendChild(entry.canvas)
+      return { canvas: entry.canvas, ready: entry.ready }
+    }
+  }
+  const canvas = document.createElement('canvas')
+  canvas.width = width
+  canvas.height = height
+  for (const [name, value] of Object.entries(styleCss)) canvas.style.setProperty(name, value)
+  host.appendChild(canvas)
+  entry = { canvas, refs: 1, scene: null, ready: null }
+  sharedScenes.set(key, entry)
+  entry.ready = createSpineScene(canvas, layers, options).then(scene => {
+    entry.scene = scene
+    if (entry.refs <= 0) scene.pause()
+    return scene
+  }).catch(error => {
+    canvas.remove()
+    sharedScenes.delete(key)
+    throw error
+  })
+  return { canvas, ready: entry.ready }
+}
+
+/** 释放一次引用；引用归零时暂停渲染循环（资源保留）。 */
+export function releaseSharedSpineScene(key) {
+  const entry = sharedScenes.get(key)
+  if (!entry) return
+  entry.refs = Math.max(0, entry.refs - 1)
+  if (entry.refs === 0) entry.scene?.pause()
+}
+
+/** 离开 /gacha 时统一清理：释放渲染器与纹理并丢弃 WebGL 上下文。 */
+export function disposeSharedSpineScenes() {
+  for (const entry of sharedScenes.values()) {
+    entry.scene?.dispose()
+    entry.scene?.dropContext?.()
+    entry.canvas.remove()
+  }
+  sharedScenes.clear()
+}
+
+/**
+ * 共享裸画布（不绑定场景）：揭晓小人的骨架逐角色不同、但画布/上下文可以跨揭晓复用
+ * （同一画布上重建场景时 `getContext` 返回同一上下文，旧场景纹理经 dispose 释放）。
+ * 每次揭晓新建画布 = 每轮揭晓多建/丢一个上下文，同样会累积待回收显存。
+ */
+const sharedCanvases = new Map()
+
+export function acquireSharedCanvas(key, host, styleCss = {}) {
+  const rect = host.getBoundingClientRect()
+  const dpr = Math.min(window.devicePixelRatio || 1, 2)
+  const width = Math.max(1, Math.round(rect.width * dpr))
+  const height = Math.max(1, Math.round(rect.height * dpr))
+  let canvas = sharedCanvases.get(key)
+  if (!canvas) {
+    canvas = document.createElement('canvas')
+    sharedCanvases.set(key, canvas)
+  }
+  if (canvas.width !== width || canvas.height !== height) {
+    canvas.width = width
+    canvas.height = height
+  }
+  for (const [name, value] of Object.entries(styleCss)) canvas.style.setProperty(name, value)
+  if (canvas.parentElement !== host) host.appendChild(canvas)
+  return canvas
+}
+
+export function releaseSharedCanvas(key) {
+  const canvas = sharedCanvases.get(key)
+  canvas?.parentElement?.removeChild(canvas)
+}
+
+/**
+ * 共享画布上的**多场景注册表**：同一画布/上下文上按 sceneKey 缓存场景（各含骨架与
+ * 纹理），同一时刻只恢复当前场景的渲染循环、其余 pause。同一画布重建场景时
+ * `getContext` 返回同一上下文，旧场景纹理经 dispose 释放。
+ */
+const canvasSceneRegistry = new Map() // canvasKey -> Map(sceneKey -> { scene, aspect })
+
+/**
+ * 在共享画布上获取（或创建）一个命名场景，并暂停该画布上的其他场景。
+ * 场景按 sceneKey 缓存（如揭晓小人 `chibi:Npc_012:def`）——同一角色再次揭晓时
+ * 零上传零解析，直接 resume + 重播动画。画布比例变化超过 2% 时该场景重建。
+ */
+export function mountCanvasScene(canvasKey, sceneKey, host, layers, options = {}, styleCss = {}) {
+  const canvas = acquireSharedCanvas(canvasKey, host, styleCss)
+  let scenes = canvasSceneRegistry.get(canvasKey)
+  if (!scenes) {
+    scenes = new Map()
+    canvasSceneRegistry.set(canvasKey, scenes)
+  }
+  const aspect = canvas.width / canvas.height
+  let entry = scenes.get(sceneKey)
+  if (entry && Math.abs(entry.aspect - aspect) / aspect > 0.02) {
+    // 视口比例变了：该场景相机取景失效，重建
+    entry.scene.dispose()
+    scenes.delete(sceneKey)
+    entry = null
+  }
+  if (!entry) {
+    // createSpineScene 内部首帧 rAF 由其 init 启动；此处先建后由下方 resume/pause 统一调度
+    const created = createSpineScene(canvas, layers, options).then(scene => {
+      entry.scene = scene
+      if (entry.paused) scene.pause()
+      return scene
+    }).catch(error => {
+      scenes.delete(sceneKey)
+      throw error
+    })
+    entry = { scene: null, aspect, ready: created, paused: false }
+    scenes.set(sceneKey, entry)
+  }
+  for (const [key, other] of scenes) {
+    if (key === sceneKey) continue
+    other.paused = true
+    other.scene?.pause()
+  }
+  if (!entry.scene) {
+    // 新场景仍在创建：清掉画布上其他场景暂停时残留的最后一帧（否则旧小人会
+    // 和新角色的立绘/名牌同框，直到新场景渲染出第一帧）
+    const gl = canvas.getContext('webgl')
+    if (gl) {
+      gl.clearColor(0, 0, 0, 0)
+      gl.clear(gl.COLOR_BUFFER_BIT)
+    }
+  }
+  entry.paused = false
+  entry.scene?.resume()
+  const ready = entry.ready ?? Promise.resolve(entry.scene)
+  return { scene: entry.scene, ready }
+}
+
+/** 暂停共享画布上的全部场景（面板卸载时调用；场景与纹理保留）。 */
+export function pauseCanvasScenes(canvasKey) {
+  const scenes = canvasSceneRegistry.get(canvasKey)
+  if (!scenes) return
+  for (const entry of scenes.values()) {
+    entry.paused = true
+    entry.scene?.pause()
+  }
+}
+
+/** 离开 /gacha 时丢弃共享裸画布与其上全部场景（含上下文）。 */
+export function disposeSharedCanvases() {
+  for (const [canvasKey, scenes] of canvasSceneRegistry) {
+    for (const entry of scenes.values()) {
+      entry.scene?.dispose()
+      entry.scene?.dropContext?.()
+    }
+    scenes.clear()
+    const canvas = sharedCanvases.get(canvasKey)
+    canvas?.parentElement?.removeChild(canvas)
+  }
+  canvasSceneRegistry.clear()
+  sharedCanvases.clear()
 }
