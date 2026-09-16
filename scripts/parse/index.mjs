@@ -11,7 +11,7 @@
 import { mkdirSync, writeFileSync, existsSync, rmSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { parsedDir, sizeOf } from './shared.mjs'
+import { parsedDir, rawDir, publicDataDir, sizeOf } from './shared.mjs'
 import * as pvp from './pvp.mjs'
 import * as hiddenRewards from './hidden-rewards.mjs'
 import * as search from './search.mjs'
@@ -35,6 +35,20 @@ import * as runtimeTables from './runtime-tables.mjs'
 
 if (!existsSync(parsedDir)) {
   mkdirSync(parsedDir, { recursive: true })
+}
+
+// CI / 线上构建环境自适应：
+// 若未包含 raw/ 原始表或原始表不完整，且 parsed 预解析数据已就绪，直接跳过构建
+const hasRawData = (existsSync(rawDir) && existsSync(join(rawDir, 'reward.json'))) ||
+  existsSync(join(publicDataDir, 'reward.json'))
+
+if (!hasRawData) {
+  if (existsSync(join(parsedDir, 'items.json'))) {
+    console.log('\n[data:build] 检测到当前环境未包含 raw/ 原始表（CI/线上部署环境），且 public/data/parsed/ 预解析数据已就绪，跳过数据预处理，直接使用已有数据。\n')
+    process.exit(0)
+  } else {
+    throw new Error('[data:build] 既未找到 raw/ 原始数据，public/data/parsed/ 也无预解析数据，无法完成构建。')
+  }
 }
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '../..')

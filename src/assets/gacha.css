@@ -89,8 +89,7 @@
   background: transparent;
 }
 
-/* fit:'height'（游戏 UIRoot 口径）：画布按高度缩放撑满，宽出视口的部分对称裁切；
-   舞台背景在 contain 下露出信箱边、height 下被画布完全覆盖（内容层自带动宽素材） */
+/* fit:'height'：宽屏按高度缩放并延展背景；窄屏按完整设计宽度缩小，保留全部交互内容。 */
 .gacha-canvas--fill {
   flex: 0 0 auto;
 }

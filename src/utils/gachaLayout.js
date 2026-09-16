@@ -29,9 +29,8 @@ export function gachaFitScale(width, height) {
 }
 
 /**
- * 仅按高度适配的缩放比。
- * 游戏（NGUI UIRoot 按高度缩放）实际是这一个；网页为了不裁切左右内容改用 contain，
- * 两者差值可用于判断「宽度不够（竖屏）」，据此给出横屏提示。
+ * 仅按高度适配的参考比，用于判断窗口是否因宽度不足而进入窄屏提示。
+ * 实际画布缩放由 GachaStage 同时取可用宽、高的较小值，避免固定坐标内容被裁切。
  */
 export function gachaFitScaleByHeight(height) {
   if (!height) return 0

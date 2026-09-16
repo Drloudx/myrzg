@@ -6,10 +6,9 @@
        开场相机（Timeline 0~2.67s 的 startopen 段）：画面从暗场 + 艾尔莎脸部特写
        （gacha_BG_in 淡入 + 相机推近）拉开到全景桌面，用外层 transform 模拟 3D 相机
        推拉；点击跳段时立即复位。 -->
-  <GachaStage :backdrop="bgUrl">
+  <GachaStage :backdrop="bgUrl" fit="height">
     <!-- 开场相机（Timeline startopen 的「由近到远」运镜）：背景与 Spine 演出层同处
-         card-cam 内一起缩放——游戏是整幅 3D 场景推拉，网页没有后处理管线，用整场景
-         transform 缩放近似（scale 1.35 → 1.0，2.4s；点击跳段立即复位）。 -->
+         card-cam 内一起缩放——初始超近景脸胸部特写 scale(2.25) origin(50% 86%)，平滑拉远到全景 1.0 -->
     <div class="card-cam" :class="{ 'card-cam--open': cameraOpen, 'card-cam--done': cameraDone }">
       <div class="g-abs g-layer-bg card-bg" :style="gachaPos(0, 0)">
         <img :src="bgUrl" alt="" />
@@ -23,6 +22,9 @@
       <div class="card-desk-fill" aria-hidden="true"></div>
     </div>
 
+    <!-- 开场纯黑转场淡入（对齐真机 Frame 096~104 的暗场切入，0.35s 快速淡出） -->
+    <div class="card-black" :class="{ 'card-black--out': cameraOpen }" aria-hidden="true"></div>
+
     <!-- 开场暗场（gacha_BG_in：暗场起手，随相机拉开退场）。
          注意：这是**整屏铺满**层，不能用 `gachaPos()`（那会写 left/top=50%，与 CSS 的
          `inset:0` 叠加后只剩右下四分之一，表现为画面中间一道硬边「阴影」）。 -->
@@ -32,11 +34,14 @@
          用常驻暗角 + 轻微过曝 + 开场期的色边近似（WebGL 里没有后处理管线）。 -->
     <div class="card-post" :class="{ 'card-post--open': cameraOpen }" aria-hidden="true"></div>
 
-    <!-- 触摸继续（源码 continueObj）：等待与翻卡段都显示——源码 SetClickCount 只隐藏
-         tail_tip，continueObj 要到面板关闭才消失（2026-09-14 实机视频逐帧确认） -->
-    <div v-if="phase === 'wait' || phase === 'cards'" class="g-abs g-layer-ui g-text card-continue" :style="gachaPos(0, -300)">
-      · 触摸继续 ·
-    </div>
+    <!-- 触摸继续（源码 continueObj）：prefab 原版使用 com_tap 160×40 贴图与 α0.2↔1 呼吸动画（同宠物池一致） -->
+    <img
+      v-if="phase === 'wait' || phase === 'cards'"
+      class="g-abs g-layer-ui card-tap"
+      :style="gachaPos(0, -300)"
+      :src="getImageUrl('/images/Common_Atlas/com_tap.png')"
+      alt="触摸继续"
+    />
 
     <!-- tail_tip：游戏实机等待画面没有可见的白色提示贴图（用户实机对照），源码的
          tail_tip 特效在网页端无法以正常混合还原，只保留其 shining1 提示音。 -->
@@ -117,8 +122,8 @@ function startCards() {
   clearTailTipTimers()
   playBgm('gacha_show_chara')
   scene?.play('elsa', cardAnimation.value, { onComplete: finishCards })
-  // 桌面层在开场时已按稀有度进入 common/surprised 循环（源码 gacha_BG 的 surprised 布尔
-  // 在 SetCardType 一次设定、贯穿整段演出），这里不重播打断循环
+  // 翻卡阶段桌面层同步切换 common 动态（蜡烛光晕与墨水反光），避免桌面层重复叠加碰头特效
+  scene?.play('desk', 'common', { loop: true })
   rareTimer = window.setTimeout(() => playSfx(props.rare ? 'card8' : 'card7'), 1200)
 }
 
@@ -172,23 +177,23 @@ onMounted(async () => {
         atlas: getImageUrl(def.atlas),
         skeleton: getImageUrl(def.skeleton)
       })),
-      { fit: 'width', zoom: 1.2 },
-      { left: 'calc(50% - 767px)', top: 'calc(50% - 375px)', width: '1534px', height: '750px', position: 'absolute', pointerEvents: 'none' }
+      { fit: 'card-stage', zoom: 1.2 },
+      { left: '0', top: '0', width: '100%', height: '100%', position: 'absolute', pointerEvents: 'none' }
     )
     scene = await ready
     scene.resume()
   } catch (error) {
+    console.error('[GachaCardPanel error]:', error)
     // 演出不可用（无 WebGL / 资产缺失）：跳过动画直接进揭晓，不阻塞抽卡
     finish()
     return
   }
   playBgm('gacha_ready_chara')
   playSfx('card3')
-  // 桌面层按稀有度进入循环（源码 SetCardType：gacha_BG.SetBool("surprised", !common)
-  // 在开场前一次设定、贯穿开场/等待/翻卡）——出 5 星时桌面进 surprised 状态而非 idle/common
-  scene.play('desk', props.rare ? 'surprised' : 'common', { loop: true })
-  // 开场相机：暗场 + 脸部特写（scale 2.2）→ 2.4s 拉回全景（startopen 全长 2.67s）
-  requestAnimationFrame(() => { cameraOpen.value = true })
+  // 桌面层常驻 idle 待机（蜡烛微光与墨水反光），在开场特写与等待点击阶段绝不触发碰头或卡牌特效
+  scene.play('desk', 'idle', { loop: true })
+  // 开场相机：超近景脸胸特写（scale 2.25 origin 50% 86%）→ 1.4s 电影级拉回全景（对齐真机 Frame 096~128）
+  window.setTimeout(() => { cameraOpen.value = true }, 50)
   scene.play('elsa', 'startopen', {
     onComplete: () => {
       if (phase.value !== 'enter') return
@@ -217,24 +222,23 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-/* ── 开场相机推近（Timeline startopen 的近似）──
-   **只缩放背景/桌面这一整幅贴图层**：Spine 舞台保持 1:1，否则骨架内部的背景/桌面贴图
-   边缘会露出来（画面中间出现硬边「阴影」）。初始 1.35 倍、焦点在艾尔莎脸部附近，
-   配暗场层；camera-open 时拉回 1.0（2.4s），camera-done 立即复位。 */
+/* ── 开场相机推近（Timeline startopen 还原）──
+   整场景（背景 + 角色 Spine + 桌面）统一置于 card-cam 内缩放：
+   初始 2.25 倍超近景脸胸部特写（焦距在项圈与胸前，origin 50% 86%），
+   入场黑屏 0.35s 快速淡入，镜头 1.4s 平滑拉回 1.0 全景桌面。 */
 .card-cam {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 1534px;
-  height: 750px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
-  transform: scale(1.35);
-  transform-origin: 50% 19%;
+  transform: scale(2.25);
+  transform-origin: 50% 86%;
   pointer-events: none;
 }
 
 .card-cam--open {
-  transition: transform 2.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: transform 1.4s cubic-bezier(0.22, 0.61, 0.36, 1);
   transform: scale(1);
 }
 
@@ -247,10 +251,9 @@ onBeforeUnmount(() => {
    left calc(50% - 767px) / top calc(50% - 375px)、1534×750；随 card-cam 一起参与开场缩放。 */
 .card-spine-wrap {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 1534px;
-  height: 750px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   z-index: 5;
   pointer-events: none;
@@ -261,8 +264,8 @@ onBeforeUnmount(() => {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 75px;
-  background: linear-gradient(to top, #14171a 0%, #172a24 45%, #203c33 80%, transparent 100%);
+  height: 120px;
+  background: linear-gradient(to bottom, #2b453d 0%, #203730 75%, #182823 100%);
   z-index: 4;
   pointer-events: none;
 }
@@ -273,6 +276,21 @@ onBeforeUnmount(() => {
   object-fit: cover;
 }
 
+/* 开场黑屏淡入（对齐真机 Frame 096~104） */
+.card-black {
+  position: absolute;
+  inset: 0;
+  z-index: 22;
+  background: #000;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.35s ease-out;
+}
+
+.card-black--out {
+  opacity: 0;
+}
+
 /* 开场暗场（gacha_BG_in）：整屏压暗，相机拉开时退场。
    `inset:0` 铺满舞台（不要再用 gachaPos / translate 居中）；用大幅椭圆做整体压暗 + 轻微暗角，
    避免小半径热点在画面里形成可见的明暗分界。 */
@@ -281,7 +299,7 @@ onBeforeUnmount(() => {
   inset: 0;
   z-index: 20;
   background: radial-gradient(ellipse 130% 130% at 50% 45%, rgba(10, 7, 4, 0.5) 0%, rgba(10, 7, 4, 0.78) 100%);
-  transition: opacity 1.6s ease-out;
+  transition: opacity 1.4s ease-out;
   pointer-events: none;
 }
 
@@ -301,7 +319,7 @@ onBeforeUnmount(() => {
     radial-gradient(ellipse 78% 78% at 50% 48%, rgba(255, 246, 224, 0.06) 0%, rgba(255, 246, 224, 0) 55%),
     radial-gradient(ellipse 120% 120% at 50% 50%, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.35) 100%);
   box-shadow: inset 0 0 0 0 transparent;
-  transition: opacity 2.4s ease-out;
+  transition: opacity 1.4s ease-out;
 }
 
 .card-post::before {
@@ -312,7 +330,7 @@ onBeforeUnmount(() => {
     linear-gradient(90deg, rgba(255, 60, 60, 0.05) 0%, rgba(255, 60, 60, 0) 18%),
     linear-gradient(270deg, rgba(50, 140, 255, 0.05) 0%, rgba(50, 140, 255, 0) 18%);
   opacity: 1;
-  transition: opacity 2.4s ease-out;
+  transition: opacity 1.4s ease-out;
 }
 
 .card-post--open::before {
@@ -323,14 +341,21 @@ onBeforeUnmount(() => {
    left calc(50% - 767px) / top calc(50% - 375px)、1534×750——层级在背景图(.g-layer-bg=1)
    之上、UI 层(40)之下（wrap 的 z-index:5）。
 
-/* 触摸继续：底部居中的米白提示（源码 continueObj，prefab 文本米白系） */
-.card-continue {
+/* 触摸继续：com_tap 160×40，α0.2↔1 dur1.0 PingPong（对齐宠物池与 Unity prefab continueObj） */
+.card-tap {
+  width: 160px;
+  height: 40px;
   z-index: 40;
-  color: #f8eedc;
-  animation: card-continue-in 1.2s ease-out both;
+  pointer-events: none;
+  animation: card-tap-in 1.2s ease-out both, card-tap-breathe 1s ease-in-out 1.2s infinite alternate;
 }
 
-@keyframes card-continue-in {
+@keyframes card-tap-breathe {
+  from { opacity: 0.2; }
+  to { opacity: 1; }
+}
+
+@keyframes card-tap-in {
   from { opacity: 0; }
   to { opacity: 1; }
 }

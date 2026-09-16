@@ -165,6 +165,7 @@ export function createSpineScene(canvas, layers, options = {}) {
     // fit:'bounds'：先在首层骨架上套用 initialAnimation（如揭晓小人的 win），按**运行时
     // 包围盒**取景（与 export-skin-models 的取景一致）。骨架数据头部的 setup 包围盒会
     // 被未启用的战斗特效附件（attack_circle 等）撑大，不能用于小人取景。
+    const aspect = canvas.width / canvas.height
     if (options.fit === 'stage') {
       // 抽卡角色小人站台（英雄揭晓 HeroGachaShowPanel）：
       // 骨架 rootBone 原点 (0,0) 即角色双足接地点，必须绝对锚定在台座上平面中心。
@@ -174,7 +175,7 @@ export function createSpineScene(canvas, layers, options = {}) {
       // 缩放 0.0016 * 100 * 0.95 = 0.152 px/Spine单位。
       const vh = Number(options.viewportHeight) > 0 ? Number(options.viewportHeight) : 2400
       renderer.camera.viewportHeight = vh
-      renderer.camera.viewportWidth = vh * (canvas.width / canvas.height)
+      renderer.camera.viewportWidth = vh * aspect
       const groundY = Number(options.groundY) > 0 ? Number(options.groundY) : 202
       const cy = -((canvas.height - groundY) / canvas.height * 2 - 1) * (vh / 2)
       renderer.camera.position.set(0, cy, 0)
@@ -196,7 +197,7 @@ export function createSpineScene(canvas, layers, options = {}) {
       renderer.camera.viewportWidth = height * (canvas.width / canvas.height)
       renderer.camera.position.set(
         offset.x + boundWidth / 2,
-        offset.y + boundHeight / 2,
+        offset.y + boundHeight / 2 + (Number(options.yOffset) || 0),
         0
       )
     } else {
@@ -210,8 +211,21 @@ export function createSpineScene(canvas, layers, options = {}) {
         width: first.width || 1,
         height: first.height || 1
       }
-      const aspect = canvas.width / canvas.height
-      if (options.fit === 'width') {
+      if (options.fit === 'card-stage') {
+        // 翻卡演出相机（高度对齐 750 设计基准，宽度随画布横向延展铺满）：
+        // 纵向视野与标准 1534×750 完全一致（zoom=1.2 时为 900），
+        // 横向视野由 aspect 动态决定，保证艾尔莎大小/脸部特写焦距在任意比例下恒定，
+        // 同时横向舞台与桌面完全盖满视口、桌沿两端无切断留空。
+        const zoom = Number(options.zoom) > 1 ? Number(options.zoom) : 1.2
+        const vh = (sceneRect.width * pad * zoom) / (1534 / 750)
+        renderer.camera.viewportHeight = vh
+        renderer.camera.viewportWidth = vh * aspect
+        renderer.camera.position.set(
+          sceneRect.x + sceneRect.width / 2,
+          sceneRect.y + vh / 2,
+          0
+        )
+      } else if (options.fit === 'width') {
         // `zoom` > 1 = 视野放大（内容变小）：骨架数据头包围盒按宽铺满的默认取景比游戏紧，
         // 站立姿的头顶会被画布上缘裁掉（用户实机对照）。**底边保持锚定**在数据包围盒下缘
         // ——桌面层 yOffset 是按最终视口高度换算的，桌沿依旧贴住画布底边。
@@ -244,7 +258,9 @@ export function createSpineScene(canvas, layers, options = {}) {
       // `stretchX`：该层随 zoom 同步横向拉伸（Skeleton.scaleX，关于世界原点=画布中线），
       // 保证桌面这类全宽绘制在拉远后仍盖满画布（内容宽度 < 数据头包围盒宽度）。
       if (def.stretchX) {
-        actors[index].scaleX = typeof def.stretchX === 'number' ? def.stretchX : (zoom || 1.25)
+        const baseStretch = typeof def.stretchX === 'number' ? def.stretchX : 1.25
+        const wideRatio = Math.max(1, aspect / (1534 / 750))
+        actors[index].scaleX = baseStretch * wideRatio
         actors[index].skeleton.scaleX = actors[index].scaleX
       }
     })

@@ -13,7 +13,7 @@
            由上部 768×448 主窗口与下部 768×68 悬浮按钮排组成，垂直间距 24px -->
       <div class="g-abs g-layer-overlay consume-modal-container" :style="gachaPos(0, 0)">
         <!-- 弹窗主框：768×448 com_sys_window_item.png -->
-        <div class="consume-modal-window">
+        <div class="consume-modal-window" :style="{ backgroundImage: `url(${getImageUrl('/images/TipsManager_Atlas/com_sys_window_item.png')})` }">
           <!-- 顶部标题：24px 提示，居中于青色顶条 (top: 22px, height: 34px) -->
           <div class="consume-modal-title">
             {{ title }}
@@ -50,6 +50,7 @@
         <div class="consume-modal-actions">
           <button
             class="consume-btn consume-btn--cancel"
+            :style="{ backgroundImage: `url(${getImageUrl('/images/sliced_buttons/com_btn_N_376x68.png')})` }"
             type="button"
             @click="handleCancel"
           >
@@ -57,6 +58,7 @@
           </button>
           <button
             class="consume-btn consume-btn--confirm"
+            :style="{ backgroundImage: `url(${getImageUrl('/images/sliced_buttons/com_btn_Y_376x68.png')})` }"
             type="button"
             @click="handleConfirm"
           >
@@ -169,12 +171,14 @@ const formattedMsg = computed(() => {
   z-index: 0;
 }
 
-/* 包含 768×448 主窗与 768×68 悬浮按键，总高 540px，完美居中在画面中心 */
+/* 包含 768×448 主窗与 768×68 悬浮按键，总高 540px，居中并等比微缩 8%（scale: 0.92）呈现更精巧质感 */
 .consume-modal-container {
   width: 768px;
   height: 540px;
   user-select: none;
   pointer-events: none;
+  transform: translate(-50%, -50%) scale(var(--consume-modal-scale, 0.92));
+  transform-origin: center center;
 }
 
 .consume-modal-window {
@@ -309,8 +313,8 @@ const formattedMsg = computed(() => {
 
 .consume-item-cell__count {
   position: absolute;
-  right: 7px;
-  bottom: 4px;
+  right: 12px;
+  bottom: 12px;
   font-family: var(--font-ui, sans-serif);
   font-size: 20px;
   font-weight: bold;

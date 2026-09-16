@@ -6,7 +6,7 @@
              spGachaDitai01 石质台座 + Q 版小人 win → win_idle 站在台座上）→
        step3 立绘展开与台座右移（菱形大框与立绘左移至 -160，台座总装右移至 +360，
              台座正面浮现 gacha_star_M.png 星级、新获得、右上角属性/职业徽标、名牌与台词）。 -->
-  <GachaStage :backdrop="getImageUrl('/images/uipanel/herogachashowpanel/bg.png')">
+  <GachaStage :backdrop="getImageUrl('/images/uipanel/herogachashowpanel/bg.png')" fit="height">
     <!-- ── 背景层 ── -->
     <div class="g-layer-bg reveal-bg">
       <img :src="getImageUrl('/images/uipanel/herogachashowpanel/bg.png')" alt="" />
@@ -58,7 +58,7 @@
 
     <!-- ── Step 2 & 3: BackFrame 菱形大框 ──
          Step 2: 位于中央 (0, 0)
-         Step 3: 随 Tween[0] 平滑滑移至 (-160, 0) -->
+         Step 3: 随 Tween[0] 平滑滑移至 (-240, 0) -->
     <div
       v-if="phaseIndex >= 1"
       class="g-abs g-layer-bg reveal-backframe-assembly"
@@ -68,28 +68,7 @@
       ]"
       :style="gachaPos(0, 0)"
     >
-      <!-- lineAlpha：spGachaLine01 (974×974) -->
-      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaLine01.png')" alt="" class="reveal-line" />
-
-      <!-- 属性染色光晕 -->
-      <div class="reveal-glow" aria-hidden="true"></div>
-
-      <!-- spGachaColor01 740×740 属性染色光芒 -->
-      <img
-        :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaColor01.png')"
-        alt=""
-        class="reveal-colordiamond"
-      />
-
-      <!-- 3星专属：midFrame 492×492（chara_bg_center_only，源码 midFrame.alpha = (rare==3)?1:0） -->
-      <img
-        v-if="starCount === 3"
-        :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/chara_bg_center_only.png')"
-        alt=""
-        class="reveal-midframe"
-      />
-
-      <!-- 菱形双框：spGachaBox02 (1024) + spGachaBox01 (975) -->
+      <!-- 菱形双框：spGachaBox02 (672) + spGachaBox01 (640)（内部透明无底色，实机1:1尺寸） -->
       <img
         :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaBox02.png')"
         alt=""
@@ -100,14 +79,6 @@
         alt=""
         class="reveal-box reveal-box--inner"
       />
-
-      <!-- 4星 & 5星专属：符文文字环 spGachaTxtRing01 (866×864) -->
-      <div
-        v-if="starCount >= 4"
-        class="reveal-ring"
-        :class="`reveal-ring--star${starCount}`"
-        aria-hidden="true"
-      ></div>
 
       <!-- 四角闪块 spGachaStar02 (410×410) -->
       <img
@@ -120,14 +91,6 @@
       <div v-if="starCount === 4" class="reveal-star4-shines" aria-hidden="true">
         <span class="reveal-shine reveal-shine--lt">✦</span>
         <span class="reveal-shine reveal-shine--rb">✦</span>
-      </div>
-
-      <!-- 四向角饰与四方块 -->
-      <div v-for="angle in angleOrnaments" :key="angle.key" class="reveal-ornament-angle" :style="ornamentPos(angle.x, angle.y)">
-        <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaAngle01.png')" alt="" class="reveal-angle" />
-      </div>
-      <div v-for="block in blockOrnaments" :key="block.key" class="reveal-ornament-block" :style="ornamentPos(block.x, block.y)">
-        <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaBlock04.png')" alt="" class="reveal-block" />
       </div>
     </div>
 
@@ -144,6 +107,31 @@
         :alt="current.name"
         class="reveal-portrait__img"
       />
+    </div>
+
+    <!-- ── Step 2 & 3: 符文圆环与角向饰件（归属台座小人总装层，Step 3 跟随小人右移至 +360，z-index 位于立绘之后） ── -->
+    <div
+      v-if="phaseIndex >= 1 && starCount >= 4"
+      class="g-abs reveal-stage-ring"
+      :class="{ 'reveal-stage-ring--step3': phaseIndex >= 2, 'reveal-fade-out': leaving }"
+      :style="gachaPos(0, 0)"
+    >
+      <!-- lineAlpha：spGachaLine01 (974×974) -->
+      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaLine01.png')" alt="" class="reveal-line" />
+
+      <!-- 4星 & 5星专属：符文文字环 spGachaTxtRing01 (866×864) -->
+      <div
+        class="reveal-ring"
+        aria-hidden="true"
+      ></div>
+
+      <!-- 四向角饰与四方块（跟随台座小人，属性染色） -->
+      <div v-for="angle in angleOrnaments" :key="angle.key" class="reveal-ornament-angle" :style="ornamentPos(angle.x, angle.y)">
+        <div class="reveal-angle" aria-hidden="true"></div>
+      </div>
+      <div v-for="block in blockOrnaments" :key="block.key" class="reveal-ornament-block" :style="ornamentPos(block.x, block.y)">
+        <div class="reveal-block" aria-hidden="true"></div>
+      </div>
     </div>
 
     <!-- ── Step 2 & 3: 台座总装（Stage Assembly）──
@@ -324,17 +312,17 @@ const ELEMENT_COLORS = {
 }
 
 const ANGLE_ORNAMENTS = [
-  { key: 'top', x: 0, y: 479 },
-  { key: 'bottom', x: 0, y: -481 },
-  { key: 'left', x: -480, y: -1 },
-  { key: 'right', x: 480, y: -1 }
+  { key: 'top', x: 0, y: 260 },
+  { key: 'bottom', x: 0, y: -260 },
+  { key: 'left', x: -260, y: 0 },
+  { key: 'right', x: 260, y: 0 }
 ]
 
 const BLOCK_ORNAMENTS = [
-  { key: 'top', x: -194, y: 194 },
-  { key: 'bottom', x: 194, y: -194 },
-  { key: 'left', x: -194, y: -194 },
-  { key: 'right', x: 194, y: 194 }
+  { key: 'top', x: -105, y: 105 },
+  { key: 'bottom', x: 105, y: -105 },
+  { key: 'left', x: -105, y: -105 },
+  { key: 'right', x: 105, y: 105 }
 ]
 
 const CLASS_BG = {
@@ -731,52 +719,7 @@ onBeforeUnmount(() => {
 }
 
 .reveal-backframe--step3 {
-  transform: translate(calc(-50% - 160px), -50%) !important;
-}
-
-.reveal-line {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 974px;
-  height: 974px;
-  margin: -487px 0 0 -487px;
-  opacity: 0.9;
-  pointer-events: none;
-  animation: reveal-fade-in 0.3s ease-out both;
-}
-
-.reveal-glow {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 1100px;
-  height: 1100px;
-  margin: -550px 0 0 -550px;
-  border-radius: 50%;
-  background: radial-gradient(circle, v-bind(elementColor) 0%, transparent 62%);
-  opacity: 0.34;
-  filter: blur(6px);
-  pointer-events: none;
-  animation: reveal-fade-in 0.6s ease-out both;
-}
-
-.reveal-colordiamond {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 740px;
-  height: 740px;
-  margin: -370px 0 0 -370px;
-  pointer-events: none;
-  animation: reveal-diamond-in 1.3s ease-out both;
-}
-
-@keyframes reveal-diamond-in {
-  0% { opacity: 0; transform: scale(1.35); }
-  30% { opacity: 1; transform: scale(1); }
-  62% { opacity: 1; }
-  100% { opacity: 0.5; transform: scale(1); }
+  transform: translate(calc(-50% - 80px), -50%) !important;
 }
 
 .reveal-box {
@@ -792,6 +735,7 @@ onBeforeUnmount(() => {
   width: 1024px;
   height: 1024px;
   margin: -512px 0 0 -512px;
+  filter: drop-shadow(0 0 8px v-bind(elementColor));
 }
 
 .reveal-box--inner {
@@ -803,44 +747,23 @@ onBeforeUnmount(() => {
 }
 
 @keyframes reveal-box-pop {
-  from { opacity: 0; transform: scale(1.6); }
-  to { opacity: 1; transform: scale(1); }
+  0% { opacity: 0; transform: scale(0.35); }
+  70% { opacity: 1; transform: scale(1.03); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
 .reveal-class--job6 .reveal-class__img {
   filter: brightness(0.25) contrast(1.3) drop-shadow(0 0 16px rgba(80, 140, 220, 0.45));
 }
 
-.reveal-midframe {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 492px;
-  height: 492px;
-  margin: -246px 0 0 -246px;
-  pointer-events: none;
-  opacity: 0.95;
-  animation: reveal-fade-in 0.4s ease-out both;
-}
-
-.reveal-backframe--star4 .reveal-box--outer {
-  filter: drop-shadow(0 0 8px rgba(0, 220, 255, 0.95)) drop-shadow(0 0 22px rgba(0, 150, 255, 0.65));
-  animation: reveal-box-pop 0.5s ease-out both, star4-box-breathe 2.4s ease-in-out infinite;
-}
-
-@keyframes star4-box-breathe {
-  0%, 100% { filter: drop-shadow(0 0 8px rgba(0, 220, 255, 0.9)) drop-shadow(0 0 18px rgba(0, 140, 255, 0.55)); }
-  50% { filter: drop-shadow(0 0 14px rgba(0, 245, 255, 1)) drop-shadow(0 0 30px rgba(0, 180, 255, 0.85)); }
-}
-
+.reveal-backframe--star4 .reveal-box--outer,
 .reveal-backframe--star5 .reveal-box--outer {
-  filter: drop-shadow(0 0 10px rgba(255, 100, 0, 0.95)) drop-shadow(0 0 28px rgba(255, 180, 0, 0.8));
-  animation: reveal-box-pop 0.5s ease-out both, star5-box-breathe 2s ease-in-out infinite;
+  animation: reveal-box-pop 0.5s ease-out both, reveal-box-breathe 2.4s ease-in-out infinite;
 }
 
-@keyframes star5-box-breathe {
-  0%, 100% { filter: drop-shadow(0 0 8px rgba(255, 80, 0, 0.9)) drop-shadow(0 0 22px rgba(255, 160, 0, 0.7)); }
-  50% { filter: drop-shadow(0 0 18px rgba(255, 140, 0, 1)) drop-shadow(0 0 40px rgba(255, 50, 0, 0.95)); }
+@keyframes reveal-box-breathe {
+  0%, 100% { filter: drop-shadow(0 0 8px v-bind(elementColor)) drop-shadow(0 0 16px v-bind(elementColor)); }
+  50% { filter: drop-shadow(0 0 14px v-bind(elementColor)) drop-shadow(0 0 28px v-bind(elementColor)); }
 }
 
 .reveal-star4-shines {
@@ -860,37 +783,60 @@ onBeforeUnmount(() => {
 .reveal-shine--lt { left: 16%; top: 16%; }
 .reveal-shine--rb { right: 16%; bottom: 16%; animation-delay: 1s; }
 
+/* ── Step 2 & 3 台座符文环与角饰（跟随台座小人，真机1:1尺寸） ── */
+.reveal-stage-ring {
+  width: 480px;
+  height: 480px;
+  pointer-events: none;
+  transition: transform 0.5s cubic-bezier(0.12, 0.82, 0.28, 1);
+  z-index: 8;
+}
+
+.reveal-stage-ring--step3 {
+  transform: translate(calc(-50% + 360px), -50%) !important;
+}
+
+.reveal-line {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 530px;
+  height: 530px;
+  margin: -265px 0 0 -265px;
+  opacity: 0.9;
+  pointer-events: none;
+  animation: reveal-line-pop 0.5s ease-out both;
+}
+
+@keyframes reveal-line-pop {
+  0% { opacity: 0; transform: scale(0.35); }
+  70% { opacity: 1; transform: scale(1.03); }
+  100% { opacity: 0.9; transform: scale(1); }
+}
+
 .reveal-ring {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 866px;
-  height: 864px;
-  margin: -432px 0 0 -433px;
+  width: 470px;
+  height: 470px;
+  margin: -235px 0 0 -235px;
   background-color: v-bind(elementColor);
   mask-image: url('/images/HeroGachaShowPanel_Atlas/spGachaTxtRing01.png');
   mask-size: 100% 100%;
   -webkit-mask-image: url('/images/HeroGachaShowPanel_Atlas/spGachaTxtRing01.png');
   -webkit-mask-size: 100% 100%;
-  filter: drop-shadow(0 0 10px v-bind(elementColor));
-  opacity: 0.75;
+  filter: drop-shadow(0 0 8px v-bind(elementColor));
+  opacity: 0.85;
   pointer-events: none;
-  animation: reveal-ring-in 0.6s ease-out both, gacha-ring-spin 8s linear infinite;
-}
-
-.reveal-ring--star4 {
-  background-color: #00e5ff;
-  filter: drop-shadow(0 0 12px #00c8ff);
-}
-
-.reveal-ring--star5 {
-  background-color: #ff5500;
-  filter: drop-shadow(0 0 18px #ff7700);
+  animation: reveal-ring-in 0.5s ease-out both, gacha-ring-spin 8s linear infinite;
+  z-index: 0;
 }
 
 @keyframes reveal-ring-in {
-  from { transform: scale(1.54); }
-  to { transform: scale(1); }
+  0% { opacity: 0; transform: scale(0.35); }
+  70% { opacity: 0.85; transform: scale(1.03); }
+  100% { opacity: 0.75; transform: scale(1); }
 }
 
 .reveal-sparkles {
@@ -908,33 +854,46 @@ onBeforeUnmount(() => {
   position: absolute;
   pointer-events: none;
   transform: translate(-50%, -50%);
+  z-index: 0;
 }
 
 .reveal-angle {
   display: block;
-  width: 128px;
-  height: 128px;
+  width: 70px;
+  height: 70px;
+  background-color: v-bind(elementColor);
+  mask-image: url('/images/HeroGachaShowPanel_Atlas/spGachaAngle01.png');
+  mask-size: 100% 100%;
+  -webkit-mask-image: url('/images/HeroGachaShowPanel_Atlas/spGachaAngle01.png');
+  -webkit-mask-size: 100% 100%;
+  filter: drop-shadow(0 0 5px v-bind(elementColor));
   pointer-events: none;
-  animation: reveal-ornament-pop 0.3s ease-out both, gacha-breathe-strong 2.6s ease-in-out 0.4s infinite;
+  animation: reveal-ornament-pop 0.4s ease-out both, gacha-breathe-strong 2.6s ease-in-out 0.4s infinite;
 }
 
 .reveal-ornament-block {
   position: absolute;
   pointer-events: none;
   transform: translate(-50%, -50%);
+  z-index: 0;
 }
 
 .reveal-block {
   display: block;
-  width: 24px;
-  height: 24px;
+  width: 14px;
+  height: 14px;
+  background-color: v-bind(elementColor);
+  mask-image: url('/images/HeroGachaShowPanel_Atlas/spGachaBlock04.png');
+  mask-size: 100% 100%;
+  -webkit-mask-image: url('/images/HeroGachaShowPanel_Atlas/spGachaBlock04.png');
+  -webkit-mask-size: 100% 100%;
   pointer-events: none;
-  animation: reveal-ornament-pop 0.3s ease-out 0.2s both, gacha-breathe-strong 2.6s ease-in-out 0.6s infinite;
 }
 
 @keyframes reveal-ornament-pop {
-  from { opacity: 0; transform: scale(2); }
-  to { opacity: 1; transform: scale(1); }
+  0% { opacity: 0; transform: scale(0.35); }
+  70% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
 /* ── Step 3 立绘 ── */
@@ -1044,10 +1003,10 @@ onBeforeUnmount(() => {
 
 .reveal-pedestal-star {
   position: relative;
-  width: 66px;
-  height: 66px;
+  width: 48px;
+  height: 48px;
   margin: 0 -9px;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 10px rgba(255, 200, 50, 0.6));
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 6px rgba(255, 200, 50, 0.45));
   animation: reveal-pedestal-star-in 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28) both;
 }
 

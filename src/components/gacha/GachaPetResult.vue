@@ -3,8 +3,8 @@
        mask(`white` 1534×750 α0.502) + 底板 `item_get`(1534×472) + 标题条 `item_get_titel`(220×44)
        + `ItemBagCell` Large 格（`item_f_{quality}` 128×128 / icon 96×96 / 连体星条 `com_stars_{rarity}`）。
        逐格 0.1s 出现 + `itemGet` 音；点击两段式：第一下补完剩余格、第二下关闭回到卡池页。 -->
-  <GachaStage clear>
-    <div class="g-abs g-layer-bg tip-mask" :style="gachaPos(0, 0)" @click="handleClick"></div>
+  <GachaStage clear fit="height">
+    <div class="g-layer-bg tip-mask" @click="handleClick"></div>
 
     <div class="g-abs g-layer-ui tip-plate" :style="gachaPos(0, 0)" @click="handleClick">
       <img :src="getImageUrl('/images/TipsManager_Atlas/item_get.png')" alt="" class="tip-plate__bg" />
@@ -143,15 +143,18 @@ onBeforeUnmount(() => { timers.forEach(id => window.clearTimeout(id)) })
    （实机截图：背景变暗、底板与结算格凸显），不是白冲洗。此前按 sprite 名误改成白色。
    舞台用 `clear`：卡池页仍在背后可见。 */
 .tip-mask {
-  width: 1534px;
-  height: 750px;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.502);
   cursor: pointer;
 }
 
-/* 底板 `item_get` 512×472 → 显示 1534×472（原图 border 全 0，横向非等比拉伸是原设计） */
+/* 底板 `item_get` 512×472 → 水平撑满视口（原图 border 全 0，横向非等比拉伸是原设计） */
 .tip-plate {
-  width: 1534px;
+  width: 100%;
+  min-width: 1534px;
   height: 472px;
   cursor: pointer;
 }
@@ -159,8 +162,8 @@ onBeforeUnmount(() => { timers.forEach(id => window.clearTimeout(id)) })
 .tip-plate__bg {
   position: absolute;
   inset: 0;
-  width: 1534px;
-  height: 472px;
+  width: 100%;
+  height: 100%;
   object-fit: fill;
 }
 

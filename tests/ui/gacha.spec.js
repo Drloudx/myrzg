@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test'
+﻿import { expect, test } from '@playwright/test'
 import { mkdirSync } from 'node:fs'
 import { join } from 'node:path'
 
@@ -208,15 +208,15 @@ test('抽卡到揭晓演出再到结果一览', async ({ page }, testInfo) => {
   // 跳过 → 直接进入结果一览（跳过后只保留 5 星，除非已到最后一个）
   const skip = page.locator('.reveal-skip')
   for (let attempt = 0; attempt < 12; attempt += 1) {
-    if (await page.locator('.result-diamonds').isVisible().catch(() => false)) break
+    if (await page.locator('.result-grid').isVisible().catch(() => false)) break
     if (await skip.isVisible().catch(() => false)) await skip.click()
     else await catcher.click().catch(() => {})
     await page.waitForTimeout(120)
   }
-  await expect(page.locator('.result-diamonds')).toBeVisible()
-  expect(await page.locator('.result-diamond').count()).toBeGreaterThan(0)
+  await expect(page.locator('.result-grid')).toBeVisible()
+  expect(await page.locator('.result-card').count()).toBeGreaterThan(0)
   // 结果面板按 HeroShowUI：十连只有「招募十次」+ 消耗行，右上角货币条 + ✕ 关闭
-  const resultScope = page.locator('.gacha-overlay:has(.result-diamonds)')
+  const resultScope = page.locator('.gacha-overlay:has(.result-grid)')
   await expect(resultScope.locator('.result-btn__label--ten')).toContainText(/招募|购买/)
   await expect(resultScope.locator('.draw-cost')).toBeVisible()
   await expect(resultScope.locator('.currency-row .currency-slot')).toHaveCount(3)
@@ -380,12 +380,6 @@ test('魔物蛋卡池可切换且贴图正确', async ({ page }, testInfo) => {
   await page.locator('.kind-toggle').nth(1).click()
   await expect(page).toHaveURL(/kind=pet/)
   await expect(page.locator('.pool-period')).toBeVisible()
-  // 切池后主视觉是重新挂载的 <img>，`naturalWidth` 在解码完成前为 0；
-  // 直接断言会与图片加载赛跑（本地约 200ms 才完成），先等它就绪再断言。
-  await page.waitForFunction(() => {
-    const el = document.querySelector('.pool-cover')
-    return Boolean(el) && el.complete && el.naturalWidth > 800
-  }, { timeout: 10_000 })
   const coverLoaded = await page.locator('.pool-cover').evaluate(el => el.naturalWidth > 0 && el.naturalWidth > 800)
   expect(coverLoaded).toBe(true)
   await page.locator('.draw-btn').first().click()

@@ -1,7 +1,6 @@
 <template>
-  <!-- 结果一览用默认 contain 缩放（与蛋池结算一致）：窄窗口下网格等比缩小完整显示；
-       fit="height" 会把 1096 设计宽的蜂窝网格左右裁掉（开开发者工具的半屏窗口必现）。 -->
-  <GachaStage :backdrop="getImageUrl('/images/uipanel/herogachashowpanel/bg.png')">
+  <!-- 结果一览由共享舞台自适应：宽屏延展背景，窄窗口完整缩小蜂窝网格与操作区。 -->
+  <GachaStage :backdrop="getImageUrl('/images/uipanel/herogachashowpanel/bg.png')" fit="height">
     <!-- 背板：整屏层用 inset:0，且**不能挂 g-abs**（它的 translate(-50%,-50%) 会把
          inset 盒子推出左上，只剩部分覆盖——画面出现半屏明暗矩形接缝）；
          bg.png 铺满整个画布。注意**不放 Rconer/Rconer2**：那是 1700×1220 的浅色圆角框贴图，

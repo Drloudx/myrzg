@@ -1,4 +1,6 @@
-# 模拟招募（/gacha）复刻审计：资源、布局真值、演出参数与现存问题
+# 模拟招募复刻审计（2026-09-13 历史记录）
+
+> 本文保留审计当时的现象、资源证据和随后修复记录，不是当前规范或待办清单。正文中的“现存问题”“未实现”“未修”及验证结果仅适用于记录时点，部分结论已在后文或后续代码中被取代。现行功能边界见 [模拟招募专题](../../docs/features/gacha/GACHA.md)。
 
 > 审计日期：2026-09-13 ｜ 范围：`src/components/gacha/`、`src/utils/gacha*.js`、`src/stores/gachaState.js`、`src/assets/gacha.css`、`public/images/gacha|eggs|Hero*_Atlas|uipanel|ItemBagPanel|Common_Atlas`
 > 对照来源：`源码/源码/Assembly-CSharp/*.cs`、`4.24路资源包/assets/res/prefab/uiprefab/{heropoolpanel,herogachaanipanel,herogachashowpanel,heroshowpanel,petgachaanipanel,tipsmanager}`（组件 dump）、`4.24路资源包/assets/res/spine/**`、`UI_Atlases/*_Atlas/*.json`（border 真值）

@@ -1,10 +1,10 @@
-# 统一奖励规则接口与分支交接
+# 统一奖励规则接口
 
 ## 实现范围
 
 `src/utils/acquisitionRules.js` 是无浏览器、无网络依赖的纯规则模块。普通奖励、固定装备、随机装备池、礼包、自选包、带钥匙宝箱与符石鉴定共用这里的解析。旧 `gameMappings` 奖励映射及解析函数保持原导出路径，通过重导出使用同一实现，不存在循环依赖。
 
-已接入物品/装备共同使用的 `ItemDetailModal`、锻造台装备候选关系、普通设施制作产出，以及任务/事件/成就原有奖励解析入口。没有新增符石页、抽奖页、来源类型或导航；其他分支同工作区产生的页面变化不属于本分支。
+已接入物品/装备共同使用的 `ItemDetailModal`、锻造台装备候选关系、普通设施制作产出，以及任务/事件/成就原有奖励解析入口。符石鉴定与合成同样使用该接口；抽奖规则和正式来源入口由业务模块负责。
 
 ## 输入与输出
 
@@ -53,28 +53,17 @@
 - 自选项没有随机概率，也不意味着所有候选同时获得。
 - 顶层货币是固定获得组，不能与随机候选混成一个多选一池。
 - 不把多次抽取直接推导为累计概率：当前奖励客户端字段没有说明组触发时点及是否放回。公共格式化函数兼容其他模块已确认的 `cumulativeProb`，但本解析器不自行生成。
-- 抽奖保底、UP 状态、账号持有及重复角色转换由 `gacha-data` 分支拥有；这些不在通用奖励原表内，不能从礼包权重推测。动画消费实际抽奖结果，不通过本模块再次随机。
+- 抽奖保底、UP 状态、账号持有及重复角色转换由 `gachaSim.js` 与 `gachaState.js` 管理；这些不在通用奖励原表内，不能从礼包权重推测。动画消费实际抽奖结果，不通过本模块再次随机。
 
 `getRewardCost` 额外消耗取 `useActionPara.itemTypeId/itemNum`；`appraisal` 取 `useActionPara.consume` 指向的消耗表。`costs` 不包含被使用物品本身，该物品单独由 `sourceItemId/sourceItemCount` 表示。`getRewardCondition` 保留条件 ID，不在通用奖励层实现账号条件判断。
 
-## 符石分支接入
+## 调用边界
 
-`buildItemData` 已在构建期为奖励类物品生成 `item.acquisition`，写入 `public/data/parsed/items.json`。浏览器通过 `fetchItemData()` 获取，直接读取该字段或调用 `getItemAcquisition(item)`，无需额外加载原始奖励表或消耗表。旧 `parseItemRewards(item)` 仍返回奖励组数组或 `null`。
+`buildItemData` 生成 `item.acquisition`，浏览器 `fetchItemData/getItemAcquisition` 读取；旧 `parseItemRewards` 仍返回奖励组或 null。页面不另加载奖励/消耗原表。
 
-符石图鉴的鉴定页签筛选正式 `useAction === 'appraisal'` 的物品，复用 `src/components/AcquisitionRewards.vue`；合成页签消费同构规则，完整实现见 [RUNE_CATALOG.md](../features/runes/RUNE_CATALOG.md)：
+展示统一用 [AcquisitionRewards](../UI_COMPONENT_LIBRARY.md#24-acquisitionrewards-共用奖励区)，父页面处理物品点击、URL 和详情历史。符石专属模型和定位见 [符石专题](../features/runes/RUNE_CATALOG.md)。
 
-```vue
-<AcquisitionRewards
-  :acquisition="selectedItem.acquisition"
-  title="鉴定"
-  @item-click="handleItemClick"
-/>
-```
-
-组件负责消耗、分组、概率、自选和随机装备候选展开，`costTitle` 可指定消耗区标题。父页面负责物品详情打开与返回，不复制弹窗历史、奖励规则或 URL 同步。符石实际属性通过 `runeData.buildRuneEffect` 统一，`itemParser.parseRuneEffect` 是其缓存适配入口。
-
-解析器保留数据关系，不负责判断正式开放入口和全局黑名单。新页面仍需遵守项目图鉴可见性规则；测试配置和“未发现正式来源”诊断不加入页面文案。来源页路由、正式来源筛选与反查由 `source-completion` 负责，不通过奖励存在就认定玩法已开放。
-
+本模块不判断账号状态、正式开放入口或黑名单；来源反查由 `searchData` 及业务来源模块处理，不能因存在奖励就认定玩法已开放。
 ## 兼容与验证入口
 
 `gameMappings.parseRewardObject` 继续返回 `{ rewards, rewardItemNames }`，`parseRewardEntries` 继续返回 `{ entries, text }`。这两个旧摘要接口保持原字段结构，不作为概率页面的数据接口；概率、数量区间和候选池必须用 `parseRewardGroups`。
@@ -83,5 +72,3 @@
 - 原有奖励、锻造、设施：`node --test tests/unit/reward-style.test.mjs tests/unit/smithing.test.mjs tests/unit/facilities.test.mjs`。
 - 桌面/手机详情：`npx playwright test tests/ui/acquisition-rules.spec.js tests/ui/smithing.spec.js tests/ui/facilities.spec.js`。
 - 发布前运行 `npm run build` 同步预解析数据和前端包；构建写数据期间不要同时运行读取生成目录的全量回归。
-
-本分支无需新增运行时依赖或复制游戏素材；保留工作区既有修改，不单独提交或切换 Git 分支。

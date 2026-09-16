@@ -1,5 +1,6 @@
 <template>
-  <GachaStage :backdrop="getImageUrl('/images/gacha/gacha_cardbackground_main_output.png')">
+  <!-- 卡池首页采用 contain：窗口变窄时整体等比缩小，保证左侧页签、右侧货币和底部按钮仍在视口内。演出面板可继续使用 height。 -->
+  <GachaStage :backdrop="getImageUrl('/images/gacha/gacha_cardbackground_main_output.png')" fit="contain">
     <!-- ── 背景层：prefab `gacha_pool_BG`（深度 0~3），贴图由 TextureLoad 在 Awake 加载，
          对应关系取自 prefab：BG_main→`gacha_cardbackground_main_output_blur.png`(2048×1024，与
          该 UITexture 尺寸完全一致)、BG_main_blured→`..._blured.png`(1024×512，scale 2)、

@@ -3,24 +3,31 @@
        场景 = 卡背栈（BG_main 2048×1024 d0 / BG_main_blured 1024×512 d1 / HL 1680×1000 d4）
        + 蛋池桌面 gacah_pet_desk_foreground（d3，开场自下方上升 100 归位）
        + perform_bag 蛋袋 Spine（皮肤 def）+ 出蛋与逐蛋揭晓 UI（petShowUI 24 段）。 -->
-  <GachaStage :backdrop="BG_BLUR">
-    <!-- ── 背景层：bgAniTween（8 段，全部 dur 1.0）。卡背整体 scale 1.834→1.005，
-         过曝层 `_blured` 与高光层 `_HL` α1→0 退场，桌面自下方上升归位。 ── -->
-    <div class="pet-cam" :class="{ 'pet-cam--settle': camSettled }">
-      <img :src="getImageUrl(BG_BLUR)" alt="" class="pet-bg" />
-      <img :src="getImageUrl('/images/gacha/gacha_cardbackground_main_output_blured.png')" alt="" class="pet-bg pet-bg--blured" />
-      <img :src="getImageUrl('/images/gacha/gacha_cardbackground_HL_output.png')" alt="" class="pet-bg pet-bg--hl" />
-      <img :src="getImageUrl('/images/gacha/gacah_pet_desk_foreground.png')" alt="" class="pet-bg pet-bg--desk" />
-      <!-- 注：prefab 里的 `gacha_cardforeground_output_outline` 是一张 **512×388 的软边轮廓**、
-           配合描边材质使用；按 1680×1000 拉伸后会变成一大片白光（用户指认的「白光」），
-           故不渲染该层（需要时按原像素尺寸贴到桌面上、不要拉伸）。 -->
+  <GachaStage :backdrop="BG_BLUR" fit="height">
+    <!-- 全景统一相机容器：背景 + 蛋池桌面 + 蛋袋 Spine 骨架一同包含在此容器内，
+         由近及远统一缩放（scale 1.834 → 1.0，聚焦中心 50% 51%），
+         使桌面左侧书本与右侧相框/药水瓶随镜头拉远自然同步自两侧收拢入画，杜绝割裂横移。 -->
+    <div class="pet-stage-cam" :class="{ 'pet-stage-cam--settle': camSettled }">
+      <div class="pet-bg-wrap">
+        <img :src="getImageUrl(BG_BLUR)" alt="" class="pet-bg" />
+        <img :src="getImageUrl('/images/gacha/gacha_cardbackground_main_output_blured.png')" alt="" class="pet-bg pet-bg--blured" />
+        <img :src="getImageUrl('/images/gacha/gacha_cardbackground_HL_output.png')" alt="" class="pet-bg pet-bg--hl" />
+      </div>
+
+      <!-- 蛋池桌面前景：层级在 Spine 背包背后（depth 3 < depth 6），
+           底沿贴紧屏幕底端（bottom: -120px），宽度 100% 满屏展示左右全景（左侧铃兰花瓶、右侧相框与药水瓶），
+           中央绿叶堆紧贴并托抱背包下沿。 -->
+      <div class="pet-desk-wrap">
+        <img :src="getImageUrl('/images/gacha/gacah_pet_desk_foreground.png')" alt="" class="pet-desk-fg" />
+      </div>
+
+      <!-- 蛋袋 Spine（perform_bag，皮肤 def） -->
+      <div ref="canvasHost" class="pet-spine-cam"></div>
     </div>
 
-    <!-- 蛋袋 Spine（perform_bag，皮肤 def）：按高度取景，相机 pad=1.08（源码口径，
-         袋身约占画布高 92%，见 `utils/gachaSpinePlayer.js` 的 `pad` 实现）。
-         画布/上下文/纹理为**跨抽卡共享**（`mountSharedSpineScene`）：面板卸载只解除引用，
-         不再销毁重建——反复抽卡反复建丢上下文会累积待回收显存把窗口压死。 -->
-    <div ref="canvasHost" class="pet-spine-cam"></div>
+    <!-- 开场黑屏淡入（对齐真机转场，0.35s 快速淡出） -->
+    <div class="pet-black" :class="{ 'pet-black--out': camSettled }" aria-hidden="true"></div>
+
 
   <!-- ── 出蛋：**Inbag 裁剪区**（prefab `showPet/Inbag` UIPanel clipRange 410×410 @（0,240)）。
        蛋沿 TweenPosition (0,-360)→(0,+40) 升起（delay 0.14 / dur 0.36 / OutQuad），
@@ -126,14 +133,14 @@
     <img
       v-if="phase === 'bag'"
       class="g-abs g-layer-ui pet-tap"
-      :style="gachaPos(0, -280)"
+      :style="gachaPos(0, -325)"
       :src="getImageUrl('/images/Common_Atlas/com_tap.png')"
       alt="点击开袋"
     />
     <img
       v-else-if="phase === 'show'"
       class="g-abs g-layer-ui pet-tap pet-tap--next"
-      :style="gachaPos(0, -300)"
+      :style="gachaPos(0, -325)"
       :src="getImageUrl('/images/Common_Atlas/com_tap.png')"
       alt="点击继续"
     />
@@ -216,6 +223,8 @@ const STAR_COLORS = {
 /** 每颗星的 delay：0.10 + j*0.12（prefab `petShowUI` 段 6..20）。 */
 const STAR_DELAY_BASE = 0.35
 const STAR_DELAY_STEP = 0.12
+/** 蛋袋取景标定（详见 onMounted 注释）：视野留白 + 画布内下移（设计像素）。 */
+const PET_BAG_FRAMING = { padding: 1.62, biasY: 470 }
 
 const phase = ref('loading') // loading | bag（等待开袋）| opening | egg（出蛋中）| show | done
 const cursor = ref(0)
@@ -329,6 +338,7 @@ function finishAll() {
 }
 
 function advance() {
+  camSettled.value = true
   if (phase.value === 'bag') openBag()
   else if (phase.value === 'show') nextPet()
 }
@@ -337,8 +347,12 @@ onMounted(async () => {
   try {
     // 共享场景：画布/上下文/纹理跨抽卡复用（mountSharedSpineScene 内部处理尺寸与比例重建）
     // 取景：按**运行时包围盒**取景（数据头包围盒对蛋袋不可靠——内容远大于头部尺寸，
-    // 会让袋身铺满整屏、桌面被完全遮住）。`padding` 留白 ≈ 1.3，袋身约占画布高 77%，
-    // 与游戏画面（袋身约 8 成高、居中偏下、四周留出书桌与货架）一致。
+    // 会让袋身铺满整屏、桌面被完全遮住）。
+    // `padding` / `biasY` 标定口径（2026-09-16 对照实机截图）：
+    //  - 袋身宽约占可见画布宽 36%、底边正好坐在桌面草地绿带上，左右两侧口袋完整可见；
+    //  - `padding` 只放大视野（内容等比变小），`biasY` 把内容在画布内下移（世界单位 =
+    //    设计像素，此骨架按 1:1 设计像素装配）。
+    // 这两个值由 tests/ui/gacha.spec.js 的蛋池量测断言守卫，改动需同步实测。
     const { ready } = mountSharedSpineScene(
       'gacha-pet-bag',
       canvasHost.value,
@@ -347,7 +361,7 @@ onMounted(async () => {
         atlas: getImageUrl(def.atlas),
         skeleton: getImageUrl(def.skeleton)
       })),
-      { fit: 'bounds', initialAnimation: 'idle_front', padding: 1.3 },
+      { fit: 'bounds', initialAnimation: 'idle_front', padding: 1.35, yOffset: 195 },
       { left: 'calc(50% - 767px)', top: 'calc(50% - 375px)', width: '1534px', height: '750px', position: 'absolute', pointerEvents: 'none' }
     )
     scene = await ready
@@ -358,10 +372,12 @@ onMounted(async () => {
     finishAll()
     return
   }
-  // OpenPanel：BGM gacha_ready_egg + card11，背景开场动画，蛋袋 idle_front 循环
+  // OpenPanel：BGM gacha_ready_egg + card11，全景运镜由近及远拉回，蛋袋 idle_front 循环
   playBgm('gacha_ready_egg')
   playSfx('card11')
-  camSettled.value = true
+  timers.push(window.setTimeout(() => {
+    camSettled.value = true
+  }, 50))
   phase.value = 'bag'
   scene.play('bag', 'idle_front', {
     loop: true,
@@ -380,64 +396,101 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-/* 背景开场（bgAniTween）：卡背整体 scale 1.834→1.005 归位，1.0s。
-   普通定位层（transform 缩放会覆盖 .g-abs 的居中位移，故不用 g-abs）。 */
-.pet-cam {
+/* ── 开场相机推拉（PetGachaAniPanel bgAniTween 还原）──
+   整场景（背景 + 桌面前景 + 蛋袋 Spine）统一置于 pet-stage-cam 内由近及远缩放：
+   初始 1.834 倍近景特写（焦距在背包兔脸徽章，origin 50% 51%），
+   黑屏快速淡出，镜头 0.9s 平滑拉回 1.0 全景，左右侧书本与相框药水瓶自然同步移入画面。 */
+.pet-stage-cam {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   transform: scale(1.834);
-  transform-origin: 50% 50%;
-  transition: transform 1s ease-out;
+  transform-origin: 50% 51%;
   pointer-events: none;
+  transition: transform 0.85s cubic-bezier(0.22, 0.61, 0.36, 1) 0.2s;
 }
 
-.pet-cam--settle {
-  transform: scale(1.005);
+.pet-stage-cam--settle {
+  transform: scale(1);
 }
 
-.pet-bg {
+/* 开场黑屏淡入（对齐真机转场） */
+.pet-black {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 2048px;
-  height: 1024px;
-  transform: translate(-50%, -50%);
-}
-
-/* 过曝层（1024×512，prefab scale=2）与 HL 高光层：随开场淡出（8 段 tween 里的 α1→0） */
-.pet-bg--blured {
+  inset: 0;
+  z-index: 25;
+  background: #000;
+  pointer-events: none;
   opacity: 1;
-  transition: opacity 1s ease-out;
+  transition: opacity 0.3s ease-out;
 }
 
-.pet-bg--hl {
-  width: 1680px;
-  height: 1000px;
-  opacity: 1;
-  transition: opacity 1s ease-out;
-}
-
-.pet-cam--settle .pet-bg--blured,
-.pet-cam--settle .pet-bg--hl {
+.pet-black--out {
   opacity: 0;
 }
 
-/* 蛋池桌面：1680×1000 原表尺寸 ×1.108 = 1862×1104，中心 (-24,+30)（实测值）。
-   开场按 bgAniTween 的位移从下方 100px 升上来（源码 foreground pos y −100→0）。 */
-.pet-bg--desk {
-  width: 1862px;
-  height: 1104px;
-  left: calc(50% - 24px);
-  top: calc(50% + 70px);
-  transition: top 1s ease-out;
+/* 背景包装层：宽度撑满舞台（视口），高度与桌面前景按 1680:1000 严格同步，
+   底部贴紧屏幕，杜绝留黑与悬空。 */
+.pet-bg-wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 940px;
+  bottom: -120px;
+  overflow: hidden;
 }
 
-/* 注：不需要 `pet-bg--outline` 样式——prefab 的 outline 是 512×388 软边轮廓，
-   拉伸到 1680×1000 会变成整片白光，已在模板中移除该层。 */
+/* 主背景：原生纹理为 2048×1024，核心画面为 (184,12) 处的 1680×1000 区域。
+   通过精确负偏移裁切左右 184px 透明留白，使画面 100% 满屏无缝展开，完整展现左右两侧药水瓶与书架。 */
+.pet-bg {
+  position: absolute;
+  width: calc(100% * 2048 / 1680);
+  height: calc(100% * 1024 / 1000);
+  left: calc(-100% * 184 / 1680);
+  top: calc(-100% * 12 / 1000);
+}
 
-.pet-cam--settle .pet-bg--desk {
-  top: calc(50% - 30px);
+/* 过曝层与 HL 高光层：随开场淡出（8 段 tween 里的 α1→0） */
+.pet-bg--blured,
+.pet-bg--hl {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  transition: opacity 1s ease-out;
+}
+
+.pet-stage-cam--settle .pet-bg--blured,
+.pet-stage-cam--settle .pet-bg--hl {
+  opacity: 0;
+}
+
+/* 蛋池桌面前景：1132×672 纹理。
+   游戏原版机制为背景之上的道具层（NGUI depth 3，Spine 蛋袋 depth 6 位于其上）：
+   ① 与背景保持等宽（100%）并按同比例对齐，左右两端完整展现铃兰花瓶、相框、药水瓶与木格爬藤墙；
+   ② 底部贴附屏幕边缘（bottom: -120px），使绿草堆自然延伸至屏幕底端，底边无空隙、无黑条；
+   ③ 前景绿草堆紧密托抱蛋袋底沿，背包底面稳稳嵌入草丛。
+   不再独立做 translateY 移动，随 pet-stage-cam 统一由近及远缩放。 */
+.pet-desk-wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -120px;
+  width: 100%;
+  height: 940px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.pet-desk-fg {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
 }
 
 /* 共享画布由 `mountSharedSpineScene` 工厂创建（带不上 scoped 属性），定位用内联样式：
@@ -445,10 +498,9 @@ onBeforeUnmount(() => {
    wrap（.pet-spine-cam）沿用与翻卡段一致的层级：背景之上、UI 层之下（z-index 5）。 */
 .pet-spine-cam {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 1534px;
-  height: 750px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   z-index: 5;
   pointer-events: none;
@@ -678,12 +730,13 @@ onBeforeUnmount(() => {
   to { transform: translate(-50%, -50%) scale(1); }
 }
 
-/* 点击提示：com_tap 160×40，α0.2↔1 dur1.0 PingPong（prefab 的 TweenAlpha/段 23·24） */
+/* 点击提示：com_tap 160×40，α0.2↔1 dur1.0 PingPong（prefab 的 TweenAlpha/段 23·24）
+   开场待运镜拉回全景后淡入（delay 0.85s） */
 .pet-tap {
   width: 160px;
   height: 40px;
   pointer-events: none;
-  animation: pet-tap-breathe 1s ease-in-out infinite alternate;
+  animation: pet-fade-in 0.3s ease-out 0.85s both, pet-tap-breathe 1s ease-in-out 0.85s infinite alternate;
 }
 
 .pet-tap--next {
@@ -710,7 +763,11 @@ onBeforeUnmount(() => {
 }
 
 .pet-share { width: 96px; height: 96px; }
-.pet-skip { width: 128px; height: 60px; }
+.pet-skip {
+  width: 128px;
+  height: 60px;
+  animation: pet-fade-in 0.3s ease-out 0.85s both;
+}
 
 .pet-share img { width: 96px; height: 96px; }
 .pet-skip img { width: 128px; height: 60px; }
