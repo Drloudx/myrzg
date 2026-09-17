@@ -8,18 +8,21 @@
  *   parsed/diary.json            — 物品详情 书籍/日记文本（taskMain/taskSub/word/book）
  *   parsed/monLevelStrength.json — 怪物详情 等级滑块（datas.monLevelStrength）
  *   parsed/pet.json              — 魔物蛋页 原始回退（datas）
+ *   parsed/petSetting.json       — 育室槽位消耗（奖励页只需 petSetting，避免为此加载整张 parsed/pets.json）
  */
 import { readJson } from './shared.mjs'
 
+/** `source` 相对 raw/（readJson 在 raw/ 缺失时兜底 public/data），`file` 相对 parsed/。 */
 const PASSTHROUGH = [
-  'menu.json',
-  'diary.json',
-  'monLevelStrength.json',
-  'pet.json'
+  { source: 'menu.json', file: 'menu.json' },
+  { source: 'diary.json', file: 'diary.json' },
+  { source: 'monLevelStrength.json', file: 'monLevelStrength.json' },
+  { source: 'pet.json', file: 'pet.json' },
+  { source: 'pet/petSetting.json', file: 'petSetting.json' }
 ]
 
 export function build() {
   return {
-    files: PASSTHROUGH.map(name => ({ file: `parsed/${name}`, data: readJson(name) }))
+    files: PASSTHROUGH.map(({ source, file }) => ({ file: `parsed/${file}`, data: readJson(source) }))
   }
 }

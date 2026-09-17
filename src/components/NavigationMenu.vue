@@ -98,9 +98,10 @@
 </template>
 
 <script setup>
-import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getImageUrl } from '../utils/env.js'
+import { prefetchDeferredRouteChunks } from '../router/index.js'
 
 const props = defineProps({
   isOpen: Boolean,
@@ -121,6 +122,8 @@ const emit = defineEmits(['close'])
 
 const route = useRoute()
 const router = useRouter()
+// 打开导航即表达跳转意图：补齐首屏空闲预取跳过的最重路由分包（/gacha）。
+watch(() => props.isOpen, open => { if (open) prefetchDeferredRouteChunks() })
 
 const currentRoute = computed(() => route.path)
 const sideBodyRef = ref(null)

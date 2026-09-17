@@ -5,11 +5,9 @@ import rubySource from '../../assets/mascot/hero-062-idle.svg?raw'
 import ivySource from '../../assets/mascot/hero-053-idle.svg?raw'
 import lupaSource from '../../assets/mascot/hero-034-idle.svg?raw'
 import filinaSource from '../../assets/mascot/hero-049-idle.svg?raw'
-import sitaSource from '../../assets/mascot/hero-005-idle.svg?raw'
+import alexiaSource from '../../assets/mascot/hero-051-idle.svg?raw'
 import { HIL_ARM_POSES, HIL_LEG_POSES } from './mascotRig.js'
 import { fishingGripPoint } from './hilFishingMotion.js'
-import { createRedrawnModels } from './mascotRedrawnModels.js'
-
 
 // Scene-space hand targets remain shared; each model supplies its own shoulders, limb lengths and costume.
 const canaanArms = Object.fromEntries(Object.entries(HIL_ARM_POSES).map(([pose, arms]) => [pose, arms.map(arm => ({
@@ -19,6 +17,8 @@ canaanArms.idle = canaanArms.idle.map(arm => ({ ...arm, hand: arm.side === 'left
 canaanArms.think[0] = { ...canaanArms.think[0], hand: [86, 251] }
 canaanArms.think[1] = { ...canaanArms.think[1], hand: [144, 143], upperLength: 32, forearmLength: 40 }
 canaanArms['think-raise'][0] = canaanArms.think[0]
+const canaanFishing = { parkedOffsetX: 40 }
+canaanArms['fish-reach'][1] = { ...canaanArms['fish-reach'][1], hand: fishingGripPoint(0, canaanFishing.parkedOffsetX) }
 const mitoraArms = Object.fromEntries(Object.entries(HIL_ARM_POSES).map(([pose, arms]) => [pose, arms.map(arm => ({ ...arm }))]))
 mitoraArms.idle = mitoraArms.idle.map(arm => ({ ...arm, hand: arm.side === 'left' ? [76, 246] : [174, 242] }))
 mitoraArms.think[1] = { ...mitoraArms.think[1], hand: [142, 152], upperLength: 32, forearmLength: 35 }
@@ -31,26 +31,6 @@ const adaptArms = (chin, shoulders = [[88, 166], [158, 166]]) => {
   return arms
 }
 const models = {
-  ...createRedrawnModels(adaptArms, HIL_LEG_POSES),
-  '005': {
-    id: '005', source: sitaSource, partAttribute: 'data-rig-part',
-    parts: ['hairLeft', 'hairRight', 'skirt', 'torso', 'front', 'head'],
-    arms: adaptArms([138, 150]), legs: HIL_LEG_POSES, sleeve: 'sita', legVariant: 'sita',
-    pupilColors: ['#b29d47', '#e0cb6d', '#706641', '#fff4d8'], fishing: { parkedOffsetX: 40 },
-    accessories: [
-      { selector: '.rig-hair-left', standing: 'none', seated: 'scaleY(.82)' },
-      { selector: '.rig-hair-right', standing: 'none', seated: 'translate(4px, -8px) rotate(8deg)' },
-      { selector: '.rig-skirt', standing: 'none', seated: 'scaleY(.64)' }
-    ],
-    styles: {
-      '--rig-outline': '#474b50', '--rig-sleeve': '#e3e2d9', '--rig-fold': '#adb8b7',
-      '--rig-cuff': '#e8e6db', '--rig-glove': '#b5d3d9', '--rig-thumb': '#a5c5cd', '--rig-trim': '#7d99a0',
-      '--rig-thigh': '#a9c9cf', '--rig-stocking': '#45484d', '--rig-knee-trim': '#806a56',
-      '--rig-leg-fold': '#3c4045', '--rig-boot': '#45484d', '--rig-boot-trim': '#806a56', '--rig-sole': '#373d43',
-      '--rig-hair-left-origin': '125px 64px', '--rig-hair-right-origin': '95px 227px',
-      '--mascot-eyes-origin': '107px 112px'
-    }
-  },
   '062': {
     id: '062', source: rubySource, partAttribute: 'data-rig-part', artOffset: -10,
     parts: ['satchel', 'torso', 'front', 'head'], arms: adaptArms([141, 151]), legs: HIL_LEG_POSES,
@@ -80,11 +60,11 @@ const models = {
     }
   },
   '034': {
-    id: '034', source: lupaSource, partAttribute: 'data-rig-part', artOffset: -3, swordLayer: 'back-visible',
+    id: '034', source: lupaSource, partAttribute: 'data-rig-part', artOffset: -3, swordLayer: 'front',
     parts: ['hairLeft', 'hairRight', 'sword', 'torso', 'head'], arms: adaptArms([139, 143]), legs: HIL_LEG_POSES,
     pupilColors: ['#a192a5', '#73677e', '#efe8df'], sleeve: 'fur', legVariant: 'gaiter', fishing: { parkedOffsetX: 40 },
     accessories: [
-      { selector: '.rig-sword', standing: 'translate(12px, 18px) scale(.72) rotate(-18deg)', seated: 'translate(12px, 18px) scale(.72) rotate(-18deg)' },
+      { selector: '.rig-sword', standing: 'translate(24px, -8px) scale(0.72) rotate(35deg)', seated: 'translate(24px, -8px) scale(0.72) rotate(35deg)' },
       { selector: '.rig-hair-left', standing: 'none', seated: 'scaleY(.85)' },
       { selector: '.rig-hair-right', standing: 'none', seated: 'scaleY(.8)' }
     ],
@@ -106,11 +86,29 @@ const models = {
       { selector: '.rig-skirt', standing: 'none', seated: 'scaleY(.7)' }
     ],
     styles: {
-      '--rig-outline': '#70563c', '--rig-sleeve': '#ebc8a6', '--rig-fold': '#b38967', '--rig-cuff': '#d6d5b7',
+      '--rig-outline': '#70563c', '--rig-sleeve': '#dfc49e', '--rig-fold': '#a77b55', '--rig-cuff': '#e5dcc0',
       '--rig-glove': '#f1cca8', '--rig-thumb': '#f1cca8', '--rig-trim': '#b38967',
       '--rig-thigh': '#f1c9a4', '--rig-stocking': '#edc39c', '--rig-knee-trim': '#846951', '--rig-leg-fold': '#edc39c',
-      '--rig-boot': '#ba9555', '--rig-boot-trim': '#d8d3ac', '--rig-sole': '#816444',
+      '--rig-boot': '#9a6a43', '--rig-boot-trim': '#e1d1a5', '--rig-sole': '#68432f',
       '--rig-hair-left-origin': '91px 97px', '--rig-hair-right-origin': '149px 103px', '--mascot-eyes-origin': '160px 123px'
+    }
+  },
+  '051': {
+    id: '051', source: alexiaSource, partAttribute: 'data-rig-part', artOffset: -2,
+    parts: ['hairLeft', 'hairRight', 'skirt', 'torso', 'front', 'head'],
+    pupilColors: ['#d7b74e', '#fff4cb', '#6e5533'], sleeve: 'fur', legVariant: 'gaiter', fishing: { parkedOffsetX: 40 },
+    arms: adaptArms([139, 151]),
+    accessories: [
+      { selector: '.rig-hair-left', standing: 'none', seated: 'scaleY(.84)' },
+      { selector: '.rig-hair-right', standing: 'none', seated: 'scaleY(.84)' },
+      { selector: '.rig-skirt', standing: 'none', seated: 'scaleY(.76)' }
+    ],
+    styles: {
+      '--rig-outline': '#45435f', '--rig-sleeve': '#354b82', '--rig-fold': '#7185ae', '--rig-cuff': '#f0ece2',
+      '--rig-glove': '#efc4ab', '--rig-thumb': '#dba98f', '--rig-trim': '#d1ae5d', '--rig-thigh': '#efc4ab',
+      '--rig-stocking': '#34364a', '--rig-knee-trim': '#d1ae5d', '--rig-leg-fold': '#8a6d50',
+      '--rig-boot': '#34364a', '--rig-boot-trim': '#cbbd9a', '--rig-sole': '#28293b',
+      '--rig-hair-left-origin': '91px 127px', '--rig-hair-right-origin': '161px 127px', '--mascot-eyes-origin': '132px 116px'
     }
   },
   '001': {
@@ -123,7 +121,7 @@ const models = {
     id: '055', source: canaanSource, partAttribute: 'data-rig-part',
     parts: ['hairLeft', 'hairRight', 'sword', 'torso', 'front', 'head'],
     pupilColors: ['#a88b4c', '#d7b767', '#695441', '#fff4dd'],
-    arms: canaanArms, legs: HIL_LEG_POSES, sleeve: 'ruffle', legVariant: 'gaiter',
+    arms: canaanArms, legs: HIL_LEG_POSES, sleeve: 'ruffle', legVariant: 'gaiter', fishing: canaanFishing,
     accessories: [
       { selector: '.rig-sword', standing: 'rotate(0deg)', seated: 'rotate(-12deg)' },
       { selector: '.rig-cape', standing: 'scaleY(1)', seated: 'scaleY(.86)' }

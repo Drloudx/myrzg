@@ -2,8 +2,10 @@
   <div class="page-view-container">
 
     <!-- 筛选区（羊皮纸面板，和物品图鉴风格一致的 UiSearchInput + UiFilterRow + UiFilterPill） -->
-    <div class="filter-panel paper-panel">
-      <UiSearchInput v-model="searchQuery" placeholder="搜索食谱名称、食材、标签或Buff效果..." />
+    <UiFilterPanel class="filter-panel paper-panel">
+      <template #search>
+        <UiSearchInput v-model="searchQuery" placeholder="搜索食谱名称、食材、标签或Buff效果..." />
+      </template>
 
       <UiFilterRow label="标签：">
         <UiFilterPill
@@ -21,7 +23,7 @@
           </div>
         </template>
       </UiFilterRow>
-    </div>
+    </UiFilterPanel>
 
     <!-- Async Data Loading State -->
     <UiEmptyState v-if="!isDataReady" type="loading" text="正在装配食谱与Buff配方数据..." />
@@ -135,7 +137,7 @@ import {
   UiFilterPill,
   UiFilterRow,
   UiModal,
-  UiSearchInput,
+  UiFilterPanel, UiSearchInput,
   UiSection,
   UiTag
 } from '../components/ui/index.js'

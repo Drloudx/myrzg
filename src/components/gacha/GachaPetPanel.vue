@@ -80,7 +80,7 @@
       <div :key="'di-' + cursor" class="g-abs g-layer-art pet-diamond-wrap" :style="{ ...gachaPos(0, 20), zIndex: 11 }">
         <div class="pet-diamond__glow" :style="starGlowStyle" aria-hidden="true"></div>
         <img
-          :src="getImageUrl(`/images/gacha/ui/gacha_egg_${starCount}.png`)"
+          :src="getImageUrl(`/images/HeroGachaPanel_Atlas/gacha_egg_${starCount}.png`)"
           alt=""
           class="pet-diamond"
         />
@@ -89,7 +89,7 @@
            宽度 224→374 展开。文字用**魔物名**（prefab UILabel 示例「宝石迷迷可」），
            蛋候选名带「的蛋」后缀需去掉。 -->
       <div :key="'name-' + cursor" class="g-abs g-layer-ui pet-name" :style="gachaPos(0, -163)">
-        <img :src="getImageUrl('/images/gacha/ui/gacha_egg_name.png')" alt="" class="pet-name__banner" />
+        <img :src="getImageUrl('/images/HeroGachaPanel_Atlas/gacha_egg_name.png')" alt="" class="pet-name__banner" />
         <p class="g-text pet-name__text">{{ petDisplayName }}</p>
       </div>
       <!-- 星级：5 个独立 `gacha_star` 72×72，UIGrid cellWidth 40，组内 (0,-137) → 绝对 (0,-117)。
@@ -105,9 +105,9 @@
           class="pet-star"
           :style="{ left: `${starOffset(index)}px`, zIndex: starSlots.length - index, '--pet-star-delay': `${starDelay(index)}s` }"
         >
-          <img :src="getImageUrl('/images/gacha/ui/gacha_star.png')" alt="" class="pet-star__base" />
+          <img :src="getImageUrl('/images/HeroGachaPanel_Atlas/gacha_star.png')" alt="" class="pet-star__base" />
           <img
-            :src="getImageUrl('/images/gacha/ui/gacha_star.png')"
+            :src="getImageUrl('/images/HeroGachaPanel_Atlas/gacha_star.png')"
             alt=""
             class="pet-star__shine"
           />

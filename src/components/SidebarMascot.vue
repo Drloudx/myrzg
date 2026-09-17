@@ -55,7 +55,7 @@
       :anchor="switchButton?.$el"
       title="选择吉祥物"
     >
-      <template #heading-actions>
+      <template #heading-actions v-if="batchCount > 1">
         <nav class="mascot-batch-controls" aria-label="切换吉祥物批次">
           <UiButton variant="ghost" size="sm" :disabled="batch === 0 || loading" aria-label="上一批角色" @click="batch--"><span class="mascot-batch-arrow" aria-hidden="true">‹</span>上一批</UiButton>
           <span class="mascot-batch-position" aria-live="polite">{{ batch + 1 }} / {{ batchCount }}</span>

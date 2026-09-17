@@ -177,7 +177,10 @@ export function createSpineScene(canvas, layers, options = {}) {
       renderer.camera.viewportHeight = vh
       renderer.camera.viewportWidth = vh * aspect
       const groundY = Number(options.groundY) > 0 ? Number(options.groundY) : 202
-      const cy = -((canvas.height - groundY) / canvas.height * 2 - 1) * (vh / 2)
+      // groundY 是 CSS 设计像素。canvas.height 是 DPR 后的缓冲区尺寸，不能混算；
+      // 否则同一个台座在手机上会随像素密度和外层缩放改变落脚点。
+      const logicalHeight = canvas.clientHeight || canvas.height
+      const cy = (groundY / logicalHeight * 2 - 1) * (vh / 2)
       renderer.camera.position.set(0, cy, 0)
     } else if (options.fit === 'bounds') {
       const firstActor = actors[0]
@@ -265,8 +268,32 @@ export function createSpineScene(canvas, layers, options = {}) {
       }
     })
 
+    function resizeCardStage() {
+      if (options.fit !== 'card-stage') return
+      const { width, height } = getCanvasBufferSize(canvas)
+      if (canvas.width === width && canvas.height === height) return
+      canvas.width = width
+      canvas.height = height
+      const aspect = width / height
+      renderer.camera.viewportWidth = renderer.camera.viewportHeight * aspect
+      renderer.camera.update()
+      const worldPerPx = renderer.camera.viewportHeight / canvas.clientHeight
+      layers.forEach((def, index) => {
+        actors[index].yOffset = -(Number(def.yOffset) || 0) * worldPerPx
+        if (def.stretchX) {
+          const baseStretch = typeof def.stretchX === 'number' ? def.stretchX : 1.25
+          actors[index].scaleX = baseStretch * Math.max(1, aspect / (1534 / 750))
+        }
+      })
+    }
+
     function frame(now) {
       if (disposed || paused) return
+      // 浏览器旋转、地址栏收起会改变舞台比例；更新取景而不重播抽卡动画。
+      resizeCardStage()
+      // 修改 canvas 缓冲区不会自动更新 WebGL viewport；共享画布重挂载也会改尺寸。
+      // 必须与当前缓冲区同步，否则场景只绘制在旧宽度内，角色偏左、桌面出现竖缝。
+      gl.viewport(0, 0, canvas.width, canvas.height)
       const delta = Math.min((now - last) / 1000, 0.1)
       last = now
       for (const actor of actors) {
@@ -355,11 +382,11 @@ const sharedScenes = new Map()
  * 视口宽高比与上次创建差超过 2%（相机取景依赖比例）时整场景重建。
  */
 export function mountSharedSpineScene(key, host, layers, options = {}, styleCss = {}) {
-  const rect = host.getBoundingClientRect()
-  const dpr = Math.min(window.devicePixelRatio || 1, 2)
-  const width = Math.max(1, Math.round(rect.width * dpr))
-  const height = Math.max(1, Math.round(rect.height * dpr))
   let entry = sharedScenes.get(key)
+  let canvas = entry?.canvas || document.createElement('canvas')
+  for (const [name, value] of Object.entries(styleCss)) canvas.style.setProperty(name, value)
+  if (canvas.parentElement !== host) host.appendChild(canvas)
+  const { width, height } = getCanvasBufferSize(canvas)
   if (entry) {
     const aspect = width / height
     const built = entry.canvas.width / entry.canvas.height
@@ -368,6 +395,9 @@ export function mountSharedSpineScene(key, host, layers, options = {}, styleCss 
       entry.scene?.dispose()
       entry.scene?.dropContext?.()
       entry.canvas.remove()
+      canvas = document.createElement('canvas')
+      for (const [name, value] of Object.entries(styleCss)) canvas.style.setProperty(name, value)
+      host.appendChild(canvas)
       sharedScenes.delete(key)
       entry = null
     } else {
@@ -381,11 +411,8 @@ export function mountSharedSpineScene(key, host, layers, options = {}, styleCss 
       return { canvas: entry.canvas, ready: entry.ready }
     }
   }
-  const canvas = document.createElement('canvas')
   canvas.width = width
   canvas.height = height
-  for (const [name, value] of Object.entries(styleCss)) canvas.style.setProperty(name, value)
-  host.appendChild(canvas)
   entry = { canvas, refs: 1, scene: null, ready: null }
   sharedScenes.set(key, entry)
   entry.ready = createSpineScene(canvas, layers, options).then(scene => {
@@ -425,22 +452,29 @@ export function disposeSharedSpineScenes() {
  */
 const sharedCanvases = new Map()
 
-export function acquireSharedCanvas(key, host, styleCss = {}) {
-  const rect = host.getBoundingClientRect()
+function getCanvasBufferSize(canvas) {
   const dpr = Math.min(window.devicePixelRatio || 1, 2)
-  const width = Math.max(1, Math.round(rect.width * dpr))
-  const height = Math.max(1, Math.round(rect.height * dpr))
+  // client 尺寸为局部设计坐标，忽略外层缩放、相机动画和手机 90° 横置。
+  // 尤其小人画布 440×520 不等于其 380×380 宿主，不能按宿主的屏幕包围盒取景。
+  return {
+    width: Math.max(1, Math.round(canvas.clientWidth * dpr)),
+    height: Math.max(1, Math.round(canvas.clientHeight * dpr))
+  }
+}
+
+export function acquireSharedCanvas(key, host, styleCss = {}) {
   let canvas = sharedCanvases.get(key)
   if (!canvas) {
     canvas = document.createElement('canvas')
     sharedCanvases.set(key, canvas)
   }
+  for (const [name, value] of Object.entries(styleCss)) canvas.style.setProperty(name, value)
+  if (canvas.parentElement !== host) host.appendChild(canvas)
+  const { width, height } = getCanvasBufferSize(canvas)
   if (canvas.width !== width || canvas.height !== height) {
     canvas.width = width
     canvas.height = height
   }
-  for (const [name, value] of Object.entries(styleCss)) canvas.style.setProperty(name, value)
-  if (canvas.parentElement !== host) host.appendChild(canvas)
   return canvas
 }
 

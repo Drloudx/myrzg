@@ -1,4 +1,4 @@
-﻿import { expect, test } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 import { mkdirSync } from 'node:fs'
 import { join } from 'node:path'
 
@@ -105,15 +105,22 @@ test('关键元素位置与 prefab 设计坐标一致', async ({ page }, testInf
   expect(canvasSize).toEqual(DESIGN)
 })
 
-test('9 宫格切片已生效（页签 / 按钮 / 记录行）', async ({ page }, testInfo) => {
+test('固定尺寸按钮与页签使用预渲染纹理（sliced_buttons）', async ({ page }, testInfo) => {
   await openGacha(page)
 
+  // 已定尺寸的按钮/页签不做 CSS 切片，改用 `public/images/sliced_buttons` 的预渲染纹理，
+  // 以 `background-size: 100% 100%` 整幅铺满（见 features/gacha/GACHA.md「布局与素材」）。
+  // 需变尺寸的切片（com_info_botm、item_info_color* 等）仍走 border-image，不在本条覆盖范围。
   const slices = await page.evaluate(() => {
     const read = selector => {
       const el = typeof selector === 'string' ? document.querySelector(selector) : selector
       if (!el) return null
       const style = getComputedStyle(el)
-      return { source: style.borderImageSource, slice: style.borderImageSlice, width: style.borderImageWidth }
+      return {
+        backgroundImage: style.backgroundImage,
+        backgroundSize: style.backgroundSize,
+        borderImageSource: style.borderImageSource
+      }
     }
     const draws = document.querySelectorAll('.draw-btn')
     return {
@@ -124,15 +131,16 @@ test('9 宫格切片已生效（页签 / 按钮 / 记录行）', async ({ page }
     }
   })
 
-  // 浏览器会把 `0 60 0 60` fill` 规范化为 `0 60 fill`（上下切片为 0 时省略）
-  expect(slices.tab?.source).toContain('gacha_page')
-  expect(slices.tab?.slice).toBe('0 60 fill')
-  // 单抽与十连用不同精灵：N 系列（红）与 Y 系列（青）
-  expect(slices.draw?.source).toContain('com_btn_N_sp')
-  expect(slices.draw?.slice).toBe('0 60 fill')
-  expect(slices.drawTen?.source).toContain('com_btn_Y_sp')
-  expect(slices.mini?.source).toContain('com_btn_mini')
-  expect(slices.mini?.slice).toBe('0 24 fill')
+  for (const [name, expectSprite] of [
+    ['tab', 'sliced_buttons/gacha_page'],
+    ['draw', 'sliced_buttons/com_btn_N_sp'],
+    ['drawTen', 'sliced_buttons/com_btn_Y_sp'],
+    ['mini', 'sliced_buttons/com_btn_mini']
+  ]) {
+    expect(slices[name]?.backgroundImage, `${name} 应使用预渲染纹理`).toContain(expectSprite)
+    expect(slices[name]?.backgroundSize, `${name} 应整幅铺满`).toBe('100% 100%')
+    expect(slices[name]?.borderImageSource, `${name} 不应再重复切片`).toBe('none')
+  }
 })
 
 test('概率详情与记录查询弹层可用', async ({ page }, testInfo) => {
@@ -172,8 +180,11 @@ test('概率详情与记录查询弹层可用', async ({ page }, testInfo) => {
   await page.mouse.click(canvas.centerX - 150 * canvas.scale, canvas.centerY + 327 * canvas.scale)
   await expect(page.locator('.tip-panel')).toBeVisible()
 
-  // 点面板外的遮罩区域（面板左缘 -400 之外）关闭
-  await page.mouse.click(canvas.centerX - 700 * canvas.scale, canvas.centerY)
+  // 点面板外的遮罩区域关闭。
+  // 用 dispatchEvent 而非坐标点击：窄屏（手机竖屏）下 800 宽的底板被缩到整个视口宽度，
+  // 视口内已不存在「面板外」的遮罩可见区域（按设计坐标算出的点会落进 .tip-scroll-wrap），
+  // 坐标点击在手机端不可靠；遮罩本身的关闭行为两端一致，故直接派发 click。
+  await page.locator('.tip-root__mask').dispatchEvent('click')
   await expect(page.locator('.tip-panel')).toBeHidden()
 })
 
@@ -186,18 +197,20 @@ test('抽卡到揭晓演出再到结果一览', async ({ page }, testInfo) => {
 
   // 十连
   await page.locator('.draw-btn').nth(1).click()
-  // 翻卡演出先挂载（Spine 画布），跳过后进入揭晓
-  await expect(page.locator('.card-spine')).toBeVisible()
+  // 翻卡演出先挂载（Spine 画布挂在自己的包裹节点 `.card-spine-wrap` 里，
+  // 由 `gachaSpinePlayer` 注入 <canvas>；断言包裹节点与 canvas 同时就位）
+  await expect(page.locator('.card-spine-wrap')).toBeVisible()
+  await expect(page.locator('.card-spine-wrap canvas')).toBeAttached()
   await skipCardAni(page)
   const catcher = page.locator('.reveal-click-catcher')
   await expect(catcher).toBeVisible()
 
   // 三段推进：step1 星级 → step2 背框 → step3 立绘/台词
-  // （点击跳段按稀有度而定：3/4 星一击直达 step3，5 星两击——轮询到立绘出现为止）
-  await expect(page.locator('.reveal-star').first()).toBeVisible()
+  // （每个角色单独走这三段；点击跳段按稀有度而定，故直接轮询到立绘出现）
+  await expect(page.locator('.reveal-bigstar-item').first()).toBeVisible({ timeout: 15_000 })
   await page.screenshot({ path: shotPath(testInfo, '04-reveal-stars.png') })
   await catcher.click()
-  const portrait = page.locator('.reveal-portrait img')
+  const portrait = page.locator('.reveal-portrait__img')
   for (let attempt = 0; attempt < 12 && !(await portrait.isVisible().catch(() => false)); attempt += 1) {
     await catcher.click().catch(() => {})
     await page.waitForTimeout(150)
@@ -207,16 +220,16 @@ test('抽卡到揭晓演出再到结果一览', async ({ page }, testInfo) => {
 
   // 跳过 → 直接进入结果一览（跳过后只保留 5 星，除非已到最后一个）
   const skip = page.locator('.reveal-skip')
-  for (let attempt = 0; attempt < 12; attempt += 1) {
-    if (await page.locator('.result-grid').isVisible().catch(() => false)) break
-    if (await skip.isVisible().catch(() => false)) await skip.click()
+  for (let attempt = 0; attempt < 30; attempt += 1) {
+    if (await page.locator('.result-diamond').first().isVisible().catch(() => false)) break
+    if (await skip.isVisible().catch(() => false)) await skip.click().catch(() => {})
     else await catcher.click().catch(() => {})
-    await page.waitForTimeout(120)
+    await page.waitForTimeout(150)
   }
-  await expect(page.locator('.result-grid')).toBeVisible()
-  expect(await page.locator('.result-card').count()).toBeGreaterThan(0)
+  await expect(page.locator('.result-diamonds')).toBeVisible({ timeout: 15_000 })
+  expect(await page.locator('.result-diamond').count()).toBeGreaterThan(0)
   // 结果面板按 HeroShowUI：十连只有「招募十次」+ 消耗行，右上角货币条 + ✕ 关闭
-  const resultScope = page.locator('.gacha-overlay:has(.result-grid)')
+  const resultScope = page.locator('.gacha-overlay:has(.result-diamonds)')
   await expect(resultScope.locator('.result-btn__label--ten')).toContainText(/招募|购买/)
   await expect(resultScope.locator('.draw-cost')).toBeVisible()
   await expect(resultScope.locator('.currency-row .currency-slot')).toHaveCount(3)
@@ -276,14 +289,22 @@ test('货币条按 prefab 位置渲染，余额不足时变红并禁用抽取', 
   await expect(page.locator('.currency-slot__icon')).toHaveCount(3)
   await expectRowAnchored()
 
-  // 余额不足：数值变红，单抽/十连都禁用
+  // 余额不足：数值变红；但按钮**保持可点**并按 `buildDrawOptions` 的 `enabled = unit > 0`
+  // （只取决于卡池是否有消耗，与钱包无关）。点击后走替代货币购买券的消耗确认弹窗，
+  // 而不是把按钮禁用——对应 `HeroPoolUI` 的券不足分支。
   const ticketLabel = page.locator('.currency-slot').nth(0).locator('.currency-slot__label')
   await expect(ticketLabel).toHaveClass(/g-text--danger/)
-  await expect(page.locator('.draw-btn').nth(0)).toBeDisabled()
-  await expect(page.locator('.draw-btn').nth(1)).toBeDisabled()
-  await page.screenshot({ path: shotPath(testInfo, '10-wallet-empty.png') })
+  await expect(page.locator('.draw-btn').nth(0)).toBeEnabled()
+  await expect(page.locator('.draw-btn').nth(1)).toBeEnabled()
 
-  // 点「+」补充模拟额度后恢复可抽，且不再变红
+  await page.locator('.draw-btn').nth(0).click()
+  await expect(page.locator('.consume-modal-root')).toBeVisible()
+  await expect(page.locator('.consume-modal-msg')).toContainText('购买')
+  await page.screenshot({ path: shotPath(testInfo, '10-wallet-empty.png') })
+  await page.locator('.consume-btn--cancel').click()
+  await expect(page.locator('.consume-modal-root')).toBeHidden()
+
+  // 点「+」补充模拟额度后恢复，且不再变红
   await page.locator('.currency-slot').nth(0).locator('.currency-slot__add').click()
   await expect(ticketLabel).not.toHaveClass(/g-text--danger/)
   await expect(page.locator('.draw-btn').nth(0)).toBeEnabled()
@@ -357,7 +378,7 @@ test('蛋池货币槽按源码分支：特别贩售=券+氪金+神晶，常规�
   await page.screenshot({ path: shotPath(testInfo, '11-wallet-pet-regular.png') })
 })
 
-test('窄视口下画布完整不裁切并提示横屏', async ({ page }, testInfo) => {
+test('窄视口下画布完整，手机横置、桌面保留横屏提示', async ({ page, isMobile }, testInfo) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await openGacha(page)
 
@@ -367,10 +388,14 @@ test('窄视口下画布完整不裁切并提示横屏', async ({ page }, testIn
   expect(box.x).toBeGreaterThanOrEqual(stage.x - 1)
   expect(box.x + box.width).toBeLessThanOrEqual(stage.x + stage.width + 1)
   expect(box.y + box.height).toBeLessThanOrEqual(stage.y + stage.height + 1)
-  // 横屏比例在竖屏容器里必然受宽度限制 → 出现提示，且提示不拦截点击
-  await expect(page.locator('.gacha-rotate-hint')).toBeVisible()
-  const hintEvents = await page.locator('.gacha-rotate-hint').evaluate(el => getComputedStyle(el).pointerEvents)
-  expect(hintEvents).toBe('none')
+  await expect(page.locator('.gacha-viewport')).toHaveAttribute('data-rotated', String(isMobile))
+  if (isMobile) {
+    await expect(page.locator('.gacha-rotate-hint')).toHaveCount(0)
+  } else {
+    await expect(page.locator('.gacha-rotate-hint')).toBeVisible()
+    const hintEvents = await page.locator('.gacha-rotate-hint').evaluate(el => getComputedStyle(el).pointerEvents)
+    expect(hintEvents).toBe('none')
+  }
   await page.screenshot({ path: shotPath(testInfo, '12-portrait-hint.png') })
 })
 
@@ -380,8 +405,13 @@ test('魔物蛋卡池可切换且贴图正确', async ({ page }, testInfo) => {
   await page.locator('.kind-toggle').nth(1).click()
   await expect(page).toHaveURL(/kind=pet/)
   await expect(page.locator('.pool-period')).toBeVisible()
-  const coverLoaded = await page.locator('.pool-cover').evaluate(el => el.naturalWidth > 0 && el.naturalWidth > 800)
-  expect(coverLoaded).toBe(true)
+  // 切换卡池后封面是**新图**，仍在异步下载：这里必须轮询等它解码完成。
+  // （`openGacha` 的等图发生在点切换之前，覆盖不到切换后新挂载的封面，
+  //   直接读 naturalWidth 会与图片加载赛跑，属于测试竞态而非页面缺陷。）
+  await expect.poll(
+    () => page.locator('.pool-cover').evaluate(el => el.naturalWidth),
+    { message: '蛋池封面应完成加载（宽度 > 800）' }
+  ).toBeGreaterThan(800)
   await page.locator('.draw-btn').first().click()
   // 蛋池走 GachaPetPanel（PetGachaAniPanel 完整还原）：蛋袋等待点击 → 出蛋揭晓 UI
   await expect(page.locator('.pet-catcher')).toBeVisible()

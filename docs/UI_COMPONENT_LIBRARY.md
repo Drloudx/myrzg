@@ -69,7 +69,8 @@ import { UiModal, UiSection, UiInfoRow } from '../components/ui/index.js'
 | 组件 | 职责 | 关键 Props |
 | --- | --- | --- |
 | `UiButton` | 通用按钮 | `variant`(primary/secondary/ghost/danger/link)、`size`(sm/md/lg)、`block`、`disabled` |
-| `UiSearchInput` | 搜索框（图标+清空） | `modelValue`、`placeholder`、`clearable` |
+| `UiSearchInput` | 搜索框（图标+清空）；在 `UiFilterPanel` 内自动显示右侧筛选折叠按钮 | `modelValue`、`placeholder`、`clearable` |
+| `UiFilterPanel` | 搜索与可折叠筛选面板，默认展开 | `search` 插槽放搜索框；默认插槽放筛选项；`footer` 插槽放始终保留的表头等内容 |
 | `UiFilterRow` | 筛选行容器 | `label`（如"稀有度："），插槽放 UiFilterPill；使用 `#right` 放计数/操作时，手机端会自动独占一行 |
 | `UiFilterPill` | 筛选胶囊 | `active`、`quality`(1~5 可选)、`disabled`；悬停反馈仅作用于未选中项，选中项悬停时保持原有强调色 |
 | `UiCollectionToggle` | 已收集/未收集状态开关（成就、隐藏点位等进度共用） | `active`、`@toggle`；内置点击阻止冒泡、键盘语义和无障碍状态 |
@@ -93,6 +94,8 @@ import { UiModal, UiSection, UiInfoRow } from '../components/ui/index.js'
 | `UiBackToTop` | 回到顶部木钮（与移动导航共用悬浮按钮尺寸、边框、阴影和业务层级变量） | `scrollContainer`(选择器) |
 | `UiListRow` | 通栏列表行 | `id`、`clickable`、`right` 插槽 |
 | `UiStatGrid` | 属性数值网格 | `items`(`[{label,value,tone?}]`)、`doubleCol` |
+
+搜索筛选区统一使用 `UiFilterPanel`，沿用 `filter-panel paper-panel` 布局与主题。`UiSearchInput` 在面板的 `search` 插槽内读取就近面板状态，右侧“收起／筛选”按钮控制默认插槽；`aria-expanded` 和唯一 `aria-controls` 同步更新，支持键盘操作，触屏按钮最小高度 44px。折叠使用 `v-show` 保留控件和已选条件，搜索、清空仍可用；展开状态仅属于本面板，不修改筛选 query，不写入账号或备份状态。魔物收益表头放在 `footer` 中，收起后继续显示。独立搜索框及顶部全局搜索没有下面的筛选区时不显示折叠按钮。
 
 ### 2.1 `UiExchangeTrade` 兑换卡片
 
@@ -198,8 +201,10 @@ import { UiModal, UiSection, UiInfoRow } from '../components/ui/index.js'
 ```vue
 <template>
   <div class="page-view-container">
-    <div class="filter-panel paper-panel">
-      <UiSearchInput v-model="searchQuery" placeholder="搜索名称..." />
+    <UiFilterPanel>
+      <template #search>
+        <UiSearchInput v-model="searchQuery" placeholder="搜索名称..." />
+      </template>
       <UiFilterRow label="大类：">
         <UiFilterPill :active="selectedMain === null" @click="selectMain(null)">全部</UiFilterPill>
         <UiFilterPill v-for="cat in categoryTree" :key="cat.type"
@@ -209,7 +214,7 @@ import { UiModal, UiSection, UiInfoRow } from '../components/ui/index.js'
         <UiFilterPill v-for="r in [1,2,3,4,5]" :key="r" :quality="r"
           :active="selectedRarity === r" @click="selectedRarity = r">{{ getRarityName(r) }}</UiFilterPill>
       </UiFilterRow>
-    </div>
+    </UiFilterPanel>
 
     <!-- 网格：class 自定义列数（如 items-card-grid=7列）；wide=宽卡；small=小图标卡 -->
     <UiCardGrid id="itemsGridScroll" class="items-card-grid" v-if="isDataReady">
@@ -239,7 +244,7 @@ import { UiModal, UiSection, UiInfoRow } from '../components/ui/index.js'
 </template>
 ```
 
-脚本导入示例：`import { UiSearchInput, UiFilterRow, UiFilterPill, UiCardGrid, UiItemCard, UiEmptyState, UiBackToTop, UiModal, UiSection, UiInfoRow, UiRewardCard } from '../components/ui/index.js'`
+脚本导入示例：`import { UiFilterPanel, UiSearchInput, UiFilterRow, UiFilterPill, UiCardGrid, UiItemCard, UiEmptyState, UiBackToTop, UiModal, UiSection, UiInfoRow, UiRewardCard } from '../components/ui/index.js'`
 
 ### 4.2 游戏原素材业务皮肤
 

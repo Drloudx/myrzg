@@ -1,7 +1,9 @@
 <template>
   <div class="page-view-container" data-view="furniture" data-image-fallback="custom">
-    <div class="filter-panel paper-panel">
-      <UiSearchInput v-model="searchQuery" placeholder="搜索家具名称、描述、材料..." />
+    <UiFilterPanel class="filter-panel paper-panel">
+      <template #search>
+        <UiSearchInput v-model="searchQuery" placeholder="搜索家具名称、描述、材料..." />
+      </template>
 
       <UiFilterRow label="一级分类：">
         <UiFilterPill :active="selectedMain === null" @click="selectMain(null)">全部</UiFilterPill>
@@ -60,7 +62,7 @@
           <span class="furniture-count">共 {{ filteredFurniture.length }} 件家具</span>
         </template>
       </UiFilterRow>
-    </div>
+    </UiFilterPanel>
 
     <UiVirtualGrid
       v-if="isDataReady"
@@ -259,7 +261,7 @@ import {
   UiInfoRow,
   UiModal,
   UiRewardCard,
-  UiSearchInput,
+  UiFilterPanel, UiSearchInput,
   UiSection,
   UiTag
 } from '../components/ui/index.js'

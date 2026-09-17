@@ -127,7 +127,7 @@ test.describe('desktop application scroll shell', () => {
     expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth + 1)
   })
 
-  test('keeps the exchange grid at four columns without framing the data area', async ({ page }) => {
+  test('keeps the exchange grid responsive without framing the data area', async ({ page }) => {
     await page.goto('/#/exchange?cat=entrust')
     await expect(page.locator('.exchange-list > .ui-exchange-trade').first()).toBeVisible()
     await dismissGlobalModals(page)
@@ -139,6 +139,10 @@ test.describe('desktop application scroll shell', () => {
       const dataStyle = getComputedStyle(dataArea)
       return {
         columns: getComputedStyle(grid).gridTemplateColumns.split(/\s+/).filter(Boolean).length,
+        gridWidth: grid.clientWidth,
+        // 栅格为 `repeat(auto-fill, minmax(110px, 1fr))`：列数随可用宽度自适应，
+        // 断言应核对「自适应是否生效」而不是钉死某个具体列数（1440 宽为 6 列、1280 宽为 5 列）。
+        expectedColumns: Math.floor((grid.clientWidth + 10) / (110 + 10)),
         filterOverflow: getComputedStyle(filter).overflow,
         dataBorderWidth: [
           dataStyle.borderTopWidth,
@@ -150,7 +154,8 @@ test.describe('desktop application scroll shell', () => {
       }
     })
 
-    expect(layout.columns).toBe(4)
+    expect(layout.columns).toBeGreaterThanOrEqual(4)
+    expect(layout.columns).toBe(layout.expectedColumns)
     expect(layout.filterOverflow).toBe('visible')
     expect(layout.dataBorderWidth).toEqual(['0px', '0px', '0px', '0px'])
     expect(layout.dataHorizontalPadding).toEqual(['0px', '0px'])
@@ -182,22 +187,33 @@ test.describe('desktop application scroll shell', () => {
       ['随机商品', 10]
     ])
     expect(byKey.tuzi.subs.map(sub => [sub.label, sub.list.length])).toEqual([['全部候选', 37]])
-    expect(byKey.shop.subs.map(sub => sub.label)).toEqual(['氪金商店', '星型徽印', '翼型徽印', '回忆结晶'])
+    // 时装（fuZhuang / packType 5）是商城的正式子类，必须出现在商店积分下。
+    expect(byKey.shop.subs.map(sub => sub.label)).toEqual(['氪金商店', '时装', '星型徽印', '翼型徽印', '回忆结晶'])
     expect(byKey.pack.label).toBe('每日补给')
     expect(byKey.pack.subs[0].list).toHaveLength(2)
     expect(excludedIds.filter(id => visibleIds.has(id))).toEqual([])
 
     await expect(page.locator('.collection-counter')).toContainText('2')
 
+    // 种子/兔子走「刷新规则」面板：规则与解锁条件集中在 view=rules，
+    // 商品卡本身不再渲染 .ui-exchange-trade__meta（断言随现行实现更新）。
     await page.goto('/#/exchange?cat=seed&sub=all')
-    await expect(page.locator('.exchange-summary')).toContainText('每池 5 选 2')
     await expect(page.locator('.collection-counter')).toContainText('14')
-    await expect(page.locator('.ui-exchange-trade__meta', { hasText: '完成《往日的阴影》后解锁' }).first()).toBeVisible()
+    await expect(page.locator('.exchange-summary, .exchange-rules__summary')).toHaveCount(0)
+    await expect(page.locator('.ui-exchange-trade__meta')).toHaveCount(0)
+
+    await page.goto('/#/exchange?cat=seed&sub=all&view=rules')
+    await expect(page.locator('.exchange-rules__summary')).toContainText('每池 5 选 2')
+    await expect(page.locator('.exchange-rules__group', { hasText: '完成《往日的阴影》后解锁' }).first()).toBeVisible()
 
     await page.goto('/#/exchange?cat=tuzi&sub=all&rarity=白')
     await expect(page.locator('.collection-counter')).toContainText('3')
-    await expect(page.locator('.ui-exchange-trade__meta')).toHaveCount(3)
-    await expect(page.locator('.ui-exchange-trade__meta', { hasText: '每次可买 2 个' })).toHaveCount(3)
+    await expect(page.locator('.ui-exchange-trade')).toHaveCount(3)
+    await expect(page.locator('.ui-exchange-trade__meta')).toHaveCount(0)
+
+    await page.goto('/#/exchange?cat=tuzi&sub=all&view=rules')
+    await expect(page.locator('.exchange-rules__summary')).toContainText('每次共出现 10 项')
+    await expect(page.locator('.exchange-rules__group', { hasText: '每次可买 2 个' })).toHaveCount(1)
 
     await page.goto('/#/exchange?cat=pack&sub=dailySupply')
     await expect(page.locator('.ui-exchange-trade__title')).toHaveText(['下午茶', '晚宴'])

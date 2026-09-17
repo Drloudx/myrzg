@@ -1,7 +1,9 @@
 <template>
   <div class="page-view-container runes-page">
-    <div class="filter-panel paper-panel">
-      <UiSearchInput :model-value="search" placeholder="搜索符石、效果或材料..." @update:model-value="setFilter('q', $event)" />
+    <UiFilterPanel class="filter-panel paper-panel">
+      <template #search>
+        <UiSearchInput :model-value="search" placeholder="搜索符石、效果或材料..." @update:model-value="setFilter('q', $event)" />
+      </template>
       <UiTabs :model-value="tab" :options="tabs" @update:model-value="changeTab" />
       <template v-if="isCatalog || isSynthesis">
         <UiFilterRow label="等级：">
@@ -14,7 +16,7 @@
         </UiFilterRow>
       </template>
       <div class="collection-counter">共 <span class="count-num">{{ isCatalog ? filteredCatalog.length : plans.length }}</span> {{ isCatalog ? '种' : '个方案' }}</div>
-    </div>
+    </UiFilterPanel>
 
     <UiEmptyState v-if="loading" type="loading" text="正在加载符石图鉴..." />
     <div v-else-if="error" class="runes-error">
@@ -122,7 +124,7 @@ import { useLazyList } from '../composables/useLazyList.js'
 import { resolveScrollTarget } from '../utils/scrollTarget.js'
 import AcquisitionRewards from '../components/AcquisitionRewards.vue'
 import RuneCountInput from '../components/runes/RuneCountInput.vue'
-import { UiTabs, UiSearchInput, UiFilterRow, UiFilterPill, UiCardGrid, UiItemCard, UiTag,
+import { UiTabs, UiFilterPanel, UiSearchInput, UiFilterRow, UiFilterPill, UiCardGrid, UiItemCard, UiTag,
   UiButton, UiEmptyState, UiBackToTop, UiSection, UiRewardCard } from '../components/ui/index.js'
 
 const route = useRoute()

@@ -2,8 +2,10 @@
   <div class="page-view-container heroes-page">
 
     <!-- 筛选区（羊皮纸面板） -->
-    <div class="filter-panel paper-panel">
-      <UiSearchInput v-model="searchQuery" placeholder="搜索角色、技能、档案、互动文本（支持中英文/数字；空格=且、=或）..." />
+    <UiFilterPanel class="filter-panel paper-panel">
+      <template #search>
+        <UiSearchInput v-model="searchQuery" placeholder="搜索角色、技能、档案、互动文本（支持中英文/数字；空格=且、=或）..." />
+      </template>
 
       <!-- 稀有度 -->
       <UiFilterRow label="稀有度：">
@@ -38,7 +40,7 @@
           @click="selectedElement = Number(elementKey)"
         >{{ elementName }}</UiFilterPill>
       </UiFilterRow>
-    </div>
+    </UiFilterPanel>
 
     <!-- 角色网格（懒加载每批 60 项） -->
     <UiCardGrid id="heroesGridScroll" v-if="isDataReady" class="heroes-scroll">
@@ -284,11 +286,11 @@
 
             <!-- Skill details display panel -->
             <div class="skill-details-panel paper-panel-solid" v-if="currentSelectedSkill">
-              <div class="panel-header">
+              <div class="panel-header skill-panel-header">
                 <h4 class="skill-display-name">{{ currentSelectedSkill.name }}</h4>
                 <div class="skill-meta-tags" v-if="currentSelectedSkill.type !== 'talent'">
-                  <UiTag v-if="currentSelectedSkill.cd > 0" tone="accent">CD: {{ currentSelectedSkill.cd }}s</UiTag>
-                  <UiTag v-if="currentSelectedSkill.cost > 0" tone="accent">法力: {{ currentSelectedSkill.cost }}</UiTag>
+                  <UiTag v-if="Number(currentSelectedSkillLevelDetail?.cd) > 0" tone="accent">CD: {{ currentSelectedSkillLevelDetail.cd }}s</UiTag>
+                  <UiTag v-if="Number(currentSelectedSkillLevelDetail?.cost) > 0" tone="accent">消耗: {{ currentSelectedSkillLevelDetail.cost }}</UiTag>
                 </div>
                 <UiTag v-else tone="default">核心被动天赋</UiTag>
               </div>
@@ -482,15 +484,16 @@
 
         <!-- TAB CONTENT: CALCULATOR -->
         <div v-if="activeTab === 'calculator'" class="tab-pane-content">
-          <UiSection title="等级与基础属性">
+          <UiSection title="等级、升星与基础属性">
             <!-- Calculator Sliders -->
             <div class="calculator-inputs">
               <div class="input-slider-group paper-panel-solid">
                 <div class="slider-header">
-                  <span class="slider-title">目标等级</span>
+                  <label class="slider-title" for="hero-calc-level">目标等级</label>
                   <span class="slider-val">{{ calcLevel }} / {{ maxHeroLevel }} · 等级突破 {{ calcRank }} 次</span>
                 </div>
                 <input
+                  id="hero-calc-level"
                   type="range"
                   min="1"
                   :max="maxHeroLevel"
@@ -499,10 +502,28 @@
                 />
                 <div class="level-growth-summary">
                   <span>每级基础属性 +{{ formatRate(heroLevelGrowthRate) }}</span>
-                  <span>每次突破基础属性 +{{ formatRate(heroBreakthroughRate) }}</span>
+                  <span>突破累计 +{{ formatRate(heroBreakthroughTotalRate) }}</span>
                 </div>
+                <label v-if="breakthroughAtLevel" class="breakthrough-toggle">
+                  <input type="checkbox" v-model="includeCurrentBreakthrough" />
+                  已完成 {{ calcLevel }} 级突破（基础属性 +{{ formatRate(breakthroughAtLevel.attUp) }}）
+                </label>
+              </div>
+              <div class="input-slider-group paper-panel-solid">
+                <div class="slider-header">
+                  <label class="slider-title" for="hero-calc-stars">升星次数</label>
+                  <span class="slider-val">{{ calcStarCount }} / {{ maxStarCount }}</span>
+                </div>
+                <input id="hero-calc-stars" type="range" min="0" :max="maxStarCount" v-model.number="calcStarCount" class="calc-range-slider" />
+                <div class="level-growth-summary">
+                  <span>每次基础属性 +{{ formatRate(starGrowthRate) }}</span>
+                  <span>升星累计 +{{ formatRate(starGrowthRate * calcStarCount) }}</span>
+                </div>
+                <p class="calculator-explanation">每提升一级星阶技能算一次，四组已升级等级相加。</p>
               </div>
             </div>
+            <p class="calculator-explanation growth-formula">五项基础属性 = 原始值 ×（1 + 等级加成 {{ formatRate((calcLevel - 1) * heroLevelGrowthRate) }} + 升星加成 {{ formatRate(calcStarCount * starGrowthRate) }} + 突破加成 {{ formatRate(heroBreakthroughTotalRate) }}）</p>
+            <p class="calculator-explanation">这里只模拟等级、升星次数和突破的基础成长，星阶技能本身的属性效果及装备、潜能、档案、营地等加成另算。</p>
 
             <!-- Calculated Attributes Grid -->
             <div class="calculator-outputs mt-4">
@@ -511,6 +532,7 @@
                 <div
                   v-for="field in growingAttributesList"
                   :key="field"
+                  :data-attribute="field"
                   class="attr-calc-card"
                 >
                   <span class="attr-calc-label">{{ translateAttributeKey(field) }}</span>
@@ -627,7 +649,7 @@ import {
   UiFilterPill,
   UiFilterRow,
   UiModal,
-  UiSearchInput,
+  UiFilterPanel, UiSearchInput,
   UiSection,
   UiTag,
   UiTabs
@@ -645,6 +667,25 @@ const itemsCache = ref([])
 const consumeCache = ref({})
 const isDataReady = ref(false)
 const errorMessage = ref('')
+
+/**
+ * items.json 只服务于「等级突破」材料的名称与图标解析（calculateUpgradeCosts），
+ * 角色列表本身不消费它。这里按需加载：只在首次打开角色详情时取，
+ * 避免只浏览列表就拉入整张物品表（移动端在线走 CDN，同样经 manifest 版本校验）。
+ * 失败不阻断详情，材料回落为 typeId + 空图标（heroParser 已有兜底）。
+ */
+let itemsLoadPromise = null
+const loadItemsOnce = () => {
+  if (!itemsLoadPromise) {
+    itemsLoadPromise = fetchItemData()
+      .then(coreData => { itemsCache.value = coreData.items })
+      .catch(err => {
+        console.error('Error loading item data for breakthrough costs:', err)
+        itemsLoadPromise = null
+      })
+  }
+  return itemsLoadPromise
+}
 
 // Filter states
 const searchQuery = ref('')
@@ -669,6 +710,8 @@ const activeSkillIndex = ref(0)
 const currentSkillLevel = ref(1)
 const activeStarIndex = ref(0)
 const calcLevel = ref(1)
+const calcStarCount = ref(0)
+const includeCurrentBreakthrough = ref(true)
 const isJobDetailExpanded = ref(false)
 
 // Job names mapping array
@@ -777,9 +820,6 @@ const getHeroSearchText = hero => {
 
 onMounted(async () => {
   try {
-    const coreData = await fetchItemData()
-    itemsCache.value = coreData.items
-    
     const parsedData = await fetchHeroData()
     allHeroes.value = parsedData.heroes
     heroLevelConfig.value = parsedData.heroLevel
@@ -815,6 +855,8 @@ function openFromQueryId(id) {
   const found = allHeroes.value.find(h => h.id === id)
   if (found) {
     selectedHero.value = found
+    // 详情才需要物品表（突破材料名称/图标）；不 await，详情先渲染，材料到位后计算属性自行重算。
+    loadItemsOnce()
     protagonistGender.value = 'female'
     detailVisible.value = true
     // Reset tabs
@@ -823,6 +865,8 @@ function openFromQueryId(id) {
     currentSkillLevel.value = 1
     activeStarIndex.value = 0
     calcLevel.value = 1
+    calcStarCount.value = 0
+    includeCurrentBreakthrough.value = true
     isJobDetailExpanded.value = false
   }
 }
@@ -1026,7 +1070,7 @@ const currentSelectedStarSkill = computed(() => {
   return selectedHero.value.starSkills[activeStarIndex.value] || null
 })
 
-// Calculator logic// Calculator logic
+// Calculator logic
 const heroRankOptions = computed(() => {
   const rankMap = heroRankConfig.value?.heroRank || {}
   return Object.values(rankMap)
@@ -1045,9 +1089,17 @@ const calcRank = computed(() => {
   const level = Number(calcLevel.value || 1)
   const rankMap = heroRankConfig.value?.heroRank || {}
   for (const rank of heroRankOptions.value) {
-    if (level < Number(rankMap[String(rank)]?.heroMaxLevel || 0)) return rank
+    const limit = Number(rankMap[String(rank)]?.heroMaxLevel || 0)
+    if (level < limit || (level === limit && !includeCurrentBreakthrough.value)) return rank
   }
   return heroRankOptions.value.at(-1) || 0
+})
+
+const breakthroughAtLevel = computed(() => {
+  const rankMap = heroRankConfig.value?.heroRank || {}
+  return heroRankOptions.value.slice(0, -1)
+    .map(rank => rankMap[String(rank)])
+    .find(rank => Number(rank.heroMaxLevel) === Number(calcLevel.value))
 })
 
 const growthFields = ['maxHp', 'phyAtk', 'magicAtk', 'phyDef', 'magicDef']
@@ -1059,13 +1111,13 @@ const formatGrowthValue = value => {
 
 const formatRate = rate => `${formatGrowthValue(Number(rate || 0) * 100)}%`
 
-const heroLevelGrowthRate = computed(() => Number(heroLevelConfig.value?.attUp || 0))
-const heroBreakthroughRate = computed(() => {
-  const rates = heroRankOptions.value
-    .map(rank => Number(heroRankConfig.value?.heroRank?.[String(rank)]?.attUp || 0))
-    .filter(rate => rate > 0)
-  return rates[0] || 0
+const heroLevelGrowthRate = computed(() => Number(heroLevelConfig.value?.attUp ?? 0.05))
+const heroBreakthroughTotalRate = computed(() => {
+  return heroRankOptions.value.filter(rank => rank < calcRank.value)
+    .reduce((sum, rank) => sum + Number(heroRankConfig.value?.heroRank?.[String(rank)]?.attUp || 0), 0)
 })
+const starGrowthRate = computed(() => Number(selectedHero.value?.starGrowthRate ?? 0.01))
+const maxStarCount = computed(() => Number(selectedHero.value?.maxStarCount ?? 0))
 
 // Renders only clean, numeric attributes in computedStats
 const calculatorAttributes = computed(() => {
@@ -1093,7 +1145,9 @@ const computedStats = computed(() => {
     parseInt(calcLevel.value),
     parseInt(calcRank.value),
     heroLevelConfig.value,
-    heroRankConfig.value
+    heroRankConfig.value,
+    calcStarCount.value,
+    starGrowthRate.value
   )
 })
 
@@ -1112,6 +1166,8 @@ const computedCosts = computed(() => {
 })
 
 function translateAttributeKey(key) {
+  // 角色原始 unitData 的 atkSpeed 是次/秒；装备、档案等同名字段仍为百分比加成。
+  if (key === 'atkSpeed') return '基础攻速'
   return translateStatName(key)
 }
 
@@ -1605,6 +1661,10 @@ const handleGiftClick = (giftId) => {
   color: var(--text-main, #3e2a14);
   letter-spacing: 1px;
 }
+.skill-panel-header {
+  justify-content: flex-start;
+  column-gap: 12px;
+}
 .skill-meta-tags {
   display: flex;
   gap: 6px;
@@ -1986,6 +2046,8 @@ const handleGiftClick = (giftId) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
   margin-bottom: 8px;
 }
 .slider-title {
@@ -2006,6 +2068,56 @@ const handleGiftClick = (giftId) => {
   margin-top: 9px;
   color: var(--text-muted);
   font-size: 12px;
+}
+.calculator-explanation {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.growth-formula {
+  color: var(--text-main);
+}
+.breakthrough-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  color: var(--text-main);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.breakthrough-toggle input[type="checkbox"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  margin: 0;
+  border: 2px solid var(--border-color);
+  border-radius: 3px;
+  background: var(--paper-soft);
+  cursor: pointer;
+  position: relative;
+}
+.breakthrough-toggle input[type="checkbox"]:checked {
+  border-color: var(--border-color);
+  background: var(--paper-soft);
+}
+.breakthrough-toggle input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 0;
+  width: 5px;
+  height: 9px;
+  border: solid var(--wood-deep);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.breakthrough-toggle input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 2px;
 }
 @media (max-width: 520px) {
   .level-growth-summary {

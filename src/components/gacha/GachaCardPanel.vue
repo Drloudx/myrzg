@@ -247,8 +247,7 @@ onBeforeUnmount(() => {
   transform: scale(1);
 }
 
-/* 共享画布由 `mountSharedSpineScene` 工厂创建（带不上 scoped 属性），定位用内联样式：
-   left calc(50% - 767px) / top calc(50% - 375px)、1534×750；随 card-cam 一起参与开场缩放。 */
+/* 共享画布以自身 CSS 尺寸取景，铺满延展后的舞台；随 card-cam 参与开场缩放。 */
 .card-spine-wrap {
   position: absolute;
   inset: 0;
@@ -270,10 +269,22 @@ onBeforeUnmount(() => {
   pointer-events: none;
 }
 
+.card-bg {
+  width: max(100%, 1680px);
+  height: 1000px;
+  overflow: hidden;
+}
+
 .card-bg img {
-  width: 2048px;
-  height: 1024px;
-  object-fit: cover;
+  /* 原图 2048×1024 的有效区域为 x=184..1863、y=12..1011。
+     按有效区域放大并反向裁掉透明边，宽屏延展时两侧仍保持连续背景。 */
+  position: absolute;
+  width: calc(100% * 2048 / 1680);
+  height: calc(100% * 1024 / 1000);
+  left: calc(-100% * 184 / 1680);
+  top: calc(-100% * 12 / 1000);
+  max-width: none;
+  object-fit: fill;
 }
 
 /* 开场黑屏淡入（对齐真机 Frame 096~104） */
@@ -336,10 +347,6 @@ onBeforeUnmount(() => {
 .card-post--open::before {
   opacity: 0;
 }
-
-/* 共享画布由 `mountSharedSpineScene` 工厂创建（带不上 scoped 属性），定位用内联样式：
-   left calc(50% - 767px) / top calc(50% - 375px)、1534×750——层级在背景图(.g-layer-bg=1)
-   之上、UI 层(40)之下（wrap 的 z-index:5）。
 
 /* 触摸继续：com_tap 160×40，α0.2↔1 dur1.0 PingPong（对齐宠物池与 Unity prefab continueObj） */
 .card-tap {

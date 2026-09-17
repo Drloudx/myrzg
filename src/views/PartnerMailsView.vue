@@ -1,7 +1,9 @@
 <template>
   <div class="page-view-container partner-mails-page">
-    <div class="filter-panel paper-panel">
-      <UiSearchInput v-model="searchQuery" placeholder="搜索角色或邮件标题..." />
+    <UiFilterPanel class="filter-panel paper-panel">
+      <template #search>
+        <UiSearchInput v-model="searchQuery" placeholder="搜索角色或邮件标题..." />
+      </template>
       <UiFilterRow label="稀有度：">
         <UiFilterPill :active="selectedRarity === null" @click="selectedRarity = null">全部</UiFilterPill>
         <UiFilterPill v-for="r in [5,4,3]" :key="r" :quality="r" :active="selectedRarity === r" @click="selectedRarity = r">{{ r }}星</UiFilterPill>
@@ -14,7 +16,7 @@
         <UiFilterPill :active="selectedElement === null" @click="selectedElement = null">全部</UiFilterPill>
         <UiFilterPill v-for="(name, key) in ELEMENT_NAMES" :key="key" :active="selectedElement === Number(key)" @click="selectedElement = Number(key)">{{ name }}</UiFilterPill>
       </UiFilterRow>
-    </div>
+    </UiFilterPanel>
 
     <UiEmptyState v-if="loading" type="loading" text="正在读取伙伴邮件..." />
     <UiEmptyState v-else-if="error" type="error" :text="error" />
@@ -29,7 +31,7 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { UiSearchInput, UiFilterRow, UiFilterPill, UiEmptyState } from '../components/ui/index.js'
+import { UiFilterPanel, UiSearchInput, UiFilterRow, UiFilterPill, UiEmptyState } from '../components/ui/index.js'
 import { fetchHeroData } from '../utils/heroParser.js'
 import { ELEMENT_NAMES, JOB_NAMES } from '../utils/gameMappings.js'
 import PartnerMailReader from '../components/heroes/PartnerMailReader.vue'

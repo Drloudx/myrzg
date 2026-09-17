@@ -1,4 +1,5 @@
 <template>
+  <GachaViewport>
   <div class="gacha-page">
     <template v-if="errorMessage">
       <div class="gacha-fallback">
@@ -111,6 +112,7 @@
       </div>
     </template>
   </div>
+  </GachaViewport>
 </template>
 
 <script setup>
@@ -128,6 +130,7 @@
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import GachaPoolPanel from '../components/gacha/GachaPoolPanel.vue'
+import GachaViewport from '../components/gacha/GachaViewport.vue'
 import GachaCardPanel from '../components/gacha/GachaCardPanel.vue'
 import GachaPetPanel from '../components/gacha/GachaPetPanel.vue'
 import GachaRevealPanel from '../components/gacha/GachaRevealPanel.vue'

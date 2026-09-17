@@ -1,1778 +1,1808 @@
 [
-  {
-    "file": "ui/at_f_3.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/at_f_3.png",
-    "bytes": 7937,
-    "sha256": "e0eae8e1d3aa4b15ae211051097a787bd2d900a00b25682c229317e996204dd6"
-  },
-  {
-    "file": "ui/at_f_4.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/at_f_4.png",
-    "bytes": 7627,
-    "sha256": "3fda5767b78b9c04bcfe44083707de02bfee3b8d07ec8e1817ab470bb25ac7d8"
-  },
-  {
-    "file": "ui/at_f_5.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/at_f_5.png",
-    "bytes": 8018,
-    "sha256": "b121385c307dbd5fbbbd156a47622df591661b8935fc22d74694bc6fdc0fc1a0"
-  },
-  {
-    "file": "ui/chara_name_tag_class_pet.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/chara_name_tag_class_pet.png",
-    "bytes": 2351,
-    "sha256": "79efdf9251efb39f01c167b4c5a6c4b30c715c95cd5212de96768d3bec176df3"
-  },
-  {
-    "file": "../Common_Atlas/com_up.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/com_up.png",
-    "bytes": 1834,
-    "sha256": "ed6806093592933ba2ce021480d3b44e91a3e748cc90850d39df437da1579543"
-  },
-  {
-    "file": "ui/gacha_at_chara002_1.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_at_chara002_1.png",
-    "bytes": 16218,
-    "sha256": "1922f3b461c0cfc9f59bda60e8cb0df794bf2a70ca2069130f35f652330ae5c7"
-  },
-  {
-    "file": "ui/gacha_at_chara062_0.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_at_chara062_0.png",
-    "bytes": 10269,
-    "sha256": "7590bb6b2b66882d6b9f26903a1e13cd4f212c531f9833ac12d9dada89da4347"
-  },
-  {
-    "file": "ui/gacha_at_chara064_0.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_at_chara064_0.png",
-    "bytes": 15983,
-    "sha256": "439159f42e70581a7d4634f4c121bb401a1c3bc3381384a45cbfd8b31823ef31"
-  },
-  {
-    "file": "ui/gacha_at_pet072.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_at_pet072.png",
-    "bytes": 10310,
-    "sha256": "3c69ae35baa3069e04c375fda870859b4b80c21bc49a1fe8ca745ecc39ddf577"
-  },
-  {
-    "file": "ui/gacha_at_pet074.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_at_pet074.png",
-    "bytes": 13138,
-    "sha256": "da692e6fbe2e8f3fbd2695ed682f179f9f193a77a60ade05d66cac9ceb3495d0"
-  },
-  {
-    "file": "ui/gacha_btn_exchange.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_btn_exchange.png",
-    "bytes": 14982,
-    "sha256": "1a6bed17cece07bb78e2d739d5f55be1f3857e3e0c03e9a0007f19f4d833a39e"
-  },
-  {
-    "file": "ui/gacha_btn_exchange_press.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_btn_exchange_press.png",
-    "bytes": 15512,
-    "sha256": "98c7d8a22f96329b4ce7e2957ae6b93a0ba30f5ced67a19fc39dd2779fd070e3"
-  },
-  {
-    "file": "ui/gacha_btn_tag.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_btn_tag.png",
-    "bytes": 564,
-    "sha256": "9f1818e59e154621e7fdd24d532b8ed2a75aec731ad97a74daa7ad5b36cb81b9"
-  },
-  {
-    "file": "ui/gacha_info_tip.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_info_tip.png",
-    "bytes": 6331,
-    "sha256": "c7b5ea72ac8de0cc59fee0ad96dc992cd296e00ddba593c5618989023e5cf385"
-  },
-  {
-    "file": "ui/gacha_name_chara.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_name_chara.png",
-    "bytes": 29668,
-    "sha256": "88cddf0292befbd762d7452e78da183be65715aac0e86928d965db4acb4eb8ca"
-  },
-  {
-    "file": "ui/gacha_name_chara_sp.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_name_chara_sp.png",
-    "bytes": 28793,
-    "sha256": "ef6cacf24591d1b3383fe7fcec4be9678255685c31f57807fbdca9ec7c2e33e4"
-  },
-  {
-    "file": "ui/gacha_name_egg.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_name_egg.png",
-    "bytes": 29247,
-    "sha256": "66b06cd77c307eecfea1d895c8b56f3892c3d2277512a055595af1cfde4c8750"
-  },
-  {
-    "file": "ui/gacha_name_egg_sp.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_name_egg_sp.png",
-    "bytes": 27444,
-    "sha256": "866b4ffc51edd1aaf29dff83a3cd4358d00aae0821ebe9467ccf70e89b01f16d"
-  },
-  {
-    "file": "ui/gacha_name_limit.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_name_limit.png",
-    "bytes": 3607,
-    "sha256": "f319d27c1a1ac9749cb156bcb9a78e8a96a7386be15d1465d0820b435334307a"
-  },
-  {
-    "file": "ui/gacha_name_stay.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_name_stay.png",
-    "bytes": 3137,
-    "sha256": "9aeda78ef0b1d5b217e266dc16e22e551c67381c40bc3898468ff95153ee23e5"
-  },
-  {
-    "file": "ui/gacha_page.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_page.png",
-    "bytes": 6249,
-    "sha256": "54aec73251a8abe02d6c8648060c6cdf4c52ab04a63e5e034b8bb7889b2f5823"
-  },
-  {
-    "file": "ui/gacha_page_chara.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_page_chara.png",
-    "bytes": 5580,
-    "sha256": "35589acc57571aaa7e103856e300c7b36f2ac04b691ab04b68eea1fec7112a40"
-  },
-  {
-    "file": "ui/gacha_page_chara_on.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_page_chara_on.png",
-    "bytes": 6876,
-    "sha256": "2affc4ffbca7e59e461c037d2e639aa923a3675a45fb87887f2ab6d2bf9274bd"
-  },
-  {
-    "file": "ui/gacha_page_egg.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_page_egg.png",
-    "bytes": 6888,
-    "sha256": "52516726d8f8edd79ea6eec099dea5f35762b41358a9ef1b159a1c84da419755"
-  },
-  {
-    "file": "ui/gacha_page_egg_disable.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_page_egg_disable.png",
-    "bytes": 1413,
-    "sha256": "11d653eeaf50a7ac2cbb345d9912786204a4f5b08895761b2fcc8576860b132e"
-  },
-  {
-    "file": "ui/gacha_page_egg_on.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_page_egg_on.png",
-    "bytes": 7875,
-    "sha256": "515761cc67d88f12690a459499b13035f87ee5de4465fcecb788e1c39a7d5f35"
-  },
-  {
-    "file": "ui/gacha_page_on.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_page_on.png",
-    "bytes": 5515,
-    "sha256": "ac4ff3898ad5007450586dd8c9799e3fbb16308459c52c19339c86dd8f73b5a8"
-  },
-  {
-    "file": "ui/gacha_page_sp.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_page_sp.png",
-    "bytes": 6422,
-    "sha256": "a41e3d2c78b6e72c99cca4b1c67f7e569c121e5a03f2922b1dadaa91718eebbc"
-  },
-  {
-    "file": "ui/gacha_page_time.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_page_time.png",
-    "bytes": 1401,
-    "sha256": "e7d293c15d6925de7542e88eeb3c13d951616b4312f22ea51c6ade28820d89bd"
-  },
-  {
-    "file": "ui/gacha_reget.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_reget.png",
-    "bytes": 10707,
-    "sha256": "e373d5ac294f560dc1899f789938de5b02385928efdc06088c287f1237324c16"
-  },
-  {
-    "file": "ui/gacha_title_chara.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_title_chara.png",
-    "bytes": 47090,
-    "sha256": "9d84206050ff1cf8cf782b34b89e41c42e466c5c8947a0f0ddcda249c9b6f34b"
-  },
-  {
-    "file": "ui/gacha_title_egg.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_title_egg.png",
-    "bytes": 49713,
-    "sha256": "40f1a7404bf19c0ee6e3ad6280aaf93388f430c03dedd6c24639db9ca4a57c09"
-  },
-  {
-    "file": "ui/gacha_up_botm.png",
-    "source": "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_up_botm.png",
-    "bytes": 9745,
-    "sha256": "3685571a4fa59001cdc078949a725ef7ed32b5919b8296d0b3882f59254d47eb"
-  },
-  {
-    "file": "ui/gacha_egg_3.png",
-    "source": "UI_Atlases/HeroGachaPanel_Atlas/sprites/gacha_egg_3.png",
-    "bytes": 65960,
-    "sha256": "a2d844089166b59eda4226ac243bc20cfbf48fa5701972a2b00c5793d59ff60e"
-  },
-  {
-    "file": "ui/gacha_egg_4.png",
-    "source": "UI_Atlases/HeroGachaPanel_Atlas/sprites/gacha_egg_4.png",
-    "bytes": 69332,
-    "sha256": "d130379190531e568290a8e34d9e291f83a9e9799041e07dfe08735ca243ca97"
-  },
-  {
-    "file": "ui/gacha_egg_5.png",
-    "source": "UI_Atlases/HeroGachaPanel_Atlas/sprites/gacha_egg_5.png",
-    "bytes": 78774,
-    "sha256": "42258ae8b2fe8c02862ca83edb69eaa70b73ac2ba1354b91f3a18944ee92e647"
-  },
-  {
-    "file": "ui/gacha_egg_name.png",
-    "source": "UI_Atlases/HeroGachaPanel_Atlas/sprites/gacha_egg_name.png",
-    "bytes": 17684,
-    "sha256": "82f6232ac25ca608d0869909f893c7f3170ca2d9f75e651249f6555765c70cf2"
-  },
-  {
-    "file": "ui/gacha_star.png",
-    "source": "UI_Atlases/HeroGachaPanel_Atlas/sprites/gacha_star.png",
-    "bytes": 3985,
-    "sha256": "850a392c4e6f3097c48c2371897673fb765b6a017551619856eb913918c0e903"
-  },
-  {
-    "file": "../Common_Atlas/com_btn_N_sp.png",
-    "source": "UI_Atlases/Common_Atlas/sprites/com_btn_N_sp.png",
-    "bytes": 6503,
-    "sha256": "f9e596e9ac8667918c28a8c250a7c265cf3187c9bddc1413830da180b8168be0"
-  },
-  {
-    "file": "../Common_Atlas/com_btn_Y_sp.png",
-    "source": "UI_Atlases/Common_Atlas/sprites/com_btn_Y_sp.png",
-    "bytes": 7259,
-    "sha256": "45a2f476c23996952e2937fedada3f017049d92fda6ad7c706058d7c929324d0"
-  },
-  {
-    "file": "../Common_Atlas/com_btn_N_sp_press.png",
-    "source": "UI_Atlases/Common_Atlas/sprites/com_btn_N_sp_press.png",
-    "bytes": 7031,
-    "sha256": "0b590409f0637dfd51655f9284852289e0043440307f5324bd171c443182f878"
-  },
-  {
-    "file": "../Common_Atlas/com_btn_Y_sp_press.png",
-    "source": "UI_Atlases/Common_Atlas/sprites/com_btn_Y_sp_press.png",
-    "bytes": 7548,
-    "sha256": "5456b869de56e8aeee1ee579cafe13a79d79a151898345ab2eb56082c89fd174"
-  },
-  {
-    "file": "../Common_Atlas/com_btn_close.png",
-    "source": "UI_Atlases/Common_Atlas/sprites/com_btn_close.png",
-    "bytes": 6363,
-    "sha256": "29582089b620437dc5e64aeb212972c8a18ac4855054e9fc1e041047532ef4a9"
-  },
-  {
-    "file": "../Common_Atlas/com_btn_back.png",
-    "source": "UI_Atlases/Common_Atlas/sprites/com_btn_back.png",
-    "bytes": 6092,
-    "sha256": "78cc09dcfca01c90affcfedd7c18b2be12db7441fd4f23677ad2066015fddd5b"
-  },
-  {
-    "file": "../Common_Atlas/com_btn_mini.png",
-    "source": "UI_Atlases/Common_Atlas/sprites/com_btn_mini.png",
-    "bytes": 1950,
-    "sha256": "4f8d8b3603b89082ba2b958dd6e680dc2cf2a79164441d02f2bfe0048c85a248"
-  },
-  {
-    "file": "../Common_Atlas/com_top_item.png",
-    "source": "UI_Atlases/Common_Atlas/sprites/com_top_item.png",
-    "bytes": 478,
-    "sha256": "c62ddaaf9c6ddc5ee8bb4adddb52c4cfe40b084823843419a4de22b4158acd89"
-  },
-  {
-    "file": "shop.png",
-    "source": "4.24路资源包/assets/res/texture/gacha_cardbackground_main_output.png",
-    "bytes": 943107,
-    "sha256": "6ab03922dc9e5d6e6a521e78422fa9ee8bf7f233bb15727f33415e099a75d1a0"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/bg.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/bg.png",
-    "bytes": 514459,
-    "sha256": "ab0c8ad78bdf6ea137d87a08c510c5e95cffd8b0648a0f1bb7316d898d91f006"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/chara_bg_center_only.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/chara_bg_center_only.png",
-    "bytes": 149274,
-    "sha256": "e6b517645cf8263efafa389c1ca98bcd61411f92d9bb74a0360d7572aa9a9bc8"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/Rconer.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/Rconer.png",
-    "bytes": 13947,
-    "sha256": "f12b87ed059656dd85c9d6e08b1a5e02e9a926b5fcda2a582715e4e5bf8bd381"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/Rconer2.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/Rconer2.png",
-    "bytes": 13860,
-    "sha256": "216a57d849249f4e348a063272036510410607ebbbd62b19d261e10cf971160a"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/spGachaBlock01.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaBlock01.png",
-    "bytes": 77932,
-    "sha256": "72ede8bb9ebcb7f7ac5374921a4981c643088efa0bad324c5bcff047d79db84a"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/spGachaBlock02.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaBlock02.png",
-    "bytes": 6649,
-    "sha256": "d1ac700b8e0d4898b8a6cf22e190190b1595f42d71be3c1256ec495ae3657cf1"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/spGachaBox01.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaBox01.png",
-    "bytes": 243394,
-    "sha256": "5980717aa4381299ae9eb150d36548b7c1657837f1c65fdefb424888fd38c0dc"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/spGachaBox02.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaBox02.png",
-    "bytes": 296692,
-    "sha256": "6fa91ba3b486659c98f44dfc95f3d4e123f749d87a1df77b049b9be1907c101f"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/spGachaClass01Black.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaClass01Black.png",
-    "bytes": 74375,
-    "sha256": "5d9d29d2bae95737d2b7ea9a5b1b1d30a15c4e36514e6d2e455ad98ba599f368"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/spGachaClass02Black.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaClass02Black.png",
-    "bytes": 85155,
-    "sha256": "7804b3c7e9cde08b1538ab56c62ab73ddd6d88acefdc152575a17aa820c42e3f"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/spGachaClass03Black.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaClass03Black.png",
-    "bytes": 92978,
-    "sha256": "3dcce4d81f35f80a3eae0d599bbf914528df6411b59bdc211f73f8debff19225"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/spGachaClass04Black.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaClass04Black.png",
-    "bytes": 83083,
-    "sha256": "e4d07a693302f5142457ef8df0021d6c6b7e0a439e16f70f64201b1000ce7558"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/spGachaClass05Black.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaClass05Black.png",
-    "bytes": 77021,
-    "sha256": "4f57f619bbf9dfa20d2a6cc7867908901f5b43bd23744654b290d1cf631fe48f"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/spGachaClass06Black.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaClass06Black.png",
-    "bytes": 88832,
-    "sha256": "88adbcb29786664736c4be5d35996634fdf583571de1c7e3bfb1a8190c6ad9a3"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/spGachaColor01.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaColor01.png",
-    "bytes": 73111,
-    "sha256": "e759e3da71f832076e74935440b765691ccb2fbb2e5913ad144ac0081f05226a"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/spGachaColor02.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaColor02.png",
-    "bytes": 3767,
-    "sha256": "83cc881c26c07f27fe7aadbf249bc28f6ed24f871b18acb7a5b7950969051336"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/spGachaLine01.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaLine01.png",
-    "bytes": 8306,
-    "sha256": "103930239e229b0404c47ea106fa63c4e5e3ebb3419f2500b0a683f5a05ac3a4"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/spGachaMeteor01.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaMeteor01.png",
-    "bytes": 5559,
-    "sha256": "fcd408d4dcb356c4d01b431ba60bb693d24a9a7d2b0fad1bada347f854887cd1"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/spGachaMeteor02.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaMeteor02.png",
-    "bytes": 13073,
-    "sha256": "e22fc7d5e1001e76425fa5cda3cea837395eb9036aab5fdaa72de599852ca21b"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/spGachaMeteor03.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaMeteor03.png",
-    "bytes": 4329,
-    "sha256": "e23f747c6d82193d1c1455bfc75dfbd0b405e41c53144eb800061455a0e0cd03"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/spGachaStar02.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaStar02.png",
-    "bytes": 5348,
-    "sha256": "1607181fc32488421591edc1531f50658457213b4b6761bfbcaf58529971cdc5"
-  },
-  {
-    "file": "../uipanel/herogachashowpanel/spGachaTxtRing01.png",
-    "source": "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaTxtRing01.png",
-    "bytes": 125952,
-    "sha256": "98bb6ece1d6bf4beaff16523f1a027d07d5cf8fcdafcb57c5cb3f0e8776fe50f"
-  },
-  {
-    "file": "../chara/l/chara005_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara005_0.png",
-    "bytes": 525485,
-    "sha256": "e6e0b09a434edc5e9953ab30bdfee53fb081f722107d8a4e3192ea10646a9cb9"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara005_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara005_0_p.png",
-    "bytes": 15225,
-    "sha256": "dfe4c9261dcdac1f643b80e73fe5e016f9bb2128ac90616e66239f32928a333d"
-  },
-  {
-    "file": "spine/heroes/Npc_005/Npc_005.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_005/Npc_005.atlas",
-    "bytes": 4116,
-    "sha256": "1f87e502580fb1e6bda1a9fb05d5c68225adcec76b2e1a6efdb1ce79983331af"
-  },
-  {
-    "file": "spine/heroes/Npc_005/Npc_005.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_005/Npc_005.skel",
-    "bytes": 407768,
-    "sha256": "378dfe11ced5c455ee64456a19c34e255351c3033a2203ecfd61ff907ad1a55a"
-  },
-  {
-    "file": "spine/heroes/Npc_005/Npc_005.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_005/Npc_005.png",
-    "bytes": 767301,
-    "sha256": "9a2c9b0f84d4be46f865892001b6dcd769b16ea5713c15b25413c3f7983ad309"
-  },
-  {
-    "file": "../chara/l/chara012_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara012_0.png",
-    "bytes": 553356,
-    "sha256": "9b2a9e3cc627d86479f3c244d50ed337c03ff002c98f76b4296b809e0ced4fd7"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara012_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara012_0_p.png",
-    "bytes": 15984,
-    "sha256": "be8bc9a78c8caf52caec32e0a095a37945026262c89037bc62991512cabccc21"
-  },
-  {
-    "file": "spine/heroes/Npc_012/Npc_012.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_012/Npc_012.atlas",
-    "bytes": 4465,
-    "sha256": "f126f596c7fe09ceee00df502a61a1c4f4f879adebc7b78b550ceb01c98cc1e6"
-  },
-  {
-    "file": "spine/heroes/Npc_012/Npc_012.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_012/Npc_012.skel",
-    "bytes": 250930,
-    "sha256": "214b7ceca2accc9564b5b925ec7b44d742a9034b948ff66860e6820e18df6427"
-  },
-  {
-    "file": "spine/heroes/Npc_012/Npc_012.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_012/Npc_012.png",
-    "bytes": 392869,
-    "sha256": "d6ecba6a8940c523e04b216914cd1bf4d9f1afb27d83461f958f4c6c7be6d1f6"
-  },
-  {
-    "file": "../chara/l/chara014_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara014_0.png",
-    "bytes": 293280,
-    "sha256": "7bbd49adaa1183619f98584d1a16b44ad8c215229cf786daffdb4beccce4b0b1"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara014_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara014_0_p.png",
-    "bytes": 17204,
-    "sha256": "6bcc6b43a290f3227f97df0b7f9e7a56c9c7577e37cda0b36303dbe6fe032ab2"
-  },
-  {
-    "file": "spine/heroes/Npc_014/Npc_014.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_014/Npc_014.atlas",
-    "bytes": 4306,
-    "sha256": "58c84301960e7be3a91aacf7f6f1cdc2e17e8971ea9319d7df2d796e03f2de67"
-  },
-  {
-    "file": "spine/heroes/Npc_014/Npc_014.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_014/Npc_014.skel",
-    "bytes": 218973,
-    "sha256": "c364a8238a3da4682c09edd4a7bfbcb658b6af8212da4b5ff0690b4476688afd"
-  },
-  {
-    "file": "spine/heroes/Npc_014/Npc_014.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_014/Npc_014.png",
-    "bytes": 347997,
-    "sha256": "cada146eddfda9923b2ed0410cc8d7543b04f13fe6d1c27a4c9d76e076a53f93"
-  },
-  {
-    "file": "../chara/l/chara002_1.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara002_1.png",
-    "bytes": 825654,
-    "sha256": "04d27eaf42e7eadb65df974d0b73eb27c97c3ee32901838ab0e02d8c88d1bd6f"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara002_1_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara002_1_p.png",
-    "bytes": 16178,
-    "sha256": "c29c759f2fc358da52ebc1dc18de68e1f606953345ac402a11142b780c085ac4"
-  },
-  {
-    "file": "spine/heroes/Npc_002_1/Npc_002_1.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_002_1/Npc_002_1.atlas",
-    "bytes": 5631,
-    "sha256": "7c5c007b65e43e18f62cee6a5b922c30924aa209d9e50121156e061a44ac8bd2"
-  },
-  {
-    "file": "spine/heroes/Npc_002_1/Npc_002_1.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_002_1/Npc_002_1.skel",
-    "bytes": 721269,
-    "sha256": "5d7c3e0df14499b6776981961deab9110e2d1544e4c8993b0c462c1ba0b2d394"
-  },
-  {
-    "file": "spine/heroes/Npc_002_1/Npc_002_1.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_002_1/Npc_002_1.png",
-    "bytes": 353117,
-    "sha256": "6c90b23a2a1729e1adeafab1d4d133307a722192bca4e0408f9318413bbd13a0"
-  },
-  {
-    "file": "../chara/l/chara023_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara023_0.png",
-    "bytes": 366731,
-    "sha256": "3a1c10986cbe8efb39f09f915c3c1a5b0c6d700cfd0262319540f7cdd579287d"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara023_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara023_0_p.png",
-    "bytes": 16645,
-    "sha256": "6daa614a8cf9f4a5f9b0eb6c8d5d19d636628c218ec46106785ff5a729636e20"
-  },
-  {
-    "file": "spine/heroes/Npc_023/Npc_023.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_023/Npc_023.atlas",
-    "bytes": 5364,
-    "sha256": "44e01c95246582e7f12aa26630b04634b80a89b2d803790ed9ff4acb88cda038"
-  },
-  {
-    "file": "spine/heroes/Npc_023/Npc_023.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_023/Npc_023.skel",
-    "bytes": 211596,
-    "sha256": "adc6410521a4dbcec1ee39adb02627106a59844dfb5146835ec7aff4785e2615"
-  },
-  {
-    "file": "spine/heroes/Npc_023/Npc_023.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_023/Npc_023.png",
-    "bytes": 655981,
-    "sha256": "a4c9be68558ab478ed4b5eebda1db05c669724c4a69133c0a1ffdbf454c8854e"
-  },
-  {
-    "file": "../chara/l/chara011_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara011_0.png",
-    "bytes": 481390,
-    "sha256": "319f8706ba645fe1a591f63558dc53ec8d08147f53bb3c05f648fda2b98f6b2b"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara011_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara011_0_p.png",
-    "bytes": 15783,
-    "sha256": "ee8337ea00f7b9dc966eccd4008b2a5b7510eae7fa7d32dc52fa4da35d500ec8"
-  },
-  {
-    "file": "spine/heroes/Npc_011/Npc_011.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_011/Npc_011.atlas",
-    "bytes": 5594,
-    "sha256": "d631fea8f106d8cbb2391fb25c872d329a7a04794fb26bd5e5dd4fd1fa8ce968"
-  },
-  {
-    "file": "spine/heroes/Npc_011/Npc_011.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_011/Npc_011.skel",
-    "bytes": 376316,
-    "sha256": "3d86e369d0a494daefb531a6e5ba48b6656aef35dd35c78c69dad71247b98c59"
-  },
-  {
-    "file": "spine/heroes/Npc_011/Npc_011.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_011/Npc_011.png",
-    "bytes": 269106,
-    "sha256": "8b9a1f12023f7d99554d5dd710631aaf184593ebe86d4a091aa73119c76d73c8"
-  },
-  {
-    "file": "../chara/l/chara009_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara009_0.png",
-    "bytes": 381398,
-    "sha256": "7383389592009846ee4a53544e3dee59d349a664a3d9dc2920a4052ac2936300"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara009_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara009_0_p.png",
-    "bytes": 15064,
-    "sha256": "b722635a8ef5cf77ba4c121f94e1c4a8640b04ecbe5d19e4e68f92de2af1c08c"
-  },
-  {
-    "file": "spine/heroes/Npc_009/Npc_009.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_009/Npc_009.atlas",
-    "bytes": 4115,
-    "sha256": "d6b755a1a492dbcb25cf2ea57504475cc293c216eb6c6b9a86a8dbe9e10a9c06"
-  },
-  {
-    "file": "spine/heroes/Npc_009/Npc_009.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_009/Npc_009.skel",
-    "bytes": 700754,
-    "sha256": "df5f12966e67d58b59732f5faeb233c0df7dbff1cafd0e4df35be206b6df60a1"
-  },
-  {
-    "file": "spine/heroes/Npc_009/Npc_009.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_009/Npc_009.png",
-    "bytes": 318703,
-    "sha256": "d31ae0a51747dba98312d058968fb56450f3cf0d8f3c09d0ed99cab937fb99c4"
-  },
-  {
-    "file": "../chara/l/chara008_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara008_0.png",
-    "bytes": 553287,
-    "sha256": "8184870fb4f372319a54c7c39c358d910995487616d76d9209a6dd3effa03be5"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara008_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara008_0_p.png",
-    "bytes": 16533,
-    "sha256": "d9679146098871fdbfd03c07c801f6989ced0d75be6a81ced1748b49f1a61e16"
-  },
-  {
-    "file": "spine/heroes/Npc_008/Npc_008.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_008/Npc_008.atlas",
-    "bytes": 4221,
-    "sha256": "a642fbf76a7d3b59ebb568fc89e4e69dda6fe53c872ce0273b21fed3cfbe7d2e"
-  },
-  {
-    "file": "spine/heroes/Npc_008/Npc_008.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_008/Npc_008.skel",
-    "bytes": 376147,
-    "sha256": "6849380c17a34dc5aa3e0f8143a0baae0c3198c4e2865a5f90e67f77b617f3d6"
-  },
-  {
-    "file": "spine/heroes/Npc_008/Npc_008.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_008/Npc_008.png",
-    "bytes": 349106,
-    "sha256": "7370068d9a84b28da544b678835359f0e26bcc1d761ec1c9bec381c5fef6c09f"
-  },
-  {
-    "file": "../chara/l/chara031_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara031_0.png",
-    "bytes": 569728,
-    "sha256": "c96746ca314cbe94208b2a97aec235f062a4204b8f3d32a3973ecd334325b26c"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara031_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara031_0_p.png",
-    "bytes": 14374,
-    "sha256": "d2ad0c4689f010e289843316e66c9fc6f2aac102e7856ce1c920ce36ff59eb62"
-  },
-  {
-    "file": "spine/heroes/Npc_031/Npc_031.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_031/Npc_031.atlas",
-    "bytes": 2292,
-    "sha256": "cfa4348e9507165cb9749d89ac73b656ed1678e50615274095ec327a27c2b55e"
-  },
-  {
-    "file": "spine/heroes/Npc_031/Npc_031.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_031/Npc_031.skel",
-    "bytes": 199337,
-    "sha256": "27fea883b24995344d0dcea91b8de93144580babdc6b6478c6abe7afbba8b672"
-  },
-  {
-    "file": "spine/heroes/Npc_031/Npc_031.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_031/Npc_031.png",
-    "bytes": 291095,
-    "sha256": "93625695be0ea17b0c8c8861bda1c66589d07bcc1ffdd529693ea64774b5c717"
-  },
-  {
-    "file": "../chara/l/chara007_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara007_0.png",
-    "bytes": 465134,
-    "sha256": "a9163227fbd897da026ca2ee234e1cb4aacf16e0a64a6541260a10401eef098d"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara007_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara007_0_p.png",
-    "bytes": 14842,
-    "sha256": "a5061f7e15aa60479ef9ce647571992e80f9a91c762a5a5a3da24f4d58a88406"
-  },
-  {
-    "file": "spine/heroes/Npc_007/Npc_007.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_007/Npc_007.atlas",
-    "bytes": 2753,
-    "sha256": "9fbe0db808310e14a1018b92784e465514f2892cb268d719fd7edb98cedbf48c"
-  },
-  {
-    "file": "spine/heroes/Npc_007/Npc_007.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_007/Npc_007.skel",
-    "bytes": 429730,
-    "sha256": "904063db056f2c49d32d386c84cc1d16ac929b630310b046fb42a91f8d063070"
-  },
-  {
-    "file": "spine/heroes/Npc_007/Npc_007.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_007/Npc_007.png",
-    "bytes": 166653,
-    "sha256": "2ed42ef666451617cde8018a7917492c70c6e0808759acaa30a1b3f7d4fa6542"
-  },
-  {
-    "file": "../chara/l/chara062_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara062_0.png",
-    "bytes": 451164,
-    "sha256": "494724d2a62d792388e97eab15df7b74145c8c23e0548bbdc17eacb8cb84b98a"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara062_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara062_0_p.png",
-    "bytes": 15233,
-    "sha256": "6416613275bb74532f7a2bc56f1b91de40389012e43c069322bc63a570c687a2"
-  },
-  {
-    "file": "spine/heroes/Npc_062/Npc_062.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_062/Npc_062.atlas",
-    "bytes": 5525,
-    "sha256": "fb30d4b788971fe71698c6baf67adf0a6763cc01c199317f900d7f5afd6817e3"
-  },
-  {
-    "file": "spine/heroes/Npc_062/Npc_062.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_062/Npc_062.skel",
-    "bytes": 321020,
-    "sha256": "944891889856c3b43244d7ec2b098fe356a766168b7ef3f00f55b930459ecd44"
-  },
-  {
-    "file": "spine/heroes/Npc_062/Npc_062.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_062/Npc_062.png",
-    "bytes": 309966,
-    "sha256": "7b4f2db4e266c8f3ff1204683de4cec8ecf96addd76442b399bf534a04df54ae"
-  },
-  {
-    "file": "../chara/l/chara041_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara041_0.png",
-    "bytes": 721621,
-    "sha256": "1171d4d26e7bfad88841f68b952fff677db3ffbb60e052a836399aac5ac6c719"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara041_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara041_0_p.png",
-    "bytes": 15514,
-    "sha256": "5b58595f3b72468615ba91b5a1cf6cb42f37985113dff0cf39634e6134033833"
-  },
-  {
-    "file": "spine/heroes/Npc_041/Npc_041.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_041/Npc_041.atlas",
-    "bytes": 3418,
-    "sha256": "19abadd63d82371dd549f2f9a393ecc1370c107470ffa14f48088453873fc417"
-  },
-  {
-    "file": "spine/heroes/Npc_041/Npc_041.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_041/Npc_041.skel",
-    "bytes": 231163,
-    "sha256": "acc1a2eeef534262266f145f359c6174f325ba9a7344b81bf8c8912259fb0796"
-  },
-  {
-    "file": "spine/heroes/Npc_041/Npc_041.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_041/Npc_041.png",
-    "bytes": 271623,
-    "sha256": "207f55af07af15b4481aa2521c68c81dba996bbb81c150cc14557a2168916cc4"
-  },
-  {
-    "file": "../chara/l/chara015_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara015_0.png",
-    "bytes": 1764699,
-    "sha256": "05afb2143771127c962fe72b478c54709aa67573c1861c15383ed8415f32c881"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara015_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara015_0_p.png",
-    "bytes": 16243,
-    "sha256": "1ed6c051dd2b8ebd4827b74b9823574fd22b3f971ae97ee3d2e10034a1a791d1"
-  },
-  {
-    "file": "spine/heroes/Npc_015/Npc_015.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_015/Npc_015.atlas",
-    "bytes": 5372,
-    "sha256": "1986a350697b80abb2029feef6e80ea79f1d8a854d6ff0521ea40ba655d4da50"
-  },
-  {
-    "file": "spine/heroes/Npc_015/Npc_015.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_015/Npc_015.skel",
-    "bytes": 468657,
-    "sha256": "a800e6f8d29d5b6b93f6290356bf1147424ff7d719ad6baaf24f04341855343a"
-  },
-  {
-    "file": "spine/heroes/Npc_015/Npc_015.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_015/Npc_015.png",
-    "bytes": 398013,
-    "sha256": "c3785e35ba17c5b019e795917b1399d38cdb48bd3a456bd00a1f6d7a594ed2c0"
-  },
-  {
-    "file": "../chara/l/chara033_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara033_0.png",
-    "bytes": 1036963,
-    "sha256": "39d8e77bfd36448f604aa30353f1ef963ab13646b220fc55b9378ed274b6887f"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara033_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara033_0_p.png",
-    "bytes": 15827,
-    "sha256": "996bf7b1199574c37b058a74a42384f0c6cc45ff6997beee7bd8c5971a6b618b"
-  },
-  {
-    "file": "spine/heroes/Npc_033/Npc_033.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_033/Npc_033.atlas",
-    "bytes": 2796,
-    "sha256": "e981d6a0d507863a59762653a4d99dda102677f2137071d41f1a6ec292bd4ab4"
-  },
-  {
-    "file": "spine/heroes/Npc_033/Npc_033.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_033/Npc_033.skel",
-    "bytes": 396566,
-    "sha256": "a521787b601cdca3ccd35c244a8f02d25f6c8c454af5d6f8ce4a07c4bff6f7c6"
-  },
-  {
-    "file": "spine/heroes/Npc_033/Npc_033.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_033/Npc_033.png",
-    "bytes": 242210,
-    "sha256": "4b96b52546f4dfc74f952ab24c79c68c084e4924c5d54de762f82921f9fda9ed"
-  },
-  {
-    "file": "../chara/l/chara037_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara037_0.png",
-    "bytes": 965697,
-    "sha256": "dd36ec89d9d33bd1546fcda33d74d93803ff3a4b8daadfb79977f6aac96a0ffe"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara037_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara037_0_p.png",
-    "bytes": 17056,
-    "sha256": "8da0db13e6970adb0149e5409de02d3c184762275bc5003147a7e9dff9a7f405"
-  },
-  {
-    "file": "spine/heroes/Npc_037/Npc_037.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_037/Npc_037.atlas",
-    "bytes": 8186,
-    "sha256": "a68226498103dfabebcc0d1a402041cbdc236bcbb5a5b417488ae704d36d1033"
-  },
-  {
-    "file": "spine/heroes/Npc_037/Npc_037.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_037/Npc_037.skel",
-    "bytes": 310496,
-    "sha256": "738b0a34a6853504f386c721315c2fc7f5f242b076b0052e271807758e2c7ced"
-  },
-  {
-    "file": "spine/heroes/Npc_037/Npc_037.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_037/Npc_037.png",
-    "bytes": 1521893,
-    "sha256": "e18c6bd7c5e46597f116fa126ab2216c4219c0a4101392660fb5f806cc59dda3"
-  },
-  {
-    "file": "../chara/l/chara029_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara029_0.png",
-    "bytes": 619152,
-    "sha256": "b7283ea29b2872af4bb109f38c071a263ef780922833ee73dfa4d937006e6ba8"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara029_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara029_0_p.png",
-    "bytes": 17568,
-    "sha256": "ef2f3ce0be0bd060acf1c8b6eb88561fc7349015c4c74d95f3f24df13599259b"
-  },
-  {
-    "file": "spine/heroes/Npc_029/Npc_029.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_029/Npc_029.atlas",
-    "bytes": 4957,
-    "sha256": "72ac346378214cee6491060fd3dfae52f10b3b72555ad50ddb0740f53bdfc1be"
-  },
-  {
-    "file": "spine/heroes/Npc_029/Npc_029.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_029/Npc_029.skel",
-    "bytes": 249397,
-    "sha256": "ea9a9bc542c5e299e9430249965215211045a8603d8309144cfa609584706adc"
-  },
-  {
-    "file": "spine/heroes/Npc_029/Npc_029.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_029/Npc_029.png",
-    "bytes": 235024,
-    "sha256": "e19ce03399cf2254666c8071c430bf486c315d023625a6fc2d63d6eb8f2c0e1e"
-  },
-  {
-    "file": "../chara/l/chara036_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara036_0.png",
-    "bytes": 605966,
-    "sha256": "9ce32442dabd8bb513d8f7c2f915adbd2050e584fb036d16921af1d01a029103"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara036_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara036_0_p.png",
-    "bytes": 16433,
-    "sha256": "941e27cae4de5dff5614c9aa81a406cdc3cb2e54b185fd65bedf10cdd2bbfb6c"
-  },
-  {
-    "file": "spine/heroes/Npc_036/Npc_036.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_036/Npc_036.atlas",
-    "bytes": 3928,
-    "sha256": "eb68e5d8062315d0fc1f55b37a50175aa855dfca17474dae94bf01ca677cde23"
-  },
-  {
-    "file": "spine/heroes/Npc_036/Npc_036.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_036/Npc_036.skel",
-    "bytes": 271311,
-    "sha256": "200b0f45c8f15a18fd53621be4f9568dbeeaacaee6f1d84ce04e142e95da51ca"
-  },
-  {
-    "file": "spine/heroes/Npc_036/Npc_036.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_036/Npc_036.png",
-    "bytes": 230335,
-    "sha256": "ea478177f578fb63dffa8f9f270e05e4d451ad661dc82bc74664b6ad09896eae"
-  },
-  {
-    "file": "../chara/l/chara026_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara026_0.png",
-    "bytes": 608615,
-    "sha256": "e317305dece19fe6c8c138907ced0220c3e0c3234228a88224eb0e2437d04547"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara026_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara026_0_p.png",
-    "bytes": 16014,
-    "sha256": "17623cdfd57a6fd8b9360dc7a550c8b3e49cb6b3ac1cb5b0dd73cd10aba4e9fd"
-  },
-  {
-    "file": "spine/heroes/Npc_026/Npc_026.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_026/Npc_026.atlas",
-    "bytes": 6594,
-    "sha256": "451727f06ae4b8407277119a6fc70e27ebeaa8ebab6c9807f08f4765c9ff13c2"
-  },
-  {
-    "file": "spine/heroes/Npc_026/Npc_026.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_026/Npc_026.skel",
-    "bytes": 333409,
-    "sha256": "d8f9fb563f4295b67f685020ebe5e7e60c150b4bdece797051bf0baffb9bdd91"
-  },
-  {
-    "file": "spine/heroes/Npc_026/Npc_026.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_026/Npc_026.png",
-    "bytes": 365567,
-    "sha256": "b850ae385ed8304891ee54c86401a746761ad156e248fd1e353dea0e07bf5db7"
-  },
-  {
-    "file": "../chara/l/chara045_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara045_0.png",
-    "bytes": 503650,
-    "sha256": "98870529031298afcb64c35aba862aaacc40e656c47c0b4a72a5f12c744698d3"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara045_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara045_0_p.png",
-    "bytes": 15767,
-    "sha256": "1301420cb210953e9766c4f43e6ee4ea712d718016fd431929d42d0822cabf58"
-  },
-  {
-    "file": "spine/heroes/Npc_045/Npc_045.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_045/npc_045.atlas",
-    "bytes": 5183,
-    "sha256": "ac02db65cdb6d7b07a60f70b9f389ea891e01aaecc77d6df4934546b5f4ac7b2"
-  },
-  {
-    "file": "spine/heroes/Npc_045/Npc_045.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_045/npc_045.skel",
-    "bytes": 537831,
-    "sha256": "60413e9e75caf89a140790a512f0f7600b4b5b4a983e4c3138ec56c7c59be640"
-  },
-  {
-    "file": "spine/heroes/Npc_045/npc_045.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_045/npc_045.png",
-    "bytes": 261023,
-    "sha256": "6d71eb670b49292ef5cf5b0616654ec70789939f6b9e43b5a37dde3a7a26b68f"
-  },
-  {
-    "file": "../chara/l/chara027_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara027_0.png",
-    "bytes": 433315,
-    "sha256": "ad73313f03d3d479006e37f23b5b9a2bd256ddfdb8eee0371d38ed4217487431"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara027_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara027_0_p.png",
-    "bytes": 16157,
-    "sha256": "7f8799cabab50c23f4de057361609a4850ba23e7ea80de2df94656098c08f0ff"
-  },
-  {
-    "file": "spine/heroes/Npc_027/Npc_027.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_027/Npc_027.atlas",
-    "bytes": 4894,
-    "sha256": "b342d81cf02526a9c90447a447a2436726602d86c9bb0d0203ea6f91e306c2b7"
-  },
-  {
-    "file": "spine/heroes/Npc_027/Npc_027.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_027/Npc_027.skel",
-    "bytes": 373859,
-    "sha256": "29b8391c628c220e30e17b9896ed8b3273f8cab10c1c23146913f385a246ebb0"
-  },
-  {
-    "file": "spine/heroes/Npc_027/Npc_027.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_027/Npc_027.png",
-    "bytes": 307721,
-    "sha256": "84f1d577c26cdeb92ec6f13430fcae168c9ba9e2a9a081d8710d03f7757fa992"
-  },
-  {
-    "file": "../chara/l/chara025_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara025_0.png",
-    "bytes": 612060,
-    "sha256": "57b4a12fdfeda09feb3e6fe394e63dd57b6c7ac14ba1f0eaeb352bab05b4c448"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara025_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara025_0_p.png",
-    "bytes": 15746,
-    "sha256": "e90741dbac073dacd86fd00d86108dd706f008bdf045a41becbacfd5378bf09c"
-  },
-  {
-    "file": "spine/heroes/Npc_025/Npc_025.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_025/Npc_025.atlas",
-    "bytes": 3898,
-    "sha256": "6eece8f5660d0d877e3f0e9dcf2d33c8cabb7b3777cf9633f50a2f7df805c136"
-  },
-  {
-    "file": "spine/heroes/Npc_025/Npc_025.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_025/Npc_025.skel",
-    "bytes": 461767,
-    "sha256": "ed562eaa132611796760e174ccb41adceb823f8047dab64dec45982836736344"
-  },
-  {
-    "file": "spine/heroes/Npc_025/Npc_025.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_025/Npc_025.png",
-    "bytes": 261642,
-    "sha256": "208bd950fafd4960813771c8562834964d008e99672130ade976b0725ee8c897"
-  },
-  {
-    "file": "../chara/l/chara066_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara066_0.png",
-    "bytes": 655860,
-    "sha256": "058f94f4ecd3042a90a59461207c5ebe278293e7ff071a628a4c8521ed3104a8"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara066_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara066_0_p.png",
-    "bytes": 15008,
-    "sha256": "c16d02fff03e634ad9848c8117e1f7a0e1ab089cfcbbba67c291d66ae5976a58"
-  },
-  {
-    "file": "spine/heroes/Npc_066/Npc_066.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_066/Npc_066.atlas",
-    "bytes": 3821,
-    "sha256": "b933c93b40e3e15f6ccb10ab1cc0a6431d987d2d4445dcf4c7d31f079a786292"
-  },
-  {
-    "file": "spine/heroes/Npc_066/Npc_066.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_066/Npc_066.skel",
-    "bytes": 244767,
-    "sha256": "87ef47d7045e70c3b444db358dea733b2aa7b62a085dd99048238c4cf031389e"
-  },
-  {
-    "file": "spine/heroes/Npc_066/Npc_066.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_066/Npc_066.png",
-    "bytes": 254965,
-    "sha256": "aaf40ef3bdfc8c6ea213ed53ae11fc709d07c9e431eeba3839128ca83effd533"
-  },
-  {
-    "file": "../chara/l/chara034_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara034_0.png",
-    "bytes": 529228,
-    "sha256": "ae1fd7fe55e318d7d5e63a7a56226802530ff4089c0ed9ac4f800af66ed13a45"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara034_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara034_0_p.png",
-    "bytes": 15677,
-    "sha256": "5812168995582e035a9cf507d89726dbdd68bfc304588192086dfb2f249b56ee"
-  },
-  {
-    "file": "spine/heroes/Npc_034/Npc_034.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_034/Npc_034.atlas",
-    "bytes": 3887,
-    "sha256": "438946fa09df9b9e673d1185d4ce2dd5156e4dfd2ad8381604a2bfc2cf5eebad"
-  },
-  {
-    "file": "spine/heroes/Npc_034/Npc_034.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_034/Npc_034.skel",
-    "bytes": 399888,
-    "sha256": "09d23630df7784cf4f7a554d06907bccc5f254fd14587182508b43c666f61a4d"
-  },
-  {
-    "file": "spine/heroes/Npc_034/Npc_034.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_034/Npc_034.png",
-    "bytes": 263226,
-    "sha256": "5cf35d82ecab8b474caa95087f80092ced642c4b7bdd776e60afb272d2c49b96"
-  },
-  {
-    "file": "../chara/l/chara046_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara046_0.png",
-    "bytes": 385932,
-    "sha256": "d13f61f4dd749314fe1654b198ee36e2c6ebcd8d37b087f94d7954f9c07d6c99"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara046_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara046_0_p.png",
-    "bytes": 15659,
-    "sha256": "de8f6a42ee4e370f5b02ef0162c6f1f0dbebe995ff76ff61a5b9bed081a0c174"
-  },
-  {
-    "file": "spine/heroes/Npc_046/Npc_046.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_046/Npc_046.atlas",
-    "bytes": 4105,
-    "sha256": "20ee542770848b26af3c06d101c30681d235a9a4ac805e5b028020e935a64804"
-  },
-  {
-    "file": "spine/heroes/Npc_046/Npc_046.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_046/Npc_046.skel",
-    "bytes": 238549,
-    "sha256": "4f39e97dd07a624cdd71a18e6a6189c84eaeb5b7f48bf5f27d6d4b470a698ea7"
-  },
-  {
-    "file": "spine/heroes/Npc_046/Npc_046.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_046/Npc_046.png",
-    "bytes": 261366,
-    "sha256": "22174bbac4bda02dd0c06b27105a712cbd82b8e99ba485c2b824346264eb00b6"
-  },
-  {
-    "file": "../chara/l/chara019_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara019_0.png",
-    "bytes": 1080700,
-    "sha256": "ff87c472fdbbdebb6a81c37addfb3bd0f8c5addee4f7f90b77616583917ddf63"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara019_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara019_0_p.png",
-    "bytes": 16099,
-    "sha256": "068406bae9bff7b19f09b2671f76b95102073ba602a1ae7302701c9c8e7e63a6"
-  },
-  {
-    "file": "spine/heroes/Npc_019/Npc_019.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_019/Npc_019.atlas",
-    "bytes": 6668,
-    "sha256": "cfa09f2f75c973597b3378d34bd68f0f6b07d842f9a6bed1728379dcda89a024"
-  },
-  {
-    "file": "spine/heroes/Npc_019/Npc_019.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_019/Npc_019.skel",
-    "bytes": 504883,
-    "sha256": "20c9b673f19dd286413325c7c37a62123652ec059654780515bd1d59631d5b5e"
-  },
-  {
-    "file": "spine/heroes/Npc_019/Npc_019.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_019/Npc_019.png",
-    "bytes": 924804,
-    "sha256": "ce8b9c2b4c9cbb9d799bc9c8662ac91c328c6e2b91ba73af31fb4a3f8598d33d"
-  },
-  {
-    "file": "../chara/l/chara051_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara051_0.png",
-    "bytes": 1404290,
-    "sha256": "f3adcdff7937f0924722fc212e937967fa0aecf7b66d7f2dfeec2c6c122ca66f"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara051_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara051_0_p.png",
-    "bytes": 16017,
-    "sha256": "0f38f865d5a467593804e2abeb7477c1bece80039062286500e26cb3d7ba0a08"
-  },
-  {
-    "file": "spine/heroes/Npc_051/Npc_051.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_051/Npc_051.atlas",
-    "bytes": 5970,
-    "sha256": "fe624a478a0354f1b05417136874803a9bfa0dc6282e73b6e7bf12b25c3d740e"
-  },
-  {
-    "file": "spine/heroes/Npc_051/Npc_051.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_051/Npc_051.skel",
-    "bytes": 544202,
-    "sha256": "911fd8a55508ef248603246b1cdc69e9466d6ecbb69445d4206823102876462b"
-  },
-  {
-    "file": "spine/heroes/Npc_051/Npc_051.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_051/Npc_051.png",
-    "bytes": 367401,
-    "sha256": "dc492b545f40792c379d67f45ebc0d4afc5733beef45fe2cce0203353d949efb"
-  },
-  {
-    "file": "../chara/l/chara049_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara049_0.png",
-    "bytes": 1632485,
-    "sha256": "c8880347727f9fa602613ac8aed80e8d73c3cd9ebcc071922549f0748e18a618"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara049_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara049_0_p.png",
-    "bytes": 16490,
-    "sha256": "848b718dbb8c8de31f8fc0113c934307211008d30853e79e5fc70b01702b0b22"
-  },
-  {
-    "file": "spine/heroes/Npc_049/Npc_049.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_049/Npc_049.atlas",
-    "bytes": 6000,
-    "sha256": "1fb8bfba72297a599472d2be9d632c1354c9155a37757a88edf1d45c520217e3"
-  },
-  {
-    "file": "spine/heroes/Npc_049/Npc_049.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_049/Npc_049.skel",
-    "bytes": 337997,
-    "sha256": "b3de9188b15664a851ecabe7aaf241247920c8763b849db65be3497711051ac1"
-  },
-  {
-    "file": "spine/heroes/Npc_049/Npc_049.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_049/Npc_049.png",
-    "bytes": 648355,
-    "sha256": "66c47c51e00d6fc4ede036103196eb9a04b41f6eaadc418e05f3cc7690b4329c"
-  },
-  {
-    "file": "../chara/l/chara050_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara050_0.png",
-    "bytes": 1065094,
-    "sha256": "fa3e12749b1dbac863e9888ccc666a71eb3a5d43c2af9860b01e9048be844456"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara050_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara050_0_p.png",
-    "bytes": 16608,
-    "sha256": "2c8a6aba3f8f61bb3345148944891fd1ec4c7169ee3df2b82c63ccba291e4f8c"
-  },
-  {
-    "file": "spine/heroes/Npc_050/Npc_050.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_050/Npc_050.atlas",
-    "bytes": 8851,
-    "sha256": "7fadaa64b9a6377c02aef9fe66426169a914af5885d30e94480edb53ca41b0da"
-  },
-  {
-    "file": "spine/heroes/Npc_050/Npc_050.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_050/Npc_050.skel",
-    "bytes": 510823,
-    "sha256": "7e85ce49be1717702d834f0900059c060161b3d6b47201bb4fc1bd22751e64c4"
-  },
-  {
-    "file": "spine/heroes/Npc_050/Npc_050.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_050/Npc_050.png",
-    "bytes": 1652035,
-    "sha256": "c07487ec64ff4ce8270702da900f7501f9dc116c75c08a5c2cecba95151f31b6"
-  },
-  {
-    "file": "../chara/l/chara055_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara055_0.png",
-    "bytes": 1363601,
-    "sha256": "02a5e7945872aaad197c88f1423b50a9ce76e80e244093839ce71747845f4d65"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara055_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara055_0_p.png",
-    "bytes": 15721,
-    "sha256": "98dceb92a7e7544dd294d840d2e9dfc087f9d8dab9d39f6331017af4995cb235"
-  },
-  {
-    "file": "spine/heroes/Npc_055/Npc_055.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_055/Npc_055.atlas",
-    "bytes": 3875,
-    "sha256": "bd7947a3f91bf65197c0f53aa117ee5c83b3ca5085a17bdc2ef5a37fd90349a1"
-  },
-  {
-    "file": "spine/heroes/Npc_055/Npc_055.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_055/Npc_055.skel",
-    "bytes": 369031,
-    "sha256": "d27a95e4e174977c1389c6cfce8e15ed193c3fdc054487b5dde1bd6cb49e15ca"
-  },
-  {
-    "file": "spine/heroes/Npc_055/Npc_055.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_055/Npc_055.png",
-    "bytes": 284545,
-    "sha256": "ae6505f1e13c4b869c96befee4e8ab809621b84a75ab732b4202deb9abcca45a"
-  },
-  {
-    "file": "../chara/l/chara053_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara053_0.png",
-    "bytes": 1829269,
-    "sha256": "9c6be6348f82a5fbd83cf6956079741c99efad879472793ce6f27238b7000c33"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara053_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara053_0_p.png",
-    "bytes": 15081,
-    "sha256": "4622b7aa57502d487ab12b57953db7b9ee331c95a66ad97d06b1033471f17bf3"
-  },
-  {
-    "file": "spine/heroes/Npc_053/Npc_053.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_053/Npc_053.atlas",
-    "bytes": 6773,
-    "sha256": "2d3e9d68f58e053d57e0e423f5ed62f6b9735a3e8a574f5beef171dfcddc4474"
-  },
-  {
-    "file": "spine/heroes/Npc_053/Npc_053.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_053/Npc_053.skel",
-    "bytes": 393789,
-    "sha256": "8084ce9fcae5d32d02679dcad6701e873532e9096c94656bb05bee91835baf45"
-  },
-  {
-    "file": "spine/heroes/Npc_053/Npc_053.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_053/Npc_053.png",
-    "bytes": 357829,
-    "sha256": "a6e7f279ef1f09e2211ac45aed05d2173b6ee35145526ea42d8f84da431b7e49"
-  },
-  {
-    "file": "../chara/l/chara065_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara065_0.png",
-    "bytes": 1070367,
-    "sha256": "92bb57441d869ff670c6b7fde79239a28ae4124544139c041237f78c97865eec"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara065_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara065_0_p.png",
-    "bytes": 15540,
-    "sha256": "33314e3eda5dd32ed9be87f8f54af84d801b3e85ad973d5a02ac10ec5239cbe9"
-  },
-  {
-    "file": "spine/heroes/Npc_065/Npc_065.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_065/Npc_065.atlas",
-    "bytes": 5966,
-    "sha256": "502aac328143241d9bc3ec709b018400a794d4d0ada6a2c3070ed5d1b1da2971"
-  },
-  {
-    "file": "spine/heroes/Npc_065/Npc_065.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_065/Npc_065.skel",
-    "bytes": 288949,
-    "sha256": "ae63e8266d4e8c765d7c83484f13818c3205e6417d661c7302c84d72bd2ac910"
-  },
-  {
-    "file": "spine/heroes/Npc_065/Npc_065.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_065/Npc_065.png",
-    "bytes": 329906,
-    "sha256": "e257bf54fe30cdbf704a369d495f76b7c72bbb14dd004ea1b530b80c6b31f33b"
-  },
-  {
-    "file": "../chara/l/chara043_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara043_0.png",
-    "bytes": 1008962,
-    "sha256": "6f980797b978b8d818a5f84302b495047c46d532a7d6674ca6e29a770dc2b81f"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara043_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara043_0_p.png",
-    "bytes": 15667,
-    "sha256": "57d9172e8d9545bbabf84e11917ea8e1d7112779773af0bbde14f39a2f4f8850"
-  },
-  {
-    "file": "spine/heroes/Npc_043/Npc_043.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_043/Npc_043.atlas",
-    "bytes": 5216,
-    "sha256": "aca14b373f23ce5b70aa9e03ecd29f3fc4c91ac4c825cacc118277cc78408d53"
-  },
-  {
-    "file": "spine/heroes/Npc_043/Npc_043.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_043/Npc_043.skel",
-    "bytes": 408011,
-    "sha256": "bd7c3c080c0f1f4c90c8153ca264bdc9fb5b182cacebfcb1c1d6f3bfde1b9625"
-  },
-  {
-    "file": "spine/heroes/Npc_043/Npc_043.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_043/Npc_043.png",
-    "bytes": 326018,
-    "sha256": "cfae8a65b746f6638ea615520c085a67dbd2ac1ce706b7b17bf29003eaa9b5fd"
-  },
-  {
-    "file": "../chara/l/chara064_0.png",
-    "source": "4.24路资源包/assets/res/texture/chara/l/chara064_0.png",
-    "bytes": 1471671,
-    "sha256": "e049b509b879451f9b7ab5535b255194358a4bf4ebef0c1ee24c425e7d94cd45"
-  },
-  {
-    "file": "../HeroInfoPanel_Atlas/chara064_0_p.png",
-    "source": "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara064_0_p.png",
-    "bytes": 16241,
-    "sha256": "961b376f47842a1f49d96ebf1003af4bc36f36095e1f826045ab8688e4b45227"
-  },
-  {
-    "file": "spine/heroes/Npc_064/Npc_064.atlas",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_064/Npc_064.atlas",
-    "bytes": 4970,
-    "sha256": "e0c6b70f941e3d762434a82bc816c1b4a3913767d342b2169856e11f9bc308e4"
-  },
-  {
-    "file": "spine/heroes/Npc_064/Npc_064.skel",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_064/Npc_064.skel",
-    "bytes": 504411,
-    "sha256": "f697b2ecabd1903f8bf47bac9a6b167111875daec4735cac157e000c56378cb2"
-  },
-  {
-    "file": "spine/heroes/Npc_064/Npc_064.png",
-    "source": "4.24路资源包/assets/res/spine/model/npc/npc_064/Npc_064.png",
-    "bytes": 321400,
-    "sha256": "c91d7c1b8eb5e0b082a46b586683063c5d1f58d4d2bd56377d86924ae4be6cec"
-  },
-  {
-    "file": "../eggs/pet_006.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_006.png",
-    "bytes": 28126,
-    "sha256": "8075283cef911524f5e72d4e4dbe2716cd07f5628fff17e8bd93be5b77100037"
-  },
-  {
-    "file": "../eggs/pet_016.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_016.png",
-    "bytes": 17486,
-    "sha256": "8121f6acd2c3e6d2ee4f41090bdd2cb60ea5b15f4a3d202583b01d6ca39ac507"
-  },
-  {
-    "file": "../eggs/pet_017.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_017.png",
-    "bytes": 18943,
-    "sha256": "d99d86881a1e141616401a7bd5987ab6db656261d9b79689c472913b5a0f5eeb"
-  },
-  {
-    "file": "../eggs/pet_007.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_007.png",
-    "bytes": 20554,
-    "sha256": "9e6326105dd31385c6358b05c53394d84f4c170028ddd20e371f8792a9bfd821"
-  },
-  {
-    "file": "../eggs/pet_037.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_037.png",
-    "bytes": 13117,
-    "sha256": "81e2ea32d399850cc3e18507cab8e6927e3ffbc94f6123c353587352def40e82"
-  },
-  {
-    "file": "../eggs/pet_038.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_038.png",
-    "bytes": 16693,
-    "sha256": "5a392a467d0f798f5d41d2582432f756a76c626d687bd608a985d3ef40482415"
-  },
-  {
-    "file": "../eggs/pet_043.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_043.png",
-    "bytes": 20217,
-    "sha256": "9f8f55e3b07743c49e267b60a3c1dc41c349915e0000572c635d773d3057ec4d"
-  },
-  {
-    "file": "../eggs/pet_044.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_044.png",
-    "bytes": 19226,
-    "sha256": "e001cbd65efc9f0c7921e3f2c3836dbd3a40b87abb6a8039fd332d680bf1126c"
-  },
-  {
-    "file": "../eggs/pet_062.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_062.png",
-    "bytes": 22804,
-    "sha256": "55db9af974a13516f125e3fb4075d7521d2b79b6a0ed02167fe29022ddc9654e"
-  },
-  {
-    "file": "../eggs/pet_045.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_045.png",
-    "bytes": 25450,
-    "sha256": "28820f28051ad286dcfc91387c7293228a7523a3b4583c56ff34544231a4a615"
-  },
-  {
-    "file": "../eggs/pet_046.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_046.png",
-    "bytes": 24480,
-    "sha256": "719aaba1ba965179e45bff818816a648abae10fa4f08a776e3e02f1be0a2ed6c"
-  },
-  {
-    "file": "../eggs/pet_036.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_036.png",
-    "bytes": 21402,
-    "sha256": "18649a1275cfd349ffde51be5123855bcbd2d75256f22e589a282db0e222e4b9"
-  },
-  {
-    "file": "../eggs/pet_058.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_058.png",
-    "bytes": 12575,
-    "sha256": "164516fe3f48252ed300d774b89d5ee699ba81991ea9d969d07323859688dd36"
-  },
-  {
-    "file": "../eggs/pet_065.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_065.png",
-    "bytes": 19461,
-    "sha256": "c6337ecb4f32d62af1778f5a12609ed99b2f691828dbbab021723de47ef83581"
-  },
-  {
-    "file": "../eggs/pet_071.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_071.png",
-    "bytes": 21576,
-    "sha256": "ced8b7daa1a6ae3babfd25b87cf26168276241ca9ebcab3add2b026a31c9d823"
-  },
-  {
-    "file": "../eggs/pet_072.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_072.png",
-    "bytes": 18612,
-    "sha256": "6d17d039d3a3d7dfd5c601f7285a93245b9109cdcae9d7111ac8d11d52a4392d"
-  },
-  {
-    "file": "../eggs/pet_075.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_075.png",
-    "bytes": 19587,
-    "sha256": "f59ebfc648d1096e84d2e69b35fee78d864271d6473bfb1bead8540afd29689a"
-  },
-  {
-    "file": "../eggs/pet_083.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_083.png",
-    "bytes": 20356,
-    "sha256": "e4c0910964f29f9f98e769504e2ff7269b74f6a471b64232ca810a92fee47137"
-  },
-  {
-    "file": "../eggs/pet_086.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_086.png",
-    "bytes": 16834,
-    "sha256": "dc5f0eae03cd87147b397e18a7ab57c366a3c52de6c7aa8a07b79bd8cf53025b"
-  },
-  {
-    "file": "../eggs/pet_094.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_094.png",
-    "bytes": 17560,
-    "sha256": "01c9fee465216a874b8a980a5434281562891b22d5be0848e4c9b2565cd2b4da"
-  },
-  {
-    "file": "../eggs/pet_063.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_063.png",
-    "bytes": 23170,
-    "sha256": "49a31c0a57d129fcc57cb945c2fb710bbe81b435695000e340089ac6ad7ea7e0"
-  },
-  {
-    "file": "../eggs/pet_073.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_073.png",
-    "bytes": 14132,
-    "sha256": "911c3646003971b22b8586e4536ac9a28b63f270564eaa0b7a8169e5137087f2"
-  },
-  {
-    "file": "../eggs/pet_076.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_076.png",
-    "bytes": 20452,
-    "sha256": "3142e06ed7f1c392777dbc3aabe926054a13954f7e11274e35145b8bb54512fe"
-  },
-  {
-    "file": "../eggs/pet_088.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_088.png",
-    "bytes": 18095,
-    "sha256": "2714ac87828afb29e36c54ca41a7f0c57fff2a4b495832ec77138b3259a969f8"
-  },
-  {
-    "file": "../eggs/pet_093.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_093.png",
-    "bytes": 28041,
-    "sha256": "e50a3e1ec31d6c2bd91c0fdd8c3aa856106d71ebae07af35c9d5d7014fc4f25f"
-  },
-  {
-    "file": "../eggs/pet_095.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_095.png",
-    "bytes": 25863,
-    "sha256": "5a4373562e8e3dd8c2459035d1598890d4e5756af2d3590f355fa78948b055f0"
-  },
-  {
-    "file": "../eggs/pet_096.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_096.png",
-    "bytes": 20627,
-    "sha256": "0a3daca0cb4ba625f3853552ac597a12a1001d8160cbec9fccbc8175f3f1be10"
-  },
-  {
-    "file": "../eggs/pet_074.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_074.png",
-    "bytes": 26049,
-    "sha256": "59cebcd51e9dc096b58c7e4098a214b6c71f451713abe2aca57d401effc4fc37"
-  },
-  {
-    "file": "../eggs/pet_077.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_077.png",
-    "bytes": 29091,
-    "sha256": "974bfb28606edfea6e728f1095a2d40b8afbf184b01e9edfa44c039782749c71"
-  },
-  {
-    "file": "../eggs/pet_078.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_078.png",
-    "bytes": 14192,
-    "sha256": "a318ed28aeb8a82f1dde1a865420abb0f7a0337dcd9c64969a8460da6d6c479f"
-  },
-  {
-    "file": "../eggs/pet_079.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_079.png",
-    "bytes": 27594,
-    "sha256": "62bc930090533419ce44ab126de3c6839aef055abf8f38476903a18077366c40"
-  },
-  {
-    "file": "../eggs/pet_097.png",
-    "source": "4.24路资源包/assets/res/texture/pet/eggs/pet_097.png",
-    "bytes": 32645,
-    "sha256": "3f7e8f8407b5a35a33a046a54de8d9892a96db5007343ab839f3828b39aef9bd"
-  },
-  {
-    "file": "spine/elsa_rawcard.json",
-    "source": "4.24路资源包/assets/res/spine/perform/perfprm_elsa/elsa_rawcard/elsa_rawcard.asset",
-    "bytes": 517967,
-    "sha256": "53c93c141d185a6144b2f9664cb7ba2b2776fe0ab5183c0110a0707421814f3d"
-  },
-  {
-    "file": "spine/elsa_rawcard.atlas",
-    "source": "4.24路资源包/assets/res/spine/perform/perfprm_elsa/elsa_rawcard/elsa_rawcard.atlas",
-    "bytes": 5506,
-    "sha256": "1dff9ec8cdb267bee20632e6108fda7a23c28d1fc573d3ab482962bb0d7f84e6"
-  },
-  {
-    "file": "spine/elsa_rawcard.png",
-    "source": "4.24路资源包/assets/res/spine/perform/perfprm_elsa/elsa_rawcard/elsa_rawcard.png",
-    "bytes": 1133065,
-    "sha256": "6354d9b717ba5736a09e15bc0ebd76eabfb1bdd65b979f152e298f9f191a4335"
-  },
-  {
-    "file": "spine/elsa_rawcard_desk.json",
-    "source": "4.24路资源包/assets/res/spine/perform/perfprm_elsa/elsa_rawcard_desk/elsa_rawcard_desk.asset",
-    "bytes": 183355,
-    "sha256": "1cc31a47b3849f1e34002a918eaed14f9ef9448ed30d954b2772f1ff35f84fa0"
-  },
-  {
-    "file": "spine/elsa_rawcard_desk.atlas",
-    "source": "4.24路资源包/assets/res/spine/perform/perfprm_elsa/elsa_rawcard_desk/elsa_rawcard_desk.atlas",
-    "bytes": 1354,
-    "sha256": "9543c662b2d14d7a3f7212d38821b6a9a065f2515513c7b67e485f58ce102a4e"
-  },
-  {
-    "file": "spine/elsa_rawcard_desk.png",
-    "source": "4.24路资源包/assets/res/spine/perform/perfprm_elsa/elsa_rawcard_desk/elsa_rawcard_desk.png",
-    "bytes": 457145,
-    "sha256": "18d2038152510847a91274c1098ff135ea9c012acd9f87e1f5f2ed9895186f61"
-  },
-  {
-    "file": "spine/elsa_rawcard_desk_2.png",
-    "source": "4.24路资源包/assets/res/spine/perform/perfprm_elsa/elsa_rawcard_desk/elsa_rawcard_desk_2.png",
-    "bytes": 1252,
-    "sha256": "778534ba74fd1e71667b2ea2a8f7172959d702ced3ae1fcd047d1e8acefa9609"
-  },
-  {
-    "file": "spine/perform_bag.skel",
-    "source": "4.24路资源包/assets/res/spine/perform/perform_bag/perform_bag.skel",
-    "bytes": 72197,
-    "sha256": "b3f3de492173cbf49e1bf76b19c4b145729739216d79bc71afbe9e6bc04fd468"
-  },
-  {
-    "file": "spine/perform_bag.atlas",
-    "source": "4.24路资源包/assets/res/spine/perform/perform_bag/perform_bag.atlas",
-    "bytes": 1471,
-    "sha256": "ae41a0d756aa04366f51875a4e37a703fe990bdee340174521b6a75de138fe32"
-  },
-  {
-    "file": "spine/perform_bag.png",
-    "source": "4.24路资源包/assets/res/spine/perform/perform_bag/perform_bag.png",
-    "bytes": 1151832,
-    "sha256": "9237c30f81fa6e059d1fbd37cec6d81c708be3de4086defe816640d8908f3bc0"
-  },
-  {
-    "file": "audio/gacha_ready_chara.wav",
-    "source": "4.24路资源包/assets/res/audio/bgm/gacha_ready_chara.wav",
-    "bytes": 7372844,
-    "sha256": "5a5302691a5d83bb2803d1c170ff211c70fde14784b511780ecf0a449ffdef8b"
-  },
-  {
-    "file": "audio/gacha_show_chara.wav",
-    "source": "4.24路资源包/assets/res/audio/bgm/gacha_show_chara.wav",
-    "bytes": 17192492,
-    "sha256": "406aaea7890c04cf70d7d5115138dd79b745a4131917c7bcf37bafc4ea4683ef"
-  },
-  {
-    "file": "audio/gacha_ready_egg.wav",
-    "source": "4.24路资源包/assets/res/audio/bgm/gacha_ready_egg.wav",
-    "bytes": 7372844,
-    "sha256": "28eed22f61e40e2455403cce337500f932de4265898a3ebd085d5f65c9848c80"
-  },
-  {
-    "file": "audio/gacha_show_egg.wav",
-    "source": "4.24路资源包/assets/res/audio/bgm/gacha_show_egg.wav",
-    "bytes": 17192492,
-    "sha256": "7fb315a5a5d4914c545f2f4a4258296aac0057d6f8d2cd34efa8a34da7c5efa8"
-  },
-  {
-    "file": "audio/gacha_shop.wav",
-    "source": "4.24路资源包/assets/res/audio/bgm/gacha_shop.wav",
-    "bytes": 13648940,
-    "sha256": "deb603ef70840cbc020d7be6da1349005114bf773f0434eb8813a9b63055cfd4"
-  },
-  {
-    "file": "audio/card.wav",
-    "source": "4.24路资源包/assets/res/audio/effect/ui/card.wav",
-    "bytes": 248876,
-    "sha256": "8f5dc9e92f70e9a42a06626def7082e97aaa5e7a9489de28a6881943d2d72e2c"
-  },
-  {
-    "file": "audio/card2.wav",
-    "source": "4.24路资源包/assets/res/audio/effect/ui/card2.wav",
-    "bytes": 654380,
-    "sha256": "d4a8f774a7cf9b9e7b7b26459b84682748d1ed6e7dee8caa542ef17163979337"
-  },
-  {
-    "file": "audio/card3.wav",
-    "source": "4.24路资源包/assets/res/audio/effect/ui/card3.wav",
-    "bytes": 820268,
-    "sha256": "7e957590f1a1357f793875123289b9bfc9fbcdfd04fc4e30d3c50293b6106b96"
-  },
-  {
-    "file": "audio/card7.wav",
-    "source": "4.24路资源包/assets/res/audio/effect/ui/card7.wav",
-    "bytes": 548396,
-    "sha256": "bf9efdddb92e49b3bd98b1e32e10cb2585fa39dbbf605fc52679c4f4c3c44db5"
-  },
-  {
-    "file": "audio/card8.wav",
-    "source": "4.24路资源包/assets/res/audio/effect/ui/card8.wav",
-    "bytes": 460844,
-    "sha256": "c329a9853ecf3782ebebe397c18d399e035ce6cde634f9433caeb9652a4eaa4f"
-  },
-  {
-    "file": "audio/card9.wav",
-    "source": "4.24路资源包/assets/res/audio/effect/ui/card9.wav",
-    "bytes": 387116,
-    "sha256": "286e36852ed722d7746fd5b8835e89dc406baaffc536251f9a4a263a9e5b1bf9"
-  },
-  {
-    "file": "audio/card10.wav",
-    "source": "4.24路资源包/assets/res/audio/effect/ui/card10.wav",
-    "bytes": 364076,
-    "sha256": "2a71060ccc6be92064676b02f00ab87da6f52cc474dc183cdff590043f0928c6"
-  },
-  {
-    "file": "audio/card12.wav",
-    "source": "4.24路资源包/assets/res/audio/effect/ui/card12.wav",
-    "bytes": 737324,
-    "sha256": "b3ab75d5cae0721e15b40095d2464d7565f231d32f504746048dfa82e07b545f"
-  },
-  {
-    "file": "audio/card11.wav",
-    "source": "4.24路资源包/assets/res/audio/effect/ui/card11.wav",
-    "bytes": 354860,
-    "sha256": "9f1c725d04938705c5d7d49a0dcff18985962cdf2b2b2474d906d3fc928d1cc1"
-  },
-  {
-    "file": "audio/get3.wav",
-    "source": "4.24路资源包/assets/res/audio/effect/ui/get3.wav",
-    "bytes": 806444,
-    "sha256": "9efaeb438dcb0ef0211c939f3b5cf9a1b66310e806c30925e799fdc0a0c56fde"
-  },
-  {
-    "file": "audio/get5.wav",
-    "source": "4.24路资源包/assets/res/audio/effect/ui/get5.wav",
-    "bytes": 419372,
-    "sha256": "e868b3a3fd5907881bf920258a7e3de7a62c4e07f1ef4ebec2d0179ed27f4d4a"
-  },
-  {
-    "file": "audio/getcard.wav",
-    "source": "4.24路资源包/assets/res/audio/effect/ui/getcard.wav",
-    "bytes": 364076,
-    "sha256": "a82b1e6909bcdb72d060c6764501ac0f1188cb3491e74db73974fc3fb9750863"
-  },
-  {
-    "file": "audio/itemGet.wav",
-    "source": "4.24路资源包/assets/res/audio/effect/ui/itemGet.wav",
-    "bytes": 188972,
-    "sha256": "33f480da52e4cbce6d316f3a56f2101a5f0df6d45c7e349241128ee92ca9fd66"
-  },
-  {
-    "file": "audio/shining1.wav",
-    "source": "4.24路资源包/assets/res/audio/effect/ui/shining1.wav",
-    "bytes": 539180,
-    "sha256": "3e15477cbde818298b37809c2d48e014f6c04541929d0490eb5b8fff42fd60ef"
-  },
-  {
-    "file": "SPINE-LICENSE.txt",
-    "source": "vue-myrzg/node_modules/@esotericsoftware/spine-webgl/LICENSE",
-    "bytes": 1454,
-    "sha256": "6142ee6cc2c03d3a918793e4750ae772bd3755c534d4a35e559e301acf51ec39"
-  }
+    {
+        "file":  "ui/at_f_3.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/at_f_3.png",
+        "bytes":  7937,
+        "sha256":  "e0eae8e1d3aa4b15ae211051097a787bd2d900a00b25682c229317e996204dd6"
+    },
+    {
+        "file":  "ui/at_f_4.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/at_f_4.png",
+        "bytes":  7627,
+        "sha256":  "3fda5767b78b9c04bcfe44083707de02bfee3b8d07ec8e1817ab470bb25ac7d8"
+    },
+    {
+        "file":  "ui/at_f_5.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/at_f_5.png",
+        "bytes":  8018,
+        "sha256":  "b121385c307dbd5fbbbd156a47622df591661b8935fc22d74694bc6fdc0fc1a0"
+    },
+    {
+        "file":  "ui/chara_name_tag_class_pet.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/chara_name_tag_class_pet.png",
+        "bytes":  2351,
+        "sha256":  "79efdf9251efb39f01c167b4c5a6c4b30c715c95cd5212de96768d3bec176df3"
+    },
+    {
+        "file":  "../Common_Atlas/com_up.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/com_up.png",
+        "bytes":  1834,
+        "sha256":  "ed6806093592933ba2ce021480d3b44e91a3e748cc90850d39df437da1579543"
+    },
+    {
+        "file":  "ui/gacha_at_chara002_1.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_at_chara002_1.png",
+        "bytes":  16218,
+        "sha256":  "1922f3b461c0cfc9f59bda60e8cb0df794bf2a70ca2069130f35f652330ae5c7"
+    },
+    {
+        "file":  "ui/gacha_at_chara062_0.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_at_chara062_0.png",
+        "bytes":  10269,
+        "sha256":  "7590bb6b2b66882d6b9f26903a1e13cd4f212c531f9833ac12d9dada89da4347"
+    },
+    {
+        "file":  "ui/gacha_at_chara064_0.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_at_chara064_0.png",
+        "bytes":  15983,
+        "sha256":  "439159f42e70581a7d4634f4c121bb401a1c3bc3381384a45cbfd8b31823ef31"
+    },
+    {
+        "file":  "ui/gacha_at_pet072.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_at_pet072.png",
+        "bytes":  10310,
+        "sha256":  "3c69ae35baa3069e04c375fda870859b4b80c21bc49a1fe8ca745ecc39ddf577"
+    },
+    {
+        "file":  "ui/gacha_at_pet074.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_at_pet074.png",
+        "bytes":  13138,
+        "sha256":  "da692e6fbe2e8f3fbd2695ed682f179f9f193a77a60ade05d66cac9ceb3495d0"
+    },
+    {
+        "file":  "ui/gacha_btn_exchange.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_btn_exchange.png",
+        "bytes":  14982,
+        "sha256":  "1a6bed17cece07bb78e2d739d5f55be1f3857e3e0c03e9a0007f19f4d833a39e"
+    },
+    {
+        "file":  "ui/gacha_btn_exchange_press.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_btn_exchange_press.png",
+        "bytes":  15512,
+        "sha256":  "98c7d8a22f96329b4ce7e2957ae6b93a0ba30f5ced67a19fc39dd2779fd070e3"
+    },
+    {
+        "file":  "ui/gacha_btn_tag.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_btn_tag.png",
+        "bytes":  564,
+        "sha256":  "9f1818e59e154621e7fdd24d532b8ed2a75aec731ad97a74daa7ad5b36cb81b9"
+    },
+    {
+        "file":  "ui/gacha_info_tip.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_info_tip.png",
+        "bytes":  6331,
+        "sha256":  "c7b5ea72ac8de0cc59fee0ad96dc992cd296e00ddba593c5618989023e5cf385"
+    },
+    {
+        "file":  "ui/gacha_name_chara.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_name_chara.png",
+        "bytes":  29668,
+        "sha256":  "88cddf0292befbd762d7452e78da183be65715aac0e86928d965db4acb4eb8ca"
+    },
+    {
+        "file":  "ui/gacha_name_chara_sp.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_name_chara_sp.png",
+        "bytes":  28793,
+        "sha256":  "ef6cacf24591d1b3383fe7fcec4be9678255685c31f57807fbdca9ec7c2e33e4"
+    },
+    {
+        "file":  "ui/gacha_name_egg.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_name_egg.png",
+        "bytes":  29247,
+        "sha256":  "66b06cd77c307eecfea1d895c8b56f3892c3d2277512a055595af1cfde4c8750"
+    },
+    {
+        "file":  "ui/gacha_name_egg_sp.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_name_egg_sp.png",
+        "bytes":  27444,
+        "sha256":  "866b4ffc51edd1aaf29dff83a3cd4358d00aae0821ebe9467ccf70e89b01f16d"
+    },
+    {
+        "file":  "ui/gacha_name_limit.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_name_limit.png",
+        "bytes":  3607,
+        "sha256":  "f319d27c1a1ac9749cb156bcb9a78e8a96a7386be15d1465d0820b435334307a"
+    },
+    {
+        "file":  "ui/gacha_name_stay.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_name_stay.png",
+        "bytes":  3137,
+        "sha256":  "9aeda78ef0b1d5b217e266dc16e22e551c67381c40bc3898468ff95153ee23e5"
+    },
+    {
+        "file":  "ui/gacha_page.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_page.png",
+        "bytes":  6249,
+        "sha256":  "54aec73251a8abe02d6c8648060c6cdf4c52ab04a63e5e034b8bb7889b2f5823"
+    },
+    {
+        "file":  "ui/gacha_page_chara.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_page_chara.png",
+        "bytes":  5580,
+        "sha256":  "35589acc57571aaa7e103856e300c7b36f2ac04b691ab04b68eea1fec7112a40"
+    },
+    {
+        "file":  "ui/gacha_page_chara_on.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_page_chara_on.png",
+        "bytes":  6876,
+        "sha256":  "2affc4ffbca7e59e461c037d2e639aa923a3675a45fb87887f2ab6d2bf9274bd"
+    },
+    {
+        "file":  "ui/gacha_page_egg.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_page_egg.png",
+        "bytes":  6888,
+        "sha256":  "52516726d8f8edd79ea6eec099dea5f35762b41358a9ef1b159a1c84da419755"
+    },
+    {
+        "file":  "ui/gacha_page_egg_disable.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_page_egg_disable.png",
+        "bytes":  1413,
+        "sha256":  "11d653eeaf50a7ac2cbb345d9912786204a4f5b08895761b2fcc8576860b132e"
+    },
+    {
+        "file":  "ui/gacha_page_egg_on.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_page_egg_on.png",
+        "bytes":  7875,
+        "sha256":  "515761cc67d88f12690a459499b13035f87ee5de4465fcecb788e1c39a7d5f35"
+    },
+    {
+        "file":  "ui/gacha_page_on.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_page_on.png",
+        "bytes":  5515,
+        "sha256":  "ac4ff3898ad5007450586dd8c9799e3fbb16308459c52c19339c86dd8f73b5a8"
+    },
+    {
+        "file":  "ui/gacha_page_sp.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_page_sp.png",
+        "bytes":  6422,
+        "sha256":  "a41e3d2c78b6e72c99cca4b1c67f7e569c121e5a03f2922b1dadaa91718eebbc"
+    },
+    {
+        "file":  "ui/gacha_page_time.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_page_time.png",
+        "bytes":  1401,
+        "sha256":  "e7d293c15d6925de7542e88eeb3c13d951616b4312f22ea51c6ade28820d89bd"
+    },
+    {
+        "file":  "ui/gacha_reget.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_reget.png",
+        "bytes":  10707,
+        "sha256":  "e373d5ac294f560dc1899f789938de5b02385928efdc06088c287f1237324c16"
+    },
+    {
+        "file":  "ui/gacha_title_chara.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_title_chara.png",
+        "bytes":  47090,
+        "sha256":  "9d84206050ff1cf8cf782b34b89e41c42e466c5c8947a0f0ddcda249c9b6f34b"
+    },
+    {
+        "file":  "ui/gacha_title_egg.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_title_egg.png",
+        "bytes":  49713,
+        "sha256":  "40f1a7404bf19c0ee6e3ad6280aaf93388f430c03dedd6c24639db9ca4a57c09"
+    },
+    {
+        "file":  "ui/gacha_up_botm.png",
+        "source":  "UI_Atlases/HeroPoolPanel_Atlas/sprites/gacha_up_botm.png",
+        "bytes":  9745,
+        "sha256":  "3685571a4fa59001cdc078949a725ef7ed32b5919b8296d0b3882f59254d47eb"
+    },
+    {
+        "file":  "ui/gacha_egg_3.png",
+        "source":  "UI_Atlases/HeroGachaPanel_Atlas/sprites/gacha_egg_3.png",
+        "bytes":  65960,
+        "sha256":  "a2d844089166b59eda4226ac243bc20cfbf48fa5701972a2b00c5793d59ff60e"
+    },
+    {
+        "file":  "ui/gacha_egg_4.png",
+        "source":  "UI_Atlases/HeroGachaPanel_Atlas/sprites/gacha_egg_4.png",
+        "bytes":  69332,
+        "sha256":  "d130379190531e568290a8e34d9e291f83a9e9799041e07dfe08735ca243ca97"
+    },
+    {
+        "file":  "ui/gacha_egg_5.png",
+        "source":  "UI_Atlases/HeroGachaPanel_Atlas/sprites/gacha_egg_5.png",
+        "bytes":  78774,
+        "sha256":  "42258ae8b2fe8c02862ca83edb69eaa70b73ac2ba1354b91f3a18944ee92e647"
+    },
+    {
+        "file":  "ui/gacha_egg_name.png",
+        "source":  "UI_Atlases/HeroGachaPanel_Atlas/sprites/gacha_egg_name.png",
+        "bytes":  17684,
+        "sha256":  "82f6232ac25ca608d0869909f893c7f3170ca2d9f75e651249f6555765c70cf2"
+    },
+    {
+        "file":  "ui/gacha_star.png",
+        "source":  "UI_Atlases/HeroGachaPanel_Atlas/sprites/gacha_star.png",
+        "bytes":  3985,
+        "sha256":  "850a392c4e6f3097c48c2371897673fb765b6a017551619856eb913918c0e903"
+    },
+    {
+        "file":  "../Common_Atlas/com_btn_N_sp.png",
+        "source":  "UI_Atlases/Common_Atlas/sprites/com_btn_N_sp.png",
+        "bytes":  6503,
+        "sha256":  "f9e596e9ac8667918c28a8c250a7c265cf3187c9bddc1413830da180b8168be0"
+    },
+    {
+        "file":  "../Common_Atlas/com_btn_Y_sp.png",
+        "source":  "UI_Atlases/Common_Atlas/sprites/com_btn_Y_sp.png",
+        "bytes":  7259,
+        "sha256":  "45a2f476c23996952e2937fedada3f017049d92fda6ad7c706058d7c929324d0"
+    },
+    {
+        "file":  "../Common_Atlas/com_btn_N_sp_press.png",
+        "source":  "UI_Atlases/Common_Atlas/sprites/com_btn_N_sp_press.png",
+        "bytes":  7031,
+        "sha256":  "0b590409f0637dfd51655f9284852289e0043440307f5324bd171c443182f878"
+    },
+    {
+        "file":  "../Common_Atlas/com_btn_Y_sp_press.png",
+        "source":  "UI_Atlases/Common_Atlas/sprites/com_btn_Y_sp_press.png",
+        "bytes":  7548,
+        "sha256":  "5456b869de56e8aeee1ee579cafe13a79d79a151898345ab2eb56082c89fd174"
+    },
+    {
+        "file":  "../Common_Atlas/com_btn_close.png",
+        "source":  "UI_Atlases/Common_Atlas/sprites/com_btn_close.png",
+        "bytes":  6363,
+        "sha256":  "29582089b620437dc5e64aeb212972c8a18ac4855054e9fc1e041047532ef4a9"
+    },
+    {
+        "file":  "../Common_Atlas/com_btn_back.png",
+        "source":  "UI_Atlases/Common_Atlas/sprites/com_btn_back.png",
+        "bytes":  6092,
+        "sha256":  "78cc09dcfca01c90affcfedd7c18b2be12db7441fd4f23677ad2066015fddd5b"
+    },
+    {
+        "file":  "../Common_Atlas/com_btn_mini.png",
+        "source":  "UI_Atlases/Common_Atlas/sprites/com_btn_mini.png",
+        "bytes":  1950,
+        "sha256":  "4f8d8b3603b89082ba2b958dd6e680dc2cf2a79164441d02f2bfe0048c85a248"
+    },
+    {
+        "file":  "../Common_Atlas/com_top_item.png",
+        "source":  "UI_Atlases/Common_Atlas/sprites/com_top_item.png",
+        "bytes":  478,
+        "sha256":  "c62ddaaf9c6ddc5ee8bb4adddb52c4cfe40b084823843419a4de22b4158acd89"
+    },
+    {
+        "file":  "shop.png",
+        "source":  "4.24路资源包/assets/res/texture/gacha_cardbackground_main_output.png",
+        "bytes":  943107,
+        "sha256":  "6ab03922dc9e5d6e6a521e78422fa9ee8bf7f233bb15727f33415e099a75d1a0"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/bg.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/bg.png",
+        "bytes":  514459,
+        "sha256":  "ab0c8ad78bdf6ea137d87a08c510c5e95cffd8b0648a0f1bb7316d898d91f006"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/chara_bg_center_only.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/chara_bg_center_only.png",
+        "bytes":  149274,
+        "sha256":  "e6b517645cf8263efafa389c1ca98bcd61411f92d9bb74a0360d7572aa9a9bc8"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/Rconer.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/Rconer.png",
+        "bytes":  13947,
+        "sha256":  "f12b87ed059656dd85c9d6e08b1a5e02e9a926b5fcda2a582715e4e5bf8bd381"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/Rconer2.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/Rconer2.png",
+        "bytes":  13860,
+        "sha256":  "216a57d849249f4e348a063272036510410607ebbbd62b19d261e10cf971160a"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/spGachaBlock01.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaBlock01.png",
+        "bytes":  77932,
+        "sha256":  "72ede8bb9ebcb7f7ac5374921a4981c643088efa0bad324c5bcff047d79db84a"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/spGachaBlock02.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaBlock02.png",
+        "bytes":  6649,
+        "sha256":  "d1ac700b8e0d4898b8a6cf22e190190b1595f42d71be3c1256ec495ae3657cf1"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/spGachaBox01.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaBox01.png",
+        "bytes":  243394,
+        "sha256":  "5980717aa4381299ae9eb150d36548b7c1657837f1c65fdefb424888fd38c0dc"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/spGachaBox02.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaBox02.png",
+        "bytes":  296692,
+        "sha256":  "6fa91ba3b486659c98f44dfc95f3d4e123f749d87a1df77b049b9be1907c101f"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/spGachaClass01Black.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaClass01Black.png",
+        "bytes":  74375,
+        "sha256":  "5d9d29d2bae95737d2b7ea9a5b1b1d30a15c4e36514e6d2e455ad98ba599f368"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/spGachaClass02Black.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaClass02Black.png",
+        "bytes":  85155,
+        "sha256":  "7804b3c7e9cde08b1538ab56c62ab73ddd6d88acefdc152575a17aa820c42e3f"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/spGachaClass03Black.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaClass03Black.png",
+        "bytes":  92978,
+        "sha256":  "3dcce4d81f35f80a3eae0d599bbf914528df6411b59bdc211f73f8debff19225"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/spGachaClass04Black.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaClass04Black.png",
+        "bytes":  83083,
+        "sha256":  "e4d07a693302f5142457ef8df0021d6c6b7e0a439e16f70f64201b1000ce7558"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/spGachaClass05Black.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaClass05Black.png",
+        "bytes":  77021,
+        "sha256":  "4f57f619bbf9dfa20d2a6cc7867908901f5b43bd23744654b290d1cf631fe48f"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/spGachaClass06Black.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaClass06Black.png",
+        "bytes":  88832,
+        "sha256":  "88adbcb29786664736c4be5d35996634fdf583571de1c7e3bfb1a8190c6ad9a3"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/spGachaColor01.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaColor01.png",
+        "bytes":  73111,
+        "sha256":  "e759e3da71f832076e74935440b765691ccb2fbb2e5913ad144ac0081f05226a"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/spGachaColor02.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaColor02.png",
+        "bytes":  3767,
+        "sha256":  "83cc881c26c07f27fe7aadbf249bc28f6ed24f871b18acb7a5b7950969051336"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/spGachaLine01.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaLine01.png",
+        "bytes":  8306,
+        "sha256":  "103930239e229b0404c47ea106fa63c4e5e3ebb3419f2500b0a683f5a05ac3a4"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/spGachaMeteor01.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaMeteor01.png",
+        "bytes":  5559,
+        "sha256":  "fcd408d4dcb356c4d01b431ba60bb693d24a9a7d2b0fad1bada347f854887cd1"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/spGachaMeteor02.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaMeteor02.png",
+        "bytes":  13073,
+        "sha256":  "e22fc7d5e1001e76425fa5cda3cea837395eb9036aab5fdaa72de599852ca21b"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/spGachaMeteor03.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaMeteor03.png",
+        "bytes":  4329,
+        "sha256":  "e23f747c6d82193d1c1455bfc75dfbd0b405e41c53144eb800061455a0e0cd03"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/spGachaStar02.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaStar02.png",
+        "bytes":  5348,
+        "sha256":  "1607181fc32488421591edc1531f50658457213b4b6761bfbcaf58529971cdc5"
+    },
+    {
+        "file":  "../uipanel/herogachashowpanel/spGachaTxtRing01.png",
+        "source":  "4.24路资源包/assets/res/texture/uipanel/herogachashowpanel/spGachaTxtRing01.png",
+        "bytes":  125952,
+        "sha256":  "98bb6ece1d6bf4beaff16523f1a027d07d5cf8fcdafcb57c5cb3f0e8776fe50f"
+    },
+    {
+        "file":  "../chara/l/chara005_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara005_0.png",
+        "bytes":  525485,
+        "sha256":  "e6e0b09a434edc5e9953ab30bdfee53fb081f722107d8a4e3192ea10646a9cb9"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara005_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara005_0_p.png",
+        "bytes":  15225,
+        "sha256":  "dfe4c9261dcdac1f643b80e73fe5e016f9bb2128ac90616e66239f32928a333d"
+    },
+    {
+        "file":  "spine/heroes/Npc_005/Npc_005.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_005/Npc_005.atlas",
+        "bytes":  4116,
+        "sha256":  "1f87e502580fb1e6bda1a9fb05d5c68225adcec76b2e1a6efdb1ce79983331af"
+    },
+    {
+        "file":  "spine/heroes/Npc_005/Npc_005.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_005/Npc_005.skel",
+        "bytes":  407768,
+        "sha256":  "378dfe11ced5c455ee64456a19c34e255351c3033a2203ecfd61ff907ad1a55a"
+    },
+    {
+        "file":  "spine/heroes/Npc_005/Npc_005.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_005/Npc_005.png",
+        "bytes":  767301,
+        "sha256":  "9a2c9b0f84d4be46f865892001b6dcd769b16ea5713c15b25413c3f7983ad309"
+    },
+    {
+        "file":  "../chara/l/chara012_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara012_0.png",
+        "bytes":  553356,
+        "sha256":  "9b2a9e3cc627d86479f3c244d50ed337c03ff002c98f76b4296b809e0ced4fd7"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara012_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara012_0_p.png",
+        "bytes":  15984,
+        "sha256":  "be8bc9a78c8caf52caec32e0a095a37945026262c89037bc62991512cabccc21"
+    },
+    {
+        "file":  "spine/heroes/Npc_012/Npc_012.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_012/Npc_012.atlas",
+        "bytes":  4465,
+        "sha256":  "f126f596c7fe09ceee00df502a61a1c4f4f879adebc7b78b550ceb01c98cc1e6"
+    },
+    {
+        "file":  "spine/heroes/Npc_012/Npc_012.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_012/Npc_012.skel",
+        "bytes":  250930,
+        "sha256":  "214b7ceca2accc9564b5b925ec7b44d742a9034b948ff66860e6820e18df6427"
+    },
+    {
+        "file":  "spine/heroes/Npc_012/Npc_012.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_012/Npc_012.png",
+        "bytes":  392869,
+        "sha256":  "d6ecba6a8940c523e04b216914cd1bf4d9f1afb27d83461f958f4c6c7be6d1f6"
+    },
+    {
+        "file":  "../chara/l/chara014_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara014_0.png",
+        "bytes":  293280,
+        "sha256":  "7bbd49adaa1183619f98584d1a16b44ad8c215229cf786daffdb4beccce4b0b1"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara014_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara014_0_p.png",
+        "bytes":  17204,
+        "sha256":  "6bcc6b43a290f3227f97df0b7f9e7a56c9c7577e37cda0b36303dbe6fe032ab2"
+    },
+    {
+        "file":  "spine/heroes/Npc_014/Npc_014.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_014/Npc_014.atlas",
+        "bytes":  4306,
+        "sha256":  "58c84301960e7be3a91aacf7f6f1cdc2e17e8971ea9319d7df2d796e03f2de67"
+    },
+    {
+        "file":  "spine/heroes/Npc_014/Npc_014.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_014/Npc_014.skel",
+        "bytes":  218973,
+        "sha256":  "c364a8238a3da4682c09edd4a7bfbcb658b6af8212da4b5ff0690b4476688afd"
+    },
+    {
+        "file":  "spine/heroes/Npc_014/Npc_014.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_014/Npc_014.png",
+        "bytes":  347997,
+        "sha256":  "cada146eddfda9923b2ed0410cc8d7543b04f13fe6d1c27a4c9d76e076a53f93"
+    },
+    {
+        "file":  "../chara/l/chara002_1.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara002_1.png",
+        "bytes":  825654,
+        "sha256":  "04d27eaf42e7eadb65df974d0b73eb27c97c3ee32901838ab0e02d8c88d1bd6f"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara002_1_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara002_1_p.png",
+        "bytes":  16178,
+        "sha256":  "c29c759f2fc358da52ebc1dc18de68e1f606953345ac402a11142b780c085ac4"
+    },
+    {
+        "file":  "spine/heroes/Npc_002_1/Npc_002_1.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_002_1/Npc_002_1.atlas",
+        "bytes":  5631,
+        "sha256":  "7c5c007b65e43e18f62cee6a5b922c30924aa209d9e50121156e061a44ac8bd2"
+    },
+    {
+        "file":  "spine/heroes/Npc_002_1/Npc_002_1.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_002_1/Npc_002_1.skel",
+        "bytes":  721269,
+        "sha256":  "5d7c3e0df14499b6776981961deab9110e2d1544e4c8993b0c462c1ba0b2d394"
+    },
+    {
+        "file":  "spine/heroes/Npc_002_1/Npc_002_1.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_002_1/Npc_002_1.png",
+        "bytes":  353117,
+        "sha256":  "6c90b23a2a1729e1adeafab1d4d133307a722192bca4e0408f9318413bbd13a0"
+    },
+    {
+        "file":  "../chara/l/chara023_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara023_0.png",
+        "bytes":  366731,
+        "sha256":  "3a1c10986cbe8efb39f09f915c3c1a5b0c6d700cfd0262319540f7cdd579287d"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara023_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara023_0_p.png",
+        "bytes":  16645,
+        "sha256":  "6daa614a8cf9f4a5f9b0eb6c8d5d19d636628c218ec46106785ff5a729636e20"
+    },
+    {
+        "file":  "spine/heroes/Npc_023/Npc_023.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_023/Npc_023.atlas",
+        "bytes":  5364,
+        "sha256":  "44e01c95246582e7f12aa26630b04634b80a89b2d803790ed9ff4acb88cda038"
+    },
+    {
+        "file":  "spine/heroes/Npc_023/Npc_023.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_023/Npc_023.skel",
+        "bytes":  211596,
+        "sha256":  "adc6410521a4dbcec1ee39adb02627106a59844dfb5146835ec7aff4785e2615"
+    },
+    {
+        "file":  "spine/heroes/Npc_023/Npc_023.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_023/Npc_023.png",
+        "bytes":  655981,
+        "sha256":  "a4c9be68558ab478ed4b5eebda1db05c669724c4a69133c0a1ffdbf454c8854e"
+    },
+    {
+        "file":  "../chara/l/chara011_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara011_0.png",
+        "bytes":  481390,
+        "sha256":  "319f8706ba645fe1a591f63558dc53ec8d08147f53bb3c05f648fda2b98f6b2b"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara011_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara011_0_p.png",
+        "bytes":  15783,
+        "sha256":  "ee8337ea00f7b9dc966eccd4008b2a5b7510eae7fa7d32dc52fa4da35d500ec8"
+    },
+    {
+        "file":  "spine/heroes/Npc_011/Npc_011.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_011/Npc_011.atlas",
+        "bytes":  5594,
+        "sha256":  "d631fea8f106d8cbb2391fb25c872d329a7a04794fb26bd5e5dd4fd1fa8ce968"
+    },
+    {
+        "file":  "spine/heroes/Npc_011/Npc_011.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_011/Npc_011.skel",
+        "bytes":  376316,
+        "sha256":  "3d86e369d0a494daefb531a6e5ba48b6656aef35dd35c78c69dad71247b98c59"
+    },
+    {
+        "file":  "spine/heroes/Npc_011/Npc_011.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_011/Npc_011.png",
+        "bytes":  269106,
+        "sha256":  "8b9a1f12023f7d99554d5dd710631aaf184593ebe86d4a091aa73119c76d73c8"
+    },
+    {
+        "file":  "../chara/l/chara009_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara009_0.png",
+        "bytes":  381398,
+        "sha256":  "7383389592009846ee4a53544e3dee59d349a664a3d9dc2920a4052ac2936300"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara009_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara009_0_p.png",
+        "bytes":  15064,
+        "sha256":  "b722635a8ef5cf77ba4c121f94e1c4a8640b04ecbe5d19e4e68f92de2af1c08c"
+    },
+    {
+        "file":  "spine/heroes/Npc_009/Npc_009.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_009/Npc_009.atlas",
+        "bytes":  4115,
+        "sha256":  "d6b755a1a492dbcb25cf2ea57504475cc293c216eb6c6b9a86a8dbe9e10a9c06"
+    },
+    {
+        "file":  "spine/heroes/Npc_009/Npc_009.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_009/Npc_009.skel",
+        "bytes":  700754,
+        "sha256":  "df5f12966e67d58b59732f5faeb233c0df7dbff1cafd0e4df35be206b6df60a1"
+    },
+    {
+        "file":  "spine/heroes/Npc_009/Npc_009.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_009/Npc_009.png",
+        "bytes":  318703,
+        "sha256":  "d31ae0a51747dba98312d058968fb56450f3cf0d8f3c09d0ed99cab937fb99c4"
+    },
+    {
+        "file":  "../chara/l/chara008_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara008_0.png",
+        "bytes":  553287,
+        "sha256":  "8184870fb4f372319a54c7c39c358d910995487616d76d9209a6dd3effa03be5"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara008_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara008_0_p.png",
+        "bytes":  16533,
+        "sha256":  "d9679146098871fdbfd03c07c801f6989ced0d75be6a81ced1748b49f1a61e16"
+    },
+    {
+        "file":  "spine/heroes/Npc_008/Npc_008.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_008/Npc_008.atlas",
+        "bytes":  4221,
+        "sha256":  "a642fbf76a7d3b59ebb568fc89e4e69dda6fe53c872ce0273b21fed3cfbe7d2e"
+    },
+    {
+        "file":  "spine/heroes/Npc_008/Npc_008.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_008/Npc_008.skel",
+        "bytes":  376147,
+        "sha256":  "6849380c17a34dc5aa3e0f8143a0baae0c3198c4e2865a5f90e67f77b617f3d6"
+    },
+    {
+        "file":  "spine/heroes/Npc_008/Npc_008.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_008/Npc_008.png",
+        "bytes":  349106,
+        "sha256":  "7370068d9a84b28da544b678835359f0e26bcc1d761ec1c9bec381c5fef6c09f"
+    },
+    {
+        "file":  "../chara/l/chara031_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara031_0.png",
+        "bytes":  569728,
+        "sha256":  "c96746ca314cbe94208b2a97aec235f062a4204b8f3d32a3973ecd334325b26c"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara031_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara031_0_p.png",
+        "bytes":  14374,
+        "sha256":  "d2ad0c4689f010e289843316e66c9fc6f2aac102e7856ce1c920ce36ff59eb62"
+    },
+    {
+        "file":  "spine/heroes/Npc_031/Npc_031.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_031/Npc_031.atlas",
+        "bytes":  2292,
+        "sha256":  "cfa4348e9507165cb9749d89ac73b656ed1678e50615274095ec327a27c2b55e"
+    },
+    {
+        "file":  "spine/heroes/Npc_031/Npc_031.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_031/Npc_031.skel",
+        "bytes":  199337,
+        "sha256":  "27fea883b24995344d0dcea91b8de93144580babdc6b6478c6abe7afbba8b672"
+    },
+    {
+        "file":  "spine/heroes/Npc_031/Npc_031.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_031/Npc_031.png",
+        "bytes":  291095,
+        "sha256":  "93625695be0ea17b0c8c8861bda1c66589d07bcc1ffdd529693ea64774b5c717"
+    },
+    {
+        "file":  "../chara/l/chara007_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara007_0.png",
+        "bytes":  465134,
+        "sha256":  "a9163227fbd897da026ca2ee234e1cb4aacf16e0a64a6541260a10401eef098d"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara007_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara007_0_p.png",
+        "bytes":  14842,
+        "sha256":  "a5061f7e15aa60479ef9ce647571992e80f9a91c762a5a5a3da24f4d58a88406"
+    },
+    {
+        "file":  "spine/heroes/Npc_007/Npc_007.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_007/Npc_007.atlas",
+        "bytes":  2753,
+        "sha256":  "9fbe0db808310e14a1018b92784e465514f2892cb268d719fd7edb98cedbf48c"
+    },
+    {
+        "file":  "spine/heroes/Npc_007/Npc_007.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_007/Npc_007.skel",
+        "bytes":  429730,
+        "sha256":  "904063db056f2c49d32d386c84cc1d16ac929b630310b046fb42a91f8d063070"
+    },
+    {
+        "file":  "spine/heroes/Npc_007/Npc_007.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_007/Npc_007.png",
+        "bytes":  166653,
+        "sha256":  "2ed42ef666451617cde8018a7917492c70c6e0808759acaa30a1b3f7d4fa6542"
+    },
+    {
+        "file":  "../chara/l/chara062_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara062_0.png",
+        "bytes":  451164,
+        "sha256":  "494724d2a62d792388e97eab15df7b74145c8c23e0548bbdc17eacb8cb84b98a"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara062_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara062_0_p.png",
+        "bytes":  15233,
+        "sha256":  "6416613275bb74532f7a2bc56f1b91de40389012e43c069322bc63a570c687a2"
+    },
+    {
+        "file":  "spine/heroes/Npc_062/Npc_062.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_062/Npc_062.atlas",
+        "bytes":  5525,
+        "sha256":  "fb30d4b788971fe71698c6baf67adf0a6763cc01c199317f900d7f5afd6817e3"
+    },
+    {
+        "file":  "spine/heroes/Npc_062/Npc_062.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_062/Npc_062.skel",
+        "bytes":  321020,
+        "sha256":  "944891889856c3b43244d7ec2b098fe356a766168b7ef3f00f55b930459ecd44"
+    },
+    {
+        "file":  "spine/heroes/Npc_062/Npc_062.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_062/Npc_062.png",
+        "bytes":  309966,
+        "sha256":  "7b4f2db4e266c8f3ff1204683de4cec8ecf96addd76442b399bf534a04df54ae"
+    },
+    {
+        "file":  "../chara/l/chara041_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara041_0.png",
+        "bytes":  721621,
+        "sha256":  "1171d4d26e7bfad88841f68b952fff677db3ffbb60e052a836399aac5ac6c719"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara041_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara041_0_p.png",
+        "bytes":  15514,
+        "sha256":  "5b58595f3b72468615ba91b5a1cf6cb42f37985113dff0cf39634e6134033833"
+    },
+    {
+        "file":  "spine/heroes/Npc_041/Npc_041.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_041/Npc_041.atlas",
+        "bytes":  3418,
+        "sha256":  "19abadd63d82371dd549f2f9a393ecc1370c107470ffa14f48088453873fc417"
+    },
+    {
+        "file":  "spine/heroes/Npc_041/Npc_041.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_041/Npc_041.skel",
+        "bytes":  231163,
+        "sha256":  "acc1a2eeef534262266f145f359c6174f325ba9a7344b81bf8c8912259fb0796"
+    },
+    {
+        "file":  "spine/heroes/Npc_041/Npc_041.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_041/Npc_041.png",
+        "bytes":  271623,
+        "sha256":  "207f55af07af15b4481aa2521c68c81dba996bbb81c150cc14557a2168916cc4"
+    },
+    {
+        "file":  "../chara/l/chara015_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara015_0.png",
+        "bytes":  1764699,
+        "sha256":  "05afb2143771127c962fe72b478c54709aa67573c1861c15383ed8415f32c881"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara015_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara015_0_p.png",
+        "bytes":  16243,
+        "sha256":  "1ed6c051dd2b8ebd4827b74b9823574fd22b3f971ae97ee3d2e10034a1a791d1"
+    },
+    {
+        "file":  "spine/heroes/Npc_015/Npc_015.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_015/Npc_015.atlas",
+        "bytes":  5372,
+        "sha256":  "1986a350697b80abb2029feef6e80ea79f1d8a854d6ff0521ea40ba655d4da50"
+    },
+    {
+        "file":  "spine/heroes/Npc_015/Npc_015.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_015/Npc_015.skel",
+        "bytes":  468657,
+        "sha256":  "a800e6f8d29d5b6b93f6290356bf1147424ff7d719ad6baaf24f04341855343a"
+    },
+    {
+        "file":  "spine/heroes/Npc_015/Npc_015.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_015/Npc_015.png",
+        "bytes":  398013,
+        "sha256":  "c3785e35ba17c5b019e795917b1399d38cdb48bd3a456bd00a1f6d7a594ed2c0"
+    },
+    {
+        "file":  "../chara/l/chara033_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara033_0.png",
+        "bytes":  1036963,
+        "sha256":  "39d8e77bfd36448f604aa30353f1ef963ab13646b220fc55b9378ed274b6887f"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara033_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara033_0_p.png",
+        "bytes":  15827,
+        "sha256":  "996bf7b1199574c37b058a74a42384f0c6cc45ff6997beee7bd8c5971a6b618b"
+    },
+    {
+        "file":  "spine/heroes/Npc_033/Npc_033.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_033/Npc_033.atlas",
+        "bytes":  2796,
+        "sha256":  "e981d6a0d507863a59762653a4d99dda102677f2137071d41f1a6ec292bd4ab4"
+    },
+    {
+        "file":  "spine/heroes/Npc_033/Npc_033.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_033/Npc_033.skel",
+        "bytes":  396566,
+        "sha256":  "a521787b601cdca3ccd35c244a8f02d25f6c8c454af5d6f8ce4a07c4bff6f7c6"
+    },
+    {
+        "file":  "spine/heroes/Npc_033/Npc_033.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_033/Npc_033.png",
+        "bytes":  242210,
+        "sha256":  "4b96b52546f4dfc74f952ab24c79c68c084e4924c5d54de762f82921f9fda9ed"
+    },
+    {
+        "file":  "../chara/l/chara037_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara037_0.png",
+        "bytes":  965697,
+        "sha256":  "dd36ec89d9d33bd1546fcda33d74d93803ff3a4b8daadfb79977f6aac96a0ffe"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara037_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara037_0_p.png",
+        "bytes":  17056,
+        "sha256":  "8da0db13e6970adb0149e5409de02d3c184762275bc5003147a7e9dff9a7f405"
+    },
+    {
+        "file":  "spine/heroes/Npc_037/Npc_037.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_037/Npc_037.atlas",
+        "bytes":  8186,
+        "sha256":  "a68226498103dfabebcc0d1a402041cbdc236bcbb5a5b417488ae704d36d1033"
+    },
+    {
+        "file":  "spine/heroes/Npc_037/Npc_037.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_037/Npc_037.skel",
+        "bytes":  310496,
+        "sha256":  "738b0a34a6853504f386c721315c2fc7f5f242b076b0052e271807758e2c7ced"
+    },
+    {
+        "file":  "spine/heroes/Npc_037/Npc_037.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_037/Npc_037.png",
+        "bytes":  1521893,
+        "sha256":  "e18c6bd7c5e46597f116fa126ab2216c4219c0a4101392660fb5f806cc59dda3"
+    },
+    {
+        "file":  "../chara/l/chara029_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara029_0.png",
+        "bytes":  619152,
+        "sha256":  "b7283ea29b2872af4bb109f38c071a263ef780922833ee73dfa4d937006e6ba8"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara029_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara029_0_p.png",
+        "bytes":  17568,
+        "sha256":  "ef2f3ce0be0bd060acf1c8b6eb88561fc7349015c4c74d95f3f24df13599259b"
+    },
+    {
+        "file":  "spine/heroes/Npc_029/Npc_029.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_029/Npc_029.atlas",
+        "bytes":  4957,
+        "sha256":  "72ac346378214cee6491060fd3dfae52f10b3b72555ad50ddb0740f53bdfc1be"
+    },
+    {
+        "file":  "spine/heroes/Npc_029/Npc_029.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_029/Npc_029.skel",
+        "bytes":  249397,
+        "sha256":  "ea9a9bc542c5e299e9430249965215211045a8603d8309144cfa609584706adc"
+    },
+    {
+        "file":  "spine/heroes/Npc_029/Npc_029.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_029/Npc_029.png",
+        "bytes":  235024,
+        "sha256":  "e19ce03399cf2254666c8071c430bf486c315d023625a6fc2d63d6eb8f2c0e1e"
+    },
+    {
+        "file":  "../chara/l/chara036_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara036_0.png",
+        "bytes":  605966,
+        "sha256":  "9ce32442dabd8bb513d8f7c2f915adbd2050e584fb036d16921af1d01a029103"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara036_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara036_0_p.png",
+        "bytes":  16433,
+        "sha256":  "941e27cae4de5dff5614c9aa81a406cdc3cb2e54b185fd65bedf10cdd2bbfb6c"
+    },
+    {
+        "file":  "spine/heroes/Npc_036/Npc_036.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_036/Npc_036.atlas",
+        "bytes":  3928,
+        "sha256":  "eb68e5d8062315d0fc1f55b37a50175aa855dfca17474dae94bf01ca677cde23"
+    },
+    {
+        "file":  "spine/heroes/Npc_036/Npc_036.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_036/Npc_036.skel",
+        "bytes":  271311,
+        "sha256":  "200b0f45c8f15a18fd53621be4f9568dbeeaacaee6f1d84ce04e142e95da51ca"
+    },
+    {
+        "file":  "spine/heroes/Npc_036/Npc_036.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_036/Npc_036.png",
+        "bytes":  230335,
+        "sha256":  "ea478177f578fb63dffa8f9f270e05e4d451ad661dc82bc74664b6ad09896eae"
+    },
+    {
+        "file":  "../chara/l/chara026_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara026_0.png",
+        "bytes":  608615,
+        "sha256":  "e317305dece19fe6c8c138907ced0220c3e0c3234228a88224eb0e2437d04547"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara026_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara026_0_p.png",
+        "bytes":  16014,
+        "sha256":  "17623cdfd57a6fd8b9360dc7a550c8b3e49cb6b3ac1cb5b0dd73cd10aba4e9fd"
+    },
+    {
+        "file":  "spine/heroes/Npc_026/Npc_026.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_026/Npc_026.atlas",
+        "bytes":  6594,
+        "sha256":  "451727f06ae4b8407277119a6fc70e27ebeaa8ebab6c9807f08f4765c9ff13c2"
+    },
+    {
+        "file":  "spine/heroes/Npc_026/Npc_026.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_026/Npc_026.skel",
+        "bytes":  333409,
+        "sha256":  "d8f9fb563f4295b67f685020ebe5e7e60c150b4bdece797051bf0baffb9bdd91"
+    },
+    {
+        "file":  "spine/heroes/Npc_026/Npc_026.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_026/Npc_026.png",
+        "bytes":  365567,
+        "sha256":  "b850ae385ed8304891ee54c86401a746761ad156e248fd1e353dea0e07bf5db7"
+    },
+    {
+        "file":  "../chara/l/chara045_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara045_0.png",
+        "bytes":  503650,
+        "sha256":  "98870529031298afcb64c35aba862aaacc40e656c47c0b4a72a5f12c744698d3"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara045_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara045_0_p.png",
+        "bytes":  15767,
+        "sha256":  "1301420cb210953e9766c4f43e6ee4ea712d718016fd431929d42d0822cabf58"
+    },
+    {
+        "file":  "spine/heroes/Npc_045/Npc_045.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_045/npc_045.atlas",
+        "bytes":  5183,
+        "sha256":  "ac02db65cdb6d7b07a60f70b9f389ea891e01aaecc77d6df4934546b5f4ac7b2"
+    },
+    {
+        "file":  "spine/heroes/Npc_045/Npc_045.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_045/npc_045.skel",
+        "bytes":  537831,
+        "sha256":  "60413e9e75caf89a140790a512f0f7600b4b5b4a983e4c3138ec56c7c59be640"
+    },
+    {
+        "file":  "spine/heroes/Npc_045/npc_045.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_045/npc_045.png",
+        "bytes":  261023,
+        "sha256":  "6d71eb670b49292ef5cf5b0616654ec70789939f6b9e43b5a37dde3a7a26b68f"
+    },
+    {
+        "file":  "../chara/l/chara027_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara027_0.png",
+        "bytes":  433315,
+        "sha256":  "ad73313f03d3d479006e37f23b5b9a2bd256ddfdb8eee0371d38ed4217487431"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara027_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara027_0_p.png",
+        "bytes":  16157,
+        "sha256":  "7f8799cabab50c23f4de057361609a4850ba23e7ea80de2df94656098c08f0ff"
+    },
+    {
+        "file":  "spine/heroes/Npc_027/Npc_027.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_027/Npc_027.atlas",
+        "bytes":  4894,
+        "sha256":  "b342d81cf02526a9c90447a447a2436726602d86c9bb0d0203ea6f91e306c2b7"
+    },
+    {
+        "file":  "spine/heroes/Npc_027/Npc_027.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_027/Npc_027.skel",
+        "bytes":  373859,
+        "sha256":  "29b8391c628c220e30e17b9896ed8b3273f8cab10c1c23146913f385a246ebb0"
+    },
+    {
+        "file":  "spine/heroes/Npc_027/Npc_027.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_027/Npc_027.png",
+        "bytes":  307721,
+        "sha256":  "84f1d577c26cdeb92ec6f13430fcae168c9ba9e2a9a081d8710d03f7757fa992"
+    },
+    {
+        "file":  "../chara/l/chara025_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara025_0.png",
+        "bytes":  612060,
+        "sha256":  "57b4a12fdfeda09feb3e6fe394e63dd57b6c7ac14ba1f0eaeb352bab05b4c448"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara025_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara025_0_p.png",
+        "bytes":  15746,
+        "sha256":  "e90741dbac073dacd86fd00d86108dd706f008bdf045a41becbacfd5378bf09c"
+    },
+    {
+        "file":  "spine/heroes/Npc_025/Npc_025.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_025/Npc_025.atlas",
+        "bytes":  3898,
+        "sha256":  "6eece8f5660d0d877e3f0e9dcf2d33c8cabb7b3777cf9633f50a2f7df805c136"
+    },
+    {
+        "file":  "spine/heroes/Npc_025/Npc_025.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_025/Npc_025.skel",
+        "bytes":  461767,
+        "sha256":  "ed562eaa132611796760e174ccb41adceb823f8047dab64dec45982836736344"
+    },
+    {
+        "file":  "spine/heroes/Npc_025/Npc_025.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_025/Npc_025.png",
+        "bytes":  261642,
+        "sha256":  "208bd950fafd4960813771c8562834964d008e99672130ade976b0725ee8c897"
+    },
+    {
+        "file":  "../chara/l/chara066_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara066_0.png",
+        "bytes":  655860,
+        "sha256":  "058f94f4ecd3042a90a59461207c5ebe278293e7ff071a628a4c8521ed3104a8"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara066_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara066_0_p.png",
+        "bytes":  15008,
+        "sha256":  "c16d02fff03e634ad9848c8117e1f7a0e1ab089cfcbbba67c291d66ae5976a58"
+    },
+    {
+        "file":  "spine/heroes/Npc_066/Npc_066.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_066/Npc_066.atlas",
+        "bytes":  3821,
+        "sha256":  "b933c93b40e3e15f6ccb10ab1cc0a6431d987d2d4445dcf4c7d31f079a786292"
+    },
+    {
+        "file":  "spine/heroes/Npc_066/Npc_066.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_066/Npc_066.skel",
+        "bytes":  244767,
+        "sha256":  "87ef47d7045e70c3b444db358dea733b2aa7b62a085dd99048238c4cf031389e"
+    },
+    {
+        "file":  "spine/heroes/Npc_066/Npc_066.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_066/Npc_066.png",
+        "bytes":  254965,
+        "sha256":  "aaf40ef3bdfc8c6ea213ed53ae11fc709d07c9e431eeba3839128ca83effd533"
+    },
+    {
+        "file":  "../chara/l/chara034_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara034_0.png",
+        "bytes":  529228,
+        "sha256":  "ae1fd7fe55e318d7d5e63a7a56226802530ff4089c0ed9ac4f800af66ed13a45"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara034_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara034_0_p.png",
+        "bytes":  15677,
+        "sha256":  "5812168995582e035a9cf507d89726dbdd68bfc304588192086dfb2f249b56ee"
+    },
+    {
+        "file":  "spine/heroes/Npc_034/Npc_034.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_034/Npc_034.atlas",
+        "bytes":  3887,
+        "sha256":  "438946fa09df9b9e673d1185d4ce2dd5156e4dfd2ad8381604a2bfc2cf5eebad"
+    },
+    {
+        "file":  "spine/heroes/Npc_034/Npc_034.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_034/Npc_034.skel",
+        "bytes":  399888,
+        "sha256":  "09d23630df7784cf4f7a554d06907bccc5f254fd14587182508b43c666f61a4d"
+    },
+    {
+        "file":  "spine/heroes/Npc_034/Npc_034.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_034/Npc_034.png",
+        "bytes":  263226,
+        "sha256":  "5cf35d82ecab8b474caa95087f80092ced642c4b7bdd776e60afb272d2c49b96"
+    },
+    {
+        "file":  "../chara/l/chara046_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara046_0.png",
+        "bytes":  385932,
+        "sha256":  "d13f61f4dd749314fe1654b198ee36e2c6ebcd8d37b087f94d7954f9c07d6c99"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara046_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara046_0_p.png",
+        "bytes":  15659,
+        "sha256":  "de8f6a42ee4e370f5b02ef0162c6f1f0dbebe995ff76ff61a5b9bed081a0c174"
+    },
+    {
+        "file":  "spine/heroes/Npc_046/Npc_046.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_046/Npc_046.atlas",
+        "bytes":  4105,
+        "sha256":  "20ee542770848b26af3c06d101c30681d235a9a4ac805e5b028020e935a64804"
+    },
+    {
+        "file":  "spine/heroes/Npc_046/Npc_046.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_046/Npc_046.skel",
+        "bytes":  238549,
+        "sha256":  "4f39e97dd07a624cdd71a18e6a6189c84eaeb5b7f48bf5f27d6d4b470a698ea7"
+    },
+    {
+        "file":  "spine/heroes/Npc_046/Npc_046.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_046/Npc_046.png",
+        "bytes":  261366,
+        "sha256":  "22174bbac4bda02dd0c06b27105a712cbd82b8e99ba485c2b824346264eb00b6"
+    },
+    {
+        "file":  "../chara/l/chara019_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara019_0.png",
+        "bytes":  1080700,
+        "sha256":  "ff87c472fdbbdebb6a81c37addfb3bd0f8c5addee4f7f90b77616583917ddf63"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara019_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara019_0_p.png",
+        "bytes":  16099,
+        "sha256":  "068406bae9bff7b19f09b2671f76b95102073ba602a1ae7302701c9c8e7e63a6"
+    },
+    {
+        "file":  "spine/heroes/Npc_019/Npc_019.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_019/Npc_019.atlas",
+        "bytes":  6668,
+        "sha256":  "cfa09f2f75c973597b3378d34bd68f0f6b07d842f9a6bed1728379dcda89a024"
+    },
+    {
+        "file":  "spine/heroes/Npc_019/Npc_019.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_019/Npc_019.skel",
+        "bytes":  504883,
+        "sha256":  "20c9b673f19dd286413325c7c37a62123652ec059654780515bd1d59631d5b5e"
+    },
+    {
+        "file":  "spine/heroes/Npc_019/Npc_019.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_019/Npc_019.png",
+        "bytes":  924804,
+        "sha256":  "ce8b9c2b4c9cbb9d799bc9c8662ac91c328c6e2b91ba73af31fb4a3f8598d33d"
+    },
+    {
+        "file":  "../chara/l/chara051_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara051_0.png",
+        "bytes":  1404290,
+        "sha256":  "f3adcdff7937f0924722fc212e937967fa0aecf7b66d7f2dfeec2c6c122ca66f"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara051_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara051_0_p.png",
+        "bytes":  16017,
+        "sha256":  "0f38f865d5a467593804e2abeb7477c1bece80039062286500e26cb3d7ba0a08"
+    },
+    {
+        "file":  "spine/heroes/Npc_051/Npc_051.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_051/Npc_051.atlas",
+        "bytes":  5970,
+        "sha256":  "fe624a478a0354f1b05417136874803a9bfa0dc6282e73b6e7bf12b25c3d740e"
+    },
+    {
+        "file":  "spine/heroes/Npc_051/Npc_051.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_051/Npc_051.skel",
+        "bytes":  544202,
+        "sha256":  "911fd8a55508ef248603246b1cdc69e9466d6ecbb69445d4206823102876462b"
+    },
+    {
+        "file":  "spine/heroes/Npc_051/Npc_051.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_051/Npc_051.png",
+        "bytes":  367401,
+        "sha256":  "dc492b545f40792c379d67f45ebc0d4afc5733beef45fe2cce0203353d949efb"
+    },
+    {
+        "file":  "../chara/l/chara049_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara049_0.png",
+        "bytes":  1632485,
+        "sha256":  "c8880347727f9fa602613ac8aed80e8d73c3cd9ebcc071922549f0748e18a618"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara049_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara049_0_p.png",
+        "bytes":  16490,
+        "sha256":  "848b718dbb8c8de31f8fc0113c934307211008d30853e79e5fc70b01702b0b22"
+    },
+    {
+        "file":  "spine/heroes/Npc_049/Npc_049.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_049/Npc_049.atlas",
+        "bytes":  6000,
+        "sha256":  "1fb8bfba72297a599472d2be9d632c1354c9155a37757a88edf1d45c520217e3"
+    },
+    {
+        "file":  "spine/heroes/Npc_049/Npc_049.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_049/Npc_049.skel",
+        "bytes":  337997,
+        "sha256":  "b3de9188b15664a851ecabe7aaf241247920c8763b849db65be3497711051ac1"
+    },
+    {
+        "file":  "spine/heroes/Npc_049/Npc_049.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_049/Npc_049.png",
+        "bytes":  648355,
+        "sha256":  "66c47c51e00d6fc4ede036103196eb9a04b41f6eaadc418e05f3cc7690b4329c"
+    },
+    {
+        "file":  "../chara/l/chara050_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara050_0.png",
+        "bytes":  1065094,
+        "sha256":  "fa3e12749b1dbac863e9888ccc666a71eb3a5d43c2af9860b01e9048be844456"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara050_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara050_0_p.png",
+        "bytes":  16608,
+        "sha256":  "2c8a6aba3f8f61bb3345148944891fd1ec4c7169ee3df2b82c63ccba291e4f8c"
+    },
+    {
+        "file":  "spine/heroes/Npc_050/Npc_050.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_050/Npc_050.atlas",
+        "bytes":  8851,
+        "sha256":  "7fadaa64b9a6377c02aef9fe66426169a914af5885d30e94480edb53ca41b0da"
+    },
+    {
+        "file":  "spine/heroes/Npc_050/Npc_050.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_050/Npc_050.skel",
+        "bytes":  510823,
+        "sha256":  "7e85ce49be1717702d834f0900059c060161b3d6b47201bb4fc1bd22751e64c4"
+    },
+    {
+        "file":  "spine/heroes/Npc_050/Npc_050.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_050/Npc_050.png",
+        "bytes":  1652035,
+        "sha256":  "c07487ec64ff4ce8270702da900f7501f9dc116c75c08a5c2cecba95151f31b6"
+    },
+    {
+        "file":  "../chara/l/chara055_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara055_0.png",
+        "bytes":  1363601,
+        "sha256":  "02a5e7945872aaad197c88f1423b50a9ce76e80e244093839ce71747845f4d65"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara055_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara055_0_p.png",
+        "bytes":  15721,
+        "sha256":  "98dceb92a7e7544dd294d840d2e9dfc087f9d8dab9d39f6331017af4995cb235"
+    },
+    {
+        "file":  "spine/heroes/Npc_055/Npc_055.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_055/Npc_055.atlas",
+        "bytes":  3875,
+        "sha256":  "bd7947a3f91bf65197c0f53aa117ee5c83b3ca5085a17bdc2ef5a37fd90349a1"
+    },
+    {
+        "file":  "spine/heroes/Npc_055/Npc_055.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_055/Npc_055.skel",
+        "bytes":  369031,
+        "sha256":  "d27a95e4e174977c1389c6cfce8e15ed193c3fdc054487b5dde1bd6cb49e15ca"
+    },
+    {
+        "file":  "spine/heroes/Npc_055/Npc_055.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_055/Npc_055.png",
+        "bytes":  284545,
+        "sha256":  "ae6505f1e13c4b869c96befee4e8ab809621b84a75ab732b4202deb9abcca45a"
+    },
+    {
+        "file":  "../chara/l/chara053_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara053_0.png",
+        "bytes":  1829269,
+        "sha256":  "9c6be6348f82a5fbd83cf6956079741c99efad879472793ce6f27238b7000c33"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara053_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara053_0_p.png",
+        "bytes":  15081,
+        "sha256":  "4622b7aa57502d487ab12b57953db7b9ee331c95a66ad97d06b1033471f17bf3"
+    },
+    {
+        "file":  "spine/heroes/Npc_053/Npc_053.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_053/Npc_053.atlas",
+        "bytes":  6773,
+        "sha256":  "2d3e9d68f58e053d57e0e423f5ed62f6b9735a3e8a574f5beef171dfcddc4474"
+    },
+    {
+        "file":  "spine/heroes/Npc_053/Npc_053.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_053/Npc_053.skel",
+        "bytes":  393789,
+        "sha256":  "8084ce9fcae5d32d02679dcad6701e873532e9096c94656bb05bee91835baf45"
+    },
+    {
+        "file":  "spine/heroes/Npc_053/Npc_053.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_053/Npc_053.png",
+        "bytes":  357829,
+        "sha256":  "a6e7f279ef1f09e2211ac45aed05d2173b6ee35145526ea42d8f84da431b7e49"
+    },
+    {
+        "file":  "../chara/l/chara065_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara065_0.png",
+        "bytes":  1070367,
+        "sha256":  "92bb57441d869ff670c6b7fde79239a28ae4124544139c041237f78c97865eec"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara065_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara065_0_p.png",
+        "bytes":  15540,
+        "sha256":  "33314e3eda5dd32ed9be87f8f54af84d801b3e85ad973d5a02ac10ec5239cbe9"
+    },
+    {
+        "file":  "spine/heroes/Npc_065/Npc_065.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_065/Npc_065.atlas",
+        "bytes":  5966,
+        "sha256":  "502aac328143241d9bc3ec709b018400a794d4d0ada6a2c3070ed5d1b1da2971"
+    },
+    {
+        "file":  "spine/heroes/Npc_065/Npc_065.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_065/Npc_065.skel",
+        "bytes":  288949,
+        "sha256":  "ae63e8266d4e8c765d7c83484f13818c3205e6417d661c7302c84d72bd2ac910"
+    },
+    {
+        "file":  "spine/heroes/Npc_065/Npc_065.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_065/Npc_065.png",
+        "bytes":  329906,
+        "sha256":  "e257bf54fe30cdbf704a369d495f76b7c72bbb14dd004ea1b530b80c6b31f33b"
+    },
+    {
+        "file":  "../chara/l/chara043_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara043_0.png",
+        "bytes":  1008962,
+        "sha256":  "6f980797b978b8d818a5f84302b495047c46d532a7d6674ca6e29a770dc2b81f"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara043_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara043_0_p.png",
+        "bytes":  15667,
+        "sha256":  "57d9172e8d9545bbabf84e11917ea8e1d7112779773af0bbde14f39a2f4f8850"
+    },
+    {
+        "file":  "spine/heroes/Npc_043/Npc_043.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_043/Npc_043.atlas",
+        "bytes":  5216,
+        "sha256":  "aca14b373f23ce5b70aa9e03ecd29f3fc4c91ac4c825cacc118277cc78408d53"
+    },
+    {
+        "file":  "spine/heroes/Npc_043/Npc_043.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_043/Npc_043.skel",
+        "bytes":  408011,
+        "sha256":  "bd7c3c080c0f1f4c90c8153ca264bdc9fb5b182cacebfcb1c1d6f3bfde1b9625"
+    },
+    {
+        "file":  "spine/heroes/Npc_043/Npc_043.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_043/Npc_043.png",
+        "bytes":  326018,
+        "sha256":  "cfae8a65b746f6638ea615520c085a67dbd2ac1ce706b7b17bf29003eaa9b5fd"
+    },
+    {
+        "file":  "../chara/l/chara064_0.png",
+        "source":  "4.24路资源包/assets/res/texture/chara/l/chara064_0.png",
+        "bytes":  1471671,
+        "sha256":  "e049b509b879451f9b7ab5535b255194358a4bf4ebef0c1ee24c425e7d94cd45"
+    },
+    {
+        "file":  "../HeroInfoPanel_Atlas/chara064_0_p.png",
+        "source":  "UI_Atlases/HeroInfoPanel_Atlas/sprites/chara064_0_p.png",
+        "bytes":  16241,
+        "sha256":  "961b376f47842a1f49d96ebf1003af4bc36f36095e1f826045ab8688e4b45227"
+    },
+    {
+        "file":  "spine/heroes/Npc_064/Npc_064.atlas",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_064/Npc_064.atlas",
+        "bytes":  4970,
+        "sha256":  "e0c6b70f941e3d762434a82bc816c1b4a3913767d342b2169856e11f9bc308e4"
+    },
+    {
+        "file":  "spine/heroes/Npc_064/Npc_064.skel",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_064/Npc_064.skel",
+        "bytes":  504411,
+        "sha256":  "f697b2ecabd1903f8bf47bac9a6b167111875daec4735cac157e000c56378cb2"
+    },
+    {
+        "file":  "spine/heroes/Npc_064/Npc_064.png",
+        "source":  "4.24路资源包/assets/res/spine/model/npc/npc_064/Npc_064.png",
+        "bytes":  321400,
+        "sha256":  "c91d7c1b8eb5e0b082a46b586683063c5d1f58d4d2bd56377d86924ae4be6cec"
+    },
+    {
+        "file":  "../eggs/pet_006.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_006.png",
+        "bytes":  28126,
+        "sha256":  "8075283cef911524f5e72d4e4dbe2716cd07f5628fff17e8bd93be5b77100037"
+    },
+    {
+        "file":  "../eggs/pet_016.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_016.png",
+        "bytes":  17486,
+        "sha256":  "8121f6acd2c3e6d2ee4f41090bdd2cb60ea5b15f4a3d202583b01d6ca39ac507"
+    },
+    {
+        "file":  "../eggs/pet_017.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_017.png",
+        "bytes":  18943,
+        "sha256":  "d99d86881a1e141616401a7bd5987ab6db656261d9b79689c472913b5a0f5eeb"
+    },
+    {
+        "file":  "../eggs/pet_007.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_007.png",
+        "bytes":  20554,
+        "sha256":  "9e6326105dd31385c6358b05c53394d84f4c170028ddd20e371f8792a9bfd821"
+    },
+    {
+        "file":  "../eggs/pet_037.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_037.png",
+        "bytes":  13117,
+        "sha256":  "81e2ea32d399850cc3e18507cab8e6927e3ffbc94f6123c353587352def40e82"
+    },
+    {
+        "file":  "../eggs/pet_038.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_038.png",
+        "bytes":  16693,
+        "sha256":  "5a392a467d0f798f5d41d2582432f756a76c626d687bd608a985d3ef40482415"
+    },
+    {
+        "file":  "../eggs/pet_043.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_043.png",
+        "bytes":  20217,
+        "sha256":  "9f8f55e3b07743c49e267b60a3c1dc41c349915e0000572c635d773d3057ec4d"
+    },
+    {
+        "file":  "../eggs/pet_044.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_044.png",
+        "bytes":  19226,
+        "sha256":  "e001cbd65efc9f0c7921e3f2c3836dbd3a40b87abb6a8039fd332d680bf1126c"
+    },
+    {
+        "file":  "../eggs/pet_062.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_062.png",
+        "bytes":  22804,
+        "sha256":  "55db9af974a13516f125e3fb4075d7521d2b79b6a0ed02167fe29022ddc9654e"
+    },
+    {
+        "file":  "../eggs/pet_045.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_045.png",
+        "bytes":  25450,
+        "sha256":  "28820f28051ad286dcfc91387c7293228a7523a3b4583c56ff34544231a4a615"
+    },
+    {
+        "file":  "../eggs/pet_046.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_046.png",
+        "bytes":  24480,
+        "sha256":  "719aaba1ba965179e45bff818816a648abae10fa4f08a776e3e02f1be0a2ed6c"
+    },
+    {
+        "file":  "../eggs/pet_036.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_036.png",
+        "bytes":  21402,
+        "sha256":  "18649a1275cfd349ffde51be5123855bcbd2d75256f22e589a282db0e222e4b9"
+    },
+    {
+        "file":  "../eggs/pet_058.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_058.png",
+        "bytes":  12575,
+        "sha256":  "164516fe3f48252ed300d774b89d5ee699ba81991ea9d969d07323859688dd36"
+    },
+    {
+        "file":  "../eggs/pet_065.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_065.png",
+        "bytes":  19461,
+        "sha256":  "c6337ecb4f32d62af1778f5a12609ed99b2f691828dbbab021723de47ef83581"
+    },
+    {
+        "file":  "../eggs/pet_071.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_071.png",
+        "bytes":  21576,
+        "sha256":  "ced8b7daa1a6ae3babfd25b87cf26168276241ca9ebcab3add2b026a31c9d823"
+    },
+    {
+        "file":  "../eggs/pet_072.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_072.png",
+        "bytes":  18612,
+        "sha256":  "6d17d039d3a3d7dfd5c601f7285a93245b9109cdcae9d7111ac8d11d52a4392d"
+    },
+    {
+        "file":  "../eggs/pet_075.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_075.png",
+        "bytes":  19587,
+        "sha256":  "f59ebfc648d1096e84d2e69b35fee78d864271d6473bfb1bead8540afd29689a"
+    },
+    {
+        "file":  "../eggs/pet_083.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_083.png",
+        "bytes":  20356,
+        "sha256":  "e4c0910964f29f9f98e769504e2ff7269b74f6a471b64232ca810a92fee47137"
+    },
+    {
+        "file":  "../eggs/pet_086.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_086.png",
+        "bytes":  16834,
+        "sha256":  "dc5f0eae03cd87147b397e18a7ab57c366a3c52de6c7aa8a07b79bd8cf53025b"
+    },
+    {
+        "file":  "../eggs/pet_094.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_094.png",
+        "bytes":  17560,
+        "sha256":  "01c9fee465216a874b8a980a5434281562891b22d5be0848e4c9b2565cd2b4da"
+    },
+    {
+        "file":  "../eggs/pet_063.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_063.png",
+        "bytes":  23170,
+        "sha256":  "49a31c0a57d129fcc57cb945c2fb710bbe81b435695000e340089ac6ad7ea7e0"
+    },
+    {
+        "file":  "../eggs/pet_073.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_073.png",
+        "bytes":  14132,
+        "sha256":  "911c3646003971b22b8586e4536ac9a28b63f270564eaa0b7a8169e5137087f2"
+    },
+    {
+        "file":  "../eggs/pet_076.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_076.png",
+        "bytes":  20452,
+        "sha256":  "3142e06ed7f1c392777dbc3aabe926054a13954f7e11274e35145b8bb54512fe"
+    },
+    {
+        "file":  "../eggs/pet_088.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_088.png",
+        "bytes":  18095,
+        "sha256":  "2714ac87828afb29e36c54ca41a7f0c57fff2a4b495832ec77138b3259a969f8"
+    },
+    {
+        "file":  "../eggs/pet_093.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_093.png",
+        "bytes":  28041,
+        "sha256":  "e50a3e1ec31d6c2bd91c0fdd8c3aa856106d71ebae07af35c9d5d7014fc4f25f"
+    },
+    {
+        "file":  "../eggs/pet_095.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_095.png",
+        "bytes":  25863,
+        "sha256":  "5a4373562e8e3dd8c2459035d1598890d4e5756af2d3590f355fa78948b055f0"
+    },
+    {
+        "file":  "../eggs/pet_096.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_096.png",
+        "bytes":  20627,
+        "sha256":  "0a3daca0cb4ba625f3853552ac597a12a1001d8160cbec9fccbc8175f3f1be10"
+    },
+    {
+        "file":  "../eggs/pet_074.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_074.png",
+        "bytes":  26049,
+        "sha256":  "59cebcd51e9dc096b58c7e4098a214b6c71f451713abe2aca57d401effc4fc37"
+    },
+    {
+        "file":  "../eggs/pet_077.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_077.png",
+        "bytes":  29091,
+        "sha256":  "974bfb28606edfea6e728f1095a2d40b8afbf184b01e9edfa44c039782749c71"
+    },
+    {
+        "file":  "../eggs/pet_078.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_078.png",
+        "bytes":  14192,
+        "sha256":  "a318ed28aeb8a82f1dde1a865420abb0f7a0337dcd9c64969a8460da6d6c479f"
+    },
+    {
+        "file":  "../eggs/pet_079.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_079.png",
+        "bytes":  27594,
+        "sha256":  "62bc930090533419ce44ab126de3c6839aef055abf8f38476903a18077366c40"
+    },
+    {
+        "file":  "../eggs/pet_097.png",
+        "source":  "4.24路资源包/assets/res/texture/pet/eggs/pet_097.png",
+        "bytes":  32645,
+        "sha256":  "3f7e8f8407b5a35a33a046a54de8d9892a96db5007343ab839f3828b39aef9bd"
+    },
+    {
+        "file":  "spine/elsa_rawcard.json",
+        "source":  "4.24路资源包/assets/res/spine/perform/perfprm_elsa/elsa_rawcard/elsa_rawcard.asset",
+        "bytes":  517967,
+        "sha256":  "53c93c141d185a6144b2f9664cb7ba2b2776fe0ab5183c0110a0707421814f3d"
+    },
+    {
+        "file":  "spine/elsa_rawcard.atlas",
+        "source":  "4.24路资源包/assets/res/spine/perform/perfprm_elsa/elsa_rawcard/elsa_rawcard.atlas",
+        "bytes":  5506,
+        "sha256":  "1dff9ec8cdb267bee20632e6108fda7a23c28d1fc573d3ab482962bb0d7f84e6"
+    },
+    {
+        "file":  "spine/elsa_rawcard.png",
+        "source":  "4.24路资源包/assets/res/spine/perform/perfprm_elsa/elsa_rawcard/elsa_rawcard.png",
+        "bytes":  1133065,
+        "sha256":  "6354d9b717ba5736a09e15bc0ebd76eabfb1bdd65b979f152e298f9f191a4335"
+    },
+    {
+        "file":  "spine/elsa_rawcard_desk.json",
+        "source":  "4.24路资源包/assets/res/spine/perform/perfprm_elsa/elsa_rawcard_desk/elsa_rawcard_desk.asset",
+        "bytes":  183355,
+        "sha256":  "1cc31a47b3849f1e34002a918eaed14f9ef9448ed30d954b2772f1ff35f84fa0"
+    },
+    {
+        "file":  "spine/elsa_rawcard_desk.atlas",
+        "source":  "4.24路资源包/assets/res/spine/perform/perfprm_elsa/elsa_rawcard_desk/elsa_rawcard_desk.atlas",
+        "bytes":  1354,
+        "sha256":  "9543c662b2d14d7a3f7212d38821b6a9a065f2515513c7b67e485f58ce102a4e"
+    },
+    {
+        "file":  "spine/elsa_rawcard_desk.png",
+        "source":  "4.24路资源包/assets/res/spine/perform/perfprm_elsa/elsa_rawcard_desk/elsa_rawcard_desk.png",
+        "bytes":  457145,
+        "sha256":  "18d2038152510847a91274c1098ff135ea9c012acd9f87e1f5f2ed9895186f61"
+    },
+    {
+        "file":  "spine/elsa_rawcard_desk_2.png",
+        "source":  "4.24路资源包/assets/res/spine/perform/perfprm_elsa/elsa_rawcard_desk/elsa_rawcard_desk_2.png",
+        "bytes":  1252,
+        "sha256":  "778534ba74fd1e71667b2ea2a8f7172959d702ced3ae1fcd047d1e8acefa9609"
+    },
+    {
+        "file":  "spine/perform_bag.skel",
+        "source":  "4.24路资源包/assets/res/spine/perform/perform_bag/perform_bag.skel",
+        "bytes":  72197,
+        "sha256":  "b3f3de492173cbf49e1bf76b19c4b145729739216d79bc71afbe9e6bc04fd468"
+    },
+    {
+        "file":  "spine/perform_bag.atlas",
+        "source":  "4.24路资源包/assets/res/spine/perform/perform_bag/perform_bag.atlas",
+        "bytes":  1471,
+        "sha256":  "ae41a0d756aa04366f51875a4e37a703fe990bdee340174521b6a75de138fe32"
+    },
+    {
+        "file":  "spine/perform_bag.png",
+        "source":  "4.24路资源包/assets/res/spine/perform/perform_bag/perform_bag.png",
+        "bytes":  1151832,
+        "sha256":  "9237c30f81fa6e059d1fbd37cec6d81c708be3de4086defe816640d8908f3bc0"
+    },
+    {
+        "file":  "audio/gacha_ready_chara.wav",
+        "source":  "4.24路资源包/assets/res/audio/bgm/gacha_ready_chara.wav",
+        "bytes":  7372844,
+        "sha256":  "5a5302691a5d83bb2803d1c170ff211c70fde14784b511780ecf0a449ffdef8b"
+    },
+    {
+        "file":  "audio/gacha_show_chara.wav",
+        "source":  "4.24路资源包/assets/res/audio/bgm/gacha_show_chara.wav",
+        "bytes":  17192492,
+        "sha256":  "406aaea7890c04cf70d7d5115138dd79b745a4131917c7bcf37bafc4ea4683ef"
+    },
+    {
+        "file":  "audio/gacha_ready_egg.wav",
+        "source":  "4.24路资源包/assets/res/audio/bgm/gacha_ready_egg.wav",
+        "bytes":  7372844,
+        "sha256":  "28eed22f61e40e2455403cce337500f932de4265898a3ebd085d5f65c9848c80"
+    },
+    {
+        "file":  "audio/gacha_show_egg.wav",
+        "source":  "4.24路资源包/assets/res/audio/bgm/gacha_show_egg.wav",
+        "bytes":  17192492,
+        "sha256":  "7fb315a5a5d4914c545f2f4a4258296aac0057d6f8d2cd34efa8a34da7c5efa8"
+    },
+    {
+        "file":  "audio/gacha_shop.wav",
+        "source":  "4.24路资源包/assets/res/audio/bgm/gacha_shop.wav",
+        "bytes":  13648940,
+        "sha256":  "deb603ef70840cbc020d7be6da1349005114bf773f0434eb8813a9b63055cfd4"
+    },
+    {
+        "file":  "audio/card.wav",
+        "source":  "4.24路资源包/assets/res/audio/effect/ui/card.wav",
+        "bytes":  248876,
+        "sha256":  "8f5dc9e92f70e9a42a06626def7082e97aaa5e7a9489de28a6881943d2d72e2c"
+    },
+    {
+        "file":  "audio/card2.wav",
+        "source":  "4.24路资源包/assets/res/audio/effect/ui/card2.wav",
+        "bytes":  654380,
+        "sha256":  "d4a8f774a7cf9b9e7b7b26459b84682748d1ed6e7dee8caa542ef17163979337"
+    },
+    {
+        "file":  "audio/card3.wav",
+        "source":  "4.24路资源包/assets/res/audio/effect/ui/card3.wav",
+        "bytes":  820268,
+        "sha256":  "7e957590f1a1357f793875123289b9bfc9fbcdfd04fc4e30d3c50293b6106b96"
+    },
+    {
+        "file":  "audio/card7.wav",
+        "source":  "4.24路资源包/assets/res/audio/effect/ui/card7.wav",
+        "bytes":  548396,
+        "sha256":  "bf9efdddb92e49b3bd98b1e32e10cb2585fa39dbbf605fc52679c4f4c3c44db5"
+    },
+    {
+        "file":  "audio/card8.wav",
+        "source":  "4.24路资源包/assets/res/audio/effect/ui/card8.wav",
+        "bytes":  460844,
+        "sha256":  "c329a9853ecf3782ebebe397c18d399e035ce6cde634f9433caeb9652a4eaa4f"
+    },
+    {
+        "file":  "audio/card9.wav",
+        "source":  "4.24路资源包/assets/res/audio/effect/ui/card9.wav",
+        "bytes":  387116,
+        "sha256":  "286e36852ed722d7746fd5b8835e89dc406baaffc536251f9a4a263a9e5b1bf9"
+    },
+    {
+        "file":  "audio/card10.wav",
+        "source":  "4.24路资源包/assets/res/audio/effect/ui/card10.wav",
+        "bytes":  364076,
+        "sha256":  "2a71060ccc6be92064676b02f00ab87da6f52cc474dc183cdff590043f0928c6"
+    },
+    {
+        "file":  "audio/card12.wav",
+        "source":  "4.24路资源包/assets/res/audio/effect/ui/card12.wav",
+        "bytes":  737324,
+        "sha256":  "b3ab75d5cae0721e15b40095d2464d7565f231d32f504746048dfa82e07b545f"
+    },
+    {
+        "file":  "audio/card11.wav",
+        "source":  "4.24路资源包/assets/res/audio/effect/ui/card11.wav",
+        "bytes":  354860,
+        "sha256":  "9f1c725d04938705c5d7d49a0dcff18985962cdf2b2b2474d906d3fc928d1cc1"
+    },
+    {
+        "file":  "audio/get3.wav",
+        "source":  "4.24路资源包/assets/res/audio/effect/ui/get3.wav",
+        "bytes":  806444,
+        "sha256":  "9efaeb438dcb0ef0211c939f3b5cf9a1b66310e806c30925e799fdc0a0c56fde"
+    },
+    {
+        "file":  "audio/get5.wav",
+        "source":  "4.24路资源包/assets/res/audio/effect/ui/get5.wav",
+        "bytes":  419372,
+        "sha256":  "e868b3a3fd5907881bf920258a7e3de7a62c4e07f1ef4ebec2d0179ed27f4d4a"
+    },
+    {
+        "file":  "audio/getcard.wav",
+        "source":  "4.24路资源包/assets/res/audio/effect/ui/getcard.wav",
+        "bytes":  364076,
+        "sha256":  "a82b1e6909bcdb72d060c6764501ac0f1188cb3491e74db73974fc3fb9750863"
+    },
+    {
+        "file":  "audio/itemGet.wav",
+        "source":  "4.24路资源包/assets/res/audio/effect/ui/itemGet.wav",
+        "bytes":  188972,
+        "sha256":  "33f480da52e4cbce6d316f3a56f2101a5f0df6d45c7e349241128ee92ca9fd66"
+    },
+    {
+        "file":  "audio/shining1.wav",
+        "source":  "4.24路资源包/assets/res/audio/effect/ui/shining1.wav",
+        "bytes":  539180,
+        "sha256":  "3e15477cbde818298b37809c2d48e014f6c04541929d0490eb5b8fff42fd60ef"
+    },
+    {
+        "file":  "SPINE-LICENSE.txt",
+        "source":  "vue-myrzg/node_modules/@esotericsoftware/spine-webgl/LICENSE",
+        "bytes":  1454,
+        "sha256":  "6142ee6cc2c03d3a918793e4750ae772bd3755c534d4a35e559e301acf51ec39"
+    },
+    {
+        "file":  "../HeroGachaPanel_Atlas/gacha_egg_3.png",
+        "source":  "UI_Atlases/HeroGachaPanel_Atlas/sprites/gacha_egg_3.png",
+        "bytes":  65960,
+        "sha256":  "a2d844089166b59eda4226ac243bc20cfbf48fa5701972a2b00c5793d59ff60e"
+    },
+    {
+        "file":  "../HeroGachaPanel_Atlas/gacha_egg_4.png",
+        "source":  "UI_Atlases/HeroGachaPanel_Atlas/sprites/gacha_egg_4.png",
+        "bytes":  69332,
+        "sha256":  "d130379190531e568290a8e34d9e291f83a9e9799041e07dfe08735ca243ca97"
+    },
+    {
+        "file":  "../HeroGachaPanel_Atlas/gacha_egg_5.png",
+        "source":  "UI_Atlases/HeroGachaPanel_Atlas/sprites/gacha_egg_5.png",
+        "bytes":  78774,
+        "sha256":  "42258ae8b2fe8c02862ca83edb69eaa70b73ac2ba1354b91f3a18944ee92e647"
+    },
+    {
+        "file":  "../HeroGachaPanel_Atlas/gacha_egg_name.png",
+        "source":  "UI_Atlases/HeroGachaPanel_Atlas/sprites/gacha_egg_name.png",
+        "bytes":  17684,
+        "sha256":  "82f6232ac25ca608d0869909f893c7f3170ca2d9f75e651249f6555765c70cf2"
+    },
+    {
+        "file":  "../HeroGachaPanel_Atlas/gacha_star.png",
+        "source":  "UI_Atlases/HeroGachaPanel_Atlas/sprites/gacha_star.png",
+        "bytes":  3985,
+        "sha256":  "850a392c4e6f3097c48c2371897673fb765b6a017551619856eb913918c0e903"
+    }
 ]

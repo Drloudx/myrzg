@@ -2,8 +2,10 @@
   <div class="page-view-container exchange-page">
 
     <!-- 筛选区（半透明羊皮纸面板） -->
-    <div class="filter-panel paper-panel">
-      <UiSearchInput v-model="searchQuery" placeholder="搜索兑换名称、描述..." />
+    <UiFilterPanel class="filter-panel paper-panel">
+      <template #search>
+        <UiSearchInput v-model="searchQuery" placeholder="搜索兑换名称、描述..." />
+      </template>
 
       <UiFilterRow class="exchange-filter-row" label="分类：">
         <UiFilterPill
@@ -39,7 +41,7 @@
       <div v-if="!showRefreshRules" class="collection-counter">
         共 <span class="count-num">{{ filteredExchanges.length }}</span> 条兑换
       </div>
-    </div>
+    </UiFilterPanel>
 
     <!-- 加载 / 错误 -->
     <UiEmptyState v-if="!isDataReady" type="loading" text="正在装配兑换数据..." />
@@ -104,7 +106,7 @@ import {
   UiFilterRow,
   UiListRow,
   UiSection,
-  UiSearchInput
+  UiFilterPanel, UiSearchInput
 } from '../components/ui/index.js'
 
 const route = useRoute()

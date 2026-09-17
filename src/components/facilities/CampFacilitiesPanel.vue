@@ -1,15 +1,17 @@
 <template>
-    <div class="filter-panel paper-panel camp-filter-panel">
-      <UiSearchInput :model-value="search" :placeholder="isResearch ? '搜索研究、效果或材料...' : '搜索建筑、效果或材料...'" @update:model-value="setSearch" />
+    <UiFilterPanel class="filter-panel paper-panel camp-filter-panel">
+      <template #search>
+        <UiSearchInput :model-value="search" :placeholder="isResearch ? '搜索研究、效果或材料...' : '搜索建筑、效果或材料...'" @update:model-value="setSearch" />
+      </template>
       <slot name="section-tabs" />
       <UiFilterRow v-if="isResearch" label="分类：">
         <UiFilterPill :active="!team" @click="setTeam('')">全部</UiFilterPill>
         <UiFilterPill v-for="option in teams" :key="option.id" :active="team === option.id" @click="setTeam(option.id)">{{ option.name }}</UiFilterPill>
       </UiFilterRow>
       <div class="camp-count">共 <span class="count-num">{{ matches.length }}</span> 项</div>
-    </div>
+    </UiFilterPanel>
 
-    <UiCardGrid id="campFacilitiesScroll" class="camp-grid paper-panel" :class="{ 'camp-grid--research-detail': isResearch && researchDetail }" wide>
+    <UiCardGrid id="campFacilitiesScroll" class="camp-grid paper-panel" wide>
       <UiEmptyState v-if="!selected" text="没有匹配的营地项目" />
       <div v-else-if="isResearch && !researchDetail" class="camp-content">
         <CampResearchTree :entries="camp.research" :matches="matches" @select="selectResearch" />
@@ -126,7 +128,7 @@ import { getImageUrl } from '../../utils/env.js'
 import { formatCampDuration } from '../../utils/campFacilityData.js'
 import { resolveScrollTarget } from '../../utils/scrollTarget.js'
 import CampResearchTree from './CampResearchTree.vue'
-import { UiBackToTop, UiButton, UiCardGrid, UiEmptyState, UiFilterPill, UiFilterRow, UiInfoRow, UiRewardCard, UiSearchInput, UiSection } from '../ui/index.js'
+import { UiBackToTop, UiButton, UiCardGrid, UiEmptyState, UiFilterPill, UiFilterRow, UiInfoRow, UiRewardCard, UiFilterPanel, UiSearchInput, UiSection } from '../ui/index.js'
 
 const props = defineProps({ camp: { type: Object, required: true }, mode: { type: String, required: true } })
 const route = useRoute()
@@ -182,7 +184,6 @@ watch([() => props.mode, () => selected.value?.id, researchDetail], async () => 
 .camp-count { font-size: 13px; font-weight: 600; color: var(--text-muted); white-space: nowrap; }
 /* The page shell clips this surface below the sticky filters on desktop. */
 .camp-grid { background: var(--paper); }
-.camp-grid--research-detail { min-height: calc(100dvh - 307px); box-sizing: border-box; }
 .camp-grid :deep(.ui-card-grid) { grid-template-columns: minmax(0, 1fr); }
 .camp-content { min-width: 0; padding: 12px 14px 24px; }
 .camp-heading { display: flex; gap: 14px; align-items: center; margin: 16px 0; }
@@ -224,7 +225,6 @@ watch([() => props.mode, () => selected.value?.id, researchDetail], async () => 
 .camp-recipe-icon { width: 22px; height: 22px; flex: 0 0 22px; object-fit: contain; }
 @media (max-width: 640px) {
   .camp-content { padding: 10px 12px 20px; }
-  .camp-grid--research-detail { min-height: 0; }
   .camp-building-picker { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
   .camp-building-choice { padding: 8px 2px; }
   .camp-building-choice img { width: 42px; height: 42px; }

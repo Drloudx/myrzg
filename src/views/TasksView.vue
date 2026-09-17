@@ -2,8 +2,10 @@
   <div class="page-view-container tasks-page">
 
     <!-- 顶部筛选面板：与物品图鉴一致的 UiSearchInput + UiFilterRow + UiFilterPill -->
-    <div class="filter-panel paper-panel">
-      <UiSearchInput v-model="searchQuery" placeholder="搜索任务名称、描述、ID..." />
+    <UiFilterPanel class="filter-panel paper-panel">
+      <template #search>
+        <UiSearchInput v-model="searchQuery" placeholder="搜索任务名称、描述、ID..." />
+      </template>
 
       <!-- 主分类筛选行 -->
       <UiFilterRow label="分类：">
@@ -34,7 +36,7 @@
           </div>
         </template>
       </UiFilterRow>
-    </div>
+    </UiFilterPanel>
 
     <!-- 加载 / 错误 -->
     <UiEmptyState v-if="!isDataReady" type="loading" text="正在装配任务数据..." />
@@ -287,7 +289,7 @@ import { ref, shallowRef, computed, nextTick, onBeforeUnmount, onMounted, watch 
 import { useRoute, useRouter } from 'vue-router'
 import DialogLines from '../components/TaskDialogLines.vue'
 import {
-  UiSearchInput,
+  UiFilterPanel, UiSearchInput,
   UiFilterRow,
   UiFilterPill,
   UiListRow,

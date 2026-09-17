@@ -1,7 +1,9 @@
 <template>
   <div class="page-view-container dungeon-page">
-    <div class="dungeon-filter-panel paper-panel">
-      <UiSearchInput v-model="searchQuery" placeholder="搜索副本、关卡或掉落物品..." />
+    <UiFilterPanel class="dungeon-filter-panel paper-panel">
+      <template #search>
+        <UiSearchInput v-model="searchQuery" placeholder="搜索副本、关卡或掉落物品..." />
+      </template>
       <UiFilterRow label="地图：">
         <UiFilterPill
           v-for="option in mapOptions"
@@ -11,7 +13,7 @@
         >{{ option.label }}</UiFilterPill>
       </UiFilterRow>
       <div class="dungeon-count">共 <span class="count-num">{{ filteredDungeons.length }}</span> 个副本，<span class="count-num">{{ battleCount }}</span> 个关卡<span v-if="storyBattleCount">，另有 <span class="count-num">{{ storyBattleCount }}</span> 个剧情入口</span></div>
-    </div>
+    </UiFilterPanel>
 
     <UiEmptyState v-if="!isReady" type="loading" text="正在装配副本数据..." />
     <UiEmptyState v-else-if="filteredDungeons.length === 0" text="未找到符合条件的副本" />
@@ -376,7 +378,7 @@ import {
   UiInfoRow,
   UiModal,
   UiRewardCard,
-  UiSearchInput,
+  UiFilterPanel, UiSearchInput,
   UiSection,
   UiSegmentedTabs,
   UiTag

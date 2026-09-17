@@ -5,8 +5,10 @@
         <UiTabs :model-value="section" :options="sectionOptions" @update:model-value="setSection" />
       </template>
     </CampFacilitiesPanel>
-    <div v-else class="filter-panel paper-panel">
-      <UiSearchInput v-model="searchQuery" :placeholder="isCamp ? (section === 'research' ? '搜索研究、效果或材料...' : '搜索建筑、效果或材料...') : '搜索产物或制作材料...'" />
+    <UiFilterPanel v-else class="filter-panel paper-panel">
+      <template #search>
+        <UiSearchInput v-model="searchQuery" :placeholder="isCamp ? (section === 'research' ? '搜索研究、效果或材料...' : '搜索建筑、效果或材料...') : '搜索产物或制作材料...'" />
+      </template>
       <UiTabs :model-value="section" :options="sectionOptions" @update:model-value="setSection" />
 
       <template v-if="!isCamp">
@@ -49,7 +51,7 @@
 
         <div class="facility-count">共 <strong>{{ filteredRecipes.length }}</strong> 项</div>
       </template>
-    </div>
+    </UiFilterPanel>
 
     <UiEmptyState v-if="!isDataReady" type="loading" text="正在整理设施数据..." />
     <UiEmptyState v-else-if="errorMessage" type="error" :text="errorMessage" />
@@ -122,7 +124,7 @@ import {
   UiFilterPill,
   UiFilterRow,
   UiRewardCard,
-  UiSearchInput,
+  UiFilterPanel, UiSearchInput,
   UiTabs
 } from '../components/ui/index.js'
 

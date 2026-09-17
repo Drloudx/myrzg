@@ -2,8 +2,10 @@
   <div class="page-view-container">
 
     <!-- 搜索 + 筛选区（半透明羊皮纸面板） -->
-    <div class="filter-panel paper-panel">
-      <UiSearchInput v-model="searchQuery" placeholder="搜索装备名称、描述..." />
+    <UiFilterPanel class="filter-panel paper-panel">
+      <template #search>
+        <UiSearchInput v-model="searchQuery" placeholder="搜索装备名称、描述..." />
+      </template>
 
       <UiFilterRow label="部位：">
         <UiFilterPill :active="selectedSub === null" @click="selectedSub = null">全部</UiFilterPill>
@@ -35,7 +37,7 @@
           @click="selectedRarity = r"
         >{{ getRarityName(r) }}</UiFilterPill>
       </UiFilterRow>
-    </div>
+    </UiFilterPanel>
 
     <!-- 列表区（桌面端精准一行 7 列，懒加载每批 60 项） -->
     <UiCardGrid id="itemsGridScroll" class="items-card-grid" v-if="isDataReady">
@@ -74,7 +76,7 @@ import {
   UiFilterPill,
   UiFilterRow,
   UiItemCard,
-  UiSearchInput
+  UiFilterPanel, UiSearchInput
 } from '../components/ui/index.js'
 
 const route = useRoute()

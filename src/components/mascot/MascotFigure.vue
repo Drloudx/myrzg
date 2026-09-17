@@ -10,8 +10,7 @@
     <g v-if="parts.front" class="rig-collar" v-html="parts.front" />
     <g v-if="model.satchelLayer === 'waist'" class="rig-satchel" :style="satchelStyle" v-html="parts.satchel" />
     <g class="hil-head" v-html="parts.head" />
-    <MascotArm v-for="arm in arms" :key="arm.side" v-bind="arm" :sleeve="model.sleeve" :details="parts" :animated="['idle', 'think', 'think-raise'].includes(pose)" />
-    <g v-if="parts.sword && model.swordLayer === 'front'" class="rig-sword" :style="swordStyle" v-html="parts.sword" />
+    <MascotArm v-for="arm in arms" :key="arm.side" v-bind="arm" :sleeve="model.sleeve" :details="parts" :mirror-rod-grip="model.mirrorRodGrip" :animated="['idle', 'think', 'think-raise'].includes(pose)" />
     <g v-if="parts.sword && model.swordLayer === 'front'" class="rig-sword" :style="swordStyle" v-html="parts.sword" />
     <g v-if="model.satchelLayer === 'shield'" class="rig-satchel" :style="satchelStyle" v-html="parts.satchel" />
   </g>

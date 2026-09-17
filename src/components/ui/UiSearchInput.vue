@@ -1,30 +1,48 @@
 <template>
   <div class="ui-search" :class="{ 'is-focused': focused }">
-    <svg class="ui-search__icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <circle cx="11" cy="11" r="7"></circle>
-      <line x1="21" y1="21" x2="16.5" y2="16.5"></line>
-    </svg>
-    <input
-      type="text"
-      class="ui-search__input"
-      :value="modelValue"
-      :placeholder="placeholder"
-      :autocomplete="autocomplete"
-      @input="onInput"
-      @focus="onFocus"
-      @blur="focused = false"
-    />
-    <button v-if="clearable && modelValue" class="ui-search__clear" @click="clear" title="清空" aria-label="清空">
-      ✕
+    <div class="ui-search__field">
+      <svg class="ui-search__icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"></circle>
+        <line x1="21" y1="21" x2="16.5" y2="16.5"></line>
+      </svg>
+      <input
+        type="text"
+        class="ui-search__input"
+        :value="modelValue"
+        :placeholder="placeholder"
+        :autocomplete="autocomplete"
+        @input="onInput"
+        @focus="onFocus"
+        @blur="focused = false"
+      />
+      <button v-if="clearable && modelValue" type="button" class="ui-search__clear" @click="clear" title="清空" aria-label="清空">
+        ✕
+      </button>
+    </div>
+    <button
+      v-if="filterPanel"
+      class="ui-search__toggle"
+      type="button"
+      :aria-expanded="filterPanel.expanded.value"
+      :aria-controls="filterPanel.contentId"
+      :title="filterPanel.expanded.value ? '收起筛选' : '展开筛选'"
+      :aria-label="filterPanel.expanded.value ? '收起筛选' : '展开筛选'"
+      @click="filterPanel.toggle"
+    >
+      <span>{{ filterPanel.expanded.value ? '收起' : '筛选' }}</span>
+      <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path :d="filterPanel.expanded.value ? 'M4 10l4-4 4 4' : 'M4 6l4 4 4-4'" />
+      </svg>
     </button>
   </div>
 </template>
 
 <script setup>
 /**
- * UiSearchInput —— 羊皮纸搜索框（图标 + 输入 + 一键清空）
+ * UiSearchInput —— 羊皮纸搜索框；位于 UiFilterPanel 内时显示筛选折叠按钮。
  */
-import { ref } from 'vue'
+import { inject, ref } from 'vue'
+import { filterPanelKey } from './filterPanelContext.js'
 
 const props = defineProps({
   modelValue: { type: String, default: '' },
@@ -35,6 +53,7 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue', 'focus', 'input'])
 
 const focused = ref(false)
+const filterPanel = inject(filterPanelKey, null)
 
 const onInput = (e) => {
   emit('update:modelValue', e.target.value)
@@ -54,6 +73,42 @@ const clear = () => emit('update:modelValue', '')
   align-items: center;
   width: 100%;
   box-sizing: border-box;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.ui-search__field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+.ui-search__toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 68px;
+  min-height: 38px;
+  padding: 0 9px;
+  flex-shrink: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--paper-soft);
+  color: var(--text-main);
+  font: 700 13px var(--font-ui);
+  cursor: pointer;
+}
+.ui-search__toggle:hover {
+  background: var(--paper-solid);
+}
+.ui-search__toggle:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 2px;
+}
+@media (pointer: coarse) {
+  .ui-search__toggle { min-height: 44px; }
+  .ui-search__input { min-height: 44px; }
 }
 .ui-search__icon {
   position: absolute;

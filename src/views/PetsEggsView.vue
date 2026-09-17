@@ -2,8 +2,10 @@
   <div class="page-view-container">
 
     <!-- 筛选区：半透明羊皮纸面板（池子星级 + 孵化行动 + 显示字段 + 表头） -->
-    <div class="filter-sticky-bar pet-filter-sticky paper-panel">
-      <UiSearchInput v-model="searchQuery" placeholder="搜索魔物名称、星级或收益数据..." />
+    <UiFilterPanel class="filter-sticky-bar pet-filter-sticky paper-panel">
+      <template #search>
+        <UiSearchInput v-model="searchQuery" placeholder="搜索魔物名称、星级或收益数据..." />
+      </template>
 
       <UiFilterRow label="分类：">
         <UiFilterPill
@@ -46,6 +48,7 @@
       </UiAccordion>
 
       <!-- 表头行（木色条，按标准字段顺序） -->
+      <template #footer>
       <div class="table-header-row">
         <div class="th-cell th-name" :class="{ 'is-active': isSortActive('name') }" @click="toggleSort('name')">
           名称 <span class="sort-icon">{{ getSortIcon('name') }}</span>
@@ -60,7 +63,8 @@
           {{ getFieldLabel(fKey) }} <span class="sort-icon">{{ getSortIcon(fKey) }}</span>
         </div>
       </div>
-    </div>
+      </template>
+    </UiFilterPanel>
 
     <!-- 加载态 -->
     <UiEmptyState v-if="!isDataReady" type="loading" text="正在拉取并解析魔物蛋数据..." />
@@ -212,7 +216,7 @@ import {
   UiModal,
   UiInfoPanel,
   UiInfoRow,
-  UiSearchInput,
+  UiFilterPanel, UiSearchInput,
   UiSection,
   UiTag,
   UiBackToTop

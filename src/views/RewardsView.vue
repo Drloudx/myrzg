@@ -2,8 +2,10 @@
   <div class="page-view-container">
 
     <!-- 筛选区：半透明羊皮纸面板（分类 / 状态 / 子状态 分段页签） -->
-    <div class="filter-sticky-bar rewards-filter-sticky paper-panel">
-      <UiSearchInput v-model="searchQuery" placeholder="搜索奖励、物品、地图或说明..." />
+    <UiFilterPanel class="filter-sticky-bar rewards-filter-sticky paper-panel">
+      <template #search>
+        <UiSearchInput v-model="searchQuery" :placeholder="currentMainCat === 'combat_rules' ? '搜索战斗规则，如冷却、暴击、护盾...' : '搜索奖励、物品、地图或说明...'" />
+      </template>
 
       <!-- 主分类（Row 1） -->
       <div class="control-row-1">
@@ -69,15 +71,17 @@
           >{{ subCat === 's1' ? 'S1 兑换' : `${subCat} 兑换` }}</UiFilterPill>
         </UiFilterRow>
       </div>
-    </div>
+    </UiFilterPanel>
 
     <!-- 加载态 -->
-    <UiEmptyState v-if="loading" type="loading" text="正在装配奖励数据..." />
+    <UiEmptyState v-if="loading && currentMainCat !== 'combat_rules'" type="loading" text="正在装配奖励数据..." />
 
     <!-- 主内容区 -->
-    <div v-else-if="pvpRewards" class="rewards-content" id="rewardsScroll" data-main-scroll>
+    <div v-else-if="pvpRewards || currentMainCat === 'combat_rules'" class="rewards-content" id="rewardsScroll" data-main-scroll>
 
-      <template v-if="currentMainCat === 'pvp'">
+      <CombatRules v-if="currentMainCat === 'combat_rules'" :query="searchQuery" />
+
+      <template v-else-if="currentMainCat === 'pvp'">
 
         <!-- 挑战赛规则 -->
         <div v-if="currentSubCat === 'rules' && pvpRewards.rules && matchesRewardQuery(pvpRewards.rules, '挑战赛 赛事 赛区 规则 追加挑战')" class="pvp-rules-container">
@@ -356,7 +360,6 @@
         </div>
       </template>
 
-      <!-- 占位 -->
       <template v-else>
         <UiEmptyState text="该板块奖励数据暂未开放，敬请期待..." />
       </template>
@@ -392,17 +395,17 @@ import {
   UiRewardCard,
   UiModal,
   UiSection,
-  UiSearchInput,
+  UiFilterPanel, UiSearchInput,
   UiBackToTop
 } from '../components/ui/index.js'
 import { fetchWithFallback } from '../utils/request.js'
 import { getCachedItem, fetchItemData } from '../utils/itemParser'
 import { getImageUrl } from '../utils/env'
 import { isBlacklisted } from '../config/blacklist.js'
-import { fetchPetData } from '../utils/petParser'
 import { REWARD_MODE_INFO } from '../utils/gameMappings'
 import { resolveScrollTarget } from '../utils/scrollTarget.js'
 import { useAppStateStore } from '../stores/appState.js'
+import CombatRules from '../components/CombatRules.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -414,9 +417,13 @@ const mainCategories = [
   { id: 'pvp', name: '挑战赛奖励' },
   { id: 'hidden', name: '被隐藏的物品' },
   { id: 'slot_cost', name: '育室槽位消耗' },
-  { id: 'ph3', name: '占位奖励3' }
+  { id: 'combat_rules', name: '战斗规则' }
 ]
-const currentMainCat = ref('pvp')
+const resolveMainCategory = value => {
+  if (value === 'ph3') return 'combat_rules'
+  return mainCategories.some(cat => cat.id === value) ? value : 'pvp'
+}
+const currentMainCat = ref(resolveMainCategory(route.query.tab))
 
 const pvpSubCategories = [
   { id: 'exchange', name: '兑换奖励' },
@@ -486,7 +493,15 @@ const queryText = value => {
   return typeof resolved === 'string' ? resolved : ''
 }
 
+/**
+ * 物品表按需加载完成前后的响应式触发器。
+ * `getCachedItem` 读的是 itemParser 的模块级缓存（非响应式），
+ * 下面三个消费函数必须先触摸本 ref，物品到达后使用它们的计算属性才会重算。
+ */
+const trackItemData = () => itemDataVersion.value
+
 const rewardSearchText = value => {
+  trackItemData()
   const parts = []
   const visit = entry => {
     if (entry === null || entry === undefined) return
@@ -528,19 +543,17 @@ const hasFilteredBattleRewards = computed(() =>
 )
 
 const applyTabsFromRoute = () => {
-  if (!pvpRewards.value) return
-
   searchQuery.value = queryText(route.query.q)
 
   const requestedMain = queryText(route.query.tab)
-  currentMainCat.value = mainCategories.some(cat => cat.id === requestedMain) ? requestedMain : 'pvp'
+  currentMainCat.value = resolveMainCategory(requestedMain)
 
   if (currentMainCat.value === 'pvp') {
     const requestedSub = queryText(route.query.sub)
     currentSubCat.value = pvpSubCategories.some(cat => cat.id === requestedSub) ? requestedSub : 'exchange'
 
     if (currentSubCat.value === 'exchange') {
-      const exchangeCategories = Object.keys(pvpRewards.value.exchange || {})
+      const exchangeCategories = Object.keys(pvpRewards.value?.exchange || {})
       const requestedSeason = queryText(route.query.season)
       currentExchangeCat.value = exchangeCategories.includes(requestedSeason)
         ? requestedSeason
@@ -559,7 +572,7 @@ const applyTabsFromRoute = () => {
 }
 
 const syncTabsToRoute = async () => {
-  if (!routeTabsReady.value) return
+  if (!routeTabsReady.value && currentMainCat.value !== 'combat_rules') return
 
   const query = { ...route.query, tab: currentMainCat.value }
   delete query.sub
@@ -586,27 +599,17 @@ const syncTabsToRoute = async () => {
 }
 
 onMounted(async () => {
-  // Ensure item data is loaded so getIcon and getCachedItem work
-  try {
-    await fetchItemData()
-  } catch (e) {
-    console.error('Failed to init item data for RewardsView', e)
-  }
-
-  let pvpRes = null
-  let hiddenRes = null
-
-  try {
-    pvpRes = await fetchWithFallback('data/parsed/parsed-pvp.json')
-  } catch (e) {
-    console.error('Failed to load parsed/parsed-pvp.json', e)
-  }
-
-  try {
-    hiddenRes = await fetchWithFallback('data/parsed/parsed-hidden.json')
-  } catch(e) {
-    console.error('Failed to load parsed-hidden.json', e)
-  }
+  // 挑战赛与隐藏点位两张小表互相独立：并行取，不要串成一条等待链。
+  const [pvpRes, hiddenRes] = await Promise.all([
+    fetchWithFallback('data/parsed/parsed-pvp.json').catch(e => {
+      console.error('Failed to load parsed/parsed-pvp.json', e)
+      return null
+    }),
+    fetchWithFallback('data/parsed/parsed-hidden.json').catch(e => {
+      console.error('Failed to load parsed-hidden.json', e)
+      return null
+    })
+  ])
 
   if (pvpRes) {
     pvpRewards.value = pvpRes
@@ -625,11 +628,9 @@ onMounted(async () => {
     }
   }
 
+  // 育室槽位只消费 petSetting：取 3KB 的小表透传，不再为一项配置加载整张魔物图鉴表。
   try {
-    const petData = await fetchPetData()
-    if (petData && petData.petSetting) {
-      slotCosts.value = petData.petSetting
-    }
+    slotCosts.value = await fetchWithFallback('data/parsed/petSetting.json')
   } catch (e) {
     console.error('Failed to load petSetting for slotCosts', e)
   }
@@ -639,7 +640,40 @@ onMounted(async () => {
   await syncTabsToRoute()
   loading.value = false
   setTimeout(() => scrollToTarget(), 300)
+
+  // 物品表（2.4MB）只服务奖励卡上的物品名与图标，不阻塞页面装配：
+  // 上面渲染完成后按需加载，到达时 targetName/targetImg 由计算属性自行重算。
+  ensureItemData()
 })
+
+/**
+ * 奖励卡的 targetName / targetQuality / targetImg 依赖 `getCachedItem` / `getIcon` 背后的物品表。
+ * 该表体积远大于本页自身的两张小表，因此不放进 onMounted 的等待链：先让页面可读，
+ * 再按需加载。战斗规则页签完全不消费物品表，此时不会触发这次请求。
+ */
+let itemDataPromise = null
+const itemDataVersion = ref(0)
+const ITEM_CONSUMING_CATS = new Set(['pvp', 'hidden'])
+const needsItemData = () =>
+  currentMainCat.value === 'combat_rules'
+    ? false
+    : ITEM_CONSUMING_CATS.has(currentMainCat.value)
+      ? true
+      : false
+
+const ensureItemData = () => {
+  if (!needsItemData() || itemDataPromise) return itemDataPromise
+  itemDataPromise = fetchItemData()
+    .then(() => { itemDataVersion.value += 1 })
+    .catch(err => {
+      console.error('Failed to load item data for RewardsView', err)
+      itemDataPromise = null
+    })
+  return itemDataPromise
+}
+
+// 页签切到真正消费物品表的分支时再补加载（含深链直达 combat_rules 时完全不加载）。
+watch([currentMainCat, currentSubCat], ensureItemData)
 
 const waitForRenderableTarget = async (element, timeout = 1500) => {
   const startedAt = performance.now()
@@ -666,6 +700,7 @@ const alignTargetInViewport = element => {
 }
 
 const scrollToTarget = async () => {
+  if (currentMainCat.value === 'combat_rules') return
   const { id } = route.query
   if (!id) return
 
@@ -733,7 +768,7 @@ watch(() => route.query.id, () => {
 watch(
   () => [route.query.tab, route.query.sub, route.query.season, route.query.map, route.query.status, route.query.q],
   () => {
-    if (routeTabsReady.value) applyTabsFromRoute()
+    if (routeTabsReady.value || resolveMainCategory(queryText(route.query.tab)) === 'combat_rules') applyTabsFromRoute()
   }
 )
 
@@ -743,6 +778,7 @@ watch(
 )
 
 const getIcon = (typeId) => {
+  trackItemData()
   const item = getCachedItem(typeId)
   if (item && item.img) {
     return getImageUrl(`/Common_ItemIcon/${item.img}.png`)
@@ -751,6 +787,7 @@ const getIcon = (typeId) => {
 }
 
 const flattenPvpItems = (groups = []) => {
+  trackItemData()
   const items = []
   for (const group of groups || []) {
     const rules = group?.rules || [group]

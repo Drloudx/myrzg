@@ -2,8 +2,10 @@
   <div class="page-view-container">
 
     <!-- 筛选区：半透明羊皮纸面板 -->
-    <div class="filter-panel paper-panel">
-      <UiSearchInput v-model="searchQuery" placeholder="搜索物品名称、描述..." />
+    <UiFilterPanel class="filter-panel paper-panel">
+      <template #search>
+        <UiSearchInput v-model="searchQuery" placeholder="搜索物品名称、描述..." />
+      </template>
 
       <!-- 级联大类 -->
       <UiFilterRow label="大类：">
@@ -49,7 +51,7 @@
           @click="selectedRarity = r"
         >{{ getRarityName(r) }}</UiFilterPill>
       </UiFilterRow>
-    </div>
+    </UiFilterPanel>
 
     <!-- 按行窗口化，列数沿用响应式网格样式。 -->
     <UiVirtualGrid ref="itemGrid" id="itemsGridScroll" class="items-card-grid" v-if="isDataReady" :items="filteredItems" item-key="typeId">
@@ -91,7 +93,7 @@ import {
   UiFilterPill,
   UiFilterRow,
   UiItemCard,
-  UiSearchInput
+  UiFilterPanel, UiSearchInput
 } from '../components/ui/index.js'
 
 const route = useRoute()

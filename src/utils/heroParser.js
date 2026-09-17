@@ -293,6 +293,9 @@ export function buildHeroData(maps) {
 
       // 8. Star coins memory crystal limits configuration
       const starConfig = starDatas[rare] || {}
+      // HeroMsg.starNum = sum(starSkillLevel), not rarity or unlocked big stars.
+      const maxStarCount = (starLevelDatas[rare] || [])
+        .reduce((sum, levels) => sum + levels.length, 0)
       const starLimitInfo = {
         limit: starConfig.starCoinLimit || 0,
         rewardItemId: starConfig.itemTypeId || 'item_20026',
@@ -327,7 +330,9 @@ export function buildHeroData(maps) {
           ziyanziyu: ziyanziyuLines,
           explore: exploreTalks
         },
-        starLimitInfo
+        starLimitInfo,
+        maxStarCount,
+        starGrowthRate: Number(generalDatas.starAttAddData ?? 0.01)
       }
     }).filter(Boolean)
 
@@ -509,13 +514,13 @@ function parseReward(rewardId, rewards, items) {
   }
 }
 
-// Interactive stats calculator: computes values at Level L and Rank R
-export function calculateStats(unitData, level, rank, heroLevelConfig, heroRankConfig) {
+// Simulate base growth only; star-skill effects enter a separate attribute layer.
+export function calculateStats(unitData, level, rank, heroLevelConfig, heroRankConfig, starCount = 0, starGrowthRate = 0.01) {
   const growthFields = ['phyAtk', 'magicAtk', 'phyDef', 'magicDef', 'maxHp']
   const results = {}
 
   // Get base growth per level (default 0.05 / 5%)
-  const levelGrowthRate = heroLevelConfig?.attUp || 0.05
+  const levelGrowthRate = Number(heroLevelConfig?.attUp ?? 0.05)
   
   // Calculate total rank attUp sum
   let rankGrowthSum = 0
@@ -527,7 +532,7 @@ export function calculateStats(unitData, level, rank, heroLevelConfig, heroRankC
     }
   }
 
-  const multiplier = 1 + (level - 1) * levelGrowthRate + rankGrowthSum
+  const multiplier = 1 + (level - 1) * levelGrowthRate + starCount * starGrowthRate + rankGrowthSum
 
   growthFields.forEach(field => {
     const baseVal = unitData[field] || 0

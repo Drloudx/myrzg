@@ -197,7 +197,7 @@
 <script setup>
 import { ref, computed, defineAsyncComponent, nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import NavigationMenu from './components/NavigationMenu.vue'
+import NavigationMenu from './components/NavigationMenuLite.vue'
 import GlobalSearchBox from './components/GlobalSearchBox.vue'
 import UpdateModal from './components/UpdateModal.vue'
 import MenuModeModal from './components/MenuModeModal.vue'
@@ -209,6 +209,7 @@ import ItemDetailModal from './components/ItemDetailModal.vue'
 import { itemModalState, openItemDetail } from './utils/itemModalState'
 import { fetchItemData } from './utils/itemParser'
 import { resetModalScrollCoordinator } from './utils/modalScrollCoordinator.js'
+import { prefetchRouteChunks } from './router/index.js'
 
 import { isBlacklisted } from './config/blacklist.js'
 import { getImageUrl, handleImageFallback, isNative } from './utils/env.js'
@@ -410,11 +411,27 @@ onMounted(() => {
       else doneFrames = 0
       if (doneFrames >= 2 || performance.now() - started > 4000) {
         rootEl.classList.remove('is-boot-loading')
+        // 首屏稳定后再预取其余路由分包：此时不再与首屏数据/图片抢带宽，
+        // 之后切换页面无需等待 chunk 下载，消除「先卡一下再切过去」。
+        prefetchRouteChunks()
         return
       }
       bootLoadingRaf = requestAnimationFrame(reveal)
     }
     bootLoadingRaf = requestAnimationFrame(reveal)
+  } else {
+    // 移动端 / 窄屏没有骨架期滚动条处理，但仍要在首屏就绪后预取路由分包。
+    const started = performance.now()
+    const settle = () => {
+      const page = document.querySelector('.page-view-container')
+      const ready = page && !page.querySelector('.ui-empty-state--loading, .ui-empty-state--error')
+      if (ready || performance.now() - started > 4000) {
+        prefetchRouteChunks()
+        return
+      }
+      bootLoadingRaf = requestAnimationFrame(settle)
+    }
+    bootLoadingRaf = requestAnimationFrame(settle)
   }
 })
 
@@ -846,6 +863,11 @@ onBeforeUnmount(() => { itemLoadOperation += 1 })
     overflow-y: visible !important;
     overscroll-behavior: auto;
     clip-path: inset(var(--sticky-clip-top, 0px) 0 0);
+  }
+  /* Camp paper fills the space left by filters, including when they collapse.
+     Longer content still expands into the desktop page scroll. */
+  .app-main :deep(.camp-panel > .camp-grid) {
+    flex: 1 0 auto;
   }
   .app-main :deep(.page-view-container > .filter-panel),
   .app-main :deep(.page-view-container > .filter-sticky-bar),

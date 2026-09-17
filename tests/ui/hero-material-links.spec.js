@@ -10,6 +10,8 @@ test('opens an item detail from a hero skill upgrade material', async ({ page })
   const heroDetail = page.locator('#heroModalScroll')
   await expect(heroDetail).toBeVisible()
   await heroDetail.locator('.skill-select-card', { hasText: '焚火冲击' }).click()
+  await expect(heroDetail.locator('.skill-meta-tags')).toContainText('CD:')
+  await expect(heroDetail.locator('.skill-meta-tags')).toContainText('消耗:')
 
   const targetLevel = heroDetail.locator('.dual-slider-input--target')
   const dualSlider = heroDetail.locator('.dual-level-slider')

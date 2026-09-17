@@ -2,8 +2,10 @@
   <div class="page-view-container">
 
     <!-- 筛选区：半透明羊皮纸面板 -->
-    <div class="filter-panel paper-panel">
-      <UiSearchInput v-model="searchQuery" placeholder="搜索怪物名称、描述、弱点..." />
+    <UiFilterPanel class="filter-panel paper-panel">
+      <template #search>
+        <UiSearchInput v-model="searchQuery" placeholder="搜索怪物名称、描述、弱点..." />
+      </template>
 
       <UiFilterRow v-if="allLabels.length > 0" label="种类：">
         <UiFilterPill :active="selectedLabel === null" @click="selectedLabel = null">全部</UiFilterPill>
@@ -14,7 +16,7 @@
           @click="selectedLabel = label"
         >{{ label }}</UiFilterPill>
       </UiFilterRow>
-    </div>
+    </UiFilterPanel>
 
     <!-- 列表区（5列大幅面卡片展示，懒加载每批 60 项） -->
     <UiCardGrid id="monstersGridScroll" class="monsters-card-grid" data-image-fallback="custom" v-if="isDataReady">
@@ -53,7 +55,7 @@ import {
   UiFilterPill,
   UiFilterRow,
   UiItemCard,
-  UiSearchInput
+  UiFilterPanel, UiSearchInput
 } from '../components/ui/index.js'
 
 const route = useRoute()

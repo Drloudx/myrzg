@@ -2,8 +2,10 @@
   <div class="page-view-container pets-page">
 
     <!-- 筛选区 -->
-    <div class="filter-panel paper-panel">
-      <UiSearchInput v-model="searchQuery" placeholder="搜索魔物名称、特性、描述..." />
+    <UiFilterPanel class="filter-panel paper-panel">
+      <template #search>
+        <UiSearchInput v-model="searchQuery" placeholder="搜索魔物名称、特性、描述..." />
+      </template>
 
       <!-- 稀有度筛选 -->
       <UiFilterRow label="稀有度：">
@@ -22,7 +24,7 @@
         <UiFilterPill :active="filterVariant === null" @click="filterVariant = null">全部</UiFilterPill>
         <UiFilterPill :active="filterVariant === true" @click="filterVariant = true">可变异</UiFilterPill>
       </UiFilterRow>
-    </div>
+    </UiFilterPanel>
 
     <!-- 列表区（5列大幅面卡片展示，懒加载每批 60 项） -->
     <UiCardGrid id="petsGridScroll" class="pets-card-grid" v-if="isDataReady">
@@ -492,7 +494,7 @@ import { fetchPetData } from '../utils/petParser'
 import { getImageUrl } from '../utils/env'
 import { useRoute, useRouter } from 'vue-router'
 import {
-  UiSearchInput,
+  UiFilterPanel, UiSearchInput,
   UiFilterRow,
   UiFilterPill,
   UiCardGrid,

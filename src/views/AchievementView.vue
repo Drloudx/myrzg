@@ -2,8 +2,10 @@
   <div class="page-view-container">
 
     <!-- 筛选区（羊皮纸面板，和物品图鉴风格一致的 UiSearchInput + UiFilterRow + UiFilterPill） -->
-    <div class="filter-panel paper-panel">
-      <UiSearchInput v-model="searchQuery" placeholder="搜索成就名称、描述或道具..." />
+    <UiFilterPanel class="filter-panel paper-panel">
+      <template #search>
+        <UiSearchInput v-model="searchQuery" placeholder="搜索成就名称、描述或道具..." />
+      </template>
 
       <!-- 分类筛选行 -->
       <UiFilterRow label="分类1：">
@@ -34,7 +36,7 @@
           </div>
         </template>
       </UiFilterRow>
-    </div>
+    </UiFilterPanel>
 
     <!-- Async Data Loading State -->
     <UiEmptyState v-if="!isDataReady" type="loading" text="正在装配成就与奖励数据..." />
@@ -177,7 +179,7 @@ import {
   UiListRow,
   UiModal,
   UiRewardCard,
-  UiSearchInput,
+  UiFilterPanel, UiSearchInput,
   UiSection
 } from '../components/ui/index.js'
 import { isBlacklisted } from '../config/blacklist.js'

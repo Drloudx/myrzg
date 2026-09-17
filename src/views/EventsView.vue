@@ -2,12 +2,14 @@
   <div class="page-view-container events-page">
 
     <!-- 筛选区：半透明羊皮纸面板 -->
-    <div class="events-filter-panel paper-panel">
+    <UiFilterPanel class="events-filter-panel paper-panel">
       <!-- 搜索 -->
-      <UiSearchInput
-        v-model="searchQuery"
-        :placeholder="activeTab === 'random' ? '搜索事件名称、描述...' : '搜索探索区域名称、描述...'"
-      />
+      <template #search>
+        <UiSearchInput
+          v-model="searchQuery"
+          :placeholder="activeTab === 'random' ? '搜索事件名称、描述...' : '搜索探索区域名称、描述...'"
+        />
+      </template>
 
       <UiFilterRow label="类型：">
         <UiFilterPill
@@ -31,7 +33,7 @@
       <div class="collection-counter">
         共 <span class="count-num">{{ listCount }}</span> 个{{ activeTab === 'random' ? '事件' : '探索区域' }}
       </div>
-    </div>
+    </UiFilterPanel>
 
     <!-- 加载 / 错误 / 列表 -->
     <UiEmptyState v-if="!isDataReady" type="loading" text="正在装配事件数据..." />
@@ -163,7 +165,7 @@ import {
   UiItemCard,
   UiModal,
   UiRewardCard,
-  UiSearchInput,
+  UiFilterPanel, UiSearchInput,
   UiSection,
   UiTag
 } from '../components/ui/index.js'

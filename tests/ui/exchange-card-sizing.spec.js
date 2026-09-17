@@ -1,5 +1,9 @@
 import { expect, test } from '@playwright/test'
 
+// 本用例逐张比对 4 个分类下的全部卡片几何与图标解码结果，累计耗时稳定超过默认 45s 预算
+// （失败点在最后一步而不是任何断言），因此单独放宽超时，不改断言强度。
+test.setTimeout(150_000)
+
 test('ordinary exchanges keep uniform frames with single-line titles and balanced icon spacing', async ({ page }, testInfo) => {
   const errors = []
   page.on('pageerror', error => errors.push(error.message))

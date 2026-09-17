@@ -23,7 +23,7 @@
         <g class="rig-wrist" :transform="`translate(0 ${joint.forearmLength}) rotate(${joint.handAngle - joint.forearmAngle})`">
           <g transform="translate(0 14)" class="mascot-grip-anchor">
             <g :class="{ 'hil-reeling-hand': side === 'left' && grip === 'rod', 'hil-rod-hand': side === 'right' && grip === 'rod' }">
-            <g :class="{ 'hil-thinking-hand': side === 'right' && animated }" :transform="side === 'left' ? 'scale(-1 1)' : undefined">
+            <g :class="{ 'hil-thinking-hand': side === 'right' && animated }" :transform="side === 'left' && (grip !== 'rod' || mirrorRodGrip) ? 'scale(-1 1)' : undefined">
               <!-- Identical glove/cuff geometry on both hands and in every pose. -->
               <template v-if="['sita', 'bandage'].includes(sleeve)">
                 <g data-costume="wrapped-wrist">
@@ -89,7 +89,7 @@ const props = defineProps({
   side: { type: String, required: true }, handAngle: Number,
   bend: { type: Number, default: 1 }, grip: { type: String, default: 'rest' },
   upperLength: { type: Number, default: 40 }, forearmLength: { type: Number, default: 27 },
-  animated: Boolean, sleeve: String, details: { type: Object, default: () => ({}) }
+  animated: Boolean, sleeve: String, details: { type: Object, default: () => ({}) }, mirrorRodGrip: { type: Boolean, default: true }
 })
 const detail = name => props.details[`${name}-${props.side}`] || props.details[name]
 const joint = computed(() => solveArm(props))

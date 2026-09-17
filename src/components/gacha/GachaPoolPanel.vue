@@ -1,19 +1,19 @@
 <template>
-  <!-- 卡池首页采用 contain：窗口变窄时整体等比缩小，保证左侧页签、右侧货币和底部按钮仍在视口内。演出面板可继续使用 height。 -->
-  <GachaStage :backdrop="getImageUrl('/images/gacha/gacha_cardbackground_main_output.png')" fit="contain">
+  <!-- 窄窗口完整缩放固定坐标控件，宽窗口只延展布景，立绘与按钮保持原比例。 -->
+  <GachaStage :backdrop="getImageUrl('/images/gacha/gacha_cardbackground_main_output.png')" fit="height">
     <!-- ── 背景层：prefab `gacha_pool_BG`（深度 0~3），贴图由 TextureLoad 在 Awake 加载，
          对应关系取自 prefab：BG_main→`gacha_cardbackground_main_output_blur.png`(2048×1024，与
          该 UITexture 尺寸完全一致)、BG_main_blured→`..._blured.png`(1024×512，scale 2)、
          BG_HL→`..._HL_output.png`(1680×1000)、desk→`elsa_desk_foreground.png`(1680×1000，scale 1.25)
          ── -->
-    <div class="g-abs g-layer-bg" :style="gachaPos(0, 0)">
+    <div class="g-abs g-layer-bg pool-scenery" :style="gachaPos(0, 0)">
       <img
         :src="getImageUrl('/images/gacha/gacha_cardbackground_main_output_blur.png')"
         alt=""
         class="pool-bgmain"
       />
     </div>
-    <div class="g-abs g-layer-bg" :style="gachaPos(0, 0)">
+    <div class="g-abs g-layer-bg pool-scenery" :style="gachaPos(0, 0)">
       <img
         :src="getImageUrl('/images/gacha/gacha_cardbackground_main_output_blured.png')"
         alt=""
@@ -21,7 +21,7 @@
       />
     </div>
     <!-- BG_HL：depth 1，TweenAlpha 0.5↔0.65 呼吸（style=2 ping-pong） -->
-    <div class="g-abs g-layer-bg" :style="gachaPos(0, 0)">
+    <div class="g-abs g-layer-bg pool-scenery" :style="gachaPos(0, 0)">
       <img
         :src="getImageUrl('/images/gacha/gacha_cardbackground_HL_output.png')"
         alt=""
@@ -458,23 +458,31 @@ function upAvatar(candidate) {
 </script>
 
 <style scoped>
-/* BG_main：2048×1024（prefab 该 UITexture 的原始尺寸），depth 0 */
-.pool-bgmain {
-  width: 2048px;
-  height: 1024px;
+.pool-scenery {
+  width: max(100%, 1680px);
+  height: 1000px;
+  overflow: hidden;
+}
+
+/* 两张模糊纹理共用主图裁切框（次级模糊边略外扩），角色立绘不拉伸。 */
+.pool-bgmain,
+.pool-bgblur {
+  position: absolute;
+  width: calc(100% * 2048 / 1680);
+  height: calc(100% * 1024 / 1000);
+  left: calc(-100% * 184 / 1680);
+  top: calc(-100% * 12 / 1000);
+  max-width: none;
 }
 
 /* BG_main_blured：1024×512，prefab 里 scale=(2,2) */
 .pool-bgblur {
-  width: 1024px;
-  height: 512px;
-  transform: scale(2);
   opacity: 0.55;
 }
 
 .pool-hl {
-  width: 1680px;
-  height: 1000px;
+  width: 100%;
+  height: 100%;
   animation: gacha-breathe 2.4s ease-in-out infinite;
   pointer-events: none;
 }
@@ -487,7 +495,7 @@ function upAvatar(candidate) {
 }
 
 .pool-foreground {
-  width: 2100px;
+  width: max(100%, 2100px);
   height: 1250px;
   pointer-events: none;
 }
