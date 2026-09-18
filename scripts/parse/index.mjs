@@ -31,6 +31,7 @@ import { buildEventsFile } from './events.mjs'
 import { buildPetEggsFile } from './pet-eggs.mjs'
 import { buildGachaFile } from './gacha.mjs'
 import { buildDungeonsFiles } from './dungeons.mjs'
+import { buildFreightFile } from './freight.mjs'
 import * as runtimeTables from './runtime-tables.mjs'
 
 if (!existsSync(parsedDir)) {
@@ -120,6 +121,7 @@ const jobs = [
   { name: 'pet-eggs', build: () => buildPetEggsFile(), dependsOnItems: false },
   { name: 'gacha', build: () => buildGachaFile(), dependsOnItems: false },
   { name: 'pets', build: () => buildPetsFile(), dependsOnItems: false },
+  { name: 'freight', build: () => buildFreightFile(), dependsOnItems: false },
   { name: 'heroes', build: () => buildHeroesFile(itemData), dependsOnItems: true },
   { name: 'monsters', build: () => buildMonstersFile(itemData), dependsOnItems: true }
 ]
