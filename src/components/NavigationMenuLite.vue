@@ -39,6 +39,7 @@ const liteNavList = [
   { name: '菜谱查询', path: '/recipes', icon: '/ui/item_30047.webp' },
   { name: '魔物收益', path: '/petseggs', icon: '/ui/pet_079.webp' },
   { name: '模拟招募', path: '/gacha', icon: '/images/HeroPoolPanel_Atlas/gacha_at_chara062_0.webp' },
+  { name: '贸易小车', path: '/freight', icon: '/images/FreightPanel_Atlas/cart_back.webp' },
   { name: '成就查询', path: '/achievement', icon: '/ui/achv_icon_adv.webp' }
 ]
 </script>

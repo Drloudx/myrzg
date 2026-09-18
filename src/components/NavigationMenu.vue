@@ -165,6 +165,9 @@ const defaultNavList = [
   { name: '副本图鉴', path: '/dungeons', icon: '/ui/zw.webp' },
   { name: '兑换', path: '/exchange', icon: '/ui/zw.webp' },
   { name: '模拟招募', path: '/gacha', icon: '/images/HeroPoolPanel_Atlas/gacha_at_chara062_0.webp' },
+  // 游戏内该玩法正式名是「货运」（FreightPanel，入口为营地 carriage 建筑）；
+  // 网页版沿用玩家更易懂的「贸易小车」。图标取该面板自己的资源。
+  { name: '贸易小车', path: '/freight', icon: '/images/FreightPanel_Atlas/cart_back.webp' },
   { name: '其他', path: '/rewards', icon: '/ui/zw.webp' }
 ]
 
