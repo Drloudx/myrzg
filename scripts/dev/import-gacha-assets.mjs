@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import crypto from 'node:crypto'
+import { execFileSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 
 const root = fileURLToPath(new URL('../../', import.meta.url))
@@ -88,3 +89,12 @@ for (const name of [
 copy(path.join(root, 'node_modules/@esotericsoftware/spine-webgl/LICENSE'), 'SPINE-LICENSE.txt')
 fs.writeFileSync(path.join(target, 'asset-manifest.json'), JSON.stringify(manifest, null, 2) + '\n')
 console.log(`Imported ${manifest.length} original files, ${(manifest.reduce((n, x) => n + x.bytes, 0) / 1048576).toFixed(1)} MiB; no image recompression.`)
+
+// 音频：原始资源包给的是 1411 kbps 未压缩 WAV（19 支 66.45 MB）。导入后立即转 Opus
+// （容器为 MP4 —— WebKit/Safari 放不出 Ogg/WebM 里的 Opus，见 convert-audio-opus.mjs 文件头），
+// BGM 96k / 音效 64k，共 4.81 MB。否则这个脚本会把 66 MB WAV 重新带回仓库，
+// 和 `src/utils/gachaAudio.js` 期望的 `.mp4` 对不上。`--delete-source` 保留仓库里只有 .mp4。
+// 单独转码脚本另有独立入口：`node scripts/dev/convert-audio-opus.mjs`。
+if (!process.argv.includes('--no-audio-opus')) {
+  execFileSync(process.execPath, [path.join(root, 'scripts/dev/convert-audio-opus.mjs'), '--apply', '--delete-source'], { stdio: 'inherit' })
+}

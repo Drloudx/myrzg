@@ -38,7 +38,14 @@ let bgm = null
 const bgmCache = new Map()
 
 function audioUrl(name) {
-  return getImageUrl(`/images/gacha/audio/${name}.wav`)
+  // `.mp4` 里装的是 Opus 流（不是 AAC）：原 `.wav` 是 1411 kbps 未压缩 PCM，19 支共 66.45 MB，
+  // 转 96k BGM / 64k 音效后共 4.81 MB（−92.8%）。全项目只有这一处拼音频扩展名。
+  //
+  // 为什么是 MP4 容器而不是更"标准"的 `.opus`(Ogg)：Opus 编码三家引擎都支持，但**容器**决定
+  // 能不能放。实测 Chromium 152 / WebKit 26.5 / Firefox 153 用**真实播放**验证：Ogg/Opus 与
+  // WebM/Opus 在 WebKit（Safari/iOS）上是编码层拒绝（canPlayType 空、MEDIA_ERR_SRC_NOT_SUPPORTED），
+  // 只有 MP4/Opus 三家全通，且体积与 Ogg 基本相同。详见 scripts/dev/convert-audio-opus.mjs 文件头。
+  return getImageUrl(`/images/gacha/audio/${name}.mp4`)
 }
 
 /**
@@ -71,8 +78,8 @@ export function currentBgmTime() {
 }
 
 /**
- * 取（或创建）某首 BGM 的元素。**默认 `preload='none'`**：BGM 单支就有 7~17MB，
- * 若进页就 `auto` 预取会与卡池图片抢带宽（实测会把卡池主视觉的加载拖到图片断言超时）。
+ * 取（或创建）某首 BGM 的元素。**默认 `preload='none'`**：BGM 单支 0.5~1.3 MB（转 Opus 前
+ * 是 7~16 MB），进页就 `auto` 预取会与卡池图片抢带宽（实测会把卡池主视觉的加载拖到图片断言超时）。
  * 只有真正切到该曲时才置 `auto` 并播放。
  */
 function bgmElement(name) {
