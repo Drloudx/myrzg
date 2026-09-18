@@ -526,7 +526,7 @@ function executeDrawWithSpend(count, spendItems) {
       // 揭晓 Q 版小人的骨架与皮肤（gacha-presentation：name = Npc 骨架名）
       skeleton: preset?.name ?? '',
       skin: preset?.skin ?? '',
-      // 游戏卡面 `gacha_at*.png`（骨架解析异常时的静态替代）与碎片图标（重复获得 ×N）
+      // 游戏卡面 `gacha_at*.webp`（骨架解析异常时的静态替代）与碎片图标（重复获得 ×N）
       card: preset?.card ?? candidate.icon ?? '',
       fragment: preset?.fragment ?? '',
       // 立绘锚点（源码 `hero.ImgPos`，形如 "10_-147"；`gachaCharaOffset` 在 prefab 里是 (0,0)）

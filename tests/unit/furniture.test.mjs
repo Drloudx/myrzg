@@ -154,7 +154,7 @@ test('derived furniture preserves source fields, crafting data, acquisition tags
   assert.equal(furniture.initialNum, 2)
   assert.deepEqual(furniture.crafting, { available: true, note: '' })
   assert.deepEqual(furniture.skins.map(skin => [skin.type, skin.icon, skin.isDefault]), [['normal', '', true]])
-  assert.deepEqual(furniture.consume.items, [{ typeId: 'wood', name: '木板', img: '/Common_ItemIcon/wood.png', quality: 2, num: 5 }])
+  assert.deepEqual(furniture.consume.items, [{ typeId: 'wood', name: '木板', img: '/Common_ItemIcon/wood.webp', quality: 2, num: 5 }])
   assert.deepEqual(furniture.consume.currencies.map(entry => [entry.typeId, entry.name, entry.num]), [['item_00001', '银币', 20]])
   assert.deepEqual(furniture.condition, {
     id: 'open-chair',
@@ -198,7 +198,7 @@ test('current raw tables produce the formal catalog and only the four known miss
   assert.equal(data.furniture.some(entry => entry.id === 'petRoom01'), false)
   assert.equal(data.furniture.filter(entry => entry.id === 'petHouse').length, 1)
   assert.equal(data.furniture.find(entry => entry.id === 'mailBox')?.displayIcon, 'build_psxw_tianlong')
-  assert.equal(data.furniture.find(entry => entry.id === 'mailBox')?.displayImage, '/RoomObj/c001_ludeng001.png')
+  assert.equal(data.furniture.find(entry => entry.id === 'mailBox')?.displayImage, '/RoomObj/c001_ludeng001.webp')
   assert.deepEqual(data.furniture.find(entry => entry.id === 'mailBox')?.crafting, {
     available: false,
     note: '营地固定设施，无需制作'
@@ -237,13 +237,13 @@ test('current raw tables produce the formal catalog and only the four known miss
     ...furniture.skins.map(skin => skin.icon),
     ...furniture.blueprints.map(blueprint => blueprint.icon)
   ]).filter(Boolean))
-  const missing = [...iconIds].filter(icon => !existsSync(join(imageDir, `${icon}.png`))).sort()
+  const missing = [...iconIds].filter(icon => !existsSync(join(imageDir, `${icon}.webp`))).sort()
   assert.deepEqual(missing, [
     'build_roomLittle_yma7_2',
     'build_roomLittle_yma8_2',
     'build_roomLittle_yma8_3',
     'build_roomOther_xca4_1'
   ])
-  assert.equal(readdirSync(imageDir).filter(file => file.endsWith('.png')).length, 143)
+  assert.equal(readdirSync(imageDir).filter(file => file.endsWith('.webp')).length, 143)
   assert.ok(data.furniture.flatMap(entry => entry.skins).every(skin => !Object.hasOwn(skin, 'roomObj')))
 })

@@ -225,7 +225,7 @@ export function buildExchangeData(maps) {
     out.push({
       typeId, num,
       name: BASE_REWARD_NAMES[typeId] || item.name || typeId,
-      icon: `/Common_ItemIcon/${item.img || typeId}.png`,
+      icon: `/Common_ItemIcon/${item.img || typeId}.webp`,
       quality: item.quality || 1
     })
   }
@@ -353,7 +353,7 @@ export function buildExchangeData(maps) {
       heroName: hero.name,
       name: skin.name,
       quality: skin.quality,
-      image: entry.img ? `/images/PackPane/${entry.img}.png` : ''
+      image: entry.img ? `/images/PackPane/${entry.img}.webp` : ''
     }
   }
 

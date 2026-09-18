@@ -57,7 +57,7 @@
         <div class="task-card-main">
           <div class="task-card-icon">
             <img
-              :src="getImageUrl(`/images/TaskPanel/task_tag${item.type}.png`)"
+              :src="getImageUrl(`/images/TaskPanel/task_tag${item.type}.webp`)"
               :alt="item.typeLabel"
               class="task-card-icon-img"
               loading="lazy"
@@ -231,7 +231,7 @@
                     >
                       <img
                         v-if="mon.icon"
-                        :src="getImageUrl(`/images/PicHandBookPanel_Atlas/${mon.icon}.png`)"
+                        :src="getImageUrl(`/images/PicHandBookPanel_Atlas/${mon.icon}.webp`)"
                         class="monster-icon"
                         loading="lazy"
                         @error="handleImgError"

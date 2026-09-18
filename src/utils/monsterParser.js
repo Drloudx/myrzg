@@ -500,10 +500,10 @@ function getMonsterPortrait(m, key) {
 function getMonsterPortraitPath(m) {
   const model = m?.viewData?.skeletonName
   if (model === 'obj_mon055' || model === 'obj_mon069') {
-    return `/images/model-previews/${model}.png`
+    return `/images/model-previews/${model}.webp`
   }
-  if (m.typeId === '003SummonMon') return '/images/Common_ItemIcon/item_10043.png'
-  return `/images/PicHandBookPanel_Atlas/${getMonsterPortrait(m, m.typeId)}.png`
+  if (m.typeId === '003SummonMon') return '/images/Common_ItemIcon/item_10043.webp'
+  return `/images/PicHandBookPanel_Atlas/${getMonsterPortrait(m, m.typeId)}.webp`
 }
 
 export function getVariantLabel(m, presentation = null) {

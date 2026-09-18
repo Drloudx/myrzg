@@ -6,10 +6,10 @@
              spGachaDitai01 石质台座 + Q 版小人 win → win_idle 站在台座上）→
        step3 立绘展开与台座右移（菱形大框与立绘左移至 -160，台座总装右移至 +360，
              台座正面浮现 gacha_star_M.png 星级、新获得、右上角属性/职业徽标、名牌与台词）。 -->
-  <GachaStage :backdrop="getImageUrl('/images/uipanel/herogachashowpanel/bg.png')" fit="height">
+  <GachaStage :backdrop="getImageUrl('/images/uipanel/herogachashowpanel/bg.webp')" fit="height">
     <!-- ── 背景层 ── -->
     <div class="g-layer-bg reveal-bg">
-      <img :src="getImageUrl('/images/uipanel/herogachashowpanel/bg.png')" alt="" />
+      <img :src="getImageUrl('/images/uipanel/herogachashowpanel/bg.webp')" alt="" />
     </div>
 
     <!-- 粒子近似（浮尘） -->
@@ -49,7 +49,7 @@
         }"
       >
         <img
-          :src="getImageUrl('/images/gacha/gacha_star_L.png')"
+          :src="getImageUrl('/images/gacha/gacha_star_L.webp')"
           alt="star"
           class="reveal-bigstar-img"
         />
@@ -70,19 +70,19 @@
     >
       <!-- 菱形双框：spGachaBox02 (672) + spGachaBox01 (640)（内部透明无底色，实机1:1尺寸） -->
       <img
-        :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaBox02.png')"
+        :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaBox02.webp')"
         alt=""
         class="reveal-box reveal-box--outer"
       />
       <img
-        :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaBox01.png')"
+        :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaBox01.webp')"
         alt=""
         class="reveal-box reveal-box--inner"
       />
 
       <!-- 四角闪块 spGachaStar02 (410×410) -->
       <img
-        :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaStar02.png')"
+        :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaStar02.webp')"
         alt=""
         class="reveal-sparkles"
       />
@@ -117,7 +117,7 @@
       :style="gachaPos(0, 0)"
     >
       <!-- lineAlpha：spGachaLine01 (974×974) -->
-      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaLine01.png')" alt="" class="reveal-line" />
+      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaLine01.webp')" alt="" class="reveal-line" />
 
       <!-- 4星 & 5星专属：符文文字环 spGachaTxtRing01 (866×864) -->
       <div
@@ -153,10 +153,10 @@
       :style="gachaPos(0, 0)"
     >
       <!-- 托板：spGachaBlock01 492×492（Step 2/3 舞台托板） -->
-      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaBlock01.png')" alt="" class="reveal-stage-block" />
+      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaBlock01.webp')" alt="" class="reveal-stage-block" />
 
       <!-- 石台座：spGachaDitai01 380×380 @(0,-118) -->
-      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaDitai01.png')" alt="" class="reveal-stage-ditai" />
+      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaDitai01.webp')" alt="" class="reveal-stage-ditai" />
 
       <!-- Q 版小人：Spine 挂载宿主 380×380 @(0,-118) -->
       <div v-show="!chibiFallback" ref="chibiHost" class="reveal-chibi-host"></div>
@@ -175,7 +175,7 @@
           <img
             v-for="index in starCount"
             :key="index"
-            :src="getImageUrl('/images/gacha/gacha_star_M.png')"
+            :src="getImageUrl('/images/gacha/gacha_star_M.webp')"
             alt=""
             class="reveal-pedestal-star"
             :style="{
@@ -187,14 +187,14 @@
 
         <!-- 新伙伴角标（只有新角色显示，pinned to 右台阶 @ (104, -108)） -->
         <div v-if="current.isNew" class="reveal-stage-new">
-          <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_new.png')" alt="新伙伴" class="reveal-new" />
-          <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_new.png')" alt="" class="reveal-new reveal-new--shine" />
+          <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_new.webp')" alt="新伙伴" class="reveal-new" />
+          <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_new.webp')" alt="" class="reveal-new reveal-new--shine" />
         </div>
 
         <!-- 属性菱形标 @ (148, 118) -->
         <div class="reveal-stage-element">
           <img
-            :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/spGachaTag${elementSlug}03.png`)"
+            :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/spGachaTag${elementSlug}03.webp`)"
             alt=""
             class="reveal-element-img"
           />
@@ -203,7 +203,7 @@
         <!-- 职业菱形标 @ (208, 79) -->
         <div v-if="current.job" class="reveal-stage-class">
           <img
-            :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaBlock05.png')"
+            :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaBlock05.webp')"
             alt=""
             class="reveal-class-frame"
           />
@@ -220,13 +220,13 @@
     <template v-if="phaseIndex >= 2">
       <!-- nameBase: spGachaNameDown01 512×512 -->
       <div class="g-abs g-layer-ui reveal-namebase" :class="{ 'reveal-fade-out': leaving }" :style="nameBaseStyle">
-        <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaNameDown01.png')" alt="" />
+        <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaNameDown01.webp')" alt="" />
       </div>
 
       <!-- elementTextBase: spGachaTag{Element}02 -->
       <div class="g-abs g-layer-ui" :class="{ 'reveal-fade-out': leaving }" :style="gachaPos(104, -126)" aria-hidden="true">
         <img
-          :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/spGachaTag${elementSlug}02.png`)"
+          :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/spGachaTag${elementSlug}02.webp`)"
           alt=""
           class="reveal-tag-img reveal-tag-img--base"
         />
@@ -235,7 +235,7 @@
       <!-- classText: 128×128 -->
       <div v-if="current.job" class="g-abs g-layer-ui" :class="{ 'reveal-fade-out': leaving }" :style="gachaPos(158, -126)">
         <img
-          :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/spGachaTagClass0${current.job}.png`)"
+          :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/spGachaTagClass0${current.job}.webp`)"
           alt=""
           class="reveal-tag-img"
         />
@@ -244,7 +244,7 @@
       <!-- elementText: 64×64 -->
       <div class="g-abs g-layer-ui" :class="{ 'reveal-fade-out': leaving }" :style="gachaPos(99, -126)">
         <img
-          :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/spGachaTag${elementSlug}01.png`)"
+          :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/spGachaTag${elementSlug}01.webp`)"
           alt=""
           class="reveal-tag-img reveal-tag-img--sm"
         />
@@ -265,7 +265,7 @@
 
     <!-- ── Step 3: 台词打字机 ── -->
     <div v-if="phaseIndex >= 2 && current.dialogue" class="g-abs g-layer-interactive reveal-text" :class="{ 'reveal-fade-out': leaving }" :style="gachaPos(0, -282)">
-      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_text.png')" alt="" class="reveal-text__bg" />
+      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_text.webp')" alt="" class="reveal-text__bg" />
       <p class="g-text reveal-text__body">{{ typedText }}</p>
     </div>
 
@@ -285,7 +285,7 @@
       title="跳过（跳过后只保留 5 星）"
       @click="skipAll"
     >
-      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_btn_skip.png')" alt="跳过" />
+      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_btn_skip.webp')" alt="跳过" />
     </button>
   </GachaStage>
 </template>
@@ -386,12 +386,12 @@ const dustMotes = DUST.map((mote, index) => ({
 }))
 
 function getClassTotemUrl(job) {
-  if (job === 6) return getImageUrl('/images/gacha/chara_bg_class_6.png')
-  return getImageUrl(`/images/HeroGachaShowPanel_Atlas/spGachaClass0${job}Black.png`)
+  if (job === 6) return getImageUrl('/images/gacha/chara_bg_class_6.webp')
+  return getImageUrl(`/images/HeroGachaShowPanel_Atlas/spGachaClass0${job}Black.webp`)
 }
 
 function getClassIconUrl(job) {
-  return getImageUrl(`/images/HeroGachaShowPanel_Atlas/spGachaClass0${job}.png`)
+  return getImageUrl(`/images/HeroGachaShowPanel_Atlas/spGachaClass0${job}.webp`)
 }
 
 const elementColor = computed(() => ELEMENT_COLORS[current.value.element ?? 1] ?? ELEMENT_COLORS[1])
@@ -822,9 +822,9 @@ onBeforeUnmount(() => {
   height: 470px;
   margin: -235px 0 0 -235px;
   background-color: v-bind(elementColor);
-  mask-image: url('/images/HeroGachaShowPanel_Atlas/spGachaTxtRing01.png');
+  mask-image: url('/images/HeroGachaShowPanel_Atlas/spGachaTxtRing01.webp');
   mask-size: 100% 100%;
-  -webkit-mask-image: url('/images/HeroGachaShowPanel_Atlas/spGachaTxtRing01.png');
+  -webkit-mask-image: url('/images/HeroGachaShowPanel_Atlas/spGachaTxtRing01.webp');
   -webkit-mask-size: 100% 100%;
   filter: drop-shadow(0 0 8px v-bind(elementColor));
   opacity: 0.85;
@@ -862,9 +862,9 @@ onBeforeUnmount(() => {
   width: 70px;
   height: 70px;
   background-color: v-bind(elementColor);
-  mask-image: url('/images/HeroGachaShowPanel_Atlas/spGachaAngle01.png');
+  mask-image: url('/images/HeroGachaShowPanel_Atlas/spGachaAngle01.webp');
   mask-size: 100% 100%;
-  -webkit-mask-image: url('/images/HeroGachaShowPanel_Atlas/spGachaAngle01.png');
+  -webkit-mask-image: url('/images/HeroGachaShowPanel_Atlas/spGachaAngle01.webp');
   -webkit-mask-size: 100% 100%;
   filter: drop-shadow(0 0 5px v-bind(elementColor));
   pointer-events: none;
@@ -1178,7 +1178,7 @@ onBeforeUnmount(() => {
 }
 
 .reveal-skip img { width: 128px; height: 60px; }
-.reveal-skip:active img { content: url('/images/HeroGachaShowPanel_Atlas/gacha_btn_skip_press.png'); }
+.reveal-skip:active img { content: url('/images/HeroGachaShowPanel_Atlas/gacha_btn_skip_press.webp'); }
 
 .reveal-text {
   width: 960px;

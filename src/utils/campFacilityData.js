@@ -21,7 +21,7 @@ function parseCost(id, consumes, items) {
     ...(consume.items || []).filter(entry => Number(entry.num) > 0).map(entry => {
       const item = items[entry.typeId]
       if (!item) throw new Error(`Missing camp material: ${entry.typeId}`)
-      return { typeId: entry.typeId, name: item.name, img: `/images/Common_ItemIcon/${item.img}.png`, quality: Number(item.quality) || 1, num: Number(entry.num) }
+      return { typeId: entry.typeId, name: item.name, img: `/images/Common_ItemIcon/${item.img}.webp`, quality: Number(item.quality) || 1, num: Number(entry.num) }
     })
   ]
 }
@@ -54,7 +54,7 @@ export function buildCampFacilityData(maps, recipes = []) {
       if (rewardId && !rewards[rewardId]) throw new Error(`Missing camp reward: ${rewardId}`)
       return {
         level,
-        icon: `/images/BuildItem/${info.icon || home.icon}.png`,
+        icon: `/images/BuildItem/${info.icon || home.icon}.webp`,
         description: cleanText(info.desc).split('\n').filter(line =>
           !(stats.some(stat => stat.key === 'decMax') && line.includes('装饰值上限'))
           && !(abilityStats.length && line.includes('货车载重上限'))).join('\n'),
@@ -76,7 +76,7 @@ export function buildCampFacilityData(maps, recipes = []) {
       }
     })
     return {
-      id, name: home.name, icon: `/images/BuildItem/${home.icon}.png`, levels,
+      id, name: home.name, icon: `/images/BuildItem/${home.icon}.webp`, levels,
       unlockCondition: formatFurnitureCondition(conditions[home.condition], tasks)
     }
   })
@@ -84,7 +84,7 @@ export function buildCampFacilityData(maps, recipes = []) {
   const research = Object.entries(researches).map(([id, entry]) => ({
     id, name: entry.name, description: cleanText(entry.des), team: entry.team,
     teamName: researchTeams[entry.team] || '其他研究',
-    icon: `/images/CampCenterPanel/${entry.icon}.png`,
+    icon: `/images/CampCenterPanel/${entry.icon}.webp`,
     prerequisite: entry.preResearch && researches[entry.preResearch]
       ? { id: entry.preResearch, name: researches[entry.preResearch].name, level: 1 } : null,
     levels: [...(entry.level || [])].sort((a, b) => a.level - b.level).map(info => ({

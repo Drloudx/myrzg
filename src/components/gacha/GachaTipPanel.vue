@@ -33,7 +33,7 @@
             :title="`${candidate.name}（查看详情）`"
             @click="emit('open-candidate', candidate)"
           >
-            <img :src="getImageUrl(`/images/HeroPoolPanel_Atlas/at_f_${candidate.quality}.png`)" alt="" class="tip-up-slot__frame" />
+            <img :src="getImageUrl(`/images/HeroPoolPanel_Atlas/at_f_${candidate.quality}.webp`)" alt="" class="tip-up-slot__frame" />
             <img :src="getImageUrl(upAvatar(candidate))" :alt="candidate.name" class="tip-up-slot__icon" />
             <!-- 概率提升角标：prefab `heroPoolTip` 下 `chanceUp` = com_up 24×56 @(37.9,0) -->
             <img :src="getImageUrl('/images/Common_Atlas/com_up.png')" alt="" class="tip-up-slot__badge" />
@@ -124,7 +124,7 @@
         title="关闭"
         @click="emit('close')"
       >
-        <img :src="getImageUrl('/images/Common_Atlas/com_btn_back.png')" alt="关闭" />
+        <img :src="getImageUrl('/images/Common_Atlas/com_btn_back.webp')" alt="关闭" />
       </button>
     </div>
     </GachaStage>

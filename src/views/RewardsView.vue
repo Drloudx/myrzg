@@ -781,7 +781,7 @@ const getIcon = (typeId) => {
   trackItemData()
   const item = getCachedItem(typeId)
   if (item && item.img) {
-    return getImageUrl(`/Common_ItemIcon/${item.img}.png`)
+    return getImageUrl(`/Common_ItemIcon/${item.img}.webp`)
   }
   return getImageUrl('/ui/default_item.svg')
 }

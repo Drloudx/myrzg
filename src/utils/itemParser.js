@@ -79,7 +79,7 @@ export function buildSmithingData({ itemExchangeRandomRes = {}, exchangeTeamRes 
       return {
         typeId: material.typeId,
         name: target.name || material.typeId,
-        img: target.img ? `/images/Common_ItemIcon/${target.img}.png` : '',
+        img: target.img ? `/images/Common_ItemIcon/${target.img}.webp` : '',
         quality: Number(target.quality) || 1,
         num: Number(material.num) || 0
       }
@@ -531,7 +531,7 @@ export function getItemImageUrl(item, avatars = cachedAvatars) {
   // 家具图纸使用目标家具/外观的可展示图；错误或缺失的源配置明确显示占位。
   if (item.useAction === 'unlockHomeItem' || item.useAction === 'unlockHomeItemSkin') {
     const icon = item.homeItemUnlocks?.[0]?.icon || ''
-    return icon ? `/images/BuildItem/${icon}.png` : '/ui/visibility-off.svg'
+    return icon ? `/images/BuildItem/${icon}.webp` : '/ui/visibility-off.svg'
   }
   
   // 只有碎片使用角色头像；指名契约书保留 item.json 配置的契约书图标。
@@ -541,12 +541,12 @@ export function getItemImageUrl(item, avatars = cachedAvatars) {
     if (avatar && avatar.img) {
       // e.g. at001_0 -> chara001_0
       const imgName = avatar.img.replace(/^at/, 'chara')
-      return `/images/HeroInfoPanel_Atlas/${imgName}_p.png`
+      return `/images/HeroInfoPanel_Atlas/${imgName}_p.webp`
     }
   }
 
   // 默认物品图标
-  return item.img ? `/images/Common_ItemIcon/${item.img}.png` : ''
+  return item.img ? `/images/Common_ItemIcon/${item.img}.webp` : ''
 }
 
 /**

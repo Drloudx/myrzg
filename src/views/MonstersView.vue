@@ -23,7 +23,7 @@
       <UiItemCard
         v-for="mon in displayedMonsters"
         :key="mon.id"
-        :img="getImageUrl(`/images/PicHandBookPanel_Atlas/${mon.icon}.png`)"
+        :img="getImageUrl(`/images/PicHandBookPanel_Atlas/${mon.icon}.webp`)"
         :name="mon.name"
         @click="handleMonsterClick(mon)"
         @img-error="e => handleImgError(e, mon)"
@@ -114,8 +114,8 @@ const handleImgError = (e, mon) => {
   const names = [mon.icon, mon.rawIcon].filter(Boolean)
     .flatMap(name => [name, name.replace('colect_mon_', 'colectr_mon_')])
   handleImageFallback(e, {
-    source: getImageUrl(`/images/PicHandBookPanel_Atlas/${mon.icon}.png`),
-    candidates: names.map(name => getImageUrl(`/images/PicHandBookPanel_Atlas/${name}.png`))
+    source: getImageUrl(`/images/PicHandBookPanel_Atlas/${mon.icon}.webp`),
+    candidates: names.map(name => getImageUrl(`/images/PicHandBookPanel_Atlas/${name}.webp`))
   })
 }
 </script>

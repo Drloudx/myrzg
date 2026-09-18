@@ -212,7 +212,7 @@
 
     <UiSection v-if="recipeInfo && PREVIEW_AVAILABLE_IDS.has(recipeInfo.typeId)" title="预览图">
       <div class="recipe-preview-box">
-        <img :src="getImageUrl(`/menu_prev/${recipeInfo.typeId}_prev.png`)" alt="预览图" class="recipe-prev-img" />
+        <img :src="getImageUrl(`/menu_prev/${recipeInfo.typeId}_prev.webp`)" alt="预览图" class="recipe-prev-img" />
       </div>
     </UiSection>
 
@@ -283,7 +283,7 @@
           <span class="home-item-unlock-icon" :class="`quality-bg-${Number(unlock.quality) || 1}`">
             <img
               v-if="unlock.icon"
-              :src="getImageUrl(`/BuildItem/${unlock.icon}.png`)"
+              :src="getImageUrl(`/BuildItem/${unlock.icon}.webp`)"
               :alt="unlock.name"
               loading="lazy"
             />
@@ -303,7 +303,7 @@
         <UiButton class="unlock-hero-link" variant="link" size="sm" @click="handleHeroNavigate">
           <img
             v-if="heroUnlock.heroIcon"
-            :src="getImageUrl(`/images/HeadIconAtals/${heroUnlock.heroIcon}.png`)"
+            :src="getImageUrl(`/images/HeadIconAtals/${heroUnlock.heroIcon}.webp`)"
             :alt="heroUnlock.heroName"
             class="unlock-hero-icon"
           />
@@ -342,7 +342,7 @@
       <div class="skin-portrait-preview" :class="[skinUnlock.quality ? `quality-border-${skinUnlock.quality}` : '', { 'has-model': skinUnlock.modelImage }]">
         <div class="skin-preview-pane">
           <img
-            :src="getImageUrl(`/images/chara/l/${skinUnlock.img}.png`)"
+            :src="getImageUrl(`/images/chara/l/${skinUnlock.img}.webp`)"
             :alt="`${skinUnlock.skinName}立绘`"
             loading="lazy"
           />

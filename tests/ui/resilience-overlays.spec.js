@@ -77,7 +77,7 @@ test('hidden reward preview appears above the header and closes without navigati
 
 test('missing CDN images retry the bundle once and finish on a visible placeholder', async ({ page }) => {
   const requests = []
-  await page.route('**/images/__review_missing__.png*', route => {
+  await page.route('**/images/__review_missing__.webp*', route => {
     requests.push(route.request().url())
     return route.fulfill({ status: 404, body: 'missing' })
   })
@@ -88,7 +88,7 @@ test('missing CDN images retry the bundle once and finish on a visible placehold
     img.alt = 'fallback-check'
     img.width = img.height = 40
     document.querySelector('.header-left').append(img)
-    img.src = 'https://myrzg.yxzmy.top/images/__review_missing__.png'
+    img.src = 'https://myrzg.yxzmy.top/images/__review_missing__.webp'
   })
   const image = page.locator('#fallback-check')
   await expect(image).toHaveAttribute('src', '/ui/visibility-off.svg')

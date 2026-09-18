@@ -10,15 +10,15 @@
     <div class="pet-stage-cam" :class="{ 'pet-stage-cam--settle': camSettled }">
       <div class="pet-bg-wrap">
         <img :src="getImageUrl(BG_BLUR)" alt="" class="pet-bg" />
-        <img :src="getImageUrl('/images/gacha/gacha_cardbackground_main_output_blured.png')" alt="" class="pet-bg pet-bg--blured" />
-        <img :src="getImageUrl('/images/gacha/gacha_cardbackground_HL_output.png')" alt="" class="pet-bg pet-bg--hl" />
+        <img :src="getImageUrl('/images/gacha/gacha_cardbackground_main_output_blured.webp')" alt="" class="pet-bg pet-bg--blured" />
+        <img :src="getImageUrl('/images/gacha/gacha_cardbackground_HL_output.webp')" alt="" class="pet-bg pet-bg--hl" />
       </div>
 
       <!-- 蛋池桌面前景：层级在 Spine 背包背后（depth 3 < depth 6），
            底沿贴紧屏幕底端（bottom: -120px），宽度 100% 满屏展示左右全景（左侧铃兰花瓶、右侧相框与药水瓶），
            中央绿叶堆紧贴并托抱背包下沿。 -->
       <div class="pet-desk-wrap">
-        <img :src="getImageUrl('/images/gacha/gacah_pet_desk_foreground.png')" alt="" class="pet-desk-fg" />
+        <img :src="getImageUrl('/images/gacha/gacah_pet_desk_foreground.webp')" alt="" class="pet-desk-fg" />
       </div>
 
       <!-- 蛋袋 Spine（perform_bag，皮肤 def） -->
@@ -80,7 +80,7 @@
       <div :key="'di-' + cursor" class="g-abs g-layer-art pet-diamond-wrap" :style="{ ...gachaPos(0, 20), zIndex: 11 }">
         <div class="pet-diamond__glow" :style="starGlowStyle" aria-hidden="true"></div>
         <img
-          :src="getImageUrl(`/images/HeroGachaPanel_Atlas/gacha_egg_${starCount}.png`)"
+          :src="getImageUrl(`/images/HeroGachaPanel_Atlas/gacha_egg_${starCount}.webp`)"
           alt=""
           class="pet-diamond"
         />
@@ -89,7 +89,7 @@
            宽度 224→374 展开。文字用**魔物名**（prefab UILabel 示例「宝石迷迷可」），
            蛋候选名带「的蛋」后缀需去掉。 -->
       <div :key="'name-' + cursor" class="g-abs g-layer-ui pet-name" :style="gachaPos(0, -163)">
-        <img :src="getImageUrl('/images/HeroGachaPanel_Atlas/gacha_egg_name.png')" alt="" class="pet-name__banner" />
+        <img :src="getImageUrl('/images/HeroGachaPanel_Atlas/gacha_egg_name.webp')" alt="" class="pet-name__banner" />
         <p class="g-text pet-name__text">{{ petDisplayName }}</p>
       </div>
       <!-- 星级：5 个独立 `gacha_star` 72×72，UIGrid cellWidth 40，组内 (0,-137) → 绝对 (0,-117)。
@@ -105,9 +105,9 @@
           class="pet-star"
           :style="{ left: `${starOffset(index)}px`, zIndex: starSlots.length - index, '--pet-star-delay': `${starDelay(index)}s` }"
         >
-          <img :src="getImageUrl('/images/HeroGachaPanel_Atlas/gacha_star.png')" alt="" class="pet-star__base" />
+          <img :src="getImageUrl('/images/HeroGachaPanel_Atlas/gacha_star.webp')" alt="" class="pet-star__base" />
           <img
-            :src="getImageUrl('/images/HeroGachaPanel_Atlas/gacha_star.png')"
+            :src="getImageUrl('/images/HeroGachaPanel_Atlas/gacha_star.webp')"
             alt=""
             class="pet-star__shine"
           />
@@ -121,7 +121,7 @@
         :style="gachaPos(94, 116)"
       >
         <img
-          :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_new.png')"
+          :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_new.webp')"
           alt="新获得"
           class="pet-new"
         />
@@ -134,14 +134,14 @@
       v-if="phase === 'bag'"
       class="g-abs g-layer-ui pet-tap"
       :style="gachaPos(0, -325)"
-      :src="getImageUrl('/images/Common_Atlas/com_tap.png')"
+      :src="getImageUrl('/images/Common_Atlas/com_tap.webp')"
       alt="点击开袋"
     />
     <img
       v-else-if="phase === 'show'"
       class="g-abs g-layer-ui pet-tap pet-tap--next"
       :style="gachaPos(0, -325)"
-      :src="getImageUrl('/images/Common_Atlas/com_tap.png')"
+      :src="getImageUrl('/images/Common_Atlas/com_tap.webp')"
       alt="点击继续"
     />
 
@@ -167,7 +167,7 @@
       title="分享"
       @click.stop="emit('share', { items })"
     >
-      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_btn_share.png')" alt="分享" />
+      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_btn_share.webp')" alt="分享" />
     </button>
     <button
       v-if="phase !== 'loading'"
@@ -177,7 +177,7 @@
       title="跳过"
       @click.stop="finishAll"
     >
-      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_btn_skip.png')" alt="跳过" />
+      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_btn_skip.webp')" alt="跳过" />
     </button>
   </GachaStage>
 </template>
@@ -213,7 +213,7 @@ const props = defineProps({
 const emit = defineEmits(['done', 'share'])
 
 /** PetGachaAniPanel 的 TextureLoad（Awake）：模糊主背景（2048×1024）。 */
-const BG_BLUR = '/images/gacha/gacha_cardbackground_main_output_blur.png'
+const BG_BLUR = '/images/gacha/gacha_cardbackground_main_output_blur.webp'
 /** 星级光效颜色（源码 `ShowPetUI` 的 ShineEft startColor）：3★ 蓝 / 4★ 紫 / 5★ 金。 */
 const STAR_COLORS = {
   3: { core: 'rgba(69, 102, 255, 0.55)', halo: 'rgba(69, 102, 255, 0.20)' },
@@ -419,7 +419,7 @@ onBeforeUnmount(() => {
 /* 开场黑屏淡入（对齐真机转场） */
 .pet-black {
   position: absolute;
-  inset: 0;
+  inset: -10px;
   z-index: 25;
   background: #000;
   pointer-events: none;
@@ -771,7 +771,7 @@ onBeforeUnmount(() => {
 
 .pet-share img { width: 96px; height: 96px; }
 .pet-skip img { width: 128px; height: 60px; }
-.pet-skip:active img { content: url('/images/HeroGachaShowPanel_Atlas/gacha_btn_skip_press.png'); }
+.pet-skip:active img { content: url('/images/HeroGachaShowPanel_Atlas/gacha_btn_skip_press.webp'); }
 
 /* 点击推进层 */
 .pet-catcher {

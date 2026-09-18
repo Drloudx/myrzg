@@ -38,19 +38,19 @@
         <template #icon>
           <div class="pet-card-art">
             <img
-              :src="getImageUrl(`/images/PetPanel/petcard_botm_${pet.starDisplay}.png`)"
+              :src="getImageUrl(`/images/PetPanel/petcard_botm_${pet.starDisplay}.webp`)"
               class="pet-card-background"
               alt=""
             />
             <img
-              :src="getImageUrl(`/images/PicHandBookPanel_Atlas/${pet.monImg}.png`)"
+              :src="getImageUrl(`/images/PicHandBookPanel_Atlas/${pet.monImg}.webp`)"
               :alt="pet.name"
               class="pet-card-avatar"
               loading="lazy"
               @error="handleImgError"
             />
             <img
-              :src="getImageUrl(`/images/PetPanel/petcard_${pet.starDisplay}.png`)"
+              :src="getImageUrl(`/images/PetPanel/petcard_${pet.starDisplay}.webp`)"
               class="pet-card-frame"
               alt=""
             />
@@ -83,12 +83,12 @@
 
               <!-- 右上角带图标的属性 -->
               <div class="portrait-element-badge" v-if="selectedPet.element">
-                <img :src="getImageUrl(`/images/HeroGachaShowPanel/spGachaTag${getSpGachaElementSlug(selectedPet.element)}03.png`)" class="top-right-badge-icon" alt="" />
+                <img :src="getImageUrl(`/images/HeroGachaShowPanel/spGachaTag${getSpGachaElementSlug(selectedPet.element)}03.webp`)" class="top-right-badge-icon" alt="" />
                 <span :class="`element-${selectedPet.element}`">{{ selectedPet.elementName || getElementName(selectedPet.element) }}</span>
               </div>
 
               <img
-                :src="getImageUrl(`/images/PicHandBookPanel_Atlas/${selectedPet.monImg}.png`)"
+                :src="getImageUrl(`/images/PicHandBookPanel_Atlas/${selectedPet.monImg}.webp`)"
                 :alt="selectedPet.name"
                 class="pet-portrait-img"
                 @error="handleImgError"
@@ -101,12 +101,12 @@
 
               <!-- 右上角带图标的属性 -->
               <div class="portrait-element-badge" v-if="selectedPet.element">
-                <img :src="getImageUrl(`/images/HeroGachaShowPanel/spGachaTag${getSpGachaElementSlug(selectedPet.element)}03.png`)" class="top-right-badge-icon" alt="" />
+                <img :src="getImageUrl(`/images/HeroGachaShowPanel/spGachaTag${getSpGachaElementSlug(selectedPet.element)}03.webp`)" class="top-right-badge-icon" alt="" />
                 <span :class="`element-${selectedPet.element}`">{{ selectedPet.elementName || getElementName(selectedPet.element) }}</span>
               </div>
 
               <img
-                :src="getImageUrl(`/images/PicHandBookPanel_Atlas/${selectedPet.monImg}_a.png`)"
+                :src="getImageUrl(`/images/PicHandBookPanel_Atlas/${selectedPet.monImg}_a.webp`)"
                 :alt="selectedPet.name"
                 class="pet-portrait-img"
                 @error="handleImgError"
@@ -417,7 +417,7 @@
                 <div class="exp-slime-row">
                   <span>约等于绿色史莱姆数量:</span>
                   <div class="slime-chip">
-                    <img :src="getImageUrl('/images/PicHandBookPanel_Atlas/colect_mon_072.png')" class="mini-slime-icon" alt="" />
+                    <img :src="getImageUrl('/images/PicHandBookPanel_Atlas/colect_mon_072.webp')" class="mini-slime-icon" alt="" />
                     <span>×{{ (cumulativeLevelExp / 125).toFixed(1) }} </span>
                   </div>
                 </div>

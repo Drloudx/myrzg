@@ -301,7 +301,8 @@ const sameValue = (left, right) => String(left) === String(right)
 
 const buildItemImage = icon => {
   if (!icon) return ''
-  return getImageUrl(`/BuildItem/${String(icon).replace(/\.png$/i, '')}.png`)
+  // 图片已统一为 .webp；仍兼容传入带扩展名的 icon，故先剥掉任意图片扩展名再拼
+  return getImageUrl(`/BuildItem/${String(icon).replace(/\.(?:png|jpe?g|webp)$/i, '')}.webp`)
 }
 
 const missingImageUrl = getImageUrl('/ui/visibility-off.svg')

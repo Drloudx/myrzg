@@ -151,7 +151,7 @@ const exchangeTitle = (exchange) => {
 
 const packImage = (exchange) => {
   if (currentCategory.value?.key !== 'pack' || exchange?.team !== 'pack') return ''
-  return getImageUrl(`/images/PackPane/shop_goods_${exchange.id}.png`)
+  return getImageUrl(`/images/PackPane/shop_goods_${exchange.id}.webp`)
 }
 
 onMounted(async () => {

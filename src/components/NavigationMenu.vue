@@ -148,24 +148,24 @@ const syncSideScrollState = () => {
 
 // --- 统一配置导航数据 ---
 const defaultNavList = [
-  { name: '物品图鉴', path: '/items', icon: '/ui/item_00002.png' },
-  { name: '家具图鉴', path: '/furniture', icon: '/ui/zw.png' },
-  { name: '设施功能', path: '/facilities', icon: '/ui/zw.png' },
+  { name: '物品图鉴', path: '/items', icon: '/ui/item_00002.webp' },
+  { name: '家具图鉴', path: '/furniture', icon: '/ui/zw.webp' },
+  { name: '设施功能', path: '/facilities', icon: '/ui/zw.webp' },
   { name: '角色图鉴', path: '/heroes', icon: '/ui/class_icon_s_zs.png' },
   { name: '伙伴邮件', path: '/partner-mails', icon: '/ui/mail_list_new_task_pt.png' },
-  { name: '魔物图鉴', path: '/pets', icon: '/ui/colect_mon_072.png' },
-  { name: '装备图鉴', path: '/equip', icon: '/ui/item_442001.png' },
-  { name: '符石图鉴', path: '/runes', icon: '/images/Common_ItemIcon/item_19310.png' },
-  { name: '菜谱查询', path: '/recipes', icon: '/ui/item_30047.png' },
-  { name: '魔物收益', path: '/petseggs', icon: '/ui/pet_079.png' },
-  { name: '成就查询', path: '/achievement', icon: '/ui/achv_icon_adv.png' },
-  { name: '怪物图鉴', path: '/monsters', icon: '/ui/colect_mon_052.png' },
+  { name: '魔物图鉴', path: '/pets', icon: '/ui/colect_mon_072.webp' },
+  { name: '装备图鉴', path: '/equip', icon: '/ui/item_442001.webp' },
+  { name: '符石图鉴', path: '/runes', icon: '/images/Common_ItemIcon/item_19310.webp' },
+  { name: '菜谱查询', path: '/recipes', icon: '/ui/item_30047.webp' },
+  { name: '魔物收益', path: '/petseggs', icon: '/ui/pet_079.webp' },
+  { name: '成就查询', path: '/achievement', icon: '/ui/achv_icon_adv.webp' },
+  { name: '怪物图鉴', path: '/monsters', icon: '/ui/colect_mon_052.webp' },
   { name: '任务图鉴', path: '/tasks', icon: '/images/TaskPanel/task_tag1.png' },
-  { name: '事件图鉴', path: '/events', icon: '/ui/zw.png' },
-  { name: '副本图鉴', path: '/dungeons', icon: '/ui/zw.png' },
-  { name: '兑换', path: '/exchange', icon: '/ui/zw.png' },
-  { name: '模拟招募', path: '/gacha', icon: '/images/HeroPoolPanel_Atlas/gacha_at_chara062_0.png' },
-  { name: '其他', path: '/rewards', icon: '/ui/zw.png' }
+  { name: '事件图鉴', path: '/events', icon: '/ui/zw.webp' },
+  { name: '副本图鉴', path: '/dungeons', icon: '/ui/zw.webp' },
+  { name: '兑换', path: '/exchange', icon: '/ui/zw.webp' },
+  { name: '模拟招募', path: '/gacha', icon: '/images/HeroPoolPanel_Atlas/gacha_at_chara062_0.webp' },
+  { name: '其他', path: '/rewards', icon: '/ui/zw.webp' }
 ]
 
 const navList = computed(() => props.items || defaultNavList)

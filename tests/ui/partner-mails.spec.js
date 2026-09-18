@@ -25,21 +25,22 @@ test('game mail skin loads and selection, filters and narrow reading remain usab
   expect(imageFailures).toEqual([])
   for (const file of ['mail_at', 'mail_page', 'mail_page_on', 'mail_botm']) {
     const folder = file === 'mail_botm' ? 'uipanel/emailpanel' : 'EmailPanel_Atlas'
-    const response = await page.request.get(`/images/${folder}/${file}.png`)
+    const response = await page.request.get(`/images/${folder}/${file}.webp`)
     expect(response.ok()).toBe(true)
-    expect(response.headers()['content-type']).toContain('image/png')
+    // 图片已统一为 .webp，服务端据此返回 image/webp（改名前的 image/png 属名实不符）
+    expect(response.headers()['content-type']).toContain('image/webp')
   }
   const search = page.locator('.partner-mails-page input')
   await search.fill('嘉莉缇')
   await expect(page.locator('.mail-hero')).toHaveCount(1)
   await expect(page.locator('.mail-meta')).toContainText('嘉莉缇')
   await expect(page.locator('.mail-content h2')).toHaveText('能否让我拜访营地呀？')
-  await expect(page.locator('.mail-title.active .mail-kind')).toHaveAttribute('src', /\/EmailPanel_Atlas\/mail_list_new_task\.png/)
+  await expect(page.locator('.mail-title.active .mail-kind')).toHaveAttribute('src', /\/EmailPanel_Atlas\/mail_list_new_task\.webp/)
   await expect(page.locator('.mail-reward-label')).toHaveAttribute('src', /\/Common_Atlas\/com_item_archive\.png/)
   await expect(page.locator('.mail-reward-label')).toHaveAttribute('alt', '档案奖励')
   const rewards = page.locator('.mail-reward-item .ui-item-card__slot')
   await expect(rewards).toHaveCount(2)
-  for (const reward of await rewards.all()) await expect(reward).toHaveCSS('background-image', /\/ItemBagPanel\/item_f_5\.png/)
+  for (const reward of await rewards.all()) await expect(reward).toHaveCSS('background-image', /\/ItemBagPanel\/item_f_5\.webp/)
   await expect(page.locator('.mail-reward-item .ui-item-card__badge')).toHaveText(['1000', '100'])
   // Compare the reward slot with the actual item catalogue component, including its icon scale.
   const catalogue = await page.context().newPage()
@@ -93,15 +94,16 @@ test('all partner mail sources can be searched and opened with the correct color
   await page.locator('.mail-title').filter({ hasText: '写什么标题好呢？' }).click()
   await expect(page.locator('.mail-content h2')).toHaveText('写什么标题好呢？')
   await expect(page.locator('.mail-meta')).toContainText('米托拉')
+  // mail_list_new 在无损 WebP 转换时因「压后未变小」被跳过，仍是真 PNG（见 PartnerMailReader 的 SKIN_EXT_OVERRIDES）
   await expect(page.locator('.mail-title.active .mail-kind')).toHaveAttribute('src', /\/mail_list_new\.png/)
   await expect(page.locator('.mail-rewards')).toHaveCount(0)
-  await expect(page.locator('.mail-illustration')).toHaveAttribute('src', /\/heromailimg\/01\.png/)
+  await expect(page.locator('.mail-illustration')).toHaveAttribute('src', /\/heromailimg\/01\.webp/)
   await expect.poll(() => page.locator('.mail-illustration').evaluate(img => img.naturalWidth)).toBeGreaterThan(0)
   await search.fill('一定会有进展的')
   await page.locator('.mail-title').filter({ hasText: '一定会有进展的！' }).click()
   await expect(page.locator('.mail-content h2')).toHaveText('一定会有进展的！')
   await expect(page.locator('.mail-meta')).toContainText('迦南')
-  await expect(page.locator('.mail-title.active .mail-kind')).toHaveAttribute('src', /\/mail_list_new_item\.png/)
+  await expect(page.locator('.mail-title.active .mail-kind')).toHaveAttribute('src', /\/mail_list_new_item\.webp/)
   await expect(page.locator('.mail-reward-label')).toHaveAttribute('alt', '附件奖励')
   await expect(page.locator('.mail-reward-item .ui-item-card__badge')).toHaveText(['500', '3', '3'])
   for (const name of ['格薇勒', '阿迪拉', '艾茵']) {
@@ -113,7 +115,7 @@ test('all partner mail sources can be searched and opened with the correct color
   await search.fill('可可娜终于回来了')
   await page.locator('.mail-title').filter({ hasText: '可可娜终于回来了！' }).click()
   await expect(page.locator('.mail-meta')).toContainText('拉碧丝')
-  await expect(page.locator('.mail-title.active .mail-kind')).toHaveAttribute('src', /\/mail_list_new_item\.png/)
+  await expect(page.locator('.mail-title.active .mail-kind')).toHaveAttribute('src', /\/mail_list_new_item\.webp/)
   await expect(page.locator('.mail-illustration')).toHaveCount(0)
 })
 

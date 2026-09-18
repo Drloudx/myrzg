@@ -54,7 +54,7 @@ test('plain mail, story attachments, task invitations and archive tasks use dist
   assert.equal(getPartnerMailPresentation(story).rewardLabel.sprite, 'com_item_encl')
   assert.deepEqual(story.reward.items.map(item => [item.id, item.count]), [['money', 500], ['item_30012', 3], ['item_30015', 3]])
   assert.deepEqual(story.reward.items.map(item => item.typeId), ['item_00001', 'item_30012', 'item_30015'])
-  assert.equal(story.image, '/images/uipanel/emailpanel/heromailimg/01.png')
+  assert.equal(story.image, '/images/uipanel/emailpanel/heromailimg/01.webp')
   const archive = parseHeroMail('mail_fav_hero_025_1', context)
   assert.equal(getPartnerMailPresentation(archive).icon, 'mail_list_new_task')
   assert.equal(getPartnerMailPresentation(archive).rewardLabel.sprite, 'com_item_archive')

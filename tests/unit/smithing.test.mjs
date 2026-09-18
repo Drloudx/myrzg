@@ -55,7 +55,7 @@ test('smithing binds exact and grouped equipment with consume materials', () => 
   assert.equal(data.sword[0].outputMode, 'equipGroup')
   assert.equal(data.helmet[0].outputMode, 'equip')
   assert.deepEqual(data.sword[0].materials, [{
-    typeId: 'ore', name: '铜锭', img: '/images/Common_ItemIcon/ore_icon.png', quality: 2, num: 2
+    typeId: 'ore', name: '铜锭', img: '/images/Common_ItemIcon/ore_icon.webp', quality: 2, num: 2
   }])
   assert.equal(data.potion, undefined)
 })

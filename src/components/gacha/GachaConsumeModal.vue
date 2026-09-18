@@ -13,7 +13,7 @@
            由上部 768×448 主窗口与下部 768×68 悬浮按钮排组成，垂直间距 24px -->
       <div class="g-abs g-layer-overlay consume-modal-container" :style="gachaPos(0, 0)">
         <!-- 弹窗主框：768×448 com_sys_window_item.png -->
-        <div class="consume-modal-window" :style="{ backgroundImage: `url(${getImageUrl('/images/TipsManager_Atlas/com_sys_window_item.png')})` }">
+        <div class="consume-modal-window" :style="{ backgroundImage: `url(${getImageUrl('/images/TipsManager_Atlas/com_sys_window_item.webp')})` }">
           <!-- 顶部标题：24px 提示，居中于青色顶条 (top: 22px, height: 34px) -->
           <div class="consume-modal-title">
             {{ title }}
@@ -37,7 +37,7 @@
             >
               <img
                 class="consume-item-cell__frame"
-                :src="getImageUrl('/images/ItemBagPanel/item_f_' + (item.quality || 5) + '.png')"
+                :src="getImageUrl('/images/ItemBagPanel/item_f_' + (item.quality || 5) + '.webp')"
                 alt=""
               />
               <img class="consume-item-cell__icon" :src="getImageUrl(item.icon)" :alt="item.name" />
@@ -50,7 +50,7 @@
         <div class="consume-modal-actions">
           <button
             class="consume-btn consume-btn--cancel"
-            :style="{ backgroundImage: `url(${getImageUrl('/images/sliced_buttons/com_btn_N_376x68.png')})` }"
+            :style="{ backgroundImage: `url(${getImageUrl('/images/sliced_buttons/com_btn_N_376x68.webp')})` }"
             type="button"
             @click="handleCancel"
           >
@@ -58,7 +58,7 @@
           </button>
           <button
             class="consume-btn consume-btn--confirm"
-            :style="{ backgroundImage: `url(${getImageUrl('/images/sliced_buttons/com_btn_Y_376x68.png')})` }"
+            :style="{ backgroundImage: `url(${getImageUrl('/images/sliced_buttons/com_btn_Y_376x68.webp')})` }"
             type="button"
             @click="handleConfirm"
           >
@@ -187,7 +187,7 @@ const formattedMsg = computed(() => {
   left: 0;
   width: 768px;
   height: 448px;
-  background: url('/images/TipsManager_Atlas/com_sys_window_item.png') no-repeat center / 100% 100%;
+  background: url('/images/TipsManager_Atlas/com_sys_window_item.webp') no-repeat center / 100% 100%;
   pointer-events: auto;
 }
 
@@ -368,7 +368,7 @@ const formattedMsg = computed(() => {
 
 /* 取消按钮：红底金边 (UISprite #70409 com_btn_N)，文字 #cfba96 (Const.ColorString[2]) */
 .consume-btn--cancel {
-  background: url('/images/sliced_buttons/com_btn_N_376x68.png') no-repeat center / 100% 100%;
+  background: url('/images/sliced_buttons/com_btn_N_376x68.webp') no-repeat center / 100% 100%;
   color: #cfba96;
   text-shadow:
     -1px -1px 0 #170e07,
@@ -386,12 +386,12 @@ const formattedMsg = computed(() => {
 }
 
 .consume-btn--cancel:active {
-  background-image: url('/images/sliced_buttons/com_btn_N_press_376x68.png');
+  background-image: url('/images/sliced_buttons/com_btn_N_press_376x68.webp');
 }
 
 /* 确认按钮：青底金边 (UISprite #73117 com_btn_Y)，文字 #33dad0 (Const.ColorString[6]) */
 .consume-btn--confirm {
-  background: url('/images/sliced_buttons/com_btn_Y_376x68.png') no-repeat center / 100% 100%;
+  background: url('/images/sliced_buttons/com_btn_Y_376x68.webp') no-repeat center / 100% 100%;
   color: #33dad0;
   text-shadow:
     -1px -1px 0 #170e07,
@@ -409,7 +409,7 @@ const formattedMsg = computed(() => {
 }
 
 .consume-btn--confirm:active {
-  background-image: url('/images/sliced_buttons/com_btn_Y_press_376x68.png');
+  background-image: url('/images/sliced_buttons/com_btn_Y_press_376x68.webp');
 }
 
 /* 轻提示浮层 */

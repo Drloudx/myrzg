@@ -39,7 +39,7 @@
       v-if="phase === 'wait' || phase === 'cards'"
       class="g-abs g-layer-ui card-tap"
       :style="gachaPos(0, -300)"
-      :src="getImageUrl('/images/Common_Atlas/com_tap.png')"
+      :src="getImageUrl('/images/Common_Atlas/com_tap.webp')"
       alt="触摸继续"
     />
 
@@ -57,7 +57,7 @@
       title="跳过"
       @click="finish"
     >
-      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_btn_skip.png')" alt="跳过" />
+      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_btn_skip.webp')" alt="跳过" />
     </button>
   </GachaStage>
 </template>
@@ -107,7 +107,7 @@ let tailTipEcho = 0
 let done = false
 
 /** 背景：HeroGachaAniPanel/petgachaanipanel 的 TextureLoad 均为 `_blur` 模糊版（2048×1024）。 */
-const bgUrl = getImageUrl('/images/gacha/gacha_cardbackground_main_output_blur.png')
+const bgUrl = getImageUrl('/images/gacha/gacha_cardbackground_main_output_blur.webp')
 /** 卡牌段动画：与源码 cardAni 四个 clip 同名。 */
 const cardAnimation = computed(() => {
   if (props.count === 10) return props.rare ? 'surprised_tencard' : 'common_tencard'
@@ -260,9 +260,9 @@ onBeforeUnmount(() => {
 
 .card-desk-fill {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  left: -20px;
+  right: -20px;
+  bottom: -10px;
   height: 120px;
   background: linear-gradient(to bottom, #2b453d 0%, #203730 75%, #182823 100%);
   z-index: 4;
@@ -290,7 +290,7 @@ onBeforeUnmount(() => {
 /* 开场黑屏淡入（对齐真机 Frame 096~104） */
 .card-black {
   position: absolute;
-  inset: 0;
+  inset: -10px;
   z-index: 22;
   background: #000;
   pointer-events: none;
@@ -303,11 +303,11 @@ onBeforeUnmount(() => {
 }
 
 /* 开场暗场（gacha_BG_in）：整屏压暗，相机拉开时退场。
-   `inset:0` 铺满舞台（不要再用 gachaPos / translate 居中）；用大幅椭圆做整体压暗 + 轻微暗角，
-   避免小半径热点在画面里形成可见的明暗分界。 */
+   铺满舞台并微量外扩消除子像素缝隙；用大幅椭圆做整体压暗 + 轻微暗角，
+   避免在画面边缘形成可见的明暗分界。 */
 .card-dark {
   position: absolute;
-  inset: 0;
+  inset: -10px;
   z-index: 20;
   background: radial-gradient(ellipse 130% 130% at 50% 45%, rgba(10, 7, 4, 0.5) 0%, rgba(10, 7, 4, 0.78) 100%);
   transition: opacity 1.4s ease-out;
@@ -323,7 +323,7 @@ onBeforeUnmount(() => {
    随相机拉开降到 0.075 的观感（这里直接过渡到 0，避免色边长期存在）。 */
 .card-post {
   position: absolute;
-  inset: 0;
+  inset: -10px;
   z-index: 21;
   pointer-events: none;
   background:
@@ -377,7 +377,7 @@ onBeforeUnmount(() => {
 }
 
 .card-skip img { width: 128px; height: 60px; }
-.card-skip:active img { content: url('/images/HeroGachaShowPanel_Atlas/gacha_btn_skip_press.png'); }
+.card-skip:active img { content: url('/images/HeroGachaShowPanel_Atlas/gacha_btn_skip_press.webp'); }
 
 /* 点击推进层：铺满整个窗口，仅在等待阶段挂载 */
 .card-catcher {

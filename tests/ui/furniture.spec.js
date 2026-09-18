@@ -75,7 +75,7 @@ test('missing skin UI art settles on the shared placeholder without base or scen
   await expect(image).toHaveAttribute('src', '/ui/visibility-off.svg')
   await expect.poll(() => image.evaluate(element => element.complete && element.naturalWidth > 0)).toBe(true)
   expect(await image.getAttribute('src')).not.toContain('build_roomLittle_yma7_0')
-  expect(await image.getAttribute('src')).not.toContain('roomLittle_yma7_2.png')
+  expect(await image.getAttribute('src')).not.toContain('roomLittle_yma7_2.webp')
 })
 
 test('source rules drive open conditions and distinguish blueprint art from furniture previews', async ({ page }) => {
@@ -92,21 +92,21 @@ test('source rules drive open conditions and distinguish blueprint art from furn
   await expect(horseDetail).toContainText('活动 / 通行证14级')
   await expect(horseDetail).not.toContainText('玩家等级达到 1 级')
   await expect(horseDetail.locator('[data-detail-furniture-id="jiaju_muma"] img').first())
-    .toHaveAttribute('src', /\/BuildItem\/build_mzh_kuijia\.png/)
+    .toHaveAttribute('src', /\/BuildItem\/build_mzh_kuijia\.webp/)
 
   await page.goto('/#/items?itemId=item_50121')
   const blueprintDialog = page.getByRole('dialog', { name: '摇摇木马制作图' })
   await expect(blueprintDialog).toBeVisible()
   await expect(blueprintDialog.locator('.home-item-unlock-link img')).toHaveAttribute(
     'src',
-    /\/BuildItem\/build_mzh_kuijia\.png/
+    /\/BuildItem\/build_mzh_kuijia\.webp/
   )
 
   await blueprintDialog.locator('.home-item-unlock-link').click()
   const horseDetailAfterBlueprint = page.locator('#furnitureModalScroll')
   await expect(horseDetailAfterBlueprint).toBeVisible()
   await expect(horseDetailAfterBlueprint.locator('[data-detail-furniture-id="jiaju_muma"] img').first())
-    .toHaveAttribute('src', /\/BuildItem\/build_mzh_kuijia\.png/)
+    .toHaveAttribute('src', /\/BuildItem\/build_mzh_kuijia\.webp/)
 })
 
 test('mailbox uses the in-world scene object preview', async ({ page }) => {
@@ -114,7 +114,7 @@ test('mailbox uses the in-world scene object preview', async ({ page }) => {
   const detail = page.locator('#furnitureModalScroll')
   await expect(detail).toBeVisible()
   await expect(detail.locator('[data-detail-furniture-id="mailBox"] img').first())
-    .toHaveAttribute('src', /\/RoomObj\/c001_ludeng001\.png/)
+    .toHaveAttribute('src', /\/RoomObj\/c001_ludeng001\.webp/)
   await expect(detail).toContainText('营地固定设施，无需制作')
   await expect(detail).not.toContainText('药浆草')
 })

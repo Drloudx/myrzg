@@ -28,7 +28,7 @@
           :key="`reward-${item.typeId || index}`"
           type="button"
           class="ui-exchange-trade__item ui-exchange-trade__item--reward"
-          :style="skin ? { backgroundImage: `url('${imageSrc(`/ItemBagPanel/item_f_${item.quality || 1}.png`)}')` } : null"
+          :style="skin ? { backgroundImage: `url('${imageSrc(`/ItemBagPanel/item_f_${item.quality || 1}.webp`)}')` } : null"
           :title="`${item.name || '物品'} ×${item.num ?? 1}`"
           @click="emit('item-click', item.typeId)"
         >
@@ -95,7 +95,8 @@ const compactIconScaleOverrides = {
   item_31008: 0.99, item_30001: 1.14, item_31001: 1.05, item_20027: 0.97,
   item_00002: 0.92, item_00008: 0.97, item_19207: 1, item_27004: 1
 }
-const compactIconScale = icon => compactIconScaleOverrides[icon?.split('/').pop()?.replace(/\.png$/, '')] ?? 0.9
+// overrides 的键是物品 id（无扩展名）；图片已统一为 .webp，故剥掉任意图片扩展名再查表
+const compactIconScale = icon => compactIconScaleOverrides[icon?.split('/').pop()?.replace(/\.(?:png|jpe?g|webp)$/i, '')] ?? 0.9
 
 const cardTitle = computed(() => {
   if (!props.compact || !props.rewardItems.length) return props.title
@@ -107,12 +108,12 @@ const cardTitle = computed(() => {
 })
 
 const cardStyle = computed(() => {
-  if (props.skin) return { borderImageSource: `url('${imageSrc('/PackPane/shop_list_skin.png')}')` }
+  if (props.skin) return { borderImageSource: `url('${imageSrc('/PackPane/shop_list_skin.webp')}')` }
   if (!props.shop) return null
   const quality = Math.min(5, Math.max(1, Number(props.rewardItems[0]?.quality) || 1))
   return {
-    borderImageSource: `url('${imageSrc('/PackPane/shop_list_pack.png')}')`,
-    '--shop-quality-image': `url('${imageSrc(`/Shop/item_info_f_${quality}.png`)}')`
+    borderImageSource: `url('${imageSrc('/PackPane/shop_list_pack.webp')}')`,
+    '--shop-quality-image': `url('${imageSrc(`/Shop/item_info_f_${quality}.webp`)}')`
   }
 })
 

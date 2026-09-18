@@ -42,7 +42,7 @@ export function parseHeroMail(id, { mailDatas, archivesDatas, rewards, items }) 
     reward: rewardId ? { id: rewardId, items: rewardItems } : null,
     taskTypeId: source.taskTypeId || '',
     getTaskText: source.getTaskText || '',
-    image: source.img ? `/images/uipanel/emailpanel/heromailimg/${source.img}.png` : ''
+    image: source.img ? `/images/uipanel/emailpanel/heromailimg/${source.img}.webp` : ''
   }
 }
 

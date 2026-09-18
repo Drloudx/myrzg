@@ -172,29 +172,29 @@ test('image fallbacks are finite, deduplicate events, and reset for a new source
   assert.equal(img.src, '/ui/visibility-off.svg')
   for (let index = 0; index < 4; index++) assert.equal(handleImageFallback({ target: img }, options), false)
   assert.equal(exhausted, 1)
-  const next = `${CLOUD_URL}/images/next.png`
+  const next = `${CLOUD_URL}/images/next.webp`
   img.src = next
   assert.equal(handleImageFallback({ target: img }, { source: next }), true)
-  assert.equal(img.src, '/images/next.png')
+  assert.equal(img.src, '/images/next.webp')
   resetImageFallback(img)
 })
 
 test('special portrait candidates preserve CDN then local order without cycles', () => {
-  const source = `${CLOUD_URL}/images/portrait.png`
-  const candidate = `${CLOUD_URL}/images/portrait_alt.png`
+  const source = `${CLOUD_URL}/images/portrait.webp`
+  const candidate = `${CLOUD_URL}/images/portrait_alt.webp`
   const img = imageElement(source)
   const options = { source, candidates: [source, candidate, candidate] }
   const sequence = []
   for (let index = 0; index < 8; index++) {
     if (handleImageFallback({ target: img }, options)) sequence.push(img.src)
   }
-  assert.deepEqual(sequence, ['/images/portrait.png', candidate, '/images/portrait_alt.png', '/ui/visibility-off.svg'])
+  assert.deepEqual(sequence, ['/images/portrait.webp', candidate, '/images/portrait_alt.webp', '/ui/visibility-off.svg'])
 })
 
 test('image and local resource helpers preserve existing API paths', () => {
   assert.equal(getImageUrl('/ui/search.svg'), '/ui/search.svg')
-  assert.equal(getImageUrl('Common_ItemIcon/item.png'), '/images/Common_ItemIcon/item.png')
-  assert.equal(getImageUrl(`${CLOUD_URL}/images/item.png`), `${CLOUD_URL}/images/item.png`)
+  assert.equal(getImageUrl('Common_ItemIcon/item.webp'), '/images/Common_ItemIcon/item.webp')
+  assert.equal(getImageUrl(`${CLOUD_URL}/images/item.webp`), `${CLOUD_URL}/images/item.webp`)
   assert.equal(getImageUrl({}), '')
   assert.equal(getLocalResourceUrl('/data/parsed/items.json'), 'data/parsed/items.json')
 })

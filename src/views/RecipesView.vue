@@ -195,7 +195,7 @@ const openPreviewModal = (recipe) => {
   previewModal.value = {
     visible: true,
     recipe,
-    imgUrl: getImageUrl(`/menu_prev/${recipe.id}_prev.png`)
+    imgUrl: getImageUrl(`/menu_prev/${recipe.id}_prev.webp`)
   }
 }
 

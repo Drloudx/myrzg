@@ -43,7 +43,7 @@ export function buildRecipeData(maps) {
     // 1. Resolve Recipe Icon & Name using itemEntry.img (e.g. item_30035 -> img: item_30009)
     const recipeName = itemEntry.name || menuEntry.name || '未知食谱'
     const recipeImgKey = itemEntry.img || typeId
-    const recipeIcon = `/Common_ItemIcon/${recipeImgKey}.png`
+    const recipeIcon = `/Common_ItemIcon/${recipeImgKey}.webp`
     const hasPreview = PREVIEW_AVAILABLE_IDS.has(typeId)
 
     // 2. Resolve Category Tags & filter out "消耗" and "料理"

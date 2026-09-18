@@ -38,7 +38,7 @@ export function buildRecipeIngredients(menuEntry, itemDict = {}) {
       typeId,
       name,
       count,
-      icon: `/Common_ItemIcon/${imgKey}.png`
+      icon: `/Common_ItemIcon/${imgKey}.webp`
     })
   }
 

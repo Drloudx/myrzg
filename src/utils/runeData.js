@@ -37,7 +37,7 @@ export function getRuneSourceTarget(source) {
 }
 
 const itemView = item => ({
-  id: item.typeId, name: item.name, icon: item.img ? `/images/Common_ItemIcon/${item.img}.png` : '',
+  id: item.typeId, name: item.name, icon: item.img ? `/images/Common_ItemIcon/${item.img}.webp` : '',
   quality: Number(item.quality) || 0
 })
 

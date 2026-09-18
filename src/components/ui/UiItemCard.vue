@@ -6,7 +6,7 @@
   >
     <div
       class="ui-item-card__slot"
-      :style="{ backgroundImage: `url('${getImageUrl(`/ItemBagPanel/item_f_${getQualityFrame(quality)}.png`)}')` }"
+      :style="{ backgroundImage: `url('${getImageUrl(`/ItemBagPanel/item_f_${getQualityFrame(quality)}.webp`)}')` }"
     >
       <img
         v-if="img"
@@ -114,7 +114,7 @@ const getQualityFrame = (q) => {
   padding: 1px 0;
   min-height: 21px;
   border: 4px solid transparent;
-  border-image-source: url('/images/PicHandBookPanel_Atlas/colect_list_mx.png');
+  border-image-source: url('/images/PicHandBookPanel_Atlas/colect_list_mx.webp');
   border-image-slice: 20 32 fill;
   border-image-width: 4px 8px;
   border-image-outset: 0;
@@ -135,7 +135,7 @@ const getQualityFrame = (q) => {
 
 .dark-mode .ui-item-card__name {
   background: transparent;
-  border-image-source: url('/images/PicHandBookPanel_Atlas/colect_list_mx.png');
+  border-image-source: url('/images/PicHandBookPanel_Atlas/colect_list_mx.webp');
   color: #eaddc2;
 }
 

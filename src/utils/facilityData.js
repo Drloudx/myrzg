@@ -16,7 +16,7 @@ const itemView = (typeId, rawItems) => {
   return {
     typeId,
     name: item.name || typeId,
-    img: item.img ? `/images/Common_ItemIcon/${item.img}.png` : '',
+    img: item.img ? `/images/Common_ItemIcon/${item.img}.webp` : '',
     quality: Number(item.quality) || 1
   }
 }
@@ -134,7 +134,7 @@ export function buildFacilityData(maps = {}) {
 
     return {
       ...definition,
-      icon: homeItem.icon ? `/images/BuildItem/${homeItem.icon}.png` : '',
+      icon: homeItem.icon ? `/images/BuildItem/${homeItem.icon}.webp` : '',
       description: homeItem.desc || '',
       modes: modes.map(mode => ({
         ...mode,

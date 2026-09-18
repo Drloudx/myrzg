@@ -45,7 +45,7 @@ test('skin cards follow shop foreign keys and the configured price without inven
   const card = buildExchangeData(maps)[0].subs[1].list[0]
   assert.deepEqual(card.skin, {
     id: 'skinRef', heroId: 'heroRef', heroName: '真实角色', name: '真实时装',
-    quality: 3, image: '/images/PackPane/shop_portrait.png'
+    quality: 3, image: '/images/PackPane/shop_portrait.webp'
   })
   assert.equal(card.consumeItems[0].num, 100)
   assert.equal(card.consumeItems[0].typeId, 'item_00002')

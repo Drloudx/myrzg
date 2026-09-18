@@ -374,7 +374,7 @@ export function buildTaskData(maps) {
             typeId: i.itemTypeId,
             name: (it && it.name) || i.itemTypeId,
             count: i.num,
-            icon: `/Common_ItemIcon/${(it && it.img) || i.itemTypeId}.png`
+            icon: `/Common_ItemIcon/${(it && it.img) || i.itemTypeId}.webp`
           }
         })
         if (p.removeItem) push('说明', '提交后扣除道具')
@@ -391,7 +391,7 @@ export function buildTaskData(maps) {
             typeId: p.itemTypeId,
             name: (item && item.name) || p.itemTypeId,
             count: p.num,
-            icon: `/Common_ItemIcon/${(item && item.img) || p.itemTypeId}.png`
+            icon: `/Common_ItemIcon/${(item && item.img) || p.itemTypeId}.webp`
           }]
         }
         if (p.dialog) dialogs.push({ label: '剧情', meta: dlgMeta(p.dialog) })

@@ -82,7 +82,7 @@
           <div class="td-cell td-name">
             <div class="egg-icon-wrapper">
               <img
-                :src="getImageUrl(`/eggs/${pet.eggImg}.png`)"
+                :src="getImageUrl(`/eggs/${pet.eggImg}.webp`)"
                 :alt="pet.name"
                 class="egg-img"
                 loading="lazy"
@@ -142,7 +142,7 @@
           <template #media>
             <img
               v-if="detailModal.pet.eggImg"
-              :src="getImageUrl(`/eggs/${detailModal.pet.eggImg}.png`)"
+              :src="getImageUrl(`/eggs/${detailModal.pet.eggImg}.webp`)"
               :alt="detailModal.pet.name"
               class="detail-egg-img"
               loading="lazy"
@@ -166,7 +166,7 @@
             >
               <img
                 v-if="detailModal.pet.avatarImg"
-                :src="getImageUrl(`/images/HeadIconAtals/${detailModal.pet.avatarImg}.png`)"
+                :src="getImageUrl(`/images/HeadIconAtals/${detailModal.pet.avatarImg}.webp`)"
                 :alt="detailModal.pet.name"
                 class="pet-atlas-avatar"
                 @error="handleImgError"

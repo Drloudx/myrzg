@@ -59,7 +59,7 @@ function buildRewardEntries(reward, itemMap, source = null, equipConfig = null) 
           entries.push({
             typeId,
             name: target?.name || (showId ? '随机装备' : equipGroup?.tip || '随机装备'),
-            icon: target ? `/images/Common_ItemIcon/${target.img || target.typeId}.png` : '',
+            icon: target ? `/images/Common_ItemIcon/${target.img || target.typeId}.webp` : '',
             quality: Number(quality || target?.quality || 0),
             min: Number(rule.min ?? groupCount ?? 1),
             max: Number(rule.max ?? rule.min ?? groupCount ?? 1),
@@ -88,7 +88,7 @@ function buildRewardEntries(reward, itemMap, source = null, equipConfig = null) 
       entries.push({
         typeId: (equipTarget || target)?.typeId || rule.typeId || mode,
         name: (equipTarget || target)?.name || (isEquip ? '具体装备' : rule.typeId || mode),
-        icon: (equipTarget || target) ? `/images/Common_ItemIcon/${(equipTarget || target).img || (equipTarget || target).typeId}.png` : '',
+        icon: (equipTarget || target) ? `/images/Common_ItemIcon/${(equipTarget || target).img || (equipTarget || target).typeId}.webp` : '',
         quality: Number((equipTarget || target)?.quality || rule.quality || 0),
         min,
         max,
@@ -385,8 +385,8 @@ export function buildDungeonData({ instanceJson, battleJson, battleRoomsJson, ba
         chapter: instance.chapter,
         mapName: getMapName(instance.chapter),
         des: instance.des || '',
-        icon: instance.icon ? `/images/instancepanel/${instance.icon}.png` : '',
-        background: instance.view?.bgImg ? `/images/instancepanel/${instance.view.bgImg}.png` : '',
+        icon: instance.icon ? `/images/instancepanel/${instance.icon}.webp` : '',
+        background: instance.view?.bgImg ? `/images/instancepanel/${instance.view.bgImg}.webp` : '',
         battles: gameBattles,
         storyBattles
       }

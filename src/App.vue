@@ -10,7 +10,7 @@
       <div class="header-content">
         <div class="header-top-row">
           <div class="header-left">
-            <img src="/ui/logo.png" class="app-logo" alt="深渊之歌" />
+            <img src="/ui/logo.webp" class="app-logo" alt="深渊之歌" />
             <div class="header-title-wrap">
               <h1 class="header-title">{{ pageTitle }}</h1>
               <span class="header-brand">深渊之歌 · 资料库</span>
@@ -1109,7 +1109,7 @@ onBeforeUnmount(() => { itemLoadOperation += 1 })
 .info-cover-image {
   width: 100%;
   height: 110px;
-  background-image: url('/ui/map_w1_bg.png');
+  background-image: url('/ui/map_w1_bg.webp');
   background-position: center;
   background-size: cover;
   border-bottom: 1px solid var(--border-color, #8f7351);

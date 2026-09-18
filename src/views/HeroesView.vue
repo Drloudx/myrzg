@@ -53,7 +53,7 @@
         >
           <!-- Card Background -->
           <img
-            :src="getImageUrl(`/images/HeroBagPanel/card_${hero.rare}_botm.png`)"
+            :src="getImageUrl(`/images/HeroBagPanel/card_${hero.rare}_botm.webp`)"
             class="bag-card-background"
             alt="background"
             loading="lazy"
@@ -63,7 +63,7 @@
 
           <!-- Frame Background -->
           <img
-            :src="getImageUrl(`/images/HeroBagPanel/card_${hero.rare}.png`)"
+            :src="getImageUrl(`/images/HeroBagPanel/card_${hero.rare}.webp`)"
             class="bag-card-frame"
             alt="frame"
             loading="lazy"
@@ -73,7 +73,7 @@
 
           <!-- Character Avatar -->
           <img
-            :src="getImageUrl(`/images/HeroBagPanel/${hero.img}_ka.png`)"
+            :src="getImageUrl(`/images/HeroBagPanel/${hero.img}_ka.webp`)"
             :alt="hero.name"
             class="bag-card-avatar"
             loading="lazy"
@@ -83,7 +83,7 @@
 
           <!-- Attribute Icon (Top-Left) -->
           <img
-            :src="getImageUrl(`/images/HeroBagPanel/card_atr_${getElementSlug(hero.element)}.png`)"
+            :src="getImageUrl(`/images/HeroBagPanel/card_atr_${getElementSlug(hero.element)}.webp`)"
             class="bag-card-element"
             :title="hero.elementName"
             loading="lazy"
@@ -93,7 +93,7 @@
 
           <!-- Class Icon (Top-Right) -->
           <img
-            :src="getImageUrl(`/images/HeroBagPanel/class_icon_s_${getJobSlug(hero.job)}.png`)"
+            :src="getImageUrl(`/images/HeroBagPanel/class_icon_s_${getJobSlug(hero.job)}.webp`)"
             class="bag-card-job"
             :title="hero.jobName"
             loading="lazy"
@@ -156,7 +156,7 @@
           </template>
           <img
             v-else
-            :src="getImageUrl(`/images/chara/l/${selectedHero.img}.png`)"
+            :src="getImageUrl(`/images/chara/l/${selectedHero.img}.webp`)"
             :alt="selectedHero.name"
             class="chara-portrait-img"
             @error="handlePortraitImgError"
@@ -175,13 +175,13 @@
             @click="isJobDetailExpanded = !isJobDetailExpanded"
           >
             <UiTag tone="default" class="badge job-badge">
-              <img :src="getImageUrl(`/images/HeroBagPanel/class_icon_s_${getJobSlug(selectedHero.job)}.png`)" class="badge-icon" />
+              <img :src="getImageUrl(`/images/HeroBagPanel/class_icon_s_${getJobSlug(selectedHero.job)}.webp`)" class="badge-icon" />
               {{ selectedHero.jobName }}
               <span class="job-badge-chevron" aria-hidden="true"></span>
             </UiTag>
           </button>
           <UiTag tone="accent" class="badge element-badge">
-            <img :src="getImageUrl(`/images/HeroGachaShowPanel/spGachaTag${getSpGachaElementSlug(selectedHero.element)}03.png`)" class="badge-icon" />
+            <img :src="getImageUrl(`/images/HeroGachaShowPanel/spGachaTag${getSpGachaElementSlug(selectedHero.element)}03.webp`)" class="badge-icon" />
             {{ selectedHero.elementName }}属性
           </UiTag>
           <UiTag :quality="selectedHero.rare" class="badge rare-badge">
@@ -214,7 +214,7 @@
           >
             <div class="job-traits-heading">
               <img
-                :src="getImageUrl(`/images/HeroBagPanel/class_icon_s_${getJobSlug(selectedHero.job)}.png`)"
+                :src="getImageUrl(`/images/HeroBagPanel/class_icon_s_${getJobSlug(selectedHero.job)}.webp`)"
                 class="job-traits-icon"
                 alt=""
               />
@@ -254,7 +254,7 @@
               >
                 <img
                   v-if="skill.type !== 'normal'"
-                  :src="getImageUrl(`/images/Common_SkillIcon/${skill.icon}.png`)"
+                  :src="getImageUrl(`/images/Common_SkillIcon/${skill.icon}.webp`)"
                   class="skill-select-icon"
                   @error="handleSkillIconError"
                 />
@@ -273,7 +273,7 @@
                 @click="activeSkillIndex = (selectedHero.skills.length + tIdx)"
               >
                 <img
-                  :src="getImageUrl(`/images/Common_SkillIcon/${talent.icon}.png`)"
+                  :src="getImageUrl(`/images/Common_SkillIcon/${talent.icon}.webp`)"
                   class="skill-select-icon"
                   @error="handleSkillIconError"
                 />
@@ -425,7 +425,7 @@
                 @click="activeStarIndex = sIdx"
               >
                 <img
-                  :src="getImageUrl(`/images/Common_SkillIcon/${star.icon}.png`)"
+                  :src="getImageUrl(`/images/Common_SkillIcon/${star.icon}.webp`)"
                   class="star-select-icon"
                   @error="handleSkillIconError"
                 />
@@ -456,7 +456,7 @@
                     <div class="shard-cost-pills" v-if="lvl.cost > 0">
                       <span class="shard-cost-label">消耗专属碎片:</span>
                       <span class="shard-cost-value">
-                        <img :src="getImageUrl(`/images/HeroInfoPanel_Atlas/${selectedHero.img}_p.png`)" class="shard-item-img-small" />
+                        <img :src="getImageUrl(`/images/HeroInfoPanel_Atlas/${selectedHero.img}_p.webp`)" class="shard-item-img-small" />
                         {{ lvl.cost }}
                       </span>
                     </div>
@@ -472,7 +472,7 @@
                   <li>
                     满命（全部点满）后，再次抽到重复角色多余的专属碎片会自动转化为通用货币：
                     <span class="limit-crystal">
-                      <img :src="getImageUrl('/Common_ItemIcon/item_20026.png')" class="crystal-icon" />
+                      <img :src="getImageUrl('/Common_ItemIcon/item_20026.webp')" class="crystal-icon" />
                       记忆结晶 x{{ selectedHero.starLimitInfo.rewardItemNum }}
                     </span>。
                   </li>
@@ -700,8 +700,8 @@ const selectedHero = ref(null)
 const isProtagonist = computed(() => selectedHero.value?.id === 'hero_001')
 const protagonistGender = ref('female')
 const protagonistPortraits = [
-  { gender: 'female', label: '希尔（女主）', image: '/images/chara/l/chara001_0.png' },
-  { gender: 'male', label: '希尔（男主）', image: '/images/chara/l/chara001b_0.png' }
+  { gender: 'female', label: '希尔（女主）', image: '/images/chara/l/chara001_0.webp' },
+  { gender: 'male', label: '希尔（男主）', image: '/images/chara/l/chara001b_0.webp' }
 ]
 const activeTab = ref('skills')
 
@@ -949,7 +949,7 @@ function handlePortraitImgError(e) {
 
 function handleSkillIconError(e) {
   // Use a generic skill icon fallback
-  e.target.src = '/ui/item_00002.png'
+  e.target.src = '/ui/item_00002.webp'
 }
 
 // Active Skill selected getter

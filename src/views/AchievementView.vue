@@ -241,12 +241,12 @@ const handleRewardClick = (rw) => {
 // Map category to icons in /AchievementPanel/
 const getCategoryIcon = (cat) => {
   const iconMap = {
-    adv: getImageUrl('/AchievementPanel/achv_icon_adv.png'),
-    exp: getImageUrl('/AchievementPanel/achv_icon_exp.png'),
-    hide: getImageUrl('/AchievementPanel/achv_icon_hide.png'),
-    live: getImageUrl('/AchievementPanel/achv_icon_live.png')
+    adv: getImageUrl('/AchievementPanel/achv_icon_adv.webp'),
+    exp: getImageUrl('/AchievementPanel/achv_icon_exp.webp'),
+    hide: getImageUrl('/AchievementPanel/achv_icon_hide.webp'),
+    live: getImageUrl('/AchievementPanel/achv_icon_live.webp')
   }
-  return iconMap[cat] || getImageUrl('/AchievementPanel/achv_icon_adv.png')
+  return iconMap[cat] || getImageUrl('/AchievementPanel/achv_icon_adv.webp')
 }
 
 const isCollected = (id) => {

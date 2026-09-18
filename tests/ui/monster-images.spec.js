@@ -4,11 +4,11 @@ test('handbook and special summon images load from their shared resources', asyn
   const errors = []
   page.on('pageerror', error => errors.push(error.message))
   const cases = [
-    ['055', '/images/PicHandBookPanel_Atlas/colect_mon_055.png'],
-    ['Mon055StoneMon', '/images/model-previews/obj_mon055.png'],
-    ['069_jianci', '/images/model-previews/obj_mon069.png'],
-    ['003SummonMon', '/images/Common_ItemIcon/item_10043.png'],
-    ['013_baby', '/images/PicHandBookPanel_Atlas/colect_mon_013_s.png']
+    ['055', '/images/PicHandBookPanel_Atlas/colect_mon_055.webp'],
+    ['Mon055StoneMon', '/images/model-previews/obj_mon055.webp'],
+    ['069_jianci', '/images/model-previews/obj_mon069.webp'],
+    ['003SummonMon', '/images/Common_ItemIcon/item_10043.webp'],
+    ['013_baby', '/images/PicHandBookPanel_Atlas/colect_mon_013_s.webp']
   ]
   for (const [id, file] of cases) {
     await page.goto(`/#/monsters?id=${id}`)

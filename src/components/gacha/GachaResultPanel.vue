@@ -1,13 +1,13 @@
 <template>
   <!-- 结果一览由共享舞台自适应：宽屏延展背景，窄窗口完整缩小蜂窝网格与操作区。 -->
-  <GachaStage :backdrop="getImageUrl('/images/uipanel/herogachashowpanel/bg.png')" fit="height">
+  <GachaStage :backdrop="getImageUrl('/images/uipanel/herogachashowpanel/bg.webp')" fit="height">
     <!-- 背板：整屏层用 inset:0，且**不能挂 g-abs**（它的 translate(-50%,-50%) 会把
          inset 盒子推出左上，只剩部分覆盖——画面出现半屏明暗矩形接缝）；
          bg.png 铺满整个画布。注意**不放 Rconer/Rconer2**：那是 1700×1220 的浅色圆角框贴图，
          宽视口下它的软边带会露出屏幕两侧（用户指认的「边缘阴影」），游戏结算背景
          （bg_bottom + padmask 组合）里没有这两层。 -->
     <div class="g-layer-bg result-backdrop">
-      <img :src="getImageUrl('/images/uipanel/herogachashowpanel/bg.png')" alt="" class="result-backdrop__bg" />
+      <img :src="getImageUrl('/images/uipanel/herogachashowpanel/bg.webp')" alt="" class="result-backdrop__bg" />
     </div>
 
     <!-- 游戏结果页没有标题文本（prefab 只有 22 个 UILabel：×N / 或 / 数字 / 按钮文案），
@@ -29,13 +29,13 @@
       >
         <img
           class="rd__base"
-          :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/gacha_card_botm${cardQuality(item)}.png`)"
+          :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/gacha_card_botm${cardQuality(item)}.webp`)"
           alt=""
         />
         <img class="rd__portrait" :src="getImageUrl(cardFace(item))" :alt="item.name" />
         <img
           class="rd__frame"
-          :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/gacha_card_frame${cardQuality(item)}.png`)"
+          :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/gacha_card_frame${cardQuality(item)}.webp`)"
           alt=""
         />
         <!-- 重复获得阴影底衬 `gacha_card_reget` 240×68 @(0,-48)（prefab depth 25，压边框、垫角标/碎片；
@@ -43,7 +43,7 @@
         <img
           v-if="!item.isNew && (fragmentCount(item) || item.converted)"
           class="rd__reget"
-          :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_card_reget.png')"
+          :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_card_reget.webp')"
           alt=""
         />
         <!-- 职业 / 属性角标 64×64：class @(68,-40)、element @(102,-6)（prefab `new/class`、`new/element`）。
@@ -51,13 +51,13 @@
         <img
           v-if="item.isNew && item.job"
           class="rd__class"
-          :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/gacha_card_class${item.job}.png`)"
+          :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/gacha_card_class${item.job}.webp`)"
           alt=""
         />
         <img
           v-if="item.isNew && item.element"
           class="rd__atr"
-          :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/gacha_card_atr${item.element}.png`)"
+          :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/gacha_card_atr${item.element}.webp`)"
           alt=""
         />
         <!-- 新角色：`gacha_card_new` 60×24（tween scale 3→1 终态原尺寸）@(0,-48) 下缘居中 -->
@@ -87,7 +87,7 @@
         <!-- 星级：`com_stars_{rare}` 连体星条（3/4/5 星 = 96/120/144×48） -->
         <img
           class="rd__stars"
-          :src="getImageUrl(`/images/Common_Atlas/com_stars_${cardQuality(item)}.png`)"
+          :src="getImageUrl(`/images/Common_Atlas/com_stars_${cardQuality(item)}.webp`)"
           alt=""
         />
       </div>
@@ -158,7 +158,7 @@
       title="复制本次结果摘要"
       @click="copySummary"
     >
-      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_btn_share.png')" alt="分享" />
+      <img :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_btn_share.webp')" alt="分享" />
     </button>
 
     <button
@@ -168,7 +168,7 @@
       title="关闭"
       @click="emit('close')"
     >
-      <img :src="getImageUrl('/images/Common_Atlas/com_btn_close.png')" alt="关闭" />
+      <img :src="getImageUrl('/images/Common_Atlas/com_btn_close.webp')" alt="关闭" />
     </button>
 
     <div v-if="copied" class="g-abs g-layer-ui g-text g-text--sm g-text--gold result-toast" :style="gachaPos(-560, -240)">
@@ -227,7 +227,7 @@ function cardQuality(item) {
   return [3, 4, 5].includes(value) ? value : 3
 }
 
-/** 卡面：游戏取 `hero.icon.Replace("at","gacha_at")`（`gacha_at*.png` 200×200）。 */
+/** 卡面：游戏取 `hero.icon.Replace("at","gacha_at")`（`gacha_at*.webp` 200×200）。 */
 function cardFace(item) {
   return item.card || item.icon
 }
@@ -350,7 +350,7 @@ onMounted(schedulePopupSounds)
 
 .rd__base { width: 100%; height: 100%; object-fit: contain; }
 
-/* 卡面 `heroIcon` = `gacha_at*.png` 200×200 居中 */
+/* 卡面 `heroIcon` = `gacha_at*.webp` 200×200 居中 */
 .rd__portrait {
   position: absolute;
   left: 50%;

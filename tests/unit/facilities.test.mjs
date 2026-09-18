@@ -21,10 +21,10 @@ test('facility formulas use real output, consume materials and preserve levels a
   assert.equal(recipes.length, 1)
   assert.equal(recipes[0].level, 7)
   assert.deepEqual(recipes[0].output, {
-    typeId: 'result', name: '制作物', img: '/images/Common_ItemIcon/result_icon.png', quality: 3, min: 2, max: 2
+    typeId: 'result', name: '制作物', img: '/images/Common_ItemIcon/result_icon.webp', quality: 3, min: 2, max: 2
   })
   assert.deepEqual(recipes[0].materials, [{
-    typeId: 'ore', name: '矿石', img: '/images/Common_ItemIcon/ore_icon.png', quality: 2, num: 3
+    typeId: 'ore', name: '矿石', img: '/images/Common_ItemIcon/ore_icon.webp', quality: 2, num: 3
   }])
   assert.equal(indexRegularFacilityRecipes(recipes).result[0].id, 'visible')
 })

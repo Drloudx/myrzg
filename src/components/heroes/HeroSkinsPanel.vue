@@ -10,7 +10,7 @@
         >
           <div class="skin-portrait-wrap">
             <img
-              :src="getImageUrl(`/images/chara/l/${skin.img}.png`)"
+              :src="getImageUrl(`/images/chara/l/${skin.img}.webp`)"
               :alt="skin.name"
               class="skin-portrait"
               loading="lazy"

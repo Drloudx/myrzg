@@ -216,7 +216,7 @@ html, body {
   background-color: #000;
   color: var(--text-main);
   /* 地图背景：像模板一样铺在 body，向下避开顶栏 */
-  background-image: url('/ui/map_w1_bg.png');
+  background-image: url('/ui/map_w1_bg.webp');
   /* Keep the page and sticky masks on the exact same fixed crop. */
   --page-bg-width: max(100vw, calc(100dvh * 2.2297619));
   --page-bg-height: max(100dvh, calc(100vw / 2.2297619));

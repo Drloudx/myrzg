@@ -35,6 +35,6 @@ try {
   }, duration)
   for (let i = 0; i < frames.length; i += 12) {
     await page.setContent(`<body style="margin:0;background:#111;color:white;display:grid;grid-template-columns:repeat(3,424px);gap:2px">${frames.slice(i, i + 12).map(frame => `<div>${frame.time}s<img style="display:block" src="${frame.image}"></div>`).join('')}</body>`)
-    await page.screenshot({ path: `${output}/video-${i}.png`, fullPage: true })
+    await page.screenshot({ path: `${output}/video-${i}.webp`, fullPage: true })
   }
 } finally { await browser.close() }

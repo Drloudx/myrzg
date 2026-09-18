@@ -11,7 +11,7 @@ export function loadSkinModelImages(skinRes) {
     const preview = manifest[skin.typeId]
     if (!preview || preview.skeletonName !== skin.skeletonName
       || preview.skinName !== (skin.skinName || 'default')) continue
-    const expected = `/images/skin-models/${skin.typeId}.png`
+    const expected = `/images/skin-models/${skin.typeId}.webp`
     if (preview.image !== expected || !existsSync(fileURLToPath(new URL(`../../public${expected}`, import.meta.url)))) continue
     images[skin.typeId] = expected
   }

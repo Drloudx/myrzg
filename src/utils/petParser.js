@@ -78,8 +78,8 @@ export function buildPetData(maps) {
             id: pet.skillSp,
             type: 'trait',
             name: getCleanSkillName(rawName),
-            icon: `/images/PetPanel/pet_skill_${starDisplay}.png`, // Frame border
-            innerIcon: `/images/PicHandBookPanel_Atlas/${pet.monImg}.png`, // Cropped inner face
+            icon: `/images/PetPanel/pet_skill_${starDisplay}.webp`, // Frame border
+            innerIcon: `/images/PicHandBookPanel_Atlas/${pet.monImg}.webp`, // Cropped inner face
             levelData,
             maxLevel: levelData.length
           })
@@ -107,8 +107,9 @@ export function buildPetData(maps) {
             }
             
             let iconName = activeSkillIcons[index] || `skill_${skillId}`
-            if (!iconName.endsWith('.png')) {
-              iconName += '.png'
+            // 图片已统一为 .webp；若配置里已带扩展名则保留（兼容旧配置）
+            if (!/\.(?:png|jpe?g|webp)$/i.test(iconName)) {
+              iconName += '.webp'
             }
 
             const rawName = s.name || s.skillName || (levelData[0] && levelData[0].name) || '技能'

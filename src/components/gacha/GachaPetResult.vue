@@ -7,8 +7,8 @@
     <div class="g-layer-bg tip-mask" @click="handleClick"></div>
 
     <div class="g-abs g-layer-ui tip-plate" :style="gachaPos(0, 0)" @click="handleClick">
-      <img :src="getImageUrl('/images/TipsManager_Atlas/item_get.png')" alt="" class="tip-plate__bg" />
-      <img :src="getImageUrl('/images/TipsManager_Atlas/item_get_titel.png')" alt="获得物品" class="tip-plate__title" />
+      <img :src="getImageUrl('/images/TipsManager_Atlas/item_get.webp')" alt="" class="tip-plate__bg" />
+      <img :src="getImageUrl('/images/TipsManager_Atlas/item_get_titel.webp')" alt="获得物品" class="tip-plate__title" />
       <p class="tip-plate__tip g-text g-text--xs">{{ showComplete ? '再次点击关闭' : '点击补齐全部结果' }}</p>
     </div>
 
@@ -25,7 +25,7 @@
         :title="cellTitle(item)"
       >
         <img
-          :src="getImageUrl(`/images/ItemBagPanel/item_f_${cellQuality(item)}.png`)"
+          :src="getImageUrl(`/images/ItemBagPanel/item_f_${cellQuality(item)}.webp`)"
           alt=""
           class="tip-cell__frame"
         />
@@ -34,7 +34,7 @@
              `com_stars_{star+2}`；翼型徽印等非蛋道具不显示星级） -->
         <img
           v-if="isPetEgg(item)"
-          :src="getImageUrl(`/images/Common_Atlas/com_stars_${cellQuality(item)}.png`)"
+          :src="getImageUrl(`/images/Common_Atlas/com_stars_${cellQuality(item)}.webp`)"
           alt=""
           class="tip-cell__stars"
         />

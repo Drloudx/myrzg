@@ -52,6 +52,7 @@ const props = defineProps({
 const stageEl = ref(null)
 const scale = ref(1)
 const stageWidth = ref(0)
+const stageHeight = ref(0)
 const showRotateHint = ref(false)
 let observer = null
 
@@ -64,8 +65,10 @@ function measure() {
   // 宽和高共同限制缩放，不能只按高度让窄窗口中的固定坐标控件落到视口外。
   scale.value = gachaFitScale(width, height)
   if (props.fit === 'height') {
-    // 宽屏仍延展背景；窄屏缩放受宽度限制，逻辑画布保持 1534，内容不被裁切。
+    // 宽屏延展宽度，高屏延展高度，使 canvas 在任意屏幕比例下均完整铺满舞台，
+    // 彻底消除遮罩、暗场、后处理与背景在顶部和底部的切边缝隙。
     stageWidth.value = width / scale.value
+    stageHeight.value = height / scale.value
   }
   // 宽度限制较强时提示横屏，提示不影响画布交互。
   const byHeight = gachaFitScaleByHeight(height)
@@ -86,7 +89,10 @@ onBeforeUnmount(() => {
 
 const canvasStyle = computed(() => {
   const style = { transform: `scale(${scale.value})` }
-  if (props.fit === 'height' && stageWidth.value) style.width = `${stageWidth.value}px`
+  if (props.fit === 'height') {
+    if (stageWidth.value) style.width = `${stageWidth.value}px`
+    if (stageHeight.value) style.height = `${stageHeight.value}px`
+  }
   return style
 })
 defineExpose({ scale })

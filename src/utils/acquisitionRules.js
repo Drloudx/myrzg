@@ -9,7 +9,7 @@ export const BASE_REWARD_NAMES = {
   ti: '体力', heroExp: '伙伴经验值', equipExp: '装备强化经验', speed: '加速点'
 }
 export const BASE_REWARD_PATHS = Object.fromEntries(
-  Object.entries(BASE_REWARD_ICONS).map(([key, id]) => [key, `/images/Common_ItemIcon/${id}.png`])
+  Object.entries(BASE_REWARD_ICONS).map(([key, id]) => [key, `/images/Common_ItemIcon/${id}.webp`])
 )
 export const REWARD_MODE_INFO = Object.fromEntries(
   Object.entries(BASE_REWARD_ICONS).map(([key, id]) => [key, {
@@ -37,7 +37,7 @@ function itemPresentation(typeId, context, currency) {
   const item = itemAt(context.items, typeId)
   const icon = item && context.getItemImageUrl
     ? context.getItemImageUrl(item)
-    : item?.img ? `/images/Common_ItemIcon/${item.img}.png` : ''
+    : item?.img ? `/images/Common_ItemIcon/${item.img}.webp` : ''
   return {
     typeId,
     targetName: item?.name || currency?.name || typeId || '',

@@ -25,7 +25,7 @@
           </button>
         </div>
         <div class="camp-heading">
-          <div class="camp-heading-portrait" :class="{ 'is-research': isResearch }" :style="isResearch ? { backgroundImage: `url('${getImageUrl('/images/CampCenterPanel/build_tree_iconbotm.png')}')` } : {}">
+          <div class="camp-heading-portrait" :class="{ 'is-research': isResearch }" :style="isResearch ? { backgroundImage: `url('${getImageUrl('/images/CampCenterPanel/build_tree_iconbotm.webp')}')` } : {}">
             <img :src="getImageUrl(selected.icon)" :alt="selected.name" @error="handleImageError" />
           </div>
           <div>

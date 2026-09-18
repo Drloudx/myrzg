@@ -12,7 +12,7 @@
           </svg>
           <button v-for="node in group.layout.nodes" :key="node.id" type="button" class="research-node"
             :class="{ 'is-context': !matchingIds.has(node.id) }" :data-research="node.id" :aria-label="node.name"
-            :style="{ left: `${node.x}px`, top: `${node.y}px`, backgroundImage: `url('${getImageUrl('/images/CampCenterPanel/build_tree_botm.png')}')` }"
+            :style="{ left: `${node.x}px`, top: `${node.y}px`, backgroundImage: `url('${getImageUrl('/images/CampCenterPanel/build_tree_botm.webp')}')` }"
             :title="`${node.name}：${node.description}${node.prerequisite ? `；前置：${node.prerequisite.name}` : ''}`" @click="emit('select', node.id)">
             <img :src="getImageUrl(node.icon)" :alt="node.name" @error="handleImageFallback" />
             <span class="research-node-body"><span class="research-node-heading"><strong>{{ node.name }}</strong><small>共 {{ node.levels.length }} 级</small></span><span class="research-node-description">{{ node.description }}</span></span>

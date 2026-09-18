@@ -227,7 +227,7 @@ const handlePortraitError = event => {
   const rawIcon = currentForm.value?.icon || monster.value?.icon
   const names = [baseId && `colect_mon_${baseId}`, rawIcon].filter(Boolean)
   const candidates = names.flatMap(name => [name, name.replace('colect_mon_', 'colectr_mon_')])
-    .map(name => getImageUrl(`/images/PicHandBookPanel_Atlas/${name}.png`))
+    .map(name => getImageUrl(`/images/PicHandBookPanel_Atlas/${name}.webp`))
   handleImageFallback(event, { source: portraitUrl.value, candidates })
 }
 const rewardCardRule = (rule, group) => ({ ...rule, targetImg: getImageUrl(rule.targetImg), min: group.min, max: group.max })

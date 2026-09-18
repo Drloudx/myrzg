@@ -9,7 +9,7 @@ const FIXED_CAMP_FACILITIES = new Set(['mailBox', 'carriage'])
 const ROOM_OBJECT_PREVIEW_IMAGES = {
   // This is the actual in-world mailbox shown by the game, not the build-list
   // placeholder stored in homeItem.icon.
-  c001_ludeng001: '/RoomObj/c001_ludeng001.png'
+  c001_ludeng001: '/RoomObj/c001_ludeng001.webp'
 }
 const PLACE_NAMES = {
   all: '营地/房间',
@@ -192,7 +192,7 @@ function buildConsume(consumeId, consumes, items) {
     return [{
       typeId: entry.typeId,
       name: item.name || entry.typeId,
-      img: `/Common_ItemIcon/${item.img || entry.typeId}.png`,
+      img: `/Common_ItemIcon/${item.img || entry.typeId}.webp`,
       quality: Number(item.quality) || 0,
       num: Number(entry.num) || 0
     }]
@@ -206,7 +206,7 @@ function buildConsume(consumeId, consumes, items) {
     return [{
       typeId,
       name: item?.name || BASE_REWARD_NAMES[field] || field,
-      img: `/Common_ItemIcon/${item?.img || typeId}.png`,
+      img: `/Common_ItemIcon/${item?.img || typeId}.webp`,
       quality: Number(item?.quality) || 0,
       num
     }]

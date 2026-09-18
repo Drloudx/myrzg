@@ -5,7 +5,7 @@
         class="mail-hero" :class="{ active: selectedHero?.id === hero.id }"
         :aria-label="hero.name" :aria-pressed="selectedHero?.id === hero.id" :title="hero.name"
         @click="emit('select-hero', hero)">
-        <img class="hero-portrait" :src="getImageUrl(`/images/HeadIconAtals/${hero.icon}.png`)" alt="" @error="avatarFallback" />
+        <img class="hero-portrait" :src="getImageUrl(`/images/HeadIconAtals/${hero.icon}.webp`)" alt="" @error="avatarFallback" />
         <img class="hero-frame" :src="skin('at_f_M')" alt="" />
         <img v-if="selectedHero?.id === hero.id" class="hero-selection" :src="skin('chara_srat_now')" alt="" />
       </UiButton>
@@ -148,10 +148,29 @@ onBeforeUnmount(() => {
   clearTimeout(selectionTimer)
   document.fonts?.removeEventListener('loadingdone', scheduleLayout)
 })
+/**
+ * 邮件 sprite 名 → URL。
+ *
+ * 图片扩展名已按**真实格式**归一（`scripts/dev/normalize-image-extensions.mjs`）：
+ * 多数是 .webp，但这三个标签图在无损 WebP 转换时因「压后未变小」被跳过，仍是真 PNG。
+ * 故不能统一拼 .webp，需要按名解析。
+ *
+ * 为什么用硬编码清单而不是 `import.meta.glob`：项目已有明确约定——
+ * 见 `src/utils/recipeUtils.js` 顶部注释「硬编码替换 import.meta.glob 防止图片被
+ * Vite 错误打包到 dist/assets 中」。这里沿用同一约定，仅列出例外（PNG 的那几个）。
+ */
+const SKIN_EXT_OVERRIDES = {
+  com_item_archive: 'png',
+  com_item_encl: 'png',
+  com_item_task: 'png',
+  mail_list_new: 'png',
+  mail_list_new_task_pt: 'png',
+}
 const skin = name => {
   const folder = name === 'mail_botm' ? 'uipanel/emailpanel'
     : (name.startsWith('mail_') ? 'EmailPanel_Atlas' : 'Common_Atlas')
-  return getImageUrl(`/images/${folder}/${name}.png`)
+  const ext = SKIN_EXT_OVERRIDES[name] || 'webp'
+  return getImageUrl(`/images/${folder}/${name}.${ext}`)
 }
 const rewardLabel = computed(() => getPartnerMailPresentation(props.selectedMail).rewardLabel)
 const skinStyle = computed(() => Object.fromEntries(['mail_at', 'mail_page', 'mail_page_on', 'mail_botm']

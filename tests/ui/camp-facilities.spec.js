@@ -80,7 +80,7 @@ test('research overview uses original game cards and linked branches on desktop 
   await expect(camp.locator('.research-tree-lines path')).toHaveCount(8)
   await expect(camp.getByRole('combobox')).toHaveCount(0)
   await expect.poll(() => camp.locator('.research-node img').evaluateAll(images => images.every(image => image.complete && image.naturalWidth > 0))).toBe(true)
-  expect(await camp.locator('.research-node').first().evaluate(element => getComputedStyle(element).backgroundImage)).toContain('build_tree_botm.png')
+  expect(await camp.locator('.research-node').first().evaluate(element => getComputedStyle(element).backgroundImage)).toContain('build_tree_botm.webp')
   expect(await camp.evaluate(element => element.scrollWidth <= element.clientWidth + 1)).toBe(true)
   const root = camp.locator('[data-research="collect_tree"]')
   const diagram = camp.locator('.research-tree-scroll')
