@@ -224,14 +224,18 @@ watch(() => props.selectedMail?.id, async () => {
 .mail-title small { grid-column: 2; font-size: 11px; line-height: 17px; color: rgb(248 238 220 / 50.196081%); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 /* The actual 512px mail_botm includes the header, separator and paper edges.
    Original mBorder is 150; give its top slice 12px more room for the sender. */
-.mail-content { position: relative; min-width: 0; min-height: 0; margin: 0 5px 0 0; display: flex; flex-direction: column; color: var(--mail-ink); }
+/* 横屏等"高度不足"场景：标题+发件人+正文+奖励四项的固定高度之和会超过容器高度，
+   把 flex:1 的 .mail-body-area 压成 0（实测 844x390 下 clientHeight=0，正文完全读不到，
+   奖励区还溢出到视口外）。故：容器允许纵向滚动兜底，正文保留最小可读高度。 */
+.mail-content { position: relative; min-width: 0; min-height: 0; margin: 0 5px 0 0; display: flex; flex-direction: column; color: var(--mail-ink); overflow-y: auto; }
 .mail-content::before { content: ''; position: absolute; inset: 0; border-image: var(--mail-botm) 150 fill / 102px 90px 90px stretch; pointer-events: none; }
 .mail-content > * { position: relative; }
 /* The black strip is centered at source y=44, or about 30px in the 102px top slice.
    Offset only the title to align its 25px line box without moving the sender below. */
 .mail-content h2 { top: 3px; flex: 0 0 25px; margin: 14px 28px 0 39px; font-family: inherit; font-size: 14px; font-weight: 400; line-height: 25px; color: #cfba96; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
 .mail-meta { flex: 0 0 23px; margin: 8px 25px 0; color: var(--mail-muted); font-size: 12px; font-weight: 700; line-height: 23px; }
-.mail-body-area { position: relative; display: flex; flex: 1; min-height: 0; margin: 9px 24px 23px; }
+/* min-height 96px：保证正文至少有可读高度；空间不足时由 .mail-content 的纵向滚动兜底 */
+.mail-body-area { position: relative; display: flex; flex: 1; min-height: 96px; margin: 9px 24px 23px; }
 .mail-body { flex: 1; min-width: 0; min-height: 0; overflow-y: auto; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 14px; font-weight: 700; line-height: 1.4; }
 .mail-rewards { flex: 0 0 64px; margin: 0 6px 24px; padding: 4px 8px; display: flex; align-items: center; gap: 8px; background: rgba(112, 105, 87, .42); }
 .mail-illustration { display: block; max-width: 100%; height: auto; margin: 12px auto 0; }

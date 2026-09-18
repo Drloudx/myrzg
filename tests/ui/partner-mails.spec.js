@@ -249,6 +249,12 @@ test('mail viewport stays aligned while each overflowing column scrolls independ
       await expect(root).toHaveJSProperty('scrollTop', 0)
       expect(await reader.boundingBox()).toEqual(before)
     }
+    // 列表横向滚动会经 140ms 防抖触发 select-mail，而选中变化会把 mail-body 的
+    // scrollTop 重置为 0（见 PartnerMailReader 的 watch(selectedMail.id)）——那会让
+    // 正文的滚动提示重新出现。此处等防抖落定后再把正文滚到底，断言才稳定。
+    await page.waitForTimeout(400)
+    await body.evaluate(el => { el.scrollTop = el.scrollHeight })
+    await page.mouse.wheel(0, 1600)
     await expect(page.locator('.mail-scroll-cue--body')).toHaveCount(0)
     await body.evaluate(el => { el.scrollTop = 0 })
     await expect(page.locator('.mail-scroll-cue--body')).toBeVisible()
