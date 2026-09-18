@@ -19,6 +19,13 @@ import { projectRoot } from './maintenance-paths.mjs'
 const { values } = parseArgs({ options: { apply: { type: 'boolean' } } })
 
 const SRC = join(projectRoot, '../UI_Atlases/FreightPanel_Atlas/sprites')
+/**
+ * 预制体目录里的额外大图（不在图集切图里，是独立贴图）。
+ * 例如 `cart_order_botm`（列表面板底）、`cart_order_empty`（空态）、`cart_bg`（面板底）。
+ * 只取本项目实际用到的，避免把小车分层图（cyyd_cart001_*）等无关资源也搬进来。
+ */
+const EXTRA_SRC = join(projectRoot, '../4.24路资源包/assets/res/prefab/uiprefab/freightpanel')
+const EXTRA_FILES = ['cart_order_botm.png', 'cart_order_empty.png', 'cart_bg.png', 'cart_market_botm.png']
 const DST = join(projectRoot, 'public/images/FreightPanel_Atlas')
 
 if (!existsSync(SRC)) {
@@ -26,8 +33,12 @@ if (!existsSync(SRC)) {
   process.exit(1)
 }
 
-const files = readdirSync(SRC).filter(f => /\.(png|jpg|jpeg)$/i.test(f))
-console.log(`[freight] 源: ${SRC}`)
+const files = [
+  ...readdirSync(SRC).filter(f => /\.(png|jpg|jpeg)$/i.test(f)).map(f => ({ name: f, dir: SRC })),
+  ...EXTRA_FILES.filter(f => existsSync(join(EXTRA_SRC, f))).map(f => ({ name: f, dir: EXTRA_SRC }))
+]
+console.log(`[freight] 图集切图: ${SRC}`)
+console.log(`[freight] 额外大图: ${EXTRA_SRC}`)
 console.log(`[freight] 待导入 ${files.length} 张`)
 
 const { default: sharp } = await import('sharp')
@@ -37,8 +48,8 @@ let totalDst = 0
 const rows = []
 const failures = []
 
-for (const f of files) {
-  const src = join(SRC, f)
+for (const { name: f, dir } of files) {
+  const src = join(dir, f)
   const name = basename(f).replace(/\.(png|jpg|jpeg)$/i, '') + '.webp'
   const dst = join(DST, name)
   const srcBuf = (await import('node:fs')).readFileSync(src)

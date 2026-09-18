@@ -125,6 +125,17 @@ export function createSpineScene(canvas, layers, options = {}) {
   const gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: true })
   if (!gl) return Promise.reject(new Error('WebGL 不可用'))
   gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true)
+  /**
+   * 上下文丢失兜底：移动端显存紧张时浏览器会丢弃 WebGL 上下文。
+   * **必须 preventDefault**，否则上下文永久丢失、画面永久残缺（且不会自动恢复）。
+   * 这里只做「允许恢复」；真正的成因（渲染缓冲过大）已由 `getCanvasBufferSize`
+   * 的像素预算从源头压低。
+   */
+  const onContextLost = event => {
+    event.preventDefault()
+    console.warn('[gachaSpine] WebGL 上下文丢失，等待浏览器恢复')
+  }
+  canvas.addEventListener('webglcontextlost', onContextLost, false)
   const renderer = new SceneRenderer(canvas, gl)
   const pad = Number(options.pad) > 0 ? Number(options.pad) : 1
   const padding = Number(options.padding) > 0 ? Number(options.padding) : 1.12
@@ -362,6 +373,7 @@ export function createSpineScene(canvas, layers, options = {}) {
       disposed = true
       paused = true
       cancelAnimationFrame(rafId)
+      canvas.removeEventListener('webglcontextlost', onContextLost, false)
       try { renderer.dispose() } catch { /* 已释放则忽略 */ }
       for (const texture of gpuTextures) {
         try { texture.dispose() } catch { /* 已释放则忽略 */ }
@@ -470,13 +482,35 @@ export function disposeSharedSpineScenes() {
  */
 const sharedCanvases = new Map()
 
+/**
+ * 单个 WebGL 渲染缓冲的**像素预算**上限（约 207 万像素 ≈ 1920×1080）。
+ *
+ * 为什么需要：手机竖屏时抽卡页会被 `GachaViewport` **旋转 90°**，于是卡片舞台画布的
+ * CSS 尺寸是「屏幕高 × 屏幕宽」的横置版本（Pixel 5 上约 1623×750）。再乘 DPR 2
+ * 就得到 3246×1500 ≈ **487 万像素**的渲染缓冲——比游戏原设计分辨率 1534×750
+ * （115 万像素）大 4.2 倍。
+ *
+ * 移动 GPU 同时还要承载 5 张 Spine 纹理（`elsa_rawcard` 1604×1599、
+ * `elsa_rawcard_desk` 1684×1408、`perform_bag` 1484×1484 等），显存与填充率很容易
+ * 吃不住，表现为**演出画面只画出一部分**（桌面端 GPU 宽裕所以看不出来）。
+ *
+ * 加预算后：超出时按等比降低有效 DPR（不是直接砍分辨率），画质仍高于 1× 屏幕，
+ * 但缓冲像素数被压到安全范围。1920×1080 这个量级对移动端是很宽裕的余量。
+ */
+const MAX_BUFFER_PIXELS = 1920 * 1080
+
 function getCanvasBufferSize(canvas) {
-  const dpr = Math.min(window.devicePixelRatio || 1, 2)
+  const cssWidth = Math.max(1, canvas.clientWidth)
+  const cssHeight = Math.max(1, canvas.clientHeight)
+  let dpr = Math.min(window.devicePixelRatio || 1, 2)
+  // 像素预算：若 dpr 下的缓冲超出预算，等比降到刚好不超（下限 1，避免糊）
+  const budgetDpr = Math.sqrt(MAX_BUFFER_PIXELS / (cssWidth * cssHeight))
+  if (budgetDpr < dpr) dpr = Math.max(1, budgetDpr)
   // client 尺寸为局部设计坐标，忽略外层缩放、相机动画和手机 90° 横置。
   // 尤其小人画布 440×520 不等于其 380×380 宿主，不能按宿主的屏幕包围盒取景。
   return {
-    width: Math.max(1, Math.round(canvas.clientWidth * dpr)),
-    height: Math.max(1, Math.round(canvas.clientHeight * dpr))
+    width: Math.max(1, Math.round(cssWidth * dpr)),
+    height: Math.max(1, Math.round(cssHeight * dpr))
   }
 }
 
