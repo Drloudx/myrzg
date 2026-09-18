@@ -16,6 +16,26 @@ const schemas = {
     && recordList(data.syntheses) && data.syntheses.every(entry => acquisition(entry.acquisition)
       && hasId(entry.input) && runeEffect(entry.input.effect) && hasId(entry.output) && runeEffect(entry.output.effect))
     && isList(data.enchantCosts) && isRecord(data.sources) && Object.values(data.sources).every(isList),
+  /**
+   * `data/parsed/gacha.json`（卡池数据）。
+   *
+   * **卡池 id 的格式**：`<kind>:<slotId>:<poolTypeId>:<teamIndex>`
+   *   - `kind`      —— `hero`（伙伴招募）/ `pet`（魔物蛋贩售）
+   *   - `slotId`    —— 原表 `heroPoolTime` / `petPoolTime` 的槽位号（= 界面上那一排按钮的位置）
+   *   - `poolTypeId`—— 原表 `heroPool` / `petPool` 的卡池配置号（概率/保底/UP/奖励都挂在这上面）
+   *   - `teamIndex` —— **该槽位内第几个 team 条目**（0 起）。同一槽位可挂多个 team，
+   *                    原表里第二个用 `poolTypeId2` 字段表示（如 `heroPoolTime` 的 slot 3 友情招募
+   *                    有两个 team，推得 `hero:3:3:0` 与 `hero:3:3:1`）。
+   *
+   * 例：`hero:2:2:0` = 伙伴招募 / 第 2 个槽位 / 第 2 号卡池配置 / 第 0 个 team
+   *     （即「活动招募」）。
+   *
+   * 注意：**当前四个在架卡池的第四段恒为 0**——因为每个槽位都只挂了一个 team，
+   * 所以这一段目前不携带信息。它只在「同槽位多 team」时才起区分作用。
+   * 另外 `slotId` 与 `poolTypeId` 目前数值相同（1↔1、2↔2）是原表配置的巧合，
+   * 两者是不同概念：slot 决定按钮位置，poolTypeId 决定卡池内容。
+   * 运行时状态按 `stateKey`（= `<kind>:<slotId>`，如 `hero:2`）索引，不含后两段。
+   */
   'data/parsed/gacha.json': data => isRecord(data) && data.schemaVersion === 1 && data.modelVersion === 'config-v1'
     && recordList(data.pools) && data.pools.every(pool => ['hero', 'pet'].includes(pool.kind)
       && typeof pool.stateKey === 'string' && typeof pool.poolTypeId === 'string' && typeof pool.slotId === 'string'
