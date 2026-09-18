@@ -13,24 +13,44 @@ const sourceRoot = path.resolve(root, '../4.24路资源包/assets/res/spine/mode
 const { values: options } = parseArgs({ options: {
   hero: { type: 'string' },
   'all-heroes': { type: 'boolean', default: false },
+  /**
+   * 直接指定骨架导出，格式 `骨架名[:皮肤名]`（皮肤名缺省 default）。
+   *
+   * 用途：导出**不在 hero.json 里**的模型。例：主角希尔有男女两套模型，
+   * 但 `hero.json` 的 viewData 只登记了女主（Npc_001_girl），
+   * 男主 Npc_001_boy 在资源包里存在却无法用 `--hero` 取到——
+   * 此时用 `--skeleton Npc_001_boy:skill_off` 导出。
+   */
+  skeleton: { type: 'string' },
   'output-dir': { type: 'string' }
 } })
-if (options.hero && options['all-heroes']) throw new Error('--hero and --all-heroes cannot be combined')
+const skeletonMode = Boolean(options.skeleton)
+if ([options.hero, options['all-heroes'], options.skeleton].filter(Boolean).length > 1) {
+  throw new Error('--hero / --all-heroes / --skeleton are mutually exclusive')
+}
 const heroMode = Boolean(options.hero || options['all-heroes'])
-if (heroMode && !options['output-dir']) throw new Error('Hero export requires --output-dir')
-if (!heroMode && options['output-dir']) throw new Error('--output-dir requires --hero or --all-heroes')
+if ((heroMode || skeletonMode) && !options['output-dir']) throw new Error('Hero/skeleton export requires --output-dir')
+if (!heroMode && !skeletonMode && options['output-dir']) throw new Error('--output-dir requires --hero, --all-heroes or --skeleton')
 const outputDir = options['output-dir'] ? path.resolve(root, options['output-dir']) : path.join(root, 'public/images/skin-models')
-let skins = Object.values(JSON.parse(fs.readFileSync(path.join(root, 'raw/skin.json'), 'utf8')).datas)
-  .filter(skin => skin.show && skin.heroTypeId && skin.skeletonName)
-if (heroMode) {
-  const heroes = Object.values(JSON.parse(fs.readFileSync(path.join(root, 'raw/hero/hero.json'), 'utf8')).datas)
-  const selected = options['all-heroes'] ? heroes.filter(hero => hero.hide !== true)
-    : heroes.filter(hero => hero.typeId === options.hero)
-  if (!selected.length) throw new Error(`Hero not found: ${options.hero}`)
-  skins = selected.map(hero => {
-    if (!hero.viewData?.skeletonName) throw new Error(`Hero model not found: ${hero.typeId}`)
-    return { ...hero.viewData, typeId: hero.typeId, name: hero.name }
-  })
+let skins
+if (skeletonMode) {
+  // `骨架名[:皮肤名]`：typeId 直接用骨架名（落盘文件名）
+  const [skeletonName, skinName = 'default'] = options.skeleton.split(':')
+  if (!/^[\w-]+$/.test(skeletonName)) throw new Error(`Invalid skeleton name: ${skeletonName}`)
+  skins = [{ typeId: skeletonName, skeletonName, skinName, name: skeletonName }]
+} else {
+  skins = Object.values(JSON.parse(fs.readFileSync(path.join(root, 'raw/skin.json'), 'utf8')).datas)
+    .filter(skin => skin.show && skin.heroTypeId && skin.skeletonName)
+  if (heroMode) {
+    const heroes = Object.values(JSON.parse(fs.readFileSync(path.join(root, 'raw/hero/hero.json'), 'utf8')).datas)
+    const selected = options['all-heroes'] ? heroes.filter(hero => hero.hide !== true)
+      : heroes.filter(hero => hero.typeId === options.hero)
+    if (!selected.length) throw new Error(`Hero not found: ${options.hero}`)
+    skins = selected.map(hero => {
+      if (!hero.viewData?.skeletonName) throw new Error(`Hero model not found: ${hero.typeId}`)
+      return { ...hero.viewData, typeId: hero.typeId, name: hero.name }
+    })
+  }
 }
 const manifest = {}
 const browser = await chromium.launch({ channel: 'chrome', headless: true })
@@ -122,15 +142,16 @@ try {
       ...(heroMode ? { name: skin.name } : {}),
       ...(textureAdjustments.length ? { textureAdjustments } : {}),
       skeletonName: name, skinName: skin.skinName || 'default', animation: result.animation, frameTime: 0,
-      spineVersion: result.version, image: heroMode ? `${skin.typeId}.png` : `/images/skin-models/${skin.typeId}.png`,
+      spineVersion: result.version, image: (heroMode || skeletonMode) ? `${skin.typeId}.png` : `/images/skin-models/${skin.typeId}.png`,
       source: path.relative(path.resolve(root, '..'), dir).replaceAll('\\', '/'),
       inputHashes: Object.fromEntries(inputs), sha256: crypto.createHash('sha256').update(png).digest('hex')
     }
     console.log(`${skin.typeId}: ${name}/${skin.skinName}, ${result.animation}, ${(png.length / 1024).toFixed(0)} KB`)
     await page.close()
   }
-  if (!heroMode || options['all-heroes']) {
-    const manifestName = heroMode ? 'hero-models.json' : 'manifest.json'
+  // 单角色导出（--hero 单个）不写清单；皮肤/骨架/全部模式都写
+  if (!options.hero || options['all-heroes']) {
+    const manifestName = (heroMode || skeletonMode) ? 'hero-models.json' : 'manifest.json'
     fs.writeFileSync(path.join(outputDir, manifestName), JSON.stringify(manifest, null, 2) + '\n')
   }
 } finally {

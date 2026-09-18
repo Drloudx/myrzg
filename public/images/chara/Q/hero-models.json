@@ -6,7 +6,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_001.png",
+    "image": "hero_001.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_001_girl",
     "inputHashes": {
       "Npc_001_girl.atlas": "418a87c9bb373e27f9aaa62e1deb4c9e09b087c2d91f5a36d2536a39ac07c34a",
@@ -22,7 +22,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_008.png",
+    "image": "hero_008.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_008",
     "inputHashes": {
       "Npc_008.atlas": "a642fbf76a7d3b59ebb568fc89e4e69dda6fe53c872ce0273b21fed3cfbe7d2e",
@@ -38,7 +38,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_031.png",
+    "image": "hero_031.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_031",
     "inputHashes": {
       "Npc_031.atlas": "cfa4348e9507165cb9749d89ac73b656ed1678e50615274095ec327a27c2b55e",
@@ -54,7 +54,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_025.png",
+    "image": "hero_025.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_025",
     "inputHashes": {
       "Npc_025.atlas": "6eece8f5660d0d877e3f0e9dcf2d33c8cabb7b3777cf9633f50a2f7df805c136",
@@ -70,7 +70,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_027.png",
+    "image": "hero_027.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_027",
     "inputHashes": {
       "Npc_027.atlas": "b342d81cf02526a9c90447a447a2436726602d86c9bb0d0203ea6f91e306c2b7",
@@ -96,7 +96,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_007.png",
+    "image": "hero_007.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_007",
     "inputHashes": {
       "Npc_007.atlas": "9fbe0db808310e14a1018b92784e465514f2892cb268d719fd7edb98cedbf48c",
@@ -112,7 +112,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_015.png",
+    "image": "hero_015.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_015",
     "inputHashes": {
       "Npc_015.atlas": "1986a350697b80abb2029feef6e80ea79f1d8a854d6ff0521ea40ba655d4da50",
@@ -128,7 +128,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_012.png",
+    "image": "hero_012.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_012",
     "inputHashes": {
       "Npc_012.atlas": "f126f596c7fe09ceee00df502a61a1c4f4f879adebc7b78b550ceb01c98cc1e6",
@@ -144,7 +144,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_005.png",
+    "image": "hero_005.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_005",
     "inputHashes": {
       "Npc_005.atlas": "1f87e502580fb1e6bda1a9fb05d5c68225adcec76b2e1a6efdb1ce79983331af",
@@ -160,7 +160,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_055.png",
+    "image": "hero_055.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_055",
     "inputHashes": {
       "Npc_055.atlas": "bd7947a3f91bf65197c0f53aa117ee5c83b3ca5085a17bdc2ef5a37fd90349a1",
@@ -176,7 +176,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_014.png",
+    "image": "hero_014.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_014",
     "inputHashes": {
       "Npc_014.atlas": "58c84301960e7be3a91aacf7f6f1cdc2e17e8971ea9319d7df2d796e03f2de67",
@@ -192,7 +192,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_009.png",
+    "image": "hero_009.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_009",
     "inputHashes": {
       "Npc_009.atlas": "d6b755a1a492dbcb25cf2ea57504475cc293c216eb6c6b9a86a8dbe9e10a9c06",
@@ -208,7 +208,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_019.png",
+    "image": "hero_019.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_019",
     "inputHashes": {
       "Npc_019.atlas": "cfa09f2f75c973597b3378d34bd68f0f6b07d842f9a6bed1728379dcda89a024",
@@ -224,7 +224,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_045.png",
+    "image": "hero_045.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_045",
     "inputHashes": {
       "Npc_045.atlas": "ac02db65cdb6d7b07a60f70b9f389ea891e01aaecc77d6df4934546b5f4ac7b2",
@@ -240,7 +240,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_046.png",
+    "image": "hero_046.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_046",
     "inputHashes": {
       "Npc_046.atlas": "20ee542770848b26af3c06d101c30681d235a9a4ac805e5b028020e935a64804",
@@ -256,7 +256,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_011.png",
+    "image": "hero_011.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_011",
     "inputHashes": {
       "Npc_011.atlas": "d631fea8f106d8cbb2391fb25c872d329a7a04794fb26bd5e5dd4fd1fa8ce968",
@@ -272,7 +272,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "new_hero_002.png",
+    "image": "new_hero_002.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_002_1",
     "inputHashes": {
       "Npc_002_1.atlas": "7c5c007b65e43e18f62cee6a5b922c30924aa209d9e50121156e061a44ac8bd2",
@@ -288,7 +288,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_023.png",
+    "image": "hero_023.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_023",
     "inputHashes": {
       "Npc_023.atlas": "44e01c95246582e7f12aa26630b04634b80a89b2d803790ed9ff4acb88cda038",
@@ -304,7 +304,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_026.png",
+    "image": "hero_026.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_026",
     "inputHashes": {
       "Npc_026.atlas": "451727f06ae4b8407277119a6fc70e27ebeaa8ebab6c9807f08f4765c9ff13c2",
@@ -320,7 +320,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_037.png",
+    "image": "hero_037.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_037",
     "inputHashes": {
       "Npc_037.atlas": "a68226498103dfabebcc0d1a402041cbdc236bcbb5a5b417488ae704d36d1033",
@@ -336,7 +336,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_029.png",
+    "image": "hero_029.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_029",
     "inputHashes": {
       "Npc_029.atlas": "72ac346378214cee6491060fd3dfae52f10b3b72555ad50ddb0740f53bdfc1be",
@@ -352,7 +352,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_034.png",
+    "image": "hero_034.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_034",
     "inputHashes": {
       "Npc_034.atlas": "438946fa09df9b9e673d1185d4ce2dd5156e4dfd2ad8381604a2bfc2cf5eebad",
@@ -368,7 +368,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_049.png",
+    "image": "hero_049.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_049",
     "inputHashes": {
       "Npc_049.atlas": "1fb8bfba72297a599472d2be9d632c1354c9155a37757a88edf1d45c520217e3",
@@ -384,7 +384,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_050.png",
+    "image": "hero_050.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_050",
     "inputHashes": {
       "Npc_050.atlas": "7fadaa64b9a6377c02aef9fe66426169a914af5885d30e94480edb53ca41b0da",
@@ -400,7 +400,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_041.png",
+    "image": "hero_041.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_041",
     "inputHashes": {
       "Npc_041.atlas": "19abadd63d82371dd549f2f9a393ecc1370c107470ffa14f48088453873fc417",
@@ -416,7 +416,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_051.png",
+    "image": "hero_051.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_051",
     "inputHashes": {
       "Npc_051.atlas": "fe624a478a0354f1b05417136874803a9bfa0dc6282e73b6e7bf12b25c3d740e",
@@ -432,7 +432,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_036.png",
+    "image": "hero_036.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_036",
     "inputHashes": {
       "Npc_036.atlas": "eb68e5d8062315d0fc1f55b37a50175aa855dfca17474dae94bf01ca677cde23",
@@ -448,7 +448,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_033.png",
+    "image": "hero_033.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_033",
     "inputHashes": {
       "Npc_033.atlas": "e981d6a0d507863a59762653a4d99dda102677f2137071d41f1a6ec292bd4ab4",
@@ -464,7 +464,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_053.png",
+    "image": "hero_053.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_053",
     "inputHashes": {
       "Npc_053.atlas": "2d3e9d68f58e053d57e0e423f5ed62f6b9735a3e8a574f5beef171dfcddc4474",
@@ -480,7 +480,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_062.png",
+    "image": "hero_062.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_062",
     "inputHashes": {
       "Npc_062.atlas": "fb30d4b788971fe71698c6baf67adf0a6763cc01c199317f900d7f5afd6817e3",
@@ -496,7 +496,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_064.png",
+    "image": "hero_064.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_064",
     "inputHashes": {
       "Npc_064.atlas": "e0c6b70f941e3d762434a82bc816c1b4a3913767d342b2169856e11f9bc308e4",
@@ -512,7 +512,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_066.png",
+    "image": "hero_066.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_066",
     "inputHashes": {
       "Npc_066.atlas": "b933c93b40e3e15f6ccb10ab1cc0a6431d987d2d4445dcf4c7d31f079a786292",
@@ -528,7 +528,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_065.png",
+    "image": "hero_065.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_065",
     "inputHashes": {
       "Npc_065.atlas": "502aac328143241d9bc3ec709b018400a794d4d0ada6a2c3070ed5d1b1da2971",
@@ -544,7 +544,7 @@
     "animation": "idle_front",
     "frameTime": 0,
     "spineVersion": "4.0.09",
-    "image": "hero_043.png",
+    "image": "hero_043.webp",
     "source": "4.24路资源包/assets/res/spine/model/npc/npc_043",
     "inputHashes": {
       "Npc_043.atlas": "aca14b373f23ce5b70aa9e03ecd29f3fc4c91ac4c825cacc118277cc78408d53",

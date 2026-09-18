@@ -50,8 +50,8 @@ const EFFORT = Math.min(6, Math.max(0, Number(values.effort ?? 6)))
 const VERIFY = !values['no-verify-pixels']
 const MIN_BYTES = 2048 // 微小图转换收益为负，且会产生额外请求头开销
 
-// 默认覆盖全站三个图片根
-const rootArgs = values.root?.length ? values.root : ['public/images', 'public/ui', 'public/test2']
+// 默认覆盖全站两个图片根（public/test2 已于 2026-09-18 删除，其内容并入 public/images/chara/Q）
+const rootArgs = values.root?.length ? values.root : ['public/images', 'public/ui']
 const roots = rootArgs.map(r => resolve(projectRoot, r))
 for (const r of roots) {
   if (!existsSync(r)) throw new Error(`根目录不存在：${r}`)

@@ -148,19 +148,53 @@
               @click="protagonistGender = protagonistGender === 'female' ? 'male' : 'female'">
               {{ protagonistGender === 'female' ? '切换男主' : '切换女主' }}
             </UiButton>
-            <div v-for="portrait in protagonistPortraits" :key="portrait.gender"
-              class="protagonist-portrait-slot" :class="{ 'is-selected': protagonistGender === portrait.gender }">
-              <img :src="getImageUrl(portrait.image)" :alt="portrait.label"
-                class="chara-portrait-img" @error="handlePortraitImgError" />
-            </div>
+            <!-- 模型图模式：与立绘模式同样处理——桌面端男女模型**并列显示**，手机端只显示选中性别 -->
+            <template v-if="showHeroModel">
+              <div v-for="variant in protagonistModels" :key="variant.gender"
+                class="protagonist-portrait-slot" :class="{ 'is-selected': protagonistGender === variant.gender }">
+                <img :src="getImageUrl(variant.image)"
+                  :alt="`${selectedHero.name}（${variant.gender === 'female' ? '女主' : '男主'}）模型图`"
+                  class="chara-model-img"
+                  @error="handleModelImgError" />
+              </div>
+            </template>
+            <template v-else>
+              <div v-for="portrait in protagonistPortraits" :key="portrait.gender"
+                class="protagonist-portrait-slot" :class="{ 'is-selected': protagonistGender === portrait.gender }">
+                <img :src="getImageUrl(portrait.image)" :alt="portrait.label"
+                  class="chara-portrait-img" @error="handlePortraitImgError" />
+              </div>
+            </template>
+            <!-- 切换「立绘 / 模型图」：手机端由 CSS 放到性别切换按钮**下面** -->
+            <UiButton v-if="hasHeroModel" class="hero-model-toggle" size="sm" variant="secondary"
+              :aria-label="showHeroModel ? '切换到立绘' : '切换到模型图'"
+              @click="showHeroModel = !showHeroModel">
+              {{ showHeroModel ? '立绘' : '模型' }}
+            </UiButton>
           </template>
-          <img
-            v-else
-            :src="getImageUrl(`/images/chara/l/${selectedHero.img}.webp`)"
-            :alt="selectedHero.name"
-            class="chara-portrait-img"
-            @error="handlePortraitImgError"
-          />
+          <template v-else>
+            <img
+              v-if="!showHeroModel"
+              :src="getImageUrl(`/images/chara/l/${selectedHero.img}.webp`)"
+              :alt="selectedHero.name"
+              class="chara-portrait-img"
+              @error="handlePortraitImgError"
+            />
+            <!-- 角色模型图（Q 版小人立绘）：与立绘同区二选一，叠在立绘区域右下角 -->
+            <img
+              v-else-if="heroModelImage"
+              :src="getImageUrl(heroModelImage)"
+              :alt="heroModelAlt"
+              class="chara-model-img"
+              @error="handleModelImgError"
+            />
+            <!-- 切换「立绘 / 模型图」：仅对**有模型图**的角色显示 -->
+            <UiButton v-if="hasHeroModel" class="hero-model-toggle" size="sm" variant="secondary"
+              :aria-label="showHeroModel ? '切换到立绘' : '切换到模型图'"
+              @click="showHeroModel = !showHeroModel">
+              {{ showHeroModel ? '立绘' : '模型' }}
+            </UiButton>
+          </template>
         </div>
 
         <!-- Badges & Favorite Gifts Row -->
@@ -641,6 +675,7 @@ import {
 } from '../utils/gameMappings'
 import HeroStoryPanels from '../components/heroes/HeroStoryPanels.vue'
 import HeroSkinsPanel from '../components/heroes/HeroSkinsPanel.vue'
+import { hasHeroModel as hasHeroModelFor, getHeroModelImage } from '../utils/heroModels.js'
 import {
   UiBackToTop,
   UiButton,
@@ -699,9 +734,28 @@ const selectedHero = ref(null)
 // ExtentionMethod.SetSexHeroImg: hero_001 的男版立绘为 chara001b_0。
 const isProtagonist = computed(() => selectedHero.value?.id === 'hero_001')
 const protagonistGender = ref('female')
+/** 立绘区显示的是「模型图」还是「立绘」；仅对有模型图的角色有效 */
+const showHeroModel = ref(false)
+const hasHeroModel = computed(() => hasHeroModelFor(selectedHero.value?.id))
+// 主角传当前性别以取对应模型（女主 hero_001 / 男主 hero_001_male）；其他角色忽略该参数
+const heroModelImage = computed(() => getHeroModelImage(selectedHero.value?.id, protagonistGender.value))
+const heroModelAlt = computed(() => isProtagonist.value
+  ? `${selectedHero.value?.name || ''}（${protagonistGender.value === 'female' ? '女主' : '男主'}）模型图`
+  : `${selectedHero.value?.name || ''}模型图`)
 const protagonistPortraits = [
   { gender: 'female', label: '希尔（女主）', image: '/images/chara/l/chara001_0.webp' },
   { gender: 'male', label: '希尔（男主）', image: '/images/chara/l/chara001b_0.webp' }
+]
+/**
+ * 主角的 Q 版模型（两个性别）。
+ *
+ * 与立绘同样处理：桌面端**并列显示**男女两个模型，手机端由 CSS 只显示选中性别
+ * （`.protagonist-portrait-slot:not(.is-selected){display:none}`）。
+ * 男主模型不在 hero.json 里，是用导出工具单独生成的，详见 utils/heroModels.js。
+ */
+const protagonistModels = [
+  { gender: 'female', image: '/images/chara/Q/hero_001.webp' },
+  { gender: 'male', image: '/images/chara/Q/hero_001_male.webp' }
 ]
 const activeTab = ref('skills')
 
@@ -858,6 +912,7 @@ function openFromQueryId(id) {
     // 详情才需要物品表（突破材料名称/图标）；不 await，详情先渲染，材料到位后计算属性自行重算。
     loadItemsOnce()
     protagonistGender.value = 'female'
+    showHeroModel.value = false
     detailVisible.value = true
     // Reset tabs
     activeTab.value = route.query.tab === 'skins' && found.skins?.length ? 'skins' : 'skills'
@@ -945,6 +1000,12 @@ function handleCardImgError(e) {
 
 function handlePortraitImgError(e) {
   e.target.style.display = 'none'
+}
+
+/** 模型图加载失败：退回立绘（而不是留一块空白），并避免重复触发 */
+function handleModelImgError(e) {
+  e.target.onerror = null
+  showHeroModel.value = false
 }
 
 function handleSkillIconError(e) {
@@ -1368,6 +1429,22 @@ const handleGiftClick = (giftId) => {
   width: 90%;
   height: 340px;
 }
+/* 模型图（Q 版小人）：与立绘同区二选一，不设 max-width 让 90% 生效 */
+.chara-model-img {
+  max-height: 340px;
+  width: 90%;
+  height: 340px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.4));
+}
+/* 切换「立绘 / 模型图」：叠在立绘区右上角（与主角的性别切换同一位置）；仅对有模型图的角色渲染 */
+.hero-model-toggle {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  z-index: 1;
+  min-height: 32px;
+}
 .protagonist-portrait-toggle { display: none; }
 @media (max-width: 640px) {
   .portrait-section--protagonist {
@@ -1381,6 +1458,10 @@ const handleGiftClick = (giftId) => {
     right: 8px;
     z-index: 1;
     min-height: 32px;
+  }
+  /* 主角页手机端两个按钮都在右上角：模型切换放在性别切换**下面**避免重叠 */
+  .portrait-section--protagonist .hero-model-toggle {
+    top: 46px;
   }
 }
 

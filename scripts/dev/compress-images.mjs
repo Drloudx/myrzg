@@ -12,7 +12,7 @@ import { fileDigest } from './raw-sync.mjs'
 const { values, positionals } = parseArgs({ allowPositionals: true, options: {
   apply: { type: 'boolean' }, 'allow-lossy': { type: 'boolean' }, backup: { type: 'string' },
   // 默认根为 public/images（该目录下的图片由 public/images 镜像备份）。
-  // `--root` 用于处理根之外的图片目录（如 public/ui、public/test2 这类站点装饰与导出产物），
+  // `--root` 用于处理根之外的图片目录（如 public/ui 这类站点装饰与导出产物），
   // 必须显式给出，且仍受「备份必须在根之外」的约束。
   root: { type: 'string' }
 } })

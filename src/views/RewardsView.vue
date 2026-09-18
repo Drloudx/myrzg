@@ -783,7 +783,8 @@ const getIcon = (typeId) => {
   if (item && item.img) {
     return getImageUrl(`/Common_ItemIcon/${item.img}.webp`)
   }
-  return getImageUrl('/ui/default_item.svg')
+  // 兜底用项目通用占位图（此前写的 /ui/default_item.svg 在仓库中从未存在，属长期 404）
+  return getImageUrl('/ui/visibility-off.svg')
 }
 
 const flattenPvpItems = (groups = []) => {
