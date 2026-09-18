@@ -300,6 +300,11 @@ input, textarea, select {
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.35), inset 0 0 20px rgba(135, 107, 72, 0.12);
   border-radius: 4px;
   position: relative;
+  /* 本组件有 2px 边框，必须用 border-box：否则 `width: 100%` 的元素（如角色详情的
+     .portrait-section）实际占位会多出 4px，把 .ui-modal-body（overflow-x: auto）
+     撑出横向滚动条——内容已完整却出现无意义的横向滑块。
+     项目其余组件均显式声明 border-box（40+ 处），此处属漏写。 */
+  box-sizing: border-box;
 }
 .dark-mode .paper-panel {
   background-color: rgba(46, 34, 23, 0.9);
