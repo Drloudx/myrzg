@@ -54,7 +54,7 @@
          但源码从不给它们赋值、游戏画面里也不出现，故不渲染。 ── -->
     <div class="g-abs g-layer-ui" :style="gachaPos(-500, 315)">
       <img
-        :src="getImageUrl(`/images/HeroPoolPanel_Atlas/${kind === 'hero' ? 'gacha_title_chara' : 'gacha_title_egg'}.png`)"
+        :src="getImageUrl(`/images/HeroPoolPanel_Atlas/${kind === 'hero' ? 'gacha_title_chara' : 'gacha_title_egg'}.webp`)"
         :alt="kind === 'hero' ? '伙伴招募' : '魔物蛋贩售'"
         class="pool-title-art"
       />
@@ -160,7 +160,7 @@
       :aria-pressed="kind === 'hero'"
       @click="emit('update:kind', 'hero')"
     >
-      <img :src="getImageUrl(`/images/HeroPoolPanel_Atlas/${kind === 'hero' ? 'gacha_page_chara_on' : 'gacha_page_chara'}.png`)" alt="角色招募" />
+      <img :src="getImageUrl(`/images/HeroPoolPanel_Atlas/${kind === 'hero' ? 'gacha_page_chara_on' : 'gacha_page_chara'}.webp`)" alt="角色招募" />
     </button>
     <button
       v-if="petOpen"
@@ -170,7 +170,7 @@
       :aria-pressed="kind === 'pet'"
       @click="emit('update:kind', 'pet')"
     >
-      <img :src="getImageUrl(`/images/HeroPoolPanel_Atlas/${kind === 'pet' ? 'gacha_page_egg_on' : 'gacha_page_egg'}.png`)" alt="魔物蛋贩售" />
+      <img :src="getImageUrl(`/images/HeroPoolPanel_Atlas/${kind === 'pet' ? 'gacha_page_egg_on' : 'gacha_page_egg'}.webp`)" alt="魔物蛋贩售" />
     </button>
     <div v-else class="g-abs g-layer-ui" :style="gachaPos(-393, 233)">
       <img :src="getImageUrl('/images/HeroPoolPanel_Atlas/gacha_page_egg_disable.webp')" alt="魔物蛋（未开放）" />
