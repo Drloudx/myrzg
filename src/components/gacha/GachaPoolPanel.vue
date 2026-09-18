@@ -448,10 +448,11 @@ const currencySlots = computed(() => buildCurrencySlots(props.pool, props.wallet
 function upAvatar(candidate) {
   const typeId = String(candidate?.typeId ?? '')
   if (props.kind === 'hero') {
+    // 头像文件已统一为 .webp（`at<3位编号>_0.webp` / `_1.webp`）
     const plain = /^hero_0*(\d+)$/.exec(typeId)
-    if (plain) return `/images/HeadIconAtals/at${String(plain[1]).padStart(3, '0')}_0.png`
+    if (plain) return `/images/HeadIconAtals/at${String(plain[1]).padStart(3, '0')}_0.webp`
     const variant = /^new_hero_0*(\d+)$/.exec(typeId)
-    if (variant) return `/images/HeadIconAtals/at${String(variant[1]).padStart(3, '0')}_1.png`
+    if (variant) return `/images/HeadIconAtals/at${String(variant[1]).padStart(3, '0')}_1.webp`
   }
   return candidate?.icon ?? ''
 }

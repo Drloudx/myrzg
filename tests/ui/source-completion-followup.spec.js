@@ -61,9 +61,14 @@ test('egg source opens the actual pet pool details', async ({ page }) => {
   const modal = await openItem(page, 'pet_074')
   const section = await group(modal, '招募与贩售')
   await section.locator('.drawer-chip').filter({ hasText: '特别贩售' }).click()
-  await expect(page).toHaveURL(/#\/gacha\?kind=pet&pool=1&view=pool/)
-  await expect(page.getByRole('heading', { name: '卡池详情', exact: true })).toBeVisible()
-  await expect(page.locator('#gachaScroll')).toContainText('宝石迷迷可的蛋')
+  // pool 用**完整 pool id**（`pet:1:1:0`），不是 poolTypeId（`1`）：
+  // GachaView 的 syncFromRoute 按 pool.id 校验，传 poolTypeId 会被判无效并回退默认池。
+  await expect(page).toHaveURL(/#\/gacha\?kind=pet&pool=pet:1:1:0&view=pool/)
+  // 概率详情的标题由 GachaTipPanel 按池名生成（`${pool.name} · 概率详情`）；
+  // 此前断言写的是「卡池详情」，该文案在源码中从未存在，属长期失效的断言。
+  await expect(page.locator('.tip-panel__title')).toHaveText('特别贩售 · 概率详情')
+  // 滚动容器是 `.tip-scroll`（此前断言的 `#gachaScroll` 在源码中不存在）。
+  await expect(page.locator('.tip-scroll')).toContainText('宝石迷迷可的蛋')
 })
 
 test('unappraised rune navigates to its dungeon chest rewards', async ({ page }, testInfo) => {

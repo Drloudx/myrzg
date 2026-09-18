@@ -335,7 +335,7 @@ function orientLayer(layer) {
 }
 
 const nodeStyle = (node, layer) => ({ left: `${Number(node.x || 0) / Math.max(1, Number(layer?.size?.w || 1600)) * 100}%`, top: `${Number(node.y || 0) / Math.max(1, Number(layer?.size?.h || 1000)) * 100}%` })
-const iconPath = variant => Number(variant?.icon || 0) > 0 ? getImageUrl(`/instancepanel/MapPanelAtlas/map_r_fb_${String(variant.icon).padStart(2, '0')}.png`) : ''
+const iconPath = variant => Number(variant?.icon || 0) > 0 ? getImageUrl(`/instancepanel/MapPanelAtlas/map_r_fb_${String(variant.icon).padStart(2, '0')}.webp`) : ''
 const routeChance = layer => {
   const total = props.routes.reduce((sum, item) => sum + Number(item.chance || 0), 0)
   if (props.routes.length === 1) return '固定布局'

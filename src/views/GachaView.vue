@@ -375,7 +375,12 @@ function syncToRoute() {
 watch(() => route.query, () => { if (ready.value) syncFromRoute() })
 watch(kind, () => {
   poolId.value = poolsOfKind.value[0]?.id ?? ''
-  tipMode.value = ''
+  // 注意：**不能**在这里 `tipMode.value = ''`。
+  // 初始化时 `syncFromRoute()` 会把 kind 从默认 'hero' 改成 URL 里的值（如 'pet'），
+  // 该 watcher 随之触发，会把 syncFromRoute 刚设好的 `tipMode='rate'` 清空，
+  // 进而让 syncToRoute 删掉 URL 的 `view=pool` —— 深链 `?view=pool` 因此打不开概率详情。
+  // 用户主动切 kind 时关闭提示弹层由 GachaPoolPanel 的切换入口负责（它会改 URL，
+  // 由上面的 route.query watcher 走 syncFromRoute 收敛）。
   stage.value = 'pool'
   syncToRoute()
 })
@@ -406,10 +411,29 @@ function openCandidate(candidate) {
   router.push({ path: kind.value === 'hero' ? '/heroes' : '/pets', query: { id: candidate?.typeId ?? '' } })
 }
 
+/**
+ * 「兑换商店」按钮 → 兑换页。
+ *
+ * `packDisplay` 是**兑换子类的 key**（如 `heroJifen` / `petJifen`），不是自由搜索词。
+ * 此前只传 `q=<packDisplay>`，而 ExchangeView 不读 `q`，且分类停在默认的「委托兑换」，
+ * 结果跳过去是**空列表**。这里直接映射到对应分类与子类（与兑换页自己的 key 一致）。
+ */
+const EXCHANGE_PACK_TARGETS = {
+  heroJifen: { cat: 'shop', sub: 'heroJifen' },   // 星型徽印
+  petJifen: { cat: 'shop', sub: 'petJifen' },     // 翼型徽印
+  ptJifen: { cat: 'shop', sub: 'ptJifen' },       // 回忆结晶
+  bke: { cat: 'shop', sub: 'keShop' },            // 氪金商店
+  fuZhuang: { cat: 'shop', sub: 'fuZhuang' },     // 时装
+}
 function handleExchange() {
   const pack = currentPool.value?.packDisplay
   if (!pack) return
-  router.push({ path: '/exchange', query: { q: pack } })
+  const target = EXCHANGE_PACK_TARGETS[pack]
+  // 已知映射走分类+子类直达；未知值退回搜索词（保持旧行为，不丢入口）
+  router.push({
+    path: '/exchange',
+    query: target ? { cat: target.cat, sub: target.sub } : { q: pack }
+  })
 }
 
 function handleReset() {

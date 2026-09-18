@@ -67,9 +67,16 @@ test('swing keeps ropes, hands and seat attached throughout the arc', async ({ p
         return Math.abs(palm.x - (index === 0 ? 114 : 208))
       })
       const body = figure.getBoundingClientRect(), canvas = svg.getBoundingClientRect()
+      // 允许 3px 容差：露帕·萝特(034) 的美术比其他角色宽约 4px，秋千摆动时
+      // 右侧最多超出画布 3px（其余角色均在界内）。容器 `.sidebar-mascot` 有
+      // overflow:hidden，这 3px 会被裁掉，但属亚像素级、肉眼不可辨，故按用户
+      // 决定放宽断言而不是改动该角色的美术比例。
+      const tolerance = 3
       return { gap: Math.max(...grips), x: body.x,
         body: body.toJSON(), canvas: canvas.toJSON(),
-        fits: body.x >= canvas.x && body.right <= canvas.right && body.y >= canvas.y && body.bottom <= canvas.bottom }
+        over: Math.max(canvas.x - body.x, body.right - canvas.right, canvas.y - body.y, body.bottom - canvas.bottom),
+        fits: body.x >= canvas.x - tolerance && body.right <= canvas.right + tolerance
+          && body.y >= canvas.y - tolerance && body.bottom <= canvas.bottom + tolerance }
     })
     expect(frame.gap).toBeLessThan(1)
     expect(frame.fits, JSON.stringify(frame)).toBe(true)
@@ -127,9 +134,18 @@ test('fishing line follows the bending rod and float through a bite and lift', a
   await page.setViewportSize({ width: 1280, height: 700 })
   await page.screenshot({ path: `${shots}/${character.id}-fish-short.png` })
   await page.getByRole('button', { name: '切换吉祥物角色' }).click()
+  // 批次按钮只在 `batchCount > 1` 时渲染（SidebarMascot 的 `v-if="batchCount > 1"`）。
+  // 吉祥物精简到 7 名、batchSize 也是 7，故 batchCount 恒为 1，批次按钮**不存在**——
+  // 原先无条件点它会让 `next.isEnabled()` 永久等待并超时。改为按存在与否决定：
+  // 有批次按钮就翻一批，没有就直接选另一个角色，验证意图（换角色后动作仍生效）不变。
   const next = page.getByRole('button', { name: '下一批角色' })
-  await (await next.isEnabled() ? next : page.getByRole('button', { name: '上一批角色' })).click()
-  await page.locator('.mascot-option').first().click()
+  if (await next.count()) {
+    await (await next.isEnabled() ? next : page.getByRole('button', { name: '上一批角色' })).click()
+    await page.locator('.mascot-option').first().click()
+  } else {
+    const other = MASCOTS.find(entry => entry.id !== character.id && !entry.idleOnly)
+    await page.getByRole('button', { name: `选择${other.name}` }).click()
+  }
   await expect(page.locator('.mascot-art .hil-scene')).toHaveAttribute('data-scene', 'fish')
   await page.getByRole('button', { name: '选择吉祥物动作' }).click()
   await expect(page.getByRole('button', { name: '使用秋千动作' })).toBeVisible()

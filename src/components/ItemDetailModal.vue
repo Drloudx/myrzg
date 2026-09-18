@@ -856,7 +856,7 @@ const hasItemSources = computed(() => currentItemSources.value.length > 0)
 
 const canNavigateToSource = (src) => {
   if (getRuneSourceTarget(src)) return true
-  return ['monster', 'achievement', 'recipe', 'pvp', 'hidden', 'task', 'exchange', 'dungeon', 'smithing', 'facility', 'event', 'explore', 'plant', 'camp', 'container'].includes(src.type)
+  return ['monster', 'achievement', 'recipe', 'pvp', 'hidden', 'task', 'exchange', 'dungeon', 'smithing', 'facility', 'event', 'explore', 'plant', 'camp', 'container', 'gacha'].includes(src.type)
 }
 
 const handleSourceClick = (src) => {
@@ -927,6 +927,18 @@ const handleSourceClick = (src) => {
   else if (src.type === 'facility') {
     targetPath = '/facilities'
     targetQuery = { facility: src.facility || 'workbench', mode: 'crafting', level: src.level || 1, item: props.item?.typeId || '' }
+  }
+  else if (src.type === 'gacha') {
+    // 卡池来源（`remainingItemSources.js` 生成）：跳招募页并直接打开该池的概率详情。
+    // URL 契约见 GachaView 顶部注释：`?kind=hero|pet&pool=<poolId>&view=pool`。
+    // `pool` 必须用**完整 pool id**（如 `pet:1:1:0`）——GachaView 的 syncFromRoute 按
+    // `pool.id` 校验，传 poolTypeId（如 `1`）会被判为无效并回退到默认池。
+    targetPath = '/gacha'
+    targetQuery = {
+      kind: src.poolKind || 'hero',
+      pool: src.id || '',
+      view: 'pool'
+    }
   }
 
   router
