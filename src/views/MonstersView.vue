@@ -7,6 +7,17 @@
         <UiSearchInput v-model="searchQuery" placeholder="搜索怪物名称、描述、弱点..." />
       </template>
 
+      <!-- 地区筛选放在种类上面（用户要求） -->
+      <UiFilterRow v-if="allPlaces.length > 0" label="地区：">
+        <UiFilterPill :active="selectedPlace === null" @click="selectedPlace = null">全部</UiFilterPill>
+        <UiFilterPill
+          v-for="place in allPlaces"
+          :key="place"
+          :active="selectedPlace === place"
+          @click="selectedPlace = place"
+        >{{ place }}</UiFilterPill>
+      </UiFilterRow>
+
       <UiFilterRow v-if="allLabels.length > 0" label="种类：">
         <UiFilterPill :active="selectedLabel === null" @click="selectedLabel = null">全部</UiFilterPill>
         <UiFilterPill
@@ -47,6 +58,7 @@ import { getImageUrl, handleImageFallback } from '../utils/env'
 import { useRoute, useRouter } from 'vue-router'
 import MonsterDetailModal from '../components/MonsterDetailModal.vue'
 import { isBlacklisted } from '../config/blacklist.js'
+import { MAP_NAMES } from '../utils/gameMappings'
 import { useLazyList } from '../composables/useLazyList'
 import {
   UiBackToTop,
@@ -63,12 +75,14 @@ const router = useRouter()
 
 const allMonsters = ref([])
 const allLabels = ref([])
+const allPlaces = ref([])
 const isDataReady = ref(false)
 const isModalVisible = ref(false)
 const errorMessage = ref('')
 
 const searchQuery = ref('')
 const selectedLabel = ref(null)
+const selectedPlace = ref(null)
 onMounted(async () => {
   try {
     const data = await fetchMonsterData()
@@ -81,6 +95,24 @@ onMounted(async () => {
     })
     allLabels.value = Array.from(labels).sort()
 
+    // 地区清单按**游戏推进顺序**排（沿用 gameMappings 的 MAP_NAMES：c0 求生者草原 →
+    // c1 秋日荒野 → c2 索利德山地 → c3 魔爪湖畔 → c4 黑森林 → c5 霜烬平原）。
+    // 不用字典序（地理名按拼音排会很乱），也不用数据出现顺序（那只是图鉴编号顺序）。
+    const places = new Set()
+    data.forEach(m => {
+      for (const place of m.place || []) places.add(place)
+    })
+    const REGION_ORDER = Object.values(MAP_NAMES)
+    allPlaces.value = Array.from(places).sort((a, b) => {
+      const ia = REGION_ORDER.indexOf(a)
+      const ib = REGION_ORDER.indexOf(b)
+      // 不在表里的地区排到最后，且保持彼此原有相对顺序
+      if (ia === -1 && ib === -1) return 0
+      if (ia === -1) return 1
+      if (ib === -1) return -1
+      return ia - ib
+    })
+
     isDataReady.value = true
   } catch (err) {
     errorMessage.value = '加载失败: ' + err.message
@@ -92,6 +124,10 @@ const filteredMonsters = computed(() => {
   if (!isDataReady.value) return []
 
   let result = allMonsters.value.filter(m => !isBlacklisted(m))
+  if (selectedPlace.value) {
+    // 一个怪物可出现在多个地区（如「角布林头领」= 求生者草原 + 秋日荒野），故用 includes 而非相等
+    result = result.filter(m => (m.place || []).includes(selectedPlace.value))
+  }
   if (selectedLabel.value) {
     result = result.filter(m => m.label === selectedLabel.value)
   }
