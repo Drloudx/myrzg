@@ -34,6 +34,32 @@ export function collectResourceManifests(publicDir) {
   return { descriptors, assets }
 }
 
+/**
+ * 图片（`public/images/**`）的**逐文件内容哈希**，键为 `/images/<相对路径>`。
+ *
+ * 为什么需要：原先 `getImageUrl` 用全局 `__RESOURCE_BUILD_ID__`（含 `Date.now()`）当版本号，
+ * 于是**每次构建所有图片 URL 都会变**，哪怕图片一个字节都没改——部署一次，全体用户的
+ * `/images` 缓存全部作废。改成逐文件哈希后：内容变了才变 URL，没变的图片可以跨部署复用缓存。
+ *
+ * 版本号取哈希前 12 位（缓存键只需高区分度，不需要密码学强度；
+ * 数据文件的完整性由 `data-manifests` 里的完整 SHA-256 单独校验，与此无关）。
+ */
+export function collectImageVersions(publicDir) {
+  const imagesDir = path.join(publicDir, 'images')
+  const versions = {}
+  function walk(directory) {
+    for (const entry of readdirSync(directory, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
+      const fullPath = path.join(directory, entry.name)
+      if (entry.isDirectory()) { walk(fullPath); continue }
+      if (!entry.isFile()) continue
+      const relative = path.relative(imagesDir, fullPath).replaceAll('\\', '/')
+      versions[`/images/${relative}`] = hashBytes(readFileSync(fullPath)).slice(0, 12)
+    }
+  }
+  walk(imagesDir)
+  return versions
+}
+
 function resourceManifestPlugin() {
   let assets = []
   return {
@@ -41,9 +67,14 @@ function resourceManifestPlugin() {
     apply: 'build',
     config() {
       const manifest = collectResourceManifests(path.join(repoRoot, 'public'))
+      const imageVersions = collectImageVersions(path.join(repoRoot, 'public'))
+      const imageCount = Object.keys(imageVersions).length
+      const imageBytes = JSON.stringify(imageVersions).length
+      console.log(`[resource-manifests] 数据清单 ${Object.keys(manifest.descriptors).length} 组；图片版本 ${imageCount} 条（注入 ${(imageBytes / 1024).toFixed(0)} KB）`)
       assets = manifest.assets
       return { define: {
         __DATA_RESOURCE_MANIFESTS__: JSON.stringify(manifest.descriptors),
+        __IMAGE_VERSIONS__: JSON.stringify(imageVersions),
         __RESOURCE_BUILD_ID__: JSON.stringify(`${Date.now().toString(36)}-${hashBytes(JSON.stringify(manifest.descriptors)).slice(0, 12)}`)
       } }
     },

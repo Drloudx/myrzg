@@ -4,6 +4,12 @@ import { Capacitor } from '@capacitor/core';
 export const CLOUD_URL = 'https://myrzg.yxzmy.top';
 export const RESOURCE_BUILD_ID = typeof __RESOURCE_BUILD_ID__ !== 'undefined' ? __RESOURCE_BUILD_ID__ : ''
 export const DATA_RESOURCE_MANIFESTS = typeof __DATA_RESOURCE_MANIFESTS__ !== 'undefined' ? __DATA_RESOURCE_MANIFESTS__ : {}
+/**
+ * `/images/<相对路径>` → 该文件的**内容哈希**（构建时由 vite.config.js 的 `collectImageVersions` 注入）。
+ * 取每个文件自己的哈希而非全局 build id，是为了让**未改动的图片跨部署复用缓存**；
+ * 未收录的路径（如运行时拼出的路径）回退到 `RESOURCE_BUILD_ID`，保持原有行为。
+ */
+export const IMAGE_VERSIONS = typeof __IMAGE_VERSIONS__ !== 'undefined' ? __IMAGE_VERSIONS__ : {}
 
 export function getLocalResourceUrl(path) {
   const cleanPath = String(path || '').replace(/^\/+/, '')
@@ -59,7 +65,9 @@ export function getImageUrl(path) {
 
   const baseUrl = getResourceBaseUrl();
   const url = `${baseUrl}${imgPath}`;
-  return RESOURCE_BUILD_ID ? `${url}${url.includes('?') ? '&' : '?'}v=${encodeURIComponent(RESOURCE_BUILD_ID)}` : url;
+  // 优先用该文件自己的内容哈希；未收录则回退全局 build id（保持旧行为，不会漏掉缓存刷新）。
+  const version = IMAGE_VERSIONS[imgPath] || RESOURCE_BUILD_ID;
+  return version ? `${url}${url.includes('?') ? '&' : '?'}v=${encodeURIComponent(version)}` : url;
 }
 
 const imageAttempts = new WeakMap()

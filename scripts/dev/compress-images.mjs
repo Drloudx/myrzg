@@ -10,11 +10,16 @@ import { imageBackupRoot, projectRoot, resolveChild } from './maintenance-paths.
 import { fileDigest } from './raw-sync.mjs'
 
 const { values, positionals } = parseArgs({ allowPositionals: true, options: {
-  apply: { type: 'boolean' }, 'allow-lossy': { type: 'boolean' }, backup: { type: 'string' }
+  apply: { type: 'boolean' }, 'allow-lossy': { type: 'boolean' }, backup: { type: 'string' },
+  // 默认根为 public/images（该目录下的图片由 public/images 镜像备份）。
+  // `--root` 用于处理根之外的图片目录（如 public/ui、public/test2 这类站点装饰与导出产物），
+  // 必须显式给出，且仍受「备份必须在根之外」的约束。
+  root: { type: 'string' }
 } })
 if (positionals.length > 1) throw new Error('Only one input directory is accepted')
 if (values.apply && !values['allow-lossy']) throw new Error('Lossy compression requires explicit --apply --allow-lossy')
-const imagesRoot = join(projectRoot, 'public/images')
+const imagesRoot = resolve(values.root || join(projectRoot, 'public/images'))
+if (!existsSync(imagesRoot)) throw new Error(`Root directory does not exist: ${imagesRoot}`)
 const inputDir = resolve(positionals[0] || imagesRoot)
 if (relative(imagesRoot, inputDir)) resolveChild(imagesRoot, inputDir)
 const backupRoot = resolve(values.backup || imageBackupRoot)
