@@ -8,7 +8,6 @@ export const MASCOTS = [
   { id: '053', name: '艾薇杜尔', groundX: 139, standingHeight: 327.545, url: new URL('../assets/mascot/hero-053-idle.svg', import.meta.url).href },
   { id: '034', name: '露帕·萝特', groundX: 126, standingHeight: 318.545, url: new URL('../assets/mascot/hero-034-idle.svg', import.meta.url).href },
   { id: '049', name: '菲莉娜', groundX: 123, standingHeight: 312.545, url: new URL('../assets/mascot/hero-049-idle.svg', import.meta.url).href },
-  { id: '051', name: '阿莱克西娅', groundX: 128, standingHeight: 326.545, url: new URL('../assets/mascot/hero-051-idle.svg', import.meta.url).href },
   { id: '002', name: '米托拉', groundX: 123, standingHeight: 308.745, url: new URL('../assets/mascot/hero-002-idle.svg', import.meta.url).href },
 ]
 

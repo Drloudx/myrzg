@@ -5,7 +5,6 @@ import rubySource from '../../assets/mascot/hero-062-idle.svg?raw'
 import ivySource from '../../assets/mascot/hero-053-idle.svg?raw'
 import lupaSource from '../../assets/mascot/hero-034-idle.svg?raw'
 import filinaSource from '../../assets/mascot/hero-049-idle.svg?raw'
-import alexiaSource from '../../assets/mascot/hero-051-idle.svg?raw'
 import { HIL_ARM_POSES, HIL_LEG_POSES } from './mascotRig.js'
 import { fishingGripPoint } from './hilFishingMotion.js'
 
@@ -60,11 +59,11 @@ const models = {
     }
   },
   '034': {
-    id: '034', source: lupaSource, partAttribute: 'data-rig-part', artOffset: -3, swordLayer: 'front',
+    id: '034', source: lupaSource, partAttribute: 'data-rig-part', artOffset: -3,
     parts: ['hairLeft', 'hairRight', 'sword', 'torso', 'head'], arms: adaptArms([139, 143]), legs: HIL_LEG_POSES,
     pupilColors: ['#a192a5', '#73677e', '#efe8df'], sleeve: 'fur', legVariant: 'gaiter', fishing: { parkedOffsetX: 40 },
     accessories: [
-      { selector: '.rig-sword', standing: 'translate(24px, -8px) scale(0.72) rotate(35deg)', seated: 'translate(24px, -8px) scale(0.72) rotate(35deg)' },
+      { selector: '.rig-sword', standing: 'translate(15px, -12px) scale(0.85) rotate(35deg)', seated: 'translate(15px, -12px) scale(0.85) rotate(35deg)' },
       { selector: '.rig-hair-left', standing: 'none', seated: 'scaleY(.85)' },
       { selector: '.rig-hair-right', standing: 'none', seated: 'scaleY(.8)' }
     ],
@@ -91,24 +90,6 @@ const models = {
       '--rig-thigh': '#f1c9a4', '--rig-stocking': '#edc39c', '--rig-knee-trim': '#846951', '--rig-leg-fold': '#edc39c',
       '--rig-boot': '#9a6a43', '--rig-boot-trim': '#e1d1a5', '--rig-sole': '#68432f',
       '--rig-hair-left-origin': '91px 97px', '--rig-hair-right-origin': '149px 103px', '--mascot-eyes-origin': '160px 123px'
-    }
-  },
-  '051': {
-    id: '051', source: alexiaSource, partAttribute: 'data-rig-part', artOffset: -2,
-    parts: ['hairLeft', 'hairRight', 'skirt', 'torso', 'front', 'head'],
-    pupilColors: ['#d7b74e', '#fff4cb', '#6e5533'], sleeve: 'fur', legVariant: 'gaiter', fishing: { parkedOffsetX: 40 },
-    arms: adaptArms([139, 151]),
-    accessories: [
-      { selector: '.rig-hair-left', standing: 'none', seated: 'scaleY(.84)' },
-      { selector: '.rig-hair-right', standing: 'none', seated: 'scaleY(.84)' },
-      { selector: '.rig-skirt', standing: 'none', seated: 'scaleY(.76)' }
-    ],
-    styles: {
-      '--rig-outline': '#45435f', '--rig-sleeve': '#354b82', '--rig-fold': '#7185ae', '--rig-cuff': '#f0ece2',
-      '--rig-glove': '#efc4ab', '--rig-thumb': '#dba98f', '--rig-trim': '#d1ae5d', '--rig-thigh': '#efc4ab',
-      '--rig-stocking': '#34364a', '--rig-knee-trim': '#d1ae5d', '--rig-leg-fold': '#8a6d50',
-      '--rig-boot': '#34364a', '--rig-boot-trim': '#cbbd9a', '--rig-sole': '#28293b',
-      '--rig-hair-left-origin': '91px 127px', '--rig-hair-right-origin': '161px 127px', '--mascot-eyes-origin': '132px 116px'
     }
   },
   '001': {
