@@ -8,7 +8,7 @@
     <header class="ui-exchange-trade__header">
       <h3 class="ui-exchange-trade__title" :title="skin ? skin.heroName : cardTitle">{{ skin ? skin.heroName : cardTitle }}</h3>
       <span v-if="limitText && !skin" class="ui-exchange-trade__limit"
-        :style="shop ? { backgroundImage: `url('${imageSrc('/PackPane/shop_tag_quota.png')}')` } : null">{{ limitText }}</span>
+        :style="shop ? { backgroundImage: `url('${imageSrc('/PackPane/shop_tag_quota.webp')}')` } : null">{{ limitText }}</span>
     </header>
 
     <button v-if="skin" type="button" class="ui-exchange-trade__skin-visual"
@@ -49,7 +49,7 @@
           :key="`consume-${item.typeId || index}`"
           type="button"
           class="ui-exchange-trade__item ui-exchange-trade__item--consume"
-          :style="skin ? { '--skin-price-image': `url('${imageSrc('/PackPane/shop_vip_time.png')}')` } : null"
+          :style="skin ? { '--skin-price-image': `url('${imageSrc('/PackPane/shop_vip_time.webp')}')` } : null"
           :title="`${item.name || '物品'} ×${item.num ?? 1}`"
           @click="emit('item-click', item.typeId)"
         >

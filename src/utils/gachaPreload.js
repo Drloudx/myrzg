@@ -24,12 +24,12 @@ const STATIC_REVEAL_IMAGES = [
   '/images/HeroGachaShowPanel_Atlas/spGachaTxtRing01.webp',
   '/images/HeroGachaShowPanel_Atlas/spGachaStar02.webp',
   '/images/HeroGachaShowPanel_Atlas/spGachaAngle01.webp',
-  '/images/HeroGachaShowPanel_Atlas/spGachaBlock04.png',
+  '/images/HeroGachaShowPanel_Atlas/spGachaBlock04.webp',
   '/images/HeroGachaShowPanel_Atlas/chara_bg_center_only.webp',
 
   // 名牌与角标底座
   '/images/HeroGachaShowPanel_Atlas/spGachaNameDown01.webp',
-  '/images/HeroGachaShowPanel_Atlas/spGachaBlock03.png',
+  '/images/HeroGachaShowPanel_Atlas/spGachaBlock03.webp',
   '/images/HeroGachaShowPanel_Atlas/spGachaBlock05.webp',
 
   // Step 1 职业图腾
@@ -57,16 +57,16 @@ const STATIC_REVEAL_IMAGES = [
   '/images/HeroGachaShowPanel_Atlas/spGachaTagClass06.webp',
 
   // 四属性元素标签 (01=文字, 02=底图, 03=右上角标)
-  '/images/HeroGachaShowPanel_Atlas/spGachaTagWater01.png',
+  '/images/HeroGachaShowPanel_Atlas/spGachaTagWater01.webp',
   '/images/HeroGachaShowPanel_Atlas/spGachaTagWater02.webp',
   '/images/HeroGachaShowPanel_Atlas/spGachaTagWater03.webp',
-  '/images/HeroGachaShowPanel_Atlas/spGachaTagFire01.png',
+  '/images/HeroGachaShowPanel_Atlas/spGachaTagFire01.webp',
   '/images/HeroGachaShowPanel_Atlas/spGachaTagFire02.webp',
   '/images/HeroGachaShowPanel_Atlas/spGachaTagFire03.webp',
-  '/images/HeroGachaShowPanel_Atlas/spGachaTagWind01.png',
+  '/images/HeroGachaShowPanel_Atlas/spGachaTagWind01.webp',
   '/images/HeroGachaShowPanel_Atlas/spGachaTagWind02.webp',
   '/images/HeroGachaShowPanel_Atlas/spGachaTagWind03.webp',
-  '/images/HeroGachaShowPanel_Atlas/spGachaTagGround01.png',
+  '/images/HeroGachaShowPanel_Atlas/spGachaTagGround01.webp',
   '/images/HeroGachaShowPanel_Atlas/spGachaTagGround02.webp',
   '/images/HeroGachaShowPanel_Atlas/spGachaTagGround03.webp',
 

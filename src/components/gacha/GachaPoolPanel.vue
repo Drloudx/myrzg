@@ -34,7 +34,7 @@
     </div>
     <!-- TweenParent/mask：fb_page_black 480×750，pos (-767,0)，depth 2（左侧压暗） -->
     <div class="g-abs g-layer-bg" :style="gachaPos(-767, 0)">
-      <img :src="getImageUrl('/images/InsBattlePanel_Atlas/fb_page_black.png')" alt="" class="pool-side-mask" />
+      <img :src="getImageUrl('/images/InsBattlePanel_Atlas/fb_page_black.webp')" alt="" class="pool-side-mask" />
     </div>
     <!-- Draw/Heros：depth 3，切池时 TweenScale 1.2→1.0 + TweenAlpha 0→1。
          游戏用 `MakePixelPerfect` 按贴图原始像素显示（角色池 1680×1000、魔物蛋池 879×946），
@@ -63,7 +63,7 @@
     <!-- ── 保底提示：RareTip (-609,-283)，icon_info 28×28 + Label（prefab fontSize=20）。
          **左对齐**：图标左边缘与下方「概率详情」按钮左边缘同在 design −631（用户要求这几项左对齐）。 ── -->
     <div v-if="safeHint" class="g-abs g-layer-ui safe-hint" :style="{ left: 'calc(50% - 631px)', top: 'calc(50% + 283px)' }">
-      <img :src="getImageUrl('/images/Common_Atlas/icon_info.png')" alt="" class="safe-hint__icon" />
+      <img :src="getImageUrl('/images/Common_Atlas/icon_info.webp')" alt="" class="safe-hint__icon" />
       <span class="g-text g-text--md safe-hint__text">{{ safeHint }}</span>
     </div>
 
@@ -119,7 +119,7 @@
         :title="`补充模拟${slot.name}`"
         @click="emit('topup', slot.typeId)"
       >
-        <img :src="getImageUrl('/images/MainPanel/M_rt_btn_add.png')" alt="补充" />
+        <img :src="getImageUrl('/images/MainPanel/M_rt_btn_add.webp')" alt="补充" />
       </button>
     </div>
 
@@ -173,7 +173,7 @@
       <img :src="getImageUrl(`/images/HeroPoolPanel_Atlas/${kind === 'pet' ? 'gacha_page_egg_on' : 'gacha_page_egg'}.png`)" alt="魔物蛋贩售" />
     </button>
     <div v-else class="g-abs g-layer-ui" :style="gachaPos(-393, 233)">
-      <img :src="getImageUrl('/images/HeroPoolPanel_Atlas/gacha_page_egg_disable.png')" alt="魔物蛋（未开放）" />
+      <img :src="getImageUrl('/images/HeroPoolPanel_Atlas/gacha_page_egg_disable.webp')" alt="魔物蛋（未开放）" />
     </div>
 
     <!-- ── 卡池页签：Toggles (-484,135)，UIGrid arrangement=1 即 Vertical、cellHeight=90，
@@ -201,7 +201,7 @@
       />
       <span class="g-text g-text--sm pool-tab__label">{{ item.name }}</span>
       <template v-if="tabTime(item)">
-        <img :src="getImageUrl('/images/HeroPoolPanel_Atlas/gacha_page_time.png')" alt="" class="pool-tab__time-icon" />
+        <img :src="getImageUrl('/images/HeroPoolPanel_Atlas/gacha_page_time.webp')" alt="" class="pool-tab__time-icon" />
         <span class="g-text g-text--xs g-text--gold pool-tab__time">{{ tabTime(item) }}</span>
       </template>
     </button>
@@ -231,7 +231,7 @@
         <img :src="getImageUrl(`/images/HeroPoolPanel_Atlas/at_f_${candidate.quality}.webp`)" alt="" class="up-slot__frame" />
         <img :src="getImageUrl(upAvatar(candidate))" :alt="candidate.name" class="up-slot__icon" />
         <!-- 概率提升角标：prefab `chanceUp` = com_up 24×56 @(37.9,0) -->
-        <img :src="getImageUrl('/images/Common_Atlas/com_up.png')" alt="" class="up-slot__badge" />
+        <img :src="getImageUrl('/images/Common_Atlas/com_up.webp')" alt="" class="up-slot__badge" />
       </button>
     </template>
 
@@ -263,7 +263,7 @@
       class="g-abs g-layer-ui draw-cost"
       :style="gachaPos(400 + option.offsetX, -264)"
     >
-      <img class="draw-cost__plate" :src="getImageUrl('/images/HeroPoolPanel_Atlas/gacha_btn_tag.png')" alt="" />
+      <img class="draw-cost__plate" :src="getImageUrl('/images/HeroPoolPanel_Atlas/gacha_btn_tag.webp')" alt="" />
       <img class="draw-cost__icon" :src="getImageUrl(option.ticket.icon)" alt="" />
       <span class="g-text g-text--md" :class="{ 'g-text--danger': !option.ticket.enough }">{{ option.ticket.text }}</span>
       <template v-if="option.exchange">

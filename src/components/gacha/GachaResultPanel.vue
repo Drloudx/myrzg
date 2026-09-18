@@ -64,7 +64,7 @@
         <img
           v-if="item.isNew"
           class="rd__new"
-          :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_card_new.png')"
+          :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/gacha_card_new.webp')"
           alt="新"
         />
         <!-- 重复获得（prefab `fragmentBg`/`fragment`/`fragmentCnt`，depth 25/26/28）：
@@ -111,7 +111,7 @@
       </button>
       <!-- 抽取消耗行：与卡池页同款（gacha_btn_tag 底板，浮在按键上方 52） -->
       <div class="g-abs g-layer-ui draw-cost" :style="gachaPos(400 + drawOption.offsetX, -264)">
-        <img class="draw-cost__plate" :src="getImageUrl('/images/HeroPoolPanel_Atlas/gacha_btn_tag.png')" alt="" />
+        <img class="draw-cost__plate" :src="getImageUrl('/images/HeroPoolPanel_Atlas/gacha_btn_tag.webp')" alt="" />
         <img class="draw-cost__icon" :src="getImageUrl(drawOption.ticket.icon)" alt="" />
         <span class="g-text g-text--md" :class="{ 'g-text--danger': !drawOption.ticket.enough }">{{ drawOption.ticket.text }}</span>
         <template v-if="drawOption.exchange">
@@ -145,7 +145,7 @@
           :title="`补充模拟${slot.name}`"
           @click="emit('topup', slot.typeId)"
         >
-          <img :src="getImageUrl('/images/MainPanel/M_rt_btn_add.png')" alt="补充" />
+          <img :src="getImageUrl('/images/MainPanel/M_rt_btn_add.webp')" alt="补充" />
         </button>
       </div>
     </div>

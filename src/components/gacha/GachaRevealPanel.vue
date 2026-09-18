@@ -253,7 +253,7 @@
       <!-- block 56×56 @(158,-68) 与 name 48px 右端 @(128,-70) -->
       <div class="g-abs g-layer-ui" :class="{ 'reveal-fade-out': leaving }" :style="gachaPos(158, -68)">
         <img
-          :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaBlock03.png')"
+          :src="getImageUrl('/images/HeroGachaShowPanel_Atlas/spGachaBlock03.webp')"
           alt=""
           class="reveal-nameblock"
         />
@@ -883,9 +883,9 @@ onBeforeUnmount(() => {
   width: 14px;
   height: 14px;
   background-color: v-bind(elementColor);
-  mask-image: url('/images/HeroGachaShowPanel_Atlas/spGachaBlock04.png');
+  mask-image: url('/images/HeroGachaShowPanel_Atlas/spGachaBlock04.webp');
   mask-size: 100% 100%;
-  -webkit-mask-image: url('/images/HeroGachaShowPanel_Atlas/spGachaBlock04.png');
+  -webkit-mask-image: url('/images/HeroGachaShowPanel_Atlas/spGachaBlock04.webp');
   -webkit-mask-size: 100% 100%;
   pointer-events: none;
 }

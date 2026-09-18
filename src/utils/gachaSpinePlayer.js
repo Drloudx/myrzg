@@ -15,6 +15,22 @@ import {
   AnimationState, AnimationStateData
 } from '@esotericsoftware/spine-webgl'
 
+/**
+ * 由 URL 推断图片 MIME 类型。
+ *
+ * 必要性：贴图走 `fetch → Blob → objectURL → Image` 加载。`new Blob([buf])` 不指定 type 时
+ * blob URL 没有 Content-Type，浏览器**不再按内容嗅探**（PNG 时代能蒙对，WebP 会直接解码失败：
+ * `贴图加载失败：blob:…`）。故必须显式给出类型。
+ */
+function imageMimeFromUrl(url) {
+  const path = url.split('?')[0].toLowerCase()
+  if (path.endsWith('.webp')) return 'image/webp'
+  if (path.endsWith('.png')) return 'image/png'
+  if (path.endsWith('.jpg') || path.endsWith('.jpeg')) return 'image/jpeg'
+  if (path.endsWith('.gif')) return 'image/gif'
+  return 'application/octet-stream'
+}
+
 function loadImage(url) {
   return new Promise((resolve, reject) => {
     const image = new Image()
@@ -50,11 +66,13 @@ export function preloadGachaSpineAssets(layers) {
     cachedFetch(def.atlas)
       .then(buffer => new TextDecoder('utf-8').decode(buffer))
       .then(text => {
-        // 解析 atlas 页名，把贴图一并预热
-        const pageNames = text
-          .split('\n')
-          .map(line => line.trim())
-          .filter(name => name && !name.includes(':') && !/^(size|filter|repeat|format)\b/.test(name))
+        // 页名用 TextureAtlas 解析器取，**不要用正则猜**：
+        // atlas 里除页名外还有大量附件名（如 armA_l / bagHandle），正则会把它们误当页名，
+        // 于是请求一堆不存在的文件（dev server 回 SPA fallback 的 HTML）→ Image 解码失败刷错误。
+        let pageNames = []
+        try {
+          pageNames = new TextureAtlas(text).pages.map(page => page.name)
+        } catch { /* 解析失败则跳过预热，播放时仍会正常加载 */ }
         for (const name of pageNames) {
           try {
             const pageUrl = new URL(name, new URL(def.atlas, window.location.href)).href
@@ -63,7 +81,7 @@ export function preloadGachaSpineAssets(layers) {
                 const image = new Image()
                 image.onload = resolve
                 image.onerror = reject
-                image.src = URL.createObjectURL(new Blob([buffer]))
+                image.src = URL.createObjectURL(new Blob([buffer], { type: imageMimeFromUrl(pageUrl) }))
               }))
               .catch(() => {})
           } catch { /* 非页名行，忽略 */ }
@@ -129,7 +147,7 @@ export function createSpineScene(canvas, layers, options = {}) {
       for (const page of atlas.pages) {
         const url = new URL(page.name, new URL(def.atlas, window.location.href)).href
         const buffer = await cachedFetch(url)
-        const blob = new Blob([buffer])
+        const blob = new Blob([buffer], { type: imageMimeFromUrl(url) })
         const objectUrl = URL.createObjectURL(blob)
         try {
           const source = def.premultiply ? await loadPremultipliedCanvas(objectUrl) : await loadImage(objectUrl)

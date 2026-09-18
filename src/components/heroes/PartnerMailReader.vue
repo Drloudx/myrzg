@@ -151,26 +151,13 @@ onBeforeUnmount(() => {
 /**
  * 邮件 sprite 名 → URL。
  *
- * 图片扩展名已按**真实格式**归一（`scripts/dev/normalize-image-extensions.mjs`）：
- * 多数是 .webp，但这三个标签图在无损 WebP 转换时因「压后未变小」被跳过，仍是真 PNG。
- * 故不能统一拼 .webp，需要按名解析。
- *
- * 为什么用硬编码清单而不是 `import.meta.glob`：项目已有明确约定——
- * 见 `src/utils/recipeUtils.js` 顶部注释「硬编码替换 import.meta.glob 防止图片被
- * Vite 错误打包到 dist/assets 中」。这里沿用同一约定，仅列出例外（PNG 的那几个）。
+ * 全站图片已统一为 `.webp`（内容为 WebP，无损；见 `scripts/dev/convert-remaining-to-webp.mjs`），
+ * 故这里可以直接拼 `.webp`，不再需要按名查扩展名的例外表。
  */
-const SKIN_EXT_OVERRIDES = {
-  com_item_archive: 'png',
-  com_item_encl: 'png',
-  com_item_task: 'png',
-  mail_list_new: 'png',
-  mail_list_new_task_pt: 'png',
-}
 const skin = name => {
   const folder = name === 'mail_botm' ? 'uipanel/emailpanel'
     : (name.startsWith('mail_') ? 'EmailPanel_Atlas' : 'Common_Atlas')
-  const ext = SKIN_EXT_OVERRIDES[name] || 'webp'
-  return getImageUrl(`/images/${folder}/${name}.${ext}`)
+  return getImageUrl(`/images/${folder}/${name}.webp`)
 }
 const rewardLabel = computed(() => getPartnerMailPresentation(props.selectedMail).rewardLabel)
 const skinStyle = computed(() => Object.fromEntries(['mail_at', 'mail_page', 'mail_page_on', 'mail_botm']

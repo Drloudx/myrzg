@@ -154,19 +154,19 @@
 .g-slice--btn-y:active { background-image: url('/images/sliced_buttons/com_btn_Y_sp_press_292x72.webp'); }
 .g-slice--btn-n { border: none; background: url('/images/sliced_buttons/com_btn_N_sp_292x72.webp') no-repeat center / 100% 100%; }
 .g-slice--btn-n:active { background-image: url('/images/sliced_buttons/com_btn_N_sp_press_292x72.webp'); }
-.g-slice--info { border-image: url('/images/Common_Atlas/com_info_botm.png') 0 15 0 15 fill / 0 15px stretch; }
-.g-slice--top-item { border-image: url('/images/Common_Atlas/com_top_item.png') 0 20 0 20 fill / 0 20px stretch; }
-.g-slice--txt-botm4 { border-image: url('/images/Common_Atlas/com_txt_botm4.png') 4 4 4 4 fill / 4px stretch; }
-.g-slice--txt-botm5 { border-image: url('/images/Common_Atlas/com_txt_botm5.png') 16 4 16 4 fill / 16px 4px stretch; }
-.g-slice--btn-mini { border: none; background: url('/images/sliced_buttons/com_btn_mini_152x40.png') no-repeat center / 100% 100%; }
-.g-slice--btn-mini:active { background-image: url('/images/sliced_buttons/com_btn_mini_on_152x40.png'); }
+.g-slice--info { border-image: url('/images/Common_Atlas/com_info_botm.webp') 0 15 0 15 fill / 0 15px stretch; }
+.g-slice--top-item { border-image: url('/images/Common_Atlas/com_top_item.webp') 0 20 0 20 fill / 0 20px stretch; }
+.g-slice--txt-botm4 { border-image: url('/images/Common_Atlas/com_txt_botm4.webp') 4 4 4 4 fill / 4px stretch; }
+.g-slice--txt-botm5 { border-image: url('/images/Common_Atlas/com_txt_botm5.webp') 16 4 16 4 fill / 16px 4px stretch; }
+.g-slice--btn-mini { border: none; background: url('/images/sliced_buttons/com_btn_mini_152x40.webp') no-repeat center / 100% 100%; }
+.g-slice--btn-mini:active { background-image: url('/images/sliced_buttons/com_btn_mini_on_152x40.webp'); }
 .g-slice--chara-change { border: none; background: url('/images/sliced_buttons/chara_btn_change_129x36.webp') no-repeat center / 100% 100%; }
 .g-slice--chara-change:active { background-image: url('/images/sliced_buttons/chara_btn_change_press_129x36.webp'); }
-.g-slice--record-1 { border-image: url('/images/TipsManager_Atlas/item_info_color1.png') 0 8 0 8 fill / 0 8px stretch; }
-.g-slice--record-2 { border-image: url('/images/TipsManager_Atlas/item_info_color2.png') 0 8 0 8 fill / 0 8px stretch; }
-.g-slice--record-3 { border-image: url('/images/TipsManager_Atlas/item_info_color3.png') 0 8 0 8 fill / 0 8px stretch; }
-.g-slice--record-4 { border-image: url('/images/TipsManager_Atlas/item_info_color4.png') 0 8 0 8 fill / 0 8px stretch; }
-.g-slice--record-5 { border-image: url('/images/TipsManager_Atlas/item_info_color5.png') 0 8 0 8 fill / 0 8px stretch; }
+.g-slice--record-1 { border-image: url('/images/TipsManager_Atlas/item_info_color1.webp') 0 8 0 8 fill / 0 8px stretch; }
+.g-slice--record-2 { border-image: url('/images/TipsManager_Atlas/item_info_color2.webp') 0 8 0 8 fill / 0 8px stretch; }
+.g-slice--record-3 { border-image: url('/images/TipsManager_Atlas/item_info_color3.webp') 0 8 0 8 fill / 0 8px stretch; }
+.g-slice--record-4 { border-image: url('/images/TipsManager_Atlas/item_info_color4.webp') 0 8 0 8 fill / 0 8px stretch; }
+.g-slice--record-5 { border-image: url('/images/TipsManager_Atlas/item_info_color5.webp') 0 8 0 8 fill / 0 8px stretch; }
 
 /* ---------- 游戏文本 ---------- */
 

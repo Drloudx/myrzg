@@ -108,7 +108,7 @@
 
           <!-- Nameplate Star Icon (Bottom-Left Diamond) -->
           <img
-            :src="getImageUrl('/PicHandBookPanel_Atlas/colect_star.png')"
+            :src="getImageUrl('/PicHandBookPanel_Atlas/colect_star.webp')"
             class="bag-card-name-star"
             alt="star"
             loading="lazy"

@@ -24,7 +24,7 @@ const close = () => {
     @update:visible="close"
   >
     <div class="author-section">
-      <img src="/ui/author_avatar.jpg" class="about-logo" alt="作者头像" />
+      <img src="/ui/author_avatar.webp" class="about-logo" alt="作者头像" />
       <h4 class="author-name">云汐渚梦</h4>
       <div class="social-links">
         <a href="https://www.taptap.cn/user/34448185?share_id=06714cbc47ff&utm_medium=share&utm_source=copylink" target="_blank" class="social-item taptap">

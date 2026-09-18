@@ -26,7 +26,7 @@ defineProps({
 const emit = defineEmits(['close'])
 
 const liteNavList = [
-  { name: '角色图鉴', path: '/heroes', icon: '/ui/class_icon_s_zs.png' },
+  { name: '角色图鉴', path: '/heroes', icon: '/ui/class_icon_s_zs.webp' },
   { name: '魔物图鉴', path: '/pets', icon: '/ui/colect_mon_072.webp' },
   { name: '菜谱查询', path: '/recipes', icon: '/ui/item_30047.webp' },
   { name: '魔物收益', path: '/petseggs', icon: '/ui/pet_079.webp' },
