@@ -15,17 +15,20 @@
 
 /* ====== 0. 字体引入 ====== */
 /* Vite 将 /fonts/ 解析到 public/fonts/；使用实际的 SC 中文字体文件名。
-   同一字体族按字重选择文件；缺字回退到设备系统字体。 */
+   同一字体族按字重选择文件；缺字回退到设备系统字体。
+   只提供 WOFF2：与 TTF 字形集完全一致（各 29063 字形，unitsPerEm 相同），
+   但体积小约 47%（7.9MB → 4.2MB），首屏少下约 7.4MB。
+   不再保留 TTF 兜底——所有支持本项目的浏览器（Chromium/WebKit/Gecko 现代版本）均支持 WOFF2。 */
 @font-face {
   font-family: 'HarmonyOS';
-  src: url('/fonts/HarmonyOS_Sans_SC_Regular.ttf') format('truetype');
+  src: url('/fonts/HarmonyOS_Sans_SC_Regular.woff2') format('woff2');
   font-style: normal;
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: 'HarmonyOS';
-  src: url('/fonts/HarmonyOS_Sans_SC_Bold.ttf') format('truetype');
+  src: url('/fonts/HarmonyOS_Sans_SC_Bold.woff2') format('woff2');
   font-style: normal;
   font-weight: 700;
   font-display: swap;
