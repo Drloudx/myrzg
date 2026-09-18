@@ -10,7 +10,9 @@ export function buildFurnitureFile() {
     consumeRes: readJson('consume.json'),
     playerInitRes: readJson('playerInit.json'),
     conditionRes: readJson('condition.json'),
-    taskRes: readJson('task.json')
+    taskRes: readJson('task.json'),
+    // 用于把「获取方式」里的 market* ID 解析成家具名（见 furnitureData.js 的 resolveMarketName）
+    rewardRes: readJson('reward.json')
   })
   return { file: 'parsed/furniture.json', data }
 }

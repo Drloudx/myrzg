@@ -119,7 +119,8 @@
           </div>
         </div>
         <div class="furniture-badges-row">
-          <UiTag>ID: {{ selectedFurniture.id }}</UiTag>
+          <!-- 家具 ID 按用户要求隐藏（保留数据与标记，便于以后恢复） -->
+          <!-- <UiTag>ID: {{ selectedFurniture.id }}</UiTag> -->
           <UiTag :quality="Number(selectedFurniture.quality)">
             {{ getRarityName(selectedFurniture.quality) }}
           </UiTag>
@@ -232,7 +233,8 @@
               </span>
               <span class="blueprint-entry__content">
                 <strong :class="`quality-text-${Number(blueprint.quality) || 1}`">{{ blueprint.name }}</strong>
-                <small>{{ blueprint.typeId }}</small>
+                <!-- 制作图 ID（item_500xx）按用户要求隐藏（保留数据与标记，便于以后恢复） -->
+                <!-- <small>{{ blueprint.typeId }}</small> -->
                 <span v-if="blueprint.skinNames?.length">包含外观：{{ blueprint.skinNames.join('、') }}</span>
               </span>
               <span class="blueprint-entry__action">查看物品</span>

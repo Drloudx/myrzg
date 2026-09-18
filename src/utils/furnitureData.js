@@ -223,10 +223,85 @@ function countBy(entries, keyOf) {
   }, {})
 }
 
-function formatAcquisitionNote(homeItem) {
-  const tip = trimSentenceEnd(homeItem?.tip).replace(/[，,]\s*/gu, ' / ')
-  if (tip) return tip
-  return '开启奖励宝箱后获得'
+/**
+ * 家具「获取方式」（`homeItem.tip`）里的原始 ID → 可读名称。
+ *
+ * 游戏配置里 tip 直接写了内部 ID，例如 `c1商店购买：market50011`、`长支线s_1_13格薇勒与秘密基地`、
+ * `c2委托兑换 weituo_item_50030`。这些 ID 对用户没有意义，这里按**权威配置关系**换成名称：
+ *
+ * - `market*`  → `reward.json` 的 `items[0].rules[0].typeId`（制作图）
+ *              → `item.json` 的 `useActionPara.homeItems[0].typeId`（家具）
+ *              → 家具名。这条链与 `itemParser.js` 判定制作图归属用的是同一套关系。
+ *              注意不能用 `itemExchange.market*.des`：其中若干条是配置时复制的占位串
+ *              （如 market50027/50100/50101/50102 的 des 都是 "c1_q2原木小柜"），会张冠李戴。
+ * - `weituo_item_NNN` → 去掉前缀取 `item_NNN` 的名称（制作图）
+ * - `s_*` / `m_*`（任务）→ `task.json` 的 name + category（支线/主线）+ 章节对应的地区
+ * - `c1`..`c5` → 地区名（与 `gameMappings.js` 的 MAP_NAMES 一致）
+ */
+const CHAPTER_TO_MAP = { 序章: 'c0', 第一章: 'c1', 第二章: 'c2', 第三章: 'c3', 第四章: 'c4', 第五章: 'c5' }
+
+/** market ID → 家具名；链断则退回制作图名（去掉「制作图」后缀）。 */
+function resolveMarketName(marketId, rewards, items, homeItems) {
+  const reward = rewards[String(marketId)]
+  const blueprintId = reward?.items?.[0]?.rules?.[0]?.typeId
+  if (!blueprintId) return ''
+  const blueprint = items[String(blueprintId)]
+  const homeId = blueprint?.useActionPara?.homeItems?.[0]?.typeId
+  if (homeId && homeItems[String(homeId)]) return homeItems[String(homeId)].name || ''
+  return String(blueprint?.name || '').replace(/制作图$/u, '')
+}
+
+/** 任务 ID → `地区 类型 「任务名」`。 */
+function resolveTaskLabel(taskId, tasks) {
+  const task = tasks[String(taskId)]
+  if (!task) return ''
+  const categories = asArray(task.category).map(String)
+  const chapter = categories.find(name => CHAPTER_TO_MAP[name])
+  const region = chapter ? getMapName(CHAPTER_TO_MAP[chapter]) : ''
+  const kind = categories.find(name => name === '主线' || name === '支线')
+    || (/^m/u.test(String(taskId)) ? '主线' : '支线')
+  return [region, kind, `「${task.name || ''}」`].filter(Boolean).join(' ')
+}
+
+/** 把 tip 里的 ID 全部换成可读名称。 */
+function formatAcquisitionNote(homeItem, { rewards = {}, tasks = {}, items = {}, homeItems = {} } = {}) {
+  const raw = trimSentenceEnd(homeItem?.tip)
+  if (!raw) return '开启奖励宝箱后获得'
+
+  // 先统一分隔逗号，**在替换任务名之前做**，否则任务名内部的逗号会被一起改掉。
+  let text = raw.replace(/[，,]\s*/gu, ' / ')
+
+  // 任务：先剥离原文自带的「地区码 + 类型词」前缀（c1商店购买 / c2任务支线 / C3支线 / 长支线 / 种植支线 …），
+  // 再让 resolveTaskLabel 统一生成「地区 类型 「名字」」。否则前缀会与生成的标签叠成
+  // 「长支线秋日荒野 支线」「索利德山地任务支线：索利德山地 支线」这类重复文案。
+  text = text.replace(
+    /(?:[cC][1-5]\s*)?(?:长?支线|种植支线|任务\s*[:：]?\s*支线|任务|成就|商店(?:购买)?|委托兑换)\s*[:：]?\s*(?=[sm]_[0-9])/gu,
+    ''
+  )
+
+  text = text
+    .replace(/market[0-9]+/gu, id => resolveMarketName(id, rewards, items, homeItems) || id)
+    .replace(/weituo_item_([0-9]+)/gu, (whole, num) => items[`item_${num}`]?.name || whole)
+    .replace(/([sm]_[0-9]+(?:_[0-9]+)*)([^\s/：:（(]*)/gu, (whole, id, trailing) => {
+      const label = resolveTaskLabel(id, tasks)
+      if (!label) return whole
+      // 原文在 ID 后常又跟一遍任务名（如「s_1_13格薇勒与秘密基地」），吃掉它避免重复
+      const taskName = tasks[id]?.name || ''
+      const eaten = trailing && taskName && (trailing === taskName || taskName.startsWith(trailing)) ? trailing : ''
+      return label + (eaten ? '' : trailing)
+    })
+
+  // 残留地区码
+  text = text.replace(/([cC][1-5])\b/gu, whole => getMapName(whole.toLowerCase()) || whole)
+  // 相邻重复片段折叠（兜底，覆盖「魔爪湖畔魔爪湖畔」这类）
+  text = text.replace(/([\u4e00-\u9fa5]{2,6}?)\1(?=\s*(?:主线|支线))/gu, '$1')
+
+  // 末尾形如 `/ 贝拉多娜` 的残留：任务名已用「」标出，其后若只剩一个短片段且非「第N步」，
+  // 说明是原文重复的尾巴，去掉。
+  text = text.replace(/(「[^」]*」)\s*\/\s*([^/]{1,12})$/u, (whole, quoted, tail) =>
+    /第\s*\d+\s*步/u.test(tail) ? whole : quoted)
+
+  return text.replace(/\s{2,}/gu, ' ').trim()
 }
 
 function roomObjectPreviewImage(roomObj) {
@@ -255,12 +330,15 @@ export function buildFurnitureData({
   consumeRes,
   playerInitRes,
   conditionRes,
-  taskRes
+  taskRes,
+  rewardRes
 }) {
   const homeItems = homeItemMapOf(homeItemRes)
   const items = itemMapOf(itemRes)
   const consumes = consumeMapOf(consumeRes)
   const conditions = conditionMapOf(conditionRes)
+  const tasks = asRecord(taskRes?.datas || taskRes)
+  const rewards = asRecord(rewardRes?.datas || rewardRes)
   const categories = normalizeCategories(settingRes)
   const categoryNames = categoryLookups(categories)
   const initialNums = new Map(asArray(playerInitRes?.homeItems || playerInitRes?.data?.homeItems)
@@ -348,7 +426,7 @@ export function buildFurnitureData({
         id: conditionId,
         label: isAcquisitionCondition ? '获取方式' : '开放条件',
         summary: isAcquisitionCondition
-          ? formatAcquisitionNote(homeItem)
+          ? formatAcquisitionNote(homeItem, { rewards, tasks, items, homeItems })
           : formatFurnitureCondition(condition, taskRes),
         configNote: condition?.desc || '',
         reverse: condition?.reverse === true,
