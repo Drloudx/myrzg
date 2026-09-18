@@ -97,12 +97,25 @@ test('关键元素位置与 prefab 设计坐标一致', async ({ page }, testInf
     expect(Math.abs(actualY - expectY), `${item.label} 纵坐标偏差 ${(actualY - expectY).toFixed(1)}px`).toBeLessThan(2)
   }
 
-  // 画布尺寸即设计分辨率（未缩放前的布局尺寸）
-  const canvasSize = await page.locator('.gacha-canvas').evaluate(el => ({
-    width: el.offsetWidth,
-    height: el.offsetHeight
-  }))
-  expect(canvasSize).toEqual(DESIGN)
+  // 画布尺寸：`fit === 'height'` 时宽、高都会按舞台尺寸延展（`舞台尺寸 / scale`），
+  // 使遮罩/暗场/背景完整铺满舞台、消除上下切边缝隙；但不得小于设计分辨率。
+  // 因此断言「不小于 DESIGN」而非「等于 DESIGN」，并核对确实覆盖了缩放后的舞台。
+  const canvasBox = await page.locator('.gacha-canvas').evaluate(el => {
+    const stage = el.parentElement
+    const scale = Number((el.style.transform.match(/scale\(([\d.]+)\)/) || [])[1]) || 1
+    return {
+      width: el.offsetWidth,
+      height: el.offsetHeight,
+      stageWidth: stage ? stage.clientWidth : 0,
+      stageHeight: stage ? stage.clientHeight : 0,
+      scale
+    }
+  })
+  expect(canvasBox.width).toBeGreaterThanOrEqual(DESIGN.width)
+  expect(canvasBox.height).toBeGreaterThanOrEqual(DESIGN.height)
+  // 缩放后必须完整覆盖舞台，否则边缘会出现缝隙
+  expect(canvasBox.width * canvasBox.scale).toBeGreaterThanOrEqual(canvasBox.stageWidth - 1)
+  expect(canvasBox.height * canvasBox.scale).toBeGreaterThanOrEqual(canvasBox.stageHeight - 1)
 })
 
 test('固定尺寸按钮与页签使用预渲染纹理（sliced_buttons）', async ({ page }, testInfo) => {

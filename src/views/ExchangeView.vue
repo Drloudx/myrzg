@@ -16,7 +16,7 @@
         >{{ category.label }}</UiFilterPill>
       </UiFilterRow>
 
-      <UiFilterRow v-if="currentSubs.length && !['tuzi', 'huoyue'].includes(selectedCat)" class="exchange-filter-row" label="子类：">
+      <UiFilterRow v-if="showSubFilter" class="exchange-filter-row" label="子类：">
         <UiFilterPill
           v-for="sub in currentSubs"
           :key="sub.key"
@@ -116,6 +116,16 @@ const categories = ref([])
 const currentSubs = ref([])
 const isDataReady = ref(false)
 const errorMessage = ref('')
+
+/**
+ * 子类筛选只在**确实有多个子类可选**时才显示。
+ * 只有单一子类时（如「神匠之塔兑换」只有塔1、「符石合成」只有 Gem、「PVP兑换」只有 s1、
+ * 「通用兑换」只有「无」），筛选行是死按钮、子类名又常是内部代号，没有信息量。
+ * `syncSubs` 会自动把 selectedSub 指向唯一子类，故隐藏筛选不影响列表内容。
+ * 同时保留原先按分类隐藏的 tuzi / huoyue。
+ */
+const showSubFilter = computed(() =>
+  currentSubs.value.length > 1 && !['tuzi', 'huoyue'].includes(selectedCat.value))
 
 // 保留旧皮肤购买分享链接，同时迁移为商城的时装子类。
 const categoryFromQuery = query => query.cat === 'fashion' ? 'shop' : query.cat

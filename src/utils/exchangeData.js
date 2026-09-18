@@ -29,7 +29,9 @@ const CATEGORY_ORDER = [
   { key: 'shop', label: '商店积分', teams: /^(bke|ptjifen|payke|fuZhuang)$/ },
   { key: 'seed', label: '种子兑换', teams: /^zhongzi$/ },
   { key: 'pack', label: '每日补给', teams: /^(pack|dailySupply)$/ },
-  { key: 'tower', label: '爬塔兑换', teams: /^tower1$/ },
+  // 「爬塔」是玩家俗称；游戏内该玩法正式名为「神匠之塔」（tower.json 的 name、
+  // exchangeTeam.json 的 tower1 → name 均为「神匠之塔」），故用正式名。
+  { key: 'tower', label: '神匠之塔兑换', teams: /^tower1$/ },
   { key: 'pvp', label: 'PVP兑换', teams: /^pvp001$/ },
   { key: 'general', label: '通用兑换', teams: /^(team\d*|无)$/ }
 ]

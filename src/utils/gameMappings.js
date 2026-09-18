@@ -341,6 +341,24 @@ export function getMapName(key) {
   return MAP_NAMES[s] || key
 }
 
+/**
+ * 家具/兑换的「来源标记」里出现的非地图标签 → 游戏内正式名。
+ * 这些标签来自配置（`homeItem.category`、`itemExchange.category`），原文是内部代号或玩家俗称：
+ *   爬塔   → 神匠之塔（`tower.json` 的 name，也是 `exchangeTeam.json` 的 tower1 → name）
+ *   塔1兑换 → 兑换（「塔1」只是内部编号，游戏里只有一座塔 towerA，单独列出没有意义）
+ * 地图码（c1..c5）仍走 getMapName。
+ */
+const SOURCE_TAG_NAMES = {
+  爬塔: '神匠之塔',
+  塔1兑换: '兑换',
+  塔1: '兑换'
+}
+export function getSourceTagName(tag) {
+  if (!tag) return ''
+  const raw = String(tag).trim()
+  return SOURCE_TAG_NAMES[raw] || getMapName(raw)
+}
+
 // ---------- 战斗/基础属性中文名（角色图鉴、怪物详情共用） ----------
 export const STAT_NAMES = {
   maxHp: '生命值',

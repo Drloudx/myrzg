@@ -1,5 +1,5 @@
 import { isBlacklisted } from '../config/blacklist.js'
-import { BASE_REWARD_ICONS, BASE_REWARD_NAMES, getMapName } from './gameMappings.js'
+import { BASE_REWARD_ICONS, BASE_REWARD_NAMES, getMapName, getSourceTagName } from './gameMappings.js'
 import { fetchWithFallback } from './request.js'
 import { createCachedLoader } from './resourceClient.js'
 
@@ -271,6 +271,10 @@ function formatAcquisitionNote(homeItem, { rewards = {}, tasks = {}, items = {},
   // 先统一分隔逗号，**在替换任务名之前做**，否则任务名内部的逗号会被一起改掉。
   let text = raw.replace(/[，,]\s*/gu, ' / ')
 
+  // 「爬塔」是玩家俗称、且后面跟的内部编号（如「爬塔1兑换」「爬塔1家具」）对用户无意义，
+  // 统一换成游戏内正式名「神匠之塔」，并去掉编号。
+  text = text.replace(/爬塔\s*[0-9]*/gu, '神匠之塔')
+
   // 任务：先剥离原文自带的「地区码 + 类型词」前缀（c1商店购买 / c2任务支线 / C3支线 / 长支线 / 种植支线 …），
   // 再让 resolveTaskLabel 统一生成「地区 类型 「名字」」。否则前缀会与生成的标签叠成
   // 「长支线秋日荒野 支线」「索利德山地任务支线：索利德山地 支线」这类重复文案。
@@ -380,7 +384,7 @@ export function buildFurnitureData({
     const conditionId = String(homeItem.condition || '')
     const condition = conditions[conditionId]
     const sourceTags = [...asArray(homeItem.category)]
-    const sourceLabels = sourceTags.map(tag => getMapName(tag))
+    const sourceLabels = sourceTags.map(tag => getSourceTagName(tag))
     const isAcquisitionCondition = conditionId === 'rewardBox'
     const initialNum = initialNums.get(homeItem.typeId) || 0
 
@@ -425,9 +429,15 @@ export function buildFurnitureData({
       condition: {
         id: conditionId,
         label: isAcquisitionCondition ? '获取方式' : '开放条件',
+        // 少数家具的 condition 为空（如「豪华露营餐点」）但 tip 里写了来源，此时
+        // formatFurnitureCondition 因无 rules 返回空串。回退用 tip，避免该行整条空白；
+        // 仅在确有 tip 时回退，否则会误显示 formatAcquisitionNote 的默认句。
         summary: isAcquisitionCondition
           ? formatAcquisitionNote(homeItem, { rewards, tasks, items, homeItems })
-          : formatFurnitureCondition(condition, taskRes),
+          : (formatFurnitureCondition(condition, taskRes)
+            || (trimSentenceEnd(homeItem?.tip)
+              ? formatAcquisitionNote(homeItem, { rewards, tasks, items, homeItems })
+              : '')),
         configNote: condition?.desc || '',
         reverse: condition?.reverse === true,
         rules: asArray(condition?.rules)
