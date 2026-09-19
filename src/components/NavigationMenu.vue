@@ -161,11 +161,11 @@ const defaultNavList = [
   { name: '成就查询', path: '/achievement', icon: '/ui/achv_icon_adv.webp' },
   { name: '怪物图鉴', path: '/monsters', icon: '/ui/colect_mon_052.webp' },
   { name: '任务图鉴', path: '/tasks', icon: '/images/TaskPanel/task_tag1.webp' },
-  { name: '事件图鉴', path: '/events', icon: '/ui/zw.webp' },
-  { name: '副本图鉴', path: '/dungeons', icon: '/ui/zw.webp' },
-  { name: '兑换', path: '/exchange', icon: '/ui/zw.webp' },
+  { name: '事件图鉴', path: '/events', icon: '/ui/mtl1.webp' },
+  { name: '副本图鉴', path: '/dungeons', icon: '/ui/map_r_fb_03.webp' },
+  { name: '兑换', path: '/exchange', icon: '/ui/map_r_fb_19.webp' },
   { name: '模拟招募', path: '/gacha', icon: '/ui/item_20004.webp' },
-  { name: '其他', path: '/rewards', icon: '/ui/zw.webp' }
+  { name: '其他', path: '/rewards', icon: '/ui/map_r_fb_12.webp' }
 ]
 
 const navList = computed(() => props.items || defaultNavList)
