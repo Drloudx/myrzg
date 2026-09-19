@@ -14,6 +14,8 @@ import {
   AtlasAttachmentLoader, SkeletonJson, SkeletonBinary, Skeleton,
   AnimationState, AnimationStateData
 } from '@esotericsoftware/spine-webgl'
+import { activeBackend, getCanvasBufferSize } from './gachaRenderShared'
+import { createSpineCanvas2DScene } from './gachaSpineCanvas2D'
 
 /**
  * 由 URL 推断图片 MIME 类型。
@@ -21,6 +23,8 @@ import {
  * 必要性：贴图走 `fetch → Blob → objectURL → Image` 加载。`new Blob([buf])` 不指定 type 时
  * blob URL 没有 Content-Type，浏览器**不再按内容嗅探**（PNG 时代能蒙对，WebP 会直接解码失败：
  * `贴图加载失败：blob:…`）。故必须显式给出类型。
+ *
+ * 实现在 gachaRenderShared（与 Canvas2D 后端共用），此处仅转出保持既有引用不变。
  */
 function imageMimeFromUrl(url) {
   const path = url.split('?')[0].toLowerCase()
@@ -136,7 +140,28 @@ export function createSpineScene(canvas, layers, options = {}) {
     console.warn('[gachaSpine] WebGL 上下文丢失，等待浏览器恢复')
   }
   canvas.addEventListener('webglcontextlost', onContextLost, false)
-  const renderer = new SceneRenderer(canvas, gl)
+  const sceneRenderer = new SceneRenderer(canvas, gl)
+  /**
+   * 渲染器适配器：把「相机对象」与「绘制调用」抽象出来。
+   *
+   * 现有相机数学（fit: 'stage' / 'bounds' / 'card-stage' / 'width' 四套取景）
+   * 直接读写 `renderer.camera.viewportWidth/Height`、`camera.position.set(...)`、
+   * `camera.update()`。用这个适配器把同样的接口暴露给 Canvas2D 后端，
+   * **相机代码一行都不用改**，两端构图自然一致。
+   *
+   * `begin/end` 在 WebGL 侧必须存在（SceneRenderer 需要成对调用）；
+   * Canvas2D 侧为空实现，因为绘制直接用 ctx 变换。
+   */
+  const renderer = {
+    camera: sceneRenderer.camera,
+    begin() { sceneRenderer.begin() },
+    end() { sceneRenderer.end() },
+    drawSkeleton(skeleton) { sceneRenderer.drawSkeleton(skeleton, true) },
+    /** 缓冲区尺寸变化后同步 WebGL viewport（用 drawingBufferWidth 而非 canvas.width，
+     *  避免改动 canvas.width 导致上下文重置时拿到 null）。 */
+    setViewport() { gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight) },
+    dispose() { sceneRenderer.dispose() },
+  }
   const pad = Number(options.pad) > 0 ? Number(options.pad) : 1
   const padding = Number(options.padding) > 0 ? Number(options.padding) : 1.12
   let disposed = false
@@ -322,8 +347,8 @@ export function createSpineScene(canvas, layers, options = {}) {
       resizeCardStage()
       // 修改 canvas 缓冲区不会自动更新 WebGL viewport；共享画布重挂载也会改尺寸。
       // 必须与当前缓冲区同步，否则场景只绘制在旧宽度内，角色偏左、桌面出现竖缝。
-      gl.viewport(0, 0, canvas.width, canvas.height)
-      const delta = Math.min((now - last) / 1000, 0.1)
+      renderer.setViewport()
+      let delta = Math.min((now - last) / 1000, 0.1)
       last = now
       for (const actor of actors) {
         actor.state.update(delta)
@@ -335,7 +360,7 @@ export function createSpineScene(canvas, layers, options = {}) {
       gl.clearColor(0, 0, 0, 0)
       gl.clear(gl.COLOR_BUFFER_BIT)
       renderer.begin()
-      for (const actor of actors) renderer.drawSkeleton(actor.skeleton, true)
+      for (const actor of actors) renderer.drawSkeleton(actor.skeleton)
       renderer.end()
       rafId = requestAnimationFrame(frame)
     }
@@ -396,6 +421,92 @@ export function createSpineScene(canvas, layers, options = {}) {
 }
 
 /**
+ * 按运行环境选择渲染后端并创建场景。
+ *
+ * - **微信内置浏览器（X5 内核）→ Canvas2D**：用户实测 Chrome 正常、微信里演出画面
+ *   渲染不全（图片呈竖条/矩形块、有硬直边）。已排除文件下载、画布过大、上下文丢失
+ *   三种成因，判定为 X5 的 WebGL 绘制路径本身有问题，故换一套完全不同的实现。
+ * - **其他环境 → WebGL**（原路径，行为完全不变）。
+ *
+ * 两条路径共用同一份相机数学（由 buildCamera 注入）、图层参数与画布尺寸逻辑，
+ * 保证取景一致。
+ */
+function createSceneForBackend(canvas, layers, options = {}) {
+  if (activeBackend() !== 'canvas2d') return createSpineScene(canvas, layers, options)
+
+  /**
+   * 相机计算：与 WebGL 路径逐条对应（stage / bounds / card-stage / width / 默认）。
+   * 通过 `cam` 适配器读写，使同一份数学既能驱动 OrthoCamera 也能驱动 Canvas2D 变换。
+   */
+  const buildCamera = (cam, actors, { pad, padding }) => {
+    const aspect = cam.aspect
+    if (options.fit === 'stage') {
+      const vh = Number(options.viewportHeight) > 0 ? Number(options.viewportHeight) : 2400
+      cam.viewportHeight = vh
+      cam.viewportWidth = vh * aspect
+      const groundY = Number(options.groundY) > 0 ? Number(options.groundY) : 202
+      const logicalHeight = canvas.clientHeight || canvas.height
+      const cy = (groundY / logicalHeight * 2 - 1) * (vh / 2)
+      cam.setPosition(0, cy)
+      return
+    }
+    if (options.fit === 'bounds') {
+      const firstActor = actors[0]
+      if (options.initialAnimation && firstActor.data.findAnimation(options.initialAnimation)) {
+        firstActor.state.setAnimation(0, options.initialAnimation, false)
+        firstActor.state.apply(firstActor.skeleton)
+      }
+      firstActor.skeleton.updateWorldTransform()
+      const offset = new Vector2()
+      const size = new Vector2()
+      firstActor.skeleton.getBounds(offset, size, [])
+      const boundWidth = Math.max(size.x, 1)
+      const boundHeight = Math.max(size.y, 1)
+      const height = Math.max(boundHeight, boundWidth / aspect) * padding * pad
+      cam.viewportHeight = height
+      cam.viewportWidth = height * aspect
+      cam.setPosition(
+        offset.x + boundWidth / 2,
+        offset.y + boundHeight / 2 + (Number(options.yOffset) || 0)
+      )
+      return
+    }
+    // 其余三种都基于首层骨架数据头部的场景包围盒
+    const first = actors[0].data
+    const sceneRect = {
+      x: first.x ?? 0,
+      y: first.y ?? 0,
+      width: first.width || 1,
+      height: first.height || 1
+    }
+    if (options.fit === 'card-stage') {
+      const zoom = Number(options.zoom) > 1 ? Number(options.zoom) : 1.2
+      const vh = (sceneRect.width * pad * zoom) / (1534 / 750)
+      cam.viewportHeight = vh
+      cam.viewportWidth = vh * aspect
+      cam.setPosition(sceneRect.x + sceneRect.width / 2, sceneRect.y + vh / 2)
+    } else if (options.fit === 'width') {
+      const zoom = Number(options.zoom) > 1 ? Number(options.zoom) : 1
+      cam.viewportWidth = sceneRect.width * pad * zoom
+      cam.viewportHeight = sceneRect.width / aspect * pad * zoom
+      cam.setPosition(
+        sceneRect.x + sceneRect.width / 2,
+        sceneRect.y + cam.viewportHeight / 2
+      )
+    } else {
+      cam.viewportHeight = sceneRect.height * pad
+      cam.viewportWidth = sceneRect.height * aspect * pad
+      cam.setPosition(
+        sceneRect.x + sceneRect.width / 2,
+        sceneRect.y + sceneRect.height / 2
+      )
+    }
+  }
+
+  return createSpineCanvas2DScene(canvas, layers, options, buildCamera)
+}
+
+/**
  * ── 共享演出场景（跨抽卡复用）──
  * 每次抽卡都新建/销毁 WebGL 上下文 + 重新上传纹理的话：上下文要等 GC 回收，反复
  * 抽卡会累积待回收显存，几次后整个窗口挂死；而且每抽一次都要重新解析骨架、重新
@@ -445,7 +556,7 @@ export function mountSharedSpineScene(key, host, layers, options = {}, styleCss 
   canvas.height = height
   entry = { canvas, refs: 1, scene: null, ready: null }
   sharedScenes.set(key, entry)
-  entry.ready = createSpineScene(canvas, layers, options).then(scene => {
+  entry.ready = createSceneForBackend(canvas, layers, options).then(scene => {
     entry.scene = scene
     if (entry.refs <= 0) scene.pause()
     return scene
@@ -481,52 +592,6 @@ export function disposeSharedSpineScenes() {
  * 每次揭晓新建画布 = 每轮揭晓多建/丢一个上下文，同样会累积待回收显存。
  */
 const sharedCanvases = new Map()
-
-/**
- * 单个 WebGL 渲染缓冲的**像素预算**上限（约 207 万像素 ≈ 1920×1080）。
- *
- * 为什么需要：手机竖屏时抽卡页会被 `GachaViewport` **旋转 90°**，于是卡片舞台画布的
- * CSS 尺寸是「屏幕高 × 屏幕宽」的横置版本（Pixel 5 上约 1623×750）。再乘 DPR 2
- * 就得到 3246×1500 ≈ **487 万像素**的渲染缓冲——比游戏原设计分辨率 1534×750
- * （115 万像素）大 4.2 倍。
- *
- * 移动 GPU 同时还要承载 5 张 Spine 纹理（`elsa_rawcard` 1604×1599、
- * `elsa_rawcard_desk` 1684×1408、`perform_bag` 1484×1484 等），显存与填充率很容易
- * 吃不住，表现为**演出画面只画出一部分**（桌面端 GPU 宽裕所以看不出来）。
- *
- * 加预算后：超出时按等比降低有效 DPR（不是直接砍分辨率），画质仍高于 1× 屏幕，
- * 但缓冲像素数被压到安全范围。1920×1080 这个量级对移动端是很宽裕的余量。
- */
-const MAX_BUFFER_PIXELS = 1920 * 1080
-
-/**
- * 是否微信内置浏览器（X5 内核）。
- *
- * X5 的 WebGL 实现比 Chrome 保守得多：大帧缓冲容易只画出一部分
- * （用户实测：Chrome 正常、微信里演出画面残缺）。故对微信单独把 DPR 压到 1。
- * 用 UA 判断即可——这里只用于**降开销**，判断失误最坏结果是画质略降，无功能风险。
- */
-function isWeChatWebView() {
-  if (typeof navigator === 'undefined') return false
-  const ua = navigator.userAgent || ''
-  return /MicroMessenger/i.test(ua)
-}
-
-function getCanvasBufferSize(canvas) {
-  const cssWidth = Math.max(1, canvas.clientWidth)
-  const cssHeight = Math.max(1, canvas.clientHeight)
-  // 微信 X5 内核：DPR 直接封顶 1（不做 2× 超采样），把渲染缓冲再砍一半
-  let dpr = isWeChatWebView() ? 1 : Math.min(window.devicePixelRatio || 1, 2)
-  // 像素预算：若 dpr 下的缓冲超出预算，等比降到刚好不超（下限 1，避免糊）
-  const budgetDpr = Math.sqrt(MAX_BUFFER_PIXELS / (cssWidth * cssHeight))
-  if (budgetDpr < dpr) dpr = Math.max(1, budgetDpr)
-  // client 尺寸为局部设计坐标，忽略外层缩放、相机动画和手机 90° 横置。
-  // 尤其小人画布 440×520 不等于其 380×380 宿主，不能按宿主的屏幕包围盒取景。
-  return {
-    width: Math.max(1, Math.round(cssWidth * dpr)),
-    height: Math.max(1, Math.round(cssHeight * dpr))
-  }
-}
 
 export function acquireSharedCanvas(key, host, styleCss = {}) {
   let canvas = sharedCanvases.get(key)
@@ -577,8 +642,8 @@ export function mountCanvasScene(canvasKey, sceneKey, host, layers, options = {}
     entry = null
   }
   if (!entry) {
-    // createSpineScene 内部首帧 rAF 由其 init 启动；此处先建后由下方 resume/pause 统一调度
-    const created = createSpineScene(canvas, layers, options).then(scene => {
+    // createSceneForBackend 内部首帧 rAF 由其 init 启动；此处先建后由下方 resume/pause 统一调度
+    const created = createSceneForBackend(canvas, layers, options).then(scene => {
       entry.scene = scene
       if (entry.paused) scene.pause()
       return scene
@@ -596,11 +661,21 @@ export function mountCanvasScene(canvasKey, sceneKey, host, layers, options = {}
   }
   if (!entry.scene) {
     // 新场景仍在创建：清掉画布上其他场景暂停时残留的最后一帧（否则旧小人会
-    // 和新角色的立绘/名牌同框，直到新场景渲染出第一帧）
+    // 和新角色的立绘/名牌同框，直到新场景渲染出第一帧）。
+    //
+    // **两条后端都要清**：同一画布只能有一个上下文，Canvas2D 后端下
+    // `getContext('webgl')` 会返回 null，若只写 WebGL 分支，微信/Canvas2D 路径
+    // 的旧小人最后一帧就留在画布上（用户实测：切下一个角色时右侧仍是上一个角色）。
     const gl = canvas.getContext('webgl')
     if (gl) {
       gl.clearColor(0, 0, 0, 0)
       gl.clear(gl.COLOR_BUFFER_BIT)
+    } else {
+      const ctx2d = canvas.getContext('2d')
+      if (ctx2d) {
+        ctx2d.setTransform(1, 0, 0, 1, 0, 0)
+        ctx2d.clearRect(0, 0, canvas.width, canvas.height)
+      }
     }
   }
   entry.paused = false
