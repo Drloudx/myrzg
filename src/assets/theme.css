@@ -752,3 +752,20 @@ input, textarea, select {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--wood-soft);
 }
+
+/* ====== 8b. 触屏端隐藏滚动条（保留滚动效果） ======
+   移动端本来就用手指滑动，滚动条既占宽度又不好看；这里只隐藏**视觉**，
+   滚动行为、惯性、scrollTop 等一概不变。
+   用 `pointer: coarse`（主指针为触摸）而非宽度断点：桌面窄窗口仍应保留滚动条，
+   而触屏平板即使很宽也不需要。Firefox 走 scrollbar-width，WebKit 走伪元素。 */
+@media (pointer: coarse) {
+  * {
+    scrollbar-width: none;      /* Firefox / 新版 Chromium */
+    -ms-overflow-style: none;   /* 旧 Edge / IE */
+  }
+  ::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
