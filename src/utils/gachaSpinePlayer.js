@@ -499,10 +499,24 @@ const sharedCanvases = new Map()
  */
 const MAX_BUFFER_PIXELS = 1920 * 1080
 
+/**
+ * 是否微信内置浏览器（X5 内核）。
+ *
+ * X5 的 WebGL 实现比 Chrome 保守得多：大帧缓冲容易只画出一部分
+ * （用户实测：Chrome 正常、微信里演出画面残缺）。故对微信单独把 DPR 压到 1。
+ * 用 UA 判断即可——这里只用于**降开销**，判断失误最坏结果是画质略降，无功能风险。
+ */
+function isWeChatWebView() {
+  if (typeof navigator === 'undefined') return false
+  const ua = navigator.userAgent || ''
+  return /MicroMessenger/i.test(ua)
+}
+
 function getCanvasBufferSize(canvas) {
   const cssWidth = Math.max(1, canvas.clientWidth)
   const cssHeight = Math.max(1, canvas.clientHeight)
-  let dpr = Math.min(window.devicePixelRatio || 1, 2)
+  // 微信 X5 内核：DPR 直接封顶 1（不做 2× 超采样），把渲染缓冲再砍一半
+  let dpr = isWeChatWebView() ? 1 : Math.min(window.devicePixelRatio || 1, 2)
   // 像素预算：若 dpr 下的缓冲超出预算，等比降到刚好不超（下限 1，避免糊）
   const budgetDpr = Math.sqrt(MAX_BUFFER_PIXELS / (cssWidth * cssHeight))
   if (budgetDpr < dpr) dpr = Math.max(1, budgetDpr)
