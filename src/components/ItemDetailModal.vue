@@ -19,7 +19,8 @@
           {{ item.name }}
         </h2>
         <div class="item-tags">
-          <UiTag class="copy-tag" @click="copyId(item.typeId)" title="点击复制 ID">ID: {{ item.typeId }}</UiTag>
+          <!-- 物品 / 装备 ID 按需求隐藏（保留代码，需要时取消注释即可恢复） -->
+          <!-- <UiTag class="copy-tag" @click="copyId(item.typeId)" title="点击复制 ID">ID: {{ item.typeId }}</UiTag> -->
           <UiTag v-if="categoryName">{{ categoryName }}</UiTag>
           <UiTag v-if="item.maxNum > 1">可堆叠 ({{ item.maxNum }})</UiTag>
         </div>
@@ -506,14 +507,15 @@ const handleClose = () => {
   }
 }
 
-const copyId = async (id) => {
-  if (!id) return
-  try {
-    await navigator.clipboard.writeText(id)
-  } catch (err) {
-    console.warn('复制失败', err)
-  }
-}
+// ID 显示已隐藏，复制入口随之停用（保留实现，恢复 ID 显示时一并取消注释）
+// const copyId = async (id) => {
+//   if (!id) return
+//   try {
+//     await navigator.clipboard.writeText(id)
+//   } catch (err) {
+//     console.warn('复制失败', err)
+//   }
+// }
 
 const categoryName = computed(() => {
   if (!props.item?.category || !props.categoryTree) return ''

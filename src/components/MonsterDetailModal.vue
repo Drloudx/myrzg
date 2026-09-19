@@ -6,7 +6,8 @@
     </UiEmptyState>
     <div v-else-if="renderError" class="error-state">渲染错误: {{ renderError }}</div>
     <template v-else-if="monster && currentForm">
-      <div class="id-line"><UiTag tone="wood" class="copy-tag" title="点击复制 ID" @click="copyId(currentForm.id)">ID: {{ currentForm.id }}</UiTag></div>
+      <!-- 怪物 ID 按需求隐藏（保留代码，需要时取消注释即可恢复） -->
+      <!-- <div class="id-line"><UiTag tone="wood" class="copy-tag" title="点击复制 ID" @click="copyId(currentForm.id)">ID: {{ currentForm.id }}</UiTag></div> -->
 
       <div class="portrait-section paper-panel corner-nails">
         <div class="portrait-box">
@@ -221,7 +222,8 @@ watch(currentForm, form => {
 }, { immediate: true })
 
 const handleClose = () => { emit('update:visible', false); if (route.query.id) { const query = { ...route.query }; delete query.id; router.replace({ query }) } }
-const copyId = id => { if (id) navigator.clipboard.writeText(id).catch(error => console.error('Failed to copy ID:', error)) }
+// ID 显示已隐藏，复制入口随之停用（保留实现，恢复 ID 显示时一并取消注释）
+// const copyId = id => { if (id) navigator.clipboard.writeText(id).catch(error => console.error('Failed to copy ID:', error)) }
 const handlePortraitError = event => {
   const baseId = String(monster.value?.id || '').replace('hero_', '')
   const rawIcon = currentForm.value?.icon || monster.value?.icon
