@@ -116,6 +116,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { fetchWithFallback } from '../utils/request.js'
 import { getImageUrl } from '../utils/env.js'
 import { resolveScrollTarget } from '../utils/scrollTarget.js'
+import { isBlacklisted, isEquipTierHidden, visibleEquipTiers, HIDDEN_EQUIP_TIERS } from '../config/blacklist.js'
 import CampFacilitiesPanel from '../components/facilities/CampFacilitiesPanel.vue'
 import {
   UiBackToTop,
@@ -167,16 +168,29 @@ const currentFacility = computed(() => recipeFacilities.value.find(facility => f
 const currentMode = computed(() => currentFacility.value?.modes.find(mode => mode.key === selectedMode.value) || currentFacility.value?.modes[0] || null)
 const facilityOptions = computed(() => recipeFacilities.value.map(facility => ({ value: facility.key, label: facility.name })))
 const modeOptions = computed(() => (currentFacility.value?.modes || []).map(mode => ({ value: mode.key, label: mode.name })))
-const levelOptions = computed(() => [
-  { value: 'all', label: '全部' },
-  ...(currentMode.value?.levels || []).map(level => ({
-    value: level,
-    label: `${level}${currentMode.value?.key === 'equipment' ? '阶' : '级'}`
-  }))
-])
+const levelOptions = computed(() => {
+  const isEquipMode = currentMode.value?.key === 'equipment'
+  return [
+    { value: 'all', label: '全部' },
+    // 装备打造模式下，被隐藏的品阶不出现在筛选行（否则点了是空列表）
+    ...(currentMode.value?.levels || [])
+      .filter(level => !(isEquipMode && HIDDEN_EQUIP_TIERS.map(Number).includes(Number(level))))
+      .map(level => ({
+        value: level,
+        label: `${level}${isEquipMode ? '阶' : '级'}`
+      }))
+  ]
+})
 const filteredRecipes = computed(() => {
   const query = searchQuery.value.trim().toLowerCase()
+  const isEquipMode = currentMode.value?.key === 'equipment'
   return (currentMode.value?.recipes || []).filter(recipe => {
+    // 黑名单：产出物或任一材料命中即隐藏。
+    // 之前本页完全没过黑名单，导致「【未使用】石镐」等仍显示在配方列表里。
+    if (isBlacklisted({ id: recipe.output?.typeId, name: recipe.output?.name })) return false
+    if ((recipe.materials || []).some(m => isBlacklisted({ id: m.typeId, name: m.name }))) return false
+    // 隐藏品阶：装备打造模式按配方 level 过滤（已验证 recipe.level 与装备 equipLevel 完全一致）
+    if (isEquipMode && HIDDEN_EQUIP_TIERS.map(Number).includes(Number(recipe.level))) return false
     if (selectedLevel.value !== 'all' && Number(recipe.level) !== Number(selectedLevel.value)) return false
     if (!query) return true
     return [recipe.output?.name, recipe.output?.typeId, ...(recipe.materials || []).flatMap(material => [material.name, material.typeId])]

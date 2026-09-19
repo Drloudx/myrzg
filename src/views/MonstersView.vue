@@ -98,9 +98,15 @@ onMounted(async () => {
     // 地区清单按**游戏推进顺序**排（沿用 gameMappings 的 MAP_NAMES：c0 求生者草原 →
     // c1 秋日荒野 → c2 索利德山地 → c3 魔爪湖畔 → c4 黑森林 → c5 霜烬平原）。
     // 不用字典序（地理名按拼音排会很乱），也不用数据出现顺序（那只是图鉴编号顺序）。
+    //
+    // **必须过黑名单**：否则被隐藏的地区（如黑森林）仍会出现在筛选栏里，
+    // 点进去还是空的（怪物列表本身是过滤的）——按钮与列表不一致。
     const places = new Set()
     data.forEach(m => {
-      for (const place of m.place || []) places.add(place)
+      for (const place of m.place || []) {
+        if (isBlacklisted(place)) continue
+        places.add(place)
+      }
     })
     const REGION_ORDER = Object.values(MAP_NAMES)
     allPlaces.value = Array.from(places).sort((a, b) => {

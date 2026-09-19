@@ -97,6 +97,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { fetchWithFallback } from '../utils/request.js'
 import { getImageUrl } from '../utils/env'
 import { useLazyList } from '../composables/useLazyList'
+import { isBlacklisted } from '../config/blacklist.js'
 import {
   UiBackToTop,
   UiCardGrid,
@@ -207,9 +208,12 @@ const refreshRuleGroups = computed(() => {
 const syncSubs = () => {
   const cat = currentCategory.value
   if (cat && cat.subs && cat.subs.length) {
-    currentSubs.value = cat.subs
-    if (!selectedSub.value || !cat.subs.some(s => s.key === selectedSub.value)) {
-      selectedSub.value = cat.subs[0] ? cat.subs[0].key : null
+    // **子类也要过黑名单**：否则被隐藏的地区（如黑森林/霜烬平原）仍作为筛选按钮出现，
+    // 点进去是空列表（条目本身会被 filteredExchanges 过滤掉）——按钮与内容不一致。
+    const subs = cat.subs.filter(sub => !isBlacklisted(sub.label) && !isBlacklisted(sub.key))
+    currentSubs.value = subs
+    if (!selectedSub.value || !subs.some(s => s.key === selectedSub.value)) {
+      selectedSub.value = subs[0] ? subs[0].key : null
     }
   } else {
     currentSubs.value = []
@@ -263,6 +267,14 @@ const filteredExchanges = computed(() => {
   } else {
     for (const s of cat.subs) list = list.concat(s.list)
   }
+  // 黑名单：兑换条目本身（名称/描述/奖励物名称/消耗物名称）命中即隐藏。
+  // 之前本页完全没过黑名单，导致【未使用】类物品、黑森林纪念币等照常显示。
+  list = list.filter(ex => {
+    if (isBlacklisted({ id: ex.id, name: ex.name, desc: ex.des })) return false
+    const hitReward = (ex.rewardItems || []).some(it => isBlacklisted({ id: it.typeId, name: it.name }))
+    const hitConsume = (ex.consumeItems || []).some(it => isBlacklisted({ id: it.typeId, name: it.name }))
+    return !hitReward && !hitConsume
+  })
   if (selectedCat.value === 'tuzi' && selectedRarity.value !== 'all') {
     list = list.filter(exchange => exchange.rarity === selectedRarity.value)
   }

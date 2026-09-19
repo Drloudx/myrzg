@@ -215,8 +215,10 @@ const mapOptions = computed(() => {
   const opts = [{ key: 'all', label: '全部' }]
   const order = ['c1_map', 'c2_map', 'c3_map', 'c4_map', 'c5_map']
   for (const k of order) {
-    if (mapNameMap.value[k]) {
-      opts.push({ key: k, label: mapNameMap.value[k] })
+    const label = mapNameMap.value[k]
+    // 黑名单：被隐藏的地区（如黑森林/霜烬平原）不作为筛选按钮出现
+    if (label && !isBlacklisted(label)) {
+      opts.push({ key: k, label })
     }
   }
   return opts

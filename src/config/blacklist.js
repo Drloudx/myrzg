@@ -8,17 +8,15 @@
 // 1. 模糊匹配名单 (只要名称中包含该关键字即隐藏)
 export const FUZZY_BLACKLIST = [
     //成就相关
-    '章节宝箱',
-    '通关',
     '未使用',
     //物品图鉴去掉测试相关
     '测试',
     '（废弃）',
     '契约感谢',
     //魔物图鉴和被隐藏的物品
-    // '黑森林',
-    // '霜烬平原',
-    // '黑森林/霜烬平原',
+    '黑森林',
+    '霜烬平原',
+    '黑森林/霜烬平原',
 
 ]
 // 2. 精确匹配名单 (ID、typeId 或 完整名称 必须完全匹配才隐藏)
@@ -46,6 +44,12 @@ export const EXACT_BLACKLIST = [
     'C1~C3家具宝箱',
     '11重分',
     '全种子各类代币属性碎片',
+
+    '普通月卡',
+    '自由委托印章',
+    '第四章',
+    '第五章',
+    '坚韧的板材',
     //没出的食谱
     '松茸鲜汤',
     '松茸肉汤面',
@@ -66,6 +70,8 @@ export const EXACT_BLACKLIST = [
     '献出心脏',
     '你甚至不愿意叫我一声老大',
     '超绝最可爱天界格莉',
+   //特殊物品
+    '【未使用】石镐',
 
 ]
 
@@ -136,3 +142,41 @@ export const isBlacklisted = (item) => {
 
   return isFuzzyMatch
 }
+
+/**
+ * ─────────── 装备品阶隐藏 ───────────
+ *
+ * 装备的「阶」对应数据里的 `item.equip.equipLevel`（1~5）。
+ * 在此数组填入要**隐藏**的品阶，以下三处一并生效：
+ *   1. 物品图鉴 → 装备子类（`ItemsView`）
+ *   2. 装备图鉴（`EquipsView`）
+ *   3. 设施功能 → 锻造台 → 装备打造（`FacilitiesView`，按配方产出物的阶过滤）
+ *
+ * 例：`[4, 5]` = 隐藏 4 阶与 5 阶装备；`[]` = 全都不隐藏。
+ *
+ * 注意：只影响**装备**（`category` 含 4）。符石也有「1阶~6阶」，但走 `category[1]=71~76`，
+ * 与 `equipLevel` 无关，不受本数组影响。
+ */
+export const HIDDEN_EQUIP_TIERS = [4, 5]
+
+/** 品阶取值范围（与游戏 equipLevel 一致） */
+export const EQUIP_TIER_RANGE = [1, 2, 3, 4, 5]
+
+/**
+ * 该装备是否属于被隐藏的品阶。
+ * @param {Object} item 物品条目（需含 category / equip）
+ * @returns {boolean} true 表示应被隐藏
+ */
+export const isEquipTierHidden = (item) => {
+  if (!item) return false
+  // 非装备不受影响
+  const cats = item.category || item.categories || []
+  if (!cats.map(String).includes('4')) return false
+  const tier = Number(item.equip?.equipLevel)
+  if (!Number.isFinite(tier)) return false
+  return HIDDEN_EQUIP_TIERS.map(Number).includes(tier)
+}
+
+/** 可见的品阶列表（用于筛选行渲染，已排除被隐藏的） */
+export const visibleEquipTiers = () =>
+  EQUIP_TIER_RANGE.filter(t => !HIDDEN_EQUIP_TIERS.map(Number).includes(t))

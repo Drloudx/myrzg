@@ -388,6 +388,7 @@ import DungeonRouteMap from '../components/dungeons/DungeonRouteMap.vue'
 import { getImageUrl, handleImageFallback } from '../utils/env.js'
 import { BASE_REWARD_PATHS, MAP_NAMES } from '../utils/gameMappings.js'
 import { resolveScrollTarget } from '../utils/scrollTarget.js'
+import { isBlacklisted } from '../config/blacklist.js'
 
 const coverObservers = new WeakMap()
 const observeCover = (image, source) => {
@@ -473,6 +474,9 @@ const sortedCollections = (collections = []) => [...collections].sort((a, b) => 
 const mapOptions = computed(() => [
   { key: 'all', label: '全部' },
   ...Object.entries(MAP_NAMES)
+    // 黑名单：被隐藏的地区（如黑森林/霜烬平原）不作为筛选按钮出现，
+    // 否则点进去是空列表（条目本身已被 filteredDungeons 过滤）
+    .filter(([, label]) => !isBlacklisted(label))
     .filter(([key]) => dungeons.value.some(dungeon => dungeon.chapter === key && (dungeon.battles?.length || 0) > 0))
     .map(([key, label]) => ({ key, label }))
 ])
@@ -570,6 +574,8 @@ const filteredDungeons = computed(() => {
       return { ...dungeon, battles: dungeon.battles.filter(matches), storyBattles: (dungeon.storyBattles || []).filter(matches) }
     })
     .filter(dungeon => dungeon.battles.length > 0 || dungeon.storyBattles?.length > 0)
+    // 黑名单：副本名/章节命中即隐藏（本页原先完全没过黑名单）
+    .filter(dungeon => !isBlacklisted({ id: dungeon.id, name: dungeon.name, label: dungeon.chapter }))
 })
 
 onMounted(async () => {

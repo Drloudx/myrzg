@@ -40,6 +40,17 @@
         >{{ mini.name }}</UiFilterPill>
       </UiFilterRow>
 
+      <!-- 品阶：仅装备大类下显示（装备的「阶」= item.equip.equipLevel，与装备图鉴一致） -->
+      <UiFilterRow v-if="showTierFilter" label="品阶：">
+        <UiFilterPill :active="selectedTier === null" @click="selectedTier = null">全部</UiFilterPill>
+        <UiFilterPill
+          v-for="tier in tierOptions"
+          :key="tier"
+          :active="selectedTier === tier"
+          @click="selectedTier = tier"
+        >{{ tier }}阶</UiFilterPill>
+      </UiFilterRow>
+
       <!-- 稀有度 -->
       <UiFilterRow label="稀有度：">
         <UiFilterPill :active="selectedRarity === null" @click="selectedRarity = null">全部</UiFilterPill>
@@ -82,7 +93,7 @@ import { ref, shallowRef, computed, nextTick, onBeforeUnmount, onMounted, watch 
 import { compareItemsByCategoryQuality, fetchItemData, getItemImageUrl, isVisibleEquipItem } from '../utils/itemParser'
 import { getImageUrl, handleImageFallback } from '../utils/env'
 import { itemModalState } from '../utils/itemModalState'
-import { isBlacklisted } from '../config/blacklist.js'
+import { isBlacklisted, isEquipTierHidden, visibleEquipTiers } from '../config/blacklist.js'
 import { getRarityName } from '../utils/gameMappings'
 import { useRoute, useRouter } from 'vue-router'
 import UiVirtualGrid from '../components/ui/UiVirtualGrid.vue'
@@ -112,6 +123,20 @@ const selectedMain = ref(null)
 const selectedSub = ref(null)
 const selectedMini = ref(null)
 const selectedRarity = ref(null)
+/** 装备品阶（equip.equipLevel）。仅装备大类下生效，见 showTierFilter */
+const selectedTier = ref(null)
+
+/** 装备大类的 type 为 '4'（与 items.json 的 categoryTree 一致） */
+const EQUIP_MAIN_TYPE = '4'
+/** 仅在装备大类（含其子类）下显示品阶筛选；被隐藏的阶不出现（否则点了是空列表） */
+const showTierFilter = computed(() =>
+  String(selectedMain.value) === EQUIP_MAIN_TYPE && visibleEquipTiers().length > 1)
+const tierOptions = computed(() => visibleEquipTiers())
+
+/** 切走装备大类时清掉品阶选择，避免留下无效筛选 */
+watch(selectedMain, () => {
+  if (String(selectedMain.value) !== EQUIP_MAIN_TYPE) selectedTier.value = null
+})
 
 const loadItems = async () => {
   const operation = ++loadOperation
@@ -219,6 +244,9 @@ const filteredItems = computed(() => {
     // 黑名单过滤
     if (isBlacklisted(item)) return false
 
+    // 被隐藏的装备品阶（config/blacklist.js）
+    if (isEquipTierHidden(item)) return false
+
     // 家具图纸在游戏 NewItemTips 中使用 BuildItem 图集，部分正式图纸没有 item.img。
     if (!item.img && !isCollectionFurniture(item)) return false
 
@@ -229,6 +257,11 @@ const filteredItems = computed(() => {
       const matchDesc = item.desc && item.desc.toLowerCase().includes(q)
       const matchId = item.typeId && item.typeId.toLowerCase().includes(q)
       if (!matchName && !matchDesc && !matchId) return false
+    }
+
+    // 装备品阶过滤（仅装备有该字段；非装备不参与，避免把没有 equipLevel 的条目全滤掉）
+    if (selectedTier.value !== null) {
+      if (Number(item.equip?.equipLevel) !== Number(selectedTier.value)) return false
     }
 
     // 稀有度过滤

@@ -35,6 +35,7 @@ import { UiFilterPanel, UiSearchInput, UiFilterRow, UiFilterPill, UiEmptyState }
 import { fetchHeroData } from '../utils/heroParser.js'
 import { ELEMENT_NAMES, JOB_NAMES } from '../utils/gameMappings.js'
 import PartnerMailReader from '../components/heroes/PartnerMailReader.vue'
+import { isBlacklisted } from '../config/blacklist.js'
 
 const route = useRoute(), router = useRouter()
 const openReward = item => {
@@ -44,7 +45,7 @@ const openReward = item => {
 const heroes = ref([]), selectedHero = ref(null), selectedMail = ref(null), searchQuery = ref('')
 const selectedRarity = ref(null), selectedJob = ref(null), selectedElement = ref(null), loading = ref(true), error = ref('')
 const jobsList = Object.values(JOB_NAMES)
-const filteredHeroes = computed(() => heroes.value.filter(h => (!selectedRarity.value || h.rare === selectedRarity.value) && (!selectedJob.value || h.job === selectedJob.value) && (!selectedElement.value || h.element === selectedElement.value) && (!searchQuery.value.trim() || `${h.name} ${h.name2 || ''} ${h.mails.map(mail => mail.title).join(' ')}`.toLowerCase().includes(searchQuery.value.trim().toLowerCase()))))
+const filteredHeroes = computed(() => heroes.value.filter(h => !isBlacklisted({ id: h.id, name: h.name, label: h.name2 }) && (!selectedRarity.value || h.rare === selectedRarity.value) && (!selectedJob.value || h.job === selectedJob.value) && (!selectedElement.value || h.element === selectedElement.value) && (!searchQuery.value.trim() || `${h.name} ${h.name2 || ''} ${h.mails.map(mail => mail.title).join(' ')}`.toLowerCase().includes(searchQuery.value.trim().toLowerCase()))))
 const selectedMails = computed(() => selectedHero.value?.mails || [])
 watch(filteredHeroes, list => { if (!list.includes(selectedHero.value)) { selectedHero.value = list[0] || null; selectedMail.value = null } })
 watch(selectedHero, () => { selectedMail.value = selectedMails.value[0] || null })

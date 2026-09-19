@@ -240,6 +240,29 @@ function countBy(entries, keyOf) {
  */
 const CHAPTER_TO_MAP = { 序章: 'c0', 第一章: 'c1', 第二章: 'c2', 第三章: 'c3', 第四章: 'c4', 第五章: 'c5' }
 
+/**
+ * 「获取方式 / 来源标记」的**展示层伪装**（按用户要求）。
+ *
+ * 只改展示文案，**不动任何数据与解析逻辑**——原始 `homeItem.tip`、`sourceTags`、
+ * 来源链路全都保留，将来想恢复只要把这张表清空即可。
+ *
+ * 用途：某些来源不希望直接暴露给玩家时，在这里映射成中性词。
+ */
+export const SOURCE_DISPLAY_ALIAS = {
+  通行证: '未知'
+}
+
+/** 对任意来源文案套用伪装映射（供家具详情、来源标记等处共用）。 */
+export function disguiseSourceText(value) {
+  if (value === null || value === undefined) return value
+  let text = String(value)
+  for (const [from, to] of Object.entries(SOURCE_DISPLAY_ALIAS)) {
+    if (!from || text.indexOf(from) === -1) continue
+    text = text.split(from).join(to)
+  }
+  return text
+}
+
 /** market ID → 家具名；链断则退回制作图名（去掉「制作图」后缀）。 */
 function resolveMarketName(marketId, rewards, items, homeItems) {
   const reward = rewards[String(marketId)]
@@ -305,7 +328,10 @@ function formatAcquisitionNote(homeItem, { rewards = {}, tasks = {}, items = {},
   text = text.replace(/(「[^」]*」)\s*\/\s*([^/]{1,12})$/u, (whole, quoted, tail) =>
     /第\s*\d+\s*步/u.test(tail) ? whole : quoted)
 
-  return text.replace(/\s{2,}/gu, ' ').trim()
+  text = text.replace(/\s{2,}/gu, ' ').trim()
+
+  // 展示层伪装：只改文案，数据与来源链路保持不变（见 SOURCE_DISPLAY_ALIAS）
+  return disguiseSourceText(text)
 }
 
 function roomObjectPreviewImage(roomObj) {

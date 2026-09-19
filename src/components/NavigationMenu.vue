@@ -149,8 +149,8 @@ const syncSideScrollState = () => {
 // --- 统一配置导航数据 ---
 const defaultNavList = [
   { name: '物品图鉴', path: '/items', icon: '/ui/item_00002.webp' },
-  { name: '家具图鉴', path: '/furniture', icon: '/ui/zw.webp' },
-  { name: '设施功能', path: '/facilities', icon: '/ui/zw.webp' },
+  { name: '家具图鉴', path: '/furniture', icon: '/ui/build_roomFlower_yma9_0.webp' },
+  { name: '设施功能', path: '/facilities', icon: '/ui/build_cyyd_yingdizhongxing002.webp' },
   { name: '角色图鉴', path: '/heroes', icon: '/ui/class_icon_s_zs.webp' },
   { name: '伙伴邮件', path: '/partner-mails', icon: '/ui/mail_list_new_task_pt.webp' },
   { name: '魔物图鉴', path: '/pets', icon: '/ui/colect_mon_072.webp' },
@@ -164,10 +164,7 @@ const defaultNavList = [
   { name: '事件图鉴', path: '/events', icon: '/ui/zw.webp' },
   { name: '副本图鉴', path: '/dungeons', icon: '/ui/zw.webp' },
   { name: '兑换', path: '/exchange', icon: '/ui/zw.webp' },
-  { name: '模拟招募', path: '/gacha', icon: '/images/HeroPoolPanel_Atlas/gacha_at_chara062_0.webp' },
-  // 游戏内该玩法正式名是「货运」（FreightPanel，入口为营地 carriage 建筑）；
-  // 网页版沿用玩家更易懂的「贸易小车」。图标取该面板自己的资源。
-  { name: '贸易小车', path: '/freight', icon: '/images/FreightPanel_Atlas/cart_back.webp' },
+  { name: '模拟招募', path: '/gacha', icon: '/ui/item_20004.webp' },
   { name: '其他', path: '/rewards', icon: '/ui/zw.webp' }
 ]
 

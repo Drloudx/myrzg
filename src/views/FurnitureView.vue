@@ -132,7 +132,7 @@
           <UiInfoRow
             v-if="selectedFurniture.sourceLabels?.length || selectedFurniture.sourceTags?.length"
             label="来源标记"
-            :value="(selectedFurniture.sourceLabels || selectedFurniture.sourceTags).join(' / ')"
+            :value="disguiseSourceText((selectedFurniture.sourceLabels || selectedFurniture.sourceTags).join(' / '))"
           />
           <UiInfoRow label="放置范围" :value="selectedFurniture.placeName || selectedFurniture.place || '未标注'" />
           <UiInfoRow label="装饰值" :value="decorationText(selectedFurniture.dec)" />
@@ -267,9 +267,10 @@ import {
   UiSection,
   UiTag
 } from '../components/ui/index.js'
-import { fetchFurnitureData } from '../utils/furnitureData.js'
+import { fetchFurnitureData, disguiseSourceText } from '../utils/furnitureData.js'
 import { getImageUrl, handleImageFallback } from '../utils/env.js'
 import { getRarityName } from '../utils/gameMappings.js'
+import { isBlacklisted } from '../config/blacklist.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -385,6 +386,8 @@ const furnitureSearchText = furniture => [
 const filteredFurniture = computed(() => {
   const query = searchQuery.value.trim().toLowerCase()
   return allFurniture.value.filter(furniture => {
+    // 黑名单：家具名/地区命中即隐藏（本页原先完全没过黑名单）
+    if (isBlacklisted({ id: furniture.id, name: furniture.name, place: furniture.place })) return false
     if (selectedMain.value !== null && !sameValue(furniture.mainType, selectedMain.value)) return false
     if (selectedSub.value !== null && !sameValue(furniture.subType, selectedSub.value)) return false
     if (selectedQuality.value !== null && Number(furniture.quality) !== selectedQuality.value) return false

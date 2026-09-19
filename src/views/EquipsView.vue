@@ -17,10 +17,10 @@
         >{{ sub.name }}</UiFilterPill>
       </UiFilterRow>
 
-      <UiFilterRow label="品阶：">
+      <UiFilterRow v-if="tierOptions.length > 1" label="品阶：">
         <UiFilterPill :active="selectedLevel === null" @click="selectedLevel = null">全部</UiFilterPill>
         <UiFilterPill
-          v-for="lvl in [1, 2, 3, 4, 5]"
+          v-for="lvl in tierOptions"
           :key="lvl"
           :active="selectedLevel === lvl"
           @click="selectedLevel = lvl"
@@ -65,7 +65,7 @@ import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { compareItemsByCategoryQuality, fetchItemData, getItemImageUrl, isVisibleEquipItem } from '../utils/itemParser'
 import { getImageUrl } from '../utils/env'
-import { isBlacklisted } from '../config/blacklist.js'
+import { isBlacklisted, isEquipTierHidden, visibleEquipTiers } from '../config/blacklist.js'
 import { getRarityName } from '../utils/gameMappings'
 import { useLazyList } from '../composables/useLazyList'
 import {
@@ -92,6 +92,9 @@ const searchQuery = ref('')
 const selectedSub = ref(null)
 const selectedLevel = ref(null)
 const selectedRarity = ref(null)
+
+/** 可见品阶（已排除 config/blacklist.js 里隐藏的阶） */
+const tierOptions = computed(() => visibleEquipTiers())
 
 const loadItems = async () => {
   const operation = ++loadOperation
@@ -122,6 +125,9 @@ const filteredItems = computed(() => {
 
     // 2. 黑名单过滤
     if (isBlacklisted(item)) return false
+
+    // 2.5 被隐藏的装备品阶（config/blacklist.js）
+    if (isEquipTierHidden(item)) return false
 
     // 3. 必须包含图标
     if (!item.img) return false

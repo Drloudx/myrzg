@@ -308,6 +308,7 @@ import { TASK_TYPE_LABELS, cleanDialogueLine } from '../utils/gameMappings'
 import { getImageUrl, handleImageFallback } from '../utils/env'
 import { fetchWithFallback } from '../utils/request.js'
 import UiVirtualGrid from '../components/ui/UiVirtualGrid.vue'
+import { isBlacklisted } from '../config/blacklist.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -344,7 +345,10 @@ const typeOptions = computed(() => {
 
 const currentSubOptions = computed(() => {
   if (filterType.value === 'all') return []
-  return subOptions.value[filterType.value] || []
+  // 章节筛选按钮也要过黑名单：否则被隐藏的章节（如第四章/第五章）仍作为按钮出现，
+  // 点进去是空列表（任务本身已被 filteredTasks 过滤）——按钮与内容不一致。
+  return (subOptions.value[filterType.value] || [])
+    .filter(opt => !isBlacklisted(opt.label ?? opt.key ?? opt))
 })
 
 const npcText = (npc) => {
@@ -354,6 +358,8 @@ const npcText = (npc) => {
 
 const filteredTasks = computed(() => {
   return tasks.value.filter((item) => {
+    // 黑名单：任务名/描述里命中关键字即隐藏（本页原先完全没过黑名单）
+    if (isBlacklisted({ id: item.id, name: item.name, desc: item.des, tip: item.typeLabel, label: item.subLabel })) return false
     if (filterType.value !== 'all' && String(item.type) !== filterType.value) return false
     if (filterSub.value && item.subKey !== filterSub.value) return false
     if (searchQuery.value.trim()) {

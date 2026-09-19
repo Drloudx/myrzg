@@ -124,6 +124,7 @@ import { useLazyList } from '../composables/useLazyList.js'
 import { resolveScrollTarget } from '../utils/scrollTarget.js'
 import AcquisitionRewards from '../components/AcquisitionRewards.vue'
 import RuneCountInput from '../components/runes/RuneCountInput.vue'
+import { isBlacklisted } from '../config/blacklist.js'
 import { UiTabs, UiFilterPanel, UiSearchInput, UiFilterRow, UiFilterPill, UiCardGrid, UiItemCard, UiTag,
   UiButton, UiEmptyState, UiBackToTop, UiSection, UiRewardCard } from '../components/ui/index.js'
 
@@ -162,6 +163,7 @@ const matches = entry => {
 }
 const filteredCatalog = computed(() => {
   const result = catalog.value.filter(entry => matches(entry)
+    && !isBlacklisted({ id: entry.id, name: entry.name, desc: entry.desc })
     && (!level.value || entry.effect.level === Number(level.value))
     && (!position.value || entry.effect.positions.includes(Number(position.value))))
   // A source link remains visible in the first batch without losing its family ordering elsewhere.
@@ -170,9 +172,11 @@ const filteredCatalog = computed(() => {
 })
 const { displayedItems: displayedRunes } = useLazyList(filteredCatalog, 20, '#runesScroll')
 const plans = computed(() => (tab.value === 'appraisal' ? data.value?.appraisals || [] : data.value?.syntheses || [])
-  .filter(entry => matches(entry) && (!isSynthesis.value
-    || ((!level.value || entry.output.effect.level === Number(level.value))
-      && (!position.value || entry.output.effect.positions.includes(Number(position.value)))))))
+  .filter(entry => matches(entry)
+    && !isBlacklisted({ id: entry.id, name: entry.name, desc: entry.desc })
+    && (!isSynthesis.value
+      || ((!level.value || entry.output.effect.level === Number(level.value))
+        && (!position.value || entry.output.effect.positions.includes(Number(position.value)))))))
 const sortedSyntheses = computed(() => {
   if (!isSynthesis.value) return []
   const target = plans.value.find(plan => plan.id === queryString('id'))
