@@ -22,16 +22,19 @@ export function isWeChatWebView() {
 /**
  * 当前使用的渲染后端。
  *
- * - **微信内置浏览器（X5 内核）→ `'canvas2d'`**：用户实测 Chrome 正常、微信里抽卡
- *   演出画面渲染不全（图片呈竖条/矩形块、有硬直边）。已逐一排除「文件没下载完」
- *   「画布过大（DPR 2→1 无效）」「WebGL 上下文丢失」三种成因，判定为 X5 的 WebGL
- *   绘制路径本身有问题，故换一套完全不同的实现。
- * - **其余环境 → `'webgl'`**（原路径，行为不变）。
+ * **现状：一律走 `'webgl'`（原路径）。**
+ * 微信 X5 内核下曾改用 Canvas2D 后端（`gachaSpineCanvas2D.js`），实机对比后
+ * 效果不及 WebGL，故切回。Canvas2D 后端代码**保留备用**，需要时把下面的返回值
+ * 改成 `isWeChatWebView() ? 'canvas2d' : 'webgl'` 即可恢复。
+ *
+ * 保留的背景记录：微信内置浏览器里抽卡演出曾出现画面渲染不全（图片呈竖条/矩形块、
+ * 有硬直边），已逐一排除「文件没下载完」「画布过大（DPR 2→1 无效）」
+ * 「WebGL 上下文丢失」三种成因。
  *
  * 抽卡页创建场景与画布缓冲尺寸都以此为准，保证「后端与 DPR 一起变」。
  */
 export function activeBackend() {
-  return isWeChatWebView() ? 'canvas2d' : 'webgl'
+  return 'webgl'
 }
 
 /**

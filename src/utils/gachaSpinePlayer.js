@@ -421,15 +421,12 @@ export function createSpineScene(canvas, layers, options = {}) {
 }
 
 /**
- * 按运行环境选择渲染后端并创建场景。
+ * 按 `activeBackend()` 选择渲染后端并创建场景。
  *
- * - **微信内置浏览器（X5 内核）→ Canvas2D**：用户实测 Chrome 正常、微信里演出画面
- *   渲染不全（图片呈竖条/矩形块、有硬直边）。已排除文件下载、画布过大、上下文丢失
- *   三种成因，判定为 X5 的 WebGL 绘制路径本身有问题，故换一套完全不同的实现。
- * - **其他环境 → WebGL**（原路径，行为完全不变）。
- *
- * 两条路径共用同一份相机数学（由 buildCamera 注入）、图层参数与画布尺寸逻辑，
- * 保证取景一致。
+ * - **当前一律 WebGL**（原路径，行为不变）。
+ * - **Canvas2D 分支保留备用**：把 `gachaRenderShared.js` 的 `activeBackend()` 返回值
+ *   改成按环境判断即可启用。两条路径共用同一份相机数学（由 buildCamera 注入）、
+ *   图层参数与画布尺寸逻辑，保证取景一致。
  */
 function createSceneForBackend(canvas, layers, options = {}) {
   if (activeBackend() !== 'canvas2d') return createSpineScene(canvas, layers, options)
@@ -664,8 +661,8 @@ export function mountCanvasScene(canvasKey, sceneKey, host, layers, options = {}
     // 和新角色的立绘/名牌同框，直到新场景渲染出第一帧）。
     //
     // **两条后端都要清**：同一画布只能有一个上下文，Canvas2D 后端下
-    // `getContext('webgl')` 会返回 null，若只写 WebGL 分支，微信/Canvas2D 路径
-    // 的旧小人最后一帧就留在画布上（用户实测：切下一个角色时右侧仍是上一个角色）。
+    // `getContext('webgl')` 会返回 null，若只写 WebGL 分支，Canvas2D 路径的
+    // 旧小人最后一帧就会留在画布上（表现为切下一个角色时右侧仍是上一个角色）。
     const gl = canvas.getContext('webgl')
     if (gl) {
       gl.clearColor(0, 0, 0, 0)
