@@ -22,6 +22,9 @@
         <button type="button" title="放大地图" aria-label="放大地图" :disabled="routeZoom >= MAX_ROUTE_ZOOM" @click="zoomBy(0.1)">+</button>
         <button type="button" title="恢复默认视图" aria-label="恢复默认视图" @click="resetMap">↺</button>
       </div>
+      <!-- 桌面端操作提示：放在缩放控件**边框外**的右上角。
+           触屏端由 CSS 隐藏（那边是双指缩放，没有 Ctrl+滚轮）。 -->
+      <span class="route-map-hint">按住 ctrl 可用滚轮进行缩放</span>
       <div
         ref="scrollRef"
         class="route-map-scroll"
@@ -364,11 +367,20 @@ onBeforeUnmount(() => {
 .route-layout-tab small { display: block; margin-top: 2px; color: var(--text-sub); font-size: 10px; font-weight: 600; }
 .route-layout-tab--active { border-color: var(--accent); background: var(--hover-bg); color: var(--text-main); }
 .route-map-shell { position: relative; }
-.route-map-toolbar { position: absolute; z-index: 5; top: 10px; left: 10px; display: grid; grid-template-columns: 30px 46px 30px 30px; align-items: center; gap: 4px; padding: 4px; border: 1px solid var(--border-soft); border-radius: 5px; background: var(--paper-solid); box-shadow: 0 2px 8px rgba(0,0,0,.22); }
+.route-map-toolbar { position: absolute; z-index: 5; top: 10px; left: 10px; display: flex; align-items: center; gap: 4px; padding: 4px; border: 1px solid var(--border-soft); border-radius: 5px; background: var(--paper-solid); box-shadow: 0 2px 8px rgba(0,0,0,.22); }
 .route-map-toolbar button { width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid var(--border-soft); border-radius: 4px; background: var(--paper-soft); color: var(--text-main); padding: 0; font-size: 17px; font-weight: 800; cursor: pointer; }
 .route-map-toolbar button:hover:not(:disabled) { border-color: var(--accent); background: var(--hover-bg); }
 .route-map-toolbar button:disabled { opacity: .38; cursor: default; }
-.route-map-toolbar output { color: var(--text-main); font-size: 11px; font-weight: 800; text-align: center; }
+.route-map-toolbar output { width: 46px; color: var(--text-main); font-size: 11px; font-weight: 800; text-align: center; }
+/* 桌面端操作提示：紧挨缩放控件**右侧**、同一水平线上。
+   工具栏 left:10px、实测宽 158px（4px padding×2 + 4 个 30px 控件 + 3 个 4px gap + 百分比格），
+   故 left = 10 + 158 + 8 = 176px；行高与工具栏等高（4+30+4）保持垂直居中。
+   颜色与左侧百分比一致（同为 --text-main），字号比正文大一号。
+   默认隐藏，仅「有精确指针（鼠标）」的桌面端显示——触屏端是双指缩放，没有 Ctrl+滚轮。 */
+.route-map-hint { display: none; position: absolute; z-index: 5; top: 10px; left: 176px; color: var(--text-main); font-size: 13px; line-height: 38px; white-space: nowrap; pointer-events: none; }
+@media (hover: hover) and (pointer: fine) {
+  .route-map-hint { display: block; }
+}
 .route-map-scroll { position: relative; width: 100%; height: clamp(360px,54vh,620px); overflow: hidden; padding: 2px 0 8px; touch-action: none; cursor: grab; user-select: none; border: 1px solid var(--border-soft); border-radius: 6px; background: var(--paper-dark); scrollbar-width: none; }
 .route-map-scroll::-webkit-scrollbar { display: none; }
 .route-map-scroll:active { cursor: grabbing; }
