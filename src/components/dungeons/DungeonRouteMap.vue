@@ -92,11 +92,23 @@ const props = defineProps({
 const emit = defineEmits(['update:routeIndex', 'update:roomId', 'update:variantId'])
 
 const DEFAULT_ROUTE_ZOOM = 0.7
-const MIN_ROUTE_ZOOM = 0.7
+// 可缩小到 10%（原为 70%）；初始与「重置」仍回到 DEFAULT_ROUTE_ZOOM = 70%
+const MIN_ROUTE_ZOOM = 0.1
 const MAX_ROUTE_ZOOM = 2.4
 const ROUTE_MAP_WIDTH = 1400
 const routeZoom = ref(DEFAULT_ROUTE_ZOOM)
 const scrollRef = ref(null)
+/**
+ * 平移偏移（屏幕像素，作用于地图左上角）。
+ *
+ * 为什么不用 `scrollLeft/scrollTop`：那是**内容溢出**才有效的机制。地图缩到比容器小
+ * （如 20%）时内容不溢出，滚动量为 0，拖动就完全失效（`startMomentum` 也靠
+ * `scrollLeft` 是否变化来判断停止）。改成显式偏移后，任意缩放级别都能自由拖动，
+ * 且缩小时默认居中显示。
+ */
+const panX = ref(0)
+const panY = ref(0)
+const viewport = ref({ w: 0, h: 0 })
 const expandedNodes = ref(new Set())
 let touchGesture = null
 let touchPan = null
@@ -106,6 +118,7 @@ let momentumFrame = 0
 let pointerDrag = null
 let zoomFrame = 0
 let zoomRequest = null
+let resizeObserver = null
 
 const selectedLayer = computed(() => props.routes[props.routeIndex] || null)
 const displayLayer = computed(() => orientLayer(selectedLayer.value))
@@ -124,15 +137,93 @@ const selectRoom = (roomId, variantId = '') => {
   emit('update:variantId', variantId || selectedLayer.value?.nodes?.find(node => node.id === roomId)?.variantOptions?.[0]?.typeId || '')
 }
 
-const clampZoom = value => Math.min(MAX_ROUTE_ZOOM, Math.max(MIN_ROUTE_ZOOM, Number(value) || 1))
+/**
+ * 夹紧缩放值。
+ *
+ * 注意**不能用 `Number(value) || 1` 兜底**：`0` 是假值，从 10% 再缩小一次得到
+ * `0.1 - 0.1 = 0`，会被兜底成 `1` → 直接跳到 100%（实测复现）。
+ * 无效输入才回落默认值，用 `Number.isFinite` 判断。
+ */
+const clampZoom = value => {
+  const num = Number(value)
+  const base = Number.isFinite(num) ? num : DEFAULT_ROUTE_ZOOM
+  return Math.min(MAX_ROUTE_ZOOM, Math.max(MIN_ROUTE_ZOOM, base))
+}
 const setZoom = value => { routeZoom.value = Number(clampZoom(value).toFixed(2)) }
 const dimensions = layer => {
   const sourceWidth = Math.max(1, Number(layer?.size?.w || 1600))
   const sourceHeight = Math.max(1, Number(layer?.size?.h || 1000))
   return { width: ROUTE_MAP_WIDTH, height: Math.round(ROUTE_MAP_WIDTH * sourceHeight / sourceWidth) }
 }
-const mapStyle = layer => ({ width: `${dimensions(layer).width}px`, height: `${dimensions(layer).height}px`, transform: `scale(${routeZoom.value})` })
-const mapSpaceStyle = layer => ({ width: `${dimensions(layer).width * routeZoom.value}px`, height: `${dimensions(layer).height * routeZoom.value}px` })
+const mapStyle = layer => ({
+  width: `${dimensions(layer).width}px`,
+  height: `${dimensions(layer).height}px`,
+  // 平移量取整：非整数会让整层落在半像素上，浏览器按低分辨率光栅化后
+  // 内容发糊，直到重绘（悬停/移动）才短暂清晰。
+  transform: `translate(${Math.round(panX.value)}px, ${Math.round(panY.value)}px) scale(${routeZoom.value})`
+})
+const mapSpaceStyle = layer => ({
+  width: `${dimensions(layer).width * routeZoom.value}px`,
+  height: `${dimensions(layer).height * routeZoom.value}px`
+})
+
+/**
+ * 容器可视尺寸（缩放/平移的约束基准）。
+ *
+ * 用 `getBoundingClientRect` 而不是 `clientWidth/clientHeight`：后者**含 padding**，
+ * 而地图是从内容盒左上角定位的（容器 `padding: 2px 0 8px`）。用 client 尺寸居中
+ * 会纵向偏 2.7px（实测 20% 缩放时中心应为 159 却落在 161.7）。
+ */
+const measureViewport = () => {
+  const container = scrollRef.value
+  if (!container) return viewport.value
+  const rect = container.getBoundingClientRect()
+  viewport.value = { w: rect.width, h: rect.height }
+  return viewport.value
+}
+
+/**
+ * 夹紧平移量：允许把地图拖到任意位置，但不允许整个拖出容器——
+ * 缩得很小时也要留得住（否则地图一拖就找不回来）。
+ * 地图比容器小的轴：至少保留 40px 在容器内；比容器大的轴：边界不得进入容器内部。
+ */
+/**
+ * 夹紧平移量：允许**随意拖动**，只保证地图不会被整个拖出容器
+ * （四边都至少留 `keep` 像素可见，否则地图一拖就找不回来）。
+ *
+ * 注意不能像滚动那样只在「内容溢出」方向放开：地图比容器大时若限制 pan ≤ 0，
+ * 向右拖动会立刻被夹死，手感像"卡住"。
+ */
+const clampPan = (x, y) => {
+  const { w, h } = viewport.value
+  const size = dimensions(displayLayer.value)
+  const scaledW = size.width * routeZoom.value
+  const scaledH = size.height * routeZoom.value
+  const keep = 40
+  const limitX = { min: -(scaledW - keep), max: w - keep }
+  const limitY = { min: -(scaledH - keep), max: h - keep }
+  return {
+    x: Math.min(limitX.max, Math.max(limitX.min, x)),
+    y: Math.min(limitY.max, Math.max(limitY.min, y))
+  }
+}
+const setPan = (x, y) => {
+  const next = clampPan(x, y)
+  panX.value = next.x
+  panY.value = next.y
+}
+/**
+ * 初始 / 重置的定位：**左对齐、底对齐**（沿用改造前的取景）。
+ *
+ * 改造前用的是 `scrollLeft = 0` + `scrollTop = scrollHeight - clientHeight`，
+ * 即把内容左下角对齐容器左下角；这里用平移量表达同一构图：
+ * 地图比容器大时 `h - scaledH` 正是底对齐；比容器小时取 0（顶对齐，居中反而不自然）。
+ */
+const resetPan = () => {
+  const { h } = viewport.value
+  const size = dimensions(displayLayer.value)
+  setPan(0, Math.min(0, h - size.height * routeZoom.value))
+}
 
 const zoomAt = (value, clientX, clientY) => {
   zoomRequest = { value, clientX, clientY }
@@ -150,21 +241,19 @@ const zoomAt = (value, clientX, clientY) => {
     const rect = container.getBoundingClientRect()
     const focusX = Number.isFinite(request.clientX) ? request.clientX - rect.left : rect.width / 2
     const focusY = Number.isFinite(request.clientY) ? request.clientY - rect.top : rect.height / 2
-    const contentX = container.scrollLeft + focusX
-    const contentY = container.scrollTop + focusY
     setZoom(request.value)
-    nextTick(() => {
-      const ratio = routeZoom.value / previousZoom
-      container.scrollLeft = Math.max(0, contentX * ratio - focusX)
-      container.scrollTop = Math.max(0, contentY * ratio - focusY)
-    })
+    // 保持光标下的地图点不动：屏幕坐标 = pan + 地图坐标 × zoom，
+    // 故新 pan = focus - (focus - 旧 pan) × (新 zoom / 旧 zoom)
+    const ratio = routeZoom.value / previousZoom
+    setPan(
+      focusX - (focusX - panX.value) * ratio,
+      focusY - (focusY - panY.value) * ratio
+    )
   })
 }
 const resetViewport = () => {
-  const container = scrollRef.value
-  if (!container) return
-  container.scrollLeft = 0
-  container.scrollTop = Math.max(0, container.scrollHeight - container.clientHeight)
+  measureViewport()
+  resetPan()
 }
 const queueViewportReset = () => nextTick(() => requestAnimationFrame(resetViewport))
 const resetMap = () => {
@@ -197,17 +286,16 @@ const stopMomentum = () => {
 const startMomentum = state => {
   let velocityX = Number(state?.velocityX || 0)
   let velocityY = Number(state?.velocityY || 0)
-  const container = state?.container
-  if (!container || Math.max(Math.abs(velocityX), Math.abs(velocityY)) < 0.35) return
+  if (Math.max(Math.abs(velocityX), Math.abs(velocityY)) < 0.35) return
   const step = () => {
     velocityX *= 0.9
     velocityY *= 0.9
-    const previousLeft = container.scrollLeft
-    const previousTop = container.scrollTop
-    container.scrollLeft += velocityX
-    container.scrollTop += velocityY
-    if (container.scrollLeft === previousLeft) velocityX = 0
-    if (container.scrollTop === previousTop) velocityY = 0
+    const previousX = panX.value
+    const previousY = panY.value
+    setPan(previousX + velocityX, previousY + velocityY)
+    // 撞到边界就停（clamp 后位置没变说明已经拖到头了）
+    if (panX.value === previousX) velocityX = 0
+    if (panY.value === previousY) velocityY = 0
     if (Math.max(Math.abs(velocityX), Math.abs(velocityY)) >= 0.35) momentumFrame = requestAnimationFrame(step)
     else momentumFrame = 0
   }
@@ -217,26 +305,32 @@ const handleTouchStart = event => {
   const container = scrollRef.value
   if (!container) return
   stopMomentum()
+  measureViewport()
   if (event.touches.length === 1) {
     const touch = event.touches[0]
     touchGesture = null
-    touchPan = { container, x: touch.clientX, y: touch.clientY, time: performance.now(), velocityX: 0, velocityY: 0 }
+    touchPan = { x: touch.clientX, y: touch.clientY, time: performance.now(), velocityX: 0, velocityY: 0 }
     return
   }
   if (event.touches.length !== 2) return
   touchPan = null
-  touchGesture = { distance: touchDistance(event.touches), zoom: routeZoom.value, midpoint: touchMidpoint(event.touches), left: container.scrollLeft, top: container.scrollTop }
+  touchGesture = {
+    distance: touchDistance(event.touches),
+    zoom: routeZoom.value,
+    midpoint: touchMidpoint(event.touches),
+    panX: panX.value,
+    panY: panY.value
+  }
 }
 const handleTouchMove = event => {
-  if (event.touches.length === 1 && touchPan?.container) {
+  if (event.touches.length === 1 && touchPan) {
     event.preventDefault()
     const touch = event.touches[0]
     const now = performance.now()
-    const deltaX = touchPan.x - touch.clientX
-    const deltaY = touchPan.y - touch.clientY
+    const deltaX = touch.clientX - touchPan.x
+    const deltaY = touch.clientY - touchPan.y
     const elapsed = Math.max(1, now - touchPan.time)
-    touchPan.container.scrollLeft += deltaX
-    touchPan.container.scrollTop += deltaY
+    setPan(panX.value + deltaX, panY.value + deltaY)
     touchPan.velocityX = deltaX / elapsed * 16
     touchPan.velocityY = deltaY / elapsed * 16
     touchPan.x = touch.clientX
@@ -254,24 +348,25 @@ const handleTouchMove = event => {
     touchRequest = null
     const container = scrollRef.value
     if (!request || !container) return
+    const rect = container.getBoundingClientRect()
+    const startX = request.start.midpoint.x - rect.left
+    const startY = request.start.midpoint.y - rect.top
+    const focusX = request.midpoint.x - rect.left
+    const focusY = request.midpoint.y - rect.top
     setZoom(request.zoom)
-    nextTick(() => {
-      const rect = container.getBoundingClientRect()
-      const ratio = routeZoom.value / request.start.zoom
-      const startX = request.start.midpoint.x - rect.left
-      const startY = request.start.midpoint.y - rect.top
-      container.scrollLeft = Math.max(0, (request.start.left + startX) * ratio - (request.midpoint.x - rect.left))
-      container.scrollTop = Math.max(0, (request.start.top + startY) * ratio - (request.midpoint.y - rect.top))
-    })
+    const ratio = routeZoom.value / request.start.zoom
+    setPan(
+      focusX - (startX - request.start.panX) * ratio,
+      focusY - (startY - request.start.panY) * ratio
+    )
   })
 }
 const handleTouchEnd = event => {
   if (event.touches?.length >= 2) return
   if (event.touches?.length === 1) {
     const touch = event.touches[0]
-    const container = scrollRef.value
     touchGesture = null
-    touchPan = container ? { container, x: touch.clientX, y: touch.clientY, time: performance.now(), velocityX: 0, velocityY: 0 } : null
+    touchPan = { x: touch.clientX, y: touch.clientY, time: performance.now(), velocityX: 0, velocityY: 0 }
     return
   }
   const finishedPan = touchPan
@@ -282,13 +377,18 @@ const handleTouchEnd = event => {
 const handlePointerDown = event => {
   if (event.pointerType === 'touch' || event.button !== 0 || !scrollRef.value || event.target?.closest?.('.route-node, .route-node-expand')) return
   const container = scrollRef.value
-  pointerDrag = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, left: container.scrollLeft, top: container.scrollTop }
+  measureViewport()
+  stopMomentum()
+  pointerDrag = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, panX: panX.value, panY: panY.value }
   container.setPointerCapture?.(event.pointerId)
 }
 const handlePointerMove = event => {
-  if (!pointerDrag || event.pointerId !== pointerDrag.pointerId || !scrollRef.value) return
-  scrollRef.value.scrollLeft = pointerDrag.left - (event.clientX - pointerDrag.x)
-  scrollRef.value.scrollTop = pointerDrag.top - (event.clientY - pointerDrag.y)
+  if (!pointerDrag || event.pointerId !== pointerDrag.pointerId) return
+  // 抓取式拖动：地图跟随指针同向移动（与「拖动滚动条」的方向相反）
+  setPan(
+    pointerDrag.panX + (event.clientX - pointerDrag.x),
+    pointerDrag.panY + (event.clientY - pointerDrag.y)
+  )
 }
 const handlePointerUp = event => { if (pointerDrag?.pointerId === event.pointerId) pointerDrag = null }
 
@@ -356,8 +456,29 @@ const nodeClass = (node, variantId) => ({
 const isLinkActive = link => link?.rooms?.includes(props.roomId)
 
 watch(() => props.routes, resetMap, { flush: 'post', immediate: true })
+
+// 容器尺寸变化（窗口缩放、面板折叠、横竖屏切换）后重新夹紧平移量，
+// 否则按旧尺寸算出的 pan 会让地图跑到可视区外。
+watch(scrollRef, container => {
+  resizeObserver?.disconnect()
+  resizeObserver = null
+  if (!container) return
+  measureViewport()
+  setPan(panX.value, panY.value)
+  if (typeof ResizeObserver === 'undefined') return
+  resizeObserver = new ResizeObserver(() => {
+    const before = { w: viewport.value.w, h: viewport.value.h }
+    const now = measureViewport()
+    if (now.w === before.w && now.h === before.h) return
+    setPan(panX.value, panY.value)
+  })
+  resizeObserver.observe(container)
+}, { flush: 'post' })
+
 onBeforeUnmount(() => {
   for (const frame of [touchFrame, momentumFrame, zoomFrame]) if (frame) cancelAnimationFrame(frame)
+  resizeObserver?.disconnect()
+  resizeObserver = null
 })
 </script>
 
