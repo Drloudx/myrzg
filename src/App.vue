@@ -197,7 +197,9 @@
 <script setup>
 import { ref, computed, defineAsyncComponent, nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import NavigationMenu from './components/NavigationMenu.vue'
+// 精简导航（NavigationMenuLite 内部包一层 NavigationMenu 并传入精简条目列表）。
+// 换回完整导航：把本行改回 `import NavigationMenu from './components/NavigationMenu.vue'` 即可。
+import NavigationMenu from './components/NavigationMenuLite.vue'
 import GlobalSearchBox from './components/GlobalSearchBox.vue'
 import UpdateModal from './components/UpdateModal.vue'
 import MenuModeModal from './components/MenuModeModal.vue'
