@@ -127,13 +127,10 @@ onMounted(() => {
   text-align: center;
 }
 .version-logo {
-  width: 64px;
-  height: 64px;
+  width: 128px;
   border-radius: 8px;
   margin-bottom: 10px;
   object-fit: contain;
-  border: 2px solid var(--border-color, #8f7351);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 .app-name {
   margin: 0 0 4px 0;

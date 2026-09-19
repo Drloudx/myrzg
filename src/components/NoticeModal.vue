@@ -17,6 +17,17 @@
         <span class="notice-item-date">{{ notice.date }}</span>
         <p class="notice-item-content">{{ notice.content }}</p>
       </div>
+
+      <!-- 交流群：所有公告通用，放在列表末尾，点击直接跳转加群 -->
+      <div class="notice-contact">
+        <span class="notice-contact-label">交流群</span>
+        <a
+          class="notice-contact-link"
+          href="https://qm.qq.com/q/iolDkZyD2E"
+          target="_blank"
+          rel="noopener noreferrer"
+        >963318625</a>
+      </div>
     </div>
     <template #footer>
       <UiButton variant="primary" @click="closeModal">确认</UiButton>
@@ -114,5 +125,30 @@ onMounted(() => {
   line-height: 1.7;
   white-space: pre-wrap;
   color: var(--text-main, #3e2a14);
+}
+
+/* 交流群：与公告正文同字号，数值加粗可点 */
+.notice-contact {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-main, #3e2a14);
+}
+.notice-contact-label {
+  color: var(--text-muted, #6b5134);
+  font-weight: 700;
+}
+.notice-contact-link {
+  color: var(--text-main, #3e2a14);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.notice-contact-link:hover {
+  opacity: 0.75;
 }
 </style>
