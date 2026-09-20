@@ -55,6 +55,7 @@ vue-myrzg/
     │   ├── scrollTarget.js     # 桌面父级/移动端页面滚动目标统一解析
     │   ├── itemParser.js       # 物品数据解析（装备属性/符石/套装/奖励）
     │   ├── furnitureData.js    # 家具、外观、制作消耗与图纸关系解析
+    │   ├── roomDisplay.js      # 房间波次/采集/奖励池的展示整形（副本与关卡图鉴共用）
     │   ├── levelConfig.js      # 玩家等级表边界解析（角色/魔物共用）
     │   ├── monsterParser.js    # 怪物数据解析
     │   ├── heroParser.js       # 角色数据解析
@@ -86,7 +87,11 @@ vue-myrzg/
     │   │   └── GachaPetResult.vue  # 蛋池结算弹层（GetRewardTip）
     │   ├── dungeons/
     │   │   └── DungeonRouteMap.vue # 路线布局、缩放、拖动和节点选择
+    │   ├── chapters/
+    │   │   └── ChapterMapCanvas.vue # 章节世界地图：底图 + 拼块渲染与归属图命中
     │   ├── FurnitureCard.vue    # 家具图鉴卡片（BuildItem UI 图与图纸状态）
+    │   ├── RoomContentList.vue  # 房间内容与掉落（副本/关卡图鉴共用）
+    │   ├── RewardPools.vue      # 奖励池列表与概率文案（副本/关卡图鉴共用）
     │   ├── App 外壳组件        # NavigationMenu（默认完整）/ NavigationMenuLite（上传备用精简）等
     │   ├── 弹窗组件             # AboutModal / NoticeModal / MenuModeModal /
     │   │                       #   VersionCheckModal / UpdateModal
@@ -107,6 +112,7 @@ vue-myrzg/
         ├── TasksView.vue       # 任务图鉴  /tasks
         ├── EventsView.vue      # 事件图鉴  /events
         ├── DungeonsView.vue    # 副本图鉴  /dungeons
+        ├── ChaptersView.vue    # 关卡图鉴  /chapters
         ├── GachaView.vue       # 模拟招募  /gacha
         ├── ExchangeView.vue    # 兑换      /exchange
         └── RewardsView.vue     # 其他      /rewards
@@ -187,6 +193,7 @@ vue-myrzg/
 - `App.vue` 只负责页面外壳、路由出口和全局弹窗装配；全局搜索、原生主题/返回键生命周期、备份导入导出分别由 `composables/app/useGlobalSearch.js`、`useNativeShell.js`、`useBackupData.js` 管理。
 - `HeroesView.vue` 管理角色列表、详情状态、技能与属性计算；档案、互动页签、对话缓存归 `HeroStoryPanels.vue`，不得重新复制回页面。
 - `DungeonsView.vue` 管理副本筛选、关卡详情、房间详情和掉落；路线图的布局投影、缩放、鼠标/触摸拖动、节点聚合归 `DungeonRouteMap.vue`。数据与来源定位见 [副本图鉴](features/DUNGEONS.md)。
+- `ChaptersView.vue` 管理章节筛选、关卡列表与关卡详情；章节归属、三难度与解锁文案来自构建期 `chapters.json` / `stages/{stageId}.json`，房间与掉落展示复用 `RoomContentList.vue`、`RewardPools.vue`，不复制副本页的解析与样式。顶部的世界地图归 `components/chapters/ChapterMapCanvas.vue`：拼块矩形与命中归属图都由构建期产物提供（坐标由模板匹配测得），页面不自己算坐标。
 - `FurnitureView.vue` 管理家具筛选、详情及 `id/itemId` 联动；`FurnitureCard.vue` 只负责稳定卡片视觉，不解析原表或猜测图纸关系。
 
 ### 4.5 移动端/原生适配

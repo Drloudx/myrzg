@@ -35,6 +35,7 @@ Vue 3 + Vite 8 + Vue Router 4（Hash）+ Pinia 4，Android 使用 Capacitor 8 �
 | 任务图鉴 | `/tasks` | `TasksView.vue` | `tasks.json` |
 | 事件图鉴 | `/events` | `EventsView.vue` | `events.json` |
 | 副本图鉴 | `/dungeons` | `DungeonsView.vue` | `dungeons.json`、`dungeons/{battleId}.json` |
+| 关卡图鉴 | `/chapters` | `ChaptersView.vue` | `chapters.json`、`stages/{stageId}.json` |
 | 兑换 | `/exchange` | `ExchangeView.vue` | `parsed-exchange.json` |
 | 模拟招募 | `/gacha` | `GachaView.vue` | `gacha.json`、`gacha-presentation.json` |
 | 其他 | `/rewards` | `RewardsView.vue` | `parsed-pvp.json`、`parsed-hidden.json` |
@@ -64,12 +65,14 @@ Vue 3 + Vite 8 + Vue Router 4（Hash）+ Pinia 4，Android 使用 Capacitor 8 �
 | 食材、通用材料与菜谱预览 | `utils/recipeUtils.js`，材料组装用 `buildRecipeIngredients` |
 | 角色、魔物、怪物、任务 | `heroParser`、`petParser`、`monsterParser`、`taskParser`；角色/魔物等级边界共用 `levelConfig` |
 | 家具、设施、符石 | `furnitureData`、`facilityData/campFacilityData`、`runeData`，构建期关联后由页面消费 |
-| 隐藏策略 | `config/blacklist.js` 的 `isBlacklisted`，维护精确/模糊名单，新增项不重复 |
+| 隐藏策略 | `config/blacklist.js` 的 `isBlacklisted`，维护精确/模糊名单，新增项不重复；按地区名匹配的条目必须传 `mapName`（`黑森林`）而不是 `chapter` 代号（`c4`）——代号匹配不到，会出现「筛选按钮隐藏了、来源或卡片还在」 |
 | 图片与静态 JSON | `utils/env.js` 的 `getImageUrl`、`utils/request.js` 的 `fetchWithFallback` |
 | 页面与详情滚动 | `scrollTarget`、`modalScrollCoordinator`，统一识别实际滚动根与嵌套恢复 |
 | 覆盖层与原生返回 | `globalModalLock`、`overlayStack/useOverlay`、`nativeBackHandler`，按最上层顺序处理 |
 | 本地收集标记 | `stores/appState.js`：成就与隐藏物品 |
 | 招募规则、状态与舞台 | `gachaSim`、`gachaState`、`gachaLayout`、`gachaCurrency`、`gachaSpinePlayer`、`gachaAudio` |
+| 房间内容与奖励池展示 | `utils/roomDisplay.js`：波次文案、宝箱排序、奖励池分组与概率标签；`RewardPools.vue` / `RoomContentList.vue` 由副本图鉴与关卡图鉴共用 |
+| 章节地图 | `components/chapters/ChapterMapCanvas.vue`：底图 + 拼块渲染与归属图命中判定；坐标与归属图由构建期产物提供 |
 
 纯规则模块在构建期完成多表计算；带请求、缓存或播放生命周期的运行时工具负责各自环境。不能因为它们同在 `utils/` 就把所有工具都当作无副作用纯函数。
 
@@ -295,6 +298,42 @@ Vue 3 + Vite 8 + Vue Router 4（Hash）+ Pinia 4，Android 使用 Capacitor 8 �
 
 提取输入、房间过滤、结构化效果、掉落去重和来源定位细节见 [副本图鉴](features/DUNGEONS.md)。
 
+### 关卡图鉴
+
+入口 `/chapters`，页面 `ChaptersView.vue`。先取 `parsed/chapters.json` 章节与关卡索引，打开关卡再取 `parsed/stages/{stageId}.json`，不把全部房间与掉落放进首屏请求。数据来自完整原表 `chapterInfo/area/levelStage/battle/room`，不使用副本专用的裁剪表。
+
+- 章节来自 `chapterInfo.json`（`c0`～`c5`）与 `area.datas[spN_map]`（幽夜古堡、黏滑溪谷）；关卡顺序取 `area.map.levelStage`，与游戏章节地图一致，不按 ID 排序。
+- 每个关卡按 `battle1/battle2/battle3` 展开简单/普通/困难。三难度的房间配置各自独立（`roomTypeId` 带难度后缀），不能合并成一份布局；体力、限时、推荐等级与奖励组逐难度取值。
+- 解锁文案按源码 `LevelStageShowPanel` 生成：普通看 `chapterInfo[chapter].exBattleOpenCondition`，困难看是否通关普通；不把地图连线或 `hide` 当作解锁前置。
+- `hide: true`（92 关中 74 关）在游戏里是「未解锁时在地图上隐藏」。本站不连账号，**不做解锁模拟**，一律正常展示。
+- 房间、怪物波次、采集物与掉落复用副本图鉴的解析与展示组件（`roomDisplay.js`、`RoomContentList.vue`、`RewardPools.vue`），不另写一套；怪物按波次分行，采集与自动掉落按奖励池展示，随机候选房间标明候选而非必然遭遇。
+- 搜索覆盖关卡名、短号、描述与构建期汇总的 `searchText`（含奖励物、怪物与采集物名称），因此可以按掉落反查关卡。难度筛选按该关卡实际存在的难度判断。
+- 黑名单按副本图鉴的同一口径处理：命中地区名（如黑森林、霜烬平原）的章节整章不出现在筛选按钮与列表中，避免按钮与内容不一致；直接链接同样不打开被隐藏的关卡。
+- URL：`chapter` 选章节（缺省 `all`）、`stage` 打开关卡详情、`diff` 选难度、`q` 同步搜索。关闭详情只清理 `stage/diff`，保留章节与筛选；奖励与材料只追加 `itemId`。
+- 列表为单列虚拟网格，与任务图鉴同构；换章节后由 `UiVirtualGrid` 自行把列表滚回顶部，页面不额外滚动（用 `scrollToItem` 会以居中方式滚动整页，把上方的地图推出视口）。
+- **关卡列表的显隐按端区分**：手机端常驻（没有地图，列表就是主视图）；桌面端属于列表视图——选定章节（或输入搜索词）才出现，未选章节时整块区域是地图，筛选面板与列表都不渲染。搜索词的例外是为了保住「按掉落物反查关卡」：在「全部」下输入搜索词会切到列表视图并跨章节出结果。
+
+### 章节地图
+
+`/chapters` 的主视图是游戏原版的世界地图（底图 + 章节拼块），点击地区切换章节。
+
+- **地图视图与列表视图是两屏，互斥**：桌面端「未选章节且没有搜索词」时整块区域只有地图（不出现筛选面板与列表）；点地图上的地区切到列表视图，地图不再出现；点章节行的「全部」回到地图视图。
+- **地图只在桌面端出现**：手机宽度下拼块里的章节名只有约 9px 高、读不清，一张读不了的地图占掉大半屏反而更差；手机端直接给关卡列表，用章节按钮切章节。断点与 `ChapterMapCanvas` 内的 `767px` 判断一致。
+- 地图铺满内容栏：画布宽 100%、高对齐**左右两侧面板的底部**（不取视口底——两侧面板要留底部安全区，比视口底还高一点，按视口算画布会比面板长出一截）。底图是正方形而区域是长方形，所以画布内部放一个正方形**舞台**按 cover 缩放居中，超出画布的部分裁掉——裁掉的是边缘云朵，大陆本身不动。**命中判定必须用舞台矩形换算**（舞台可能比画布大），不能用画布矩形。
+- 画布高度按**实测**算出（`左右面板底部 − 画布顶部`，取不到面板时退回 `视口底 − 10`），不用 `100dvh − 常量`：常量估偏几像素画布就会比面板高，看起来没对齐。
+- 900px 的高度上限是为了限制裁切量：舞台取画布宽高中的较大者，视口越高裁得越多，超过约 900px 会开始啃到大陆边缘而不是云朵。
+- 画布描边沿用全局 `.paper-panel`（与左侧导航面板同一套 2px 描边、阴影与圆角），不另写一套面板样式。
+- 幽夜古堡、黏滑溪谷不在世界地图上，由页面通过画布的 `extra` 插槽在地图视图里补入口——否则地图视图没有任何路径能进这两个章节。
+- 底图 `map_w1_bg.png`（1680×1680）与 6 块章节彩色拼块来自 `ChapterPanel` 预制体；拼块在底图上的坐标**不是配置项**（prefab 导出里没有 Transform 节点），由模板匹配测得并固化为构建期常量，见 `scripts/parse/chapterMapLayout.mjs`，重测入口 `scripts/dev/measure-chapter-map-tiles.mjs`。底图换图或换尺寸必须重测，不能沿用旧值。
+- 命中判定用构建期烘焙的**归属图**（`chapters.json.map.owner`，256×256 RLE，约 4.6 KB）：拼块包围盒互相重叠（c0 的框有 57% 被 c3 压住），矩形热区会点错章节；不透明区域之间也有重叠，所以归属按渲染顺序定。运行时按格查表，不用 canvas 取 alpha（原生端 CDN 跨域会污染 canvas）。
+- 「世界地图 · 选择需要前往的章节」标题条固定在画布**左上角**（同时是「你在这里」的标识），折叠开关在右上角，当前章节标签在底部居中；三者都 `pointer-events: none`（开关除外），不挡地图点击。
+- 拼块只渲染可见章节：被黑名单隐藏的地区不出现，该区域保持底图原样（等同游戏里未探索的样子）。幽夜古堡、黏滑溪谷同样在模糊名单里（整章隐藏），世界地图上本来也没有它们的拼块；地图视图里的 `extra` 入口由 `visibleChapters` 推导，被隐藏后自动消失。
+- 未选中具体章节时整张地图保持原色；选中后当前地区高亮、其余压暗，底部标签显示当前章节与关卡数。
+- 画布 `aria-hidden`：地图是鼠标/触摸的快捷入口，等价的可聚焦控件是同一页的章节按钮，键盘用户用它切换；折叠开关是真按钮，放在 `aria-hidden` 之外。
+- 手机端默认收起（拼块里的章节名在 390px 宽下只有约 9px 高，读不清，又占掉大半屏）；桌面默认展开，两端都可手动折叠。
+
+章节关卡内部的房间路线图（`battle.layers[].map`，与副本同构）尚未渲染。
+
 ### 兑换
 
 入口 `/exchange`，页面 `ExchangeView.vue`。读取 `parsed/parsed-exchange.json`，内容来自 `itemExchange/reward/consume/item`，入口判断关联 `shop/general/packDisplay/activityList/condition/task`。
@@ -346,6 +385,7 @@ Vue 3 + Vite 8 + Vue Router 4（Hash）+ Pinia 4，Android 使用 Capacitor 8 �
 | `task` | 任务详情 |
 | `event/explore` | 事件/探索详情 |
 | `battle` | 副本详情，掉落定位参数见专题 |
+| `chapter` / `stage` / `diff` | 关卡图鉴：章节筛选、关卡详情、难度选择 |
 
 - 列表点击通过 query 打开详情，保留当前路由和其他筛选；全局物品入口不强跳 `/items`。关闭仅清理自身参数，父详情和筛选保持。
 - `openItemDetail(item, categoryTree, savedScrollTop=null)` 全新打开时清空历史；详情内 `pushItemDetail(item, bodyScrollTop)`/`popItemDetail()` 保存上一件物品与正文位置，新物品置顶，返回恢复。
@@ -395,6 +435,7 @@ Vue 3 + Vite 8 + Vue Router 4（Hash）+ Pinia 4，Android 使用 Capacitor 8 �
 | `recipes.json` / `tasks.json` | 菜谱材料、Buff、任务步骤和后续关系 |
 | `events.json` / `parsed-exchange.json` | 随机事件、探索、兑换入口与随机池 |
 | `dungeons.json`、`dungeons/{battleId}.json` | 副本摘要与关卡详情，按关卡懒加载 |
+| `chapters.json`、`stages/{stageId}.json` | 章节与关卡索引、关卡详情（三难度 + 房间/怪物/掉落），按关卡懒加载；索引另含世界地图的底图、拼块矩形与命中归属图 |
 | `gacha.json` / `gacha-presentation.json` | 招募规则与展示资源，运行时不重读原表 |
 | `search-index.json` / `item-sources.json` | 全局搜索和物品来源反查 |
 
@@ -453,7 +494,11 @@ node scripts/dev/compress-images.mjs
 node scripts/dev/compress-images.mjs <public/images子目录> --apply --allow-lossy
 ```
 
-可用 `--backup` 或 `MYRZG_IMAGE_BACKUP_DIR` 指定完整 images 备份根。PNG 调色板量化与 JPG 重编码均有损，不能称为无损；只在结果变小后写回，观感下降用已核验原图恢复。只读检查用 `audit-image-resources.mjs`，报告是当日结果，不写成永久“零重复”。静态皮肤导出见 [工具说明](technical/SKIN_MODEL_EXPORT.md)。
+可用 `--backup` 或 `MYRZG_IMAGE_BACKUP_DIR` 指定完整 images 备份根。PNG 调色板量化与 JPG 重编码均有损，不能称为无损；只在结果变小后写回，观感下降用已核验原图恢复。只读检查用 `audit-image-resources.mjs`，报告是当日结果，不写成永久“零重复”。
+
+去重复用 `dedupe-image-resources.mjs`：默认只预览内容相同且全仓库无任何引用的副本，保留被引用的那一份；`--hash-suffix` 才把 `#编号` 重名导出副本纳入范围（它们与同目录同名文件像素不同，需人工确认）；`--apply` 先备份到 `../vue-myrzg备份-资源/dedupe-images-<时间>/` 并逐文件校验 SHA-256 再删除。只按内容与引用判定，同名或目录名不构成删除依据。
+
+静态皮肤导出见 [工具说明](technical/SKIN_MODEL_EXPORT.md)。
 
 ### 图片种类与导入核对
 
