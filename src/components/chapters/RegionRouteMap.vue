@@ -379,7 +379,7 @@ watch(() => props.height, () => resetView())
 .region-map__node.is-stage .region-map__node-art--gem { inset: auto; }
 .region-map__node.is-stage .region-map__node-art--gem.is-mid { left: 35%; top: 0; width: 30%; }
 .region-map__node.is-stage .region-map__node-art--gem.is-left { left: 15%; top: 15%; width: 24%; }
-.region-map__node.is-stage .region-map__node-art--gem.is-right { left: 59%; top: 15%; width: 24%; }
+.region-map__node.is-stage .region-map__node-art--gem.is-right { left: 61%; top: 15%; width: 24%; }
 .region-map__node.is-area { width: 86px; z-index: 1; pointer-events: none; }
 .region-map__node.is-area .region-map__node-art { width: 86px; }
 .region-map__node.is-instance { width: 72px; z-index: 2; pointer-events: none; }
