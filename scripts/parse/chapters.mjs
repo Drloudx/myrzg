@@ -17,7 +17,7 @@ import { readFileSync } from 'node:fs'
 import { readJson } from './shared.mjs'
 import { compactRewards, compactRooms } from './compact.mjs'
 import { buildRoomEffects } from './roomEffects.mjs'
-import { CHAPTER_MAP_SIZE, CHAPTER_TILE_RECTS, CHAPTER_MAP_TILE_PATH, CHAPTER_REGION_BG_PATH, AREA_ICON_PATH, INSTANCE_ICON_PATH, STAGE_PLATFORM_PATH, STAGE_PLATFORM_LOCKED_PATH, STAGE_CRYSTAL_PATH } from './chapterMapLayout.mjs'
+import { CHAPTER_MAP_SIZE, CHAPTER_TILE_RECTS, CHAPTER_MAP_TILE_PATH, CHAPTER_REGION_BG_PATH, AREA_ICON_PATH, INSTANCE_ICON_PATH, STAGE_PLATFORM_PATH, STAGE_PLATFORM_LOCKED_PATH, STAGE_CRYSTAL_PATH, STAGE_CRYSTAL_SMALL_PATH } from './chapterMapLayout.mjs'
 
 const asMap = value => value && typeof value === 'object' ? value : {}
 const asArray = value => Array.isArray(value) ? value : []
@@ -344,6 +344,7 @@ export function buildChaptersFiles() {
     // 地区路线图上的关卡节点石台（从 MapPanelAtlas 切出来的游戏原图），以及叠上去的蓝色水晶
     stagePlatform: { normal: STAGE_PLATFORM_PATH, locked: STAGE_PLATFORM_LOCKED_PATH },
     stageCrystal: STAGE_CRYSTAL_PATH,
+    stageCrystalSmall: STAGE_CRYSTAL_SMALL_PATH,
     // 命中判定用：地图上每格最终属于哪一块（构建期烘焙，见 import-chapter-map-assets.mjs）。
     // 拼块包围盒互相重叠，不能用矩形热区；不透明区域也有重叠，所以按渲染顺序定归属。
     owner: ownerGrid

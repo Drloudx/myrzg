@@ -46,8 +46,10 @@
         >
           <template v-if="node.kind === 'stage'">
             <img class="region-map__node-art" :src="getImageUrl(nodeIcon(node))" alt="" decoding="async" @error="handleImgError" />
-            <!-- 石台本体只有灰/橙两态，蓝色是单独一张 sprite 叠上去的（游戏原图，不用滤镜染） -->
-            <img class="region-map__node-art region-map__node-art--crystal" :src="getImageUrl(stageCrystal)" alt="" aria-hidden="true" decoding="async" @error="handleImgError" />
+            <!-- 石台本体只有灰/橙两态，三颗宝石是各自一张 sprite 叠上去的（游戏原图，不用滤镜染） -->
+            <img class="region-map__node-art region-map__node-art--gem is-mid" :src="getImageUrl(stageCrystal)" alt="" aria-hidden="true" decoding="async" @error="handleImgError" />
+            <img class="region-map__node-art region-map__node-art--gem is-left" :src="getImageUrl(stageCrystalSmall)" alt="" aria-hidden="true" decoding="async" @error="handleImgError" />
+            <img class="region-map__node-art region-map__node-art--gem is-right" :src="getImageUrl(stageCrystalSmall)" alt="" aria-hidden="true" decoding="async" @error="handleImgError" />
           </template>
           <img v-else-if="nodeIcon(node)" class="region-map__node-art" :src="getImageUrl(nodeIcon(node))" alt="" decoding="async" @error="handleImgError" />
           <span v-else class="region-map__node-dot"></span>
@@ -105,8 +107,10 @@ const props = defineProps({
   mapTitle: { type: String, default: '' },
   /** 关卡节点石台图（`chapters.json.map.stagePlatform`）：{ normal, locked }。 */
   stagePlatform: { type: Object, default: () => ({ normal: '', locked: '' }) },
-  /** 叠在石台上的蓝色水晶（`chapters.json.map.stageCrystal`）。 */
+  /** 叠在石台中间的大宝石（`chapters.json.map.stageCrystal`）。 */
   stageCrystal: { type: String, default: '' },
+  /** 叠在石台两侧的小宝石（`chapters.json.map.stageCrystalSmall`）。 */
+  stageCrystalSmall: { type: String, default: '' },
   /** 当前打开的关卡 id（高亮它在路线上的位置）。 */
   currentStageId: { type: String, default: '' },
   caption: { type: String, default: '' },
@@ -367,17 +371,15 @@ watch(() => props.height, () => resetView())
 /* 关卡节点在最上层；地区/副本/探索点是装饰，既不接收指针也不参与命中 */
 .region-map__node.is-stage { width: 54px; height: 54px; z-index: 3; }
 .region-map__node.is-stage .region-map__node-art { position: absolute; inset: 0; width: 100%; height: auto; }
-/* 蓝色水晶叠在石台上：位置按石台内水晶那一簇的比例 */
-.region-map__node.is-stage .region-map__node-art--crystal {
-  left: 16%;
-  top: 6%;
-  width: 69%;
-  inset: auto;
-}
+/* 三颗宝石叠在石台上：位置按石台内那三颗的比例（中间大、左右小） */
+.region-map__node.is-stage .region-map__node-art--gem { inset: auto; }
+.region-map__node.is-stage .region-map__node-art--gem.is-mid { left: 36%; top: 4%; width: 32%; }
+.region-map__node.is-stage .region-map__node-art--gem.is-left { left: 16%; top: 40%; width: 24%; }
+.region-map__node.is-stage .region-map__node-art--gem.is-right { left: 62%; top: 40%; width: 24%; }
 .region-map__node.is-area { width: 86px; z-index: 1; pointer-events: none; }
 .region-map__node.is-area .region-map__node-art { width: 86px; }
-.region-map__node.is-instance { width: 80px; z-index: 2; pointer-events: none; }
-.region-map__node.is-instance .region-map__node-art { width: 80px; }
+.region-map__node.is-instance { width: 72px; z-index: 2; pointer-events: none; }
+.region-map__node.is-instance .region-map__node-art { width: 72px; }
 .region-map__node.is-explore { width: 13px; height: 13px; z-index: 1; pointer-events: none; }
 
 .region-map__node-dot {
@@ -426,20 +428,21 @@ watch(() => props.height, () => resetView())
   line-height: 30px;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
 }
-/* 副本名：压在图标自带的空牌子上，不再套边框 */
+/* 副本名：压在图标自带的空牌子上（牌子在图的下缘 ~82%~99% 处），不再套边框 */
 .region-map__node-label.is-builtin {
   position: absolute;
   left: 50%;
-  bottom: 1%;
+  bottom: 5%;
   transform: translateX(-50%);
   padding: 0;
   border: none;
   background: none;
   box-shadow: none;
   color: #f2e3c4;
-  font-size: 11px;
-  line-height: 1.4;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85);
+  font-size: 10px;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
 }
 .region-map__node.is-current .region-map__node-label { background: var(--accent); color: #fff; border-color: var(--accent-ink); }
 .region-map__node.is-current .region-map__node-label.is-plaque,

@@ -37,6 +37,7 @@
         :map-title="chapterMap.title"
         :stage-platform="chapterMap.stagePlatform"
         :stage-crystal="chapterMap.stageCrystal"
+        :stage-crystal-small="chapterMap.stageCrystalSmall"
         :current-stage-id="stageDetail?.id || ''"
         :caption="regionCaption"
         :height="mapAreaHeight"

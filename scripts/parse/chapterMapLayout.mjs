@@ -45,12 +45,15 @@ export const AREA_TITLE_RECT = { x: 317, y: 683, w: 164, h: 52 }
 export const AREA_TITLE_PATH = '/images/chapters/area_title.webp'
 
 /**
- * 关卡石台上那簇**蓝色水晶**（游戏原图，单独一张 sprite，不是滤镜染出来的）。
- * 石台本体只有灰/橙两态，蓝色是这一层叠上去的；`LevelStageItemUI.levelSpList` 那三张
- * 就是「石台 + 水晶 + 状态」的分层。
+ * 关卡石台顶上那三颗宝石（游戏原图，各自一张 sprite，不是滤镜染出来的）：
+ * 中间一颗大的是 `STAGE_CRYSTAL_RECT`，左右两颗小的是 `STAGE_CRYSTAL_SMALL_RECT`。
+ * 石台本体只有灰/橙两态，宝石是叠上去的一层；`LevelStageItemUI.levelSpList` 那三张
+ * 就是「石台 + 宝石 + 状态」的分层。
  */
-export const STAGE_CRYSTAL_RECT = { x: 1319, y: 502, w: 87, h: 83 }
+export const STAGE_CRYSTAL_RECT = { x: 558, y: 490, w: 38, h: 39 }
+export const STAGE_CRYSTAL_SMALL_RECT = { x: 2010, y: 1288, w: 30, h: 30 }
 export const STAGE_CRYSTAL_PATH = '/images/chapters/stage_crystal.webp'
+export const STAGE_CRYSTAL_SMALL_PATH = '/images/chapters/stage_crystal_small.webp'
 
 /** 地区节点立体图（`texture/area/icon/<icon>.png`）与副本入口图（`texture/uipanel/instancepanel/<icon>.png`）。 */
 export const AREA_ICON_PATH = icon => `/images/chapters/area/${icon}.webp`
