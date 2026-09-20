@@ -8,64 +8,53 @@
   布局要点：底图是正方形，而「占满中间区域」的区域是长方形。做法是画布铺满区域、内部放一个
   正方形**舞台**按 cover 缩放居中，超出画布的部分裁掉——裁掉的是边缘云朵，大陆本身不动。
   因此命中判定必须用**舞台**的矩形换算（舞台可能比画布大），不能用画布矩形。
-  画布高度按实测的顶部偏移算出来，不用 `100dvh - 常量`——常量估偏几像素就会比可视区高，
-  页面多出一条无意义的滚动。
+  画布高度按左右面板底部实测对齐（见 measure），且**底部不留外边距**——留了画布就比面板高，
+  页面会多出一条无意义的滚动条。
 
   边框沿用全局 `.paper-panel`（与左侧导航面板同一套描边/阴影/圆角），不另写一套。
 
   可访问性：画布本身 `aria-hidden`（等价的可聚焦控件是页面上的章节按钮，键盘用户用它切换），
-  但折叠开关是真按钮，放在 aria-hidden 之外。
+  但「展开列表」是真按钮，放在 aria-hidden 之外。
 -->
 <template>
   <figure v-if="tiles.length" class="chapter-map">
-    <div v-show="!collapsed" class="chapter-map__body">
-      <div
-        id="chapterMapCanvas"
-        ref="canvasRef"
-        class="chapter-map__canvas paper-panel"
-        :class="{ 'is-pointing': hoverId }"
-        :style="canvasStyle"
-        @click="handleClick"
-        @mousemove="handleMove"
-        @mouseleave="hoverId = ''"
-      >
-        <div ref="stageRef" class="chapter-map__stage" aria-hidden="true">
-          <img class="chapter-map__bg" :src="getImageUrl(map.background)" alt="" decoding="async" @error="handleImgError" />
-          <img
-            v-for="tile in tiles"
-            :key="tile.id"
-            class="chapter-map__tile"
-            :class="{ 'is-active': tile.id === activeId, 'is-dimmed': hasActive && tile.id !== activeId, 'is-hover': tile.id === hoverId }"
-            :style="tileStyle(tile)"
-            :data-tile="tile.id"
-            :src="getImageUrl(tile.image)"
-            alt=""
-            decoding="async"
-            @error="handleImgError"
-          />
-        </div>
-        <img v-if="map.title" class="chapter-map__title" :src="getImageUrl(map.title)" alt="" @error="handleImgError" />
-        <div class="chapter-map__extra"><slot name="extra" /></div>
-        <span class="chapter-map__caption">{{ captionText }}</span>
-        <UiButton class="chapter-map__toggle" size="sm" variant="ghost" :aria-expanded="!collapsed" aria-controls="chapterMapCanvas" @click="collapsed = !collapsed">
-          收起地图
-        </UiButton>
+    <div
+      id="chapterMapCanvas"
+      ref="canvasRef"
+      class="chapter-map__canvas paper-panel"
+      :class="{ 'is-pointing': hoverId }"
+      :style="canvasStyle"
+      @click="handleClick"
+      @mousemove="handleMove"
+      @mouseleave="hoverId = ''"
+    >
+      <div ref="stageRef" class="chapter-map__stage" aria-hidden="true">
+        <img class="chapter-map__bg" :src="getImageUrl(map.background)" alt="" decoding="async" @error="handleImgError" />
+        <img
+          v-for="tile in tiles"
+          :key="tile.id"
+          class="chapter-map__tile"
+          :class="{ 'is-active': tile.id === activeId, 'is-dimmed': hasActive && tile.id !== activeId, 'is-hover': tile.id === hoverId }"
+          :style="tileStyle(tile)"
+          :data-tile="tile.id"
+          :src="getImageUrl(tile.image)"
+          alt=""
+          decoding="async"
+          @error="handleImgError"
+        />
       </div>
+      <img v-if="map.title" class="chapter-map__title" :src="getImageUrl(map.title)" alt="" @error="handleImgError" />
+      <div class="chapter-map__extra"><slot name="extra" /></div>
+      <span class="chapter-map__chip chapter-map__caption">{{ captionText }}</span>
+      <button type="button" class="chapter-map__chip chapter-map__list-btn" @click="emit('list')">展开列表</button>
     </div>
-
-    <UiButton v-show="collapsed" size="sm" variant="ghost" :aria-expanded="!collapsed" aria-controls="chapterMapCanvas" @click="collapsed = !collapsed">
-      展开地图
-    </UiButton>
   </figure>
 </template>
 
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { UiButton } from '../ui/index.js'
 import { getImageUrl, handleImageFallback } from '../../utils/env.js'
 
-/** 地图底部与视口底部之间留的空隙。 */
-const BOTTOM_GAP = 10
 /** 高度上限：舞台取宽高中的较大者，太高会把大陆边缘裁掉（见文件头说明）。 */
 const MAX_HEIGHT = 900
 const MIN_HEIGHT = 360
@@ -79,15 +68,13 @@ const props = defineProps({
   /** 「全部章节」时的关卡总数，用于未选中具体章节时的说明。 */
   totalStages: { type: Number, default: 0 }
 })
-const emit = defineEmits(['select'])
+const emit = defineEmits(['select', 'list'])
 
 const canvasRef = ref(null)
 const stageRef = ref(null)
 const hoverId = ref('')
 const canvasHeight = ref(0)
 const handleImgError = handleImageFallback
-
-const collapsed = ref(false)
 
 const canvasStyle = computed(() => canvasHeight.value
   ? { '--chapter-map-h': `${canvasHeight.value}px` }
@@ -105,9 +92,7 @@ const measure = () => {
   if (!canvas) return
   const top = canvas.getBoundingClientRect().top
   const sidePanel = document.querySelector('.desktop-sidebar-container, .desktop-right-container')
-  const bottom = sidePanel
-    ? sidePanel.getBoundingClientRect().bottom
-    : window.innerHeight - BOTTOM_GAP
+  const bottom = sidePanel ? sidePanel.getBoundingClientRect().bottom : window.innerHeight - 10
   canvasHeight.value = Math.max(MIN_HEIGHT, Math.min(Math.round(bottom - top), MAX_HEIGHT))
 }
 
@@ -186,16 +171,8 @@ watch(() => props.map, async () => { await nextTick(); measure() })
 <style scoped>
 /* figure 有 UA 默认的 16px 40px 外边距，必须显式清零，否则画布左右各缩 40px。 */
 .chapter-map {
-  margin: 0 0 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.chapter-map__body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
+  margin: 0;
+  display: block;
 }
 .chapter-map__canvas {
   position: relative;
@@ -232,20 +209,40 @@ watch(() => props.map, async () => { await nextTick(); measure() })
 .chapter-map__tile.is-dimmed { opacity: 0.42; filter: saturate(0.4); }
 .chapter-map__tile.is-dimmed.is-hover { opacity: 0.85; filter: saturate(0.8); }
 
-/* 「世界地图」标题条：画布左上角，同时是「你在这里」的标识。 */
 .chapter-map__title {
   position: absolute;
-  top: 6px;
-  left: 6px;
-  width: min(34%, 260px);
+  width: min(50%, 260px);
   height: auto;
   pointer-events: none;
 }
-.chapter-map__toggle {
+
+/* 底部标签与右上角「展开列表」共用一套胶囊样式。 */
+.chapter-map__chip {
   position: absolute;
+  padding: 4px 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--text-main);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.chapter-map__caption {
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  max-width: calc(100% - 24px);
+  pointer-events: none;
+}
+.chapter-map__list-btn {
   top: 8px;
   right: 8px;
+  cursor: pointer;
+  font-family: inherit;
 }
+.chapter-map__list-btn:hover { background: var(--paper-soft); }
+
 /* 地图上没有拼块的章节（幽夜古堡、黏滑溪谷）由页面通过 extra 插槽放进来的入口。 */
 .chapter-map__extra {
   position: absolute;
@@ -255,22 +252,6 @@ watch(() => props.map, async () => { await nextTick(); measure() })
   flex-wrap: wrap;
   gap: 6px;
   max-width: calc(50% - 16px);
-}
-.chapter-map__caption {
-  position: absolute;
-  left: 50%;
-  bottom: 10px;
-  transform: translateX(-50%);
-  max-width: calc(100% - 24px);
-  padding: 4px 12px;
-  border: 1px solid var(--border-soft);
-  border-radius: 999px;
-  background: var(--paper);
-  color: var(--text-main);
-  font-size: 13px;
-  font-weight: 700;
-  white-space: nowrap;
-  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

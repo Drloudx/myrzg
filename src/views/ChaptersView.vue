@@ -9,6 +9,7 @@
       :visible-ids="mapVisibleIds"
       :total-stages="visibleStages.length"
       @select="selectChapter"
+      @list="openList"
     >
       <template #extra>
         <UiButton
@@ -28,11 +29,14 @@
       <template #action><UiButton @click="loadChapters">重试</UiButton></template>
     </UiEmptyState>
 
-    <!-- 列表视图：地图与列表是两屏，选定章节后才切过来；点章节行的「全部」回到地图 -->
+    <!-- 列表视图：与地图是两屏；桌面端搜索框右侧的「进入地图」切回地图（手机端没有地图，不显示） -->
     <template v-else-if="showStageList">
       <UiFilterPanel class="filter-panel paper-panel">
         <template #search>
-          <UiSearchInput v-model="searchQuery" placeholder="搜索关卡名称、描述、掉落物..." />
+          <div class="chapters-search-row">
+            <UiSearchInput v-model="searchQuery" placeholder="搜索关卡名称、描述、掉落物..." />
+            <UiButton v-if="!isMobile" variant="secondary" @click="openMap">进入地图</UiButton>
+          </div>
         </template>
 
         <UiFilterRow label="章节：">
@@ -235,20 +239,20 @@ const visibleStages = computed(() => visibleChapters.value.flatMap(chapter => ch
 const mapVisibleIds = computed(() => visibleChapters.value.map(chapter => chapter.id))
 
 /**
- * 地图只在桌面端显示：手机宽度下拼块里的章节名只有约 9px 高、读不清，
- * 一张读不了的地图占掉大半屏反而更差——手机端直接给列表，用章节按钮切章节。
+ * 地图视图与列表视图是两屏，互斥，由显式的 `view` 决定：
+ *   - 地图视图（仅桌面端）：整块区域只有地图；点地块或右上角「展开列表」切到列表。
+ *   - 列表视图：地图不出现；桌面端搜索框右侧的「进入地图」切回地图。
+ * 手机端不出地图（拼块章节名在 390px 下读不清），恒为列表视图。
  */
 const MOBILE_QUERY = '(max-width: 767px)'
 const isMobile = ref(typeof window !== 'undefined' && window.matchMedia(MOBILE_QUERY).matches)
+const view = ref(route.query.view === 'list' || route.query.chapter || route.query.stage ? 'list' : 'map')
 
-/**
- * 地图视图与列表视图是两屏，互斥：
- *   - 桌面端「未选章节且没有搜索词」→ 地图视图（整块区域只有地图）
- *   - 选定章节（或输入搜索词、或手机端）→ 列表视图，地图不出现
- * 手机端不出地图（拼块章节名读不清），直接列表。点章节行的「全部」回到地图视图。
- */
-const showMap = computed(() => !isMobile.value && chapterId.value === 'all' && !searchQuery.value.trim())
+const showMap = computed(() => !isMobile.value && view.value === 'map')
 const showStageList = computed(() => !showMap.value)
+
+const openList = () => { view.value = 'list' }
+const openMap = () => { view.value = 'map' }
 
 /** 不在世界地图上的章节（幽夜古堡、黏滑溪谷）：地图视图里由 extra 插槽给入口，否则无路可进。 */
 const mapTileIds = computed(() => new Set((chapterMap.value?.tiles || []).map(tile => tile.id)))
@@ -292,6 +296,8 @@ const selectChapter = (id) => {
   // 换章节后列表内容整体替换，`UiVirtualGrid` 会在 items 变化时自行把列表滚回顶部；
   // 这里不要再调 scrollToItem——它用 align:'center' 会把整页滚动，把上方的地图推出视口。
   chapterId.value = id
+  // 选章节即进入列表视图（地图视图里点地块、点章节按钮都是这个入口）
+  openList()
 }
 
 // ---------- 数据 ----------
@@ -378,11 +384,13 @@ onMounted(() => {
 })
 onBeforeUnmount(() => { loadOperation += 1; detailOperation += 1 })
 
-watch([chapterId, difficultyFilter, searchQuery], () => {
+watch([chapterId, difficultyFilter, searchQuery, view], () => {
   const query = {}
   if (chapterId.value !== 'all') query.chapter = chapterId.value
   if (difficultyFilter.value !== 'all') query.diff = difficultyFilter.value
   if (searchQuery.value.trim()) query.q = searchQuery.value.trim()
+  // 列表视图没有章节时也要能分享/刷新回同一屏，所以显式带上 view
+  if (view.value === 'list') query.view = 'list'
   if (route.query.stage) query.stage = route.query.stage
   router.replace({ query })
 })
@@ -400,6 +408,14 @@ watch(() => route.query.stage, (value) => {
 </script>
 
 <style scoped>
+/* 搜索框右侧放「进入地图」：与筛选面板同高的一行 */
+.chapters-search-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.chapters-search-row :deep(.ui-search) { flex: 1; min-width: 0; }
+
 .chapters-counter {
   font-size: 13px;
   font-weight: 600;
