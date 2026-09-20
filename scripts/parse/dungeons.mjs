@@ -1,71 +1,7 @@
 /** 副本图鉴预解析：轻量索引 + 按关卡拆分的详情文件。 */
 import { buildDungeonData, buildDungeonItemSources } from '../../src/utils/dungeonData.js'
 import { readJson } from './shared.mjs'
-
-const compactReward = (entry = {}) => ({
-  typeId: entry.typeId,
-  name: entry.name,
-  icon: entry.icon,
-  quality: entry.quality,
-  min: entry.min,
-  max: entry.max,
-  actualProb: entry.actualProb,
-  cumulativeProb: entry.cumulativeProb,
-  groupIndex: entry.groupIndex,
-  kind: entry.kind,
-  detail: entry.detail || undefined,
-  groupRate: entry.groupRate,
-  groupCount: entry.groupCount
-})
-
-const compactRewards = (entries = []) => entries.map(compactReward)
-
-const compactMonster = (monster = {}) => ({
-  typeId: monster.typeId,
-  name: monster.name,
-  count: monster.count,
-  drops: (monster.drops || []).map(drop => ({
-    collectTypeId: drop.collectTypeId,
-    name: drop.name,
-    dropRate: drop.dropRate,
-    reward: compactRewards(drop.reward)
-  }))
-})
-
-const compactVariant = (variant = {}) => ({
-  typeId: variant.typeId,
-  name: variant.name,
-  kind: variant.kind,
-  notFightRoom: variant.notFightRoom,
-  npcCount: variant.npcCount,
-  effects: (variant.effects || []).map(effect => ({
-    type: effect.type,
-    title: effect.title,
-    summary: effect.summary,
-    options: (effect.options || []).map(option => ({
-      name: option.name,
-      detail: option.detail
-    }))
-  })),
-  monsters: (variant.monsters || []).map(compactMonster),
-  waves: (variant.waves || []).map(wave => ({
-    round: wave.round,
-    monsters: (wave.monsters || []).map(monster => ({
-      typeId: monster.typeId,
-      name: monster.name,
-      count: monster.count
-    }))
-  })),
-  collections: (variant.collections || []).map(collection => ({
-    collectTypeId: collection.collectTypeId,
-    count: collection.count,
-    name: collection.name,
-    consume: collection.consume,
-    consumeCost: collection.consumeCost,
-    reward: compactRewards(collection.reward)
-  })),
-  source: variant.source ? { candidate: !!variant.source.candidate } : undefined
-})
+import { compactRewards, compactRooms } from './compact.mjs'
 
 const compactBattle = (battle = {}) => ({
   id: battle.id,
@@ -85,14 +21,7 @@ const compactBattle = (battle = {}) => ({
       reward: compactRewards(source.reward)
     }))
   },
-  rooms: (battle.rooms || []).map(room => ({
-    layer: room.layer,
-    roomId: room.roomId,
-    label: room.label,
-    level: room.level,
-    hidden: room.hidden,
-    variants: (room.variants || []).map(compactVariant)
-  })),
+  rooms: compactRooms(battle.rooms),
   routes: (battle.routes || []).map(route => ({
     id: route.id,
     name: route.name,

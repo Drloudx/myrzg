@@ -140,7 +140,7 @@
                 <h3>{{ selectedRouteRoom.name }}</h3>
               </div>
               <div class="detail-badges">
-                <UiTag :tone="routeRoomTone(selectedRouteRoom)">{{ selectedRouteRoom.kind }}</UiTag>
+                <UiTag :tone="roomKindTone(selectedRouteRoom)">{{ selectedRouteRoom.kind }}</UiTag>
                 <UiTag v-if="selectedRouteRoom.level" tone="muted">Lv.{{ selectedRouteRoom.level }}</UiTag>
               </div>
             </div>
@@ -185,75 +185,7 @@
         </UiSection>
 
         <UiSection v-if="selectedBattle.rooms?.length" title="房间内容与掉落来源">
-          <div class="room-list">
-            <article v-for="room in displayRoomCards" :key="`${room.layer}-${room.roomId}`" class="room-card">
-              <div v-if="room.level || room.hidden" class="room-card__heading room-card__heading--meta-only">
-                <UiTag v-if="room.level" tone="default">Lv.{{ room.level }}</UiTag>
-                <UiTag v-if="room.hidden" tone="muted">隐藏</UiTag>
-              </div>
-              <div class="room-card__variants">
-                <template v-for="variant in room.variants" :key="variant.typeId">
-                <div class="room-variant">
-                  <div class="room-variant__title">
-                    <span>{{ variant.name }}</span>
-                    <UiTag v-if="variant.source?.candidate" tone="muted">随机候选</UiTag>
-                    <UiTag :tone="variant.kind.includes('宝箱') ? 'gold' : 'default'">{{ variant.kind }}</UiTag>
-                  </div>
-                  <div v-if="variant.effects?.length" class="room-effects">
-                    <div v-for="effect in variant.effects" :key="`${variant.typeId}-${effect.type}`" class="room-effect">
-                      <strong>{{ effect.title }}</strong>
-                      <p>{{ effect.summary }}</p>
-                      <div v-if="effect.options?.length" class="room-effect__options">
-                        <span v-for="option in effect.options" :key="`${effect.type}-${option.name}`">
-                          <b>{{ option.name }}</b>{{ option.detail }}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <template v-if="variant.monsters.length">
-                    <p v-for="line in monsterWaveLines(variant)" :key="line.key" class="room-variant__line"><strong v-if="line.wave">第{{ line.wave }}波：</strong><template v-else>怪物：</template>{{ line.text }}</p>
-                  </template>
-                  <p v-else-if="variant.notFightRoom" class="room-variant__line">非战斗房间</p>
-                  <p v-if="variant.npcCount" class="room-variant__line">NPC：{{ variant.npcCount }} 个</p>
-                  <div v-for="collection in sortedCollections(variant.collections)" :key="`${variant.typeId}-${collection.collectTypeId}`" :data-source-entry="`${variant.typeId}:${collection.collectTypeId}`" class="room-collection">
-                    <div class="room-collection__heading">
-                      <span>{{ collection.name }}<template v-if="collection.count > 1"> ×{{ collection.count }}</template></span>
-                      <small v-if="collection.consume">{{ collectConsumeText(collection) }}</small>
-                    </div>
-                    <div v-if="collection.reward.length" class="reward-pools room-reward-pools">
-                      <div v-for="group in rewardGroups(collection.reward)" :key="`${collection.collectTypeId}-pool-${group.index}`" class="reward-pool">
-                        <div class="reward-pool__heading"><strong>奖励池 {{ group.index + 1 }}</strong><small>{{ rewardGroupLabel(group) }}</small></div>
-                        <div class="room-reward-grid">
-                          <UiRewardCard
-                            v-for="(entry, index) in group.entries"
-                            :key="`${collection.collectTypeId}-${entry.typeId}-${index}`"
-                            :rule="rewardRule(entry)"
-                            :clickable="isRewardClickable(entry)"
-                            @click="goToItem(entry.typeId)"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <p v-else class="room-variant__line">已配置交互，奖励表未提供可展示条目</p>
-                  </div>
-                  <div v-for="monster in variant.monsters" :key="`${variant.typeId}-${monster.typeId}-drop`">
-                    <div v-for="drop in monster.drops" :key="`${monster.typeId}-${drop.collectTypeId}`" :data-source-entry="`${variant.typeId}:${monster.typeId}:${drop.collectTypeId}`" class="room-collection room-collection--monster">
-                      <div class="room-collection__heading"><span>{{ monster.name }} 自动掉落</span><small v-if="drop.dropRate">{{ (drop.dropRate * 100).toFixed(0) }}%</small></div>
-                      <div v-if="drop.reward.length" class="reward-pools room-reward-pools">
-                        <div v-for="group in rewardGroups(drop.reward)" :key="`${drop.collectTypeId}-pool-${group.index}`" class="reward-pool">
-                          <div class="reward-pool__heading"><strong>奖励池 {{ group.index + 1 }}</strong><small>{{ rewardGroupLabel(group) }}</small></div>
-                          <div class="room-reward-grid">
-                            <UiRewardCard v-for="(entry, index) in group.entries" :key="`${drop.collectTypeId}-${entry.typeId}-${index}`" :rule="rewardRule(entry)" :clickable="isRewardClickable(entry)" @click="goToItem(entry.typeId)" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                </template>
-              </div>
-            </article>
-          </div>
+          <RoomContentList :rooms="displayRoomCards" @item-click="goToItem" />
         </UiSection>
 
         <div v-if="specialDropTotal" ref="specialDropsAnchorRef" class="special-drops-anchor">
@@ -278,20 +210,7 @@
                     <strong>{{ source.label }}</strong>
                     <small v-if="source.note">{{ source.note }}</small>
                   </div>
-                  <div class="reward-pools room-reward-pools">
-                    <div v-for="group in rewardGroups(source.reward)" :key="`${entry.typeId}-${source.key}-pool-${group.index}`" class="reward-pool">
-                      <div class="reward-pool__heading"><strong>奖励池 {{ group.index + 1 }}</strong><small>{{ rewardGroupLabel(group) }}</small></div>
-                      <div class="room-reward-grid">
-                        <UiRewardCard
-                          v-for="(reward, index) in group.entries"
-                          :key="`${entry.typeId}-${source.key}-${reward.typeId}-${index}`"
-                          :rule="rewardRule(reward)"
-                          :clickable="isRewardClickable(reward)"
-                          @click="goToItem(reward.typeId)"
-                        />
-                      </div>
-                    </div>
-                  </div>
+                  <RewardPools dense :entries="source.reward" @item-click="goToItem" />
                 </section>
               </div>
               <p v-else class="special-drop-card__empty">暂无可展示的掉落配置</p>
@@ -302,62 +221,17 @@
         </div>
 
         <UiSection v-model:open="settlementDropsOpen" title="通关结算掉落" data-source-entry="settlement" collapsible>
-          <div v-if="selectedBattle.reward.length" class="reward-pools">
-            <div v-for="group in rewardGroups(selectedBattle.reward)" :key="`reward-pool-${group.index}`" class="reward-pool">
-              <div class="reward-pool__heading"><strong>奖励池 {{ group.index + 1 }}</strong><small>{{ rewardGroupLabel(group) }}</small></div>
-              <div class="reward-grid">
-                <UiRewardCard
-                  v-for="(entry, index) in group.entries"
-                  :key="`${entry.typeId}-${index}`"
-                  :rule="rewardRule(entry)"
-                  :clickable="isRewardClickable(entry)"
-                  @click="goToItem(entry.typeId)"
-                />
-              </div>
-            </div>
-          </div>
+          <RewardPools v-if="selectedBattle.reward.length" :entries="selectedBattle.reward" @item-click="goToItem" />
           <p v-else class="empty-reward">暂无可展示的掉落配置</p>
         </UiSection>
 
         <UiSection v-if="selectedBattle.previewReward.length" v-model:open="previewDropsOpen" title="副本预览掉落" collapsible>
-          <div class="reward-pools">
-            <div v-for="group in rewardGroups(selectedBattle.previewReward)" :key="`preview-pool-${group.index}`" class="reward-pool">
-              <div class="reward-pool__heading">
-                <span class="reward-pool__heading-main">
-                  <strong>奖励池 {{ group.index + 1 }}</strong>
-                  <span class="reward-pool__source">来源：{{ previewGroupSourceLabel(group) }}</span>
-                </span>
-                <small>{{ rewardGroupLabel(group) }}</small>
-              </div>
-              <div class="reward-grid">
-                <UiRewardCard
-                  v-for="(entry, index) in group.entries"
-                  :key="`preview-${entry.typeId}-${index}`"
-                  :rule="rewardRule(entry)"
-                  :clickable="isRewardClickable(entry)"
-                  @click="goToItem(entry.typeId)"
-                />
-              </div>
-            </div>
-          </div>
+          <RewardPools :entries="selectedBattle.previewReward" :source-of="previewGroupSourceLabel" @item-click="goToItem" />
           <p class="drop-note drop-note--inline">源码中 `showReward` 用于进入副本前的奖励预览，实际结算使用上方 `reward`。</p>
         </UiSection>
 
         <UiSection v-if="selectedBattle.firstReward.length" title="首次通关奖励" data-source-entry="first">
-          <div class="reward-pools">
-            <div v-for="group in rewardGroups(selectedBattle.firstReward)" :key="`first-pool-${group.index}`" class="reward-pool">
-              <div class="reward-pool__heading"><strong>奖励池 {{ group.index + 1 }}</strong><small>{{ rewardGroupLabel(group) }}</small></div>
-              <div class="reward-grid">
-                <UiRewardCard
-                  v-for="(entry, index) in group.entries"
-                  :key="`first-${entry.typeId}-${index}`"
-                  :rule="rewardRule(entry)"
-                  :clickable="isRewardClickable(entry)"
-                  @click="goToItem(entry.typeId)"
-                />
-              </div>
-            </div>
-          </div>
+          <RewardPools :entries="selectedBattle.firstReward" @item-click="goToItem" />
         </UiSection>
 
         <p class="drop-note">奖励卡中的“本次抽取”是当前奖励池抽中该物品的概率；如果同一奖励池会抽取多次，会同时显示多次抽取后至少获得一次的概率。“随机装备”表示游戏按品质和部位规则生成装备。</p>
@@ -377,7 +251,6 @@ import {
   UiFilterRow,
   UiInfoRow,
   UiModal,
-  UiRewardCard,
   UiFilterPanel, UiSearchInput,
   UiSection,
   UiSegmentedTabs,
@@ -385,10 +258,19 @@ import {
 } from '../components/ui/index.js'
 import { fetchWithFallback } from '../utils/request.js'
 import DungeonRouteMap from '../components/dungeons/DungeonRouteMap.vue'
+import RoomContentList from '../components/RoomContentList.vue'
+import RewardPools from '../components/RewardPools.vue'
 import { getImageUrl, handleImageFallback } from '../utils/env.js'
 import { BASE_REWARD_PATHS, MAP_NAMES } from '../utils/gameMappings.js'
 import { resolveScrollTarget } from '../utils/scrollTarget.js'
 import { isBlacklisted } from '../config/blacklist.js'
+import {
+  chestTier,
+  monsterWaveLines,
+  roomKindTone,
+  sortedCollections,
+  uniqueRewards
+} from '../utils/roomDisplay.js'
 
 const coverObservers = new WeakMap()
 const observeCover = (image, source) => {
@@ -449,13 +331,6 @@ const SPECIAL_DROP_TABS = [
   { key: 'boss', label: 'BOSS' }
 ]
 
-const chestTier = (value = '') => {
-  const text = String(value)
-  if (text.includes('金')) return 3
-  if (text.includes('银')) return 2
-  if (text.includes('铜')) return 1
-  return 0
-}
 const specialDropCategory = (room, variant) => {
   const name = String(variant?.name || '')
   const kind = String(variant?.kind || '')
@@ -465,11 +340,6 @@ const specialDropCategory = (room, variant) => {
   if (/boss|首领/i.test(text) || /boss|首领/i.test(String(room?.label || ''))) return 'boss'
   return ''
 }
-const rewardQualitySort = (a, b) => Number(b?.quality || 0) - Number(a?.quality || 0)
-  || Number(b?.actualProb || 0) - Number(a?.actualProb || 0)
-  || String(a?.name || '').localeCompare(String(b?.name || ''), 'zh-CN')
-const sortedCollections = (collections = []) => [...collections].sort((a, b) => chestTier(b?.name) - chestTier(a?.name)
-  || String(a?.name || '').localeCompare(String(b?.name || ''), 'zh-CN'))
 
 const mapOptions = computed(() => [
   { key: 'all', label: '全部' },
@@ -574,8 +444,10 @@ const filteredDungeons = computed(() => {
       return { ...dungeon, battles: dungeon.battles.filter(matches), storyBattles: (dungeon.storyBattles || []).filter(matches) }
     })
     .filter(dungeon => dungeon.battles.length > 0 || dungeon.storyBattles?.length > 0)
-    // 黑名单：副本名/章节命中即隐藏（本页原先完全没过黑名单）
-    .filter(dungeon => !isBlacklisted({ id: dungeon.id, name: dungeon.name, label: dungeon.chapter }))
+    // 黑名单：副本名/地区命中即隐藏。
+    // 必须用 mapName（「黑森林」）而不是 chapter（「c4」）——黑名单里存的是地区名，用章节代号匹配不到，
+    // 结果是筛选按钮被隐藏、卡片却还在。
+    .filter(dungeon => !isBlacklisted({ id: dungeon.id, name: dungeon.name, label: dungeon.mapName }))
 })
 
 onMounted(async () => {
@@ -780,46 +652,6 @@ const goToItem = (typeId) => {
 }
 
 const collectionSummary = (collections = []) => collections.map(collection => `${collection.name}${collection.count > 1 ? ` ×${collection.count}` : ''}`).join('、')
-const monsterWaveLines = (room) => {
-  const waves = room?.waves || []
-  if (waves.length > 1) {
-    return waves.map((wave, index) => ({
-      key: `wave-${wave.round || index + 1}`,
-      wave: wave.round || index + 1,
-      text: (wave.monsters || []).map(monster => `${monster.name} ×${monster.count}`).join('、')
-    }))
-  }
-  return [{ key: 'all', wave: 0, text: (room?.monsters || []).map(monster => `${monster.name} ×${monster.count}`).join('、') }]
-}
-const collectConsumeText = (collection) => collection?.consumeCost?.ti > 0 ? `消耗 ${collection.consumeCost.ti} 体力` : '无需消耗'
-const isRewardClickable = (entry) => !!entry?.typeId && (entry.kind === 'item' || entry.kind === 'equip') && entry.typeId !== 'equipGroup'
-const uniqueRewards = (entries = []) => {
-  const rewards = new Map()
-  entries.forEach((entry, index) => {
-    if (!entry) return
-    const key = entry.typeId || `${entry.name}-${index}`
-    const current = rewards.get(key)
-    if (!current || Number(entry.quality || 0) > Number(current.quality || 0)) rewards.set(key, entry)
-  })
-  return [...rewards.values()].sort((a, b) => Number(b.quality || 0) - Number(a.quality || 0) || String(a.name || '').localeCompare(String(b.name || ''), 'zh-CN'))
-}
-const rewardRule = (entry) => ({
-  ...entry,
-  targetName: entry.name,
-  targetImg: entry.icon ? getImageUrl(entry.icon) : '',
-  targetQuality: entry.quality || 0
-})
-const rewardGroups = (entries = []) => {
-  const groups = new Map()
-  entries.forEach(entry => {
-    const index = Number(entry.groupIndex || 0)
-    if (!groups.has(index)) groups.set(index, { index, rate: Number(entry.groupRate ?? 1), count: Number(entry.groupCount || 1), entries: [] })
-    groups.get(index).entries.push(entry)
-  })
-  return [...groups.values()]
-    .map(group => ({ ...group, entries: [...group.entries].sort(rewardQualitySort) }))
-    .sort((a, b) => a.index - b.index)
-}
 const previewRewardSourceGroups = () => {
   const sources = []
   const addSource = (label, entries) => {
@@ -882,7 +714,6 @@ const specialDropSources = (entry) => {
     || Math.max(...b.reward.map(entry => Number(entry.quality || 0)), 0) - Math.max(...a.reward.map(entry => Number(entry.quality || 0)), 0))
 }
 const specialDropTone = (entry) => entry?.specialCategory === 'boss' ? 'danger' : entry?.specialCategory === 'merchant' ? 'accent' : 'gold'
-const rewardGroupLabel = (group) => `${group.rate < 1 ? `${(group.rate * 100).toFixed(0)}% 概率触发` : '必定触发'} · ${group.count} 个奖励`
 const isStoryOpen = (dungeonId) => !!storyOpenState.value[dungeonId]
 const setStoryOpen = (dungeonId, open) => {
   if (!dungeonId) return
@@ -895,7 +726,6 @@ const handleStorySummaryClick = (dungeonId, count, event) => {
 }
 
 const candidateLabel = (option) => selectedRouteRoom.value?.variants?.find(variant => variant.typeId === option?.typeId)?.name || '未命名候选'
-const routeRoomTone = (room) => room?.kind?.includes('宝箱') ? 'gold' : room?.kind === 'BOSS' ? 'danger' : room?.kind === '事件' ? 'accent' : 'default'
 
 watch([mapFilter, searchQuery], () => {
   const query = {}
@@ -952,27 +782,11 @@ watch(() => [route.query.battle, route.query.drop, route.query.dropTab, route.qu
 .detail-badges { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 4px; }
 .dungeon-entry-cost { display: inline-flex; align-items: center; justify-content: flex-end; gap: 3px; font-weight: 700; white-space: nowrap; }
 .dungeon-entry-cost img { width: 22px; height: 22px; object-fit: contain; }
-.reward-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-.reward-pools { display: flex; flex-direction: column; gap: 9px; }
-.reward-pool { min-width: 0; }
-.reward-pool__heading { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin: 0 0 5px; color: var(--text-main); font-size: 12px; }
-.reward-pool__heading-main { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 6px; min-width: 0; }
-.reward-pool__source { color: var(--accent-ink); background: var(--hover-bg); border: 1px solid var(--border-soft); border-radius: 3px; padding: 1px 5px; font-size: 10px; font-weight: 700; }
-.reward-pool__heading small { color: var(--text-muted); font-size: 11px; font-weight: 600; }
+/* 奖励池与房间内容的卡片样式随 RewardPools / RoomContentList 组件走。 */
 .empty-reward, .drop-note { color: var(--text-muted); font-size: 13px; margin: 0; }
 .drop-note { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--border-soft); line-height: 1.6; }
 .drop-note--room-intro { margin: 0 0 10px; padding: 0 0 8px; border-top: 0; border-bottom: 1px dashed var(--border-soft); }
-.room-list { display: flex; flex-direction: column; gap: 8px; overflow: visible; padding-right: 0; }
-.room-card { border: 1px solid var(--border-soft); border-radius: 5px; background: var(--paper-soft); padding: 9px 10px; }
-.room-card__heading, .room-variant__title, .room-collection__heading { display: flex; align-items: center; gap: 7px; min-width: 0; }
-.room-card__heading { color: var(--text-main); font-size: 13px; }
-.room-card__heading strong { flex: 1; }
-.room-card__heading--meta-only { justify-content: flex-end; }
-.room-card__variants { display: flex; flex-direction: column; gap: 7px; margin-top: 7px; }
-.room-variant { border-left: 3px solid var(--accent); padding: 6px 0 6px 9px; min-width: 0; }
-.room-variant__title { font-size: 12px; font-weight: 700; color: var(--text-main); }
-.room-variant__title span:first-child { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.room-variant__line { margin: 4px 0 0; color: var(--text-muted); font-size: 11px; line-height: 1.5; }
+/* 房间内容与掉落来源的卡片样式随 RoomContentList 组件走，这里只保留路线详情用到的效果块。 */
 .room-effects { display: grid; gap: 6px; margin-top: 7px; }
 .room-effects--route { margin-top: 9px; border-top: 1px dashed var(--border-soft); padding-top: 7px; }
 .room-effect { min-width: 0; border-left: 2px solid var(--accent); padding-left: 8px; }
@@ -981,12 +795,6 @@ watch(() => [route.query.battle, route.query.drop, route.query.dropTab, route.qu
 .room-effect__options { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
 .room-effect__options span { border: 1px solid var(--border-soft); border-radius: 3px; background: var(--paper-solid); padding: 3px 6px; color: var(--text-sub); font-size: 11px; line-height: 1.4; }
 .room-effect__options b { margin-right: 5px; color: var(--text-main); }
-.room-collection { margin-top: 6px; padding: 6px 7px; background: var(--paper-solid); border: 1px dashed var(--border-soft); border-radius: 4px; }
-.room-collection--monster { border-style: solid; }
-.room-collection__heading { justify-content: space-between; color: var(--text-main); font-size: 12px; font-weight: 700; }
-.room-collection__heading small { color: var(--text-muted); font-weight: 600; }
-.room-reward-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; margin-top: 6px; }
-.room-reward-pools .reward-pool__heading { margin-top: 5px; padding: 0 2px; }
 .special-drops { margin: 0 0 18px; }
 .special-drops :deep(.ui-empty-state) { padding: 24px 16px; }
 .special-drops__tabs { width: 100%; margin-bottom: 9px; }
@@ -1026,8 +834,6 @@ watch(() => [route.query.battle, route.query.drop, route.query.dropTab, route.qu
   .dungeon-card__cover { min-height: 140px; }
 }
 @media (max-width: 440px) {
-  .reward-grid { grid-template-columns: 1fr; }
-  .room-reward-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .dungeon-card__heading h2 { font-size: 16px; }
   .route-room-detail__grid { grid-template-columns: 1fr; }
 }

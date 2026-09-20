@@ -548,6 +548,15 @@ export function buildSearchData(maps) {
   // ---------- 9. 黑名单过滤 ----------
   const filteredSearchIndex = searchIndex.filter(item => !isBlacklisted(item))
 
+  // 来源同样要过黑名单：兑换等来源的名字里直接带地区名（如「委托兑换 · 黑森林」），
+  // 不过滤就会从物品详情的「来源」把已隐藏地区重新列出来。
+  // 副本来源的名字不含地区名，另有按副本 mapName 的判断（见 dungeonData.js）。
+  const filteredItemSources = {}
+  for (const [itemId, sources] of Object.entries(itemSources)) {
+    const kept = sources.filter(source => !isBlacklisted({ id: source.id, name: source.name, desc: source.des, tip: source.type }))
+    if (kept.length) filteredItemSources[itemId] = kept
+  }
+
   // ---------- 10. TypeScript 类型定义（原 data-types.d.ts） ----------
   const typesContent = `// Auto-generated TypeScript definitions by scripts/parse/search.mjs
 
@@ -582,5 +591,5 @@ export interface IndexData {
 }
 `
 
-  return { searchIndex: filteredSearchIndex, itemSources, typesContent }
+  return { searchIndex: filteredSearchIndex, itemSources: filteredItemSources, typesContent }
 }

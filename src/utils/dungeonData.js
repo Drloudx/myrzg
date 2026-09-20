@@ -4,7 +4,7 @@ import { isInternalSource } from './supplementalItemSources.js'
 
 const asMap = (value) => value && typeof value === 'object' ? value : {}
 const asArray = (value) => Array.isArray(value) ? value : []
-const consumeCost = (consume) => consume ? {
+export const consumeCost = (consume) => consume ? {
   ti: Number(consume.ti || 0),
   money: Number(consume.money || 0),
   ke: Number(consume.ke || 0),
@@ -15,7 +15,7 @@ const consumeCost = (consume) => consume ? {
 // 蛇腹矿坑是主线矿坑/日常采集混合配置，不属于标准副本图鉴的常规副本列表。
 const NON_STANDARD_INSTANCE_IDS = new Set(['dungeonD'])
 
-function buildRewardEntries(reward, itemMap, source = null, equipConfig = null) {
+export function buildRewardEntries(reward, itemMap, source = null, equipConfig = null) {
   if (!reward || isInternalSource([reward.tip, ...(reward.category || [])].join(' '))) return []
   const entries = []
 
@@ -206,7 +206,7 @@ function buildRoomVariant(roomTypeId, roomDetails, collectMap, collectTypeMap, r
   }
 }
 
-function buildBattleRooms(fullBattle, roomDetails, collectMap, collectTypeMap, rewardMap, consumeMap, itemMap, monMap, equipConfig) {
+export function buildBattleRooms(fullBattle, roomDetails, collectMap, collectTypeMap, rewardMap, consumeMap, itemMap, monMap, equipConfig) {
   const rooms = []
   asArray(fullBattle?.layers).forEach((layer, layerIndex) => {
     const layerDatas = Array.isArray(layer) ? layer : asArray(layer?.layerDatas)
@@ -240,7 +240,7 @@ function fallbackRoomIcon(kind) {
   return 1
 }
 
-function buildBattleRoutes(routeBattle, rooms) {
+export function buildBattleRoutes(routeBattle, rooms) {
   if (!routeBattle?.layers?.length) return []
   const roomMap = new Map((rooms || []).map(room => [room.roomId, room]))
   return routeBattle.layers.map((layer, layerIndex) => ({
@@ -286,7 +286,7 @@ function buildBattleRoutes(routeBattle, rooms) {
   }))
 }
 
-function buildSpecialChestSources(rooms, rewardMap, itemMap, equipConfig) {
+export function buildSpecialChestSources(rooms, rewardMap, itemMap, equipConfig) {
   const sources = new Map()
   asArray(rooms).forEach(room => asArray(room.variants).forEach(variant => {
     asArray(variant.collections).forEach(collection => {
@@ -449,6 +449,10 @@ export function buildDungeonItemSources(dungeons = []) {
   }
 
   for (const dungeon of dungeons || []) {
+    // 被黑名单隐藏的地区不进入物品来源。副本名本身不含地区名（「垂死菌林」属于黑森林、
+    // 「伊菲卡温泉谷」属于霜烬平原），所以必须按 mapName 判断；否则副本图鉴列表已经隐藏了，
+    // 物品详情的「掉落来源」却仍把该地区列出来。
+    if (isBlacklisted({ id: dungeon.id, name: dungeon.name, label: dungeon.mapName })) continue
     const battles = [...(dungeon.battles || []), ...(dungeon.storyBattles || [])]
     for (const battle of battles) {
       const base = {

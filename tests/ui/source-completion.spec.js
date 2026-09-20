@@ -16,7 +16,9 @@ async function openItem(page, id) {
 
 test('event and explore sources open the exact existing detail', async ({ page }) => {
   for (const [groupName, type] of [['随机事件', 'event'], ['探索区域', 'explore']]) {
-    const modal = await openItem(page, 'item_10036')
+    // 原用 item_10036（绿榛菇）：它唯一的事件来源在黑森林，该地区进黑名单后不再产出，
+    // 断言随之失效。换成 item_20017（精英冒险家手记），事件与探索来源都还在可见地区。
+    const modal = await openItem(page, 'item_20017')
     const group = modal.locator('.ui-accordion').filter({ has: page.getByRole('button', { name: groupName, exact: true }) })
     await group.getByRole('button', { name: groupName, exact: true }).click()
     const source = group.locator('.drawer-chip').first()
