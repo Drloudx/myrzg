@@ -31,6 +31,7 @@ import { buildEventsFile } from './events.mjs'
 import { buildPetEggsFile } from './pet-eggs.mjs'
 import { buildGachaFile } from './gacha.mjs'
 import { buildDungeonsFiles } from './dungeons.mjs'
+import { buildChaptersFiles } from './chapters.mjs'
 import * as runtimeTables from './runtime-tables.mjs'
 
 if (!existsSync(parsedDir)) {
@@ -119,6 +120,7 @@ const jobs = [
   { name: 'events', build: () => buildEventsFile(), dependsOnItems: false },
   { name: 'pet-eggs', build: () => buildPetEggsFile(), dependsOnItems: false },
   { name: 'gacha', build: () => buildGachaFile(), dependsOnItems: false },
+  { name: 'chapters', build: () => buildChaptersFiles(), dependsOnItems: false },
   { name: 'pets', build: () => buildPetsFile(), dependsOnItems: false },
   { name: 'heroes', build: () => buildHeroesFile(itemData), dependsOnItems: true },
   { name: 'monsters', build: () => buildMonstersFile(itemData), dependsOnItems: true }
@@ -133,6 +135,7 @@ for (const job of jobs) {
   const startedAt = Date.now()
   const output = job.build()
   if (job.name === 'dungeons') rmSync(join(parsedDir, 'dungeons'), { recursive: true, force: true })
+  if (job.name === 'chapters') rmSync(join(parsedDir, 'stages'), { recursive: true, force: true })
   if (job.name === 'monsters') rmSync(join(parsedDir, 'monster-encounters'), { recursive: true, force: true })
   if (job.name === 'items') itemData = output.data
   const files = output.files || [output]

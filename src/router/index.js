@@ -93,6 +93,11 @@ const routes = [
     component: () => import('../views/DungeonsView.vue')
   },
   {
+    path: '/chapters',
+    name: 'chapters',
+    component: () => import('../views/ChaptersView.vue')
+  },
+  {
     path: '/gacha',
     name: 'gacha',
     component: () => import('../views/GachaView.vue')
