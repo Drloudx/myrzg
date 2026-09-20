@@ -35,6 +35,7 @@
         v-else
         :region="regionRoute"
         :map-title="chapterMap.title"
+        :stage-platform="chapterMap.stagePlatform"
         :current-stage-id="stageDetail?.id || ''"
         :caption="regionCaption"
         :height="mapAreaHeight"
@@ -454,14 +455,15 @@ onMounted(() => {
   query.addEventListener('change', sync)
   onBeforeUnmount(() => query.removeEventListener('change', sync))
 })
-// 地图区高度实测：地图视图挂载后测一次，窗口变化时重测
+// 地图区高度实测：地图区挂载后测一次，窗口变化时重测。
+// 必须等 isDataReady —— 首次挂载时地图区还没渲染（v-if 里带 isDataReady），
+// 量不到元素就会一直停在默认值，表现为地图比左右面板短一截。
 onMounted(() => {
   measureMapArea()
   window.addEventListener('resize', measureMapArea, { passive: true })
   onBeforeUnmount(() => window.removeEventListener('resize', measureMapArea))
 })
-watch(showMap, async on => {
-  if (!on) return
+watch([showMap, isDataReady], async () => {
   await nextTick()
   measureMapArea()
 })

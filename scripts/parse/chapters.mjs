@@ -17,7 +17,7 @@ import { readFileSync } from 'node:fs'
 import { readJson } from './shared.mjs'
 import { compactRewards, compactRooms } from './compact.mjs'
 import { buildRoomEffects } from './roomEffects.mjs'
-import { CHAPTER_MAP_SIZE, CHAPTER_TILE_RECTS, CHAPTER_MAP_TILE_PATH, CHAPTER_REGION_BG_PATH } from './chapterMapLayout.mjs'
+import { CHAPTER_MAP_SIZE, CHAPTER_TILE_RECTS, CHAPTER_MAP_TILE_PATH, CHAPTER_REGION_BG_PATH, AREA_ICON_PATH, INSTANCE_ICON_PATH, STAGE_PLATFORM_PATH, STAGE_PLATFORM_LOCKED_PATH } from './chapterMapLayout.mjs'
 
 const asMap = value => value && typeof value === 'object' ? value : {}
 const asArray = value => Array.isArray(value) ? value : []
@@ -121,15 +121,24 @@ function unlockOf(index, conf, chapterConf) {
  *
  * 节点位置与类型取自 `area.datas[mapArea].map`，摆放偏移照源码 `MapPanel.InitMapPanel`：
  * levelStage / levelRoom 落在 (x, y)，地区节点上移 80、副本入口上移 75。
+ *
+ * **Y 轴要翻转**：配置是 Unity UI 的 `localPosition`（+y 向上），而 CSS 的 `top` 是 +y 向下，
+ * 直接拿来用整张地图会上下镜像。游戏截图里 2-6 在 2-5 上方，而配置 y(2-6)=1095 > y(2-5)=957，
+ * 就是这条的证据。所以统一 `y_css = size.h − y_unity`，偏移量在 Unity 坐标里先加再翻。
+ *
  * 探索点没有名字（`explorePoint.json` 只有一条、且真正的点位来自玩家存档），只画点不标名。
  */
 function buildRegionRoute(chapterId, areaMap, tables) {
+  const height = Number(areaMap.size?.h || 0)
+  /** Unity 的 +y 向上 → CSS 的 +y 向下。 */
+  const flipY = unityY => height - unityY
+
   const nodes = [
     ...asArray(areaMap.levelStage).map(node => ({
       kind: 'stage',
       id: node.typeId,
       x: Number(node.x || 0),
-      y: Number(node.y || 0),
+      y: flipY(Number(node.y || 0)),
       label: tables.levelStages[node.typeId]?.shortName || node.typeId,
       name: tables.levelStages[node.typeId]?.name || ''
     })),
@@ -137,23 +146,27 @@ function buildRegionRoute(chapterId, areaMap, tables) {
       kind: 'area',
       id: node.typeId,
       x: Number(node.x || 0),
-      y: Number(node.y || 0) - 80,
+      y: flipY(Number(node.y || 0) - 80),
       label: tables.areas[node.typeId]?.name || node.typeId,
-      name: ''
+      name: '',
+      icon: tables.areas[node.typeId]?.icon || '',
+      iconPath: tables.areas[node.typeId]?.icon ? AREA_ICON_PATH(tables.areas[node.typeId].icon) : ''
     })),
     ...asArray(areaMap.instance).map(node => ({
       kind: 'instance',
       id: node.instance,
       x: Number(node.x || 0),
-      y: Number(node.y || 0) - 75,
+      y: flipY(Number(node.y || 0) - 75),
       label: tables.instances[node.instance]?.name || node.instance,
-      name: ''
+      name: '',
+      icon: tables.instances[node.instance]?.icon || '',
+      iconPath: tables.instances[node.instance]?.icon ? INSTANCE_ICON_PATH(tables.instances[node.instance].icon) : ''
     })),
     ...asArray(areaMap.explorePoint).map(node => ({
       kind: 'explore',
       id: node.explorePointTypeId,
       x: Number(node.x || 0),
-      y: Number(node.y || 0),
+      y: flipY(Number(node.y || 0)),
       label: '',
       name: ''
     }))
@@ -162,14 +175,14 @@ function buildRegionRoute(chapterId, areaMap, tables) {
     // 底图按**章节 id** 命名（map_w1_c1_bg），不是地区 id（c1_map）——两者差一个 _map 后缀，
     // 拼错时 SPA fallback 会对不存在的图片返回 200 + HTML，只有解码失败才会暴露。
     background: CHAPTER_REGION_BG_PATH(chapterId),
-    size: { w: Number(areaMap.size?.w || 0), h: Number(areaMap.size?.h || 0) },
-    bgPos: { x: Number(areaMap.bgImg?.x || 0), y: Number(areaMap.bgImg?.y || 0) },
+    size: { w: Number(areaMap.size?.w || 0), h: height },
+    bgPos: { x: Number(areaMap.bgImg?.x || 0), y: flipY(Number(areaMap.bgImg?.y || 0)) },
     nodes,
     links: asArray(areaMap.link).map(link => ({
       x1: Number(link.x1 || 0),
-      y1: Number(link.y1 || 0),
+      y1: flipY(Number(link.y1 || 0)),
       x2: Number(link.x2 || 0),
-      y2: Number(link.y2 || 0)
+      y2: flipY(Number(link.y2 || 0))
     }))
   }
 }
@@ -326,6 +339,8 @@ export function buildChaptersFiles() {
     size: CHAPTER_MAP_SIZE,
     tiles,
     regions,
+    // 地区路线图上的关卡节点石台（从 MapPanelAtlas 切出来的游戏原图）
+    stagePlatform: { normal: STAGE_PLATFORM_PATH, locked: STAGE_PLATFORM_LOCKED_PATH },
     // 命中判定用：地图上每格最终属于哪一块（构建期烘焙，见 import-chapter-map-assets.mjs）。
     // 拼块包围盒互相重叠，不能用矩形热区；不透明区域也有重叠，所以按渲染顺序定归属。
     owner: ownerGrid

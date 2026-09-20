@@ -28,18 +28,26 @@
         <svg class="region-map__links" :viewBox="`0 0 ${size.w} ${size.h}`" preserveAspectRatio="none" aria-hidden="true">
           <line v-for="(link, index) in region.links" :key="`link-${index}`" :x1="link.x1" :y1="link.y1" :x2="link.x2" :y2="link.y2" />
         </svg>
-        <button
+        <!--
+          只有关卡节点是可点的：地区/副本/探索点是地图装饰（源码里地区节点的 BoxCollider
+          是 enabled = false），用 div + pointer-events:none，否则立体图会盖住关卡节点、
+          把点击吃掉。
+        -->
+        <component
+          :is="node.kind === 'stage' ? 'button' : 'div'"
           v-for="node in region.nodes"
           :key="`${node.kind}-${node.id}`"
-          type="button"
           class="region-map__node"
           :class="[`is-${node.kind}`, { 'is-current': node.kind === 'stage' && node.id === currentStageId }]"
           :style="nodeStyle(node)"
+          :type="node.kind === 'stage' ? 'button' : undefined"
           :title="nodeTitle(node)"
           @click="handleNode(node)"
         >
+          <img v-if="nodeIcon(node)" class="region-map__node-art" :src="getImageUrl(nodeIcon(node))" alt="" decoding="async" @error="handleImgError" />
+          <span v-else class="region-map__node-dot"></span>
           <span v-if="node.label" class="region-map__node-label">{{ node.label }}</span>
-        </button>
+        </component>
       </div>
 
       <div class="region-map__toolbar" role="group" aria-label="地图缩放控制">
@@ -73,6 +81,8 @@ const props = defineProps({
   region: { type: Object, required: true },
   /** 世界地图标题条路径，用作「返回世界地图」按钮。 */
   mapTitle: { type: String, default: '' },
+  /** 关卡节点石台图（`chapters.json.map.stagePlatform`）：{ normal, locked }。 */
+  stagePlatform: { type: Object, default: () => ({ normal: '', locked: '' }) },
   /** 当前打开的关卡 id（高亮它在路线上的位置）。 */
   currentStageId: { type: String, default: '' },
   caption: { type: String, default: '' },
@@ -119,6 +129,13 @@ const nodeStyle = node => ({
   top: `${(Number(node.y || 0) / size.value.h) * 100}%`,
   transform: `translate(-50%, -50%) scale(${nodeScale.value})`
 })
+
+/** 节点用游戏原图：关卡是石台，地区是立体图，副本入口是入口图，探索点没有图只画点。 */
+const nodeIcon = (node) => {
+  if (node.kind === 'stage') return props.stagePlatform?.normal || ''
+  if (node.kind === 'area' || node.kind === 'instance') return node.iconPath || ''
+  return ''
+}
 
 const nodeTitle = (node) => {
   if (node.kind === 'stage') return `${node.label} ${node.name}`
@@ -266,6 +283,9 @@ watch(() => props.height, () => resetView())
 .region-map__viewport {
   position: relative;
   width: 100%;
+  /* 有 1px 边框，必须 border-box：否则实际占位比传入的 height 多 2px，
+     地图区就会比左右面板高出一截、页面多一条滚动条。 */
+  box-sizing: border-box;
   overflow: hidden;
   border: 1px solid var(--border-soft);
   border-radius: 6px;
@@ -293,36 +313,67 @@ watch(() => props.height, () => resetView())
   height: 100%;
   overflow: visible;
 }
+/* 连线：游戏里是金色虚线 */
 .region-map__links line {
-  stroke: rgba(90, 66, 40, 0.55);
-  stroke-width: 7;
+  stroke: #d8a63f;
+  stroke-width: 3;
+  stroke-dasharray: 8 6;
   stroke-linecap: round;
   vector-effect: non-scaling-stroke;
 }
 
-/* 节点标记：屏幕尺寸恒定（由 1/zoom 反向缩放维持），所以这里给的是屏幕像素。 */
+/*
+  节点：屏幕尺寸恒定（由 1/zoom 反向缩放维持），所以这里给的都是屏幕像素。
+  用的是游戏原图——关卡是石台、地区是立体图、副本入口是入口图，图下面挂编号/名称牌。
+*/
 .region-map__node {
   position: absolute;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 2px;
   padding: 0;
-  border-radius: 999px;
-  border: 1px solid var(--border-color);
-  background: var(--paper);
-  color: var(--text-main);
+  border: none;
+  background: none;
+  cursor: pointer;
   font-family: var(--font-ui);
   font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
-.region-map__node.is-stage { width: 40px; height: 40px; font-size: 12px; }
-.region-map__node.is-area { height: 30px; padding: 0 12px; font-size: 12px; background: var(--paper-soft); }
-.region-map__node.is-instance { height: 30px; padding: 0 12px; font-size: 12px; background: var(--wood); color: var(--on-wood-text); }
-.region-map__node.is-explore { width: 14px; height: 14px; background: var(--accent); border-color: var(--accent-ink); cursor: default; }
-.region-map__node.is-current { background: var(--accent); border-color: var(--accent-ink); color: #fff; }
-.region-map__node.is-stage:hover { background: var(--accent-bright); color: #fff; }
-.region-map__node-label { white-space: nowrap; }
+.region-map__node-art { display: block; height: auto; pointer-events: none; }
+/* 关卡节点在最上层；地区/副本/探索点是装饰，既不接收指针也不参与命中 */
+.region-map__node.is-stage { width: 54px; z-index: 3; }
+.region-map__node.is-stage .region-map__node-art { width: 54px; }
+.region-map__node.is-area { width: 104px; z-index: 1; pointer-events: none; }
+.region-map__node.is-area .region-map__node-art { width: 104px; }
+.region-map__node.is-instance { width: 62px; z-index: 2; pointer-events: none; }
+.region-map__node.is-instance .region-map__node-art { width: 62px; }
+.region-map__node.is-explore { width: 13px; height: 13px; z-index: 1; pointer-events: none; }
+
+.region-map__node-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 999px;
+  background: var(--accent);
+  border: 1px solid var(--accent-ink);
+}
+
+.region-map__node-label {
+  padding: 1px 8px;
+  border: 1px solid #17100a;
+  border-radius: 3px;
+  background: rgba(43, 31, 21, 0.88);
+  color: var(--paper);
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+.region-map__node.is-area .region-map__node-label,
+.region-map__node.is-instance .region-map__node-label { font-size: 11px; }
+.region-map__node.is-current .region-map__node-label { background: var(--accent); color: #fff; border-color: var(--accent-ink); }
+.region-map__node:hover .region-map__node-art { filter: brightness(1.15) drop-shadow(0 0 7px rgba(255, 214, 120, 0.95)); }
+.region-map__node.is-area:hover .region-map__node-label,
+.region-map__node.is-instance:hover .region-map__node-label { background: var(--accent); color: #fff; }
 
 .region-map__toolbar {
   position: absolute;

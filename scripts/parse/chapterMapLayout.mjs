@@ -28,3 +28,18 @@ export const CHAPTER_MAP_TILE_PATH = id => `/images/chapters/map_w1_${id}.webp`
 
 /** 章节地区地图底图（点进章节后的那张关卡地图，走 texture/area/bg）。 */
 export const CHAPTER_REGION_BG_PATH = id => `/images/chapters/map_w1_${id}_bg.webp`
+
+/**
+ * 关卡节点石台：从 `atlas/uiatlas/mappanel/MapPanelAtlas.png` 里切出来。
+ * 图集是**不透明**的（有底色）、且排得很密，不能用「整列全空」分段，是用连通域标记切出来的；
+ * 这两块在 x=402 那一竖列上，尺寸都是 126×126。
+ */
+export const ATLAS_PATH = 'atlas/uiatlas/mappanel/MapPanelAtlas.png'
+export const STAGE_PLATFORM_RECT = { x: 402, y: 1004, w: 126, h: 126 }
+export const STAGE_PLATFORM_LOCKED_RECT = { x: 402, y: 1133, w: 126, h: 126 }
+export const STAGE_PLATFORM_PATH = '/images/chapters/stage_platform.webp'
+export const STAGE_PLATFORM_LOCKED_PATH = '/images/chapters/stage_platform_locked.webp'
+
+/** 地区节点立体图（`texture/area/icon/<icon>.png`）与副本入口图（`texture/uipanel/instancepanel/<icon>.png`）。 */
+export const AREA_ICON_PATH = icon => `/images/chapters/area/${icon}.webp`
+export const INSTANCE_ICON_PATH = icon => `/images/chapters/instance/${icon}.webp`

@@ -322,6 +322,10 @@ Vue 3 + Vite 8 + Vue Router 4（Hash）+ Pinia 4，Android 使用 Capacitor 8 �
 
 - **地图视图分两级**：未选章节 → 世界地图（6 个章节拼块）；已选章节 → 该章节的**地区路线图**（`map_w1_cN_bg` 底图 + 关卡/地区/副本/探索节点 + 连线）。层级由 `chapterId` 推导、不另存状态，刷新与分享自然一致：`/#/chapters` 是世界地图，`/#/chapters?chapter=c1` 是秋日荒野的路线图。
 - 地区路线图的节点坐标与摆放偏移照源码 `MapPanel.InitMapPanel`：关卡与房间落在 (x, y)，**地区节点上移 80、副本入口上移 75**；连线直接取 `area.map.link`。探索点只画点不标名——`explorePoint.json` 只有一条配置，真正的点位来自玩家存档。
+- **Y 轴必须翻转**：配置是 Unity UI 的 `localPosition`（+y 向上），而 CSS 的 `top` 是 +y 向下，直接用整张地图会上下镜像。判据来自游戏截图：2-6 在 2-5 上方，而配置 `y(2-6)=1095 > y(2-5)=957`。统一 `y_css = size.h − y_unity`，偏移量在 Unity 坐标里先加再翻；节点、连线、底图中心都要翻。
+- **只有关卡节点可点**：地区/副本/探索点是地图装饰（源码里地区节点的 `BoxCollider` 是 `enabled = false`），用非按钮元素 + `pointer-events: none`，否则 104px 宽的立体图会盖住关卡节点、把点击吃掉；层级上关卡节点 `z-index` 最高。
+- 节点用游戏原图：关卡是石台（从 `MapPanelAtlas` 切出，见下）、地区是立体图（`texture/area/icon/<icon>`）、副本入口是入口图（`texture/uipanel/instancepanel/<icon>`，另有几个散在 `area/icon`），图下面挂编号/名称牌。连线是金色虚线。
+- 关卡石台不是独立素材，在 `atlas/uiatlas/mappanel/MapPanelAtlas.png` 里。该图集**不透明**且排得很密，「整列全空」式分段无效，要用**连通域标记**切；石台在 x=402 那一竖列上（126×126），矩形固化为 `chapterMapLayout.mjs` 的 `STAGE_PLATFORM_RECT`。
 - 地区画布比可视区大得多（2727×2406 ~ 3456×2144），所以需要缩放平移：用**显式的平移偏移**而不是 `scrollLeft`（缩到比容器小时 `scrollLeft` 恒为 0，拖动会完全失效）；画布比容器小时锁居中，大时限制在边界内。
 - 地区路线图初始视图**贴合节点包围盒**（加 180 边距）而不是整张画布——节点通常只占画布的一小块（c1 节点跨度 1454×871，画布 3456×2144），按画布适配会让节点挤成一团。节点标记按 `1/zoom` **反向缩放**，屏幕上保持恒定大小，否则缩小后标签读不清。
 - 地区路线图的 viewport 上有拖动监听并会 `setPointerCapture`，因此**任何按钮上都不启动拖动**：捕获后 `pointerup` 落在 viewport 上，按钮的 `click` 就不再触发（缩放条、返回、节点、胶囊全是按钮）。拖动从地图空白处开始。
