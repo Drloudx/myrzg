@@ -25,3 +25,6 @@ export const CHAPTER_TILE_RECTS = {
 
 /** 特殊章节（幽夜古堡 / 黏滑溪谷）不在世界地图上，没有拼块。 */
 export const CHAPTER_MAP_TILE_PATH = id => `/images/chapters/map_w1_${id}.webp`
+
+/** 章节地区地图底图（点进章节后的那张关卡地图，走 texture/area/bg）。 */
+export const CHAPTER_REGION_BG_PATH = id => `/images/chapters/map_w1_${id}_bg.webp`

@@ -52,12 +52,8 @@
 </template>
 
 <script setup>
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import { getImageUrl, handleImageFallback } from '../../utils/env.js'
-
-/** 高度上限：舞台取宽高中的较大者，太高会把大陆边缘裁掉（见文件头说明）。 */
-const MAX_HEIGHT = 900
-const MIN_HEIGHT = 360
 
 const props = defineProps({
   /** `chapters.json` 的 `map` 对象：{ background, title, size, tiles, owner } */
@@ -66,35 +62,18 @@ const props = defineProps({
   /** 可见章节 id（黑名单隐藏的章节不出现在地图上）。 */
   visibleIds: { type: Array, default: () => [] },
   /** 「全部章节」时的关卡总数，用于未选中具体章节时的说明。 */
-  totalStages: { type: Number, default: 0 }
+  totalStages: { type: Number, default: 0 },
+  /** 可视区高度：由页面统一测量后传入，与地区路线图保持一致。 */
+  height: { type: Number, default: 640 }
 })
 const emit = defineEmits(['select', 'list'])
 
 const canvasRef = ref(null)
 const stageRef = ref(null)
 const hoverId = ref('')
-const canvasHeight = ref(0)
 const handleImgError = handleImageFallback
 
-const canvasStyle = computed(() => canvasHeight.value
-  ? { '--chapter-map-h': `${canvasHeight.value}px` }
-  : {})
-
-/**
- * 画布高度 = **左右面板底部** − 画布顶部。
- *
- * 基准取左右两侧的 sticky 面板，不取视口：两侧面板底部比视口底还高一点
- * （要留底部安全区），按视口算画布就会比左右面板长出一截，看起来没对齐。
- * 取不到面板时（原生壳等）退回视口底部减一个空隙。
- */
-const measure = () => {
-  const canvas = canvasRef.value
-  if (!canvas) return
-  const top = canvas.getBoundingClientRect().top
-  const sidePanel = document.querySelector('.desktop-sidebar-container, .desktop-right-container')
-  const bottom = sidePanel ? sidePanel.getBoundingClientRect().bottom : window.innerHeight - 10
-  canvasHeight.value = Math.max(MIN_HEIGHT, Math.min(Math.round(bottom - top), MAX_HEIGHT))
-}
+const canvasStyle = computed(() => ({ '--chapter-map-h': `${props.height}px` }))
 
 const visible = computed(() => new Set(props.visibleIds))
 const tiles = computed(() => (props.map.tiles || []).filter(tile => visible.value.has(tile.id)))
@@ -159,13 +138,6 @@ const handleMove = (event) => {
   const id = tileAt(event.clientX, event.clientY)
   if (id !== hoverId.value) hoverId.value = id
 }
-
-onMounted(() => {
-  measure()
-  window.addEventListener('resize', measure, { passive: true })
-})
-onBeforeUnmount(() => window.removeEventListener('resize', measure))
-watch(() => props.map, async () => { await nextTick(); measure() })
 </script>
 
 <style scoped>

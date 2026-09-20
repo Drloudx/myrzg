@@ -17,7 +17,7 @@ import { readFileSync } from 'node:fs'
 import { readJson } from './shared.mjs'
 import { compactRewards, compactRooms } from './compact.mjs'
 import { buildRoomEffects } from './roomEffects.mjs'
-import { CHAPTER_MAP_SIZE, CHAPTER_TILE_RECTS, CHAPTER_MAP_TILE_PATH } from './chapterMapLayout.mjs'
+import { CHAPTER_MAP_SIZE, CHAPTER_TILE_RECTS, CHAPTER_MAP_TILE_PATH, CHAPTER_REGION_BG_PATH } from './chapterMapLayout.mjs'
 
 const asMap = value => value && typeof value === 'object' ? value : {}
 const asArray = value => Array.isArray(value) ? value : []
@@ -95,8 +95,7 @@ function unlockOf(index, conf, chapterConf) {
   return null
 }
 
-/** 关卡内的可检索词：名称、描述、奖励物品、怪物与采集物。 */
-function stageSearchText({ shortName, name, des, difficulties }) {
+/** 关卡内的可检索词：名称、描述、奖励物品、怪物与采集物。 */function stageSearchText({ shortName, name, des, difficulties }) {
   const words = [shortName, name, des]
   for (const difficulty of difficulties) {
     for (const entry of [...difficulty.reward, ...difficulty.firstReward]) words.push(entry.name)
@@ -117,6 +116,64 @@ function stageSearchText({ shortName, name, des, difficulties }) {
   return [...new Set(words.filter(Boolean))].join(' ')
 }
 
+/**
+ * 章节地区路线图：底图 + 节点 + 连线。
+ *
+ * 节点位置与类型取自 `area.datas[mapArea].map`，摆放偏移照源码 `MapPanel.InitMapPanel`：
+ * levelStage / levelRoom 落在 (x, y)，地区节点上移 80、副本入口上移 75。
+ * 探索点没有名字（`explorePoint.json` 只有一条、且真正的点位来自玩家存档），只画点不标名。
+ */
+function buildRegionRoute(chapterId, areaMap, tables) {
+  const nodes = [
+    ...asArray(areaMap.levelStage).map(node => ({
+      kind: 'stage',
+      id: node.typeId,
+      x: Number(node.x || 0),
+      y: Number(node.y || 0),
+      label: tables.levelStages[node.typeId]?.shortName || node.typeId,
+      name: tables.levelStages[node.typeId]?.name || ''
+    })),
+    ...asArray(areaMap.area).map(node => ({
+      kind: 'area',
+      id: node.typeId,
+      x: Number(node.x || 0),
+      y: Number(node.y || 0) - 80,
+      label: tables.areas[node.typeId]?.name || node.typeId,
+      name: ''
+    })),
+    ...asArray(areaMap.instance).map(node => ({
+      kind: 'instance',
+      id: node.instance,
+      x: Number(node.x || 0),
+      y: Number(node.y || 0) - 75,
+      label: tables.instances[node.instance]?.name || node.instance,
+      name: ''
+    })),
+    ...asArray(areaMap.explorePoint).map(node => ({
+      kind: 'explore',
+      id: node.explorePointTypeId,
+      x: Number(node.x || 0),
+      y: Number(node.y || 0),
+      label: '',
+      name: ''
+    }))
+  ]
+  return {
+    // 底图按**章节 id** 命名（map_w1_c1_bg），不是地区 id（c1_map）——两者差一个 _map 后缀，
+    // 拼错时 SPA fallback 会对不存在的图片返回 200 + HTML，只有解码失败才会暴露。
+    background: CHAPTER_REGION_BG_PATH(chapterId),
+    size: { w: Number(areaMap.size?.w || 0), h: Number(areaMap.size?.h || 0) },
+    bgPos: { x: Number(areaMap.bgImg?.x || 0), y: Number(areaMap.bgImg?.y || 0) },
+    nodes,
+    links: asArray(areaMap.link).map(link => ({
+      x1: Number(link.x1 || 0),
+      y1: Number(link.y1 || 0),
+      x2: Number(link.x2 || 0),
+      y2: Number(link.y2 || 0)
+    }))
+  }
+}
+
 export function buildChaptersFiles() {
   const chapterInfo = asMap(readJson('chapterInfo.json'))
   const ownerGrid = JSON.parse(readFileSync(new URL('./chapterMapOwner.json', import.meta.url), 'utf8'))
@@ -130,6 +187,8 @@ export function buildChaptersFiles() {
   const collectTypes = asMap(readJson('roomCollectType.json').datas)
   const monMap = asMap(readJson('mon.json').datas)
   const equipConfig = readJson('equip/equipGroup.json')
+  const instances = asMap(readJson('instance.json').datas)
+  const routeTables = { areas, instances, levelStages }
   const roomDetails = roomDetailsFrom(asMap(readJson('room.json')), {
     buffMap: asMap(readJson('buff.json')),
     buffTeamMap: asMap(readJson('battleBuffTeam.json')),
@@ -253,11 +312,20 @@ export function buildChaptersFiles() {
       }
     })
 
+  // 地区路线图：每个章节的内页地图（底图 + 关卡/地区/副本/探索节点 + 连线）
+  const regions = {}
+  for (const chapter of chapters) {
+    const areaMap = areas[chapter.areaId]?.map
+    if (!areaMap) continue
+    regions[chapter.id] = buildRegionRoute(chapter.id, areaMap, routeTables)
+  }
+
   const chapterMap = {
     background: '/images/chapters/map_w1_bg.webp',
     title: '/images/chapters/map_w1_title.webp',
     size: CHAPTER_MAP_SIZE,
     tiles,
+    regions,
     // 命中判定用：地图上每格最终属于哪一块（构建期烘焙，见 import-chapter-map-assets.mjs）。
     // 拼块包围盒互相重叠，不能用矩形热区；不透明区域也有重叠，所以按渲染顺序定归属。
     owner: ownerGrid

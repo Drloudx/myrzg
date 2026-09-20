@@ -1,0 +1,380 @@
+<!--
+  章节地区路线图：点进章节后的那张关卡地图（底图 + 关卡/地区/副本/探索节点 + 连线）。
+
+  数据来自构建期产物 `chapters.json.map.regions[cid]`：节点坐标与摆放偏移照源码
+  `MapPanel.InitMapPanel`（关卡在 (x,y)，地区上移 80、副本入口上移 75），连线直接取
+  `area.map.link`。底图按 `bgPos` 居中摆放，尺寸用图片自身像素（不在产物里存宽高）。
+
+  画布比可视区大得多（2727×2406 ~ 3456×2144），所以需要缩放平移：
+  用显式的平移偏移而不是 scrollLeft —— 缩到比容器小时 scrollLeft 恒为 0，拖动会完全失效。
+  节点标记按 1/zoom 反向缩放，保持屏幕上恒定大小，否则缩小后标签读不清。
+
+  可访问性：节点是真按钮（可 Tab、可回车），缩放控件与「展开列表」也是。
+-->
+<template>
+  <div class="region-map">
+    <div ref="viewportRef" class="region-map__viewport" :style="{ height: `${height}px` }" @wheel="handleWheel" @pointerdown="handlePointerDown" @pointermove="handlePointerMove" @pointerup="handlePointerUp" @pointercancel="handlePointerUp" @touchstart="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd" @touchcancel="handleTouchEnd">
+      <div class="region-map__canvas" :style="canvasStyle">
+        <img
+          v-if="region.background"
+          class="region-map__bg"
+          :src="getImageUrl(region.background)"
+          alt=""
+          decoding="async"
+          :style="bgStyle"
+          @load="handleBgLoad"
+          @error="handleImgError"
+        />
+        <svg class="region-map__links" :viewBox="`0 0 ${size.w} ${size.h}`" preserveAspectRatio="none" aria-hidden="true">
+          <line v-for="(link, index) in region.links" :key="`link-${index}`" :x1="link.x1" :y1="link.y1" :x2="link.x2" :y2="link.y2" />
+        </svg>
+        <button
+          v-for="node in region.nodes"
+          :key="`${node.kind}-${node.id}`"
+          type="button"
+          class="region-map__node"
+          :class="[`is-${node.kind}`, { 'is-current': node.kind === 'stage' && node.id === currentStageId }]"
+          :style="nodeStyle(node)"
+          :title="nodeTitle(node)"
+          @click="handleNode(node)"
+        >
+          <span v-if="node.label" class="region-map__node-label">{{ node.label }}</span>
+        </button>
+      </div>
+
+      <div class="region-map__toolbar" role="group" aria-label="地图缩放控制">
+        <button type="button" title="缩小地图" aria-label="缩小地图" :disabled="zoom <= MIN_ZOOM" @click="zoomBy(-ZOOM_STEP)">−</button>
+        <output aria-label="当前缩放比例">{{ Math.round(zoom * 100) }}%</output>
+        <button type="button" title="放大地图" aria-label="放大地图" :disabled="zoom >= MAX_ZOOM" @click="zoomBy(ZOOM_STEP)">+</button>
+        <button type="button" title="恢复默认视图" aria-label="恢复默认视图" @click="resetView">↺</button>
+      </div>
+
+      <button type="button" class="region-map__back" @click="emit('back')">
+        <img :src="getImageUrl(mapTitle)" alt="返回世界地图" @error="handleImgError" />
+      </button>
+      <button type="button" class="region-map__chip region-map__list-btn" @click="emit('list')">展开列表</button>
+      <span class="region-map__chip region-map__caption">{{ captionText }}</span>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { getImageUrl, handleImageFallback } from '../../utils/env.js'
+
+const MIN_ZOOM = 0.32
+const MAX_ZOOM = 2.4
+const ZOOM_STEP = 0.15
+/** 初始视图在节点范围外留的边距（画布像素）。 */
+const FIT_PADDING = 180
+
+const props = defineProps({
+  /** `chapters.json.map.regions[cid]` */
+  region: { type: Object, required: true },
+  /** 世界地图标题条路径，用作「返回世界地图」按钮。 */
+  mapTitle: { type: String, default: '' },
+  /** 当前打开的关卡 id（高亮它在路线上的位置）。 */
+  currentStageId: { type: String, default: '' },
+  caption: { type: String, default: '' },
+  /** 可视区高度（由页面统一测量，与世界地图保持一致）。 */
+  height: { type: Number, default: 640 }
+})
+const emit = defineEmits(['select', 'back', 'list'])
+
+const viewportRef = ref(null)
+const zoom = ref(1)
+const panX = ref(0)
+const panY = ref(0)
+const bgNatural = ref(null)
+const handleImgError = handleImageFallback
+
+const size = computed(() => ({
+  w: Math.max(1, Number(props.region.size?.w || 1)),
+  h: Math.max(1, Number(props.region.size?.h || 1))
+}))
+const captionText = computed(() => props.caption)
+
+/** 底图按 `bgPos` 居中摆放；宽度用图片自身像素换算成画布百分比，所以产物里不必存宽高。 */
+const bgStyle = computed(() => {
+  if (!bgNatural.value) return { display: 'none' }
+  return {
+    left: `${(Number(props.region.bgPos?.x || 0) / size.value.w) * 100}%`,
+    top: `${(Number(props.region.bgPos?.y || 0) / size.value.h) * 100}%`,
+    width: `${(bgNatural.value.w / size.value.w) * 100}%`
+  }
+})
+
+const canvasStyle = computed(() => ({
+  width: `${size.value.w}px`,
+  height: `${size.value.h}px`,
+  transform: `scale(${zoom.value})`,
+  left: `${panX.value}px`,
+  top: `${panY.value}px`
+}))
+
+/** 节点标记反向缩放：父层按 zoom 缩放，这里 1/zoom 抵消，屏幕上恒定大小。 */
+const nodeScale = computed(() => 1 / zoom.value)
+const nodeStyle = node => ({
+  left: `${(Number(node.x || 0) / size.value.w) * 100}%`,
+  top: `${(Number(node.y || 0) / size.value.h) * 100}%`,
+  transform: `translate(-50%, -50%) scale(${nodeScale.value})`
+})
+
+const nodeTitle = (node) => {
+  if (node.kind === 'stage') return `${node.label} ${node.name}`
+  if (node.kind === 'area') return `地区：${node.label}`
+  if (node.kind === 'instance') return `副本入口：${node.label}`
+  return '探索点'
+}
+
+const handleNode = (node) => {
+  if (node.kind !== 'stage') return
+  emit('select', node.id)
+}
+
+/** 节点包围盒（加边距）：初始视图贴合它，而不是整张画布——节点通常只占画布的一小块。 */
+const nodeBounds = computed(() => {
+  const nodes = props.region.nodes || []
+  if (!nodes.length) return { x: 0, y: 0, w: size.value.w, h: size.value.h }
+  const xs = nodes.map(n => Number(n.x || 0))
+  const ys = nodes.map(n => Number(n.y || 0))
+  const x = Math.min(...xs) - FIT_PADDING
+  const y = Math.min(...ys) - FIT_PADDING
+  return {
+    x,
+    y,
+    w: Math.max(...xs) + FIT_PADDING - x,
+    h: Math.max(...ys) + FIT_PADDING - y
+  }
+})
+
+const clampZoom = value => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, value))
+
+const viewportSize = () => {
+  const el = viewportRef.value
+  return { w: el?.clientWidth || 1, h: el?.clientHeight || 1 }
+}
+
+/** 平移范围：画布比可视区大时限制在边界内，小时锁居中（避免「缩小时拖不动」的错觉）。 */
+const clampPan = () => {
+  const view = viewportSize()
+  const scaledW = size.value.w * zoom.value
+  const scaledH = size.value.h * zoom.value
+  panX.value = scaledW <= view.w
+    ? (view.w - scaledW) / 2
+    : Math.min(0, Math.max(view.w - scaledW, panX.value))
+  panY.value = scaledH <= view.h
+    ? (view.h - scaledH) / 2
+    : Math.min(0, Math.max(view.h - scaledH, panY.value))
+}
+
+const resetView = () => {
+  const view = viewportSize()
+  const bounds = nodeBounds.value
+  const next = clampZoom(Math.min(view.w / bounds.w, view.h / bounds.h))
+  zoom.value = next
+  // 让节点范围居中
+  panX.value = (view.w - bounds.w * next) / 2 - bounds.x * next
+  panY.value = (view.h - bounds.h * next) / 2 - bounds.y * next
+  clampPan()
+}
+
+/** 以可视区中心为锚点缩放，避免缩放时内容乱跳。 */
+const zoomAt = (next, anchorX, anchorY) => {
+  const view = viewportSize()
+  const cx = anchorX ?? view.w / 2
+  const cy = anchorY ?? view.h / 2
+  const mapX = (cx - panX.value) / zoom.value
+  const mapY = (cy - panY.value) / zoom.value
+  zoom.value = clampZoom(next)
+  panX.value = cx - mapX * zoom.value
+  panY.value = cy - mapY * zoom.value
+  clampPan()
+}
+
+const zoomBy = amount => zoomAt(zoom.value + amount)
+
+const handleBgLoad = event => {
+  bgNatural.value = { w: event.target.naturalWidth, h: event.target.naturalHeight }
+}
+
+// ---------- 交互：Ctrl/⌘+滚轮缩放、拖动平移、双指捏合 ----------
+const drag = ref(null)
+const touch = ref(null)
+
+const handleWheel = event => {
+  if (!event.ctrlKey && !event.metaKey) return
+  event.preventDefault()
+  const rect = viewportRef.value.getBoundingClientRect()
+  zoomAt(zoom.value - event.deltaY * 0.0016, event.clientX - rect.left, event.clientY - rect.top)
+}
+
+const handlePointerDown = event => {
+  if (event.button !== 0) return
+  // 任何按钮上都不启动拖动：viewport 会 setPointerCapture，捕获后 pointerup 落在 viewport 上，
+  // 按钮的 click 就不再触发（缩放条、返回、节点、胶囊全是按钮）。拖动请从地图空白处开始。
+  if (event.target.closest?.('button')) return
+  drag.value = { pointerId: event.pointerId, x: event.clientX, y: event.clientY }
+  event.currentTarget.setPointerCapture?.(event.pointerId)
+}
+
+const handlePointerMove = event => {
+  if (!drag.value || drag.value.pointerId !== event.pointerId) return
+  panX.value += event.clientX - drag.value.x
+  panY.value += event.clientY - drag.value.y
+  drag.value.x = event.clientX
+  drag.value.y = event.clientY
+  clampPan()
+}
+
+const handlePointerUp = event => {
+  if (drag.value?.pointerId === event.pointerId) drag.value = null
+}
+
+const handleTouchStart = event => {
+  if (event.touches.length === 2) {
+    const [a, b] = event.touches
+    touch.value = { distance: Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY), zoom: zoom.value }
+  }
+}
+
+const handleTouchMove = event => {
+  if (!touch.value || event.touches.length !== 2) return
+  event.preventDefault()
+  const [a, b] = event.touches
+  const distance = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY)
+  if (!touch.value.distance) return
+  const rect = viewportRef.value.getBoundingClientRect()
+  zoomAt(touch.value.zoom * (distance / touch.value.distance), (a.clientX + b.clientX) / 2 - rect.left, (a.clientY + b.clientY) / 2 - rect.top)
+}
+
+const handleTouchEnd = () => { touch.value = null }
+
+const onResize = () => clampPan()
+
+onMounted(() => {
+  resetView()
+  window.addEventListener('resize', onResize, { passive: true })
+})
+onBeforeUnmount(() => window.removeEventListener('resize', onResize))
+watch(() => props.region, () => resetView())
+watch(() => props.height, () => resetView())
+</script>
+
+<style scoped>
+.region-map { width: 100%; }
+.region-map__viewport {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
+  background: var(--paper-dark);
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+}
+.region-map__viewport:active { cursor: grabbing; }
+
+.region-map__canvas {
+  position: absolute;
+  transform-origin: 0 0;
+}
+.region-map__bg {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: block;
+  max-width: none;
+}
+.region-map__links {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.region-map__links line {
+  stroke: rgba(90, 66, 40, 0.55);
+  stroke-width: 7;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* 节点标记：屏幕尺寸恒定（由 1/zoom 反向缩放维持），所以这里给的是屏幕像素。 */
+.region-map__node {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--paper);
+  color: var(--text-main);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+.region-map__node.is-stage { width: 40px; height: 40px; font-size: 12px; }
+.region-map__node.is-area { height: 30px; padding: 0 12px; font-size: 12px; background: var(--paper-soft); }
+.region-map__node.is-instance { height: 30px; padding: 0 12px; font-size: 12px; background: var(--wood); color: var(--on-wood-text); }
+.region-map__node.is-explore { width: 14px; height: 14px; background: var(--accent); border-color: var(--accent-ink); cursor: default; }
+.region-map__node.is-current { background: var(--accent); border-color: var(--accent-ink); color: #fff; }
+.region-map__node.is-stage:hover { background: var(--accent-bright); color: #fff; }
+.region-map__node-label { white-space: nowrap; }
+
+.region-map__toolbar {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
+  background: var(--paper);
+}
+.region-map__toolbar button {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border-soft);
+  border-radius: 4px;
+  background: var(--paper-soft);
+  color: var(--text-main);
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.region-map__toolbar button:disabled { opacity: 0.45; cursor: default; }
+.region-map__toolbar output { min-width: 42px; text-align: center; font-size: 11px; font-weight: 700; color: var(--text-muted); }
+
+.region-map__back {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  line-height: 0;
+}
+.region-map__back img { width: min(46%, 260px); height: auto; }
+.region-map__chip {
+  position: absolute;
+  padding: 4px 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--text-main);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.region-map__list-btn { top: 8px; right: 8px; cursor: pointer; font-family: inherit; }
+.region-map__list-btn:hover { background: var(--paper-soft); }
+.region-map__caption { left: 50%; bottom: 10px; transform: translateX(-50%); pointer-events: none; }
+</style>

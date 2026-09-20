@@ -1,4 +1,4 @@
-﻿/**
+/**
  * 导入章节地图素材（世界地图底图 + 章节拼块）到 public/images/chapters。
  *
  * 源：4.24路资源包/assets/res/prefab/uiprefab/chapterpanel/（游戏原图，PNG）
@@ -19,28 +19,39 @@ import { fileURLToPath } from 'node:url'
 import sharp from 'sharp'
 
 const root = fileURLToPath(new URL('../../', import.meta.url))
-const sourceDir = path.resolve(root, '../4.24路资源包/assets/res/prefab/uiprefab/chapterpanel')
+const resDir = path.resolve(root, '../4.24路资源包/assets/res')
+const sourceDir = path.join(resDir, 'prefab/uiprefab/chapterpanel')
 const target = path.join(root, 'public/images/chapters')
 const apply = process.argv.includes('--apply')
 
 /** 世界地图底图 + 6 个已开放章节的彩色拼块 + 标题条；锁定块另行评估。 */
 const ASSETS = [
-  { from: 'map_w1_bg.png', to: 'map_w1_bg.webp', note: '世界地图底图 1680x1680' },
-  ...['c0', 'c1', 'c2', 'c3', 'c4', 'c5'].map(id => ({ from: `map_w1_${id}.png`, to: `map_w1_${id}.webp`, note: `第 ${id.slice(1)} 章彩色拼块` })),
-  { from: 'map_w1_title.png', to: 'map_w1_title.webp', note: '「世界地图 · 选择需要前往的章节」标题条' }
+  { from: path.join(sourceDir, 'map_w1_bg.png'), to: 'map_w1_bg.webp', note: '世界地图底图 1680x1680' },
+  ...['c0', 'c1', 'c2', 'c3', 'c4', 'c5'].map(id => ({ from: path.join(sourceDir, `map_w1_${id}.png`), to: `map_w1_${id}.webp`, note: `第 ${id.slice(1)} 章彩色拼块` })),
+  { from: path.join(sourceDir, 'map_w1_title.png'), to: 'map_w1_title.webp', note: '「世界地图 · 选择需要前往的章节」标题条' },
+  // 章节地区地图底图（点进章节后的那张关卡地图）。8 张全导——sp1/sp2 当前在黑名单里用不到，
+  // 但 chapters.json 同样保留这些章节的数据，只导一半会让「取消隐藏」变成半坏状态。
+  // 单张 2~4.5 MB 的整屏地图，用 q80（世界地图那套小图仍用 q85）。
+  ...['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'sp1', 'sp2'].map(id => ({
+    from: path.join(resDir, `texture/area/bg/map_w1_${id}_bg.png`),
+    to: `map_w1_${id}_bg.webp`,
+    quality: 80,
+    note: `${id} 地区地图底图`
+  }))
 ]
 
 const hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex')
 
 const plan = []
 for (const asset of ASSETS) {
-  const from = path.join(sourceDir, asset.from)
+  const from = asset.from
   if (!fs.existsSync(from)) throw new Error(`缺少源素材：${from}`)
   const bytes = fs.readFileSync(from)
   const meta = await sharp(from).metadata()
-  const out = await sharp(from).webp({ quality: 85, effort: 5 }).toBuffer()
+  const out = await sharp(from).webp({ quality: asset.quality ?? 85, effort: 5 }).toBuffer()
   plan.push({
     ...asset,
+    source: path.relative(path.resolve(root, '..'), from).replaceAll('\\', '/'),
     width: meta.width,
     height: meta.height,
     sourceBytes: bytes.length,
