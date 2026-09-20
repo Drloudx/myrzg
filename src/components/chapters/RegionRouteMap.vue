@@ -372,14 +372,14 @@ watch(() => props.height, () => resetView())
 .region-map__node.is-stage { width: 54px; height: 54px; z-index: 3; }
 .region-map__node.is-stage .region-map__node-art { position: absolute; inset: 0; width: 100%; height: auto; }
 /*
-  三颗宝石叠在石台上：位置是**从石台图里量出来的**，不是估的。
-  量法：找出石台中间那团橙色光晕（83×40，中心落在 50% / 43.3%），
-  大宝石正对光晕上方、两颗小宝石分列光晕左右边缘。
+  三颗宝石叠在石台上：位置是**从石台图里量出来的**。
+  石台图里水晶簇的包围盒是 88×42 @ (19,0)（顶到图的最高行）——中间那颗最高，
+  所以大宝石 top 0%，两侧矮一截、top 8%。
 */
 .region-map__node.is-stage .region-map__node-art--gem { inset: auto; }
-.region-map__node.is-stage .region-map__node-art--gem.is-mid { left: 35%; top: 11.5%; width: 30%; }
-.region-map__node.is-stage .region-map__node-art--gem.is-left { left: 17.5%; top: 30%; width: 24%; }
-.region-map__node.is-stage .region-map__node-art--gem.is-right { left: 59.5%; top: 30%; width: 24%; }
+.region-map__node.is-stage .region-map__node-art--gem.is-mid { left: 35%; top: 0; width: 30%; }
+.region-map__node.is-stage .region-map__node-art--gem.is-left { left: 15%; top: 8%; width: 24%; }
+.region-map__node.is-stage .region-map__node-art--gem.is-right { left: 59%; top: 8%; width: 24%; }
 .region-map__node.is-area { width: 86px; z-index: 1; pointer-events: none; }
 .region-map__node.is-area .region-map__node-art { width: 86px; }
 .region-map__node.is-instance { width: 72px; z-index: 2; pointer-events: none; }
