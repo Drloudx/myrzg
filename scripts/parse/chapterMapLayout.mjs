@@ -44,6 +44,14 @@ export const STAGE_PLATFORM_LOCKED_PATH = '/images/chapters/stage_platform_locke
 export const AREA_TITLE_RECT = { x: 317, y: 683, w: 164, h: 52 }
 export const AREA_TITLE_PATH = '/images/chapters/area_title.webp'
 
+/**
+ * 关卡石台上那簇**蓝色水晶**（游戏原图，单独一张 sprite，不是滤镜染出来的）。
+ * 石台本体只有灰/橙两态，蓝色是这一层叠上去的；`LevelStageItemUI.levelSpList` 那三张
+ * 就是「石台 + 水晶 + 状态」的分层。
+ */
+export const STAGE_CRYSTAL_RECT = { x: 1319, y: 502, w: 87, h: 83 }
+export const STAGE_CRYSTAL_PATH = '/images/chapters/stage_crystal.webp'
+
 /** 地区节点立体图（`texture/area/icon/<icon>.png`）与副本入口图（`texture/uipanel/instancepanel/<icon>.png`）。 */
 export const AREA_ICON_PATH = icon => `/images/chapters/area/${icon}.webp`
 export const INSTANCE_ICON_PATH = icon => `/images/chapters/instance/${icon}.webp`

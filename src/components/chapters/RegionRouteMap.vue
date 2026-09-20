@@ -46,16 +46,20 @@
         >
           <template v-if="node.kind === 'stage'">
             <img class="region-map__node-art" :src="getImageUrl(nodeIcon(node))" alt="" decoding="async" @error="handleImgError" />
-            <!--
-              三颗星默认都按「困难已通关」点亮成蓝色。图集里没有蓝色版石台，
-              所以叠一张同图、裁到上半（三颗星所在处）再加蓝色滤镜——只染星星，
-              底座和中间那颗宝石保持原色。
-            -->
-            <img class="region-map__node-art region-map__node-art--stars" :src="getImageUrl(nodeIcon(node))" alt="" aria-hidden="true" decoding="async" @error="handleImgError" />
+            <!-- 石台本体只有灰/橙两态，蓝色是单独一张 sprite 叠上去的（游戏原图，不用滤镜染） -->
+            <img class="region-map__node-art region-map__node-art--crystal" :src="getImageUrl(stageCrystal)" alt="" aria-hidden="true" decoding="async" @error="handleImgError" />
           </template>
           <img v-else-if="nodeIcon(node)" class="region-map__node-art" :src="getImageUrl(nodeIcon(node))" alt="" decoding="async" @error="handleImgError" />
           <span v-else class="region-map__node-dot"></span>
-          <span v-if="node.label" class="region-map__node-label" :class="{ 'is-plaque': node.kind === 'area' || node.kind === 'instance' }">{{ node.label }}</span>
+          <!--
+            副本图**自带名称牌边框**（map_w1_cN_dM 里已经含「迷宫挑战」徽标 + 一块空牌子），
+            所以名字直接压在图上的牌子位置，不再套地区那层边框。
+          -->
+          <span
+            v-if="node.label"
+            class="region-map__node-label"
+            :class="node.kind === 'area' ? 'is-plaque' : (node.kind === 'instance' ? 'is-builtin' : '')"
+          >{{ node.label }}</span>
         </component>
       </div>
 
@@ -101,6 +105,8 @@ const props = defineProps({
   mapTitle: { type: String, default: '' },
   /** 关卡节点石台图（`chapters.json.map.stagePlatform`）：{ normal, locked }。 */
   stagePlatform: { type: Object, default: () => ({ normal: '', locked: '' }) },
+  /** 叠在石台上的蓝色水晶（`chapters.json.map.stageCrystal`）。 */
+  stageCrystal: { type: String, default: '' },
   /** 当前打开的关卡 id（高亮它在路线上的位置）。 */
   currentStageId: { type: String, default: '' },
   caption: { type: String, default: '' },
@@ -361,15 +367,17 @@ watch(() => props.height, () => resetView())
 /* 关卡节点在最上层；地区/副本/探索点是装饰，既不接收指针也不参与命中 */
 .region-map__node.is-stage { width: 54px; height: 54px; z-index: 3; }
 .region-map__node.is-stage .region-map__node-art { position: absolute; inset: 0; width: 100%; height: auto; }
-/* 只染上半（三颗星），用 sepia + hue-rotate 把中性灰的星星推成蓝色 */
-.region-map__node.is-stage .region-map__node-art--stars {
-  clip-path: inset(0 0 46% 0);
-  filter: sepia(1) saturate(3.6) hue-rotate(152deg) brightness(1.12);
+/* 蓝色水晶叠在石台上：位置按石台内水晶那一簇的比例 */
+.region-map__node.is-stage .region-map__node-art--crystal {
+  left: 16%;
+  top: 6%;
+  width: 69%;
+  inset: auto;
 }
-.region-map__node.is-area { width: 104px; z-index: 1; pointer-events: none; }
-.region-map__node.is-area .region-map__node-art { width: 104px; }
-.region-map__node.is-instance { width: 62px; z-index: 2; pointer-events: none; }
-.region-map__node.is-instance .region-map__node-art { width: 62px; }
+.region-map__node.is-area { width: 86px; z-index: 1; pointer-events: none; }
+.region-map__node.is-area .region-map__node-art { width: 86px; }
+.region-map__node.is-instance { width: 80px; z-index: 2; pointer-events: none; }
+.region-map__node.is-instance .region-map__node-art { width: 80px; }
 .region-map__node.is-explore { width: 13px; height: 13px; z-index: 1; pointer-events: none; }
 
 .region-map__node-dot {
@@ -418,10 +426,27 @@ watch(() => props.height, () => resetView())
   line-height: 30px;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
 }
+/* 副本名：压在图标自带的空牌子上，不再套边框 */
+.region-map__node-label.is-builtin {
+  position: absolute;
+  left: 50%;
+  bottom: 1%;
+  transform: translateX(-50%);
+  padding: 0;
+  border: none;
+  background: none;
+  box-shadow: none;
+  color: #f2e3c4;
+  font-size: 11px;
+  line-height: 1.4;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85);
+}
 .region-map__node.is-current .region-map__node-label { background: var(--accent); color: #fff; border-color: var(--accent-ink); }
-.region-map__node.is-current .region-map__node-label.is-plaque { background: none; }
+.region-map__node.is-current .region-map__node-label.is-plaque,
+.region-map__node.is-current .region-map__node-label.is-builtin { background: none; }
 .region-map__node:hover .region-map__node-art { filter: brightness(1.15) drop-shadow(0 0 7px rgba(255, 214, 120, 0.95)); }
-.region-map__node.is-stage:hover .region-map__node-art--stars { filter: sepia(1) saturate(3.6) hue-rotate(152deg) brightness(1.2) drop-shadow(0 0 7px rgba(120, 210, 255, 0.95)); }
+.region-map__node.is-area:hover .region-map__node-label,
+.region-map__node.is-instance:hover .region-map__node-label { filter: brightness(1.18); }
 .region-map__node.is-area:hover .region-map__node-label,
 .region-map__node.is-instance:hover .region-map__node-label { filter: brightness(1.18); }
 
@@ -484,8 +509,6 @@ watch(() => props.height, () => resetView())
    浏览器会退化成「按钮撑满、图片居中」，标题条就跑不到左上角。 */
 .region-map__back {
   position: absolute;
-  top: 6px;
-  left: 6px;
   width: min(50%, 260px);
   padding: 0;
   border: none;

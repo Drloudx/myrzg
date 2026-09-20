@@ -36,6 +36,7 @@
         :region="regionRoute"
         :map-title="chapterMap.title"
         :stage-platform="chapterMap.stagePlatform"
+        :stage-crystal="chapterMap.stageCrystal"
         :current-stage-id="stageDetail?.id || ''"
         :caption="regionCaption"
         :height="mapAreaHeight"
