@@ -191,8 +191,9 @@ export function buildChaptersFiles() {
         x: Number(node.x || 0),
         y: Number(node.y || 0),
         difficultyLabels: difficulties.map(item => item.label),
+        // 列表卡片按当前难度显示等级，所以每难度的等级都要进索引（三难度的推荐等级不同）
+        levels: Object.fromEntries(difficulties.map(item => [item.label, item.level])),
         cost: difficulties[0].consumeCost?.ti || 0,
-        level: difficulties[0].level,
         reward: compactRewards(difficulties[0].reward),
         firstReward: compactRewards(difficulties[0].firstReward),
         detailFile: `stages/${stage.typeId}.json`

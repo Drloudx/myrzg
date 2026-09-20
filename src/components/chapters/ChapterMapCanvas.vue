@@ -28,7 +28,7 @@
       @mousemove="handleMove"
       @mouseleave="hoverId = ''"
     >
-      <div ref="stageRef" class="chapter-map__stage" aria-hidden="true">
+      <div ref="stageRef" class="chapter-map__stage" :class="{ 'is-hovering': !!hoverId }" aria-hidden="true">
         <img class="chapter-map__bg" :src="getImageUrl(map.background)" alt="" decoding="async" @error="handleImgError" />
         <img
           v-for="tile in tiles"
@@ -204,10 +204,23 @@ watch(() => props.map, async () => { await nextTick(); measure() })
 .chapter-map__tile {
   position: absolute;
   display: block;
-  transition: opacity 0.18s ease, filter 0.18s ease;
+  transition: opacity 0.18s ease, filter 0.18s ease, transform 0.18s ease;
 }
 .chapter-map__tile.is-dimmed { opacity: 0.42; filter: saturate(0.4); }
-.chapter-map__tile.is-dimmed.is-hover { opacity: 0.85; filter: saturate(0.8); }
+
+/*
+  悬停浮动：鼠标进入地图后，指着的那块浮起来（放大 + 提亮 + 投影 + 提到最上层），
+  其余压暗。默认（未选中任何章节）时全部同色，没有这个反馈就分不清指着哪一块。
+*/
+.chapter-map__stage.is-hovering .chapter-map__tile:not(.is-hover) { opacity: 0.55; }
+.chapter-map__tile.is-hover {
+  opacity: 1;
+  z-index: 2;
+  transform: scale(1.045);
+  filter: brightness(1.12) saturate(1.05) drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
+}
+/* 已选中章节时其余块本来就是压暗的，悬停时再压一档即可，不要再叠加饱和度变化 */
+.chapter-map__stage.is-hovering .chapter-map__tile.is-dimmed:not(.is-hover) { opacity: 0.34; filter: saturate(0.35); }
 
 .chapter-map__title {
   position: absolute;

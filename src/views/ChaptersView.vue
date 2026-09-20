@@ -93,8 +93,8 @@
               <div class="stage-card-name-row">
                 <span class="stage-card-name">{{ item.name }}</span>
                 <UiTag v-if="chapterId === 'all'" tone="accent">{{ item.chapterName }}</UiTag>
-                <UiTag v-for="label in item.difficultyLabels" :key="label" tone="wood">{{ label }}</UiTag>
-                <UiTag v-if="item.level" tone="muted">Lv.{{ item.level }}</UiTag>
+                <UiTag tone="wood">{{ displayDifficulty(item) }}</UiTag>
+                <UiTag v-if="displayLevel(item)" tone="muted">Lv.{{ displayLevel(item) }}</UiTag>
               </div>
               <div class="stage-card-des">{{ item.des || '（无描述）' }}</div>
             </div>
@@ -140,7 +140,18 @@
           <UiTag v-if="difficulty.level" tone="gold">推荐等级 Lv.{{ difficulty.level }}</UiTag>
         </div>
 
-        <UiSegmentedTabs v-model="difficultyIndex" :options="difficultyTabs" class="stage-difficulty-tabs" />
+        <!-- 难度切换用列表页同款的 UiFilterPill：UiSegmentedTabs 是深色木条（为深色底设计），
+             放在羊皮纸弹窗里不搭；换成胶囊后与列表页的难度筛选完全一致。 -->
+        <UiFilterRow label="难度：" class="stage-difficulty-tabs">
+          <UiFilterPill
+            v-for="(item, index) in stageDetail.difficulties"
+            :key="item.key"
+            :active="difficultyIndex === index"
+            @click="difficultyIndex = index"
+          >
+            {{ item.label }}
+          </UiFilterPill>
+        </UiFilterRow>
 
         <UiSection title="关卡信息">
           <UiInfoRow label="关卡" :value="`${stageDetail.shortName} ${stageDetail.name}`" />
@@ -192,7 +203,6 @@ import {
   UiModal,
   UiSearchInput,
   UiSection,
-  UiSegmentedTabs,
   UiTag
 } from '../components/ui/index.js'
 import UiVirtualGrid from '../components/ui/UiVirtualGrid.vue'
@@ -267,9 +277,19 @@ const stages = computed(() => {
   return (chapter?.stages || []).map(stage => ({ ...stage, chapterName: chapter.areaName }))
 })
 
-const chapterLabel = (chapter) => chapter.chapterNo === null
-  ? chapter.areaName
-  : `${chapter.chapterNo} ${chapter.areaName}`
+const chapterLabel = (chapter) => chapter.areaName
+
+/**
+ * 卡片上只显示**一个**难度标签：按当前难度筛选显示对应难度；筛选为「全部」时默认显示「普通」。
+ * 关卡没有「普通」（如序章只有简单）时退回它实际有的第一个难度。
+ */
+const displayDifficulty = (stage) => {
+  const wanted = difficultyFilter.value !== 'all' ? difficultyFilter.value : '普通'
+  return stage.difficultyLabels.includes(wanted) ? wanted : stage.difficultyLabels[0]
+}
+
+/** 等级跟着上面的难度走——三难度的推荐等级不同。 */
+const displayLevel = (stage) => stage.levels?.[displayDifficulty(stage)] || 0
 
 const filteredStages = computed(() => {
   const query = searchQuery.value.trim().toLowerCase()
@@ -281,9 +301,6 @@ const filteredStages = computed(() => {
     return `${stage.name} ${stage.shortName} ${stage.id} ${stage.des} ${stage.searchText || ''}`.toLowerCase().includes(query)
   })
 })
-
-const difficultyTabs = computed(() => (stageDetail.value?.difficulties || [])
-  .map((item, index) => ({ value: index, label: item.label })))
 
 const difficulty = computed(() => stageDetail.value?.difficulties?.[difficultyIndex.value] || null)
 const detailTitle = computed(() => stageDetail.value
@@ -510,7 +527,9 @@ watch(() => route.query.stage, (value) => {
 }
 
 /* ---------- 详情 ---------- */
-.stage-difficulty-tabs { margin: 6px 0 12px; }
+/* 与其它详情页同款：徽标行必须有 gap，否则 UiTag 之间只剩空白字符的间距，看着像没做间距。 */
+.detail-badges { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 4px; }
+.stage-difficulty-tabs { margin: 8px 0 12px; }
 .stage-entry-cost { display: inline-flex; align-items: center; justify-content: flex-end; gap: 3px; font-weight: 700; white-space: nowrap; }
 .stage-entry-cost img { width: 22px; height: 22px; object-fit: contain; }
 .stage-empty-reward { margin: 0; color: var(--text-muted); font-size: 13px; }
