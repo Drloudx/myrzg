@@ -44,24 +44,37 @@
           :title="nodeTitle(node)"
           @click="handleNode(node)"
         >
-          <img v-if="nodeIcon(node)" class="region-map__node-art" :src="getImageUrl(nodeIcon(node))" alt="" decoding="async" @error="handleImgError" />
+          <template v-if="node.kind === 'stage'">
+            <img class="region-map__node-art" :src="getImageUrl(nodeIcon(node))" alt="" decoding="async" @error="handleImgError" />
+            <!--
+              三颗星默认都按「困难已通关」点亮成蓝色。图集里没有蓝色版石台，
+              所以叠一张同图、裁到上半（三颗星所在处）再加蓝色滤镜——只染星星，
+              底座和中间那颗宝石保持原色。
+            -->
+            <img class="region-map__node-art region-map__node-art--stars" :src="getImageUrl(nodeIcon(node))" alt="" aria-hidden="true" decoding="async" @error="handleImgError" />
+          </template>
+          <img v-else-if="nodeIcon(node)" class="region-map__node-art" :src="getImageUrl(nodeIcon(node))" alt="" decoding="async" @error="handleImgError" />
           <span v-else class="region-map__node-dot"></span>
-          <span v-if="node.label" class="region-map__node-label">{{ node.label }}</span>
+          <span v-if="node.label" class="region-map__node-label" :class="{ 'is-plaque': node.kind === 'area' || node.kind === 'instance' }">{{ node.label }}</span>
         </component>
-      </div>
-
-      <div class="region-map__toolbar" role="group" aria-label="地图缩放控制">
-        <button type="button" title="缩小地图" aria-label="缩小地图" :disabled="zoom <= MIN_ZOOM" @click="zoomBy(-ZOOM_STEP)">−</button>
-        <output aria-label="当前缩放比例">{{ Math.round(zoom * 100) }}%</output>
-        <button type="button" title="放大地图" aria-label="放大地图" :disabled="zoom >= MAX_ZOOM" @click="zoomBy(ZOOM_STEP)">+</button>
-        <button type="button" title="恢复默认视图" aria-label="恢复默认视图" @click="resetView">↺</button>
       </div>
 
       <button type="button" class="region-map__back" @click="emit('back')">
         <img :src="getImageUrl(mapTitle)" alt="返回世界地图" @error="handleImgError" />
       </button>
+      <span class="region-map__hint region-map__hint--back">点击返回世界地图</span>
       <button type="button" class="region-map__chip region-map__list-btn" @click="emit('list')">展开列表</button>
       <span class="region-map__chip region-map__caption">{{ captionText }}</span>
+
+      <div class="region-map__footer">
+        <span class="region-map__hint">按住 ctrl 可用滚轮进行缩放</span>
+        <div class="region-map__toolbar" role="group" aria-label="地图缩放控制">
+          <button type="button" title="缩小地图" aria-label="缩小地图" :disabled="zoom <= MIN_ZOOM" @click="zoomBy(-ZOOM_STEP)">−</button>
+          <output aria-label="当前缩放比例">{{ Math.round(zoom * 100) }}%</output>
+          <button type="button" title="放大地图" aria-label="放大地图" :disabled="zoom >= MAX_ZOOM" @click="zoomBy(ZOOM_STEP)">+</button>
+          <button type="button" title="恢复默认视图" aria-label="恢复默认视图" @click="resetView">↺</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -74,7 +87,12 @@ const MIN_ZOOM = 0.32
 const MAX_ZOOM = 2.4
 const ZOOM_STEP = 0.15
 /** 初始视图在节点范围外留的边距（画布像素）。 */
-const FIT_PADDING = 180
+const FIT_PADDING = 120
+/**
+ * 初始缩放相对「贴合节点范围」的放大倍数：贴合时节点间距太小、标签互相压住，
+ * 放大一档后位置铺开（标记是恒定屏幕尺寸，不跟着放大），重叠明显减少。
+ */
+const FIT_BOOST = 1.4
 
 const props = defineProps({
   /** `chapters.json.map.regions[cid]` */
@@ -188,7 +206,7 @@ const clampPan = () => {
 const resetView = () => {
   const view = viewportSize()
   const bounds = nodeBounds.value
-  const next = clampZoom(Math.min(view.w / bounds.w, view.h / bounds.h))
+  const next = clampZoom(Math.min(view.w / bounds.w, view.h / bounds.h) * FIT_BOOST)
   zoom.value = next
   // 让节点范围居中
   panX.value = (view.w - bounds.w * next) / 2 - bounds.x * next
@@ -324,14 +342,14 @@ watch(() => props.height, () => resetView())
 
 /*
   节点：屏幕尺寸恒定（由 1/zoom 反向缩放维持），所以这里给的都是屏幕像素。
-  用的是游戏原图——关卡是石台、地区是立体图、副本入口是入口图，图下面挂编号/名称牌。
+  锚点只由**图形**决定（translate(-50%,-50%) 作用在图形上），名称牌绝对定位挂在下方——
+  名称牌参与布局的话会把节点整体上推，落点就不准了。
 */
 .region-map__node {
   position: absolute;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 2px;
+  justify-content: center;
   padding: 0;
   border: none;
   background: none;
@@ -341,8 +359,13 @@ watch(() => props.height, () => resetView())
 }
 .region-map__node-art { display: block; height: auto; pointer-events: none; }
 /* 关卡节点在最上层；地区/副本/探索点是装饰，既不接收指针也不参与命中 */
-.region-map__node.is-stage { width: 54px; z-index: 3; }
-.region-map__node.is-stage .region-map__node-art { width: 54px; }
+.region-map__node.is-stage { width: 54px; height: 54px; z-index: 3; }
+.region-map__node.is-stage .region-map__node-art { position: absolute; inset: 0; width: 100%; height: auto; }
+/* 只染上半（三颗星），用 sepia + hue-rotate 把中性灰的星星推成蓝色 */
+.region-map__node.is-stage .region-map__node-art--stars {
+  clip-path: inset(0 0 46% 0);
+  filter: sepia(1) saturate(3.6) hue-rotate(152deg) brightness(1.12);
+}
 .region-map__node.is-area { width: 104px; z-index: 1; pointer-events: none; }
 .region-map__node.is-area .region-map__node-art { width: 104px; }
 .region-map__node.is-instance { width: 62px; z-index: 2; pointer-events: none; }
@@ -357,7 +380,13 @@ watch(() => props.height, () => resetView())
   border: 1px solid var(--accent-ink);
 }
 
+/* 关卡编号：游戏里就是一小块深色牌子 */
 .region-map__node-label {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 1px;
   padding: 1px 8px;
   border: 1px solid #17100a;
   border-radius: 3px;
@@ -368,17 +397,45 @@ watch(() => props.height, () => resetView())
   white-space: nowrap;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
-.region-map__node.is-area .region-map__node-label,
-.region-map__node.is-instance .region-map__node-label { font-size: 11px; }
+/*
+  地区/副本名：用游戏里的名称牌边框（图集里的 map_a_title，两端菱形 + 金边 + 深青底）。
+  两端是装饰、中段要随名字长短伸缩，所以走 border-image 而不是整张缩放，否则菱形会被拉扁。
+*/
+.region-map__node-label.is-plaque {
+  padding: 0 24px;
+  border-style: solid;
+  border-width: 0 24px;
+  border-color: transparent;
+  border-image-source: url('/images/chapters/area_title.webp');
+  border-image-slice: 0 34 fill;
+  border-image-width: 0 24px;
+  border-image-repeat: stretch;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--paper);
+  font-size: 12px;
+  line-height: 30px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+}
 .region-map__node.is-current .region-map__node-label { background: var(--accent); color: #fff; border-color: var(--accent-ink); }
+.region-map__node.is-current .region-map__node-label.is-plaque { background: none; }
 .region-map__node:hover .region-map__node-art { filter: brightness(1.15) drop-shadow(0 0 7px rgba(255, 214, 120, 0.95)); }
+.region-map__node.is-stage:hover .region-map__node-art--stars { filter: sepia(1) saturate(3.6) hue-rotate(152deg) brightness(1.2) drop-shadow(0 0 7px rgba(120, 210, 255, 0.95)); }
 .region-map__node.is-area:hover .region-map__node-label,
-.region-map__node.is-instance:hover .region-map__node-label { background: var(--accent); color: #fff; }
+.region-map__node.is-instance:hover .region-map__node-label { filter: brightness(1.18); }
 
-.region-map__toolbar {
+/* 底部右侧：提示文字在缩放条左边，与副本图鉴同一套写法 */
+.region-map__footer {
   position: absolute;
   right: 8px;
   bottom: 8px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.region-map__toolbar {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -403,17 +460,40 @@ watch(() => props.height, () => resetView())
 .region-map__toolbar button:disabled { opacity: 0.45; cursor: default; }
 .region-map__toolbar output { min-width: 42px; text-align: center; font-size: 11px; font-weight: 700; color: var(--text-muted); }
 
+/* 操作提示：与副本图鉴同款，只在有鼠标的设备上显示（触屏端是双指缩放） */
+.region-map__hint {
+  display: none;
+  color: var(--text-main);
+  font-size: 13px;
+  white-space: nowrap;
+  pointer-events: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+@media (hover: hover) and (pointer: fine) {
+  .region-map__hint { display: block; }
+}
+.region-map__hint--back {
+  position: absolute;
+  z-index: 5;
+  top: 10px;
+  left: calc(min(50%, 260px) + 16px);
+}
+
+/* 「世界地图」标题条：位置与尺寸和世界地图画布保持一致，在这里兼作「返回世界地图」按钮。
+   按钮必须给显式宽度——它是 shrink-to-fit，而里面的 img 用百分比宽度会形成循环依赖，
+   浏览器会退化成「按钮撑满、图片居中」，标题条就跑不到左上角。 */
 .region-map__back {
   position: absolute;
-  top: 8px;
-  left: 8px;
+  top: 6px;
+  left: 6px;
+  width: min(50%, 260px);
   padding: 0;
   border: none;
   background: none;
   cursor: pointer;
   line-height: 0;
 }
-.region-map__back img { width: min(46%, 260px); height: auto; }
+.region-map__back img { display: block; width: 100%; height: auto; }
 .region-map__chip {
   position: absolute;
   padding: 4px 12px;

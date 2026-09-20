@@ -18,7 +18,7 @@ import crypto from 'node:crypto'
 import { fileURLToPath } from 'node:url'
 import sharp from 'sharp'
 import {
-  ATLAS_PATH, STAGE_PLATFORM_RECT, STAGE_PLATFORM_LOCKED_RECT
+  ATLAS_PATH, STAGE_PLATFORM_RECT, STAGE_PLATFORM_LOCKED_RECT, AREA_TITLE_RECT
 } from '../parse/chapterMapLayout.mjs'
 
 const root = fileURLToPath(new URL('../../', import.meta.url))
@@ -64,6 +64,7 @@ const ASSETS = [
   // 关卡节点石台：从 MapPanelAtlas 切出来（见 chapterMapLayout.mjs 的说明）
   { from: path.join(resDir, ATLAS_PATH), to: 'stage_platform.webp', crop: STAGE_PLATFORM_RECT, note: '关卡节点石台（三水晶 + 橙宝石）' },
   { from: path.join(resDir, ATLAS_PATH), to: 'stage_platform_locked.webp', crop: STAGE_PLATFORM_LOCKED_RECT, note: '关卡节点石台（未开放，灰）' },
+  { from: path.join(resDir, ATLAS_PATH), to: 'area_title.webp', crop: AREA_TITLE_RECT, note: '地区名称牌边框' },
   // 地区节点立体图：按 area.icon 命名，只导有 icon 的
   ...AREA_ICONS.map(icon => ({
     from: path.join(resDir, `texture/area/icon/${icon}.png`),

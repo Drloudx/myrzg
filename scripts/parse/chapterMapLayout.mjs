@@ -40,6 +40,10 @@ export const STAGE_PLATFORM_LOCKED_RECT = { x: 402, y: 1133, w: 126, h: 126 }
 export const STAGE_PLATFORM_PATH = '/images/chapters/stage_platform.webp'
 export const STAGE_PLATFORM_LOCKED_PATH = '/images/chapters/stage_platform_locked.webp'
 
+/** 地区名称牌的边框（同一张图集，深青底 + 金边 + 两端菱形）。 */
+export const AREA_TITLE_RECT = { x: 317, y: 683, w: 164, h: 52 }
+export const AREA_TITLE_PATH = '/images/chapters/area_title.webp'
+
 /** 地区节点立体图（`texture/area/icon/<icon>.png`）与副本入口图（`texture/uipanel/instancepanel/<icon>.png`）。 */
 export const AREA_ICON_PATH = icon => `/images/chapters/area/${icon}.webp`
 export const INSTANCE_ICON_PATH = icon => `/images/chapters/instance/${icon}.webp`

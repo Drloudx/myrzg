@@ -159,8 +159,10 @@ function buildRegionRoute(chapterId, areaMap, tables) {
       y: flipY(Number(node.y || 0) - 75),
       label: tables.instances[node.instance]?.name || node.instance,
       name: '',
-      icon: tables.instances[node.instance]?.icon || '',
-      iconPath: tables.instances[node.instance]?.icon ? INSTANCE_ICON_PATH(tables.instances[node.instance].icon) : ''
+      // 节点图要用 map.instance[].img（map_w1_cN_dM，地图上的立体图），**不是** instance.icon——
+      // 后者是副本自己的平面图标，c1/c2 那几个是 map_fb_*，摆到地图上不是游戏里的样子。
+      icon: node.img || '',
+      iconPath: node.img ? INSTANCE_ICON_PATH(node.img) : ''
     })),
     ...asArray(areaMap.explorePoint).map(node => ({
       kind: 'explore',
