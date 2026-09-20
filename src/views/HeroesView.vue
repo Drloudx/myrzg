@@ -215,7 +215,7 @@
             </UiTag>
           </button>
           <UiTag tone="accent" class="badge element-badge">
-            <img :src="getImageUrl(`/images/HeroGachaShowPanel/spGachaTag${getSpGachaElementSlug(selectedHero.element)}03.webp`)" class="badge-icon" />
+            <img :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/spGachaTag${getSpGachaElementSlug(selectedHero.element)}03.webp`)" class="badge-icon" />
             {{ selectedHero.elementName }}属性
           </UiTag>
           <UiTag :quality="selectedHero.rare" class="badge rare-badge">

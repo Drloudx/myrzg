@@ -57,7 +57,7 @@ for (const candidate of pools.filter(pool => pool.kind === 'hero').flatMap(pool 
   // → `heroPic.localPosition`。产物不带上它，立绘就只能居中，逐角色会偏。
   const [imgPosX, imgPosY] = String(hero.imgPos ?? '').split('_').map(Number)
   presentation[candidate.typeId] = { name, binary, skin: hero.viewData.skinName, job: hero.job, element: hero.element,
-    idle: hero.viewData.idle_Front_AnimName || 'idle_front', card: `/images/HeroGachaShowPanel/gacha_${hero.icon}.png`,
+    idle: hero.viewData.idle_Front_AnimName || 'idle_front', card: `/images/HeroGachaShowPanel_Atlas/gacha_${hero.icon}.webp`,
     portrait: `/images/chara/l/${hero.img}.png`, fragment: `/images/HeroInfoPanel_Atlas/${fragment}.png`, dialogue: talks[candidate.typeId]?.gacha?.[0] || '',
     imgPos: Number.isFinite(imgPosX) && Number.isFinite(imgPosY) ? { x: imgPosX, y: imgPosY } : null }
 }

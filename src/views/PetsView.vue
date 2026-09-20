@@ -83,7 +83,7 @@
 
               <!-- 右上角带图标的属性 -->
               <div class="portrait-element-badge" v-if="selectedPet.element">
-                <img :src="getImageUrl(`/images/HeroGachaShowPanel/spGachaTag${getSpGachaElementSlug(selectedPet.element)}03.webp`)" class="top-right-badge-icon" alt="" />
+                <img :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/spGachaTag${getSpGachaElementSlug(selectedPet.element)}03.webp`)" class="top-right-badge-icon" alt="" />
                 <span :class="`element-${selectedPet.element}`">{{ selectedPet.elementName || getElementName(selectedPet.element) }}</span>
               </div>
 
@@ -101,7 +101,7 @@
 
               <!-- 右上角带图标的属性 -->
               <div class="portrait-element-badge" v-if="selectedPet.element">
-                <img :src="getImageUrl(`/images/HeroGachaShowPanel/spGachaTag${getSpGachaElementSlug(selectedPet.element)}03.webp`)" class="top-right-badge-icon" alt="" />
+                <img :src="getImageUrl(`/images/HeroGachaShowPanel_Atlas/spGachaTag${getSpGachaElementSlug(selectedPet.element)}03.webp`)" class="top-right-badge-icon" alt="" />
                 <span :class="`element-${selectedPet.element}`">{{ selectedPet.elementName || getElementName(selectedPet.element) }}</span>
               </div>
 
