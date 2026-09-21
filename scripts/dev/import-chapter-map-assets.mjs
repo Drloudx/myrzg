@@ -18,7 +18,8 @@ import crypto from 'node:crypto'
 import { fileURLToPath } from 'node:url'
 import sharp from 'sharp'
 import {
-  ATLAS_PATH, STAGE_PLATFORM_RECT, STAGE_PLATFORM_LOCKED_RECT, AREA_TITLE_RECT, STAGE_CRYSTAL_RECT, STAGE_CRYSTAL_SMALL_RECT
+  ATLAS_PATH, STAGE_PLATFORM_RECT, STAGE_PLATFORM_LOCKED_RECT, AREA_TITLE_RECT, STAGE_CRYSTAL_RECT, STAGE_CRYSTAL_SMALL_RECT,
+  AREA_TAG_RECT
 } from '../parse/chapterMapLayout.mjs'
 
 const root = fileURLToPath(new URL('../../', import.meta.url))
@@ -67,6 +68,9 @@ const ASSETS = [
   { from: path.join(resDir, ATLAS_PATH), to: 'area_title.webp', crop: AREA_TITLE_RECT, note: '地区名称牌边框' },
   { from: path.join(resDir, ATLAS_PATH), to: 'stage_crystal.webp', crop: STAGE_CRYSTAL_RECT, note: '关卡石台中间的大宝石' },
   { from: path.join(resDir, ATLAS_PATH), to: 'stage_crystal_small.webp', crop: STAGE_CRYSTAL_SMALL_RECT, note: '关卡石台两侧的小宝石' },
+  // 地区节点名称牌上方的小标签（游戏里写「自由探索」）。
+  // 图集里的 map_select_out/in/corner 是「选中态」橙环，本站不显示，故不导入。
+  { from: path.join(resDir, ATLAS_PATH), to: 'area_tag.webp', crop: AREA_TAG_RECT, note: '地区节点「自由探索」标签' },
   // 地区节点立体图：按 area.icon 命名，只导有 icon 的
   ...AREA_ICONS.map(icon => ({
     from: path.join(resDir, `texture/area/icon/${icon}.png`),

@@ -120,7 +120,7 @@ function roomKind(detail, collectType) {
   return detail?.jigDes || '战斗房间'
 }
 
-function buildRoomVariant(roomTypeId, roomDetails, collectMap, collectTypeMap, rewardMap, consumeMap, itemMap, monMap, equipConfig, source) {
+export function buildRoomVariant(roomTypeId, roomDetails, collectMap, collectTypeMap, rewardMap, consumeMap, itemMap, monMap, equipConfig, source) {
   const detail = roomDetails[roomTypeId]
   if (!detail) return null
   const monRounds = asArray(detail.monRounds)
@@ -206,18 +206,87 @@ function buildRoomVariant(roomTypeId, roomDetails, collectMap, collectTypeMap, r
   }
 }
 
-export function buildBattleRooms(fullBattle, roomDetails, collectMap, collectTypeMap, rewardMap, consumeMap, itemMap, monMap, equipConfig) {
+function sortRoomsByPath(layerData) {
+  const roomKeys = Object.keys(layerData?.rooms || {})
+  if (roomKeys.length <= 1) return roomKeys
+
+  const adj = {}
+  for (const r of roomKeys) adj[r] = []
+  for (const link of asArray(layerData?.map?.link)) {
+    const [u, v] = asArray(link.levelRooms)
+    if (u && v && adj[u] && adj[v]) {
+      if (!adj[u].includes(v)) adj[u].push(v)
+      if (!adj[v].includes(u)) adj[v].push(u)
+    }
+  }
+
+  let start = layerData.startRoomId
+  if (!start || !adj[start]) {
+    const deg1 = roomKeys.filter(r => adj[r].length === 1)
+    if (deg1.length > 0) {
+      const posMap = Object.fromEntries(asArray(layerData?.map?.levelRoom).map(n => [n.typeId, n.x || 0]))
+      deg1.sort((a, b) => (posMap[a] || 0) - (posMap[b] || 0))
+      start = deg1[0]
+    } else {
+      start = roomKeys[0]
+    }
+  }
+
+  const visited = new Set([start])
+  const order = [start]
+  let curr = start
+  while (order.length < roomKeys.length) {
+    const next = (adj[curr] || []).find(n => !visited.has(n))
+    if (next) {
+      visited.add(next)
+      order.push(next)
+      curr = next
+    } else {
+      const remaining = roomKeys.filter(r => !visited.has(r))
+      if (!remaining.length) break
+      const posMap = Object.fromEntries(asArray(layerData?.map?.levelRoom).map(n => [n.typeId, n.x || 0]))
+      remaining.sort((a, b) => (posMap[a] || 0) - (posMap[b] || 0))
+      const nextStart = remaining[0]
+      visited.add(nextStart)
+      order.push(nextStart)
+      curr = nextStart
+    }
+  }
+  return order
+}
+
+export function buildBattleRooms(fullBattle, roomDetails, collectMap, collectTypeMap, rewardMap, consumeMap, itemMap, monMap, equipConfig, options = {}) {
   const rooms = []
+  const nameByPosition = !!options.nameByPosition
+  const totalLayers = asArray(fullBattle?.layers).length || 1
+
   asArray(fullBattle?.layers).forEach((layer, layerIndex) => {
     const layerDatas = Array.isArray(layer) ? layer : asArray(layer?.layerDatas)
     layerDatas.forEach(layerData => {
-      Object.values(layerData?.rooms || {}).forEach(room => {
+      const orderedRoomKeys = nameByPosition
+        ? sortRoomsByPath(layerData)
+        : Object.keys(layerData?.rooms || {})
+
+      orderedRoomKeys.forEach((roomKey, roomIndex) => {
+        const room = layerData?.rooms?.[roomKey]
+        if (!room) return
+
         const candidates = [room.roomTypeId, ...asArray(room.randomRooms).map(item => item.roomTypeId)].filter(Boolean)
         const variants = [...new Set(candidates)].map((roomTypeId, index) => buildRoomVariant(roomTypeId, roomDetails, collectMap, collectTypeMap, rewardMap, consumeMap, itemMap, monMap, equipConfig, { layer: layerIndex + 1, roomId: room.typeId, candidate: index > 0 }))
           .filter(Boolean)
         if (variants.length) {
-          const configuredLabel = room.name || ''
-          const label = configuredLabel && configuredLabel !== room.typeId && !configuredLabel.includes('未命名') ? configuredLabel : variants[0].name
+          let label = ''
+          if (nameByPosition) {
+            label = totalLayers > 1
+              ? `房间 ${layerIndex + 1}-${roomIndex + 1}`
+              : `房间 ${roomIndex + 1}`
+            for (const v of variants) {
+              v.name = label
+            }
+          } else {
+            const configuredLabel = room.name || ''
+            label = configuredLabel && configuredLabel !== room.typeId && !configuredLabel.includes('未命名') ? configuredLabel : variants[0].name
+          }
           rooms.push({ layer: layerIndex + 1, roomId: room.typeId, label, level: room.gameLevel || 0, hidden: !!room.hiddenRoom, icon: room.roomIcon || 0, variants })
         }
       })

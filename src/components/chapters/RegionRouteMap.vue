@@ -34,13 +34,13 @@
           把点击吃掉。
         -->
         <component
-          :is="node.kind === 'stage' ? 'button' : 'div'"
+          :is="node.kind === 'stage' || node.kind === 'area' ? 'button' : 'div'"
           v-for="node in region.nodes"
           :key="`${node.kind}-${node.id}`"
           class="region-map__node"
-          :class="[`is-${node.kind}`, { 'is-current': node.kind === 'stage' && node.id === currentStageId }]"
+          :class="[`is-${node.kind}`, { 'is-current': (node.kind === 'stage' || node.kind === 'area') && node.id === currentStageId }]"
           :style="nodeStyle(node)"
-          :type="node.kind === 'stage' ? 'button' : undefined"
+          :type="node.kind === 'stage' || node.kind === 'area' ? 'button' : undefined"
           :title="nodeTitle(node)"
           @click="handleNode(node)"
         >
@@ -51,8 +51,19 @@
             <img class="region-map__node-art region-map__node-art--gem is-left" :src="getImageUrl(stageCrystalSmall)" alt="" aria-hidden="true" decoding="async" @error="handleImgError" />
             <img class="region-map__node-art region-map__node-art--gem is-right" :src="getImageUrl(stageCrystalSmall)" alt="" aria-hidden="true" decoding="async" @error="handleImgError" />
           </template>
+
+          <!--
+            地区节点：游戏里是「立体图（建筑 + 圆盘）+ 名称牌 + 名称牌上方的小标签」。
+            锚点在**圆盘中心**（见 nodeStyle 的说明），所以图形正好落在节点坐标上。
+          -->
+          <template v-else-if="node.kind === 'area'">
+            <img v-if="nodeIcon(node)" class="region-map__node-art" :src="getImageUrl(nodeIcon(node))" alt="" decoding="async" @error="handleImgError" />
+            <img v-if="areaTag" class="region-map__node-tag" :src="getImageUrl(areaTag)" alt="" aria-hidden="true" decoding="async" @error="handleImgError" />
+          </template>
+
           <img v-else-if="nodeIcon(node)" class="region-map__node-art" :src="getImageUrl(nodeIcon(node))" alt="" decoding="async" @error="handleImgError" />
           <span v-else class="region-map__node-dot"></span>
+
           <!--
             副本图**自带名称牌边框**（map_w1_cN_dM 里已经含「迷宫挑战」徽标 + 一块空牌子），
             所以名字直接压在图上的牌子位置，不再套地区那层边框。
@@ -68,7 +79,7 @@
       <button type="button" class="region-map__back" @click="emit('back')">
         <img :src="getImageUrl(mapTitle)" alt="返回世界地图" @error="handleImgError" />
       </button>
-      <span class="region-map__hint region-map__hint--back">点击返回世界地图</span>
+      <span class="region-map__hint region-map__hint--back" role="button" tabindex="0" @click="emit('back')">← 点击返回世界地图</span>
       <button type="button" class="region-map__chip region-map__list-btn" @click="emit('list')">展开列表</button>
       <span class="region-map__chip region-map__caption">{{ captionText }}</span>
 
@@ -111,6 +122,8 @@ const props = defineProps({
   stageCrystal: { type: String, default: '' },
   /** 叠在石台两侧的小宝石（`chapters.json.map.stageCrystalSmall`）。 */
   stageCrystalSmall: { type: String, default: '' },
+  /** 地区名称牌上方的小标签，游戏里写「自由探索」（`chapters.json.map.areaTag`）。 */
+  areaTag: { type: String, default: '' },
   /** 当前打开的关卡 id（高亮它在路线上的位置）。 */
   currentStageId: { type: String, default: '' },
   caption: { type: String, default: '' },
@@ -150,12 +163,13 @@ const canvasStyle = computed(() => ({
   top: `${panY.value}px`
 }))
 
-/** 节点标记反向缩放：父层按 zoom 缩放，这里 1/zoom 抵消，屏幕上恒定大小。 */
-const nodeScale = computed(() => 1 / zoom.value)
+/**
+ * 节点在画布坐标系（Canvas 像素）内摆放，随外层 canvas 缩放同步放大缩小。
+ * 锚点在各类节点对应几何中心（关卡在石台中心、地区在圆盘中心、副本在底座中心）。
+ */
 const nodeStyle = node => ({
-  left: `${(Number(node.x || 0) / size.value.w) * 100}%`,
-  top: `${(Number(node.y || 0) / size.value.h) * 100}%`,
-  transform: `translate(-50%, -50%) scale(${nodeScale.value})`
+  left: `${node.x}px`,
+  top: `${node.y}px`
 })
 
 /** 节点用游戏原图：关卡是石台，地区是立体图，副本入口是入口图，探索点没有图只画点。 */
@@ -173,7 +187,7 @@ const nodeTitle = (node) => {
 }
 
 const handleNode = (node) => {
-  if (node.kind !== 'stage') return
+  if (node.kind !== 'stage' && node.kind !== 'area') return
   emit('select', node.id)
 }
 
@@ -344,16 +358,14 @@ watch(() => props.height, () => resetView())
 /* 连线：游戏里是金色虚线 */
 .region-map__links line {
   stroke: #d8a63f;
-  stroke-width: 3;
-  stroke-dasharray: 8 6;
+  stroke-width: 6;
+  stroke-dasharray: 14 10;
   stroke-linecap: round;
-  vector-effect: non-scaling-stroke;
 }
 
 /*
-  节点：屏幕尺寸恒定（由 1/zoom 反向缩放维持），所以这里给的都是屏幕像素。
-  锚点只由**图形**决定（translate(-50%,-50%) 作用在图形上），名称牌绝对定位挂在下方——
-  名称牌参与布局的话会把节点整体上推，落点就不准了。
+  节点：直接在画布坐标系（Canvas 像素）内以真实尺寸渲染。
+  随父级 canvas 的 scale(zoom) 同步缩放，彻底杜绝底图放大而节点不放大的问题。
 */
 .region-map__node {
   position: absolute;
@@ -368,94 +380,161 @@ watch(() => props.height, () => resetView())
   font-weight: 700;
 }
 .region-map__node-art { display: block; height: auto; pointer-events: none; }
-/* 关卡节点在最上层；地区/副本/探索点是装饰，既不接收指针也不参与命中 */
-.region-map__node.is-stage { width: 54px; height: 54px; z-index: 3; }
+
+/* 关卡节点：128x128 居中对齐节点坐标 */
+.region-map__node.is-stage {
+  width: 128px;
+  height: 128px;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
 .region-map__node.is-stage .region-map__node-art { position: absolute; inset: 0; width: 100%; height: auto; }
-/*
-  三颗宝石叠在石台上：位置是**从石台图里量出来的**。
-  石台图里水晶簇的包围盒是 88×42 @ (19,0)（顶到图的最高行）——中间那颗最高，
-  所以大宝石 top 0%，两侧 top 15%（用户校准值）。
-*/
 .region-map__node.is-stage .region-map__node-art--gem { inset: auto; }
 .region-map__node.is-stage .region-map__node-art--gem.is-mid { left: 35%; top: 0; width: 30%; }
 .region-map__node.is-stage .region-map__node-art--gem.is-left { left: 15%; top: 15%; width: 24%; }
 .region-map__node.is-stage .region-map__node-art--gem.is-right { left: 61%; top: 15%; width: 24%; }
-.region-map__node.is-area { width: 86px; z-index: 1; pointer-events: none; }
-.region-map__node.is-area .region-map__node-art { width: 86px; }
-.region-map__node.is-instance { width: 72px; z-index: 2; pointer-events: none; }
-.region-map__node.is-instance .region-map__node-art { width: 72px; }
-.region-map__node.is-explore { width: 13px; height: 13px; z-index: 1; pointer-events: none; }
 
-.region-map__node-dot {
-  width: 13px;
-  height: 13px;
-  border-radius: 999px;
-  background: var(--accent);
-  border: 1px solid var(--accent-ink);
-}
-
-/* 关卡编号：游戏里就是一小块深色牌子 */
-.region-map__node-label {
+/*
+  关卡编号：游戏里是紧贴石台底座下沿的无底板白字 + 黑色浓描边。
+*/
+.region-map__node.is-stage .region-map__node-label {
   position: absolute;
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  margin-top: 1px;
-  padding: 1px 8px;
-  border: 1px solid #17100a;
-  border-radius: 3px;
-  background: rgba(43, 31, 21, 0.88);
-  color: var(--paper);
-  font-size: 12px;
-  line-height: 1.5;
+  margin-top: -14px;
+  padding: 0;
+  border: none;
+  background: none;
+  box-shadow: none;
+  color: #ffffff;
+  font-size: 22px;
+  line-height: 1;
   white-space: nowrap;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+  -webkit-text-stroke: 3.5px rgba(28, 20, 12, 0.95);
+  paint-order: stroke fill;
 }
+
 /*
-  地区/副本名：用游戏里的名称牌边框（图集里的 map_a_title，两端菱形 + 金边 + 深青底）。
-  两端是装饰、中段要随名字长短伸缩，所以走 border-image 而不是整张缩放，否则菱形会被拉扁。
+  地区节点：244x258 原图尺寸，圆盘底座中心在垂直 75.4% 处，因此 translate(-50%, -75.4%) 保证圆盘中心精准落在节点坐标上。
 */
-.region-map__node-label.is-plaque {
-  padding: 0 24px;
+.region-map__node.is-area {
+  width: 244px;
+  height: 258px;
+  transform: translate(-50%, calc(-100% + 63.5px));
+  z-index: 1;
+  pointer-events: auto;
+  cursor: pointer;
+}
+.region-map__node.is-area .region-map__node-art {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 244px;
+  height: auto;
+}
+/* 「自由探索」标签：居中横跨于圆盘石阶表面（距底 38px，原寸 120x24） */
+.region-map__node.is-area .region-map__node-tag {
+  position: absolute;
+  left: 50%;
+  bottom: 38px;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 24px;
+  pointer-events: none;
+  z-index: 2;
+}
+/* 地区名称牌：紧贴「自由探索」下方，两端菱形修饰紧凑收紧，消除多余空隙，字号饱满 */
+.region-map__node.is-area .region-map__node-label.is-plaque {
+  position: absolute;
+  left: 50%;
+  bottom: -2px;
+  transform: translateX(-50%);
+  margin-top: 0;
+  padding: 0 8px;
+  height: 44px;
+  line-height: 40px;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--on-wood-text);
   border-style: solid;
   border-width: 0 24px;
   border-color: transparent;
   border-image-source: url('/images/chapters/area_title.webp');
-  border-image-slice: 0 34 fill;
+  border-image-slice: 0 36 fill;
   border-image-width: 0 24px;
   border-image-repeat: stretch;
   background: none;
   border-radius: 0;
   box-shadow: none;
-  color: var(--paper);
-  font-size: 12px;
-  line-height: 30px;
+  white-space: nowrap;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+  -webkit-text-stroke: 0;
+  z-index: 3;
 }
-/* 副本名：压在图标自带的空牌子上（牌子在图的下缘 ~82%~99% 处），不再套边框 */
-.region-map__node-label.is-builtin {
+
+/*
+  副本节点：172px 原始宽度，底座圆盘中心距底部约 54px。
+*/
+.region-map__node.is-instance {
+  width: 172px;
+  height: 180px;
+  transform: translate(-50%, calc(-100% + 54px));
+  z-index: 2;
+  pointer-events: none;
+}
+.region-map__node.is-instance .region-map__node-art {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 172px;
+  height: auto;
+  display: block;
+}
+/* 副本名：精准居中落在图片自带的深褐色底框（bottom: 26~50px，高24px）内部，绝不遮挡上方“迷宫挑战”（bottom: 62~66px） */
+.region-map__node.is-instance .region-map__node-label.is-builtin {
   position: absolute;
   left: 50%;
-  bottom: 5%;
+  bottom: 26px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transform: translateX(-50%);
   padding: 0;
   border: none;
   background: none;
   box-shadow: none;
-  color: #f2e3c4;
-  font-size: 10px;
-  line-height: 1.2;
+  color: #f4e6c8;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
   white-space: nowrap;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.95);
+  -webkit-text-stroke: 0;
 }
-.region-map__node.is-current .region-map__node-label { background: var(--accent); color: #fff; border-color: var(--accent-ink); }
-.region-map__node.is-current .region-map__node-label.is-plaque,
-.region-map__node.is-current .region-map__node-label.is-builtin { background: none; }
-.region-map__node:hover .region-map__node-art { filter: brightness(1.15) drop-shadow(0 0 7px rgba(255, 214, 120, 0.95)); }
-.region-map__node.is-area:hover .region-map__node-label,
-.region-map__node.is-instance:hover .region-map__node-label { filter: brightness(1.18); }
-.region-map__node.is-area:hover .region-map__node-label,
-.region-map__node.is-instance:hover .region-map__node-label { filter: brightness(1.18); }
+
+/* 探索点：24x24 小圆点 */
+.region-map__node.is-explore {
+  width: 24px;
+  height: 24px;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+}
+.region-map__node-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--accent);
+  border: 2px solid var(--accent-ink);
+}
+.region-map__node.is-current .region-map__node-label { color: var(--accent-bright); }
+.region-map__node.is-current .region-map__node-label.is-plaque { color: var(--on-wood-text); }
+.region-map__node.is-stage:hover .region-map__node-art { filter: brightness(1.15) drop-shadow(0 0 7px rgba(255, 214, 120, 0.95)); }
+.region-map__node.is-area:hover .region-map__node-art,
+.region-map__node.is-instance:hover .region-map__node-art { filter: brightness(1.18); }
 
 /* 底部右侧：提示文字在缩放条左边，与副本图鉴同一套写法 */
 .region-map__footer {
@@ -508,7 +587,9 @@ watch(() => props.height, () => resetView())
   position: absolute;
   z-index: 5;
   top: 10px;
-  left: calc(min(50%, 260px) + 16px);
+  left: calc(min(50%, 260px) + 4px);
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 /* 「世界地图」标题条：位置与尺寸和世界地图画布保持一致，在这里兼作「返回世界地图」按钮。

@@ -12,18 +12,36 @@
  * 房间、怪物与掉落的解析直接复用副本图鉴的实现（dungeonData.js + compact.mjs），
  * 只在“从完整 battle.json 取哪一批关卡”和“章节归属”上与副本不同。
  */
-import { buildBattleRooms, buildBattleRoutes, buildSpecialChestSources, buildRewardEntries, consumeCost } from '../../src/utils/dungeonData.js'
+import { buildBattleRooms, buildBattleRoutes, buildSpecialChestSources, buildRewardEntries, consumeCost, buildRoomVariant } from '../../src/utils/dungeonData.js'
 import { readFileSync } from 'node:fs'
 import { readJson } from './shared.mjs'
 import { compactRewards, compactRooms } from './compact.mjs'
 import { buildRoomEffects } from './roomEffects.mjs'
-import { CHAPTER_MAP_SIZE, CHAPTER_TILE_RECTS, CHAPTER_MAP_TILE_PATH, CHAPTER_REGION_BG_PATH, AREA_ICON_PATH, INSTANCE_ICON_PATH, STAGE_PLATFORM_PATH, STAGE_PLATFORM_LOCKED_PATH, STAGE_CRYSTAL_PATH, STAGE_CRYSTAL_SMALL_PATH } from './chapterMapLayout.mjs'
+import { CHAPTER_MAP_SIZE, CHAPTER_TILE_RECTS, CHAPTER_MAP_TILE_PATH, CHAPTER_REGION_BG_PATH, AREA_ICON_PATH, INSTANCE_ICON_PATH, STAGE_PLATFORM_PATH, STAGE_PLATFORM_LOCKED_PATH, STAGE_CRYSTAL_PATH, STAGE_CRYSTAL_SMALL_PATH, AREA_TAG_PATH } from './chapterMapLayout.mjs'
 
 const asMap = value => value && typeof value === 'object' ? value : {}
 const asArray = value => Array.isArray(value) ? value : []
 
 /** 章节顺序：主线 c0..c5 走 chapterInfo，特殊章节（幽夜古堡/黏滑溪谷）只有 area。 */
 const SPECIAL_CHAPTER_IDS = ['sp1', 'sp2']
+
+/**
+ * 节点图相对配置坐标的摆放偏移（Unity 单位，+y 向上）。
+ *
+ * 两个节点图的**锚点语义不同**，这是必须分开处理的原因：
+ *
+ * - **副本入口图**（`map_w1_cN_dM`，172×180）：`InstanceRoomItemUI` 用 `MakePixelPerfect()`，
+ *   图以**自身中心**落在节点坐标上。源码在这里多减了 75，但游戏截图里图标是正落在节点上的
+ *   （连线端点就落在图标中心），所以本站取 0、不跟着减。
+ * - **地区立体图**（`map_w1_cN_aM`，244×258）：图比关卡石台大得多（238 宽的圆盘 vs 117），
+ *   锚点要落在**圆盘中心**（sprite 高度的 75.4% 处）——这层由 `RegionRouteMap.vue` 的
+ *   `.region-map__node-art { top: -17.8px }` 完成，数据侧同样取 0。
+ *
+ * 源码的 80 / 75 是给 `AreaItemUI` / `InstanceRoomItemUI` 在**它自己的 prefab 层级**里用的，
+ * 直接照搬到「sprite 居中摆放」的网页实现上会把图标整体抬离节点。
+ */
+const AREA_NODE_OFFSET_Y = 0
+const INSTANCE_NODE_OFFSET_Y = 0
 
 /** 房间配置里战斗相关字段都在 battleData 下；这里统一摊平成 dungeonData 期望的形状。 */
 function roomDetailsFrom(roomMap, buffs) {
@@ -146,7 +164,7 @@ function buildRegionRoute(chapterId, areaMap, tables) {
       kind: 'area',
       id: node.typeId,
       x: Number(node.x || 0),
-      y: flipY(Number(node.y || 0) - 80),
+      y: flipY(Number(node.y || 0) + AREA_NODE_OFFSET_Y),
       label: tables.areas[node.typeId]?.name || node.typeId,
       name: '',
       icon: tables.areas[node.typeId]?.icon || '',
@@ -156,7 +174,7 @@ function buildRegionRoute(chapterId, areaMap, tables) {
       kind: 'instance',
       id: node.instance,
       x: Number(node.x || 0),
-      y: flipY(Number(node.y || 0) - 75),
+      y: flipY(Number(node.y || 0) + INSTANCE_NODE_OFFSET_Y),
       label: tables.instances[node.instance]?.name || node.instance,
       name: '',
       // 节点图要用 map.instance[].img（map_w1_cN_dM，地图上的立体图），**不是** instance.icon——
@@ -194,6 +212,8 @@ export function buildChaptersFiles() {
   const ownerGrid = JSON.parse(readFileSync(new URL('./chapterMapOwner.json', import.meta.url), 'utf8'))
   const areas = asMap(readJson('area.json').datas)
   const levelStages = asMap(readJson('levelStage.json').datas)
+  const levelRooms = asMap(readJson('levelRoom.json').datas)
+  const rawRoomMap = asMap(readJson('room.json'))
   const battles = asMap(readJson('battle.json').datas)
   const rewards = asMap(readJson('reward.json').datas)
   const consumes = asMap(readJson('consume.json').datas)
@@ -204,7 +224,7 @@ export function buildChaptersFiles() {
   const equipConfig = readJson('equip/equipGroup.json')
   const instances = asMap(readJson('instance.json').datas)
   const routeTables = { areas, instances, levelStages }
-  const roomDetails = roomDetailsFrom(asMap(readJson('room.json')), {
+  const roomDetails = roomDetailsFrom(rawRoomMap, {
     buffMap: asMap(readJson('buff.json')),
     buffTeamMap: asMap(readJson('battleBuffTeam.json')),
     buffCardMap: asMap(readJson('battleBuffCard.json'))
@@ -213,7 +233,7 @@ export function buildChaptersFiles() {
   const buildDifficulty = (battleId, index, conf, chapterConf) => {
     const battle = battles[battleId]
     if (!battle) return null
-    const rooms = buildBattleRooms(battle, roomDetails, collectMap, collectTypes, rewards, consumes, items, monMap, equipConfig)
+    const rooms = buildBattleRooms(battle, roomDetails, collectMap, collectTypes, rewards, consumes, items, monMap, equipConfig, { nameByPosition: true })
     return {
       key: DIFFICULTY_KEYS[index],
       label: DIFFICULTY_LABELS[index],
@@ -245,7 +265,7 @@ export function buildChaptersFiles() {
     const area = areas[areaId]
     if (!area?.map) throw new Error(`[chapters] 章节 ${chapterId} 缺少地图配置：${areaId}`)
 
-    const stages = asArray(area.map.levelStage).map(node => {
+    const normalStages = asArray(area.map.levelStage).map(node => {
       const stage = levelStages[node.typeId]
       if (!stage) throw new Error(`[chapters] 关卡节点 ${node.typeId} 在 levelStage.json 中不存在`)
       if (stageIds.has(node.typeId)) throw new Error(`[chapters] 关卡重复挂载：${node.typeId}`)
@@ -291,6 +311,123 @@ export function buildChaptersFiles() {
       return { ...summary, searchText: stageSearchText({ ...summary, difficulties }) }
     })
 
+    const areaStages = asArray(area.map.area).map(node => {
+      const areaNode = areas[node.typeId]
+      if (!areaNode) return null
+
+      const rawRooms = asArray(areaNode.map?.levelRoom)
+      const rooms = rawRooms.map((rNode, rIdx) => {
+        const lr = levelRooms[rNode.typeId] || {}
+        const candidates = [lr.roomTypeId, ...asArray(lr.randomRooms).map(item => item.roomTypeId)].filter(Boolean)
+        const variants = [...new Set(candidates)].map((roomTypeId, index) => {
+          const v = buildRoomVariant(
+            roomTypeId,
+            roomDetails,
+            collectMap,
+            collectTypes,
+            rewards,
+            consumes,
+            items,
+            monMap,
+            equipConfig,
+            { layer: 1, roomId: rNode.typeId, candidate: index > 0 }
+          )
+          if (!v) return null
+          const hasValidName = lr.name && lr.name !== rNode.typeId && !lr.name.includes('未命名')
+          const roomTitle = hasValidName ? lr.name : `房间 ${rIdx + 1}`
+          v.name = roomTitle
+          if (v.monsters.length === 0 && (v.notFightRoom || v.kind === '战斗房间')) {
+            v.kind = v.npcCount ? '剧情/交互房间' : (v.collections.length ? '探索房间' : '剧情/交互房间')
+          }
+          return v
+        }).filter(Boolean)
+
+        if (!variants.length) return null
+        const hasValidLabel = lr.name && lr.name !== rNode.typeId && !lr.name.includes('未命名')
+        const label = hasValidLabel ? lr.name : `房间 ${rIdx + 1}`
+
+        return {
+          layer: '1',
+          roomId: rNode.typeId,
+          label,
+          level: Number(lr.gameLevel || 0),
+          hidden: !!lr.hiddenRoom,
+          variants
+        }
+      }).filter(Boolean)
+
+      const roomLevels = rooms.map(r => r.level).filter(Boolean)
+      const minLvl = roomLevels.length ? Math.min(...roomLevels) : 0
+      const maxLvl = roomLevels.length ? Math.max(...roomLevels) : 0
+      const levelDisplay = minLvl ? (minLvl === maxLvl ? minLvl : `${minLvl}~${maxLvl}`) : 0
+
+      const rewardEntries = asArray(areaNode.areaItems).map(itemId => {
+        const item = items[itemId] || {}
+        return {
+          typeId: itemId,
+          name: item.name || itemId,
+          icon: `/images/Common_ItemIcon/${item.img || itemId}.webp`,
+          quality: Number(item.quality || 1),
+          min: 1,
+          max: 1
+        }
+      })
+
+      const difficulties = [
+        {
+          key: 'explore',
+          label: '自由探索',
+          name: areaNode.name || '',
+          level: typeof levelDisplay === 'number' ? levelDisplay : minLvl,
+          levelDisplay: String(levelDisplay),
+          time: 0,
+          consumeCost: null,
+          unlock: null,
+          reward: compactRewards(rewardEntries),
+          firstReward: [],
+          rooms: compactRooms(rooms),
+          routes: null,
+          chestSources: []
+        }
+      ]
+
+      const summary = {
+        id: node.typeId,
+        shortName: '自由探索',
+        name: areaNode.name || node.typeId,
+        des: areaNode.des || '',
+        kind: 'area',
+        hidden: false,
+        x: Number(node.x || 0),
+        y: Number(node.y || 0),
+        difficultyLabels: ['自由探索'],
+        levels: { '自由探索': levelDisplay },
+        cost: 0,
+        reward: compactRewards(rewardEntries),
+        firstReward: [],
+        detailFile: `stages/${node.typeId}.json`
+      }
+
+      const { reward, firstReward, ...scalars } = summary
+      files.push({
+        file: `parsed/stages/${node.typeId}.json`,
+        data: {
+          ...scalars,
+          chapter: { id: chapterId, name: conf?.name || area.name, areaName: area.name, areaId },
+          difficulties: difficulties.map(item => ({
+            ...item,
+            reward: compactRewards(item.reward),
+            firstReward: compactRewards(item.firstReward),
+            rooms: compactRooms(item.rooms)
+          }))
+        }
+      })
+
+      return { ...summary, searchText: stageSearchText({ ...summary, difficulties }) }
+    }).filter(Boolean)
+
+    const stages = [...normalStages, ...areaStages]
+
     return {
       id: chapterId,
       order,
@@ -300,7 +437,7 @@ export function buildChaptersFiles() {
       areaId,
       areaName: area.name || '',
       areaDes: area.des || '',
-      stageCount: stages.length,
+      stageCount: normalStages.length,
       stages
     }
   })
@@ -345,6 +482,9 @@ export function buildChaptersFiles() {
     stagePlatform: { normal: STAGE_PLATFORM_PATH, locked: STAGE_PLATFORM_LOCKED_PATH },
     stageCrystal: STAGE_CRYSTAL_PATH,
     stageCrystalSmall: STAGE_CRYSTAL_SMALL_PATH,
+    // 地区节点名称牌上方的小标签（游戏里写「自由探索」）。
+    // 图集里的 map_select_out/in/corner 是「选中态」橙环，本站不显示，故不输出。
+    areaTag: AREA_TAG_PATH,
     // 命中判定用：地图上每格最终属于哪一块（构建期烘焙，见 import-chapter-map-assets.mjs）。
     // 拼块包围盒互相重叠，不能用矩形热区；不透明区域也有重叠，所以按渲染顺序定归属。
     owner: ownerGrid

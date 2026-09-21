@@ -194,7 +194,7 @@ vue-myrzg/
 - `App.vue` 只负责页面外壳、路由出口和全局弹窗装配；全局搜索、原生主题/返回键生命周期、备份导入导出分别由 `composables/app/useGlobalSearch.js`、`useNativeShell.js`、`useBackupData.js` 管理。
 - `HeroesView.vue` 管理角色列表、详情状态、技能与属性计算；档案、互动页签、对话缓存归 `HeroStoryPanels.vue`，不得重新复制回页面。
 - `DungeonsView.vue` 管理副本筛选、关卡详情、房间详情和掉落；路线图的布局投影、缩放、鼠标/触摸拖动、节点聚合归 `DungeonRouteMap.vue`。数据与来源定位见 [副本图鉴](features/DUNGEONS.md)。
-- `ChaptersView.vue` 管理章节筛选、关卡列表与关卡详情；章节归属、三难度与解锁文案来自构建期 `chapters.json` / `stages/{stageId}.json`，房间与掉落展示复用 `RoomContentList.vue`、`RewardPools.vue`，不复制副本页的解析与样式。地图视图分两级，各归一个组件：世界地图归 `components/chapters/ChapterMapCanvas.vue`（拼块矩形与命中归属图都由构建期产物提供，坐标由模板匹配测得，页面不自己算坐标），地区路线图归 `RegionRouteMap.vue`（节点坐标、摆放偏移与连线同样来自构建期产物）。两级共用页面测出的同一块区域高度，缩放平移只在 `RegionRouteMap` 内部维护。
+- `ChaptersView.vue` 管理章节筛选、关卡列表与关卡详情；章节归属、三难度与解锁文案来自构建期 `chapters.json` / `stages/{stageId}.json`，房间与掉落展示复用 `RoomContentList.vue`、`RewardPools.vue`，不复制副本页的解析与样式。地图视图分两级，各归一个组件：世界地图归 `components/chapters/ChapterMapCanvas.vue`（拼块矩形与命中归属图都由构建期产物提供，坐标由模板匹配测得，页面不自己算坐标），地区路线图归 `RegionRouteMap.vue`（节点坐标与连线同样来自构建期产物）。两级共用页面测出的同一块区域高度，缩放平移只在 `RegionRouteMap` 内部维护。节点标记按屏幕恒定尺寸渲染，尺寸与锚点**按各 sprite 自身的内容比例量出**：关卡石台以自身中心落在节点坐标上，地区立体图的锚点在圆盘中心（sprite 高度的 75.4% 处，比 sprite 中心低 25.4%），副本入口图以自身中心落在节点坐标上；三者比例不同，不能套同一个宽度，也**不能照搬源码给 `AreaItemUI` / `InstanceRoomItemUI` 的 80 / 75 偏移**——那是给它们各自 prefab 层级用的，搬到「sprite 居中摆放」的网页实现上会把图标抬离节点。
 - `FurnitureView.vue` 管理家具筛选、详情及 `id/itemId` 联动；`FurnitureCard.vue` 只负责稳定卡片视觉，不解析原表或猜测图纸关系。
 
 ### 4.5 移动端/原生适配
