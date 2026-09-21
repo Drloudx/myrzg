@@ -769,3 +769,32 @@ input, textarea, select {
     height: 0;
   }
 }
+
+/* ====== 9. 掉落概率明细按钮 ====== */
+.prob-detail-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: 8px;
+  padding: 1px 7px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--accent-ink);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  border-radius: 999px;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+.prob-detail-btn:hover {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+}
+.prob-detail-btn:active {
+  transform: scale(0.97);
+}
+

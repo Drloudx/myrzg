@@ -167,6 +167,7 @@ test('area exploration node opens detail modal, and list difficulty filter suppo
   await expect(modal.locator('.ui-section__title', { hasText: '探索产出' })).toBeVisible()
   await expect(modal.locator('.ui-section__title', { hasText: '房间内容与掉落来源' })).toBeVisible()
   await expect(modal.locator('.room-collection').first()).toBeVisible()
+  await expect(modal.locator('.reward-slot').first()).toBeVisible()
 
   // 关闭弹窗
   await page.locator('.ui-modal-close:visible').first().click()

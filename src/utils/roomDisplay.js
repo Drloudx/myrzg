@@ -25,6 +25,32 @@ export const rewardQualitySort = (a, b) => Number(b?.quality || 0) - Number(a?.q
 export const sortedCollections = (collections = []) => [...collections].sort((a, b) => chestTier(b?.name) - chestTier(a?.name)
   || String(a?.name || '').localeCompare(String(b?.name || ''), 'zh-CN'))
 
+/** 怪物掉落去重合并：同一房间中相同怪物的相同掉落表合并为单条展示。 */
+export const sortedMonsterDrops = (monsters = []) => {
+  const unique = new Map()
+  for (const monster of (monsters || [])) {
+    for (const drop of (monster?.drops || [])) {
+      if (!drop?.reward?.length) continue
+      const rewardKey = drop.reward
+        .map(r => `${r.typeId}:${r.groupIndex}:${r.actualProb}:${r.min}:${r.max}`)
+        .join('|')
+      const key = `${monster.name || monster.typeId}:${rewardKey}`
+      if (!unique.has(key)) {
+        unique.set(key, {
+          key: `${monster.typeId || ''}:${drop.collectTypeId || ''}:${rewardKey}`,
+          sourceEntry: `${monster.typeId || ''}:${drop.collectTypeId || ''}`,
+          monsterName: monster.name,
+          monsterTypeId: monster.typeId,
+          collectTypeId: drop.collectTypeId,
+          dropRate: drop.dropRate,
+          reward: drop.reward
+        })
+      }
+    }
+  }
+  return [...unique.values()]
+}
+
 /** 怪物按波次分行；多波时逐波列出，单波时合并成一行。 */
 export const monsterWaveLines = (room) => {
   const waves = room?.waves || []
@@ -81,7 +107,13 @@ export const rewardGroups = (entries = []) => {
     .sort((a, b) => a.index - b.index)
 }
 
-export const rewardGroupLabel = (group) => `${group.rate < 1 ? `${(group.rate * 100).toFixed(0)}% 概率触发` : '必定触发'} · ${group.count} 个奖励`
+export const rewardGroupLabel = (group) => {
+  const countText = `${group.count} 件`
+  if (group.rate < 1) {
+    return `${(group.rate * 100).toFixed(0)}% 触发 · ${countText}`
+  }
+  return countText
+}
 
 /** 房间类型 → `UiTag` 的 tone。 */
 export const roomKindTone = (room) => room?.kind?.includes('宝箱') ? 'gold'

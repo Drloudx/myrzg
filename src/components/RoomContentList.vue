@@ -44,22 +44,43 @@
               class="room-collection"
             >
               <div class="room-collection__heading">
-                <span>{{ collection.name }}<template v-if="collection.count > 1"> ×{{ collection.count }}</template></span>
+                <span>
+                  {{ collection.name }}<template v-if="collection.count > 1"> ×{{ collection.count }}</template>
+                  <button
+                    v-if="collection.reward?.length"
+                    type="button"
+                    class="prob-detail-btn"
+                    @click.stop="openRewardDetail(collection.name, collection.reward)"
+                  >
+                    概率明细
+                  </button>
+                </span>
                 <small v-if="collection.consume">{{ collectConsumeText(collection) }}</small>
               </div>
               <RewardPools v-if="collection.reward.length" dense :entries="collection.reward" @item-click="emit('item-click', $event)" />
               <p v-else class="room-variant__line">已配置交互，奖励表未提供可展示条目</p>
             </div>
-            <div v-for="monster in variant.monsters" :key="`${variant.typeId}-${monster.typeId}-drop`">
-              <div
-                v-for="drop in monster.drops"
-                :key="`${monster.typeId}-${drop.collectTypeId}`"
-                :data-source-entry="`${variant.typeId}:${monster.typeId}:${drop.collectTypeId}`"
-                class="room-collection room-collection--monster"
-              >
-                <div class="room-collection__heading"><span>{{ monster.name }} 自动掉落</span><small v-if="drop.dropRate">{{ (drop.dropRate * 100).toFixed(0) }}%</small></div>
-                <RewardPools v-if="drop.reward.length" dense :entries="drop.reward" @item-click="emit('item-click', $event)" />
+            <div
+              v-for="drop in sortedMonsterDrops(variant.monsters)"
+              :key="`${variant.typeId}-${drop.key}`"
+              :data-source-entry="`${variant.typeId}:${drop.sourceEntry}`"
+              class="room-collection room-collection--monster"
+            >
+              <div class="room-collection__heading">
+                <span>
+                  {{ drop.monsterName }}
+                  <button
+                    v-if="drop.reward?.length"
+                    type="button"
+                    class="prob-detail-btn"
+                    @click.stop="openRewardDetail(drop.monsterName, drop.reward)"
+                  >
+                    概率明细
+                  </button>
+                </span>
+                <small v-if="drop.dropRate">{{ (drop.dropRate * 100).toFixed(0) }}%</small>
               </div>
+              <RewardPools v-if="drop.reward.length" dense :entries="drop.reward" @item-click="emit('item-click', $event)" />
             </div>
           </div>
         </template>
@@ -74,8 +95,10 @@ import RewardPools from './RewardPools.vue'
 import {
   collectConsumeText,
   monsterWaveLines,
-  sortedCollections
+  sortedCollections,
+  sortedMonsterDrops
 } from '../utils/roomDisplay.js'
+import { openRewardDetail } from '../utils/rewardModalState.js'
 
 defineProps({
   rooms: { type: Array, default: () => [] }
@@ -103,6 +126,7 @@ const emit = defineEmits(['item-click'])
 .room-effect__options b { margin-right: 5px; color: var(--text-main); }
 .room-collection { margin-top: 6px; padding: 6px 7px; background: var(--paper-solid); border: 1px dashed var(--border-soft); border-radius: 4px; }
 .room-collection--monster { border-style: solid; }
-.room-collection__heading { justify-content: space-between; color: var(--text-main); font-size: 12px; font-weight: 700; }
+.room-collection__heading { justify-content: space-between; color: var(--text-main); font-size: 12px; font-weight: 700; margin-bottom: 9px; }
+.room-collection__heading > span { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
 .room-collection__heading small { color: var(--text-muted); font-weight: 600; }
 </style>

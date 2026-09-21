@@ -20,8 +20,13 @@
         </span>
       </button>
       <template v-else>
-        <span class="ui-section__diamond" aria-hidden="true"></span>
-        {{ title }}
+        <span class="ui-section__title-main">
+          <span class="ui-section__diamond" aria-hidden="true"></span>
+          {{ title }}
+        </span>
+        <span v-if="$slots['title-end']" class="ui-section__title-end">
+          <slot name="title-end" />
+        </span>
       </template>
     </h3>
     <div v-show="!collapsible || open" class="ui-section__body">

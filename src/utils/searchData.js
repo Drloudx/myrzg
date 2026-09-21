@@ -349,7 +349,7 @@ export function buildSearchData(maps) {
       subTag: r.element,
       keywords: `${r.name} ${r.class} ${r.element} ${r.desc} ${r.skillName}`.toLowerCase()
     })),
-    ...rawItems.filter(i => !i.typeId || !i.typeId.startsWith('show_')).flatMap(i => {
+    ...rawItems.filter(i => (!i.typeId || !i.typeId.startsWith('show_')) && !isBlacklisted(i)).flatMap(i => {
       const categoryTags = resolveItemCategoryTags(i.category)
       const isEquip = i.category && String(i.category[0]) === '4'
       const fragHero = getFragmentHeroName(i)

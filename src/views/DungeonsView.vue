@@ -201,14 +201,34 @@
             >
               <div class="special-drop-card__heading">
                 <strong>{{ entry.name }}</strong>
-                <UiTag :tone="specialDropTone(entry)">{{ SPECIAL_DROP_TABS.find(tab => tab.key === entry.specialCategory)?.label }}</UiTag>
-                <UiTag v-if="entry.level" tone="default">Lv.{{ entry.level }}</UiTag>
+                <button
+                  v-if="specialDropSources(entry).length <= 1 && specialDropAllRewards(entry).length"
+                  type="button"
+                  class="prob-detail-btn"
+                  @click.stop="openRewardDetail(entry.name, specialDropAllRewards(entry))"
+                >
+                  概率明细
+                </button>
+                <div class="special-drop-card__tags">
+                  <UiTag :tone="specialDropTone(entry)">{{ SPECIAL_DROP_TABS.find(tab => tab.key === entry.specialCategory)?.label }}</UiTag>
+                  <UiTag v-if="entry.level" tone="default">Lv.{{ entry.level }}</UiTag>
+                </div>
               </div>
               <div v-if="specialDropSources(entry).length" class="special-drop-sources">
                 <section v-for="source in specialDropSources(entry)" :key="`${entry.typeId}-${source.key}`" class="special-drop-source">
-                  <div v-if="source.label || source.note" class="special-drop-source__heading">
-                    <strong>{{ source.label }}</strong>
-                    <small v-if="source.note">{{ source.note }}</small>
+                  <div v-if="shouldShowSourceHeading(source, entry)" class="special-drop-source__heading">
+                    <span class="special-drop-source__title">
+                      <strong v-if="source.label">{{ source.label }}</strong>
+                      <button
+                        v-if="specialDropSources(entry).length > 1 && source.reward?.length"
+                        type="button"
+                        class="prob-detail-btn"
+                        @click.stop="openRewardDetail(source.label || entry.name, source.reward)"
+                      >
+                        概率明细
+                      </button>
+                    </span>
+                    <small v-if="source.note && source.note !== entry.name">{{ source.note }}</small>
                   </div>
                   <RewardPools dense :entries="source.reward" @item-click="goToItem" />
                 </section>
@@ -221,20 +241,46 @@
         </div>
 
         <UiSection v-model:open="settlementDropsOpen" title="通关结算掉落" data-source-entry="settlement" collapsible>
+          <template #title-end>
+            <button
+              v-if="selectedBattle.reward?.length"
+              type="button"
+              class="prob-detail-btn prob-detail-btn--section"
+              @click.stop="openRewardDetail('通关结算掉落', selectedBattle.reward)"
+            >
+              概率明细
+            </button>
+          </template>
           <RewardPools v-if="selectedBattle.reward.length" :entries="selectedBattle.reward" @item-click="goToItem" />
           <p v-else class="empty-reward">暂无可展示的掉落配置</p>
         </UiSection>
 
         <UiSection v-if="selectedBattle.previewReward.length" v-model:open="previewDropsOpen" title="副本预览掉落" collapsible>
+          <template #title-end>
+            <button
+              type="button"
+              class="prob-detail-btn prob-detail-btn--section"
+              @click.stop="openRewardDetail('副本预览掉落', selectedBattle.previewReward)"
+            >
+              概率明细
+            </button>
+          </template>
           <RewardPools :entries="selectedBattle.previewReward" :source-of="previewGroupSourceLabel" @item-click="goToItem" />
-          <p class="drop-note drop-note--inline">源码中 `showReward` 用于进入副本前的奖励预览，实际结算使用上方 `reward`。</p>
         </UiSection>
 
-        <UiSection v-if="selectedBattle.firstReward.length" title="首次通关奖励" data-source-entry="first">
+        <UiSection v-if="selectedBattle.firstReward.length" v-model:open="firstDropsOpen" title="首次通关奖励" data-source-entry="first" collapsible>
+          <template #title-end>
+            <button
+              type="button"
+              class="prob-detail-btn prob-detail-btn--section"
+              @click.stop="openRewardDetail('首次通关奖励', selectedBattle.firstReward)"
+            >
+              概率明细
+            </button>
+          </template>
           <RewardPools :entries="selectedBattle.firstReward" @item-click="goToItem" />
         </UiSection>
 
-        <p class="drop-note">奖励卡中的“本次抽取”是当前奖励池抽中该物品的概率；如果同一奖励池会抽取多次，会同时显示多次抽取后至少获得一次的概率。“随机装备”表示游戏按品质和部位规则生成装备。</p>
         <UiBackToTop scroll-container="#dungeonDetailScroll" />
       </template>
     </UiModal>
@@ -260,6 +306,7 @@ import { fetchWithFallback } from '../utils/request.js'
 import DungeonRouteMap from '../components/dungeons/DungeonRouteMap.vue'
 import RoomContentList from '../components/RoomContentList.vue'
 import RewardPools from '../components/RewardPools.vue'
+import { openRewardDetail } from '../utils/rewardModalState.js'
 import { getImageUrl, handleImageFallback } from '../utils/env.js'
 import { BASE_REWARD_PATHS, MAP_NAMES } from '../utils/gameMappings.js'
 import { resolveScrollTarget } from '../utils/scrollTarget.js'
@@ -318,9 +365,10 @@ const selectedRouteVariantId = ref('')
 const specialDropsAnchorRef = ref(null)
 const focusedSpecialDropEntry = ref('')
 const storyOpenState = ref({})
-const specialDropsOpen = ref(false)
-const settlementDropsOpen = ref(false)
-const previewDropsOpen = ref(false)
+const specialDropsOpen = ref(true)
+const settlementDropsOpen = ref(true)
+const previewDropsOpen = ref(true)
+const firstDropsOpen = ref(false)
 const specialDropTab = ref('chest')
 let detailRequestId = 0
 let specialDropHighlightTimer = 0
@@ -492,9 +540,10 @@ const initializeBattleDetail = (battle) => {
   selectedRouteIndex.value = 0
   selectedRouteRoomId.value = battle.routes?.[0]?.startRoomId || battle.routes?.[0]?.nodes?.[0]?.id || ''
   selectedRouteVariantId.value = battle.routes?.[0]?.nodes?.find(node => node.id === selectedRouteRoomId.value)?.variantOptions?.[0]?.typeId || ''
-  specialDropsOpen.value = false
-  settlementDropsOpen.value = false
-  previewDropsOpen.value = false
+  specialDropsOpen.value = true
+  settlementDropsOpen.value = true
+  previewDropsOpen.value = true
+  firstDropsOpen.value = false
   specialDropTab.value = SPECIAL_DROP_TABS.find(tab => specialDropGroups.value[tab.key].length)?.key || 'chest'
 }
 
@@ -552,6 +601,7 @@ const focusRequestedDrop = async () => {
   specialDropTab.value = SPECIAL_DROP_TABS.some(tab => tab.key === requestedTab) ? requestedTab : 'chest'
   specialDropsOpen.value = !isDirectReward
   if (requestedTab === 'settlement') settlementDropsOpen.value = true
+  if (requestedTab === 'first') firstDropsOpen.value = true
   await nextTick()
 
   const requestedDrop = isDirectReward ? null : requestedEntry
@@ -690,7 +740,7 @@ const specialDropSources = (entry) => {
   const sources = entry?.specialCategory === 'boss'
     ? variants.flatMap(variant => (variant.monsters || []).flatMap(monster => (monster.drops || []).map(drop => ({
         key: `monster-${drop.collectTypeId}-${monster.typeId}`,
-        label: `${monster.name} 自动掉落`,
+        label: monster.name,
         note: drop.dropRate ? `${(drop.dropRate * 100).toFixed(0)}%` : '',
         reward: drop.reward || []
       }))))
@@ -712,6 +762,14 @@ const specialDropSources = (entry) => {
   })
   return [...unique.values()].sort((a, b) => chestTier(b.label) - chestTier(a.label)
     || Math.max(...b.reward.map(entry => Number(entry.quality || 0)), 0) - Math.max(...a.reward.map(entry => Number(entry.quality || 0)), 0))
+}
+const specialDropAllRewards = (entry) => {
+  return specialDropSources(entry).flatMap(source => source.reward || [])
+}
+const shouldShowSourceHeading = (source, entry) => {
+  if (source?.label) return true
+  if (source?.note && source.note !== entry?.name) return true
+  return false
 }
 const specialDropTone = (entry) => entry?.specialCategory === 'boss' ? 'danger' : entry?.specialCategory === 'merchant' ? 'accent' : 'gold'
 const isStoryOpen = (dungeonId) => !!storyOpenState.value[dungeonId]
@@ -802,11 +860,17 @@ watch(() => [route.query.battle, route.query.drop, route.query.dropTab, route.qu
 .special-drop-list { display: flex; flex-direction: column; gap: 8px; }
 .special-drop-card { min-width: 0; border: 1px solid var(--border-soft); border-radius: 5px; background: var(--paper-soft); padding: 9px 10px; }
 .special-drop-card--focused { border-color: var(--gold); box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 72%, transparent); }
-.special-drop-card__heading, .special-drop-source__heading { display: flex; align-items: center; gap: 7px; min-width: 0; }
-.special-drop-card__heading > strong { flex: 1; min-width: 0; color: var(--text-main); font-size: 13px; }
-.special-drop-sources { display: flex; flex-direction: column; gap: 9px; margin-top: 7px; }
-.special-drop-source { min-width: 0; border-top: 1px dashed var(--border-soft); padding-top: 7px; }
-.special-drop-source__heading { justify-content: space-between; color: var(--text-main); font-size: 12px; }
+.special-drop-card__heading { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.special-drop-card__heading > strong { min-width: 0; color: var(--text-main); font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.special-drop-card__heading > .prob-detail-btn { flex-shrink: 0; }
+.special-drop-card__tags { display: flex; align-items: center; gap: 6px; margin-left: auto; flex-shrink: 0; }
+.special-drop-sources { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+.special-drop-source { min-width: 0; }
+.special-drop-source:not(:first-child) { border-top: 1px dashed var(--border-soft); padding-top: 10px; }
+.special-drop-source__heading { display: flex; align-items: center; justify-content: space-between; gap: 7px; min-width: 0; margin-bottom: 10px; color: var(--text-main); font-size: 12px; }
+.special-drop-source__title { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.special-drop-source__title > strong { min-width: 0; }
+.special-drop-source__title > .prob-detail-btn { flex-shrink: 0; }
 .special-drop-source__heading small { color: var(--text-muted); font-size: 11px; font-weight: 600; }
 .special-drop-card__empty { margin: 7px 0 0; color: var(--text-muted); font-size: 12px; }
 .route-room-detail { margin-top: 8px; border: 1px solid var(--border-soft); border-radius: 6px; background: var(--paper-soft); padding: 10px; }

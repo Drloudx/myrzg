@@ -23,7 +23,7 @@
           :aria-label="title || '详情'"
           tabindex="-1"
           :class="{ 'is-fullscreen': fullscreen, 'is-teleported': !!teleportTo }"
-          :style="fullscreen || !teleportTo ? {} : { maxWidth }"
+          :style="fullscreen || !teleportTo ? {} : { maxWidth, ...(maxHeight ? { maxHeight } : {}) }"
         >
           <!-- 顶部木质标题条 -->
           <div class="ui-modal-header">
@@ -70,6 +70,7 @@ const props = defineProps({
   visible: { type: Boolean, default: false },
   title: { type: String, default: '' },
   maxWidth: { type: String, default: '100%' },
+  maxHeight: { type: String, default: '' },
   fullscreen: { type: Boolean, default: false },
   closable: { type: Boolean, default: true },
   closeOnOverlay: { type: Boolean, default: false },
@@ -269,6 +270,11 @@ onBeforeUnmount(() => {
   max-height: 100%;
   outline: none;
 }
+@media (min-width: 769px) {
+  .ui-modal-window.is-teleported {
+    max-height: min(72vh, 640px);
+  }
+}
 .ui-modal-window.is-fullscreen {
   border-radius: 0;
 }
@@ -329,6 +335,7 @@ onBeforeUnmount(() => {
 /* 内容区 */
 .ui-modal-body {
   padding: 18px;
+  overflow-x: hidden;
   overflow-y: auto;
   flex: 1;
   min-height: 0;

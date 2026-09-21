@@ -180,6 +180,8 @@
       </template>
     </UiModal>
     
+    <RewardProbabilityModal />
+
     <UiModal
       v-model:visible="showMessageModal"
       :title="messageTitle"
@@ -216,6 +218,7 @@ import VersionCheckModal from './components/VersionCheckModal.vue'
 import AboutModal from './components/AboutModal.vue'
 import { UiButton, UiModal } from './components/ui/index.js'
 import ItemDetailModal from './components/ItemDetailModal.vue'
+import RewardProbabilityModal from './components/RewardProbabilityModal.vue'
 import { itemModalState, openItemDetail } from './utils/itemModalState'
 import { fetchItemData } from './utils/itemParser'
 import { resetModalScrollCoordinator } from './utils/modalScrollCoordinator.js'
