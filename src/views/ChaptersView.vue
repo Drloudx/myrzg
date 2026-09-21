@@ -13,7 +13,7 @@
         :map="chapterMap"
         :active-id="chapterId"
         :visible-ids="mapVisibleIds"
-        :total-stages="visibleStages.length"
+        :total-stages="totalNormalStages"
         :height="mapAreaHeight"
         @select="selectChapter"
         @list="openList"
@@ -269,6 +269,11 @@ const visibleChapters = computed(() => chapters.value.filter(chapter =>
 /** 可见章节的全部关卡（深链定位也走这里：黑名单影响列表、搜索与直接入口）。 */
 const visibleStages = computed(() => visibleChapters.value.flatMap(chapter => chapter.stages))
 
+/** 可见章节的纯关卡总数（不含自由探索小地区，供世界地图与统计汇总显示）。 */
+const totalNormalStages = computed(() =>
+  visibleChapters.value.reduce((sum, chapter) => sum + (chapter.stageCount ?? chapter.stages.filter(s => s.kind !== 'area').length), 0)
+)
+
 /** 地图上可见的章节 id：被黑名单隐藏的章节不出现，地图上该区域保持底图原样（未探索）。 */
 const mapVisibleIds = computed(() => visibleChapters.value.map(chapter => chapter.id))
 
@@ -297,7 +302,8 @@ const regionRoute = computed(() => {
 const regionCaption = computed(() => {
   const chapter = visibleChapters.value.find(item => item.id === chapterId.value)
   if (!chapter) return ''
-  return `${chapter.areaName} · ${chapter.stages.length} 关`
+  const count = chapter.stageCount ?? chapter.stages.filter(s => s.kind !== 'area').length
+  return `${chapter.areaName} · ${count} 关`
 })
 const backToWorldMap = () => { chapterId.value = 'all' }
 

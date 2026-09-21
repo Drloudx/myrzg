@@ -458,7 +458,7 @@ export function buildChaptersFiles() {
         chapterNo: chapter.chapterNo,
         name: chapter.name,
         areaName: chapter.areaName,
-        stageCount: chapter.stages.length,
+        stageCount: chapter.stageCount,
         image: CHAPTER_MAP_TILE_PATH(chapter.id),
         ...rect
       }
