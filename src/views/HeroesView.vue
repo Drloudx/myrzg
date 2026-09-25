@@ -342,42 +342,52 @@
               </div>
 
               <!-- Levels sliders for skill -->
+              <!-- 技能等级滑块（统一 UI 风格，支持手机端随意丝滑拖动与微调） -->
               <div class="skill-level-slider-container" v-if="currentSelectedSkill.type !== 'normal' && currentSelectedSkill.levelData?.length > 1">
-                <div class="dual-slider-labels">
-                  <span class="lvl-slider-label">当前等级: Lv.{{ currentSkillLevel }}</span>
-                  <span class="lvl-slider-label">目标等级: Lv.{{ targetSkillLevel }}</span>
+                <div class="skill-slider-header">
+                  <span class="skill-slider-title">技能等级</span>
+                  <div class="skill-slider-status">
+                    <strong class="skill-slider-current">Lv.{{ currentSkillLevel }}</strong>
+                    <span class="skill-slider-max">/ {{ skillLevelMax }}</span>
+                    <UiTag v-if="currentSkillLevel === skillLevelMax" tone="gold" size="sm" class="max-badge">满级</UiTag>
+                  </div>
                 </div>
-                <div
-                  class="dual-level-slider"
-                  :style="skillSliderStyle"
-                  :aria-label="`技能等级范围，当前等级 ${currentSkillLevel}，目标等级 ${targetSkillLevel}`"
-                  role="group"
-                  @click="handleSkillTrackClick"
-                >
-                  <span class="dual-slider-track" aria-hidden="true"></span>
-                  <span class="dual-slider-fill" aria-hidden="true"></span>
+
+                <div class="skill-slider-control-row">
+                  <button
+                    type="button"
+                    class="slider-step-btn"
+                    :disabled="currentSkillLevel <= 1"
+                    aria-label="降低一级"
+                    @click="stepSkillLevel(-1)"
+                  >－</button>
                   <input
                     type="range"
                     min="1"
                     :max="skillLevelMax"
                     v-model.number="currentSkillLevel"
-                    class="dual-slider-input dual-slider-input--current"
-                    aria-label="当前技能等级"
-                    @input="handleCurrentSkillLevelInput"
+                    class="calc-range-slider skill-level-range-input"
+                    aria-label="技能等级"
                   />
-                  <input
-                    type="range"
-                    min="1"
-                    :max="skillLevelMax"
-                    v-model.number="targetSkillLevel"
-                    class="dual-slider-input dual-slider-input--target"
-                    aria-label="目标技能等级"
-                    @input="handleTargetSkillLevelInput"
-                  />
+                  <button
+                    type="button"
+                    class="slider-step-btn"
+                    :disabled="currentSkillLevel >= skillLevelMax"
+                    aria-label="提升一级"
+                    @click="stepSkillLevel(1)"
+                  >＋</button>
                 </div>
-                <div class="dual-slider-scale" aria-hidden="true">
-                  <span>Lv.1</span>
-                  <span>Lv.{{ skillLevelMax }}</span>
+
+                <div class="skill-slider-scale">
+                  <span class="scale-item" :class="{ 'is-active': currentSkillLevel === 1 }" @click="currentSkillLevel = 1">Lv.1</span>
+                  <span
+                    v-for="lvl in midMilestoneLevels"
+                    :key="lvl"
+                    class="scale-item"
+                    :class="{ 'is-active': currentSkillLevel === lvl }"
+                    @click="currentSkillLevel = lvl"
+                  >Lv.{{ lvl }}</span>
+                  <span class="scale-item" :class="{ 'is-active': currentSkillLevel === skillLevelMax }" @click="currentSkillLevel = skillLevelMax">Lv.{{ skillLevelMax }}</span>
                 </div>
               </div>
 
@@ -434,27 +444,60 @@
                 </div>
               </div>
 
-              <!-- Upgrade Cost Info -->
-              <div class="upgrade-costs-box" v-if="currentSelectedSkill.type !== 'normal' && currentSelectedSkill.upgrades?.length > 0 && targetSkillLevel > currentSkillLevel">
-                <h5 class="cost-subtitle">升级计划消耗 (Lv.{{ currentSkillLevel }} → Lv.{{ targetSkillLevel }}):</h5>
-                <div class="cost-req-row">
-                  <div class="cost-req-cell">角色等级门槛: <span class="cost-num">{{ skillUpgradeRangeSummary.maxHeroLevel }}级</span></div>
-                  <div class="cost-req-cell">消耗银币: <span class="cost-num">{{ skillUpgradeRangeSummary.money }}</span></div>
+              <!-- 升级计划消耗（清晰易用，无需捏双滑块） -->
+              <div class="upgrade-costs-box" v-if="currentSelectedSkill.type !== 'normal' && currentSelectedSkill.upgrades?.length > 0">
+                <div class="cost-header-row">
+                  <h5 class="cost-subtitle">
+                    升级消耗规划
+                    <span class="cost-range-badge">Lv.{{ effectiveUpgradeStartLevel }} → Lv.{{ effectiveUpgradeEndLevel }}</span>
+                  </h5>
+                  <div class="cost-plan-tabs">
+                    <button
+                      v-if="currentSkillLevel > 1"
+                      type="button"
+                      class="cost-plan-pill"
+                      :class="{ active: costPlanMode === 'toCurrent' || (costPlanMode === 'auto' && currentSkillLevel > 1) }"
+                      @click="costPlanMode = 'toCurrent'"
+                    >升至当前(Lv.{{ currentSkillLevel }})</button>
+                    <button
+                      v-if="currentSkillLevel < skillLevelMax"
+                      type="button"
+                      class="cost-plan-pill"
+                      :class="{ active: costPlanMode === 'next' }"
+                      @click="costPlanMode = 'next'"
+                    >升下一级</button>
+                    <button
+                      type="button"
+                      class="cost-plan-pill"
+                      :class="{ active: costPlanMode === 'toMax' || (costPlanMode === 'auto' && currentSkillLevel === 1) }"
+                      @click="costPlanMode = 'toMax'"
+                    >升至满级(Lv.{{ skillLevelMax }})</button>
+                  </div>
                 </div>
-                <div class="cost-items-list" v-if="skillUpgradeRangeSummary.items?.length > 0">
-                  <span class="cost-label">消耗道具:</span>
-                  <button
-                    v-for="item in skillUpgradeRangeSummary.items"
-                    :key="item.id"
-                    type="button"
-                    class="cost-item-pill"
-                    :data-item-id="item.id"
-                    :title="`${item.name}（点击查看物品）`"
-                    @click="openItemDetail(item.id)"
-                  >
-                    <img :src="getImageUrl(item.img)" class="cost-item-img" />
-                    <span class="cost-item-name" :class="`quality-text-${item.quality}`">{{ item.name }} x{{ item.num }}</span>
-                  </button>
+
+                <div v-if="skillUpgradeRangeSummary.items?.length || skillUpgradeRangeSummary.money" class="cost-content">
+                  <div class="cost-req-row">
+                    <div class="cost-req-cell">角色等级门槛: <span class="cost-num">{{ skillUpgradeRangeSummary.maxHeroLevel }}级</span></div>
+                    <div class="cost-req-cell">消耗银币: <span class="cost-num">{{ skillUpgradeRangeSummary.money.toLocaleString() }}</span></div>
+                  </div>
+                  <div class="cost-items-list" v-if="skillUpgradeRangeSummary.items?.length > 0">
+                    <span class="cost-label">消耗道具:</span>
+                    <button
+                      v-for="item in skillUpgradeRangeSummary.items"
+                      :key="item.id"
+                      type="button"
+                      class="cost-item-pill"
+                      :data-item-id="item.id"
+                      :title="`${item.name}（点击查看物品）`"
+                      @click="openItemDetail(item.id)"
+                    >
+                      <img :src="getImageUrl(item.img)" class="cost-item-img" />
+                      <span class="cost-item-name" :class="`quality-text-${item.quality}`">{{ item.name }} x{{ item.num }}</span>
+                    </button>
+                  </div>
+                </div>
+                <div v-else class="cost-empty-hint">
+                  当前已是所选阶段最高等级，无需进一步消耗。
                 </div>
               </div>
             </div>
@@ -1037,67 +1080,67 @@ const currentSelectedSkill = computed(() => {
   }
 })
 
-// Update skill level selection range
-const targetSkillLevel = ref(1)
-
+// 技能等级与消耗规划
 const skillLevelMax = computed(() => Math.max(
   1,
   Number(currentSelectedSkill.value?.maxLevel || currentSelectedSkill.value?.levelData?.length || 1)
 ))
 
-const skillSliderStyle = computed(() => {
+const stepSkillLevel = (delta) => {
+  const next = Number(currentSkillLevel.value) + delta
+  currentSkillLevel.value = Math.max(1, Math.min(skillLevelMax.value, next))
+}
+
+const midMilestoneLevels = computed(() => {
   const max = skillLevelMax.value
-  const position = level => max <= 1 ? 0 : ((Number(level) - 1) / (max - 1)) * 100
-  return {
-    '--skill-level-start': `${position(currentSkillLevel.value)}%`,
-    '--skill-level-end': `${position(targetSkillLevel.value)}%`
-  }
+  if (max <= 4) return []
+  if (max === 12) return [4, 7, 10]
+  if (max === 21) return [7, 14]
+  const step = Math.round(max / 3)
+  return [step, step * 2].filter(l => l > 1 && l < max)
 })
 
-const handleCurrentSkillLevelInput = event => {
-  const next = Number(event.target.value)
-  currentSkillLevel.value = Math.min(next, Number(targetSkillLevel.value))
-}
+const costPlanMode = ref('auto') // 'toCurrent' | 'toMax' | 'next' | 'auto'
 
-const handleTargetSkillLevelInput = event => {
-  const next = Number(event.target.value)
-  targetSkillLevel.value = Math.max(next, Number(currentSkillLevel.value))
-}
-
-const handleSkillTrackClick = event => {
-  if (event.target instanceof HTMLInputElement) return
-  const rect = event.currentTarget.getBoundingClientRect()
-  const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width))
-  const level = Math.round(ratio * (skillLevelMax.value - 1)) + 1
-  targetSkillLevel.value = Math.max(level, Number(currentSkillLevel.value))
-}
-
-watch(currentSkillLevel, (newVal) => {
-  const cur = parseInt(newVal)
-  const tgt = parseInt(targetSkillLevel.value)
-  if (tgt < cur) {
-    targetSkillLevel.value = cur
+const effectiveUpgradeStartLevel = computed(() => {
+  if (costPlanMode.value === 'next') {
+    return Number(currentSkillLevel.value)
   }
+  return 1
+})
+
+const effectiveUpgradeEndLevel = computed(() => {
+  if (costPlanMode.value === 'toMax') {
+    return skillLevelMax.value
+  }
+  if (costPlanMode.value === 'next') {
+    return Math.min(skillLevelMax.value, Number(currentSkillLevel.value) + 1)
+  }
+  // toCurrent 或 auto 模式
+  if (currentSkillLevel.value > 1) {
+    return Number(currentSkillLevel.value)
+  }
+  return skillLevelMax.value
 })
 
 watch(activeSkillIndex, () => {
   currentSkillLevel.value = 1
-  targetSkillLevel.value = 1
+  costPlanMode.value = 'auto'
 })
 
 const skillUpgradeRangeSummary = computed(() => {
   const skill = currentSelectedSkill.value
-  if (!skill || !skill.upgrades) return null
-  
-  const cur = parseInt(currentSkillLevel.value)
-  const tgt = parseInt(targetSkillLevel.value)
-  if (tgt <= cur) return { money: 0, items: [], maxHeroLevel: 1 }
-  
+  if (!skill || !skill.upgrades) return { money: 0, items: [], maxHeroLevel: 1 }
+
+  const start = effectiveUpgradeStartLevel.value
+  const end = effectiveUpgradeEndLevel.value
+  if (end <= start) return { money: 0, items: [], maxHeroLevel: 1 }
+
   let totalMoney = 0
   const itemMap = {}
   let maxHeroLevel = 1
-  
-  for (let i = cur - 1; i <= tgt - 2; i++) {
+
+  for (let i = start - 1; i <= end - 2; i++) {
     const u = skill.upgrades[i]
     if (u) {
       totalMoney += u.money || 0
@@ -1114,7 +1157,7 @@ const skillUpgradeRangeSummary = computed(() => {
       }
     }
   }
-  
+
   return {
     money: totalMoney,
     items: Object.values(itemMap),
@@ -1806,121 +1849,115 @@ const handleGiftClick = (giftId) => {
   flex-wrap: wrap;
 }
 
-/* 等级滑块 */
+/* 等级滑块（统一 UI 风格，流畅单滑块与微调控制） */
 .skill-level-slider-container {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  background: rgba(43, 31, 21, 0.05);
+  border: 1px solid var(--border-faint, rgba(143, 115, 81, 0.25));
+  border-radius: 4px;
 }
-.lvl-slider-label {
+.skill-slider-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.skill-slider-title {
   font-size: 13px;
   font-weight: 700;
   color: var(--text-muted, #6b5134);
 }
-.dual-slider-labels {
+.skill-slider-status {
   display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 8px;
+  align-items: baseline;
+  gap: 4px;
 }
-.dual-level-slider {
-  position: relative;
+.skill-slider-current {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent-ink, #557574);
+}
+.skill-slider-max {
+  font-size: 12px;
+  color: var(--text-muted, #6b5134);
+}
+.skill-slider-status .max-badge {
+  margin-left: 4px;
+  transform: translateY(-1px);
+}
+.skill-slider-control-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 0 6px;
+}
+.slider-step-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
   height: 28px;
-  margin: 0 8px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  border: 1px solid var(--border-color, #8f7351);
+  background: var(--paper-soft, #e9dcc3);
+  color: var(--text-main, #3e2a14);
+  font-size: 16px;
+  font-weight: 700;
   cursor: pointer;
+  user-select: none;
+  transition: all 0.15s ease;
 }
-.dual-slider-track,
-.dual-slider-fill {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 6px;
-  border-radius: 999px;
-  transform: translateY(-50%);
-  pointer-events: none;
+.slider-step-btn:hover:not(:disabled) {
+  background: var(--hover-bg, #f3ebd8);
+  border-color: var(--accent-bright, #7a9a99);
 }
-.dual-slider-track {
-  background: var(--border-color, #8f7351);
+.slider-step-btn:active:not(:disabled) {
+  transform: scale(0.92);
 }
-.dual-slider-fill {
-  left: var(--skill-level-start);
-  right: calc(100% - var(--skill-level-end));
-  background: var(--accent-bright, #7a9a99);
+.slider-step-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
-.dual-slider-input {
-  position: absolute;
-  inset: 0;
-  width: 100%;
+.skill-level-range-input {
+  flex: 1;
   height: 28px;
   margin: 0;
-  appearance: none;
   background: transparent;
-  pointer-events: none;
   cursor: pointer;
+  accent-color: var(--accent-bright, #7a9a99);
+  touch-action: pan-y;
 }
-.dual-slider-input--current {
-  z-index: 2;
-}
-.dual-slider-input--target {
-  z-index: 3;
-}
-.dual-slider-input:focus-visible {
-  outline: none;
-}
-.dual-slider-input::-webkit-slider-runnable-track {
-  height: 6px;
-  background: transparent;
-}
-.dual-slider-input::-webkit-slider-thumb {
-  width: 16px;
-  height: 16px;
-  margin-top: -5px;
-  appearance: none;
-  border: 2px solid var(--paper-soft, #e9dcc3);
-  border-radius: 50%;
-  background: var(--accent-bright, #7a9a99);
-  box-shadow: 0 1px 4px rgba(43, 31, 21, 0.3);
-  pointer-events: auto;
-  cursor: grab;
-}
-.dual-slider-input:active::-webkit-slider-thumb {
-  cursor: grabbing;
-  box-shadow: 0 2px 7px rgba(43, 31, 21, 0.38);
-}
-.dual-slider-input::-moz-range-track {
-  height: 6px;
-  background: transparent;
-}
-.dual-slider-input::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
-  border: 2px solid var(--paper-soft, #e9dcc3);
-  border-radius: 50%;
-  background: var(--accent-bright, #7a9a99);
-  box-shadow: 0 1px 4px rgba(43, 31, 21, 0.3);
-  pointer-events: auto;
-  cursor: grab;
-}
-.dual-slider-input:active::-moz-range-thumb {
-  cursor: grabbing;
-  box-shadow: 0 2px 7px rgba(43, 31, 21, 0.38);
-}
-.dual-slider-input:focus-visible::-webkit-slider-thumb,
-.dual-slider-input:focus-visible::-moz-range-thumb {
-  outline: 2px solid var(--accent-ink, #557574);
-  outline-offset: 2px;
-}
-.dual-slider-scale {
+.skill-slider-scale {
   display: flex;
   justify-content: space-between;
-  margin: 2px 8px 0;
-  color: var(--text-muted, #6b5134);
+  padding: 0 4px;
   font-size: 11px;
+  color: var(--text-muted, #6b5134);
+}
+.skill-slider-scale .scale-item {
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 2px;
+  user-select: none;
+  transition: all 0.15s ease;
+}
+.skill-slider-scale .scale-item:hover {
+  color: var(--accent-ink, #557574);
+  background: rgba(43, 31, 21, 0.08);
+}
+.skill-slider-scale .scale-item.is-active {
+  font-weight: 700;
+  color: var(--accent-ink, #557574);
+  background: rgba(122, 154, 153, 0.18);
 }
 .calc-range-slider {
   width: 100%;
   cursor: pointer;
   accent-color: var(--accent-bright, #7a9a99);
   height: 6px;
+  touch-action: pan-y;
 }
 .mt-2 { margin-top: 8px; }
 .mt-3 { margin-top: 12px; }
@@ -2003,11 +2040,62 @@ const handleGiftClick = (giftId) => {
   border-radius: 4px;
   padding: 10px 12px;
 }
+.cost-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
 .cost-subtitle {
-  margin: 0 0 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
   font-size: 13px;
   font-weight: 700;
   color: var(--gold, #8a6a1f);
+}
+.cost-range-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(138, 106, 31, 0.22);
+  color: #634607;
+}
+.cost-plan-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.cost-plan-pill {
+  padding: 2px 8px;
+  border: 1px solid rgba(138, 106, 31, 0.4);
+  border-radius: 3px;
+  background: var(--paper-soft, #e9dcc3);
+  color: var(--text-main, #3e2a14);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s ease;
+}
+.cost-plan-pill:hover {
+  background: var(--hover-bg, #f3ebd8);
+}
+.cost-plan-pill.active {
+  background: #8a6a1f;
+  color: #fff;
+  border-color: #8a6a1f;
+}
+.cost-empty-hint {
+  font-size: 12px;
+  color: var(--text-muted, #6b5134);
+  padding: 4px 0;
 }
 .cost-req-row {
   display: flex;
