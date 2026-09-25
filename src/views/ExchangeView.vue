@@ -243,8 +243,8 @@ watch(
     const targetCategory = categories.value.some(category => category.key === cat) ? cat : categories.value[0]?.key
     if (targetCategory && selectedCat.value !== targetCategory) {
       selectedCat.value = targetCategory
-      return
     }
+    syncSubs()
     if (sub && currentSubs.value.some(option => option.key === sub)) selectedSub.value = sub
     else if (!currentSubs.value.some(option => option.key === selectedSub.value)) syncSubs()
     selectedRarity.value = rarityOptions.value.some(option => option.value === rarity) ? rarity : 'all'

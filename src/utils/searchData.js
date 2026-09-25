@@ -1,6 +1,6 @@
 /**
  * 搜索索引 + 物品来源 构建期纯函数：由全部原始表生成
- *   { searchIndex: search-index.json 内容, itemSources: item-sources.json 内容, typesContent }
+ *   { searchIndex: search-index.json 内容, itemSources: item-sources.json 内容 }
  * 对应原 scripts/clean-data.js（等价迁移；不再生成无引用的 roles.json / equips.json）。
  * 不依赖网络与浏览器，Node 构建脚本（scripts/parse/*.mjs）共用。
  */
@@ -114,6 +114,8 @@ function buildExchangeSearchList(maps, officialExchangeIndex) {
       category: '兑换',
       subTag: meta.categoryLabel,
       categoryTags: ['兑换', meta.categoryLabel, meta.subLabel],
+      exchangeCat: meta.category,
+      exchangeSub: meta.sub,
       keywords: `${name} 兑换 ${e.des || ''} ${meta.categoryLabel} ${meta.subLabel}`.toLowerCase()
     })
   }
@@ -165,6 +167,214 @@ function buildFurnitureSearchList(maps) {
         keywords: `${furniture.name || ''} 家具 家具图鉴 ${mainName} ${subName} ${sourceText} ${furniture.desc || ''} ${skinText}`.toLowerCase()
       }
     })
+}
+
+function buildCampResearchSearchList(maps) {
+  const researchTeams = { collect: '采集研究', make: '生产研究', adv: '冒险研究' }
+  const rawResearch = maps.campResearchJson?.datas || maps.campResearchJson || {}
+  const rawItems = maps.itemJson?.datas || maps.itemJson || {}
+  const consumes = maps.consumeJson || {}
+  const list = []
+
+  for (const [id, entry] of Object.entries(rawResearch)) {
+    if (!entry || !entry.name) continue
+    const teamName = researchTeams[entry.team] || '属性研究'
+    const levelEffects = (entry.level || []).map(l => l.addDes || '').filter(Boolean).join(' ')
+    const materialNames = (entry.level || []).flatMap(l => {
+      const c = consumes[l.consume]
+      return (c?.items || []).map(it => rawItems[it.typeId]?.name || '')
+    }).filter(Boolean)
+    const uniqueMaterials = [...new Set(materialNames)].join(' ')
+
+    list.push({
+      id,
+      type: 'research',
+      name: entry.name,
+      quality: 4,
+      category: '属性研究',
+      categoryTags: ['设施功能', '属性研究', teamName],
+      subTag: teamName,
+      keywords: `${entry.name} ${entry.des || ''} ${teamName} 设施 营地 属性研究 ${levelEffects} ${uniqueMaterials}`.toLowerCase()
+    })
+  }
+
+  return list
+}
+
+function buildCampBuildingSearchList(maps) {
+  const homes = maps.homeLevelJson?.home || maps.homeLevelJson?.datas || {}
+  const list = []
+  for (const [id, entry] of Object.entries(homes)) {
+    if (!entry || !entry.name) continue
+    list.push({
+      id,
+      type: 'camp_building',
+      name: entry.name,
+      quality: 4,
+      category: '营地升级',
+      categoryTags: ['设施功能', '营地升级'],
+      subTag: '建筑升级',
+      keywords: `${entry.name} 建筑 营地升级 设施 功能 ${entry.des || ''}`.toLowerCase()
+    })
+  }
+  return list
+}
+
+function buildPartnerMailSearchList(maps) {
+  const heroMails = maps.heroMailJson?.datas || maps.heroMailJson || {}
+  const heroes = maps.heroJson?.datas || maps.heroJson || {}
+  const rawItems = maps.itemJson?.datas || maps.itemJson || {}
+  const rawRewards = maps.rewardJson?.datas || maps.rewardJson || {}
+  const list = []
+
+  for (const [id, m] of Object.entries(heroMails)) {
+    if (!m || !m.title) continue
+    const hero = heroes[m.heroTypeId] || {}
+    const heroName = hero.name || ''
+    if (!heroName) continue
+
+    let rewardItemNames = []
+    if (m.reward && rawRewards[m.reward]) {
+      const rew = rawRewards[m.reward]
+      for (const group of rew.items || []) {
+        for (const rule of group.rules || []) {
+          const it = rawItems[rule.typeId]
+          if (it?.name) rewardItemNames.push(it.name)
+        }
+      }
+    }
+    const rewardKeywords = [...new Set(rewardItemNames)].join(' ')
+
+    list.push({
+      id: m.typeId || id,
+      type: 'partner_mail',
+      name: m.title,
+      quality: Number(hero.rare) || 4,
+      category: '伙伴邮件',
+      categoryTags: ['伙伴邮件', heroName],
+      subTag: `${heroName}的来信`,
+      heroId: m.heroTypeId,
+      keywords: `${m.title} ${heroName} ${hero.name2 || ''} 伙伴邮件 来信 信件 邮件 ${rewardKeywords}`.toLowerCase()
+    })
+  }
+
+  return list
+}
+
+// ---------- 副本图鉴搜索条目 ----------
+function buildDungeonSearchList(dungeonsJson) {
+  const dungeons = dungeonsJson?.dungeons || []
+  const list = []
+  for (const d of dungeons) {
+    if (!d || !d.name) continue
+    if (isBlacklisted({ id: d.id, name: d.name, label: d.mapName })) continue
+
+    const allBattles = [...(d.battles || []), ...(d.storyBattles || [])]
+    const battleNames = allBattles.map(b => b.name).join(' ')
+    list.push({
+      id: d.id,
+      type: 'dungeon',
+      name: d.name,
+      quality: 4,
+      category: '副本',
+      subTag: d.mapName || '副本',
+      categoryTags: ['副本', d.mapName || ''],
+      dungeonId: d.id,
+      chapter: d.chapter,
+      keywords: `${d.name} 副本 ${d.mapName || ''} ${d.des || ''} ${battleNames}`.toLowerCase()
+    })
+
+    for (const b of allBattles) {
+      if (!b || !b.name) continue
+      list.push({
+        id: b.id,
+        type: 'dungeon',
+        name: `${d.name} · ${b.name}`,
+        quality: b.level >= 10 ? 4 : 3,
+        category: '副本',
+        subTag: b.level ? `Lv.${b.level}` : d.name,
+        categoryTags: ['副本', d.name],
+        dungeonId: d.id,
+        battleId: b.id,
+        chapter: d.chapter,
+        keywords: `${b.name} ${d.name} 副本 ${d.mapName || ''} ${b.level ? 'lv' + b.level : ''}`.toLowerCase()
+      })
+    }
+  }
+  return list
+}
+
+// ---------- 关卡图鉴搜索条目 ----------
+function buildChapterSearchList(chaptersJson) {
+  const chapters = chaptersJson?.chapters || []
+  const list = []
+  for (const ch of chapters) {
+    if (!ch || !ch.areaName) continue
+    if (isBlacklisted({ id: ch.id, name: ch.areaName, label: ch.name })) continue
+
+    list.push({
+      id: ch.id,
+      type: 'chapter',
+      name: `${ch.name} · ${ch.areaName}`,
+      quality: 4,
+      category: '关卡',
+      subTag: ch.areaName,
+      categoryTags: ['关卡', ch.name],
+      chapterId: ch.id,
+      keywords: `${ch.name} ${ch.areaName} 章节 关卡 关卡图鉴`.toLowerCase()
+    })
+
+    for (const stage of (ch.stages || [])) {
+      if (!stage || !stage.name) continue
+      if (isBlacklisted({ id: stage.id, name: stage.name, desc: stage.des })) continue
+      const displayName = stage.shortName ? `${stage.shortName} ${stage.name}` : stage.name
+      list.push({
+        id: stage.id,
+        type: 'chapter',
+        name: displayName,
+        quality: 3,
+        category: '关卡',
+        subTag: ch.areaName,
+        categoryTags: ['关卡', ch.areaName],
+        chapterId: ch.id,
+        stageId: stage.id,
+        keywords: `${stage.shortName || ''} ${stage.name} 关卡 ${ch.name} ${ch.areaName} ${stage.des || ''}`.toLowerCase()
+      })
+    }
+  }
+  return list
+}
+
+// ---------- 词条百科搜索条目 ----------
+function buildGlossarySearchList(glossaryJson) {
+  const entries = glossaryJson?.entries || glossaryJson?.buffs || []
+  const sections = glossaryJson?.sections || [
+    { id: 'status', name: '异常与状态' },
+    { id: 'stats', name: '战斗属性' },
+    { id: 'mechanics', name: '核心机制' }
+  ]
+  const sectionMap = {}
+  for (const s of sections) sectionMap[s.id] = s.name
+
+  const list = []
+  for (const e of entries) {
+    if (!e || !e.name) continue
+    const secName = sectionMap[e.group] || '词条'
+    const categoryName = e.category || secName
+    const quality = e.group === 'mechanics' ? 5 : (e.group === 'stats' ? 4 : 3)
+    list.push({
+      id: e.id || e.name,
+      type: 'glossary',
+      name: e.name,
+      quality,
+      category: '词条',
+      subTag: categoryName,
+      categoryTags: ['词条', secName, categoryName],
+      glossaryGroup: e.group || 'all',
+      keywords: `${e.name} 词条 百科 机制 ${secName} ${categoryName} ${e.summary || ''}`.toLowerCase()
+    })
+  }
+  return list
 }
 
 export function buildSearchData(maps) {
@@ -402,7 +612,13 @@ export function buildSearchData(maps) {
     ...buildEventSearchList(maps),
     ...buildExchangeSearchList(maps, officialExchangeIndex),
     ...buildHiddenSearchList(hiddenList),
-    ...buildFurnitureSearchList(maps)
+    ...buildFurnitureSearchList(maps),
+    ...buildCampResearchSearchList(maps),
+    ...buildCampBuildingSearchList(maps),
+    ...buildPartnerMailSearchList(maps),
+    ...buildDungeonSearchList(maps.dungeonsJson),
+    ...buildChapterSearchList(maps.chaptersJson),
+    ...buildGlossarySearchList(maps.glossaryJson)
   ]
 
   // ---------- 8. Item Sources ----------
@@ -557,39 +773,5 @@ export function buildSearchData(maps) {
     if (kept.length) filteredItemSources[itemId] = kept
   }
 
-  // ---------- 10. TypeScript 类型定义（原 data-types.d.ts） ----------
-  const typesContent = `// Auto-generated TypeScript definitions by scripts/parse/search.mjs
-
-export interface RoleData {
-  id: string;
-  name: string;
-  quality: number;
-  class: '战士' | '游侠' | '法师' | '圣职';
-  element: '光' | '暗' | '火' | '水' | '风' | '地' | '冰' | '土';
-  desc: string;
-  skillName: string;
-}
-
-export interface EquipData {
-  id: string;
-  name: string;
-  quality: number;
-  slot: '武器' | '头部' | '衣服' | '鞋子' | '饰品';
-  mainStat: string;
-  effect: string;
-  starEffects: string[];
-}
-
-export interface IndexData {
-  id: string;
-  type: 'role' | 'equip' | 'pet' | 'pet_egg' | 'achievement' | 'recipe' | 'item' | 'furniture' | 'monster' | 'task' | 'event' | 'explore' | 'exchange' | 'hidden';
-  name: string;
-  quality: number;
-  category: string;
-  subTag: string;
-  keywords: string;
-}
-`
-
-  return { searchIndex: filteredSearchIndex, itemSources: filteredItemSources, typesContent }
+  return { searchIndex: filteredSearchIndex, itemSources: filteredItemSources }
 }

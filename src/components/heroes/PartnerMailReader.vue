@@ -201,8 +201,10 @@ watch(() => props.selectedMail?.id, async () => {
 .mail-heroes, .mail-list, .mail-body { overscroll-behavior: contain; scrollbar-width: none; }
 .mail-heroes::-webkit-scrollbar, .mail-list::-webkit-scrollbar, .mail-body::-webkit-scrollbar { display: none; }
 .mail-heroes { scrollbar-width: none; -ms-overflow-style: none; }
-.mail-heroes::-webkit-scrollbar { display: none; width: 0; height: 0; }
-.mail-heroes { position: relative; padding: 8px 3px; border-style: solid; border-color: transparent; border-width: 0 1px 0 0; border-image: var(--mail-at) 40 0 fill / 24px 1px stretch; }
+.mail-heroes { position: relative; padding: 8px 3px; }
+@media (min-width: 701px) {
+  .mail-heroes { border-style: solid; border-color: transparent; border-width: 0 1px 0 0; border-image: var(--mail-at) 40 0 fill / 24px 1px stretch; }
+}
 .mail-hero.ui-btn { display: block; width: 60px; height: 60px; padding: 0; position: relative; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
 .mail-hero img { position: absolute; object-fit: contain; pointer-events: none; }
 .hero-portrait { width: 44px; height: 44px; top: 8px; left: 8px; border-radius: 50%; }
@@ -260,7 +262,7 @@ watch(() => props.selectedMail?.id, async () => {
   .mail-scroll-cue--heroes { top: 28px; right: 4px; left: auto; bottom: auto; transform: rotate(-45deg); }
   .mail-scroll-cue--list { display: none; }
   .mail-columns { grid-template-columns: minmax(0, 1fr); grid-template-rows: 68px 64px minmax(0, 1fr); height: auto; }
-  .mail-heroes { grid-column: 1 / -1; display: flex; padding: 4px; overflow-x: auto; overflow-y: hidden; border-image: none; }
+  .mail-heroes { grid-column: 1 / -1; display: flex; padding: 4px; overflow-x: auto; overflow-y: hidden; border: none !important; border-image: none !important; }
   .mail-hero.ui-btn { flex: 0 0 60px; }
   .mail-selector { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
   .mail-list { display: flex; gap: 6px; padding: 4px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; }

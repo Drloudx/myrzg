@@ -47,9 +47,49 @@ const selectedRarity = ref(null), selectedJob = ref(null), selectedElement = ref
 const jobsList = Object.values(JOB_NAMES)
 const filteredHeroes = computed(() => heroes.value.filter(h => !isBlacklisted({ id: h.id, name: h.name, label: h.name2 }) && (!selectedRarity.value || h.rare === selectedRarity.value) && (!selectedJob.value || h.job === selectedJob.value) && (!selectedElement.value || h.element === selectedElement.value) && (!searchQuery.value.trim() || `${h.name} ${h.name2 || ''} ${h.mails.map(mail => mail.title).join(' ')}`.toLowerCase().includes(searchQuery.value.trim().toLowerCase()))))
 const selectedMails = computed(() => selectedHero.value?.mails || [])
-watch(filteredHeroes, list => { if (!list.includes(selectedHero.value)) { selectedHero.value = list[0] || null; selectedMail.value = null } })
-watch(selectedHero, () => { selectedMail.value = selectedMails.value[0] || null })
-onMounted(async () => { try { const data = await fetchHeroData(); heroes.value = data.mailboxes || [] } catch (e) { error.value = '伙伴邮件数据加载失败' } finally { loading.value = false } })
+
+const applyRouteSelection = () => {
+  const targetHeroId = route.query.hero
+  const targetMailId = route.query.mail
+  if (targetHeroId && heroes.value.length) {
+    const foundHero = heroes.value.find(h => h.id === targetHeroId)
+    if (foundHero) {
+      if (!filteredHeroes.value.includes(foundHero)) {
+        selectedRarity.value = null
+        selectedJob.value = null
+        selectedElement.value = null
+        searchQuery.value = ''
+      }
+      selectedHero.value = foundHero
+      if (targetMailId) {
+        const foundMail = (foundHero.mails || []).find(m => m.id === targetMailId)
+        if (foundMail) selectedMail.value = foundMail
+      }
+    }
+  }
+}
+
+watch(filteredHeroes, list => {
+  if (route.query.hero && heroes.value.some(h => h.id === route.query.hero)) return
+  if (!list.includes(selectedHero.value)) { selectedHero.value = list[0] || null; selectedMail.value = null }
+})
+watch(selectedHero, () => {
+  if (route.query.mail && selectedHero.value?.mails?.some(m => m.id === route.query.mail)) return
+  selectedMail.value = selectedMails.value[0] || null
+})
+watch(() => [route.query.hero, route.query.mail], applyRouteSelection)
+
+onMounted(async () => {
+  try {
+    const data = await fetchHeroData()
+    heroes.value = data.mailboxes || []
+    applyRouteSelection()
+  } catch (e) {
+    error.value = '伙伴邮件数据加载失败'
+  } finally {
+    loading.value = false
+  }
+})
 </script>
 
 <style scoped>

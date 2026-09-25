@@ -68,6 +68,8 @@
 
     <UiSection v-if="seedInfo" title="种植参数">
       <UiInfoRow label="成熟时间" :value="seedInfo.formattedGrowTime" />
+      <UiInfoRow v-if="seedInfo.formattedWateringReduce" label="浇水减少时长" :value="seedInfo.formattedWateringReduce" />
+      <UiInfoRow v-if="seedInfo.formattedWateringResearch" :label="seedInfo.wateringResearchName || '植物养护 Lv.1'" :value="seedInfo.formattedWateringResearch" />
       <UiInfoRow v-if="seedInfo.harvest" label="基础收获" :value="formatHarvest(seedInfo.harvest)" />
       <UiInfoRow
         v-for="harvest in seedInfo.researchHarvests"
@@ -75,6 +77,30 @@
         :label="`${seedInfo.researchName} Lv.${harvest.level}`"
         :value="formatHarvest(harvest)"
       />
+    </UiSection>
+
+    <!-- 生长过程 -->
+    <UiSection v-if="seedInfo?.growthStages && seedInfo.growthStages.length" title="生长过程">
+      <div class="growth-stages-panel paper-panel-solid">
+        <div
+          v-for="(stage, sIdx) in seedInfo.growthStages"
+          :key="sIdx"
+          class="growth-stage-item"
+        >
+          <div class="growth-stage-icon-wrap">
+            <img
+              :src="getImageUrl(stage.img)"
+              :alt="stage.name"
+              class="growth-stage-img"
+              loading="lazy"
+              decoding="async"
+              @error="handleImageFallback"
+            />
+          </div>
+          <div class="growth-stage-name">{{ stage.name }}</div>
+          <div class="growth-stage-time">{{ stage.timeText }}</div>
+        </div>
+      </div>
     </UiSection>
 
     <UiSection v-if="petEggInfo" title="孵化与收益">
@@ -135,58 +161,6 @@
       </div>
 
       <UiStatGrid v-if="computedUnitItems.length" :items="computedUnitItems" />
-    </UiSection>
-
-    <UiSection v-if="facilityCraftingRecipes.length" title="设施制作">
-      <div v-for="recipe in facilityCraftingRecipes" :key="recipe.id" class="smithing-recipe paper-panel-solid">
-        <div class="smithing-recipe__head">
-          <span>{{ recipe.facilityName }} {{ recipe.level }} 级制作</span>
-          <UiButton variant="link" size="sm" @click="handleFacilityNavigate(recipe)">查看设施</UiButton>
-        </div>
-        <p v-if="recipe.makeTime" class="smithing-recipe__output">制作时间：{{ formatCraftingDuration(recipe.makeTime) }}</p>
-        <div class="smithing-recipe__materials">
-          <span class="smithing-recipe__label">制作材料</span>
-          <div class="reward-grid">
-            <UiRewardCard
-              v-for="material in recipe.materials"
-              :key="material.typeId"
-              :rule="{ targetName: material.name, targetImg: getImageUrl(material.img), targetQuality: material.quality, min: material.num, max: material.num, typeId: material.typeId }"
-              :clickable="!!material.typeId"
-              @click="handleSmithingMaterialClick(material.typeId)"
-            />
-          </div>
-        </div>
-      </div>
-    </UiSection>
-
-    <UiSection v-if="smithingRecipes.length" title="锻造台打造">
-      <div v-for="recipe in smithingRecipes" :key="recipe.exchangeId" class="smithing-recipe paper-panel-solid">
-        <div class="smithing-recipe__head">
-          <span>第 {{ recipe.equipLevel }} 阶装备打造</span>
-          <UiButton variant="link" size="sm" @click="handleSmithingNavigate(recipe)">查看锻造台</UiButton>
-        </div>
-        <div class="smithing-recipe__meta">
-          <span>品质概率</span>
-          <span v-for="chance in recipe.qualityChances" :key="chance.quality" :class="`quality-text-${chance.quality}`">
-            {{ EQUIP_QUALITY_LABELS[chance.quality] || `品质${chance.quality}` }} {{ formatChance(chance.chance) }}
-          </span>
-        </div>
-        <p class="smithing-recipe__output">
-          {{ recipe.outputMode === 'equipGroup' ? '同类装备池中随机产出，品质按以上概率决定。' : '打造该装备，品质按以上概率决定。' }}
-        </p>
-        <div class="smithing-recipe__materials">
-          <span class="smithing-recipe__label">制作材料</span>
-          <div class="reward-grid">
-            <UiRewardCard
-              v-for="material in recipe.materials"
-              :key="material.typeId"
-              :rule="{ targetName: material.name, targetImg: getImageUrl(material.img), targetQuality: material.quality, min: material.num, max: material.num, typeId: material.typeId }"
-              :clickable="!!material.typeId"
-              @click="handleSmithingMaterialClick(material.typeId)"
-            />
-          </div>
-        </div>
-      </div>
     </UiSection>
 
 
@@ -363,6 +337,132 @@
       <UiInfoRow label="售价" :value="item.sellPrice + ' 银币'" />
     </UiSection>
 
+    <!-- 关联信息 -->
+    <UiSection v-if="relatedItems && relatedItems.length" title="关联信息">
+      <div class="related-scroll-wrapper">
+        <div class="related-cards-track">
+          <div
+            v-for="rel in relatedItems"
+            :key="`${rel.targetType}:${rel.id}:${rel.relationType}`"
+            class="related-item-card"
+            :title="`${rel.relationLabel}：${rel.name}${rel.extra ? `（${rel.extra}）` : ''}`"
+            @click="handleRelatedClick(rel)"
+          >
+            <div
+              class="related-item-card__slot"
+              :class="[`quality-border-${rel.quality || 1}`, `quality-bg-${rel.quality || 1}`]"
+            >
+              <img
+                :src="getRelatedIcon(rel)"
+                :alt="rel.name"
+                class="related-item-card__icon"
+                :class="{ 'is-hero': rel.targetType === 'hero', 'is-pet': rel.targetType === 'pet', 'is-monster': rel.targetType === 'monster' }"
+                loading="lazy"
+                decoding="async"
+                @error="handleImageFallback"
+              />
+              <span class="related-item-card__tag" :class="`tag-${rel.relationType}`">
+                {{ rel.relationLabel }}
+              </span>
+            </div>
+            <div class="related-item-card__name" :class="rel.quality ? `quality-text-${rel.quality}` : ''">
+              {{ rel.name }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </UiSection>
+
+    <!-- 同类物品 -->
+    <UiSection v-if="similarItems && similarItems.length" title="同类物品">
+      <div class="related-scroll-wrapper">
+        <div class="related-cards-track">
+          <div
+            v-for="sim in similarItems"
+            :key="sim.id"
+            class="related-item-card"
+            :class="{ 'is-current': sim.id === item.typeId }"
+            :title="sim.id === item.typeId ? `当前物品：${sim.name}` : `同类物品：${sim.name}${sim.label ? `（${sim.label}）` : ''}`"
+            @click="handleSimilarClick(sim)"
+          >
+            <div
+              class="related-item-card__slot"
+              :class="[`quality-border-${sim.quality || 1}`, `quality-bg-${sim.quality || 1}`]"
+            >
+              <img
+                :src="getImageUrl(getItemImageUrl({ img: sim.icon, itemType: 1 }))"
+                :alt="sim.name"
+                class="related-item-card__icon"
+                loading="lazy"
+                decoding="async"
+                @error="handleImageFallback"
+              />
+              <span v-if="sim.id === item.typeId" class="related-item-card__tag tag-current">
+                当前
+              </span>
+            </div>
+            <div class="related-item-card__name" :class="sim.quality ? `quality-text-${sim.quality}` : ''">
+              {{ sim.name }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </UiSection>
+
+    <!-- 设施制作 -->
+    <UiSection v-if="facilityCraftingRecipes.length" title="设施制作">
+      <div v-for="recipe in facilityCraftingRecipes" :key="recipe.id" class="smithing-recipe paper-panel-solid">
+        <div class="smithing-recipe__head">
+          <span>{{ recipe.facilityName }} {{ recipe.level }} 级制作</span>
+          <UiButton variant="link" size="sm" @click="handleFacilityNavigate(recipe)">查看设施</UiButton>
+        </div>
+        <p v-if="recipe.makeTime" class="smithing-recipe__output">制作时间：{{ formatCraftingDuration(recipe.makeTime) }}</p>
+        <div class="smithing-recipe__materials">
+          <span class="smithing-recipe__label">制作材料</span>
+          <div class="reward-grid">
+            <UiRewardCard
+              v-for="material in recipe.materials"
+              :key="material.typeId"
+              :rule="{ targetName: material.name, targetImg: getImageUrl(material.img), targetQuality: material.quality, min: material.num, max: material.num, typeId: material.typeId }"
+              :clickable="!!material.typeId"
+              @click="handleSmithingMaterialClick(material.typeId)"
+            />
+          </div>
+        </div>
+      </div>
+    </UiSection>
+
+    <!-- 锻造台打造 -->
+    <UiSection v-if="smithingRecipes.length" title="锻造台打造">
+      <div v-for="recipe in smithingRecipes" :key="recipe.exchangeId" class="smithing-recipe paper-panel-solid">
+        <div class="smithing-recipe__head">
+          <span>第 {{ recipe.equipLevel }} 阶装备打造</span>
+          <UiButton variant="link" size="sm" @click="handleSmithingNavigate(recipe)">查看锻造台</UiButton>
+        </div>
+        <div class="smithing-recipe__meta">
+          <span>品质概率</span>
+          <span v-for="chance in recipe.qualityChances" :key="chance.quality" :class="`quality-text-${chance.quality}`">
+            {{ EQUIP_QUALITY_LABELS[chance.quality] || `品质${chance.quality}` }} {{ formatChance(chance.chance) }}
+          </span>
+        </div>
+        <p class="smithing-recipe__output">
+          {{ recipe.outputMode === 'equipGroup' ? '同类装备池中随机产出，品质按以上概率决定。' : '打造该装备，品质按以上概率决定。' }}
+        </p>
+        <div class="smithing-recipe__materials">
+          <span class="smithing-recipe__label">制作材料</span>
+          <div class="reward-grid">
+            <UiRewardCard
+              v-for="material in recipe.materials"
+              :key="material.typeId"
+              :rule="{ targetName: material.name, targetImg: getImageUrl(material.img), targetQuality: material.quality, min: material.num, max: material.num, typeId: material.typeId }"
+              :clickable="!!material.typeId"
+              @click="handleSmithingMaterialClick(material.typeId)"
+            />
+          </div>
+        </div>
+      </div>
+    </UiSection>
+
     <!-- 获取途径 -->
     <UiSection title="获取途径">
       <div v-if="sharedResourcesLoading" class="empty-tip" role="status">来源与配方加载中...</div>
@@ -427,6 +527,7 @@ import { fetchWithFallback } from '../utils/request.js'
 import { PREVIEW_AVAILABLE_IDS } from '../utils/recipeUtils'
 import { formatHighlightedText, EQUIP_QUALITY_LABELS, translateStatName } from '../utils/gameMappings.js'
 import { compareExchangeSources } from '../utils/exchangeData.js'
+import { resolveItemRelations, resolveSimilarItems } from '../utils/relationData.js'
 import { UiModal, UiSection, UiTag, UiInfoRow, UiButton, UiFilterPill, UiStatGrid, UiRewardCard, UiAccordion, UiBackToTop } from './ui/index.js'
 
 const props = defineProps({
@@ -769,6 +870,8 @@ watch(bookEventId, async (newVal) => {
 }, { immediate: true })
 
 const globalItemSources = ref({})
+const globalItemRelations = ref({})
+const globalSimilarItems = ref({})
 
 // Failed resources remain retryable; successful resources are cached by request.js.
 let sharedResourcesLoaded = false
@@ -784,7 +887,11 @@ const loadSharedResources = () => {
     fetchWithFallback('data/parsed/recipes.json').then(data => {
       menuDict.value = Object.fromEntries(data.recipes.map(recipe => [recipe.id, recipe]))
     }),
-    fetchWithFallback('data/parsed/item-sources.json').then(data => { globalItemSources.value = data })
+    fetchWithFallback('data/parsed/item-sources.json').then(data => { globalItemSources.value = data }),
+    fetchWithFallback('data/parsed/item-relations.json').then(data => {
+      globalItemRelations.value = data?.relations || data || {}
+      globalSimilarItems.value = data?.similar || {}
+    }).catch(() => {})
   ]).then(() => {
     sharedResourcesLoaded = true
   }).catch(error => {
@@ -795,6 +902,74 @@ const loadSharedResources = () => {
     sharedResourcesLoading.value = false
   })
   return sharedResourcesPending
+}
+
+const relatedItems = computed(() => {
+  return resolveItemRelations(props.item, globalItemRelations.value)
+})
+
+const similarItems = computed(() => {
+  return resolveSimilarItems(props.item, globalSimilarItems.value)
+})
+
+const handleSimilarClick = (sim) => {
+  if (!sim || sim.id === props.item?.typeId) return
+  const targetItem = getCachedItem(sim.id)
+  if (targetItem) {
+    openNestedItem(targetItem)
+  } else {
+    openNestedItem({
+      typeId: sim.id,
+      name: sim.name,
+      quality: sim.quality,
+      img: sim.icon,
+      itemType: 1
+    })
+  }
+}
+
+const getQualityFrame = (q) => {
+  const num = Math.floor(Number(q) || 1)
+  if (num < 1) return 1
+  if (num > 6) return 6
+  return num
+}
+
+const getRelatedIcon = (rel) => {
+  if (rel?.targetType === 'hero') {
+    return getImageUrl(`/images/HeadIconAtals/${rel.icon}.webp`)
+  }
+  if (rel?.targetType === 'pet' || rel?.targetType === 'monster') {
+    return getImageUrl(`/images/PicHandBookPanel_Atlas/${rel.icon}.webp`)
+  }
+  return getImageUrl(getItemImageUrl({ img: rel?.icon, itemType: 1 }))
+}
+
+const handleRelatedClick = (rel) => {
+  if (!rel) return
+  if (rel.targetType === 'hero') {
+    router.push({ path: '/heroes', query: { id: rel.id } })
+      .finally(() => emit('update:visible', false))
+  } else if (rel.targetType === 'monster') {
+    router.push({ path: '/monsters', query: { id: rel.id } })
+      .finally(() => emit('update:visible', false))
+  } else if (rel.targetType === 'pet') {
+    router.push({ path: '/pets', query: { id: rel.id } })
+      .finally(() => emit('update:visible', false))
+  } else if (rel.targetType === 'item') {
+    const targetItem = getCachedItem(rel.id)
+    if (targetItem) {
+      openNestedItem(targetItem)
+    } else {
+      openNestedItem({
+        typeId: rel.id,
+        name: rel.name,
+        quality: rel.quality,
+        img: rel.icon,
+        itemType: 1
+      })
+    }
+  }
 }
 
 watch(() => props.visible, (v) => { if (v) loadSharedResources() }, { immediate: true })
@@ -1663,5 +1838,292 @@ onBeforeUnmount(cancelBodyScrollRestore)
 }
 .origin-placeholder {
   padding: 8px 0;
+}
+
+/* === 关联信息卡片：电脑端换行平铺，手机端横向滚动 === */
+.related-scroll-wrapper {
+  width: 100%;
+  padding: 4px 2px;
+}
+
+.related-cards-track {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px 10px;
+}
+
+.related-item-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 66px;
+  flex-shrink: 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.related-item-card:hover {
+  z-index: 10;
+}
+
+.related-item-card__slot {
+  position: relative;
+  width: 66px;
+  height: 66px;
+  min-height: 0;
+  min-width: 0;
+  border-radius: 6px;
+  border: 2px solid var(--border-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  background: var(--paper-soft);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.related-item-card:hover .related-item-card__slot {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.28);
+}
+
+.related-item-card:active .related-item-card__slot {
+  transform: scale(0.96);
+}
+
+.related-item-card__icon {
+  width: 82%;
+  height: 82%;
+  max-width: 82%;
+  max-height: 82%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
+}
+
+.related-item-card__icon.is-hero,
+.related-item-card__icon.is-pet,
+.related-item-card__icon.is-monster {
+  border-radius: 4px;
+}
+
+/* 关系类型小角标（右上角，与通关掉落角标风格一致） */
+.related-item-card__tag {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: rgba(28, 20, 12, 0.85);
+  color: #fce8bd;
+  font-size: 9.5px;
+  font-weight: 700;
+  line-height: 1.2;
+  pointer-events: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  letter-spacing: -0.2px;
+  white-space: nowrap;
+}
+
+.related-item-card__tag.tag-monster_drop {
+  background: rgba(183, 28, 28, 0.92);
+  color: #fff;
+  border: 1px solid rgba(255, 112, 67, 0.7);
+}
+.related-item-card__tag.tag-smithing_product {
+  background: rgba(191, 54, 12, 0.92);
+  color: #fff;
+  border: 1px solid rgba(255, 171, 0, 0.7);
+}
+.related-item-card__tag.tag-smithing_material {
+  background: rgba(69, 90, 100, 0.92);
+  color: #eceff1;
+  border: 1px solid rgba(144, 164, 174, 0.7);
+}
+.related-item-card__tag.tag-hero_link {
+  background: rgba(184, 115, 51, 0.92);
+  color: #fff;
+  border: 1px solid rgba(255, 215, 0, 0.6);
+}
+.related-item-card__tag.tag-harvest_product,
+.related-item-card__tag.tag-harvest_source {
+  background: rgba(46, 125, 50, 0.92);
+  color: #e8f5e9;
+  border: 1px solid rgba(129, 199, 132, 0.6);
+}
+.related-item-card__tag.tag-craft_product {
+  background: rgba(21, 101, 192, 0.92);
+  color: #e3f2fd;
+  border: 1px solid rgba(100, 181, 246, 0.6);
+}
+.related-item-card__tag.tag-craft_material {
+  background: rgba(109, 76, 65, 0.92);
+  color: #efebe9;
+  border: 1px solid rgba(161, 136, 127, 0.6);
+}
+.related-item-card__tag.tag-recipe_product,
+.related-item-card__tag.tag-recipe_material {
+  background: rgba(216, 67, 21, 0.92);
+  color: #fbe9e7;
+  border: 1px solid rgba(255, 138, 101, 0.6);
+}
+.related-item-card__tag.tag-pet_link {
+  background: rgba(106, 27, 154, 0.92);
+  color: #f3e5f5;
+  border: 1px solid rgba(186, 104, 200, 0.6);
+}
+.related-item-card__tag.tag-similar {
+  background: rgba(40, 53, 147, 0.92);
+  color: #e8eaf6;
+  border: 1px solid rgba(121, 134, 203, 0.6);
+}
+.related-item-card__tag.tag-current {
+  background: rgba(184, 115, 51, 0.95);
+  color: #fff;
+  border: 1px solid rgba(255, 215, 0, 0.9);
+}
+
+.related-item-card.is-current .related-item-card__slot {
+  border-color: #d4af37;
+  box-shadow: 0 0 0 1.5px rgba(212, 175, 55, 0.7), 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* 物品名称：与通关掉落一致居中并最多两行展示 */
+.related-item-card__name {
+  margin-top: 4px;
+  width: 100%;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-main);
+  text-align: center;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  min-height: 29px;
+}
+
+.dark-mode .related-item-card__name {
+  color: var(--text-main, #dfcfb2);
+}
+
+/* 手机移动端：保持横向滚动 */
+@media (max-width: 640px) {
+  .related-scroll-wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 4px 2px 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .related-cards-track {
+    flex-wrap: nowrap;
+    min-width: min-content;
+    gap: 12px;
+  }
+
+  .related-scroll-wrapper::-webkit-scrollbar {
+    height: 4px;
+  }
+  .related-scroll-wrapper::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 2px;
+  }
+  .related-scroll-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(143, 115, 81, 0.35);
+    border-radius: 2px;
+  }
+  .related-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+    background: rgba(143, 115, 81, 0.65);
+  }
+  .dark-mode .related-scroll-wrapper::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .dark-mode .related-scroll-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(212, 175, 55, 0.3);
+  }
+  .dark-mode .related-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+    background: rgba(212, 175, 55, 0.55);
+  }
+}
+
+/* 种子生长过程面板 */
+.growth-stages-panel {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  padding: 16px 14px 14px;
+  gap: 12px;
+}
+
+.growth-stage-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.growth-stage-icon-wrap {
+  height: 64px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.growth-stage-img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.22));
+  transition: transform 0.2s ease;
+}
+
+.growth-stage-item:hover .growth-stage-img {
+  transform: translateY(-2px) scale(1.05);
+}
+
+.growth-stage-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main, #3e2a14);
+  line-height: 1.3;
+  margin-bottom: 3px;
+}
+
+.growth-stage-time {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-muted, #6b5134);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .growth-stages-panel {
+    padding: 12px 6px 10px;
+    gap: 4px;
+  }
+  .growth-stage-icon-wrap {
+    height: 48px;
+    margin-bottom: 6px;
+  }
+  .growth-stage-name {
+    font-size: 11.5px;
+  }
+  .growth-stage-time {
+    font-size: 10px;
+    letter-spacing: -0.2px;
+  }
 }
 </style>

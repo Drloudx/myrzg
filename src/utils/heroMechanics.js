@@ -331,6 +331,36 @@ export const HERO_SKILL_MECHANICS_OVERRIDES = {
       '召唤出的风精灵持续演奏，为附近的友方单位提供持续治疗。'
     ],
     notes: []
+  },
+  '06504': {
+    reviewStatus: 'verified',
+    damage: {
+      form: 'summon',
+      formLabel: '召唤物攻击',
+      types: ['phyAtk'],
+      typeLabels: ['物理'],
+      elements: ['fire'],
+      elementLabels: ['火'],
+      scaling: ['phyAtk'],
+      scalingLabels: ['物理攻击'],
+      crit: 'yes'
+    },
+    bonuses: {
+      applies: ['phyAtk', 'physicalDamage', 'physicalPenetration', 'fireDamage', 'normalDamage', 'normalAndSkillDamage'],
+      excludes: ['skillDamage']
+    },
+    conditions: [
+      '驻守浮游炮自动攻击为远程普通攻击，按火属性物理伤害结算，可以暴击（浮游炮基础暴击率20%、暴击伤害125%）。',
+      '浮游炮继承乌尔勒100%物理攻击力与80%最大生命值。'
+    ],
+    notes: []
+  },
+  '04604': {
+    reviewStatus: 'verified',
+    conditions: [
+      '生命值低于阈值时自动放置2个反击假人，假人机制与技能【反击假人】相同，反击伤害不能暴击。'
+    ],
+    notes: []
   }
 }
 

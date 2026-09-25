@@ -33,6 +33,7 @@ import { buildGlossaryFile } from './glossary.mjs'
 import { buildGachaFile } from './gacha.mjs'
 import { buildDungeonsFiles } from './dungeons.mjs'
 import { buildChaptersFiles } from './chapters.mjs'
+import { buildRelationsFile } from './relations.mjs'
 import * as runtimeTables from './runtime-tables.mjs'
 
 if (!existsSync(parsedDir)) {
@@ -89,16 +90,7 @@ const dungeonOut = buildDungeonsFiles()
 rmSync(join(parsedDir, 'dungeons'), { recursive: true, force: true })
 dungeonOut.files.forEach(writeOutput)
 
-console.log('\n── [legacy→new] 搜索索引 + 物品来源 + 类型文件 ──')
-const searchOut = search.build({
-  pvpSources: pvpOut.deps.pvpSources,
-  hiddenSources: hiddenOut.deps.hiddenSources,
-  hiddenList: hiddenOut.deps.hiddenList,
-  dungeonSources: dungeonOut.deps.dungeonSources
-})
-searchOut.files.forEach(writeOutput)
-writeFileWithRetry(join(repoRoot, 'src/types/data-types.d.ts'), searchOut.typesContent)
-console.log('  ✓ src/types/data-types.d.ts 已生成')
+
 
 console.log('\n── [legacy→new] 装备词缀 ──')
 affixes.build().files.forEach(writeOutput)
@@ -131,6 +123,9 @@ const jobs = [
 console.log('\n── [page] 页面级预解析 ──')
 let itemData = null
 let monsterData = null
+let recipeData = null
+let heroData = null
+let petData = null
 for (const job of jobs) {
   if (job.dependsOnItems && !itemData) {
     throw new Error(`[scripts/parse] ${job.name} 依赖 items 产物，但 items 尚未构建`)
@@ -144,9 +139,29 @@ for (const job of jobs) {
     monsterData = output.files?.[0]?.data?.monsters || output.data?.monsters
   }
   if (job.name === 'items') itemData = output.data
+  if (job.name === 'recipes') recipeData = output.data
+  if (job.name === 'heroes') heroData = output.data
+  if (job.name === 'pets') petData = output.data
   const files = output.files || [output]
   files.forEach(writeOutput)
   console.log(`                              (${Date.now() - startedAt}ms)`)
 }
+
+console.log('\n── [relations] 物品关联信息预解析 ──')
+const relStartedAt = Date.now()
+const relationsOut = buildRelationsFile({ itemData, recipeData, heroData, petData, monsterData })
+writeOutput(relationsOut)
+console.log(`                              (${Date.now() - relStartedAt}ms)`)
+
+console.log('\n── [search] 搜索索引 + 物品来源 ──')
+const searchStartedAt = Date.now()
+const searchOut = search.build({
+  pvpSources: pvpOut.deps.pvpSources,
+  hiddenSources: hiddenOut.deps.hiddenSources,
+  hiddenList: hiddenOut.deps.hiddenList,
+  dungeonSources: dungeonOut.deps.dungeonSources
+})
+searchOut.files.forEach(writeOutput)
+console.log(`                              (${Date.now() - searchStartedAt}ms)`)
 
 console.log('\n✅ 数据预处理完成，全部产物在 public/data/parsed/，可直接进行 vite build 发布。')

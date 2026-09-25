@@ -485,7 +485,9 @@ const filteredDungeons = computed(() => {
     .filter(dungeon => mapFilter.value === 'all' || dungeon.chapter === mapFilter.value)
     .map(dungeon => {
       if (!query) return dungeon
+      const dungeonMatches = (dungeon.name || '').toLowerCase().includes(query)
       const matches = battle => {
+        if (dungeonMatches) return true
         const text = `${battle.name || ''} ${battle.searchText || ''}`.toLowerCase()
         return text.includes(query)
       }
@@ -814,6 +816,16 @@ watch(() => [route.query.battle, route.query.drop, route.query.dropTab, route.qu
   const match = findBattle(battleId)
   if (match && selectedBattle.value?.id !== battleId) openBattle(match.dungeon, match.battle, false)
   else if (match && !detailLoading.value) await focusRequestedDrop()
+})
+
+watch(() => [route.query.map, route.query.q], ([map, q]) => {
+  if (map && mapOptions.value.some(o => o.key === map)) {
+    if (mapFilter.value !== map) mapFilter.value = map
+  } else if (!map && mapFilter.value !== 'all') {
+    mapFilter.value = 'all'
+  }
+  const nextQ = q || ''
+  if (searchQuery.value !== nextQ) searchQuery.value = nextQ
 })
 </script>
 

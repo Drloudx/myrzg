@@ -176,6 +176,167 @@ function getPrimaryHarvest(rewardId, rewards, rawItems) {
   return null
 }
 
+const PLANT_STAGE_MAP = {
+  // 药浆草种子
+  item_15011: {
+    stages: [
+      { name: '萌芽期', img: '/images/plants/yaojiangcao_1.webp', ratio: 0.3 },
+      { name: '生长期', img: '/images/plants/yaojiangcao_2.webp', ratio: 0.7 },
+      { name: '成熟期', img: '/images/plants/yaojiangcao_3.webp', ratio: 1.0 }
+    ]
+  },
+  // 小麦种子
+  item_15003: {
+    stages: [
+      { name: '萌芽期', img: '/images/plants/xiaomai_1.webp', ratio: 0.3 },
+      { name: '生长期', img: '/images/plants/xiaomai_2.webp', ratio: 0.7 },
+      { name: '成熟期', img: '/images/plants/xiaomai_3.webp', ratio: 1.0 }
+    ]
+  },
+  // 亚麻种子
+  item_15017: {
+    stages: [
+      { name: '萌芽期', img: '/images/plants/yama_1.webp', ratio: 0.3 },
+      { name: '生长期', img: '/images/plants/yama_2.webp', ratio: 0.7 },
+      { name: '成熟期', img: '/images/plants/yama_3.webp', ratio: 1.0 }
+    ]
+  },
+  // 金铃草种子
+  item_15002: {
+    stages: [
+      { name: '萌芽期', img: '/images/plants/goldenHerb_1.webp', ratio: 0.3 },
+      { name: '生长期', img: '/images/plants/goldenHerb_2.webp', ratio: 0.7 },
+      { name: '成熟期', img: '/images/plants/goldenHerb_3.webp', ratio: 1.0 }
+    ]
+  },
+  // 冰莲种子
+  item_15021: {
+    stages: [
+      { name: '萌芽期', img: '/images/plants/binglian_1.webp', ratio: 0.3 },
+      { name: '生长期', img: '/images/plants/binglian_2.webp', ratio: 0.7 },
+      { name: '成熟期', img: '/images/plants/binglian_3.webp', ratio: 1.0 }
+    ]
+  },
+  // 绿榛菇孢子
+  item_15009: {
+    stages: [
+      { name: '萌芽期', img: '/images/plants/lvzhengu_1.webp', ratio: 0.3 },
+      { name: '生长期', img: '/images/plants/lvzhengu_2.webp', ratio: 0.7 },
+      { name: '成熟期', img: '/images/plants/lvzhengu_3.webp', ratio: 1.0 }
+    ]
+  },
+  // 赤剑草种子
+  item_15010: {
+    stages: [
+      { name: '萌芽期', img: '/images/plants/chijiancao_1.webp', ratio: 0.3 },
+      { name: '生长期', img: '/images/plants/chijiancao_2.webp', ratio: 0.7 },
+      { name: '成熟期', img: '/images/plants/chijiancao_3.webp', ratio: 1.0 }
+    ]
+  },
+  // 蓝露草种子
+  item_15013: {
+    stages: [
+      { name: '萌芽期', img: '/images/plants/lanlucao_1.webp', ratio: 0.3 },
+      { name: '生长期', img: '/images/plants/lanlucao_2.webp', ratio: 0.7 },
+      { name: '成熟期', img: '/images/plants/lanlucao_3.webp', ratio: 1.0 }
+    ]
+  },
+  // 活血草种子
+  item_15012: {
+    stages: [
+      { name: '萌芽期', img: '/images/plants/huoxuecao_1.webp', ratio: 0.3 },
+      { name: '生长期', img: '/images/plants/huoxuecao_2.webp', ratio: 0.7 },
+      { name: '成熟期', img: '/images/plants/huoxuecao_3.webp', ratio: 1.0 }
+    ]
+  },
+  // 浆果种子
+  item_15014: {
+    stages: [
+      { name: '萌芽期', img: '/images/plants/jiangguo_1.webp', ratio: 0.3 },
+      { name: '生长期', img: '/images/plants/jiangguo_2.webp', ratio: 0.7 },
+      { name: '成熟期', img: '/images/plants/jiangguo_3.webp', ratio: 1.0 }
+    ]
+  },
+  // 野菜种子
+  item_15015: {
+    stages: [
+      { name: '萌芽期', img: '/images/plants/yecai_1.webp', ratio: 0.3 },
+      { name: '生长期', img: '/images/plants/yecai_2.webp', ratio: 0.7 },
+      { name: '成熟期', img: '/images/plants/yecai_3.webp', ratio: 1.0 }
+    ]
+  },
+  // 地菇孢子
+  item_15016: {
+    stages: [
+      { name: '萌芽期', img: '/images/plants/digu_1.webp', ratio: 0.3 },
+      { name: '生长期', img: '/images/plants/digu_2.webp', ratio: 0.7 },
+      { name: '成熟期', img: '/images/plants/digu_3.webp', ratio: 1.0 }
+    ]
+  },
+  // 水露果种子
+  item_15018: {
+    stages: [
+      { name: '萌芽期', img: '/images/plants/shuiluguo_1.webp', ratio: 0.3 },
+      { name: '生长期', img: '/images/plants/shuiluguo_2.webp', ratio: 0.7 },
+      { name: '成熟期', img: '/images/plants/shuiluguo_3.webp', ratio: 1.0 }
+    ]
+  },
+  // 水纹花种子
+  item_15019: {
+    stages: [
+      { name: '萌芽期', img: '/images/plants/shuiwenhua_1.webp', ratio: 0.3 },
+      { name: '生长期', img: '/images/plants/shuiwenhua_2.webp', ratio: 0.7 },
+      { name: '成熟期', img: '/images/plants/shuiwenhua_3.webp', ratio: 1.0 }
+    ]
+  },
+  // 松茸孢子
+  item_15020: {
+    stages: [
+      { name: '萌芽期', img: '/images/plants/songrong_1.webp', ratio: 0.3 },
+      { name: '生长期', img: '/images/plants/songrong_2.webp', ratio: 0.7 },
+      { name: '成熟期', img: '/images/plants/songrong_3.webp', ratio: 1.0 }
+    ]
+  }
+}
+
+function buildGrowthStages(seedId, totalMinutes) {
+  const config = PLANT_STAGE_MAP[seedId]
+  if (!config) return []
+  const mins = Math.max(0, Math.floor(Number(totalMinutes) || 0))
+  const formatMin = m => {
+    if (m >= 60) {
+      const h = Math.floor(m / 60)
+      const rest = m % 60
+      return rest ? `${h}小时${rest}分` : `${h}小时`
+    }
+    return `${m}分钟`
+  }
+
+  const r1 = config.stages[0].ratio || 0.3
+  const r2 = config.stages[1].ratio || 0.7
+
+  const m1 = Math.round(mins * r1)
+  const m2 = Math.round(mins * r2)
+
+  return [
+    {
+      name: config.stages[0].name || '萌芽期',
+      img: config.stages[0].img,
+      timeText: `0 ~ ${formatMin(m1)}`
+    },
+    {
+      name: config.stages[1].name || '生长期',
+      img: config.stages[1].img,
+      timeText: `${formatMin(m1)} ~ ${formatMin(m2)}`
+    },
+    {
+      name: config.stages[2].name || '成熟期',
+      img: config.stages[2].img,
+      timeText: `${formatMin(mins)}成熟`
+    }
+  ]
+}
+
 /**
  * 构建期纯函数：由原始 JSON 响应对象生成物品/装备核心数据。
  * 不依赖网络与浏览器，Node 构建脚本（scripts/parse/*.mjs）与浏览器共用。
@@ -185,7 +346,7 @@ export function buildItemData(maps) {
     itemRes, settingRes, lanRes, avatarRes, rewardRes,
     enchantRes, triggerRes, equipGroupRes, equipSuitRes, itemAffixesRes, equipGlobalRes, homeLevelRes,
     heroRes, heroStarRes, skinRes = {}, plantRes = {}, petRes = {}, campResearchRes = {}, homeItemRes = {},
-    itemExchangeRandomRes = {}, exchangeTeamRes = {}, consumeRes = {}
+    itemExchangeRandomRes = {}, exchangeTeamRes = {}, consumeRes = {}, playerInitRes = {}
   } = maps
 
   // 1. 解析字典 lan.json
@@ -223,6 +384,15 @@ export function buildItemData(maps) {
     Number(level?.actionPara?.potionPoisonReduce) > 0
   )
   const potionPoisonReduction = Number(potionResearchLevel?.actionPara?.potionPoisonReduce) || 0
+
+  const wateringReduceRate = Number(playerInitRes?.plantWateringReduce) || 0.1
+  const wateringResearch = campResearch?.plantWateringReduceAdd
+  const wateringResearchLevel = wateringResearch?.level?.find(level =>
+    Number(level?.actionPara?.plantWateringReduceAdd) > 0
+  )
+  const wateringResearchAdd = Number(wateringResearchLevel?.actionPara?.plantWateringReduceAdd) || 0.05
+  const wateringResearchRate = wateringReduceRate + wateringResearchAdd
+  const wateringResearchName = wateringResearch ? `${wateringResearch.name} Lv.${wateringResearchLevel?.level || 1}` : '植物养护 Lv.1'
 
   // 2. 解析分类树 gameSetting.json -> typeSetting.item_type（完整补全中类/小类）
   const rawCategoryTree = settingRes?.data?.typeSetting?.item_type || []
@@ -267,10 +437,22 @@ export function buildItemData(maps) {
           !harvest || level.typeId !== harvest.typeId || level.min !== harvest.min || level.max !== harvest.max
         ))
 
+      const growthStages = buildGrowthStages(item.typeId, Number(plant.time) || 0)
+
+      const totalGrowSeconds = (Number(plant.time) || 0) * 60
+      const wateringReduceSec = Math.round(totalGrowSeconds * wateringReduceRate)
+      const wateringResearchReduceSec = Math.round(totalGrowSeconds * wateringResearchRate)
+
       item.seedInfo = {
         growMinutes: Number(plant.time) || 0,
-        formattedGrowTime: formatDuration((Number(plant.time) || 0) * 60),
+        formattedGrowTime: formatDuration(totalGrowSeconds),
+        wateringReduceSeconds: wateringReduceSec,
+        formattedWateringReduce: wateringReduceSec > 0 ? `${formatDuration(wateringReduceSec)} (${Math.round(wateringReduceRate * 100)}%)` : '',
+        wateringResearchName,
+        wateringResearchReduceSeconds: wateringResearchReduceSec,
+        formattedWateringResearch: wateringResearchReduceSec > 0 ? `${formatDuration(wateringResearchReduceSec)} (${Math.round(wateringResearchRate * 100)}%)` : '',
         harvest,
+        growthStages,
         researchName,
         researchHarvests
       }

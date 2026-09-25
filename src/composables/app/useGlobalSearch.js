@@ -2,7 +2,7 @@ import { computed, ref } from 'vue'
 import { isBlacklisted } from '../../config/blacklist.js'
 import { fetchWithFallback } from '../../utils/request.js'
 
-const VALID_TYPES = new Set(['recipe', 'achievement', 'pet', 'pet_egg', 'item', 'furniture', 'role', 'equip', 'monster', 'task', 'event', 'explore', 'exchange', 'hidden'])
+const VALID_TYPES = new Set(['recipe', 'achievement', 'pet', 'pet_egg', 'item', 'furniture', 'role', 'equip', 'monster', 'task', 'event', 'explore', 'exchange', 'hidden', 'research', 'camp_building', 'partner_mail', 'dungeon', 'chapter', 'glossary'])
 
 export function useGlobalSearch(route, router) {
   const globalQuery = ref('')
@@ -51,8 +51,25 @@ export function useGlobalSearch(route, router) {
         task: { path: '/tasks', query: { task: item.id } },
         event: { path: '/events', query: { event: item.id } },
         explore: { path: '/events', query: { tab: 'explore', explore: item.id } },
-        exchange: { path: '/exchange' },
-        hidden: { path: '/rewards' }
+        exchange: {
+          path: '/exchange',
+          query: {
+            ...(item.exchangeCat ? { cat: item.exchangeCat } : {}),
+            ...(item.exchangeSub ? { sub: item.exchangeSub } : {}),
+            ...(item.name ? { q: item.name } : {})
+          }
+        },
+        hidden: { path: '/rewards' },
+        research: { path: '/facilities', query: { facility: 'camp', mode: 'research', research: item.id, level: 1 } },
+        camp_building: { path: '/facilities', query: { facility: 'camp', mode: 'building', building: item.id } },
+        partner_mail: { path: '/partner-mails', query: { hero: item.heroId || '', mail: item.id } },
+        dungeon: item.battleId
+          ? { path: '/dungeons', query: { battle: item.battleId } }
+          : { path: '/dungeons', query: { map: item.chapter || 'all', q: item.name } },
+        chapter: item.stageId
+          ? { path: '/chapters', query: { chapter: item.chapterId || 'all', stage: item.stageId, view: 'list' } }
+          : { path: '/chapters', query: { chapter: item.chapterId || item.id, view: 'list' } },
+        glossary: { path: '/glossary', query: { id: item.id, section: item.glossaryGroup || 'all' } }
       }
       const pageRoutes = {
         pet: '/pets', pet_egg: '/petseggs', achievement: '/achievement', recipe: '/recipes',

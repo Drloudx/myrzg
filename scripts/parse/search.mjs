@@ -12,7 +12,15 @@ import { buildDungeonsFiles } from './dungeons.mjs'
 import { readJson, parsedDir } from './shared.mjs'
 
 export function build(deps = {}) {
-  const { pvpSources = {}, hiddenSources = {}, hiddenList = [], dungeonSources = buildDungeonsFiles().deps.dungeonSources } = deps
+  const {
+    pvpSources = {},
+    hiddenSources = {},
+    hiddenList = [],
+    dungeonSources = buildDungeonsFiles().deps.dungeonSources,
+    dungeonsJson = (deps.dungeonsJson || readJson('parsed/dungeons.json')),
+    chaptersJson = (deps.chaptersJson || readJson('parsed/chapters.json')),
+    glossaryJson = (deps.glossaryJson || readJson('parsed/glossary.json'))
+  } = deps
   const result = buildSearchData({
     runeSources: buildRunesFile().data.sources,
     gachaData: buildGachaFile().data,
@@ -23,6 +31,7 @@ export function build(deps = {}) {
     towerJson: readJson('tower.json'),
     equipDecJson: readJson('equipDec.json'),
     heroJson: readJson('hero/hero.json'),
+    heroMailJson: readJson('heroMail.json'),
     itemJson: readJson('item.json'),
     monJson: readJson('mon.json'),
     fileMonJson: readJson('fileMon.json'),
@@ -55,6 +64,9 @@ export function build(deps = {}) {
     levelStageJson: readJson('levelStage.json'),
     battleJson: readJson('battle.json'),
     playerInitJson: readJson('playerInit.json'),
+    dungeonsJson,
+    chaptersJson,
+    glossaryJson,
     pvpSources,
     hiddenSources,
     hiddenList,
@@ -64,15 +76,14 @@ export function build(deps = {}) {
     files: [
       { file: 'parsed/search-index.json', data: result.searchIndex },
       { file: 'parsed/item-sources.json', data: result.itemSources }
-    ],
-    typesContent: result.typesContent
+    ]
   }
 }
 
-// ---------- 独立运行：npm run search:update（只重建搜索索引/来源/类型文件） ----------
+// ---------- 独立运行：npm run search:update（只重建搜索索引/来源文件） ----------
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs'
-import { join, dirname } from 'node:path'
-import { fileURLToPath, pathToFileURL } from 'node:url'
+import { join } from 'node:path'
+import { pathToFileURL } from 'node:url'
 
 const isMain = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href
 if (isMain) {
@@ -91,7 +102,5 @@ if (isMain) {
     writeFileSync(join(parsedDir, file.replace('parsed/', '')), JSON.stringify(data), 'utf8')
     console.log(`  ✓ ${file}（${Math.round(Buffer.byteLength(JSON.stringify(data)) / 1024)}KB）`)
   }
-  const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '../..')
-  writeFileSync(join(repoRoot, 'src/types/data-types.d.ts'), out.typesContent, 'utf8')
-  console.log('✅ 全局搜索索引已更新（覆盖 角色/物品/家具/装备/魔物/魔物蛋/成就/料理/怪物/任务/事件/探索/兑换/隐藏宝箱）')
+  console.log('✅ 全局搜索索引已更新（覆盖 角色/物品/家具/装备/魔物/魔物蛋/成就/料理/怪物/任务/事件/探索/兑换/隐藏宝箱/属性研究/营地升级）')
 }

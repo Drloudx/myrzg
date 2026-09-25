@@ -88,7 +88,13 @@ const typeLabel = (type) => {
     event: '事件',
     explore: '探索',
     exchange: '兑换',
-    hidden: '隐藏'
+    hidden: '隐藏',
+    research: '研究',
+    camp_building: '建筑',
+    partner_mail: '邮件',
+    dungeon: '副本',
+    chapter: '关卡',
+    glossary: '词条'
   }
   return map[type] || '未知'
 }
@@ -225,13 +231,19 @@ const subTagLabel = (item) => {
 .item-type-badge.item { background: rgba(85, 117, 116, 0.18); color: var(--accent-ink, #557574); }
 .item-type-badge.furniture { background: rgba(176, 97, 12, 0.15); color: var(--q5-text, #b15d00); }
 .item-type-badge.pet, .item-type-badge.pet_egg { background: rgba(176, 97, 12, 0.15); color: var(--q5); }
-.item-type-badge.achievement { background: rgba(43, 122, 43, 0.15); color: var(--q2); }
+.item-type-badge.achievement { background: rgba(46, 125, 50, 0.15); color: #2e7d32; }
 .item-type-badge.recipe { background: rgba(176, 97, 12, 0.18); color: var(--q5); }
 .item-type-badge.monster { background: var(--danger-soft, rgba(139, 0, 0, 0.1)); color: var(--danger, #8b0000); }
-.item-type-badge.task { background: rgba(43, 122, 43, 0.15); color: var(--q2); }
+.item-type-badge.task { background: rgba(30, 110, 65, 0.16); color: #1b5e20; }
 .item-type-badge.event, .item-type-badge.explore { background: rgba(122, 154, 153, 0.18); color: var(--accent-ink, #557574); }
 .item-type-badge.exchange { background: rgba(126, 42, 168, 0.15); color: var(--q4); }
 .item-type-badge.hidden { background: rgba(110, 110, 110, 0.16); color: var(--q1); }
+.item-type-badge.research { background: rgba(46, 125, 50, 0.15); color: #2e7d32; }
+.item-type-badge.camp_building { background: rgba(184, 115, 51, 0.15); color: #8d4f16; }
+.item-type-badge.partner_mail { background: rgba(140, 92, 51, 0.18); color: #844c1a; }
+.item-type-badge.dungeon { background: rgba(108, 52, 131, 0.16); color: #6c3483; }
+.item-type-badge.chapter { background: rgba(31, 78, 121, 0.16); color: #1f4e79; }
+.item-type-badge.glossary { background: rgba(22, 110, 105, 0.16); color: #166e69; }
 
 .item-name {
   font-size: 14px;
