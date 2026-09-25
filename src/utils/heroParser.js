@@ -461,7 +461,7 @@ function processSkillInfo(skillId, s, type, rare, element, upgradeList, consumeD
   return {
     id: skillId,
     type,
-    icon: `skill_${skillId}`,
+    icon: s.skillIcon || s.icon || `skill_${skillId}`,
     name: getCleanSkillName(rawName),
     levelData,
     upgrades,
