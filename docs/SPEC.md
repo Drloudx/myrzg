@@ -38,6 +38,7 @@ Vue 3 + Vite 8 + Vue Router 4（Hash）+ Pinia 4，Android 使用 Capacitor 8 �
 | 关卡图鉴 | `/chapters` | `ChaptersView.vue` | `chapters.json`、`stages/{stageId}.json` |
 | 兑换 | `/exchange` | `ExchangeView.vue` | `parsed-exchange.json` |
 | 模拟招募 | `/gacha` | `GachaView.vue` | `gacha.json`、`gacha-presentation.json` |
+| 词条 | `/glossary` | `GlossaryView.vue` | `glossary.json`（另含静态 `config/glossaryTerms.js`） |
 | 其他 | `/rewards` | `RewardsView.vue` | `parsed-pvp.json`、`parsed-hidden.json` |
 
 项目入口为 `src/main.js`，应用壳为 `src/App.vue`，页面在 `src/views/`，共享逻辑在 `src/utils/`，构建入口在 `scripts/parse/index.mjs`。源码目录不等同于运行时请求路径；首次接手可先沿“路由 → 页面 → parser/产物 → 构建器”找到目标模块。
@@ -72,6 +73,7 @@ Vue 3 + Vite 8 + Vue Router 4（Hash）+ Pinia 4，Android 使用 Capacitor 8 �
 | 本地收集标记 | `stores/appState.js`：成就与隐藏物品 |
 | 招募规则、状态与舞台 | `gachaSim`、`gachaState`、`gachaLayout`、`gachaCurrency`、`gachaSpinePlayer`、`gachaAudio` |
 | 房间内容与奖励池展示 | `utils/roomDisplay.js`：波次文案、宝箱排序、奖励池分组与概率标签；`RewardPools.vue` / `RoomContentList.vue` 由副本图鉴与关卡图鉴共用 |
+| 状态（buff）数值说明 | `utils/buffParser.js`：**唯一**的 `para → 中文数值` 渲染实现（`describeBuff` / `describeBuffPara` / `resolveBuffEffect`），词条页与角色、怪物图鉴共用；单位语义与笔误归一化依据见 [词条页契约](#词条) |
 | 章节地图 | `components/chapters/ChapterMapCanvas.vue`：世界地图底图 + 拼块渲染与归属图命中判定；`RegionRouteMap.vue`：地区路线图（底图 + 节点 + 连线 + 缩放平移）；坐标、归属图与路线数据都由构建期产物提供 |
 
 纯规则模块在构建期完成多表计算；带请求、缓存或播放生命周期的运行时工具负责各自环境。不能因为它们同在 `utils/` 就把所有工具都当作无副作用纯函数。
@@ -398,6 +400,42 @@ Vue 3 + Vite 8 + Vue Router 4（Hash）+ Pinia 4，Android 使用 Capacitor 8 �
 
 吉祥物不是独立页面，是普通桌面页面按需加载的辅助插画。应用壳决定可见性与加载，角色配置、SVG 装配缓存和动作由对应工具维护；选择层使用公共覆盖层，不能影响当前查询或详情返回。角色装配、握点、动作及资源适配见 [右栏吉祥物](features/SIDEBAR_MASCOT.md)。
 
+### 词条
+
+入口 `/glossary`，页面 `GlossaryView.vue`。分「名词解释」与「状态词条库」两个页签：前者是静态文案（`config/glossaryTerms.js`），后者读 `parsed/glossary.json`。
+
+- **名词解释**覆盖战斗基础名词、Buff 分类名词、触发条件名词、属性名词四块。每条都带 `basis` 依据（源码文件或配置字段）；证据不足的项必须写明「未确证」，不编造结论。公式正文不在这里重复，指向战斗规则页（`config/combatRules.js`）。
+- **状态词条库分四组**（`STATUS_GROUPS`）：**战斗状态**（默认视图，18 条标准状态）、**属性增益**（11）、**怪物异变**（7）、**技能专属**（27，技能花名如「利息」「冰爆」「禅武不二」），共 63 条。分组、分类、标签三个维度都按**当前组内**统计，避免出现「在战斗状态组里点『技能专属』筛出 0 条」。**搜索是跨分组的**——用户不该先知道某个状态属于哪一组，命中项在卡片上标出所属分组。
+- **标准状态的判定完全基于数据字段，不使用 `buffName`**（`STATUS_RULES`）。判定按**信号强度分层**，而不是按规则书写顺序：
+  1. `buffTypes` —— 配置的语义类型（`poison` / `bleeding` / `burning` / `vertigo` / `fixed` / `taunt` / `shield` / `critUp` / `damageReduce`…）
+  2. `buffEffects` —— 源码唯一的效果派发键（`Thick` / `HOT` / `Shield` / `confusion` / `dotHalo`…）
+  3. `elements` —— `para.damage.elementType`（火属性 DOT 即燃烧）
+  4. `attrPositive` / `attrNegative` —— `para.attr` 改了哪个属性、往哪个方向
+  5. `desPattern` —— **游戏自己的效果描述** `buffDes`（如「进入中毒状态」）。这是配置对效果的权威说明，不是展示名
+- **没有「兜底规则」，规则表里不允许存在不带任何数据信号的条目**。曾经用 `buffEffect=DOT` 兜底出一条通用「持续伤害」，结果 hero043 的专属 DOT 被改了名（玩家搜「利息」搜不到）；现在细分不出来的 DOT 一律落到**技能专属**、保留自己的名字。单测逐条断言「每条规则至少要有一个数据信号」锁住这一点。
+- **为什么不用展示名**：名字判不出效果，而且会判错。实际数据的反例——`圣愈` 的 `buffDes` 写「暴击增加」、`buffType=critUp`，但 `buffEffect` 是 `HOT`；按名字会归进治疗类，按 `buffType` 才正确落到「暴击提升」。同理 `炒鲜姑` 的 `effect=1201` 与治疗同号，实际却是「增加生命上限 500 点」，因此 **`effect` 数字编号（表现层特效号）也不参与判定**。
+- **`desPattern` 与 `elements` 都有作用域限制**，否则越界：`desPattern` 只对通用机制的 buff 生效（英雄被动的描述里常提到「燃烧」「流血」，因为它会施加该状态，但它本身不是那个状态）；`elements` 只对 `buffEffect=DOT` 生效（否则任何造成火属性伤害的技能都会被算成燃烧）。两条限制各由一条单测锁住。
+- **料理按 `buffType === 'cook'` 排除**（38 条），不用名字前缀——「属性附加」「炒鲜姑」并不叫「料理：xxx」，但都是吃料理产生的临时增益。`/recipes` 已按菜谱展示效果。
+- 新 buff 只要带上述任一字段就会**自动归位**，不需要改清单。构建期由 `buildGlossaryEntries` 断言「每条规则至少命中一条 buff」，清单与数据脱节时直接报错，不会静默变成空词条。
+- **两个池子**：标准状态从**全量** buff 里找（否则会漏掉「吸血」这类没通过精选的），其余分组只用**精选池**（否则 300 多条「XX 升星1」会全涌进技能专属）。
+- **同名/同类变体按渲染结果去重**：数值完全相同的变体只留一个代表（护盾类 31 条 buff 去重后仍有多套数值），去重时**合并来源**，弹窗里用可滚动容器承载版本切换。词条保留 `sourceNames`，所以搜「冰爆」能搜到「弱化」。
+- **只收录游戏内可达的技能等级**。`skill.json` 的 `levelData` 给主动技能配了 **21 级**（全表 70 个主动技能都是 21 级，每级一份专属 buff，第 N 级直接引用 `_N`），但游戏内升级表 `heroSkillUpgrade.json` 的 `skillOne` / `skillTwo` **每个稀有度都只有 12 行**，源码 `HeroSkillUI.cs:245` 直接拿行数当上限（`num = ...[rare].Count`，`level >= num` 就隐藏升级按钮）。因此 **Lv.13–21 是配置里有、当前客户端升不到的预留等级**，词条库不收录：不滤掉的话「穿甲箭」会平白多出 9 个玩家永远查不到的版本（21 个胶囊）。等级不靠 id 后缀猜，只认 `skill.json` `levelData[N]` 里**直接引用**的 buffID（猜后缀会误伤 `item_30004`、`monBuff_5003` 这类恰好以数字结尾的 id）。被滤掉的条数写进产物 `meta.unreachableBuffs`（当前 63 = 7 个技能家族 × 9 级），便于核对口径而不是以为漏数据。
+- **技能等级型词条的胶囊只写 `Lv.N`**（`entry.levelBased`）。整条词条的版本都来自同一技能的各个等级时，数值随等级单调变化，把倍率塞进胶囊会变成 21 个重复的长标签。此时**「施加来源」排在「数值版本」之前**，来源写成「角色：菲莉娜」+「技能：穿甲箭头」——角色名与技能名只交代一次，选中哪个等级就在下面列该级数值。判定还要求**等级两两不同**：几个技能各自的一级并成一条词条时（「定身」）等级区分不了任何东西，必须退回 `来源 · 区分数值` 写法。混了非等级来源的词条（如「攻速提升」里既有技能各级、又有装备与怪物 buff）同样不按等级排版。
+- **数值版本标签是「来源 · 区分数值」**（`variant.label`），不是时长。同名变体常常是同一角色的升星技能各级（「结晶」四级只差伤害倍率），只显示时长会出现四个一样的「结晶（5 秒）」，只显示来源又会四个都是「缇莎」。区分数值 = 各版本之间**不一致**的那条数值行；来源超过 2 个时收敛成「首个 等 N 个」。来源由 `utils/buffSourceIndex.js` 在构建期建索引：先按 `buffType` 前缀（`heroNNN` / `pet_NNN` / `monNNN`），再反查技能/触发器的 `para.buffId` 经角色、魔物、怪物、物品表归属；技能等级由 `utils/skillLevelIndex.js` 单独索引。
+- **胶囊标签必须两两不同**。两条变体可能数值完全一样、只有持续时间或生效时机不同（「易伤」的「大巧不工」一份 5 秒一份 10 秒），去重签名认得出它们是两条，但标签会写成一模一样，胶囊就白摆了两颗。撞车时把「区分它们的那部分状态信息」补进标签，单测逐条断言标签唯一。
+- **`variant.emptyPayload` 必须在来源合并之后才算**（`hasPayload === false && sources.length === 0`）：合并会把同数值的其它来源并进来，若在单条 buff 渲染时就把结论算死，会出现「来源有 2 个、却还说配置里没写效果」的自相矛盾（`034_battleItem002` 眩晕）。页面据此分两种文案：「配置里没写效果也查不到施法者」（如 `圣愈`）与「纯控制/纯标记、本就不带数值」（如「定身」）。
+- **异变与光环类在源数据里没有 `buffIcon`**（游戏用粒子表现、不走状态栏图标），图集里也没有对应素材。这类用首字占位徽标，**不借相似状态的图标冒充**；单测断言「缺图标必须是源数据本来就没有」，防止是构建丢图。
+- **筛选按钮上的计数必须按「当前组内 + 归并后的词条」统计**，与列表展示同一口径。按归并前的 buff 条数统计会出现「筛选写 10、点进去只有 1 条」——10 条带同一标签的 buff 可能归并成一条词条。`tests/unit/glossary.test.mjs` 逐组逐个断言「计数 == 该筛选实际筛出的条数」。
+- **分类标注**仍只认 `buffEffect`：它是源码唯一的效果派发键（`BuffControl.cs:312`，356 分支的 switch）。`buffType`（509 个取值）用于同类型互斥去重，`buffTags`（71% 为空）用于检测/驱散/改时长/护盾归属。注意这与「标准状态判定」是两件事：判定用上面的分层信号，`buffEffect` 只用来给每条词条标注通用机制名。
+- **6 个 `buffEffect` 在 switch 里没有分支**（`enchant_1001_1`、`enchant_2001_1`、`强化普攻`、`力量药剂（小）`、`miTuoLaPassive`、`tempValue`），配置存在但游戏里不生效，由 `BROKEN_BUFF_EFFECTS` 排除，不进入词条库。
+- **数值单位按源码而非按字段名猜**：`AttrAdd.cs` 的 `baseValue`/`percent` 两个字段在不同属性上单位不同——物理/魔法攻击防御、生命法力是「固定值 + 比例（×100）」；暴击、暴伤、攻速、冷却缩减的 `baseValue` 本身已是百分数；受击/元素增伤与各抗性是比例（×100）；移速加成只有 `percent` 且是比例。官方对照见 `UnitDataShowPanel.cs:162-221`（`GetPercent(v) = round(v*100,2)+"%"`）与 `ExtentionMethod.cs:1726-1770`。
+- **配置笔误在渲染时归一化，不改写原表**：`attr.restoreHp/restoreSp.percent` 与顶层 `atkSpeed` 有少量漏乘 100 的值（0.05、-0.1 等），判定依据是该字段整体取值分布加 `buffDes` 原文自证，逐条记录在 `buffParser.js` 的 `PERCENT_TYPO_KEYS`。属性名拼接同理：`runSpeed` 的官方名就叫「移速加成」，`percent` 行不再叠一层「加成」（曾渲染成「移速加成加成」），而「生命恢复」仍要拼成「生命恢复加成」。
+- **`damage.repelForce` 是击退力度系数不是距离**；`damage.repelSpeed` 源码无读取点，不展示；`attr.cirtDam` 疑似死键但保留原值。
+- **配置内部数值不一致之处如实呈现、不替游戏下结论，也不在页面上「修正」**。已记录：`穿甲箭`（`hero049Skill2Buff1_*`）的 `para.damage.muPower` 恒为技能说明文本百分比的 **1.1 倍**（Lv.18：buff 3.05 → 页面 305%，`skill.json` 说明写 277%；21 级全部如此），而 `胜军之加护`、`重锤眩晕` 的说明与 buff **完全一致**。页面显示的是引擎实际使用的 buff 值；说明文本疑似某次平衡调整后未同步重生成。
+- **回填范围**：`monsterParser` 的怪物 buff 与技能附加状态、`heroParser` 的职业特性都写入同一个 `values`（`describeBuff` 产物）。原先怪物详情手写的 `damageReduction/speedChange/triggerInterval/triggerType/stackable/maxStacks/triggerLabel/rectRange` 已由 `values.status` 与 `values.groups` 覆盖，不再重复输出。
+- **图标**取自图集 `CombatPanel_Atlas` 的 28×28 sprite，导入为无损 WebP（`scripts/dev/import-buff-icons.mjs`，默认预览、`--apply` 才写）。图标清单由精选判定推导，不另维护一份清单，避免与产物脱节。
+- URL：`tab=terms|buffs`，`group` 选分组（缺省 `status`），`q` 为两页签共用的搜索，`category` 选分类、`tag` 选状态标签（均按当前分组），`buff=<词条名>` 打开详情。换分组会清掉分类与标签（它们是按组统计的），切页签清理只属于上一个页签的定位与筛选。
+
 ## 四、详情与 URL
 
 | 参数 | 用途与维护方 |
@@ -408,6 +446,7 @@ Vue 3 + Vite 8 + Vue Router 4（Hash）+ Pinia 4，Android 使用 Capacitor 8 �
 | `event/explore` | 事件/探索详情 |
 | `battle` | 副本详情，掉落定位参数见专题 |
 | `chapter` / `stage` / `diff` / `view` | 关卡图鉴：章节筛选、关卡详情、难度选择、地图/列表视图（`view=list` 用于无章节时的列表视图） |
+| `buff` | 词条页状态词条详情，值为归并后的词条名（如 `buff=燃烧`） |
 
 - 列表点击通过 query 打开详情，保留当前路由和其他筛选；全局物品入口不强跳 `/items`。关闭仅清理自身参数，父详情和筛选保持。
 - `openItemDetail(item, categoryTree, savedScrollTop=null)` 全新打开时清空历史；详情内 `pushItemDetail(item, bodyScrollTop)`/`popItemDetail()` 保存上一件物品与正文位置，新物品置顶，返回恢复。
@@ -459,6 +498,7 @@ Vue 3 + Vite 8 + Vue Router 4（Hash）+ Pinia 4，Android 使用 Capacitor 8 �
 | `dungeons.json`、`dungeons/{battleId}.json` | 副本摘要与关卡详情，按关卡懒加载 |
 | `chapters.json`、`stages/{stageId}.json` | 章节与关卡索引、关卡详情（三难度 + 房间/怪物/掉落），按关卡懒加载；索引另含世界地图的底图、拼块矩形、命中归属图，以及每个章节的地区路线图（底图、节点、连线、地区「自由探索」标签素材路径） |
 | `gacha.json` / `gacha-presentation.json` | 招募规则与展示资源，运行时不重读原表 |
+| `glossary.json` | 词条页状态词条库：按名归并的词条、机制分类与标签分布、每条状态的数值说明与施加来源；供词条页消费（369 KB / gzip 24.4 KB，63 条词条；`meta.skillLevelCap=12`、`meta.unreachableBuffs` 记录被滤掉的升不到的等级） |
 | `search-index.json` / `item-sources.json` | 全局搜索和物品来源反查 |
 
 `scripts/parse/index.mjs` 负责常规页面产物；`scripts/parse/search.mjs` 重建搜索与来源索引；副本路线提取、副本房间效果、怪物塔层和模型导出是开发机按需执行的独立步骤。维护时需区分普通构建与这些前置步骤。资源 schema 和业务外键检查用于发现缺失或不合法字段；不能把空产物当成修复输入缺失的办法，也不能假定整条数据构建具备事务回滚能力。
@@ -487,6 +527,7 @@ Android 将核心代码作为 Capgo 热更包，将图片和运行时 JSON 作�
 | `npm run data:dungeons:effects` | 维护女神/泉水等房间结构化效果输入，之后再生成副本 |
 | `npm run data:monsters:tower` | 从完整 tower/battle/room 生成轻量 Boss 塔层索引，不复制全量来源到浏览器 |
 | `npm run skins:export` | 离线导出皮肤模型 PNG 与清单；普通页面构建只验证并引用，不重新渲染模型 |
+| `scripts/dev/import-buff-icons.mjs` | 从图集 `CombatPanel_Atlas` 导入状态图标为无损 WebP（28×28，清单由精选判定推导）；默认预览，`--apply` 才写，逐张与图集 sprite 表核对像素 |
 | `npm run data:build` | 运行当前解析入口，生成页面数据与关联产物 |
 | `npm run search:update` | 重建搜索、来源与类型；重算副本来源，合并已有 PVP/隐藏产物，不替代全量数据构建 |
 

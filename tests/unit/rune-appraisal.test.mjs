@@ -71,7 +71,9 @@ test('zero-weight entries cannot be drawn', () => {
 test('shared probability text preserves 1.25%, 0.25% and repeating fractions', () => {
   for (const [value, text] of [[.235, '23.50'], [.0125, '1.25'], [.0025, '0.25'],
     [94 / 1100, '8.55'], [1 / 1100, '0.09'], [0, '0.00'], [1e-8, '<0.01']]) {
-    assert.equal(formatRewardProbability({ actualProb: value }), `单次抽取 ${text}%`)
+    assert.equal(formatRewardProbability({ actualProb: value }), `概率 ${text}%`)
+    assert.equal(formatRewardProbability({ actualProb: value, groupCount: 2 }), `单次抽取 ${text}%`)
   }
-  assert.equal(formatRewardProbability({ actualProb: 1 }), '单次抽取必定获得')
+  assert.equal(formatRewardProbability({ actualProb: 1 }), '必定获得')
+  assert.equal(formatRewardProbability({ actualProb: 1, groupCount: 2 }), '单次抽取必定获得')
 })

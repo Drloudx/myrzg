@@ -77,7 +77,10 @@ const emit = defineEmits(['click'])
 }
 
 .ui-filter-pill.is-disabled {
-  opacity: 0.45;
+  opacity: 0.35;
   cursor: not-allowed;
+  filter: grayscale(1);
+  box-shadow: none;
+  border-color: var(--border-faint, rgba(143, 115, 81, 0.18));
 }
 </style>

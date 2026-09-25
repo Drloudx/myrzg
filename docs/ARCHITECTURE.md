@@ -58,6 +58,10 @@ vue-myrzg/
     │   ├── roomDisplay.js      # 房间波次/采集/奖励池的展示整形（副本与关卡图鉴共用）
     │   ├── levelConfig.js      # 玩家等级表边界解析（角色/魔物共用）
     │   ├── monsterParser.js    # 怪物数据解析
+    │   ├── buffParser.js       # 状态（buff）para → 中文数值 的唯一渲染器（词条页与角色/怪物图鉴共用）
+    │   ├── glossaryData.js     # 词条页产物构建（按名归并 + 机制/标签分布）
+    │   ├── buffSourceIndex.js  # 「这个状态是谁施加的」构建期反查索引（角色/魔物/怪物/物品）
+    │   ├── skillLevelIndex.js  # 「这条 buff 属于哪个技能的第几级」+ 游戏内技能等级上限（12）
     │   ├── heroParser.js       # 角色数据解析
     │   ├── petParser.js        # 魔物数据解析
     │   ├── taskParser.js       # 任务数据解析
@@ -115,6 +119,7 @@ vue-myrzg/
         ├── DungeonsView.vue    # 副本图鉴  /dungeons
         ├── ChaptersView.vue    # 关卡图鉴  /chapters
         ├── GachaView.vue       # 模拟招募  /gacha
+        ├── GlossaryView.vue    # 词条      /glossary
         ├── ExchangeView.vue    # 兑换      /exchange
         └── RewardsView.vue     # 其他      /rewards
 ```
@@ -171,6 +176,8 @@ vue-myrzg/
 
 奖励公共底层为 `acquisitionRules.js`（无网络、缓存或组件依赖），`gameMappings` 重导出旧映射及摘要解析接口。物品构建器在完成名称和图标关联后生成 `item.acquisition`；`ItemDetailModal → AcquisitionRewards → UiRewardCard` 共用消耗、奖励池和概率展示，物品、装备与符石图鉴不再各自解析使用动作。锻造装备候选与普通设施产出也调用该底层。正式来源入口判断、抽奖保底与重复转换各归其业务模块，不进入通用奖励解析。接口详见 [ACQUISITION_RULES.md](technical/ACQUISITION_RULES.md)。
 
+状态数值同理有唯一底层 `buffParser.js`（纯函数，无请求与组件依赖）：它把 `buff.json` 的 `para` 翻成中文数值，`glossaryData` 用它生成词条产物，`monsterParser` 与 `heroParser` 用它回填怪物状态、技能附加状态与职业特性。单位语义取自源码 `AttrAdd.cs` / `UnitDataShowPanel.cs` / `ExtentionMethod.cs`，不按字段名猜；配置笔误只在渲染时归一化，不改写原表。页面与组件不得再自行解读 `para`。
+
 1. **构建**：`scripts/parse/index.mjs` 调用 `scripts/parse/*`，优先读取 `raw/`，生成 `public/data/parsed/`。业务纯函数位于 `utils/*Parser.js` / `*Data.js`；字段语义和可见性见 SPEC 与功能专题。输入不齐时沿用产物的条件见 [构建前置](../README.md#构建前置与原表维护)。
 2. **运行时**：视图通过 `fetchWithFallback` 读取同版本产物；云端失败只回退包内同路径文件。副本按关卡请求详情，怪物详情另取等级系数小表；页面不重新关联原表，解析失败显示错误态。
 3. **来源**：`searchData` 合并正式玩法入口、`supplementalItemSources`、`remainingItemSources` 和专题来源，实际产物筛选复用 `acquisitionRules`。完整构建传入本次副本来源；独立搜索构建重算副本来源并读取已有 PVP/隐藏产物。只保存展示与定位实际消费的字段，无法确认的来源留在内部记录。
@@ -196,6 +203,8 @@ vue-myrzg/
 - `DungeonsView.vue` 管理副本筛选、关卡详情、房间详情和掉落；路线图的布局投影、缩放、鼠标/触摸拖动、节点聚合归 `DungeonRouteMap.vue`。数据与来源定位见 [副本图鉴](features/DUNGEONS.md)。
 - `ChaptersView.vue` 管理章节筛选、关卡列表与关卡详情；章节归属、三难度与解锁文案来自构建期 `chapters.json` / `stages/{stageId}.json`，房间与掉落展示复用 `RoomContentList.vue`、`RewardPools.vue`，不复制副本页的解析与样式。地图视图分两级，各归一个组件：世界地图归 `components/chapters/ChapterMapCanvas.vue`（拼块矩形与命中归属图都由构建期产物提供，坐标由模板匹配测得，页面不自己算坐标），地区路线图归 `RegionRouteMap.vue`（节点坐标与连线同样来自构建期产物）。两级共用页面测出的同一块区域高度，缩放平移只在 `RegionRouteMap` 内部维护。节点标记按屏幕恒定尺寸渲染，尺寸与锚点**按各 sprite 自身的内容比例量出**：关卡石台以自身中心落在节点坐标上，地区立体图的锚点在圆盘中心（sprite 高度的 75.4% 处，比 sprite 中心低 25.4%），副本入口图以自身中心落在节点坐标上；三者比例不同，不能套同一个宽度，也**不能照搬源码给 `AreaItemUI` / `InstanceRoomItemUI` 的 80 / 75 偏移**——那是给它们各自 prefab 层级用的，搬到「sprite 居中摆放」的网页实现上会把图标抬离节点。
 - `FurnitureView.vue` 管理家具筛选、详情及 `id/itemId` 联动；`FurnitureCard.vue` 只负责稳定卡片视觉，不解析原表或猜测图纸关系。
+
+- `GlossaryView.vue` 分「名词解释」（静态 `config/glossaryTerms.js`）与「状态词条库」（`parsed/glossary.json`）两个页签。状态的数值说明一律走 `buffParser` 的 `describeBuff`，页面不自行解读 `para`；分类只用源码唯一派发键 `buffEffect`，`buffType`/`buffTags` 不承担分类职责。标准状态的判定是按数据字段分层的纯函数（`matchCanonicalStatus`），**不使用 `buffName`**；词条库只收录游戏内可达的技能等级（`skillLevelIndex`，上限 12）。数值版本的「来源」来自构建期的 `buffSourceIndex`，技能等级型词条（穿甲箭这类）把「施加来源」排在「数值版本」之前、胶囊只写 `Lv.N`，页面只消费产物。怪物与角色的状态数值回填复用同一渲染器，不另写一套。
 
 ### 4.5 移动端/原生适配
 - 安全区变量：`--safe-top/bottom/left/right`（theme.css 定义）。

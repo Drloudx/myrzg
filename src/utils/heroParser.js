@@ -5,6 +5,7 @@ import { resolvePlayablePlayerLevelCap } from './levelConfig.js'
 import { JOB_NAMES, ELEMENT_NAMES, BASE_REWARD_ICONS, REWARD_MODE_INFO, getCleanSkillName } from './gameMappings.js'
 import { buildSkillMechanics, buildTalentMechanics } from './heroMechanics.js'
 import { buildPartnerMailboxes, parseHeroMail } from './partnerMailData.js'
+import { describeBuff } from './buffParser.js'
 
 let cachedHeroes = null
 let cachedMailboxes = null
@@ -71,7 +72,9 @@ export function buildHeroData(maps) {
       return {
         id: entry.buff || `job-${jobId}-${index + 1}`,
         name: buff?.buffName || entry.name || '',
-        des: buff?.buffDes || entry.des || ''
+        des: buff?.buffDes || entry.des || '',
+        // 职业特性同样带数值（如攻速、属性加成），与词条页共用同一渲染器
+        values: buff ? describeBuff(buff, { buffData: buffDatas }) : null
       }
     }).filter(trait => trait.name && trait.des)
   })

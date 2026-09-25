@@ -109,6 +109,7 @@ export const ITEM_CATEGORY_NAMES = {
   // 其他 (2) 下属
   '21': '结晶碎片/礼包',
   '22': '兑换代币',
+  '25': '宝箱',
   '24': '旧版符石',
 
   // 消耗 (3) 下属
@@ -210,6 +211,7 @@ export function buildFullCategoryTree(rawTree = []) {
       info: [
         { type: '21', name: '结晶碎片/礼包' },
         { type: '22', name: '兑换代币' },
+        { type: '25', name: '宝箱' },
         { type: '24', name: '旧版符石' }
       ]
     },

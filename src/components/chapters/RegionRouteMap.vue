@@ -34,13 +34,13 @@
           把点击吃掉。
         -->
         <component
-          :is="node.kind === 'stage' || node.kind === 'area' ? 'button' : 'div'"
+          :is="node.kind === 'stage' || node.kind === 'area' || node.kind === 'instance' ? 'button' : 'div'"
           v-for="node in region.nodes"
           :key="`${node.kind}-${node.id}`"
           class="region-map__node"
           :class="[`is-${node.kind}`, { 'is-current': (node.kind === 'stage' || node.kind === 'area') && node.id === currentStageId }]"
           :style="nodeStyle(node)"
-          :type="node.kind === 'stage' || node.kind === 'area' ? 'button' : undefined"
+          :type="node.kind === 'stage' || node.kind === 'area' || node.kind === 'instance' ? 'button' : undefined"
           :title="nodeTitle(node)"
           @click="handleNode(node)"
         >
@@ -130,7 +130,7 @@ const props = defineProps({
   /** 可视区高度（由页面统一测量，与世界地图保持一致）。 */
   height: { type: Number, default: 640 }
 })
-const emit = defineEmits(['select', 'back', 'list'])
+const emit = defineEmits(['select', 'select-instance', 'back', 'list'])
 
 const viewportRef = ref(null)
 const zoom = ref(1)
@@ -187,8 +187,11 @@ const nodeTitle = (node) => {
 }
 
 const handleNode = (node) => {
-  if (node.kind !== 'stage' && node.kind !== 'area') return
-  emit('select', node.id)
+  if (node.kind === 'stage' || node.kind === 'area') {
+    emit('select', node.id)
+  } else if (node.kind === 'instance') {
+    emit('select-instance', node.id)
+  }
 }
 
 /** 节点包围盒（加边距）：初始视图贴合它，而不是整张画布——节点通常只占画布的一小块。 */
@@ -482,7 +485,8 @@ watch(() => props.height, () => resetView())
   height: 180px;
   transform: translate(-50%, calc(-100% + 54px));
   z-index: 2;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
 }
 .region-map__node.is-instance .region-map__node-art {
   position: absolute;
@@ -533,8 +537,8 @@ watch(() => props.height, () => resetView())
 .region-map__node.is-current .region-map__node-label { color: var(--accent-bright); }
 .region-map__node.is-current .region-map__node-label.is-plaque { color: var(--on-wood-text); }
 .region-map__node.is-stage:hover .region-map__node-art { filter: brightness(1.15) drop-shadow(0 0 7px rgba(255, 214, 120, 0.95)); }
-.region-map__node.is-area:hover .region-map__node-art,
-.region-map__node.is-instance:hover .region-map__node-art { filter: brightness(1.18); }
+.region-map__node.is-area:hover .region-map__node-art { filter: brightness(1.18); }
+.region-map__node.is-instance:hover .region-map__node-art { filter: brightness(1.18) drop-shadow(0 0 8px rgba(255, 214, 120, 0.7)); }
 
 /* 底部右侧：提示文字在缩放条左边，与副本图鉴同一套写法 */
 .region-map__footer {

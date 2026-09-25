@@ -238,6 +238,9 @@ export function buildItemData(maps) {
     if (smithingData[item.typeId]) item.smithing = { facilityId: 'sysBlacksmith', facilityName: '锻造台', recipes: smithingData[item.typeId] }
     item.homeItemUnlocks = resolveHomeItemUnlocks(item, homeItemRes)
     const category = item.category || []
+    if (Number(category[0]) === 2 && item.name && item.name.includes('宝箱')) {
+      item.category = [2, 25]
+    }
     if (Number(category[0]) === 3 && Number(category[1]) === 31) {
       const toxicity = Number(item.use2Info?.poison) || 0
       item.potionInfo = {

@@ -23,7 +23,7 @@ defineProps({
 <style scoped>
 .ui-filter-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   font-size: 13px;
   min-width: 0;
@@ -39,6 +39,7 @@ defineProps({
   font-family: var(--font-ui);
   letter-spacing: 0.5px;
   text-align: left;
+  line-height: 25px;
 }
 .ui-filter-row__options {
   display: flex;

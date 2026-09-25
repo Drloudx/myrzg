@@ -10,7 +10,7 @@
     <div v-for="(group, index) in acquisition.groups" :key="index" class="acquisition-group">
       <div class="acquisition-heading">
         <UiTag tone="gold">{{ formatRewardGroupLabel(group) }}</UiTag>
-        <span v-if="group.num > 1 && !group.isSelect">(抽取 {{ group.num }} 次)</span>
+        <span v-if="group.num > 1 && !group.isSelect">(获得 {{ group.num }} 次)</span>
       </div>
       <div class="acquisition-grid">
         <div v-for="(rule, ruleIndex) in group.rules" :key="ruleIndex" class="acquisition-entry">
@@ -33,7 +33,7 @@ import { formatRewardGroupLabel } from '../utils/acquisitionRules.js'
 
 defineProps({
   acquisition: { type: Object, default: null },
-  title: { type: String, default: '使用效果' },
+  title: { type: String, default: '开启奖励' },
   costTitle: { type: String, default: '额外消耗' }
 })
 const emit = defineEmits(['item-click'])
@@ -45,7 +45,13 @@ const imageRule = rule => ({ ...rule, targetImg: rule.targetImg ? getImageUrl(ru
 .acquisition-group:last-child { margin-bottom: 0; }
 .acquisition-costs h4 { margin: 0 0 8px; font-size: 13px; }
 .acquisition-heading { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 8px; font-size: 13px; }
-.acquisition-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 8px; }
+.acquisition-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 8px; }
+@media (max-width: 640px) {
+  .acquisition-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+}
 .acquisition-entry { min-width: 0; }
 .acquisition-candidates { margin-top: 8px; font-size: 13px; }
 .acquisition-candidates summary { cursor: pointer; margin-bottom: 8px; }

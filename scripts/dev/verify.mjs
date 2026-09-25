@@ -151,8 +151,8 @@ try {
     && !chiefForms.has('034_4')
     && commanderForms.get('052_1')?.relationType === '探索版本'
     && commanderForms.get('052_2')?.relationType === '剧情版本'
-    && commanderForms.get('052_tower1_30')?.relationType === '爬塔版本'
-    && ![...chiefForms.values(), ...commanderForms.values()].some(form => /特殊|爬塔\s*\d+层/.test(form.tabLabel || ''))
+    && commanderForms.get('052_tower1_30')?.relationType === '神匠之塔版本'
+    && ![...chiefForms.values(), ...commanderForms.values()].some(form => /特殊|爬塔\s*\d+层|神匠之塔\s*\d+层/.test(form.tabLabel || ''))
     && turod?.summons?.some(form => form.id === '069_jianci' && form.name === '尖刺')
     && turod?.forms?.some(form => form.skills?.some(skill => skill.addBuffs?.some(buff => buff.id === 'mon069StunBuff' && buff.name === '特殊眩晕' && buff.description?.includes('尖刺被破坏时解除'))))
     && crystalMonster?.summons?.some(form => form.id === 'Mon055StoneMon')
@@ -161,6 +161,14 @@ try {
     && ansen?.forms?.some(form => form.skills?.some(skill => skill.id === 'mon_04209' && skill.summons?.some(summon => summon.monsterId === '042_1' && summon.count === 3)))
   check('怪物变种按源码用途归类', sourceDrivenVariantsOk,
     sourceDrivenVariantsOk ? '关系、Boss 塔层、尖刺召唤与晶石召唤均正确' : '关系、Boss 塔层或召唤物解析不符合预期')
+
+  const duplicateTabMonster = parsedMonsters.find(m => {
+    const tabs = (m.forms || []).map(f => f.tabLabel)
+    return new Set(tabs).size !== tabs.length
+  })
+  check('怪物形态Tab命名无冲突', !duplicateTabMonster,
+    duplicateTabMonster ? `怪物 ${duplicateTabMonster.id} (${duplicateTabMonster.name}) 存在重复Tab` : '全图鉴无重名Tab')
+
   check('全怪物图鉴产物已移除', !Object.hasOwn(parsedMonsterFile, 'handbook'),
     Object.hasOwn(parsedMonsterFile, 'handbook') ? 'parsed/monsters.json 仍含 handbook' : '')
 } catch (error) {

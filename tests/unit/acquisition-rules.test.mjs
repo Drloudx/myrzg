@@ -3,7 +3,8 @@ import test from 'node:test'
 import { readFileSync } from 'node:fs'
 import {
   parseRewardGroups, parseItemAcquisition, parseAcquisitionCosts, parseEquipmentPool,
-  parseRewardObject, parseRewardEntries, formatRewardProbability, formatRewardGroupLabel
+  parseRewardObject, parseRewardEntries, formatRewardProbability, formatRewardGroupLabel,
+  formatCountProbability
 } from '../../src/utils/acquisitionRules.js'
 import * as mappings from '../../src/utils/gameMappings.js'
 import { buildItemData, getItemAcquisition, parseItemRewards } from '../../src/utils/itemParser.js'
@@ -162,4 +163,31 @@ test('all nine real appraisal pools resolve costs and weighted probabilities', (
       assert.ok(group.rules.every(rule => rule.target && rule.min === 1 && rule.max === 1))
     }
   }
+})
+
+test('formatCountProbability correctly formats uniform probability for count ranges', () => {
+  assert.equal(formatCountProbability(1, 1), '')
+  assert.equal(formatCountProbability(1, 2), '各 50%')
+  assert.equal(formatCountProbability(1, 3), '各 33.3%')
+  assert.equal(formatCountProbability(1, 4), '均等概率')
+  assert.equal(formatCountProbability(10, 20), '均等概率')
+  assert.equal(formatCountProbability(undefined, 2), '')
+  assert.equal(formatCountProbability(2, 1), '')
+})
+
+test('formatRewardProbability distinguishes single vs multi draws', () => {
+  assert.equal(formatRewardProbability({ actualProb: 0.1429 }), '概率 14.29%')
+  assert.equal(formatRewardProbability({ actualProb: 0.1429, groupCount: 1 }), '概率 14.29%')
+  assert.equal(formatRewardProbability({ actualProb: 1 }), '必定获得')
+  assert.equal(formatRewardProbability({ actualProb: 1, groupCount: 1 }), '必定获得')
+  assert.equal(formatRewardProbability({ actualProb: 0.1429, groupCount: 2 }), '单次抽取 14.29%')
+  assert.equal(formatRewardProbability({ actualProb: 1, groupCount: 2 }), '单次抽取必定获得')
+  assert.equal(formatRewardProbability({ actualProb: 0.1429, groupCount: 2, cumulativeProb: 0.2653 }), '单次抽取 14.29% · 综合概率 26.53%')
+})
+
+test('formatRewardGroupLabel outputs player-facing game text', () => {
+  assert.equal(formatRewardGroupLabel({ isSelect: true }), '从以下奖励中任选 1 项')
+  assert.equal(formatRewardGroupLabel({ kind: 'fixed' }), '固定获得')
+  assert.equal(formatRewardGroupLabel({ rate: 1, rules: [{ actualProb: 0.5 }] }), '必定获得以下其一')
+  assert.equal(formatRewardGroupLabel({ rate: 0.07, rules: [{ actualProb: 0.07 }] }), '7.0% 概率获得以下其一')
 })

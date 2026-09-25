@@ -43,6 +43,7 @@
         :caption="regionCaption"
         :height="mapAreaHeight"
         @select="openStageById"
+        @select-instance="openDungeonByNodeId"
         @back="backToWorldMap"
         @list="openList"
       />
@@ -164,8 +165,6 @@
           <UiTag v-if="difficulty.level" tone="gold">推荐等级 Lv.{{ difficulty.level }}</UiTag>
         </div>
 
-        <!-- 难度切换用列表页同款的 UiFilterPill：UiSegmentedTabs 是深色木条（为深色底设计），
-             放在羊皮纸弹窗里不搭；换成胶囊后与列表页的难度筛选完全一致。 -->
         <UiFilterRow label="难度：" class="stage-difficulty-tabs">
           <UiFilterPill
             v-for="(item, index) in stageDetail.difficulties"
@@ -201,8 +200,36 @@
           <p v-else class="stage-empty-reward">暂无可展示的掉落配置</p>
         </UiSection>
 
-        <UiSection v-if="difficulty.rooms.length" title="房间内容与掉落来源">
-          <RoomContentList :rooms="difficulty.rooms" @item-click="goToItem" />
+        <UiSection
+          v-if="difficulty.rooms.length"
+          id="chapterStageRoomsSection"
+          title="房间内容与掉落来源"
+        >
+          <UiFilterRow v-if="roomOptions.length > 1 || hasHiddenRooms" label="房间：" class="stage-room-tabs">
+            <UiFilterPill
+              :active="selectedRoomKey === null"
+              @click="selectedRoomKey = null"
+            >
+              全部
+            </UiFilterPill>
+            <UiFilterPill
+              v-if="hasHiddenRooms"
+              :active="selectedRoomKey === '__hidden__'"
+              @click="selectedRoomKey = '__hidden__'"
+            >
+              带隐藏物品
+            </UiFilterPill>
+            <UiFilterPill
+              v-for="room in roomOptions"
+              :key="room.key"
+              :active="selectedRoomKey === room.key"
+              @click="selectedRoomKey = room.key"
+            >
+              {{ room.label }}
+            </UiFilterPill>
+          </UiFilterRow>
+
+          <RoomContentList :rooms="filteredRooms" @item-click="goToItem" />
         </UiSection>
 
         <UiBackToTop scroll-container="#chapterStageScroll" />
@@ -366,6 +393,57 @@ const detailTitle = computed(() => stageDetail.value
   ? `${stageDetail.value.shortName} ${stageDetail.value.name}`
   : '关卡详情')
 
+const selectedRoomKey = ref(null)
+
+const isRoomWithHiddenItem = (room) => {
+  if (!room) return false
+  if (room.hidden) return true
+  return (room.variants || []).some(variant =>
+    (variant.collections || []).some(col => {
+      const name = String(col.name || '')
+      return name.includes('隐藏') || name.includes('？？') || name.includes('?')
+    })
+  )
+}
+
+const hasHiddenRooms = computed(() => {
+  const rooms = difficulty.value?.rooms || []
+  return rooms.some(isRoomWithHiddenItem)
+})
+
+const roomOptions = computed(() => {
+  const rooms = difficulty.value?.rooms || []
+  const map = new Map()
+  for (const r of rooms) {
+    const label = r.label || r.roomId
+    if (!map.has(label)) {
+      map.set(label, { key: label, label })
+    }
+  }
+  return [...map.values()]
+})
+
+const filteredRooms = computed(() => {
+  const rooms = difficulty.value?.rooms || []
+  if (!selectedRoomKey.value) return rooms
+  if (selectedRoomKey.value === '__hidden__') {
+    return rooms.filter(isRoomWithHiddenItem)
+  }
+  return rooms.filter(r => (r.label || r.roomId) === selectedRoomKey.value)
+})
+
+watch(stageDetail, () => {
+  selectedRoomKey.value = null
+})
+
+watch(difficultyIndex, () => {
+  if (selectedRoomKey.value === '__hidden__') {
+    if (!hasHiddenRooms.value) selectedRoomKey.value = null
+  } else if (selectedRoomKey.value && !roomOptions.value.some(r => r.key === selectedRoomKey.value)) {
+    selectedRoomKey.value = null
+  }
+})
+
 const handleImgError = handleImageFallback
 
 const selectChapter = (id) => {
@@ -379,6 +457,55 @@ const selectChapter = (id) => {
 const openStageById = (stageId) => {
   const found = visibleStages.value.find(stage => stage.id === stageId)
   if (found) openStage(found)
+}
+
+/**
+ * 路线图上的副本节点点击跳转到副本图鉴对应的第三个难度关卡。
+ * 顺序对应各副本 battles[1]（最高普通难度，第0项为噩梦）：
+ * 蔓晶采石场 -> 采石场·采掘部 (c2_d2)
+ * 阿娜希塔遗迹 -> 遗迹·中枢部 (c2_d4)
+ */
+const INSTANCE_BATTLE_MAP = {
+  dungeonB: 'yzdj_6',
+  dungeonaseyj: 'aseyj_main_03',
+  dungeonmjcsc: 'c2_d2',
+  dungeonanxtyj: 'c2_d4',
+  dungeonxwtyj: 'c3_d1_3',
+  dungeonhjyc: 'c3_d2_3',
+  dungeoncsjl: 'c4_d1_3',
+  dungeonhenyj: 'c4_d2_3',
+  dungeonyfkwqg: 'c5_d1_3',
+  dungeonhmtkyj: 'c5_d2_3'
+}
+
+let cachedDungeons = null
+const openDungeonByNodeId = async (dungeonId) => {
+  let battleId = INSTANCE_BATTLE_MAP[dungeonId]
+  if (!battleId) {
+    if (!cachedDungeons) {
+      try {
+        const data = await fetchWithFallback('data/parsed/dungeons.json')
+        cachedDungeons = data.dungeons || []
+      } catch (e) {
+        console.error('加载副本配置失败:', e)
+      }
+    }
+    const d = cachedDungeons?.find(item => item.id === dungeonId)
+    battleId = (d?.battles?.[1] || d?.battles?.[0])?.id
+  }
+
+  if (battleId) {
+    router.push({
+      path: '/dungeons',
+      query: {
+        battle: battleId,
+        from: 'chapters',
+        fromChapter: chapterId.value !== 'all' ? chapterId.value : undefined
+      }
+    })
+  } else {
+    router.push({ path: '/dungeons' })
+  }
 }
 
 // ---------- 数据 ----------
@@ -624,6 +751,7 @@ watch(() => route.query, (query) => {
 /* 与其它详情页同款：徽标行必须有 gap，否则 UiTag 之间只剩空白字符的间距，看着像没做间距。 */
 .detail-badges { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 4px; }
 .stage-difficulty-tabs { margin: 8px 0 12px; }
+.stage-room-tabs { margin: 0 0 14px; }
 .stage-entry-cost { display: inline-flex; align-items: center; justify-content: flex-end; gap: 3px; font-weight: 700; white-space: nowrap; }
 .stage-entry-cost img { width: 22px; height: 22px; object-fit: contain; }
 .stage-empty-reward { margin: 0; color: var(--text-muted); font-size: 13px; }

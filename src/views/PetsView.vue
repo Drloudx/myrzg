@@ -7,6 +7,17 @@
         <UiSearchInput v-model="searchQuery" placeholder="搜索魔物名称、特性、描述..." />
       </template>
 
+      <!-- 属性筛选 -->
+      <UiFilterRow label="属性：">
+        <UiFilterPill :active="selectedElement === null" @click="selectedElement = null">全部</UiFilterPill>
+        <UiFilterPill
+          v-for="(elementName, elementKey) in ELEMENT_NAMES"
+          :key="elementKey"
+          :active="selectedElement === Number(elementKey)"
+          @click="selectedElement = Number(elementKey)"
+        >{{ elementName }}</UiFilterPill>
+      </UiFilterRow>
+
       <!-- 稀有度筛选 -->
       <UiFilterRow label="稀有度：">
         <UiFilterPill :active="selectedStar === null" @click="selectedStar = null">全部</UiFilterPill>
@@ -525,6 +536,7 @@ const selectedPet = ref(null)
 const errorMessage = ref('')
 
 const searchQuery = ref('')
+const selectedElement = ref(null)
 const selectedStar = ref(null)
 const filterVariant = ref(null)
 
@@ -585,6 +597,11 @@ const filteredPets = computed(() => {
   
   let result = allPets.value.filter(p => !isBlacklisted(p))
   
+  // Element Filter
+  if (selectedElement.value !== null) {
+    result = result.filter(p => p.element === selectedElement.value)
+  }
+
   // Star Filter
   if (selectedStar.value !== null) {
     result = result.filter(p => p.starDisplay === selectedStar.value)

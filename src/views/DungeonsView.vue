@@ -684,6 +684,16 @@ const closeBattle = () => {
   settlementDropsOpen.value = false
   previewDropsOpen.value = false
   specialDropTab.value = 'chest'
+  const from = route.query.from
+  const fromChapter = route.query.fromChapter
+  if (from === 'chapters') {
+    router.push({
+      path: '/chapters',
+      query: fromChapter && fromChapter !== 'all' ? { chapter: fromChapter } : {}
+    })
+    return
+  }
+
   const query = { ...route.query }
   delete query.battle
   delete query.drop

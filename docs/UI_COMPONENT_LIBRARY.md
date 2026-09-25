@@ -70,7 +70,7 @@ import { UiModal, UiSection, UiInfoRow } from '../components/ui/index.js'
 | --- | --- | --- |
 | `UiButton` | 通用按钮 | `variant`(primary/secondary/ghost/danger/link)、`size`(sm/md/lg)、`block`、`disabled` |
 | `UiSearchInput` | 搜索框（图标+清空）；在 `UiFilterPanel` 内自动显示右侧筛选折叠按钮 | `modelValue`、`placeholder`、`clearable` |
-| `UiFilterPanel` | 搜索与可折叠筛选面板，默认展开 | `search` 插槽放搜索框；默认插槽放筛选项；`footer` 插槽放始终保留的表头等内容 |
+| `UiFilterPanel` | 搜索与可折叠筛选面板，默认展开 | `search` 插槽放搜索框；默认插槽放筛选项；`footer` 插槽放始终保留的表头等内容；`collapsible`(默认 `true`，传 `false` 隐藏收起按钮且内容恒展开) |
 | `UiFilterRow` | 筛选行容器 | `label`（如"稀有度："），插槽放 UiFilterPill；使用 `#right` 放计数/操作时，手机端会自动独占一行 |
 | `UiFilterPill` | 筛选胶囊 | `active`、`quality`(1~5 可选)、`disabled`；悬停反馈仅作用于未选中项，选中项悬停时保持原有强调色 |
 | `UiCollectionToggle` | 已收集/未收集状态开关（成就、隐藏点位等进度共用） | `active`、`@toggle`；内置点击阻止冒泡、键盘语义和无障碍状态 |
@@ -96,6 +96,8 @@ import { UiModal, UiSection, UiInfoRow } from '../components/ui/index.js'
 | `UiStatGrid` | 属性数值网格 | `items`(`[{label,value,tone?}]`)、`doubleCol` |
 
 搜索筛选区统一使用 `UiFilterPanel`，沿用 `filter-panel paper-panel` 布局与主题。`UiSearchInput` 在面板的 `search` 插槽内读取就近面板状态，右侧“收起／筛选”按钮控制默认插槽；`aria-expanded` 和唯一 `aria-controls` 同步更新，支持键盘操作，触屏按钮最小高度 44px。折叠使用 `v-show` 保留控件和已选条件，搜索、清空仍可用；展开状态仅属于本面板，不修改筛选 query，不写入账号或备份状态。魔物收益表头放在 `footer` 中，收起后继续显示。独立搜索框及顶部全局搜索没有下面的筛选区时不显示折叠按钮。
+
+页签栏与搜索框同处一块面板（不要另起一块面板把页签浮在搜索框上方）。面板里只有搜索框和页签、没有可折叠的筛选项时，传 `collapsible="false"` 隐藏收起按钮——否则会出现一个收起不了任何东西的「收起」按钮。词条页的名词解释页签就是这种情形。
 
 ### 2.1 `UiExchangeTrade` 兑换卡片
 

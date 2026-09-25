@@ -16,9 +16,14 @@
       <span class="ui-reward-card__name">
         {{ rule.targetName }}
       </span>
-      <span v-if="rule.min !== undefined && rule.max !== undefined" class="ui-reward-card__qty">
-        ×{{ rule.min === rule.max ? rule.min : `${rule.min}~${rule.max}` }}
-      </span>
+      <div v-if="rule.min !== undefined && rule.max !== undefined" class="ui-reward-card__qty-row">
+        <span class="ui-reward-card__qty">
+          ×{{ rule.min === rule.max ? rule.min : `${rule.min}~${rule.max}` }}
+        </span>
+        <span v-if="formatCountProbability(rule.min, rule.max)" class="ui-reward-card__qty-prob">
+          ({{ formatCountProbability(rule.min, rule.max) }})
+        </span>
+      </div>
       <span v-if="formatRewardProbability(rule)" class="ui-reward-card__prob">{{ formatRewardProbability(rule) }}</span>
       <span v-if="rule.detail" class="ui-reward-card__detail">{{ rule.detail }}</span>
     </div>
@@ -27,7 +32,7 @@
 
 <script setup>
 import { handleImageFallback } from '../../utils/env.js'
-import { formatRewardProbability } from '../../utils/acquisitionRules.js'
+import { formatRewardProbability, formatCountProbability } from '../../utils/acquisitionRules.js'
 
 /**
  * UiRewardCard —— 奖励/掉落卡片（横向卡片 + 图标品质底 + 名称 + 数量 + 概率）
@@ -104,10 +109,21 @@ const handleRewardImageError = event => {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.ui-reward-card__qty-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 1px;
+}
 .ui-reward-card__qty {
   font-size: 12px;
   color: var(--text-main, #3e2a14);
-  margin-top: 1px;
+}
+.ui-reward-card__qty-prob {
+  font-size: 11px;
+  color: var(--text-faint, #8a6d4d);
+  white-space: nowrap;
 }
 .ui-reward-card__prob {
   font-size: 11px;
@@ -119,5 +135,30 @@ const handleRewardImageError = event => {
   color: var(--text-muted, #6b5134);
   margin-top: 1px;
   line-height: 1.25;
+}
+
+@media (max-width: 640px) {
+  .ui-reward-card {
+    padding: 6px 7px;
+    gap: 6px;
+  }
+  .ui-reward-card__icon {
+    width: 38px;
+    height: 38px;
+  }
+  .ui-reward-card__icon img {
+    width: 30px;
+    height: 30px;
+  }
+  .ui-reward-card__name {
+    font-size: 12px;
+  }
+  .ui-reward-card__qty {
+    font-size: 11px;
+  }
+  .ui-reward-card__qty-prob,
+  .ui-reward-card__prob {
+    font-size: 10px;
+  }
 }
 </style>

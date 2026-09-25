@@ -40,6 +40,7 @@ defineProps({
   text-align: right;
   color: var(--text-main, #3e2a14);
   min-width: 0;
-  word-break: break-all;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 </style>

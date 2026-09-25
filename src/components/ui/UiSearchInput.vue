@@ -20,7 +20,7 @@
       </button>
     </div>
     <button
-      v-if="filterPanel"
+      v-if="filterPanel && filterPanel.collapsible.value"
       class="ui-search__toggle"
       type="button"
       :aria-expanded="filterPanel.expanded.value"

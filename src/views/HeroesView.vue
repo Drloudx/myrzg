@@ -261,6 +261,18 @@
               <div v-for="trait in selectedHero.jobTraits" :key="trait.id" class="job-trait-item">
                 <div class="job-trait-name">{{ trait.name }}</div>
                 <p class="job-trait-description" v-html="formatSkillDescription(trait.des)"></p>
+                <!-- 职业特性数值：与词条页共用 buffParser.describeBuff 的产物 -->
+                <div v-if="trait.values?.groups?.length" class="buff-value-groups">
+                  <div v-for="group in trait.values.groups" :key="group.title" class="buff-value-group">
+                    <span class="buff-value-group__title">{{ group.title }}</span>
+                    <span class="buff-value-group__items">
+                      <span v-for="row in group.items" :key="`${row.label}-${row.value}`" class="buff-value-chip">
+                        <span class="buff-value-chip__label">{{ row.label }}</span>
+                        <span class="buff-value-chip__value">{{ row.value }}</span>
+                      </span>
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
@@ -1565,6 +1577,48 @@ const handleGiftClick = (giftId) => {
   color: var(--text-muted, #6b5134);
   font-size: 13px;
   line-height: 1.65;
+}
+/* 职业特性数值：分组标题 + 数值胶囊（数据来自 buffParser.describeBuff） */
+.buff-value-groups {
+  display: grid;
+  gap: 6px;
+  margin-top: 8px;
+}
+.buff-value-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+}
+.buff-value-group__title {
+  flex-shrink: 0;
+  min-width: 56px;
+  color: var(--text-muted, #6b5134);
+  font-size: 12px;
+  font-weight: 700;
+}
+.buff-value-group__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.buff-value-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 2px 7px;
+  border: 1px solid var(--border-faint, rgba(143, 115, 81, 0.25));
+  border-radius: 3px;
+  background: var(--paper-soft, #e9dcc3);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.buff-value-chip__label {
+  color: var(--text-muted, #6b5134);
+}
+.buff-value-chip__value {
+  font-weight: 700;
+  color: var(--accent-ink, #2f4a49);
 }
 .job-traits-enter-active,
 .job-traits-leave-active {

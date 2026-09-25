@@ -29,6 +29,7 @@ import { buildRecipesFile } from './recipes.mjs'
 import { buildAchievementsFile } from './achievements.mjs'
 import { buildEventsFile } from './events.mjs'
 import { buildPetEggsFile } from './pet-eggs.mjs'
+import { buildGlossaryFile } from './glossary.mjs'
 import { buildGachaFile } from './gacha.mjs'
 import { buildDungeonsFiles } from './dungeons.mjs'
 import { buildChaptersFiles } from './chapters.mjs'
@@ -123,11 +124,13 @@ const jobs = [
   { name: 'chapters', build: () => buildChaptersFiles(), dependsOnItems: false },
   { name: 'pets', build: () => buildPetsFile(), dependsOnItems: false },
   { name: 'heroes', build: () => buildHeroesFile(itemData), dependsOnItems: true },
-  { name: 'monsters', build: () => buildMonstersFile(itemData), dependsOnItems: true }
+  { name: 'monsters', build: () => buildMonstersFile(itemData), dependsOnItems: true },
+  { name: 'glossary', build: () => buildGlossaryFile(monsterData), dependsOnItems: false }
 ]
 
 console.log('\n── [page] 页面级预解析 ──')
 let itemData = null
+let monsterData = null
 for (const job of jobs) {
   if (job.dependsOnItems && !itemData) {
     throw new Error(`[scripts/parse] ${job.name} 依赖 items 产物，但 items 尚未构建`)
@@ -136,7 +139,10 @@ for (const job of jobs) {
   const output = job.build()
   if (job.name === 'dungeons') rmSync(join(parsedDir, 'dungeons'), { recursive: true, force: true })
   if (job.name === 'chapters') rmSync(join(parsedDir, 'stages'), { recursive: true, force: true })
-  if (job.name === 'monsters') rmSync(join(parsedDir, 'monster-encounters'), { recursive: true, force: true })
+  if (job.name === 'monsters') {
+    rmSync(join(parsedDir, 'monster-encounters'), { recursive: true, force: true })
+    monsterData = output.files?.[0]?.data?.monsters || output.data?.monsters
+  }
   if (job.name === 'items') itemData = output.data
   const files = output.files || [output]
   files.forEach(writeOutput)

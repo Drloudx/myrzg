@@ -32,6 +32,28 @@
       <p class="desc-text">{{ item.desc }}</p>
     </UiSection>
 
+    <!-- 使用效果 / 料理效果 / 内容展示 -->
+    <UiSection
+      v-if="displayUseDes || recipeInfo || bookContent || isRecipeItem"
+      :title="effectSectionTitle"
+    >
+      <!-- 书籍内容 -->
+      <div v-if="bookContent" class="book-content-box paper-panel-solid">
+        <template v-for="(para, i) in bookContent.split('\n')" :key="i">
+          <p v-if="para.trim()" class="book-para">{{ para.trim() }}</p>
+        </template>
+      </div>
+
+      <template v-if="recipeInfo">
+        <p v-if="recipeInfo.buffDes" class="use-des" v-html="formatUseDes(recipeInfo.buffDes)"></p>
+        <div v-if="recipeInfo.effectStacks > 0" class="recipe-effect-stacks">
+          <span>效果层数</span>
+          <strong>{{ recipeInfo.effectStacks }}</strong>
+        </div>
+      </template>
+      <p v-else-if="displayUseDes" class="use-des" v-html="formatUseDes(displayUseDes)"></p>
+    </UiSection>
+
     <UiSection v-if="potionInfo" title="药水毒性">
       <UiInfoRow label="药水毒性" :value="potionInfo.toxicity" />
       <UiInfoRow label="毒性上限" :value="potionInfo.toxicityCap" />
@@ -82,7 +104,9 @@
               :key="q"
               :quality="Number(q)"
               :active="selectedAttrQuality == q"
-              @click="selectedAttrQuality = Number(q)"
+              :disabled="!availableQualities.has(Number(q))"
+              :title="availableQualities.has(Number(q)) ? `${name}品质` : `此装备无${name}品质`"
+              @click="availableQualities.has(Number(q)) && (selectedAttrQuality = Number(q))"
             >
               {{ name }}
             </UiFilterPill>
@@ -165,27 +189,6 @@
       </div>
     </UiSection>
 
-    <!-- 使用效果 / 料理效果 / 内容展示 -->
-    <UiSection
-      v-if="displayUseDes || recipeInfo || bookContent || isRecipeItem"
-      :title="effectSectionTitle"
-    >
-      <!-- 书籍内容 -->
-      <div v-if="bookContent" class="book-content-box paper-panel-solid">
-        <template v-for="(para, i) in bookContent.split('\n')" :key="i">
-          <p v-if="para.trim()" class="book-para">{{ para.trim() }}</p>
-        </template>
-      </div>
-
-      <template v-if="recipeInfo">
-        <p v-if="recipeInfo.buffDes" class="use-des" v-html="formatUseDes(recipeInfo.buffDes)"></p>
-        <div v-if="recipeInfo.effectStacks > 0" class="recipe-effect-stacks">
-          <span>效果层数</span>
-          <strong>{{ recipeInfo.effectStacks }}</strong>
-        </div>
-      </template>
-      <p v-else-if="displayUseDes" class="use-des" v-html="formatUseDes(displayUseDes)"></p>
-    </UiSection>
 
     <UiSection v-if="skinUnlock?.attributes?.length" title="皮肤属性">
       <div class="skin-attribute-list">
@@ -224,7 +227,7 @@
     </UiSection>
 
     <!-- 宝箱/奖励掉落 -->
-    <AcquisitionRewards :acquisition="acquisition" @item-click="handleRewardClick" />
+    <AcquisitionRewards :acquisition="acquisition" :title="acquisitionTitle" @item-click="handleRewardClick" />
 
     <!-- 装备组展示 -->
     <UiSection v-if="equipGroupItems && equipGroupItems.length > 0 && !isEquipsPage" title="包含内容">
@@ -639,9 +642,38 @@ const equipEnhanceConfig = computed(() => getEquipEnhanceConfig())
 const enhanceRatePercent = computed(() => Math.round(equipEnhanceConfig.value.attUp * 100))
 const enhanceBonusPercent = computed(() => Math.round(selectedEnhanceLevel.value * equipEnhanceConfig.value.attUp * 100))
 
+const availableQualities = computed(() => {
+  if (!props.item || props.item.itemType !== 2) return new Set([1, 2, 3, 4, 5])
+
+  // 1. 如果有锻造配方，以配方中能产出的品质为准 (如 [3, 4, 5])
+  if (smithingRecipes.value.length) {
+    const qualities = new Set()
+    for (const r of smithingRecipes.value) {
+      for (const qc of (r.qualityChances || [])) {
+        if (qc.quality) qualities.add(Number(qc.quality))
+      }
+    }
+    if (qualities.size > 0) return qualities
+  }
+
+  // 2. 否则（传说装备、固定装备、首饰等），以物品自身品质为准
+  const q = Number(props.item.quality)
+  if (q >= 1 && q <= 5) {
+    return new Set([q])
+  }
+  return new Set([5])
+})
+
 watch(() => props.item, (newVal) => {
   if (newVal) {
-    selectedAttrQuality.value = 5
+    const available = availableQualities.value
+    if (available.has(5)) {
+      selectedAttrQuality.value = 5
+    } else if (available.has(Number(newVal.quality))) {
+      selectedAttrQuality.value = Number(newVal.quality)
+    } else {
+      selectedAttrQuality.value = Array.from(available)[0] || 5
+    }
     selectedEnhanceLevel.value = 0
   }
 }, { immediate: true })
@@ -669,6 +701,10 @@ const affixGroups = computed(() => {
 })
 
 const acquisition = computed(() => getItemAcquisition(props.item))
+const acquisitionTitle = computed(() => {
+  if (acquisition.value?.action === 'appraisal') return '鉴定奖励'
+  return '开启奖励'
+})
 
 const handleRewardClick = (rule) => {
   if (rule.typeId) {

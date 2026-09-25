@@ -190,20 +190,36 @@ export function scaleAcquisition(acquisition, count = 1) {
 
 /** Shared business labels; no page-specific mechanics or source routes. */
 export function formatRewardGroupLabel(group) {
-  if (group.isSelect) return '[自选池] 从以下奖励中自选 1 个'
+  if (group.isSelect) return '从以下奖励中任选 1 项'
   if (group.kind === 'fixed') return '固定获得'
   if (group.num === 0 || group.rate === 0) return '不触发奖励'
   if (group.rules.every(rule => rule.actualProb == null)) return '奖励内容'
-  if (group.rate < 1) return `[概率池] ${(group.rate * 100).toFixed(1)}% 概率从以下奖励中抽取 1 个`
-  return '[必出池] 从以下奖励中抽取 1 个'
+  if (group.rate < 1) return `${(group.rate * 100).toFixed(1)}% 概率获得以下其一`
+  return '必定获得以下其一'
 }
 
 export function formatRewardProbability(rule) {
   if (rule.isSelect) return '自选获得'
   if (rule.actualProb == null || !Number.isFinite(rule.actualProb)) return ''
-  const label = rule.actualProb < 1 ? `单次抽取 ${formatPercent(rule.actualProb)}%` : '单次抽取必定获得'
-  return rule.cumulativeProb != null && rule.groupCount > 1
+  const isMultiple = (rule.groupCount ?? 1) > 1
+  const label = rule.actualProb < 1
+    ? `${isMultiple ? '单次抽取 ' : '概率 '}${formatPercent(rule.actualProb)}%`
+    : (isMultiple ? '单次抽取必定获得' : '必定获得')
+  return rule.cumulativeProb != null && isMultiple
     ? `${label} · 综合概率 ${formatPercent(rule.cumulativeProb)}%` : label
+}
+
+export function formatCountProbability(min, max) {
+  if (min == null || max == null) return ''
+  const numMin = Number(min)
+  const numMax = Number(max)
+  if (!Number.isFinite(numMin) || !Number.isFinite(numMax) || numMax <= numMin) return ''
+  const count = numMax - numMin + 1
+  if (count <= 3) {
+    const pct = (100 / count).toFixed(count === 2 ? 0 : 1)
+    return `各 ${pct}%`
+  }
+  return '均等概率'
 }
 
 function formatPercent(probability) {

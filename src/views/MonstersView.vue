@@ -27,6 +27,17 @@
           @click="selectedLabel = label"
         >{{ label }}</UiFilterPill>
       </UiFilterRow>
+
+      <!-- 属性筛选（放最下面） -->
+      <UiFilterRow label="属性：">
+        <UiFilterPill :active="selectedElement === null" @click="selectedElement = null">全部</UiFilterPill>
+        <UiFilterPill
+          v-for="(elementName, elementKey) in ELEMENT_NAMES"
+          :key="elementKey"
+          :active="selectedElement === Number(elementKey)"
+          @click="selectedElement = Number(elementKey)"
+        >{{ elementName }}</UiFilterPill>
+      </UiFilterRow>
     </UiFilterPanel>
 
     <!-- 列表区（5列大幅面卡片展示，懒加载每批 60 项） -->
@@ -36,6 +47,7 @@
         :key="mon.id"
         :img="getImageUrl(`/images/PicHandBookPanel_Atlas/${mon.icon}.webp`)"
         :name="mon.name"
+        :quality="mon.quality"
         @click="handleMonsterClick(mon)"
         @img-error="e => handleImgError(e, mon)"
       />
@@ -58,7 +70,7 @@ import { getImageUrl, handleImageFallback } from '../utils/env'
 import { useRoute, useRouter } from 'vue-router'
 import MonsterDetailModal from '../components/MonsterDetailModal.vue'
 import { isBlacklisted } from '../config/blacklist.js'
-import { MAP_NAMES } from '../utils/gameMappings'
+import { MAP_NAMES, ELEMENT_NAMES } from '../utils/gameMappings'
 import { useLazyList } from '../composables/useLazyList'
 import {
   UiBackToTop,
@@ -83,6 +95,7 @@ const errorMessage = ref('')
 const searchQuery = ref('')
 const selectedLabel = ref(null)
 const selectedPlace = ref(null)
+const selectedElement = ref(null)
 onMounted(async () => {
   try {
     const data = await fetchMonsterData()
@@ -136,6 +149,10 @@ const filteredMonsters = computed(() => {
   }
   if (selectedLabel.value) {
     result = result.filter(m => m.label === selectedLabel.value)
+  }
+  if (selectedElement.value !== null) {
+    const targetElement = ELEMENT_NAMES[selectedElement.value]
+    result = result.filter(m => (m.mark || []).some(k => k.includes(targetElement)))
   }
   if (searchQuery.value) {
     const q = searchQuery.value.toLowerCase().trim()

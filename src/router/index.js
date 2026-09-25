@@ -98,10 +98,15 @@ const routes = [
     component: () => import('../views/ChaptersView.vue')
   },
   {
+    path: '/glossary',
+    name: 'glossary',
+    component: () => import('../views/GlossaryView.vue')
+  },
+  {
     path: '/gacha',
     name: 'gacha',
     component: () => import('../views/GachaView.vue')
-  },
+  }
 ]
 
 const router = createRouter({

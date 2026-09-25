@@ -2,6 +2,7 @@ import { fetchWithFallback } from './request.js'
 import { createCachedLoader } from './resourceClient.js'
 import { getItemImageUrl } from './itemParser.js'
 import { getCleanSkillName, getMonsterIcon, REWARD_MODE_INFO } from './gameMappings.js'
+import { describeBuff } from './buffParser.js'
 
 let cachedMonsters = null
 let cachedLevelStrength = null
@@ -88,7 +89,7 @@ const VARIANT_SOURCE_LABELS = {
   explore: '探索',
   dungeon: '副本',
   daily: '日常',
-  tower: '爬塔',
+  tower: '神匠之塔',
   scene: '场景'
 }
 
@@ -103,7 +104,7 @@ function getBattleUsageKind(battleId, battle) {
   const category = Array.isArray(battle?.category) ? battle.category.join(' ') : String(battle?.category || '')
   const text = `${id} ${battle?.name || ''} ${battle?.tip || ''} ${category}`
   if (/测试|停用|\btest\b/i.test(text)) return 'test'
-  if (/^tower/i.test(id) || category.includes('爬塔')) return 'tower'
+  if (/^tower/i.test(id) || category.includes('爬塔') || category.includes('神匠之塔') || category.includes('塔1')) return 'tower'
   if (category.includes('副本')) return 'dungeon'
   if (/^daily_/i.test(id) || category.includes('日常')) return 'daily'
   return 'story'
@@ -300,6 +301,17 @@ export function buildMonsterVariantUsage({ monData, aiData, towerUsageRes = {}, 
   return { usage, transformSourcesByTarget, transformEdgesByMonster, towerAppearancesByMonster, towerBossAppearancesByMonster, hasSourceData: usage.size > 0 }
 }
 
+const SPECIAL_TRANSFORM_CONFIGS = {
+  '012': {
+    stage1Name: '空中结网 · 霸体',
+    stage2Name: '坠地虚弱 · 破防',
+    stage1Tab: '空中结网 (一阶段)',
+    stage2Tab: '坠地虚弱 (二阶段)',
+    condition: '被命中 4 次后击落',
+    reverseCondition: '完成 2 次攻击后逃窜回网'
+  }
+}
+
 function applyVariantMetadata(form, typeId, ownerId, variantUsage) {
   const id = String(typeId || '')
   const edges = variantUsage?.transformEdgesByMonster?.get(id) || []
@@ -307,9 +319,18 @@ function applyVariantMetadata(form, typeId, ownerId, variantUsage) {
     || edges.find(item => item.toId === ownerId)
     || edges[0]
   if (edge) {
+    const special = SPECIAL_TRANSFORM_CONFIGS[edge.fromId] || SPECIAL_TRANSFORM_CONFIGS[ownerId]
     form.transform = {
       ...edge,
-      currentStage: id === edge.toId ? 'after' : 'before'
+      currentStage: id === edge.toId ? 'after' : 'before',
+      ...(special ? {
+        stage1Name: special.stage1Name,
+        stage2Name: special.stage2Name,
+        stage1Tab: special.stage1Tab,
+        stage2Tab: special.stage2Tab,
+        ...(special.condition ? { condition: special.condition } : {}),
+        ...(special.reverseCondition ? { reverseCondition: special.reverseCondition } : {})
+      } : {})
     }
   }
   const towerAppearances = variantUsage?.towerAppearancesByMonster?.get(id)
@@ -349,8 +370,7 @@ function getVariantPresentation(m, ownerId, ownerName, officialIds, variantUsage
     return { relationType: '分裂形态', tabLabel: `分裂形态 · ${name}` }
   }
   if (isSummonOrEgg(m)) {
-    const isEgg = id.toLowerCase().includes('egg')
-    return { relationType: isEgg ? '蛋形态' : '召唤物', tabLabel: isEgg ? '卵 / 蛋形态' : name }
+    return { relationType: '召唤物', tabLabel: name }
   }
   if (isActiveTransformTarget(id, officialIds, variantUsage)) {
     return { relationType: '变身阶段', tabLabel: `变身阶段 · ${name}` }
@@ -366,8 +386,20 @@ function getVariantPresentation(m, ownerId, ownerName, officialIds, variantUsage
     ? '通用'
     : sourceKinds.map(kind => VARIANT_SOURCE_LABELS[kind]).join(' / ')
   const sameNameAsOwner = String(name).trim() === String(ownerName || '').trim()
+
+  // 关系标签与阶级精细化：精英标记为「xx精英」，关底/独立首领标记为「xx首领」
+  let relationType = `${sourceLabel}版本`
+  const rank = m?.monRank || m?.unitData?.monRank || 1
+  if (id !== '052_1' && id !== '064_elite' && id !== '067_elite' && id !== '052_2' && id !== '052_tower1_30') {
+    if (rank >= 3 && (!sameNameAsOwner || id.includes('boss'))) {
+      relationType = sourceLabel === '剧情 / 副本' ? '关底首领' : `${sourceLabel}首领`
+    } else if (rank === 2 && (id.includes('elite') || name.includes('精英'))) {
+      relationType = `${sourceLabel}精英`
+    }
+  }
+
   return {
-    relationType: `${sourceLabel}版本`,
+    relationType,
     tabLabel: sameNameAsOwner ? `${sourceLabel} · ${name}` : name
   }
 }
@@ -474,6 +506,120 @@ function getAiSkillIndices(aiConfig) {
   return indices
 }
 
+export function extractSkillTriggerConditions(aiModel) {
+  if (!aiModel || typeof aiModel !== 'object') return {}
+
+  const stateToSkillIndex = new Map()
+  Object.entries(aiModel).forEach(([stateName, state]) => {
+    if (Number(state?.type) === 1 && state?.para?.int_para !== undefined) {
+      stateToSkillIndex.set(stateName, Number(state.para.int_para))
+    } else {
+      const match = stateName.match(/^skill_?(\d+)$/i)
+      if (match) {
+        stateToSkillIndex.set(stateName, Number(match[1]))
+      }
+    }
+  })
+
+  const skillConditions = new Map()
+  const getEntry = idx => {
+    if (!skillConditions.has(idx)) {
+      skillConditions.set(idx, {
+        hpPercents: new Set(),
+        attackCounts: new Set(),
+        hitCounts: new Set(),
+        durations: new Set(),
+        others: new Set()
+      })
+    }
+    return skillConditions.get(idx)
+  }
+
+  Object.entries(aiModel).forEach(([fromState, state]) => {
+    (state?.tri || []).forEach(tr => {
+      const targetState = tr.triEnter
+      const skillIdx = stateToSkillIndex.get(targetState)
+      if (skillIdx === undefined) return
+
+      const triList = tr.triList || []
+      const entry = getEntry(skillIdx)
+
+      triList.forEach(check => {
+        const triType = Number(check?.triType)
+        const para = check?.triPara || {}
+        const range = check?.triParaRange
+
+        if (triType === 2) {
+          const hp = Math.round(Number(para.float_para1 || 0) * 100)
+          if (hp > 0 && hp <= 100) entry.hpPercents.add(hp)
+        } else if (triType === 7) {
+          if (check.needRange && range && range.min !== undefined && range.max !== undefined) {
+            const min = Number(range.min)
+            const max = Number(range.max)
+            if (min === max) {
+              entry.attackCounts.add(`自身普攻 ${min} 次后`)
+            } else {
+              const count = max - min + 1
+              const prob = (100 / count).toFixed(1).replace(/\.0$/, '')
+              entry.attackCounts.add(`自身普攻 ${min}~${max} 次后（各 ${prob}% 几率）`)
+            }
+          } else if (para.int_para1) {
+            entry.attackCounts.add(`自身普攻 ${para.int_para1} 次后`)
+          }
+        } else if (triType === 16) {
+          if (check.needRange && range && range.min !== undefined && range.max !== undefined) {
+            const min = Number(range.min)
+            const max = Number(range.max)
+            if (min === max) {
+              entry.hitCounts.add(`自身受到 ${min} 次攻击后`)
+            } else {
+              const count = max - min + 1
+              const prob = (100 / count).toFixed(1).replace(/\.0$/, '')
+              entry.hitCounts.add(`自身受到 ${min}~${max} 次攻击后（各 ${prob}% 几率）`)
+            }
+          } else if (para.int_para1) {
+            entry.hitCounts.add(`自身受到 ${para.int_para1} 次攻击后`)
+          }
+        } else if (triType === 1) {
+          const sec = Number(para.float_para1 || 0)
+          if (sec > 0) entry.durations.add(`${sec}秒`)
+        } else if (triType === 8) {
+          entry.others.add('自身死亡时')
+        }
+      })
+    })
+  })
+
+  const result = {}
+  skillConditions.forEach((data, skillIdx) => {
+    const parts = []
+
+    if (data.hpPercents.size > 0) {
+      const sortedHp = [...data.hpPercents].sort((a, b) => b - a).map(h => `${h}%`)
+      parts.push(`自身生命值降至 ${sortedHp.join('、')} 及以下`)
+    }
+    if (data.attackCounts.size > 0) {
+      parts.push([...data.attackCounts].join(' / '))
+    }
+    if (data.hitCounts.size > 0) {
+      parts.push([...data.hitCounts].join(' / '))
+    }
+    if (data.durations.size > 0 && data.hpPercents.size === 0 && data.attackCounts.size === 0) {
+      parts.push(`战斗持续 ${[...data.durations].join(' / ')} 后`)
+    }
+    if (data.others.size > 0) {
+      parts.push([...data.others].join('，'))
+    }
+
+    if (parts.length > 0) {
+      result[skillIdx] = parts.join('；')
+    }
+  })
+
+  return result
+}
+
+
 function getMonsterPortrait(m, key) {
   const typeId = String(m?.typeId || key || '')
   if (typeId.includes('023_egg')) {
@@ -550,13 +696,18 @@ function processForm(m, skillData, buffData, rewards, items, lanDict, equipGroup
   if (typeof rawSkills === 'string') rawSkills = rawSkills.split(',').filter(Boolean)
   else if (!Array.isArray(rawSkills)) rawSkills = [rawSkills]
   const aiSkillIndices = getAiSkillIndices(aiData[m.aiId])
-  if (aiSkillIndices.size) rawSkills = rawSkills.filter((_, index) => aiSkillIndices.has(index))
+  const skillTriggerConditions = extractSkillTriggerConditions(aiData[m.aiId]?.aiModel)
+
+  const indexedRawSkills = rawSkills.map((skillObj, index) => ({ skillObj, originalIndex: index }))
+  const filteredSkills = indexedRawSkills
+    .filter(item => !aiSkillIndices.size || aiSkillIndices.has(item.originalIndex) || item.originalIndex === 0)
+    .filter(item => {
+      const skillId = typeof item.skillObj === 'object' ? (item.skillObj.skillId || item.skillObj.id) : item.skillObj
+      return skillId && !String(skillId).includes('hero')
+    })
 
   let unnamedSkillIndex = 0
-  const skills = rawSkills.filter(skillObj => {
-    const skillId = typeof skillObj === 'object' ? (skillObj.skillId || skillObj.id) : skillObj
-    return skillId && !String(skillId).includes('hero')
-  }).map(skillObj => {
+  const skills = filteredSkills.map(({ skillObj, originalIndex }) => {
     const skillId = typeof skillObj === 'object' ? (skillObj.skillId || skillObj.id) : skillObj
     const s = skillData[skillId]
     if (!s) return null
@@ -594,9 +745,10 @@ function processForm(m, skillData, buffData, rewards, items, lanDict, equipGroup
           const formatted = formatRangeValue(value)
           if (formatted) ranges.push({ key, value: formatted })
         }
-        if ((key === 'addBuff' || key === 'buffId') && typeof value === 'string') addedBuffIds.add(value)
-        if (key === 'addBuff' && Array.isArray(value)) value.forEach(id => addedBuffIds.add(String(id)))
-        if (key === 'addBuffs' && Array.isArray(value)) value.forEach(id => addedBuffIds.add(String(id)))
+        if (typeof key === 'string' && /buff/i.test(key) && !/time|range|eft|spine|des|color|name|icon/i.test(key)) {
+          if (typeof value === 'string' && value.length > 0) addedBuffIds.add(value)
+          else if (Array.isArray(value)) value.forEach(id => typeof id === 'string' && addedBuffIds.add(id))
+        }
         if (key === 'summonData' && value && typeof value === 'object') {
           const poolIds = Array.isArray(parent?.monList) ? parent.monList.map(String).filter(Boolean) : []
           const directId = value.monTypeId || value.typeId || ''
@@ -671,7 +823,9 @@ function processForm(m, skillData, buffData, rewards, items, lanDict, equipGroup
         description: id === 'mon069StunBuff'
           ? '无法移动、攻击或使用技能；尖刺被破坏时解除'
           : cleanConfiguredText(buff.buffDes || buff.des || ''),
-        duration: Number(buff.buffTime || 0)
+        duration: Number(buff.buffTime || 0),
+        // 数值说明与词条页共用同一个渲染器，不再各自解析 para
+        values: buff.para || buff.buffEffect ? describeBuff(buff, { buffData }) : null
       }
     })
     const kind = String(s.skillType) === '0' ? '普攻' : '技能'
@@ -690,7 +844,14 @@ function processForm(m, skillData, buffData, rewards, items, lanDict, equipGroup
     const description = isDeveloperSkillLabel(configuredDescription) || isPlaceholderSkillDescription(configuredDescription)
       ? ''
       : configuredDescription
-    const displayName = configuredName || `技能${++unnamedSkillIndex}`
+    let displayName = configuredName || (kind === '普攻' ? '普通攻击' : `技能${++unnamedSkillIndex}`)
+    if (kind === '普攻') {
+      const cleanMonName = (m.name || '').replace(/[“”（）\s]/g, '')
+      const cleanDispName = displayName.replace(/[“”（）\s]/g, '')
+      if (!displayName || cleanDispName === cleanMonName || cleanMonName.includes(cleanDispName) || cleanDispName.includes(cleanMonName) || displayName.endsWith('普攻')) {
+        displayName = '普通攻击'
+      }
+    }
     const mechanicParts = []
     if (damageHits.length) {
       const damageText = damageHits.map(hit => `${hit.type === 'magicAtk' ? '魔法' : hit.type === 'realAtk' ? '真实' : '物理'}${Math.round(hit.multiplier * 100)}%${hit.count > 1 ? ` ×${hit.count}` : ''}`).join(' / ')
@@ -712,6 +873,7 @@ function processForm(m, skillData, buffData, rewards, items, lanDict, equipGroup
       id: skillId,
       name: displayName,
       kind,
+      triggerCondition: kind === '普攻' || originalIndex === 0 ? '' : (skillTriggerConditions[originalIndex] || ''),
       cooldown: Number(lvlData.cd || 0),
       cost: lvlData.cost || s.cost || 0,
       des: description,
@@ -744,16 +906,6 @@ function processForm(m, skillData, buffData, rewards, items, lanDict, equipGroup
     if (!b) return null
     
     const actPara = b.para?.actionPara || {}
-    let rectStr = ''
-    if (actPara.rectRange) {
-      if (typeof actPara.rectRange === 'object') {
-        rectStr = `${actPara.rectRange.width || 0}x${actPara.rectRange.lenth || 0}`
-      } else {
-        rectStr = String(actPara.rectRange)
-      }
-    } else {
-      rectStr = b.rectRange ? String(b.rectRange) : ''
-    }
 
     const rawAddBuffIds = [
       ...(Array.isArray(actPara.addBuffs) ? actPara.addBuffs : []),
@@ -790,21 +942,13 @@ function processForm(m, skillData, buffData, rewards, items, lanDict, equipGroup
       des: cleanDes,
       nameAdd: b.nameAdd || b.para?.nameAdd || '',
       duration: Number(b.buffTime || 0),
-      stackable: !!b.canOverlay,
-      maxStacks: Number(b.para?.maxLayPara || 0),
-      triggerType: b.para?.detectType || '',
-      triggerInterval: Number(b.para?.cd || 0),
-      damageReduction: Number(b.para?.damReduce || 0),
-      speedChange: Number(b.para?.runSpeedAdd || 0),
-      repelForce: actPara.damage?.repelForce || 0,
-      muPower: actPara.damage?.muPower || 0,
-      damageType: actPara.damage?.damageType || '',
-      rectRange: rectStr,
-      repelTime: actPara.damage?.repelTime || 0,
-      baseDamage: actPara.damage?.baseDamage || 0,
       addBuffs: mappedAddBuffs,
       linkedEffects,
-      triggerLabel
+      // 完整数值说明：与词条页共用 buffParser 的渲染器，覆盖属性/伤害/护盾/回复/范围/时间层数。
+      // 原先手写的 damageReduction/speedChange/triggerInterval/triggerType/stackable/maxStacks/
+      // triggerLabel/rectRange/muPower/baseDamage/repel* 已全部由 values.status 与 values.groups 覆盖，
+      // 故不再重复输出（SPEC：只保留展示与定位实际消费的字段）。
+      values: describeBuff(b, { buffData })
     }
   }).filter(Boolean)
 
@@ -818,6 +962,7 @@ function processForm(m, skillData, buffData, rewards, items, lanDict, equipGroup
     portraitPath: getMonsterPortraitPath(m),
     monDes: m.monDes || '',
     weakAttDes: m.weakAttDes || '',
+    specialDes: m.specialDes || '',
     stats: translatedStats,
     rawStats,
     level: m.level || 1,
@@ -945,8 +1090,8 @@ const isSummonOrEgg = (m) => {
   return low.includes('summon') || low.includes('egg') || low.startsWith('obj_') || mId === '069_jianci' || mId === 'Mon055StoneMon' || mId.includes('LeftHand') || mId.includes('RightHand')
 }
 
-// monRank -> 展示品质（>=5 五星，==4 四星，其余三星）
-const rankToQuality = (rankVal) => (rankVal >= 5 ? 5 : (rankVal === 4 ? 4 : 3))
+// monRank -> 展示品质 (3: 首领/Boss -> 5橙, 2: 精英 -> 4紫, 1: 普通 -> 3蓝)
+const rankToQuality = (rankVal) => (rankVal >= 3 ? 5 : (rankVal === 2 ? 4 : 3))
 
 // 1. fetchMonsterData - Official pokedex grouped by skeletonName
 // 构建期纯函数：由基础数据表生成怪物图鉴列表（不依赖网络与浏览器）
@@ -1012,10 +1157,42 @@ export function buildMonsterData(maps) {
       return a.id.localeCompare(b.id)
     })
 
+    // 消除同名 Tab 冲突（如安瑟恩单元 042_tower1_35/70，恐怖蟾兽 055_tower1_50/75，砂蜘蛛育母 013_tower1_15 等）
+    const allFormItems = [...forms, ...summons]
+    const labelCounts = new Map()
+    allFormItems.forEach(f => {
+      labelCounts.set(f.tabLabel, (labelCounts.get(f.tabLabel) || 0) + 1)
+    })
+
+    allFormItems.forEach(f => {
+      if ((labelCounts.get(f.tabLabel) || 0) > 1) {
+        const floorMatch = f.id.match(/tower\d*_(\d+)/)
+        const floor = floorMatch ? floorMatch[1] : (f.towerAppearances?.[0]?.floors?.[0] || f.towerBossAppearances?.[0]?.floors?.[0])
+        if (floor) {
+          f.tabLabel = `神匠之塔 · ${floor}层`
+        } else if (f.relationType && f.relationType !== '本体') {
+          f.tabLabel = `${f.relationType} · ${f.name}`
+        }
+      }
+    })
+
     const baseRewards = parseRewardId(baseMon.reward, rewards, items, equipGroupData)
     const rankVal = forms[0]?.monRank || 3
     const quality = rankToQuality(rankVal)
     const icon = getMonsterPortrait(baseFormInMonJson, monTypeId) || baseMon.monIcon
+
+    const allFormNames = forms.map(f => f.name).filter(Boolean)
+    const allTabLabels = allFormItems.map(f => f.tabLabel).filter(Boolean)
+    const allWeaknesses = forms.map(f => f.weakAttDes).filter(Boolean)
+    const keywords = [
+      ...allFormNames,
+      ...allTabLabels,
+      baseMon.text || '',
+      baseMon.label || '',
+      ...(baseMon.mark || []),
+      ...(baseMon.place || []),
+      ...allWeaknesses
+    ].filter(Boolean).join(' ').toLowerCase()
 
     return {
       id: monTypeId,
@@ -1031,7 +1208,7 @@ export function buildMonsterData(maps) {
       quality,
       forms,
       summons,
-      keywords: `${forms[0]?.name || ''} ${baseMon.label || ''} ${baseMon.place?.join(' ') || ''}`.toLowerCase()
+      keywords
     }
   }).filter(Boolean)
   

@@ -4,7 +4,7 @@
     <!-- 筛选区：半透明羊皮纸面板（分类 / 状态 / 子状态 分段页签） -->
     <UiFilterPanel class="filter-sticky-bar rewards-filter-sticky paper-panel">
       <template #search>
-        <UiSearchInput v-model="searchQuery" :placeholder="currentMainCat === 'combat_rules' ? '搜索战斗规则，如冷却、暴击、护盾...' : '搜索奖励、物品、地图或说明...'" />
+        <UiSearchInput v-model="searchQuery" placeholder="搜索奖励、物品、地图或说明..." />
       </template>
 
       <!-- 主分类（Row 1） -->
@@ -74,14 +74,12 @@
     </UiFilterPanel>
 
     <!-- 加载态 -->
-    <UiEmptyState v-if="loading && currentMainCat !== 'combat_rules'" type="loading" text="正在装配奖励数据..." />
+    <UiEmptyState v-if="loading" type="loading" text="正在装配奖励数据..." />
 
     <!-- 主内容区 -->
-    <div v-else-if="pvpRewards || currentMainCat === 'combat_rules'" class="rewards-content" id="rewardsScroll" data-main-scroll>
+    <div v-else-if="pvpRewards" class="rewards-content" id="rewardsScroll" data-main-scroll>
 
-      <CombatRules v-if="currentMainCat === 'combat_rules'" :query="searchQuery" />
-
-      <template v-else-if="currentMainCat === 'pvp'">
+      <template v-if="currentMainCat === 'pvp'">
 
         <!-- 挑战赛规则 -->
         <div v-if="currentSubCat === 'rules' && pvpRewards.rules && matchesRewardQuery(pvpRewards.rules, '挑战赛 赛事 赛区 规则 追加挑战')" class="pvp-rules-container">
@@ -405,7 +403,6 @@ import { isBlacklisted } from '../config/blacklist.js'
 import { REWARD_MODE_INFO } from '../utils/gameMappings'
 import { resolveScrollTarget } from '../utils/scrollTarget.js'
 import { useAppStateStore } from '../stores/appState.js'
-import CombatRules from '../components/CombatRules.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -416,11 +413,13 @@ const pvpRewards = ref(null)
 const mainCategories = [
   { id: 'pvp', name: '挑战赛奖励' },
   { id: 'hidden', name: '被隐藏的物品' },
-  { id: 'slot_cost', name: '育室槽位消耗' },
-  { id: 'combat_rules', name: '战斗规则' }
+  { id: 'slot_cost', name: '育室槽位消耗' }
 ]
 const resolveMainCategory = value => {
-  if (value === 'ph3') return 'combat_rules'
+  if (value === 'combat_rules' || value === 'ph3') {
+    router.replace('/glossary')
+    return 'pvp'
+  }
   return mainCategories.some(cat => cat.id === value) ? value : 'pvp'
 }
 const currentMainCat = ref(resolveMainCategory(route.query.tab))
@@ -572,7 +571,7 @@ const applyTabsFromRoute = () => {
 }
 
 const syncTabsToRoute = async () => {
-  if (!routeTabsReady.value && currentMainCat.value !== 'combat_rules') return
+  if (!routeTabsReady.value) return
 
   const query = { ...route.query, tab: currentMainCat.value }
   delete query.sub
@@ -649,17 +648,12 @@ onMounted(async () => {
 /**
  * 奖励卡的 targetName / targetQuality / targetImg 依赖 `getCachedItem` / `getIcon` 背后的物品表。
  * 该表体积远大于本页自身的两张小表，因此不放进 onMounted 的等待链：先让页面可读，
- * 再按需加载。战斗规则页签完全不消费物品表，此时不会触发这次请求。
+ * 再按需加载。
  */
 let itemDataPromise = null
 const itemDataVersion = ref(0)
 const ITEM_CONSUMING_CATS = new Set(['pvp', 'hidden'])
-const needsItemData = () =>
-  currentMainCat.value === 'combat_rules'
-    ? false
-    : ITEM_CONSUMING_CATS.has(currentMainCat.value)
-      ? true
-      : false
+const needsItemData = () => ITEM_CONSUMING_CATS.has(currentMainCat.value)
 
 const ensureItemData = () => {
   if (!needsItemData() || itemDataPromise) return itemDataPromise
@@ -672,7 +666,7 @@ const ensureItemData = () => {
   return itemDataPromise
 }
 
-// 页签切到真正消费物品表的分支时再补加载（含深链直达 combat_rules 时完全不加载）。
+// 页签切到真正消费物品表的分支时再补加载
 watch([currentMainCat, currentSubCat], ensureItemData)
 
 const waitForRenderableTarget = async (element, timeout = 1500) => {
@@ -700,7 +694,6 @@ const alignTargetInViewport = element => {
 }
 
 const scrollToTarget = async () => {
-  if (currentMainCat.value === 'combat_rules') return
   const { id } = route.query
   if (!id) return
 
@@ -768,7 +761,7 @@ watch(() => route.query.id, () => {
 watch(
   () => [route.query.tab, route.query.sub, route.query.season, route.query.map, route.query.status, route.query.q],
   () => {
-    if (routeTabsReady.value || resolveMainCategory(queryText(route.query.tab)) === 'combat_rules') applyTabsFromRoute()
+    if (routeTabsReady.value) applyTabsFromRoute()
   }
 )
 

@@ -163,9 +163,10 @@ const defaultNavList = [
   { name: '任务图鉴', path: '/tasks', icon: '/images/TaskPanel/task_tag1.webp' },
   { name: '事件图鉴', path: '/events', icon: '/ui/mtl1.webp' },
   { name: '副本图鉴', path: '/dungeons', icon: '/ui/map_r_fb_03.webp' },
-  { name: '关卡图鉴', path: '/chapters', icon: '/images/Common_Atlas/map_info.webp' },
+  { name: '关卡图鉴', path: '/chapters', icon: '/ui/stage_crystal.webp' },
   { name: '兑换', path: '/exchange', icon: '/ui/map_r_fb_19.webp' },
   { name: '模拟招募', path: '/gacha', icon: '/ui/item_20004.webp' },
+  { name: '词条', path: '/glossary', icon: '/ui/buff_017.webp' },
   { name: '其他', path: '/rewards', icon: '/ui/map_r_fb_12.webp' }
 ]
 

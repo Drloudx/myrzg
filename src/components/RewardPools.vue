@@ -62,7 +62,7 @@
                   {{ entry.name }}
                 </div>
                 <div v-if="entry.min !== undefined && entry.max !== undefined" class="reward-slot__tooltip-line">
-                  数量：{{ entry.min === entry.max ? entry.min : `${entry.min}~${entry.max}` }}
+                  数量：{{ tooltipCountText(entry.min, entry.max) }}
                 </div>
                 <div class="reward-slot__tooltip-line reward-slot__tooltip-rule">
                   所属规则：{{ tooltipRuleText(group.rate, group.count) }}
@@ -81,6 +81,24 @@
 
             <div class="reward-slot__name" :title="entry.name">
               {{ entry.name }}
+            </div>
+
+            <!-- 弹窗明细：单次抽取与综合获得概率展示 -->
+            <div class="reward-slot__breakdown-probs">
+              <span class="reward-slot__breakdown-prob">
+                单次：{{ formatBreakdownProb(resolveEntryProb(entry, group).singleProb) }}
+              </span>
+              <span class="reward-slot__breakdown-prob is-composite">
+                综合：{{ formatBreakdownProb(resolveEntryProb(entry, group).compositeProb) }}
+              </span>
+              <template v-if="groupHasCountRange(group)">
+                <span v-if="hasCountRange(entry)" class="reward-slot__breakdown-prob is-count">
+                  数量：{{ breakdownCountText(entry.min, entry.max) }}
+                </span>
+                <span v-else class="reward-slot__breakdown-prob is-count is-placeholder" aria-hidden="true">
+                  &nbsp;
+                </span>
+              </template>
             </div>
           </div>
         </div>
@@ -129,7 +147,7 @@
                 {{ item.name }}
               </div>
               <div v-if="item.min !== undefined && item.max !== undefined" class="reward-slot__tooltip-line">
-                数量：{{ item.min === item.max ? item.min : `${item.min}~${item.max}` }}
+                数量：{{ tooltipCountText(item.min, item.max) }}
               </div>
 
               <!-- 单来源规则 -->
@@ -171,6 +189,7 @@
 import { computed } from 'vue'
 import { getImageUrl, handleImageFallback } from '../utils/env.js'
 import { isRewardClickable, rewardGroups } from '../utils/roomDisplay.js'
+import { formatCountProbability } from '../utils/acquisitionRules.js'
 
 const props = defineProps({
   entries: { type: Array, default: () => [] },
@@ -292,26 +311,33 @@ const onSlotEnter = (event) => {
   const containerRight = container ? container.getBoundingClientRect().right : window.innerWidth - 10
 
   const slotRect = slot.getBoundingClientRect()
+  const tooltipHeight = tooltip.offsetHeight || tooltip.getBoundingClientRect().height || 90
   const spaceAbove = slotRect.top - containerTop
 
-  // 2. 垂直检测：上方空间不足（< 115px）时翻转朝下展示
-  const shouldFlip = spaceAbove < 115
+  // 2. 垂直检测：上方空间不足时翻转朝下展示
+  const shouldFlip = spaceAbove < tooltipHeight + 16
   tooltip.classList.toggle('is-flipped-bottom', shouldFlip)
 
-  // 3. 水平检测：防左右两侧溢出
-  const tooltipRect = tooltip.getBoundingClientRect()
+  // 3. 水平检测：基于卡片中心与 Tooltip 物理宽度的纯几何计算，防左右两侧溢出
+  const tooltipWidth = tooltip.offsetWidth || tooltip.getBoundingClientRect().width || 140
+  const slotCenterX = slotRect.left + slotRect.width / 2
+  const expectedLeft = slotCenterX - tooltipWidth / 2
+  const expectedRight = slotCenterX + tooltipWidth / 2
+
   const pad = 12
+  const minLeft = containerLeft + pad
+  const maxRight = containerRight - pad
   let shiftX = 0
 
-  if (tooltipRect.left < containerLeft + pad) {
-    shiftX = (containerLeft + pad) - tooltipRect.left
-  } else if (tooltipRect.right > containerRight - pad) {
-    shiftX = (containerRight - pad) - tooltipRect.right
+  if (expectedLeft < minLeft) {
+    shiftX = minLeft - expectedLeft
+  } else if (expectedRight > maxRight) {
+    shiftX = maxRight - expectedRight
   }
 
   if (Math.abs(shiftX) > 1) {
     tooltip.style.transform = `translateX(calc(-50% + ${Math.round(shiftX)}px))`
-    const maxShift = Math.max(0, tooltipRect.width / 2 - 14)
+    const maxShift = Math.max(0, tooltipWidth / 2 - 14)
     const arrowShift = Math.max(-maxShift, Math.min(maxShift, -shiftX))
     tooltip.style.setProperty('--arrow-shift', `${Math.round(arrowShift)}px`)
   } else {
@@ -324,7 +350,8 @@ const onSlotLeave = (event) => {
   const slot = event.currentTarget
   const tooltip = slot.querySelector('.reward-slot__tooltip')
   if (tooltip) {
-    tooltip.style.setProperty('--arrow-shift', '0px')
+    tooltip.style.transform = ''
+    tooltip.style.removeProperty('--arrow-shift')
   }
 }
 
@@ -351,6 +378,39 @@ const formatDetailPercent = (probability) => {
   const percent = probability * 100
   if (percent > 0 && percent < 0.01) return '<0.01'
   return percent.toFixed(2)
+}
+
+/** 弹窗明细模式下卡片底部的概率展示：保留有效小数，避免多余 0 */
+const formatBreakdownProb = (prob) => {
+  if (prob == null) return '0%'
+  const percent = prob * 100
+  if (percent >= 100) return '100%'
+  if (percent <= 0) return '0%'
+  if (percent < 0.01) return '<0.01%'
+  return `${Number(percent.toFixed(2))}%`
+}
+
+/** 数量是否为区间 */
+const hasCountRange = (entry) => {
+  return entry?.min !== undefined && entry?.max !== undefined && entry.min !== entry.max
+}
+
+/** 奖励池组内是否有任意物品是区间数量（用于同行卡片高度对齐） */
+const groupHasCountRange = (group) => {
+  return group?.entries?.some(entry => hasCountRange(entry)) ?? false
+}
+
+/** 桌面端 Tooltip 数量文案 */
+const tooltipCountText = (min, max) => {
+  if (min === undefined || max === undefined) return ''
+  if (min === max) return String(min)
+  const prob = formatCountProbability(min, max)
+  return prob ? `${min}~${max} (${prob})` : `${min}~${max}`
+}
+
+/** 弹窗明细模式下卡片底部的数量概率简写 */
+const breakdownCountText = (min, max) => {
+  return formatCountProbability(min, max)
 }
 </script>
 
@@ -430,6 +490,8 @@ const formatDetailPercent = (probability) => {
   position: relative;
   width: 66px;
   height: 66px;
+  min-height: 0;
+  min-width: 0;
   border-radius: 6px;
   border: 2px solid var(--border-soft);
   display: flex;
@@ -444,6 +506,8 @@ const formatDetailPercent = (probability) => {
 .reward-slot__icon {
   width: 82%;
   height: 82%;
+  max-width: 82%;
+  max-height: 82%;
   object-fit: contain;
   display: block;
   pointer-events: none;
@@ -501,9 +565,51 @@ const formatDetailPercent = (probability) => {
   word-break: break-all;
 }
 
+/* 弹窗明细模式下固定两行高度，确保同排物品的概率信息水平基线完全对齐 */
+.breakdown-pool .reward-slot__name {
+  min-height: 29px;
+}
+
+/* 弹窗明细模式下卡片底部的概率展示容器与文本 */
+.reward-slot__breakdown-probs {
+  width: 100%;
+  margin-top: 1px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  pointer-events: none;
+}
+.reward-slot__breakdown-prob {
+  font-size: 10px;
+  line-height: 1.25;
+  color: var(--text-muted, #6b5134);
+  white-space: nowrap;
+  letter-spacing: -0.3px;
+  text-align: center;
+}
+.reward-slot__breakdown-prob.is-composite {
+  color: #9c5700;
+  font-weight: 600;
+}
+:global(.dark-mode) .reward-slot__breakdown-prob.is-composite {
+  color: var(--gold, #c9a24b);
+}
+.reward-slot__breakdown-prob.is-count {
+  font-size: 9.5px;
+  line-height: 1.2;
+  color: var(--text-muted, #6b5134);
+  letter-spacing: -0.4px;
+}
+.reward-slot__breakdown-prob.is-placeholder {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 /* 桌面端悬浮气泡浮层（Tooltip - 温暖羊皮纸风格） */
 .reward-slot__tooltip {
-  display: none;
+  visibility: hidden;
+  opacity: 0;
   position: absolute;
   bottom: calc(100% + 8px);
   left: 50%;
@@ -521,6 +627,7 @@ const formatDetailPercent = (probability) => {
   z-index: 60;
   pointer-events: none;
   text-align: left;
+  transition: opacity 0.12s ease;
 }
 
 /* 顶部空间受限时翻转朝下展示 */
@@ -601,28 +708,40 @@ const formatDetailPercent = (probability) => {
 /* 仅在支持鼠标悬停的桌面端激活浮层 */
 @media (hover: hover) and (pointer: fine) {
   .reward-slot:hover .reward-slot__tooltip {
-    display: block;
+    visibility: visible;
+    opacity: 1;
   }
 }
 
-/* 移动端视口适配：自适应网格均分（5列自适应流，自然靠左对齐），消除行末尴尬留白 */
+/* 移动端视口适配：自适应网格均分（自然靠左对齐），消除行末尴尬留白 */
 @media (max-width: 640px) {
   .reward-shelf {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
     gap: 6px 8px;
   }
+  .reward-pools--dense .reward-shelf {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
+    gap: 6px 6px;
+  }
   .reward-slot {
     width: 100%;
     min-width: 0;
+    min-height: 0;
   }
   .reward-slot__box {
     width: 100%;
     height: auto;
     aspect-ratio: 1 / 1;
+    min-height: 0;
+    min-width: 0;
   }
   .reward-slot__name {
     font-size: 10px;
+  }
+  .breakdown-pool .reward-slot__name {
+    min-height: 26px;
   }
   .reward-slot__prob {
     font-size: 9px;
@@ -633,12 +752,7 @@ const formatDetailPercent = (probability) => {
   }
 }
 
-/* 密集模式（如特殊掉落卡片、房间掉落列表） */
-.reward-pools--dense .reward-shelf {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 8px;
-}
+/* 密集模式桌面端（如特殊掉落卡片、房间掉落列表） */
 @media (min-width: 641px) {
   .reward-pools--dense .reward-shelf {
     display: grid;
