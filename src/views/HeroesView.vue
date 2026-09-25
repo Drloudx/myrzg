@@ -377,18 +377,6 @@
                     @click="stepSkillLevel(1)"
                   >＋</button>
                 </div>
-
-                <div class="skill-slider-scale">
-                  <span class="scale-item" :class="{ 'is-active': currentSkillLevel === 1 }" @click="currentSkillLevel = 1">Lv.1</span>
-                  <span
-                    v-for="lvl in midMilestoneLevels"
-                    :key="lvl"
-                    class="scale-item"
-                    :class="{ 'is-active': currentSkillLevel === lvl }"
-                    @click="currentSkillLevel = lvl"
-                  >Lv.{{ lvl }}</span>
-                  <span class="scale-item" :class="{ 'is-active': currentSkillLevel === skillLevelMax }" @click="currentSkillLevel = skillLevelMax">Lv.{{ skillLevelMax }}</span>
-                </div>
               </div>
 
               <!-- Level Description -->
@@ -397,50 +385,75 @@
                 <p class="lvl-des-txt" v-html="formatSkillDescription(currentSelectedSkillLevelDetail.des)"></p>
               </div>
 
-              <!-- Combat settlement summary -->
-              <div v-if="currentSkillMechanics" class="skill-mechanics-box">
-                <div class="mechanics-row mechanics-settlement-row">
-                  <span class="mechanics-label">结算</span>
-                  <UiTag v-if="currentSkillMechanics.damage?.formLabel" tone="default">{{ currentSkillMechanics.damage.formLabel }}</UiTag>
-                  <UiTag v-for="label in currentSkillMechanics.damage?.typeLabels" :key="`type-${label}`" tone="danger">{{ label }}</UiTag>
-                  <UiTag v-for="label in currentSkillMechanics.damage?.elementLabels" :key="`element-${label}`" tone="accent">{{ label }}属性</UiTag>
-                  <UiTag v-if="currentSkillMechanics.damage?.crit && currentSkillMechanics.damage.crit !== 'na'" :tone="critTone(currentSkillMechanics.damage.crit)">{{ critLabel(currentSkillMechanics.damage.crit) }}</UiTag>
-                </div>
-                <div v-if="currentSkillMechanics.outcomeLabels?.length && !(currentSkillMechanics.outcomeLabels.length === 1 && currentSkillMechanics.outcomeLabels[0] === '伤害')" class="mechanics-row">
-                  <span class="mechanics-label">效果类型</span>
-                  <span class="mechanics-text">{{ currentSkillMechanics.outcomeLabels.join('、') }}</span>
-                </div>
-                <div v-if="currentSkillMechanics.damage?.scalingLabels?.length" class="mechanics-row">
-                  <span class="mechanics-label">加成基准</span>
-                  <span class="mechanics-text">{{ currentSkillMechanics.damage.scalingLabels.join('、') }}</span>
-                </div>
-                <div v-if="currentSkillMechanics.effectScalingLabels?.length && currentSkillMechanics.outcomeLabels?.some(label => label !== '伤害')" class="mechanics-row">
-                  <span class="mechanics-label">效果基准</span>
-                  <span class="mechanics-text">{{ currentSkillMechanics.effectScalingLabels.join('、') }}</span>
-                </div>
-                <div v-if="currentSkillMechanics.bonuses?.applies?.length" class="mechanics-row">
-                  <span class="mechanics-label">加成生效</span>
-                  <span class="mechanics-text">{{ currentSkillMechanics.bonuses.applies.map(mechanicsLabel).join(' · ') }}</span>
-                </div>
-                <div v-if="currentSkillMechanics.features?.length" class="mechanics-row">
-                  <span class="mechanics-label">攻击特性</span>
-                  <span class="mechanics-text">{{ currentSkillMechanics.features.join(' · ') }}</span>
-                </div>
-                <div v-if="currentSkillMechanics.effects?.length" class="mechanics-row">
-                  <span class="mechanics-label">附加效果</span>
-                  <span class="mechanics-text">{{ currentSkillMechanics.effects.join(' · ') }}</span>
-                </div>
-                <div v-if="currentSkillMechanics.bonuses?.excludes?.length" class="mechanics-row mechanics-muted-row">
-                  <span class="mechanics-label">不生效</span>
-                  <span class="mechanics-text">{{ currentSkillMechanics.bonuses.excludes.map(mechanicsLabel).join(' · ') }}</span>
-                </div>
-                <div v-if="currentSkillMechanics.conditions?.length" class="mechanics-row mechanics-condition-row">
-                  <span class="mechanics-label">条件变化</span>
-                  <span class="mechanics-text">{{ currentSkillMechanics.conditions.join('；') }}</span>
-                </div>
-                <div v-if="currentSkillMechanics.notes?.length" class="mechanics-row mechanics-note-row">
-                  <span class="mechanics-label">实际说明</span>
-                  <span class="mechanics-text">{{ currentSkillMechanics.notes.join('；') }}</span>
+              <!-- Combat settlement summary (默认收起，可展开) -->
+              <div v-if="currentSkillMechanics" class="skill-mechanics-wrapper">
+                <button
+                  type="button"
+                  class="skill-mechanics-toggle-bar"
+                  :class="{ 'is-expanded': isSkillMechanicsExpanded }"
+                  @click="isSkillMechanicsExpanded = !isSkillMechanicsExpanded"
+                >
+                  <div class="mechanics-toggle-header">
+                    <span class="mechanics-toggle-title">战斗机制</span>
+                    <span class="mechanics-toggle-btn">
+                      {{ isSkillMechanicsExpanded ? '收起详细' : '展开详细' }}
+                      <span class="toggle-arrow" :class="{ 'is-rotated': isSkillMechanicsExpanded }">▾</span>
+                    </span>
+                  </div>
+                  <div v-if="!isSkillMechanicsExpanded" class="mechanics-preview-tags">
+                    <UiTag v-if="currentSkillMechanics.damage?.formLabel" tone="default" size="sm">{{ currentSkillMechanics.damage.formLabel }}</UiTag>
+                    <UiTag v-for="label in currentSkillMechanics.damage?.typeLabels" :key="`prev-type-${label}`" tone="danger" size="sm">{{ label }}</UiTag>
+                    <UiTag v-for="label in currentSkillMechanics.damage?.elementLabels" :key="`prev-elem-${label}`" tone="accent" size="sm">{{ label }}属性</UiTag>
+                    <UiTag v-if="currentSkillMechanics.damage?.crit && currentSkillMechanics.damage.crit !== 'na'" :tone="critTone(currentSkillMechanics.damage.crit)" size="sm">{{ critLabel(currentSkillMechanics.damage.crit) }}</UiTag>
+                  </div>
+                </button>
+
+                <div v-show="isSkillMechanicsExpanded" class="skill-mechanics-box">
+                  <div class="mechanics-row mechanics-settlement-row">
+                    <span class="mechanics-label">结算</span>
+                    <div class="mechanics-tags-wrap">
+                      <UiTag v-if="currentSkillMechanics.damage?.formLabel" tone="default">{{ currentSkillMechanics.damage.formLabel }}</UiTag>
+                      <UiTag v-for="label in currentSkillMechanics.damage?.typeLabels" :key="`type-${label}`" tone="danger">{{ label }}</UiTag>
+                      <UiTag v-for="label in currentSkillMechanics.damage?.elementLabels" :key="`element-${label}`" tone="accent">{{ label }}属性</UiTag>
+                      <UiTag v-if="currentSkillMechanics.damage?.crit && currentSkillMechanics.damage.crit !== 'na'" :tone="critTone(currentSkillMechanics.damage.crit)">{{ critLabel(currentSkillMechanics.damage.crit) }}</UiTag>
+                    </div>
+                  </div>
+                  <div v-if="currentSkillMechanics.outcomeLabels?.length && !(currentSkillMechanics.outcomeLabels.length === 1 && currentSkillMechanics.outcomeLabels[0] === '伤害')" class="mechanics-row">
+                    <span class="mechanics-label">效果类型</span>
+                    <span class="mechanics-text">{{ currentSkillMechanics.outcomeLabels.join('、') }}</span>
+                  </div>
+                  <div v-if="currentSkillMechanics.damage?.scalingLabels?.length" class="mechanics-row">
+                    <span class="mechanics-label">加成基准</span>
+                    <span class="mechanics-text">{{ currentSkillMechanics.damage.scalingLabels.join('、') }}</span>
+                  </div>
+                  <div v-if="currentSkillMechanics.effectScalingLabels?.length && currentSkillMechanics.outcomeLabels?.some(label => label !== '伤害')" class="mechanics-row">
+                    <span class="mechanics-label">效果基准</span>
+                    <span class="mechanics-text">{{ currentSkillMechanics.effectScalingLabels.join('、') }}</span>
+                  </div>
+                  <div v-if="currentSkillMechanics.bonuses?.applies?.length" class="mechanics-row">
+                    <span class="mechanics-label">加成生效</span>
+                    <span class="mechanics-text">{{ currentSkillMechanics.bonuses.applies.map(mechanicsLabel).join(' · ') }}</span>
+                  </div>
+                  <div v-if="currentSkillMechanics.features?.length" class="mechanics-row">
+                    <span class="mechanics-label">攻击特性</span>
+                    <span class="mechanics-text">{{ currentSkillMechanics.features.join(' · ') }}</span>
+                  </div>
+                  <div v-if="currentSkillMechanics.effects?.length" class="mechanics-row">
+                    <span class="mechanics-label">附加效果</span>
+                    <span class="mechanics-text">{{ currentSkillMechanics.effects.join(' · ') }}</span>
+                  </div>
+                  <div v-if="currentSkillMechanics.bonuses?.excludes?.length" class="mechanics-row mechanics-muted-row">
+                    <span class="mechanics-label">不生效</span>
+                    <span class="mechanics-text">{{ currentSkillMechanics.bonuses.excludes.map(mechanicsLabel).join(' · ') }}</span>
+                  </div>
+                  <div v-if="currentSkillMechanics.conditions?.length" class="mechanics-row mechanics-condition-row">
+                    <span class="mechanics-label">机制说明</span>
+                    <span class="mechanics-text">{{ currentSkillMechanics.conditions.join('；') }}</span>
+                  </div>
+                  <div v-if="currentSkillMechanics.notes?.length" class="mechanics-row mechanics-note-row">
+                    <span class="mechanics-label">实际说明</span>
+                    <span class="mechanics-text">{{ currentSkillMechanics.notes.join('；') }}</span>
+                  </div>
                 </div>
               </div>
 
@@ -816,6 +829,7 @@ const activeTab = ref('skills')
 
 // Tab specific states
 const activeSkillIndex = ref(0)
+const isSkillMechanicsExpanded = ref(false)
 const currentSkillLevel = ref(1)
 const activeStarIndex = ref(0)
 const calcLevel = ref(1)
@@ -978,6 +992,7 @@ function openFromQueryId(id) {
     calcStarCount.value = 0
     includeCurrentBreakthrough.value = true
     isJobDetailExpanded.value = false
+    isSkillMechanicsExpanded.value = false
   }
 }
 
@@ -1091,19 +1106,10 @@ const stepSkillLevel = (delta) => {
   currentSkillLevel.value = Math.max(1, Math.min(skillLevelMax.value, next))
 }
 
-const midMilestoneLevels = computed(() => {
-  const max = skillLevelMax.value
-  if (max <= 4) return []
-  if (max === 12) return [4, 7, 10]
-  if (max === 21) return [7, 14]
-  const step = Math.round(max / 3)
-  return [step, step * 2].filter(l => l > 1 && l < max)
-})
-
 const costPlanMode = ref('auto') // 'toCurrent' | 'toMax' | 'next' | 'auto'
 
 const effectiveUpgradeStartLevel = computed(() => {
-  if (costPlanMode.value === 'next') {
+  if (costPlanMode.value === 'next' || costPlanMode.value === 'toMax') {
     return Number(currentSkillLevel.value)
   }
   return 1
@@ -1126,6 +1132,7 @@ const effectiveUpgradeEndLevel = computed(() => {
 watch(activeSkillIndex, () => {
   currentSkillLevel.value = 1
   costPlanMode.value = 'auto'
+  isSkillMechanicsExpanded.value = false
 })
 
 const skillUpgradeRangeSummary = computed(() => {
@@ -1929,29 +1936,6 @@ const handleGiftClick = (giftId) => {
   accent-color: var(--accent-bright, #7a9a99);
   touch-action: pan-y;
 }
-.skill-slider-scale {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 4px;
-  font-size: 11px;
-  color: var(--text-muted, #6b5134);
-}
-.skill-slider-scale .scale-item {
-  cursor: pointer;
-  padding: 2px 4px;
-  border-radius: 2px;
-  user-select: none;
-  transition: all 0.15s ease;
-}
-.skill-slider-scale .scale-item:hover {
-  color: var(--accent-ink, #557574);
-  background: rgba(43, 31, 21, 0.08);
-}
-.skill-slider-scale .scale-item.is-active {
-  font-weight: 700;
-  color: var(--accent-ink, #557574);
-  background: rgba(122, 154, 153, 0.18);
-}
 .calc-range-slider {
   width: 100%;
   cursor: pointer;
@@ -1985,51 +1969,151 @@ const handleGiftClick = (giftId) => {
   white-space: pre-wrap;
 }
 
+.skill-mechanics-wrapper {
+  margin: -2px 0 10px;
+  border: 1px solid rgba(122, 154, 153, 0.28);
+  border-radius: 4px;
+  background: rgba(122, 154, 153, 0.05);
+  overflow: hidden;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.skill-mechanics-toggle-bar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+  user-select: none;
+}
+
+.skill-mechanics-toggle-bar:hover {
+  background: rgba(122, 154, 153, 0.1);
+}
+
+.mechanics-toggle-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.mechanics-toggle-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main, #3e2a14);
+  line-height: 1.2;
+}
+
+.mechanics-preview-tags {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.mechanics-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main, #3e2a14);
+  flex-shrink: 0;
+  line-height: 1.2;
+}
+
+.toggle-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.toggle-arrow.is-rotated {
+  transform: rotate(180deg);
+}
+
 .skill-mechanics-box {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  margin: -2px 0 10px;
-  padding: 9px 12px;
-  border-left: 3px solid var(--accent-bright, #7a9a99);
-  background: rgba(122, 154, 153, 0.08);
-  border-radius: 3px;
+  padding: 10px 12px;
+  border-top: 1px dashed rgba(122, 154, 153, 0.25);
+  background: rgba(122, 154, 153, 0.04);
 }
+
 .mechanics-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 58px 1fr;
   align-items: baseline;
-  flex-wrap: wrap;
-  gap: 6px 9px;
-  min-width: 0;
+  column-gap: 8px;
   font-size: 12px;
   line-height: 1.55;
 }
+
 .mechanics-label {
-  flex: 0 0 auto;
-  min-width: 62px;
   color: var(--text-muted, #6b5134);
   font-weight: 700;
+  white-space: nowrap;
 }
+
+.mechanics-tags-wrap {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  min-width: 0;
+}
+
 .mechanics-text {
   min-width: 0;
   color: var(--text-main, #3e2a14);
-  overflow-wrap: anywhere;
+  word-break: break-word;
 }
+
 .mechanics-muted-row .mechanics-text {
   color: var(--text-muted, #6b5134);
 }
+
 .mechanics-condition-row {
   color: var(--gold, #8a6a1f);
 }
+
 .mechanics-note-row {
   color: var(--text-muted, #6b5134);
 }
+
 @media (max-width: 640px) {
+  .skill-mechanics-toggle-bar {
+    padding: 7px 10px;
+    gap: 6px;
+  }
+  .mechanics-toggle-title {
+    font-size: 13.5px;
+  }
+  .mechanics-toggle-btn {
+    font-size: 12.5px;
+  }
+  .toggle-arrow {
+    font-size: 13px;
+  }
   .skill-mechanics-box {
     padding: 8px 10px;
+    gap: 5px;
   }
-  .mechanics-label {
-    min-width: 56px;
+  .mechanics-row {
+    grid-template-columns: 52px 1fr;
+    column-gap: 6px;
+    font-size: 11.5px;
   }
 }
 

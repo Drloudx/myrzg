@@ -261,6 +261,76 @@ export const HERO_SKILL_MECHANICS_OVERRIDES = {
       'Boss是否受嘲讽取决于目标的控制抗性；具有控制抗性的Boss可能免疫嘲讽。'
     ],
     notes: []
+  },
+  '03403': {
+    reviewStatus: 'verified',
+    damage: {
+      form: 'summon',
+      formLabel: '召唤物攻击',
+      types: ['magicAtk'],
+      typeLabels: ['魔法'],
+      elements: [],
+      elementLabels: [],
+      scaling: ['magicAtk'],
+      scalingLabels: ['魔法攻击'],
+      crit: 'yes'
+    },
+    bonuses: {
+      applies: ['magicAtk', 'magicDamage', 'magicPenetration', 'normalDamage', 'normalAndSkillDamage'],
+      excludes: ['skillDamage']
+    },
+    conditions: [
+      '魔水精灵喷射魔水弹为远程普通攻击，按魔法伤害结算，可以暴击（召唤物基础暴击率25%、暴击伤害125%）。',
+      '魔水精灵继承露帕对应技能等级比例的法术强度与最大生命值。'
+    ],
+    notes: []
+  },
+  '06502': {
+    reviewStatus: 'verified',
+    damage: {
+      form: 'summon',
+      formLabel: '召唤物攻击',
+      types: ['phyAtk'],
+      typeLabels: ['物理'],
+      elements: ['fire'],
+      elementLabels: ['火'],
+      scaling: ['phyAtk'],
+      scalingLabels: ['物理攻击'],
+      crit: 'yes'
+    },
+    bonuses: {
+      applies: ['phyAtk', 'physicalDamage', 'physicalPenetration', 'fireDamage', 'normalDamage', 'normalAndSkillDamage'],
+      excludes: ['skillDamage']
+    },
+    conditions: [
+      '浮游炮自动攻击为远程普通攻击，按火属性物理伤害结算，可以暴击（召唤物基础暴击率12%、暴击伤害150%）。',
+      '浮游炮继承乌尔勒60%攻击力、20%防御力与80%最大生命值。'
+    ],
+    notes: []
+  },
+  '02603': {
+    reviewStatus: 'verified',
+    conditions: [
+      '技能本体造成的范围斩击按技能伤害结算，不能暴击。',
+      '召唤出的吸血蝙蝠攻击为近战普通攻击，按火属性物理伤害结算，可以暴击（蝙蝠基础暴击率35%、暴击伤害125%），攻击附带吸血恢复。'
+    ],
+    notes: []
+  },
+  '02902': {
+    reviewStatus: 'verified',
+    conditions: [
+      '技能发射的音波斩击按技能伤害结算，不能暴击。',
+      '召唤出的火精灵自动攻击为火属性普通攻击，可以暴击（火精灵基础暴击率25%、暴击伤害125%）。'
+    ],
+    notes: []
+  },
+  '02903': {
+    reviewStatus: 'verified',
+    conditions: [
+      '技能为群体治疗，无直接伤害。',
+      '召唤出的风精灵持续演奏，为附近的友方单位提供持续治疗。'
+    ],
+    notes: []
   }
 }
 
