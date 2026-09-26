@@ -72,5 +72,9 @@
 /ui/*
   Cache-Control: public, max-age=604800
 
+# ── 字体：URL 带内容 hash，可永久缓存 ──
+# `@font-face` 的 src 由 vite.config.js 的 fontUrlVersionPlugin 在构建期补上
+# `?v=<该文件内容哈希>`，所以文件名虽固定、URL 却随内容变。
+# 这让"内容增长后重新子集化"能立刻生效（否则固定文件名 + 长缓存会继续发旧字形，最长 7 天）。
 /fonts/*
-  Cache-Control: public, max-age=604800
+  Cache-Control: public, max-age=31536000, immutable

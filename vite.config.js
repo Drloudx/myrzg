@@ -127,6 +127,45 @@ export function collectImageVersions(publicDir) {
   return versions
 }
 
+/**
+ * 给 CSS 里 `/fonts/*.woff2` 的引用补上内容哈希版本参数。
+ *
+ * 为什么需要：字体文件名是固定的（`HarmonyOS_Sans_SC_Regular.subset.woff2`），而 `/fonts/*`
+ * 有长缓存。内容增长后重新子集化 → **文件名不变** → 浏览器与 CDN 继续发旧字形，最长 7 天
+ * （2026-09-27 实测过这个模式：`/ui/map_w1_bg.webp` 换了内容但 URL 没变，边缘缓存发了 23 小时旧图）。
+ * 补上 `?v=<该文件内容哈希>` 后 URL 随内容变，重新子集化部署即生效、不需要刷缓存。
+ *
+ * 为什么必须用插件改 CSS、而不是走 `getImageUrl`：`@font-face` 的 `src` 是 CSS 里的字符串，
+ * 读不到 `define`（`__IMAGE_VERSIONS__` 那套只覆盖 JS 拼出来的 URL）。构建期替换是唯一
+ * 既不引入"字体延迟加载"（JS 设字体会有 FOUT/闪帧）、又能让 URL 随内容变的做法。
+ *
+ * 覆盖 `/fonts/` 下所有 woff2（含作兜底的全字集），不只是子集——这样任一个文件换了内容都
+ * 会换 URL。文件不存在时保持原样（不因为缺文件把构建搞坏）。
+ */
+function fontUrlVersionPlugin() {
+  const fontDir = path.join(repoRoot, 'public/fonts')
+  const cache = new Map()
+  const versionOf = name => {
+    if (!cache.has(name)) {
+      const file = path.join(fontDir, name)
+      cache.set(name, existsSync(file) ? hashBytes(readFileSync(file)).slice(0, IMAGE_VERSION_LENGTH) : '')
+    }
+    return cache.get(name)
+  }
+  return {
+    name: 'font-url-version',
+    enforce: 'pre',
+    transform(code, id) {
+      if (!id.endsWith('.css') || !code.includes('/fonts/')) return null
+      const next = code.replace(/url\((['"]?)(\/fonts\/[^'")?]+\.woff2)\1\)/g, (whole, quote, url) => {
+        const version = versionOf(url.slice('/fonts/'.length))
+        return version ? `url(${quote}${url}?v=${version}${quote})` : whole
+      })
+      return next === code ? null : next
+    }
+  }
+}
+
 function resourceManifestPlugin() {
   let assets = []
   return {
@@ -158,6 +197,7 @@ export default defineConfig({
   cacheDir: process.env.VITE_CACHE_DIR || 'node_modules/.vite',
   plugins: [
     vue(),
+    fontUrlVersionPlugin(),
     resourceManifestPlugin(),
   ],
   resolve: {

@@ -77,7 +77,7 @@ const EXPECTATIONS = [
   { path: '/data/notice.json', expectType: 'application/json', note: '实时公告，不参与游戏表版本锁', ok: cc => /no-store/.test(cc) },
   { path: '/data/parsed/items.json', expectType: 'application/json', note: 'URL 带 ?v=<sha256>，可永久缓存', ok: cc => /immutable/.test(cc) && /max-age=31536000/.test(cc) },
   { path: assetPath, expectType: 'javascript', note: '文件名自带内容 hash，可永久缓存', ok: cc => /immutable/.test(cc) && /max-age=31536000/.test(cc) },
-  { path: '/fonts/HarmonyOS_Sans_SC_Regular.subset.woff2', expectType: 'font/woff2', note: '_headers 给 7 天', ok: cc => /max-age=604800/.test(cc) },
+  { path: '/fonts/HarmonyOS_Sans_SC_Regular.subset.woff2', expectType: 'font/woff2', note: 'URL 带内容哈希，_headers 给 1 年 immutable', ok: cc => /immutable/.test(cc) && /max-age=31536000/.test(cc) },
   // 对照组：同前缀、非图片类型 —— 用来证明 `_headers` 的 /images/* 规则本身是生效的
   { path: '/images/gacha/asset-manifest.json', expectType: 'application/json', control: true, note: '对照组：/images/* 下的非图片文件应随 _headers 为 7 天', ok: cc => /max-age=604800/.test(cc) },
   { path: '/images/gacha/audio/card.mp4', expectType: 'video/mp4', control: true, note: '对照组：mp4 应随 _headers 为 7 天', ok: cc => /max-age=604800/.test(cc) },

@@ -299,14 +299,23 @@ const builtCss = existsSync(distAssetsDir)
   : ''
 const fontFaces = builtCss.match(/@font-face\s*\{[^}]*\}/g) || []
 const facesWithoutSubset = fontFaces.filter(face => !face.includes('.subset.woff2'))
-check('子集字体已进 dist 且被 @font-face 引用', distSubsetMissing.length === 0 && fontFaces.length > 0 && facesWithoutSubset.length === 0,
+// 字体 URL 必须带 `?v=<内容哈希>`（vite.config.js 的 fontUrlVersionPlugin 负责）。
+// 少了它，重新子集化后文件名不变 → 浏览器与 CDN 继续发旧字形，最长 7 天。
+// 这种"优化静默失效"的形状和上面那条一样，所以同样由断言守住。
+const builtFontUrls = [...builtCss.matchAll(/url\(['"]?(\/fonts\/[^'")?]+\.woff2)(\?v=[0-9a-f]+)?['"]?\)/g)]
+const fontUrlsWithoutVersion = builtFontUrls.filter(match => !match[2]).map(match => match[1])
+check('子集字体已进 dist、被 @font-face 引用且 URL 带内容哈希',
+  distSubsetMissing.length === 0 && fontFaces.length > 0 && facesWithoutSubset.length === 0
+    && builtFontUrls.length > 0 && fontUrlsWithoutVersion.length === 0,
   distSubsetMissing.length
     ? `dist/fonts 缺少：${distSubsetMissing.join(', ')}`
     : fontFaces.length === 0
       ? '打包后的 CSS 里找不到 @font-face'
-      : facesWithoutSubset.length
-        ? `${facesWithoutSubset.length} 条 @font-face 没有指向 .subset.woff2（优化会静默失效）`
-        : `${fontFaces.length} 条 @font-face 均指向子集`)
+      : fontUrlsWithoutVersion.length
+        ? `${fontUrlsWithoutVersion.length} 个字体 URL 没有 ?v= 内容哈希：${fontUrlsWithoutVersion.slice(0, 3).join(', ')}`
+        : facesWithoutSubset.length
+          ? `${facesWithoutSubset.length} 条 @font-face 没有指向 .subset.woff2（优化会静默失效）`
+          : `${fontFaces.length} 条 @font-face 均指向子集，${builtFontUrls.length} 个字体 URL 均带版本号`)
 
 // ---------- 2d. dist 产物 ----------
 for (const f of ['items.json', 'furniture.json', 'facilities.json', 'tasks.json', 'heroes.json', 'monsters.json', 'search-index.json', 'parsed-exchange.json', 'dungeons.json']) {
