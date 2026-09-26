@@ -14,7 +14,7 @@
 
 ## 一、项目与路由
 
-Vue 3 + Vite 8 + Vue Router 4（Hash）+ Pinia 4，Android 使用 Capacitor 8 与 Capgo Updater。依赖版本以 [package.json](../package.json) 为准。路由集中在 [router/index.js](../src/router/index.js)，全部懒加载，路径与名称唯一；`/` 重定向 `/recipes`，切页统一关闭全局物品详情。
+Vue 3 + Vite 8 + Vue Router 4（Hash）+ Pinia 4，Android 使用 Capacitor 8 与 Capgo Updater。依赖版本以 [package.json](../package.json) 为准。路由集中在 [router/index.js](../src/router/index.js)，全部懒加载，路径与名称唯一；`/` 重定向 `/items`（首页为物品图鉴，按用户指定），切页统一关闭全局物品详情。
 
 下表是页面与主要运行时数据的索引。页面组件均在 `src/views/`，数据文件均相对 `public/data/parsed/`；不是原表加载清单。
 
@@ -225,7 +225,7 @@ Vue 3 + Vite 8 + Vue Router 4（Hash）+ Pinia 4，Android 使用 Capacitor 8 �
 
 ### 菜谱查询
 
-入口 `/recipes`，页面 `RecipesView.vue`，也是根路由默认页。构建期关联 `menu/item/buff/gameSetting`，运行时读取 `parsed/recipes.json`，不在缺产物时回退原表重建。
+入口 `/recipes`，页面 `RecipesView.vue`。构建期关联 `menu/item/buff/gameSetting`，运行时读取 `parsed/recipes.json`，不在缺产物时回退原表重建。（根路由 `/` 重定向的是 `/items`，不是这里。）
 
 - 提供标签、搜索和料理卡片，展示食材、料理效果及获取方式；图标优先用已关联 `item.img`。通用食材和具体材料一律由 `buildRecipeIngredients` 组装，物品详情复用同样结果。
 - 料理预览只在 `PREVIEW_AVAILABLE_IDS` 登记时出现，使用对应 `menu_prev` 图片；未登记不猜测文件存在。Buff 说明用清洗后的纯文本。
