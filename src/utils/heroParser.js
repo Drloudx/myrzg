@@ -552,9 +552,32 @@ export function calculateStats(unitData, level, rank, heroLevelConfig, heroRankC
   return results
 }
 
+/**
+ * 该稀有度/职业的突破档位是否**真的消耗物品**。
+ *
+ * 为什么需要：角色详情原先无条件加载整张 `items.json`（本地 brotli 约 126 KiB）来解析
+ * 突破材料的名称与图标。但当前原表 `heroRank` 引用的 54 个 consume 条目**全部只有 money、
+ * 没有 items**——`raw/consume.json` 全表 983 条里有 795 条带 items，说明表结构支持，
+ * 只是突破没用到。于是那次加载解析不出任何东西，是纯浪费。
+ *
+ * 这里先判断再决定要不要加载：当前数据下恒为 false，省掉整张物品表；
+ * 若以后配置给突破加了材料，条件自然为真，行为与原先完全一致
+ * （`calculateUpgradeCosts` 与材料展示逻辑都不改动）。
+ * 依据与核对过程见 docs/dev-logs/2026-09/2026-09-27.md。
+ */
+export function breakthroughConsumesItems(heroRankConfig, consumeDatas, rarity, job) {
+  const rankList = heroRankConfig?.heroRank || {}
+  for (const rankInfo of Object.values(rankList)) {
+    const consumeKey = rankInfo?.upgradeConsume?.[rarity]?.[job]
+    if (!consumeKey) continue
+    const detail = consumeDatas?.[consumeKey] || consumeDatas?.datas?.[consumeKey]
+    if (detail?.items?.length) return true
+  }
+  return false
+}
+
 // Compute cumulative upgrade and breakthrough costs
-export function calculateUpgradeCosts(targetLevel, targetRank, rarity, job, heroLevelConfig, heroRankConfig, consumeDatas, items) {
-  let totalExp = 0
+export function calculateUpgradeCosts(targetLevel, targetRank, rarity, job, heroLevelConfig, heroRankConfig, consumeDatas, items) {  let totalExp = 0
   let totalUpgradeMoney = 0
   let totalBreakthroughMoney = 0
 

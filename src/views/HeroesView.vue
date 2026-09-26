@@ -728,7 +728,7 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getImageUrl } from '../utils/env'
 import { fetchItemData } from '../utils/itemParser'
-import { fetchHeroData, calculateStats, calculateUpgradeCosts } from '../utils/heroParser'
+import { fetchHeroData, calculateStats, calculateUpgradeCosts, breakthroughConsumesItems } from '../utils/heroParser'
 import { MECHANICS_CRIT_LABELS, MECHANICS_LABELS } from '../utils/heroMechanics.js'
 import { isBlacklisted } from '../config/blacklist.js'
 import { useLazyList } from '../composables/useLazyList'
@@ -979,7 +979,11 @@ function openFromQueryId(id) {
   if (found) {
     selectedHero.value = found
     // 详情才需要物品表（突破材料名称/图标）；不 await，详情先渲染，材料到位后计算属性自行重算。
-    loadItemsOnce()
+    // 只有该角色的突破档位**真的带材料**时才加载：当前原表 heroRank 引用的 consume 全部只有
+    // money、没有 items（已按 raw/consume.json 核对），无条件加载等于白下整张 items.json。
+    if (breakthroughConsumesItems(heroRankConfig.value, consumeCache.value, found.rare, found.job)) {
+      loadItemsOnce()
+    }
     protagonistGender.value = 'female'
     showHeroModel.value = false
     detailVisible.value = true
