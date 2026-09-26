@@ -23,7 +23,14 @@ export function appraiseRunes(acquisition, count, random = Math.random) {
   const draws = []
   const totals = new Map()
   for (let index = 0; index < count; index++) {
-    const { rule } = pickWeighted(entries, random())
+    // 注入的随机源必须显式校验。`pickWeighted` 对越界/NaN 会一路落到最后一个候选，
+    // 于是非法随机性会产出"看起来正常、其实毫无随机性"的结果而不报错——
+    // 与这里对 count、对配置的显式校验保持一致，宁可抛错也不要静默给错结果。
+    const roll = random()
+    if (!Number.isFinite(roll) || roll < 0 || roll >= 1) {
+      throw new RangeError('Appraisal randomness must be a finite number in [0, 1)')
+    }
+    const { rule } = pickWeighted(entries, roll)
     draws.push(rule.typeId)
     const previous = totals.get(rule.typeId)
     if (previous) previous.count++
