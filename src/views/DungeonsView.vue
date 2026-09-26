@@ -302,7 +302,7 @@ import {
   UiSegmentedTabs,
   UiTag
 } from '../components/ui/index.js'
-import { fetchWithFallback } from '../utils/request.js'
+import { fetchWithFallback, prefetchResourceManifest } from '../utils/request.js'
 import DungeonRouteMap from '../components/dungeons/DungeonRouteMap.vue'
 import RoomContentList from '../components/RoomContentList.vue'
 import RewardPools from '../components/RewardPools.vue'
@@ -506,6 +506,9 @@ onMounted(async () => {
     dungeons.value = data.dungeons || []
     if (mapFilter.value !== 'all' && !mapOptions.value.some(option => option.key === mapFilter.value)) mapFilter.value = 'all'
     isReady.value = true
+    // 关卡详情是「点开才取」，取之前要先读 data-parsed-dungeons 清单。页面挂载时先预热，
+    // 把这个往返藏在用户浏览列表的时间里，点开详情时直接发数据请求。
+    prefetchResourceManifest('data/parsed/dungeons/detail.json')
     if (route.query.battle) {
       const match = findBattle(route.query.battle)
       if (match) openBattle(match.dungeon, match.battle, false)

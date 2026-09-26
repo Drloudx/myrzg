@@ -24,39 +24,91 @@ export function collectResourceManifests(publicDir) {
   walk(path.join(publicDir, 'data'))
   const descriptors = {}
   const assets = []
-  for (const [directory, entries] of groups) {
-    const source = JSON.stringify(entries)
+  const entries = {}
+  for (const [directory, directoryEntries] of groups) {
+    const source = JSON.stringify(directoryEntries)
     const hash = hashBytes(source)
     const file = `assets/data-manifests/${directory.replace(/[^a-zA-Z0-9]+/g, '-')}${hash.slice(0, 16)}.json`
     descriptors[directory] = { file, hash }
+    entries[directory] = directoryEntries
     assets.push({ type: 'asset', fileName: file, source })
   }
-  return { descriptors, assets }
+  return { descriptors, assets, entries }
 }
 
 /**
- * 图片（`public/images/**`）的**逐文件内容哈希**，键为 `/images/<相对路径>`。
+ * **内联**逐文件 SHA-256 的目录白名单。
+ *
+ * 为什么需要：`resourceClient.expectedHashFor()` 要先读 `assets/data-manifests/<目录>-*.json`
+ * 拿到该文件的 sha256，才能拼出 `?v=<sha256>` 去请求真正的数据文件——于是关键路径变成
+ * `壳 → manifest（1 个 RTT）→ 数据（1 个 RTT）`。在跨国/跨网 RTT 200~400 ms 的环境下，
+ * 等于白等一个来回才开始下载大文件。
+ *
+ * 只内联 `data/parsed/`（34 个文件，约 3.4 KB raw）：它是**首屏落地页**要的那组
+ * （`/` 重定向 `/items` → `items.json`），冷启动必然要付这个 RTT，收益最高。
+ * `data/parsed/dungeons/`、`data/parsed/stages/` 只在用户**点开某个详情**时才取，
+ * 那一次点击多 1 个 RTT 基本无感，不值得让每个冷启动用户都多下它们的哈希表；
+ * `data/dialogs/`（522 个）与 `data/taskDialogs/`（979 个）更重，同样留在 manifest。
+ */
+const INLINE_HASH_DIRECTORIES = ['data/parsed/']
+
+export function collectInlineHashes(entries) {
+  const inline = {}
+  for (const directory of INLINE_HASH_DIRECTORIES) Object.assign(inline, entries[directory] || {})
+  return inline
+}
+
+/**
+ * 图片（`public/images/**`）的**逐文件内容哈希**，按目录分组，键为 `<目录>/<文件名>`。
  *
  * 为什么需要：原先 `getImageUrl` 用全局 `__RESOURCE_BUILD_ID__`（含 `Date.now()`）当版本号，
  * 于是**每次构建所有图片 URL 都会变**，哪怕图片一个字节都没改——部署一次，全体用户的
  * `/images` 缓存全部作废。改成逐文件哈希后：内容变了才变 URL，没变的图片可以跨部署复用缓存。
  *
- * 版本号取哈希前 12 位（缓存键只需高区分度，不需要密码学强度；
- * 数据文件的完整性由 `data-manifests` 里的完整 SHA-256 单独校验，与此无关）。
+ * 为什么按目录分组：这张表会**内联进首屏 `ui-*.js`**（每个页面都 modulepreload 它）。
+ * 扁平写法 `"/images/<目录>/<文件>": "<hash>"` 把目录前缀重复了 3052 次；
+ * 按目录分组后 raw 179.4 KB → 155.6 KB。实测该表在首屏 chunk 里占 **29.0 KB brotli**
+ * （该 chunk 共 45.6 KB，即 64%），所以这里省的每一字节都直接落在关键路径上。
+ *
+ * 哈希取 `IMAGE_VERSION_LENGTH` 位十六进制：只做缓存键区分，不需要密码学强度
+ * （数据完整性另由 `data-manifests` 里的完整 SHA-256 校验）。
+ * 截断会带来理论碰撞（32 bit / 3052 个文件约 0.1%），但**只有「短哈希相同而内容不同」
+ * 才是真碰撞**；「短哈希相同且内容逐字节相同」是仓库里真实存在的重复素材
+ * （如 `plants/lanlucao_1.webp` 与 `plants/shuiluguo_1.webp` 完全同图），共享版本串无害，
+ * 因为缓存键还带各自路径。因此下面用**完整 SHA-256** 判定，只对真碰撞报错。
  */
+export const IMAGE_VERSION_LENGTH = 8
+
 export function collectImageVersions(publicDir) {
   const imagesDir = path.join(publicDir, 'images')
   const versions = {}
+  const hashOwners = new Map()
+  const collisions = []
   function walk(directory) {
     for (const entry of readdirSync(directory, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
       const fullPath = path.join(directory, entry.name)
       if (entry.isDirectory()) { walk(fullPath); continue }
       if (!entry.isFile()) continue
       const relative = path.relative(imagesDir, fullPath).replaceAll('\\', '/')
-      versions[`/images/${relative}`] = hashBytes(readFileSync(fullPath)).slice(0, 12)
+      const cut = relative.lastIndexOf('/')
+      const bucket = cut < 0 ? '' : relative.slice(0, cut)
+      const file = cut < 0 ? relative : relative.slice(cut + 1)
+      const full = hashBytes(readFileSync(fullPath))
+      const short = full.slice(0, IMAGE_VERSION_LENGTH)
+      const owner = `${bucket}/${file}`
+      const previous = hashOwners.get(short)
+      if (previous && previous.full !== full) {
+        collisions.push(`${short} → ${previous.owner} / ${owner}`)
+      }
+      hashOwners.set(short, { owner, full })
+      if (!versions[bucket]) versions[bucket] = {}
+      versions[bucket][file] = short
     }
   }
   walk(imagesDir)
+  if (collisions.length) {
+    throw new Error(`图片版本哈希真碰撞（${IMAGE_VERSION_LENGTH} 位十六进制，内容不同却同短哈希，共 ${collisions.length} 组）：${collisions.slice(0, 5).join('; ')}。请调大 vite.config.js 的 IMAGE_VERSION_LENGTH。`)
+  }
   return versions
 }
 
@@ -68,12 +120,15 @@ function resourceManifestPlugin() {
     config() {
       const manifest = collectResourceManifests(path.join(repoRoot, 'public'))
       const imageVersions = collectImageVersions(path.join(repoRoot, 'public'))
-      const imageCount = Object.keys(imageVersions).length
+      const inlineHashes = collectInlineHashes(manifest.entries)
+      const imageCount = Object.values(imageVersions).reduce((total, bucket) => total + Object.keys(bucket).length, 0)
       const imageBytes = JSON.stringify(imageVersions).length
-      console.log(`[resource-manifests] 数据清单 ${Object.keys(manifest.descriptors).length} 组；图片版本 ${imageCount} 条（注入 ${(imageBytes / 1024).toFixed(0)} KB）`)
+      const inlineBytes = JSON.stringify(inlineHashes).length
+      console.log(`[resource-manifests] 数据清单 ${Object.keys(manifest.descriptors).length} 组；图片版本 ${imageCount} 条 / ${Object.keys(imageVersions).length} 个目录（注入 ${(imageBytes / 1024).toFixed(0)} KB）；内联数据哈希 ${Object.keys(inlineHashes).length} 条（注入 ${(inlineBytes / 1024).toFixed(1)} KB）`)
       assets = manifest.assets
       return { define: {
         __DATA_RESOURCE_MANIFESTS__: JSON.stringify(manifest.descriptors),
+        __DATA_RESOURCE_HASHES__: JSON.stringify(inlineHashes),
         __IMAGE_VERSIONS__: JSON.stringify(imageVersions),
         __RESOURCE_BUILD_ID__: JSON.stringify(`${Date.now().toString(36)}-${hashBytes(JSON.stringify(manifest.descriptors)).slice(0, 12)}`)
       } }

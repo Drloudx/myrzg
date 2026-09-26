@@ -260,7 +260,7 @@ import ChapterMapCanvas from '../components/chapters/ChapterMapCanvas.vue'
 import RegionRouteMap from '../components/chapters/RegionRouteMap.vue'
 import RewardPools from '../components/RewardPools.vue'
 import RoomContentList from '../components/RoomContentList.vue'
-import { fetchWithFallback } from '../utils/request.js'
+import { fetchWithFallback, prefetchResourceManifest } from '../utils/request.js'
 import { getImageUrl, handleImageFallback } from '../utils/env.js'
 import { BASE_REWARD_PATHS } from '../utils/gameMappings.js'
 import { isBlacklisted } from '../config/blacklist.js'
@@ -519,6 +519,9 @@ const loadChapters = async () => {
     chapters.value = data.chapters || []
     chapterMap.value = data.map || null
     isDataReady.value = true
+    // 关卡详情是「点开才取」，取之前要先读 data-parsed-stages 清单。页面挂载时先预热，
+    // 把这个往返藏在用户看地图/列表的时间里，点开详情时直接发数据请求。
+    prefetchResourceManifest('data/parsed/stages/detail.json')
     // URL 里带了被黑名单隐藏的章节时退回「全部」，避免停在空列表
     if (chapterId.value !== 'all' && !visibleChapters.value.some(chapter => chapter.id === chapterId.value)) {
       chapterId.value = 'all'

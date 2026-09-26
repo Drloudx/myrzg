@@ -43,10 +43,13 @@ const withVersion = (url, version) => version
   ? `${url}${url.includes('?') ? '&' : '?'}v=${encodeURIComponent(version)}`
   : url
 
+const SHA256_HEX = /^[a-f0-9]{64}$/
+
 export function createResourceClient({
   getBaseUrl = () => '',
   resolveLocalUrl = path => path,
   manifests = {},
+  inlineHashes = {},
   isDev = false,
   fetchImpl,
   digest,
@@ -58,24 +61,60 @@ export function createResourceClient({
   const enforceManifest = Object.keys(manifests).length > 0
   const readJson = (url, options = {}) => fetchJsonWithTimeout(url, { fetchImpl, digest, timeoutMs, ...options })
 
-  const expectedHashFor = async path => {
-    const directory = path.slice(0, path.lastIndexOf('/') + 1)
+  /** 目录内所有文件共用一个 manifest；同目录的进行中请求合并，失败即从缓存移除以便重试。 */
+  const manifestRequestFor = directory => {
     const descriptor = manifests[directory]
-    if (!descriptor) {
-      if (enforceManifest && path !== 'data/notice.json') throw new Error(`Resource is missing from this build: ${path}`)
-      return ''
-    }
+    if (!descriptor) return null
     if (!manifestRequests.has(directory)) {
       const request = readJson(resolveLocalUrl(descriptor.file), { expectedHash: descriptor.hash })
         .catch(error => { manifestRequests.delete(directory); throw error })
       manifestRequests.set(directory, request)
     }
-    const manifest = await manifestRequests.get(directory)
+    return manifestRequests.get(directory)
+  }
+
+  /**
+   * 期望哈希。**先查内联表**——命中就不必读 manifest，省掉一个串行 RTT
+   * （关键路径 `壳 → manifest → 数据` 变成 `壳 → 数据`）。
+   * 未内联的目录仍按原样读 `assets/data-manifests/<目录>-*.json`。
+   */
+  const expectedHashFor = async path => {
+    const inline = inlineHashes[path]
+    if (typeof inline === 'string' && SHA256_HEX.test(inline)) return inline
+    const directory = path.slice(0, path.lastIndexOf('/') + 1)
+    if (!manifests[directory]) {
+      if (enforceManifest && path !== 'data/notice.json') throw new Error(`Resource is missing from this build: ${path}`)
+      return ''
+    }
+    const manifest = await manifestRequestFor(directory)
     const hash = manifest?.[decodeURI(path)]
-    if (typeof hash !== 'string' || !/^[a-f0-9]{64}$/.test(hash)) {
+    if (typeof hash !== 'string' || !SHA256_HEX.test(hash)) {
       throw new Error(`Resource is missing from this build: ${path}`)
     }
     return hash
+  }
+
+  /**
+   * 预热某目录的 manifest（不 await、失败静默）。
+   *
+   * 未内联的目录（副本详情 / 关卡详情 / 任务剧情）只在用户**点开某个详情**时才取数据，
+   * 而取数据前必须先读 manifest —— 那次点击会白等一个 RTT。页面挂载时先预热，
+   * 这个往返就与用户阅读列表的时间重叠掉了。
+   *
+   * 刻意**不在启动时预取全部 manifest**：`data/dialogs/`(50.7 KB) 与
+   * `data/taskDialogs/`(97 KB) 加起来 148 KB，而冷启动未必会用到它们；
+   * 按页面意图预热才能既不浪费字节、又藏掉 RTT。
+   *
+   * 失败不缓存：`manifestRequestFor` 的 catch 已把条目删除，真正需要时会重新取。
+   * 这里额外吞一次 rejection，避免"预热失败"变成 unhandledrejection。
+   */
+  const prefetchManifest = relativePath => {
+    const path = String(relativePath || '').replace(/^\/+/, '')
+    const directory = path.slice(0, path.lastIndexOf('/') + 1)
+    if (!directory) return
+    const inline = inlineHashes[path]
+    if (typeof inline === 'string' && SHA256_HEX.test(inline)) return
+    manifestRequestFor(directory)?.catch(() => {})
   }
 
   function fetchResource(relativePath, { validate, cache = true } = {}) {
@@ -117,7 +156,7 @@ export function createResourceClient({
     })
   }
 
-  return { fetchResource }
+  return { fetchResource, prefetchManifest }
 }
 
 export function createCachedLoader(load) {

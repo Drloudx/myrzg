@@ -133,7 +133,7 @@
 import { computed, defineComponent, h, ref, watch } from 'vue'
 import TaskDialogLines from '../TaskDialogLines.vue'
 import { UiButton, UiRewardCard, UiSection, UiTabs, UiTag } from '../ui/index.js'
-import { fetchWithFallback } from '../../utils/request.js'
+import { fetchWithFallback, prefetchResourceManifest } from '../../utils/request.js'
 import { cleanDialogueBase, cleanMailContent, translateStatName } from '../../utils/gameMappings.js'
 import { getImageUrl } from '../../utils/env.js'
 
@@ -209,7 +209,10 @@ watch(() => props.hero.id, () => {
   dialogsCache.value = {}
   loadingDialogs.value = {}
   expandedDialogs.value = new Set()
-})
+  // 剧情正文是「展开某一段才取」，取之前要先读 data-dialogs 清单（50.7 KB，522 个文件共用）。
+  // 打开角色详情时就预热，把这个往返藏在用户浏览档案/互动页签的时间里。
+  prefetchResourceManifest('data/dialogs/dialog.json')
+}, { immediate: true })
 
 const DialogueContent = defineComponent({
   props: { loading: Boolean, lines: Array, loadingText: String, errorText: String, inline: Boolean },

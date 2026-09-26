@@ -306,7 +306,7 @@ import {
 import { loadTaskData } from '../utils/taskParser'
 import { TASK_TYPE_LABELS, cleanDialogueLine } from '../utils/gameMappings'
 import { getImageUrl, handleImageFallback } from '../utils/env'
-import { fetchWithFallback } from '../utils/request.js'
+import { fetchWithFallback, prefetchResourceManifest } from '../utils/request.js'
 import UiVirtualGrid from '../components/ui/UiVirtualGrid.vue'
 import { isBlacklisted } from '../config/blacklist.js'
 
@@ -470,6 +470,9 @@ const loadTasks = async () => {
     tasks.value = HIDE_CLOSED_TASKS ? data.tasks.filter((t) => !t.close) : data.tasks
     subOptions.value = data.subOptions
     isDataReady.value = true
+    // 任务剧情正文是「展开步骤才取」，取之前要先读 data-taskDialogs 清单（97 KB，最重的一份）。
+    // 刻意放在这里（而不是启动时全局预取）：只有进任务页的用户才需要它。
+    prefetchResourceManifest('data/taskDialogs/dialog.json')
     // 分享链接直达：?task=<任务id> 自动打开详情
     const taskId = route.query.task
     if (taskId) {

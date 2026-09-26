@@ -5,11 +5,33 @@ export const CLOUD_URL = 'https://myrzg.yxzmy.top';
 export const RESOURCE_BUILD_ID = typeof __RESOURCE_BUILD_ID__ !== 'undefined' ? __RESOURCE_BUILD_ID__ : ''
 export const DATA_RESOURCE_MANIFESTS = typeof __DATA_RESOURCE_MANIFESTS__ !== 'undefined' ? __DATA_RESOURCE_MANIFESTS__ : {}
 /**
- * `/images/<相对路径>` → 该文件的**内容哈希**（构建时由 vite.config.js 的 `collectImageVersions` 注入）。
+ * 内联的逐文件 SHA-256（`data/parsed/`、`data/parsed/dungeons/`、`data/parsed/stages/`）。
+ *
+ * 为什么内联：`resourceClient` 原先必须先读 `assets/data-manifests/<目录>-*.json` 才知道
+ * 该文件的 sha256，于是关键路径多了一个串行 RTT（manifest → 数据）。这三组是首屏与最常
+ * 打开的详情，内联后数据请求可以立刻发出。其余目录仍走 manifest，避免为它们增大首屏体积。
+ * 具体白名单与体积见 vite.config.js 的 INLINE_HASH_DIRECTORIES。
+ */
+export const DATA_RESOURCE_HASHES = typeof __DATA_RESOURCE_HASHES__ !== 'undefined' ? __DATA_RESOURCE_HASHES__ : {}
+/**
+ * `images/<目录>` → `{ <文件名>: <内容哈希> }`（构建时由 vite.config.js 的
+ * `collectImageVersions` 注入）。
+ *
  * 取每个文件自己的哈希而非全局 build id，是为了让**未改动的图片跨部署复用缓存**；
+ * 按目录分组是为了缩小内联进首屏 `ui-*.js` 的体积（扁平写法会把目录前缀重复 3052 次）。
  * 未收录的路径（如运行时拼出的路径）回退到 `RESOURCE_BUILD_ID`，保持原有行为。
  */
 export const IMAGE_VERSIONS = typeof __IMAGE_VERSIONS__ !== 'undefined' ? __IMAGE_VERSIONS__ : {}
+
+/** 在分组表里查 `/images/<目录...>/<文件名>` 的内容哈希；未收录返回空串。 */
+export function getImageVersion(imgPath) {
+  if (!imgPath.startsWith('/images/')) return ''
+  const relative = imgPath.slice('/images/'.length)
+  const cut = relative.lastIndexOf('/')
+  if (cut < 0) return ''
+  const bucket = IMAGE_VERSIONS[relative.slice(0, cut)]
+  return (bucket && bucket[relative.slice(cut + 1)]) || ''
+}
 
 export function getLocalResourceUrl(path) {
   const cleanPath = String(path || '').replace(/^\/+/, '')
@@ -66,7 +88,7 @@ export function getImageUrl(path) {
   const baseUrl = getResourceBaseUrl();
   const url = `${baseUrl}${imgPath}`;
   // 优先用该文件自己的内容哈希；未收录则回退全局 build id（保持旧行为，不会漏掉缓存刷新）。
-  const version = IMAGE_VERSIONS[imgPath] || RESOURCE_BUILD_ID;
+  const version = getImageVersion(imgPath) || RESOURCE_BUILD_ID;
   return version ? `${url}${url.includes('?') ? '&' : '?'}v=${encodeURIComponent(version)}` : url;
 }
 
