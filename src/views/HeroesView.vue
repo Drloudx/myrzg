@@ -1084,7 +1084,7 @@ function handleModelImgError(e) {
 
 function handleSkillIconError(e) {
   // Use a generic skill icon fallback
-  e.target.src = '/ui/item_00002.webp'
+  e.target.src = getImageUrl('/ui/item_00002.webp')
 }
 
 // Active Skill selected getter

@@ -96,7 +96,7 @@
           @click.stop="openPreviewModal(item)"
           title="查看制作图"
         >
-          <img src="/ui/visibility1.svg" class="preview-icon-img" alt="查看" />
+          <img :src="getImageUrl('/ui/visibility1.svg')" class="preview-icon-img" alt="查看" />
         </button>
       </div>
 

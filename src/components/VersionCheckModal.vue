@@ -7,7 +7,7 @@
     @update:visible="closeModal"
   >
     <div class="version-info">
-      <img src="/ui/logo.webp" alt="Logo" class="version-logo" />
+      <img :src="getImageUrl('/ui/logo.webp')" alt="Logo" class="version-logo" />
       <h2 class="app-name">深渊之歌助手</h2>
       <p class="current-version">当前版本: {{ currentVersion }}</p>
     </div>
@@ -58,6 +58,7 @@
 import { ref, watch, onMounted } from 'vue'
 import { UiModal, UiButton, UiEmptyState } from './ui/index.js'
 import { checkHotUpdate, getCurrentWebVersion } from '../utils/hotupdate'
+import { getImageUrl } from '../utils/env.js'
 
 const props = defineProps({
   modelValue: {

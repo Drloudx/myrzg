@@ -10,7 +10,7 @@
       <div class="header-content">
         <div class="header-top-row">
           <div class="header-left">
-            <img src="/ui/logo.webp" class="app-logo" alt="深渊之歌" />
+            <img :src="getImageUrl('/ui/logo.webp')" class="app-logo" alt="深渊之歌" />
             <div class="header-title-wrap">
               <h1 class="header-title">{{ pageTitle }}</h1>
               <span class="header-brand">深渊之歌 · 资料库</span>
