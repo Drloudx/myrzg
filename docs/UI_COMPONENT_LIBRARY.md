@@ -65,6 +65,12 @@
 - **两个刻意的例外（不要当成漏改）**：全局背景与 logo 是 **CSS `url()` / 模板字面量**，不是 JS 拼的 URL，**过不了 `getImageUrl`，因此不带 `?v=`**——`theme.css` 的 `html,body` 背景与 `App.vue` 的 About 封面（两张都是 `/ui/map_w1_bg.webp`），以及顶部 logo `/ui/logo.webp`。这是**有意保留**的：它们属于站点身份类资源，本来就不该频繁替换。**若确需替换其中任何一个，网页端要手动刷一次 EdgeOne 缓存**，否则浏览器与边缘会继续发旧图（最长 7 天）。想把这条也消掉只能把资源移进 `src/assets/` 让 Vite 出内容哈希，会引入"内容图放 `src/assets/`"的新约定，2026-09-27 与用户确认后决定不做。
 - **不要在 CSS 里按路由把它关掉**：`/gacha` 用 `GachaStage` 的整屏背板把地图**完全**盖住（1440×900 逐像素比对最大单通道差值 0），但那 251.7 KB 仍会被下载。已实测两条路都不行——`html:has(.app-container.is-gacha-stage)` 与"`index.html` 内联脚本在样式表前打路由类"都能让计算值变成 `none`，图片却照样被请求（`initiatorType: css`）：**Chrome 的 CSS 背景图预加载扫描器不看层叠优先级**。真正避免只能改成 JS 挂载后再设背景，代价是其余路由都变成"JS 执行后才出现底图"，不划算。
 
+### 1.5 安全区（`--safe-*`）
+
+- `--safe-bottom/left/right` 直接取 `env(safe-area-inset-*)`，不做条件化。
+- **`--safe-top` 默认 `0px`，只在"页面真的占满屏幕、没有任何宿主 UI 遮住状态栏"时才取值**（`@media (display-mode: standalone|fullscreen|minimal-ui)`，以及 `html:has(.app-container.is-native-shell)` 为原生壳兜底）。判定必须做在**变量这一层**，因为它是全局布局变量（顶栏内边距、吸顶偏移、弹窗内边距与高度、body 背景位置等十余处共用）；只改顶栏的 `padding-top` 会让其余位置仍按 `header + safe-top` 计算，空隙只是从顶栏挪到弹窗/吸顶元素上。
+- **为什么默认 0**：`env(safe-area-inset-top)` 非零意味着"页面被铺到状态栏下、需要自己让开"，但**已经画了自己标题栏的宿主**（QQ / 微信等内置浏览器）同样会报非零 → 我们让一次、宿主也让一次 → 顶栏上方多出一条空带。2026-09-27 实测：QQ 里那条空带是 40px 木色（用 CDP 注入 `top: 40px` 完全复现，header 高 101 → 141px）；微信与 Chrome 报 0，没有这个问题。本项目各环境实测——**原生 APK 的 `MainActivity` 显式 `setDecorFitsSystemWindows(getWindow(), true)`（targetSdk 36 本会强制 edge-to-edge，这里主动贴合系统栏）→ inset 为 0**；普通浏览器 0；微信 0；只有 QQ 这类宿主非零。所以默认 0 对现有环境**零行为变化**，只是去掉 QQ 那条多余空带。
+
 ## 2. 组件库目录（src/components/ui/）
 
 统一从 `index.js` 导入：
