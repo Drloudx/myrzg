@@ -147,7 +147,9 @@ test('derived furniture preserves source fields, crafting data, acquisition tags
   assert.deepEqual(furniture.categoryIds, ['2', '22'])
   assert.deepEqual(furniture.categoryNames, ['家具', '椅子'])
   assert.deepEqual(furniture.sourceTags, ['c4', 7])
-  assert.deepEqual(furniture.sourceLabels, ['黑森林', 7])
+  // sourceTags 保留原始值（含数值类型）；sourceLabels 是展示文案，经 getSourceTagName 统一
+  // 规范化为字符串（`String(tag).trim()` 后再查映射），所以未映射的 7 在这里是 '7'。
+  assert.deepEqual(furniture.sourceLabels, ['黑森林', '7'])
   assert.equal(furniture.place, 'room')
   assert.equal(furniture.placeName, '房间')
   assert.equal(furniture.displayIcon, 'base-icon')
@@ -216,7 +218,9 @@ test('current raw tables produce the formal catalog and only the four known miss
       data.furniture.find(entry => entry.id === 'jiaju_muma')?.condition.label,
       data.furniture.find(entry => entry.id === 'jiaju_muma')?.condition.summary
     ],
-    ['获取方式', '活动 / 通行证14级']
+    // 「通行证」按用户要求做了展示层伪装（SOURCE_DISPLAY_ALIAS: 通行证 → 未知），
+    // 只改文案、不动数据与来源链路；断言跟随当前文案。
+    ['获取方式', '活动 / 未知14级']
   )
   assert.ok(data.furniture.every(entry => !/废稿/.test([entry.name, ...entry.sourceTags].join(' '))))
 

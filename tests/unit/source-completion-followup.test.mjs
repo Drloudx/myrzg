@@ -39,7 +39,10 @@ test('containers exclude zero rewards and equipment pool previews', () => {
   assert.deepEqual(Object.keys(sources), ['target'])
   assert.equal(sources.target[0].des, '使用获得')
   maps.itemJson.datas.root.name = '宝箱'
-  assert.match(buildRemainingItemSources(maps, { root: [{}] }).target[0].des, /单次抽取必定获得/)
+  // 宝箱容器要带上概率文案（这条断言的本意）。具体措辞跟随 acquisitionRules：
+  // actualProb=1 且 groupCount<=1 时是「必定获得」，只有多次抽取才是「单次抽取必定获得」
+  // （该语义由 ac79c0c2 引入，并在 rune-appraisal 测试里有正反两面的断言）。
+  assert.match(buildRemainingItemSources(maps, { root: [{}] }).target[0].des, /使用获得 · 必定获得/)
 })
 
 test('dungeon actual items, eggs and fixed equipment get the right targets, never preview or zero rewards', () => {
