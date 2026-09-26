@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "skins:export": "node scripts/dev/export-skin-models.mjs",
+    "fonts:subset": "node scripts/dev/subset-fonts.mjs",
+    "cdn:check": "node scripts/dev/check-cdn-cache-headers.mjs",
     "data:build": "node scripts/parse/index.mjs",
     "data:dungeons:effects": "node scripts/dev/update-dungeon-room-effects.mjs",
     "data:monsters:tower": "node scripts/dev/update-monster-tower-usage.mjs",

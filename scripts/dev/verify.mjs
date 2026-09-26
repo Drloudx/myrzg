@@ -10,6 +10,7 @@ import { readFileSync, existsSync, statSync, readdirSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { execSync } from 'node:child_process'
+import { checkFontSubset } from './font-subset-lib.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '../..')
 const parsedDir = join(root, 'public/data/parsed')
@@ -271,7 +272,43 @@ scanRuntimeDataRequests(join(root, 'src'))
 check('浏览器运行时不引用原始配置表', runtimeRawRefs.length === 0,
   runtimeRawRefs.length ? runtimeRawRefs.join('; ') : '仅使用 parsed、公告与剧情分片')
 
-// ---------- 2b. dist 产物 ----------
+// ---------- 2b. 字体子集与当前数据一致 ----------
+// 子集字体的字符集是从「随包发布的数据 + 源码」现算的（scripts/dev/font-subset-lib.mjs）。
+// 数据更新后字符集可能变大，忘了重新子集化就会缺字并静默回退系统字体——这里直接拦下。
+const fontSubset = checkFontSubset(root)
+check('字体子集覆盖当前全部字符', fontSubset.ok,
+  fontSubset.ok
+    ? `内容 ${fontSubset.contentCount} 字 / 补齐后 ${fontSubset.charCount} 字，sha256 ${fontSubset.hash.slice(0, 12)}`
+    : fontSubset.problems.join('; '))
+
+// ---------- 2c. 子集字体真的进了产物、且打包后的 CSS 真的引用它 ----------
+// 这一步专防 2026-09-18 那个坑：当时 WOFF2 只被生成、`@font-face` 没改，
+// 线上实际加载的仍是全字集，而"浏览器只下载 woff2"的错误结论一直没人发现。
+// 上一项只校验 public/fonts 的源文件与字符集，校验不到"构建有没有带上、CSS 有没有指向"。
+// 少了子集文件不会报错、页面也不会坏（@font-face 第二顺位会回退全字集），
+// 只是优化**静默失效**——所以必须由这里断言。
+const distFontsDir = join(root, 'dist/fonts')
+const distSubsetMissing = []
+for (const weight of ['Regular', 'Bold']) {
+  const p = join(distFontsDir, `HarmonyOS_Sans_SC_${weight}.subset.woff2`)
+  if (!existsSync(p) || statSync(p).size < 1024) distSubsetMissing.push(`HarmonyOS_Sans_SC_${weight}.subset.woff2`)
+}
+const distAssetsDir = join(root, 'dist/assets')
+const builtCss = existsSync(distAssetsDir)
+  ? readdirSync(distAssetsDir).filter(f => f.endsWith('.css')).map(f => readFileSync(join(distAssetsDir, f), 'utf8')).join('\n')
+  : ''
+const fontFaces = builtCss.match(/@font-face\s*\{[^}]*\}/g) || []
+const facesWithoutSubset = fontFaces.filter(face => !face.includes('.subset.woff2'))
+check('子集字体已进 dist 且被 @font-face 引用', distSubsetMissing.length === 0 && fontFaces.length > 0 && facesWithoutSubset.length === 0,
+  distSubsetMissing.length
+    ? `dist/fonts 缺少：${distSubsetMissing.join(', ')}`
+    : fontFaces.length === 0
+      ? '打包后的 CSS 里找不到 @font-face'
+      : facesWithoutSubset.length
+        ? `${facesWithoutSubset.length} 条 @font-face 没有指向 .subset.woff2（优化会静默失效）`
+        : `${fontFaces.length} 条 @font-face 均指向子集`)
+
+// ---------- 2d. dist 产物 ----------
 for (const f of ['items.json', 'furniture.json', 'facilities.json', 'tasks.json', 'heroes.json', 'monsters.json', 'search-index.json', 'parsed-exchange.json', 'dungeons.json']) {
   const p = join(distParsedDir, f)
   const ok = existsSync(p)

@@ -16,19 +16,30 @@
 /* ====== 0. 字体引入 ====== */
 /* Vite 将 /fonts/ 解析到 public/fonts/；使用实际的 SC 中文字体文件名。
    同一字体族按字重选择文件；缺字回退到设备系统字体。
-   只提供 WOFF2：与 TTF 字形集完全一致（各 29063 字形，unitsPerEm 相同），
-   但体积小约 47%（7.9MB → 4.2MB），首屏少下约 7.4MB。
-   不再保留 TTF 兜底——所有支持本项目的浏览器（Chromium/WebKit/Gecko 现代版本）均支持 WOFF2。 */
+
+   两级 src：`.subset.woff2` 优先，全字集 `.woff2` 兜底。
+   - 子集由 `scripts/dev/subset-fonts.mjs` 从**随包发布的数据产物 + 源码 + HTML**
+     现算字符集生成（当前 3713 个内容字符 → 3932 字形），Regular/Bold 合计 0.93 MB；
+     全字集是 CJK 全字集 29063 字形、各约 4.2 MB，两项合计 8.28 MB。
+   - 首次访问（含清缓存、换设备）字体是冷启动最大单项：全字集占约 94%，
+     换成子集后省 88.8%，这是「打开慢」的第一位原因，且对所有页面生效。
+   - src 列表按 format() 只择一，正常情况**只下载子集**，不会同时拉全字集；
+     全字集仅在子集文件缺失/损坏时才被取用。注意 src 内部**不做缺字回退**——
+     子集缺字时由 `--font-ui` 后面的设备字体接住，不出现豆腐块。
+   - 数据更新后字符集可能变大：`npm run verify` 会断言子集与当前数据一致，
+     过期会直接失败，按提示重跑 `node scripts/dev/subset-fonts.mjs --apply` 即可。 */
 @font-face {
   font-family: 'HarmonyOS';
-  src: url('/fonts/HarmonyOS_Sans_SC_Regular.woff2') format('woff2');
+  src: url('/fonts/HarmonyOS_Sans_SC_Regular.subset.woff2') format('woff2'),
+       url('/fonts/HarmonyOS_Sans_SC_Regular.woff2') format('woff2');
   font-style: normal;
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: 'HarmonyOS';
-  src: url('/fonts/HarmonyOS_Sans_SC_Bold.woff2') format('woff2');
+  src: url('/fonts/HarmonyOS_Sans_SC_Bold.subset.woff2') format('woff2'),
+       url('/fonts/HarmonyOS_Sans_SC_Bold.woff2') format('woff2');
   font-style: normal;
   font-weight: 700;
   font-display: swap;
