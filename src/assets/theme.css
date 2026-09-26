@@ -48,8 +48,28 @@
 /* ====== 1. 羊皮纸主题 CSS 变量 ====== */
 :root {
   --font-ui: 'HarmonyOS', 'Microsoft YaHei', 'PingFang SC', 'Noto Sans CJK SC', sans-serif;
-  /* 移动端沉浸式安全区（保留） */
-  --safe-top: max(env(safe-area-inset-top), 0px);
+  /**
+   * 顶部安全区（状态栏高度）——**默认 0，只在真正沉浸式的环境里才取值**。
+   *
+   * 为什么默认 0：`env(safe-area-inset-top)` 非零意味着"页面被铺到了状态栏下面、需要自己让开"。
+   * 但**宿主已经画了自己标题栏**的环境（QQ / 微信等内置浏览器）同样会报非零值，于是我们让一次、
+   * 宿主也让一次 → 顶栏上方多出一条空带。2026-09-27 实测 QQ：注入 40px inset 复现出的空带与
+   * QQ 截图完全一致（header 高 101 → 141px、logo top 10 → 50px）；微信与 Chrome 报 0，没有这个问题。
+   *
+   * 本项目各环境实测：原生 APK 里 `MainActivity` 显式 `setDecorFitsSystemWindows(getWindow(), true)`
+   * （targetSdk 36 本会强制 edge-to-edge，这里主动贴合系统栏）→ inset 为 0；普通浏览器为 0；
+   * 微信为 0；只有 QQ 这类宿主报非零。所以默认 0 对现有环境是**零行为变化**，
+   * 只是把 QQ 那条多出来的空带去掉。
+   *
+   * 什么时候要留白：页面真的占满屏幕、没有任何宿主 UI 遮住状态栏时——即**已安装的 PWA**
+   * （`display-mode` 为 standalone / fullscreen / minimal-ui）。原生壳若将来改成 edge-to-edge，
+   * 也由下面的 `:has(.is-native-shell)` 兜住（当前它求值为 0，等价于默认，不会引起启动跳动）。
+   *
+   * 注意：`--safe-top` 是**全局布局变量**（顶栏内边距、吸顶偏移、弹窗内边距与高度、body 背景位置
+   * 等十余处共用），所以判定必须做在变量这一层——只改顶栏的 padding 会让那十余处仍按
+   * "header + safe-top" 计算，空隙只是从顶栏挪到弹窗/吸顶元素上。
+   */
+  --safe-top: 0px;
   --safe-bottom: max(env(safe-area-inset-bottom), 0px);
   --safe-left: env(safe-area-inset-left, 0px);
   --safe-right: env(safe-area-inset-right, 0px);
@@ -144,6 +164,21 @@
   --q5-bg: rgba(255, 182, 77, 0.24);
   /* 叠加在插画上的品质角标底，保持不透明以确保文字可读。 */
   --quality-label-bg: rgba(239, 226, 196, 0.96);
+}
+
+/**
+ * 顶部安全区**只在真正沉浸式的环境**取值（默认见 :root 里 --safe-top 的注释）。
+ * 三个 display-mode 覆盖所有"已安装应用"形态：iOS 主屏 PWA 是 standalone，
+ * Android WebAPK 是 standalone，全屏 API / minimal-ui 各自对应。
+ * 原生壳用 .is-native-shell 兜住（当前 inset 为 0，等价于默认，不会引起启动跳动）。
+ */
+@media (display-mode: standalone), (display-mode: fullscreen), (display-mode: minimal-ui) {
+  :root {
+    --safe-top: max(env(safe-area-inset-top), 0px);
+  }
+}
+html:has(.app-container.is-native-shell) {
+  --safe-top: max(env(safe-area-inset-top), 0px);
 }
 
 /* —— 暗色模式：暗木羊皮卷 —— */
