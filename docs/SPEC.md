@@ -567,7 +567,7 @@ node scripts/dev/compress-images.mjs <public/images子目录> --apply --allow-lo
 
 ### 字体与缓存头（性能敏感）
 
-- **字体必须用子集版**（`public/fonts/*.subset.woff2`）。全字集 woff2 各约 4.2 MB，两项合计 8.28 MB，占冷启动传输量约 94%，是所有页面"打开慢"的第一位原因。子集由 `scripts/dev/subset-fonts.mjs` 从随包数据现算字符集生成（0.93 MB）。`npm run verify` 有两条断言：字符集是否过期，以及**产物里每条 `@font-face` 是否真的指向子集**——后者必需，因为漏带子集文件不会报错，会静默回退全字集（页面照常显示，优化白做）。规则与红线见 [UI 组件库 1.3](UI_COMPONENT_LIBRARY.md#13-字体与可读性红线)。
+- **字体必须用子集版**（`public/fonts/*.subset.woff2`）。全字集 woff2 各约 4.2 MB，两项合计 8.28 MB，占冷启动传输量约 94%，是所有页面"打开慢"的第一位原因。子集由 `scripts/dev/subset-fonts.mjs` 从随包数据现算字符集生成（0.93 MB）。`npm run verify` 有**三条**断言：字符集是否过期、**产物里每条 `@font-face` 是否真的指向子集**、以及**每个字体 URL 是否带 `?v=<内容哈希>`**。后两条都是必需的，因为漏带子集或漏带版本号都**不会报错**、只会静默降级（回退全字集／缓存发旧字形最长 7 天）。字体 URL 的版本号由 `vite.config.js` 的 `fontUrlVersionPlugin` 构建期补上，因此 `/fonts/*` 可以 1 年 `immutable`，重新子集化后部署即生效。规则与红线见 [UI 组件库 1.3](UI_COMPONENT_LIBRARY.md#13-字体与可读性红线)。
 - **图片版本表按目录分组内联进首屏 chunk**，用完整 SHA-256 判定真碰撞；首屏那组数据哈希（`data/parsed/`）也内联，用来省掉"先读 manifest 再读数据"的串行 RTT。机制见 [架构 4.7](ARCHITECTURE.md#47-资源版本与容错)。
 - **缓存头有两层**：Cloudflare Pages 读 `public/_headers`，但外层腾讯云 EdgeOne 的缓存策略优先级更高。改完 `_headers` 必须用 `npm run cdn:check` 打真实响应头复测，不能只看文件内容。
 

@@ -48,7 +48,8 @@
 
 - 标题与正文：本地 `HarmonyOS` 常规/粗体，分别使用 `public/fonts/HarmonyOS_Sans_SC_Regular.subset.woff2` / `HarmonyOS_Sans_SC_Bold.subset.woff2`（400/700）。伙伴邮件共用这两款字体；缺字或字体不可用时回落设备原生无衬线字体。
 - **字体必须用子集版**：全字集 woff2 各约 4.2 MB（CJK 29063 字形），两项合计 8.28 MB，占冷启动传输量约 94%——这是"打开慢"的第一位原因，且对所有页面生效（字体浏览器缓存 7 天，老用户感知不到，新用户极慢）。子集由 `scripts/dev/subset-fonts.mjs` 从**随包发布的数据产物 + 源码 + HTML** 现算字符集生成（当前 3713 个内容字符 → 3932 字形，合计 0.93 MB，省 88.8%）。`@font-face` 保留全字集作第二顺位 src 兜底，正常情况只下载子集。
-- 数据更新后字符集可能变大：`npm run verify` 会断言"子集与当前数据一致"，过期**直接失败**，按提示跑 `node scripts/dev/subset-fonts.mjs --apply` 重新生成即可（该命令需 python + fonttools + brotli）。子集内**不做缺字回退**，缺字由 `--font-ui` 后面的设备字体接住，不出现豆腐块。
+- 数据更新后字符集可能变大：`npm run verify` 会断言"子集与当前数据一致"，过期**直接失败**，按提示跑 `node scripts/dev/subset-fonts.mjs --apply`（`npm run fonts:subset -- --apply`）重新生成即可（该命令需 python + fonttools + brotli）。子集内**不做缺字回退**，缺字由 `--font-ui` 后面的设备字体接住，不出现豆腐块——这一点今天就在生效：`✓ ▾ ✦ ▶ ✠` 等 18 个符号源字体本来就没有，它们用在 11 处 UI 里（技能展开箭头、收集勾选、奖励占位符、空态图标），一直正常显示。
+- **字体 URL 自带内容哈希**：`vite.config.js` 的 `fontUrlVersionPlugin` 在构建期把 `@font-face` 里的 `/fonts/*.woff2` 补成 `?v=<该文件内容哈希>`，所以 `/fonts/*` 在 `_headers` 里是 **1 年 immutable**。**这让"内容增长后重新子集化"部署即生效**——否则文件名固定、URL 不变，浏览器与 CDN 会继续发旧字形最长 7 天（既有缓存又缺字）。`verify` 有第三条断言守住它（产物里每个字体 URL 都必须带 `?v=`），故意摘掉插件能让它失败、已反向验证。
 - 不从 Google Fonts 拉取字体，不引入 Cinzel、Noto Serif SC 或完整 `MYR2Sans` 游戏字库作为回退；保留 `font-display: swap`，字体不阻塞正文显示。
 - **正文 ≥ 13px、行高 ≥ 1.6**；描述性文字用 `--text-main`/`--text-muted`；
   禁止浅灰低对比配色；暗色模式对比同样达标。
