@@ -528,6 +528,8 @@ Android 将核心代码作为 Capgo 热更包，将图片和运行时 JSON 作�
 | `npm run data:monsters:tower` | 从完整 tower/battle/room 生成轻量 Boss 塔层索引，不复制全量来源到浏览器 |
 | `npm run skins:export` | 离线导出皮肤模型 PNG 与清单；普通页面构建只验证并引用，不重新渲染模型 |
 | `scripts/dev/import-buff-icons.mjs` | 从图集 `CombatPanel_Atlas` 导入状态图标为无损 WebP（28×28，清单由精选判定推导）；默认预览，`--apply` 才写，逐张与图集 sprite 表核对像素 |
+| `scripts/dev/subset-fonts.mjs` | 字体子集化：从**随包发布的数据产物 + 源码 + HTML** 现算字符集，把全字集 woff2 裁到实际用得到的字形（8.28 MB → 0.93 MB）；默认预览，`--apply` 才写，`--check` 由 `npm run verify` 调用断言不过期。数据更新后字符集变大必须重新生成 |
+| `npm run cdn:check` | 只读核对线上缓存头与 `public/_headers` 是否一致（需网络，**不进 verify**）。站点是 Cloudflare Pages + 外层腾讯云 EdgeOne，后者策略优先，文件写对不等于线上生效 |
 | `npm run data:build` | 运行当前解析入口，生成页面数据与关联产物 |
 | `npm run search:update` | 重建搜索、来源与类型；重算副本来源，合并已有 PVP/隐藏产物，不替代全量数据构建 |
 
@@ -562,6 +564,12 @@ node scripts/dev/compress-images.mjs <public/images子目录> --apply --allow-lo
 去重复用 `dedupe-image-resources.mjs`：默认只预览内容相同且全仓库无任何引用的副本，保留被引用的那一份；`--hash-suffix` 才把 `#编号` 重名导出副本纳入范围（它们与同目录同名文件像素不同，需人工确认）；`--apply` 先备份到 `../vue-myrzg备份-资源/dedupe-images-<时间>/` 并逐文件校验 SHA-256 再删除。只按内容与引用判定，同名或目录名不构成删除依据。
 
 静态皮肤导出见 [工具说明](technical/SKIN_MODEL_EXPORT.md)。
+
+### 字体与缓存头（性能敏感）
+
+- **字体必须用子集版**（`public/fonts/*.subset.woff2`）。全字集 woff2 各约 4.2 MB，两项合计 8.28 MB，占冷启动传输量约 94%，是所有页面"打开慢"的第一位原因。子集由 `scripts/dev/subset-fonts.mjs` 从随包数据现算字符集生成（0.93 MB）。`npm run verify` 有两条断言：字符集是否过期，以及**产物里每条 `@font-face` 是否真的指向子集**——后者必需，因为漏带子集文件不会报错，会静默回退全字集（页面照常显示，优化白做）。规则与红线见 [UI 组件库 1.3](UI_COMPONENT_LIBRARY.md#13-字体与可读性红线)。
+- **图片版本表按目录分组内联进首屏 chunk**，用完整 SHA-256 判定真碰撞；首屏那组数据哈希（`data/parsed/`）也内联，用来省掉"先读 manifest 再读数据"的串行 RTT。机制见 [架构 4.7](ARCHITECTURE.md#47-资源版本与容错)。
+- **缓存头有两层**：Cloudflare Pages 读 `public/_headers`，但外层腾讯云 EdgeOne 的缓存策略优先级更高。改完 `_headers` 必须用 `npm run cdn:check` 打真实响应头复测，不能只看文件内容。
 
 ### 图片种类与导入核对
 
