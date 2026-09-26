@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import { createHash } from 'node:crypto'
-import { readFileSync, readdirSync } from 'node:fs'
+import { readFileSync, readdirSync, existsSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 
 const repoRoot = path.dirname(fileURLToPath(import.meta.url))
@@ -79,8 +79,18 @@ export function collectInlineHashes(entries) {
  */
 export const IMAGE_VERSION_LENGTH = 8
 
+/**
+ * 参与版本化的静态资源根目录（相对 `public/`）。
+ *
+ * 为什么 `/ui` 也要进来：`getImageUrl` 对 `/ui/*` 原先直接返回裸路径，理由是"UI 图标随热更包
+ * 内置、走本地文件、最先可用"。那对**原生端**成立，但网页端也走了同一条分支——于是网页端的
+ * `/ui/` 资源**没有任何缓存失效手段**：换一张 `/ui/` 素材后，浏览器与 CDN 会继续发旧图。
+ * 2026-09-27 就为此在 EdgeOne 手动刷过一次缓存（压缩后的底图迟迟不生效）。
+ * 现在网页端补上 `?v=`，原生端行为不变（见 `env.js` 的 `getImageUrl`）。
+ */
+const VERSIONED_ASSET_ROOTS = ['images', 'ui']
+
 export function collectImageVersions(publicDir) {
-  const imagesDir = path.join(publicDir, 'images')
   const versions = {}
   const hashOwners = new Map()
   const collisions = []
@@ -89,10 +99,12 @@ export function collectImageVersions(publicDir) {
       const fullPath = path.join(directory, entry.name)
       if (entry.isDirectory()) { walk(fullPath); continue }
       if (!entry.isFile()) continue
-      const relative = path.relative(imagesDir, fullPath).replaceAll('\\', '/')
+      // 键用「相对 public 的完整目录路径」（如 `/images/Common_Atlas`、`/ui`）：
+      // 这样两个根能共用一张表，且 `/ui` 是平铺目录（没有子目录）也能正确分组。
+      const relative = path.relative(publicDir, fullPath).replaceAll('\\', '/')
       const cut = relative.lastIndexOf('/')
-      const bucket = cut < 0 ? '' : relative.slice(0, cut)
-      const file = cut < 0 ? relative : relative.slice(cut + 1)
+      const bucket = `/${relative.slice(0, cut)}`
+      const file = relative.slice(cut + 1)
       const full = hashBytes(readFileSync(fullPath))
       const short = full.slice(0, IMAGE_VERSION_LENGTH)
       const owner = `${bucket}/${file}`
@@ -105,7 +117,10 @@ export function collectImageVersions(publicDir) {
       versions[bucket][file] = short
     }
   }
-  walk(imagesDir)
+  for (const root of VERSIONED_ASSET_ROOTS) {
+    const directory = path.join(publicDir, root)
+    if (existsSync(directory)) walk(directory)
+  }
   if (collisions.length) {
     throw new Error(`图片版本哈希真碰撞（${IMAGE_VERSION_LENGTH} 位十六进制，内容不同却同短哈希，共 ${collisions.length} 组）：${collisions.slice(0, 5).join('; ')}。请调大 vite.config.js 的 IMAGE_VERSION_LENGTH。`)
   }

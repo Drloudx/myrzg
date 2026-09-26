@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url'
 import { createCachedLoader, createResourceClient, fetchJsonWithTimeout } from '../../src/utils/resourceClient.js'
 import { validateResource } from '../../src/utils/resourceSchemas.js'
 import { CLOUD_URL, getImageUrl, getLocalResourceUrl, handleImageFallback, resetImageFallback } from '../../src/utils/env.js'
-import { collectResourceManifests } from '../../vite.config.js'
+import { collectResourceManifests, collectImageVersions } from '../../vite.config.js'
 
 const hash = text => createHash('sha256').update(text).digest('hex')
 const jsonResponse = value => new Response(JSON.stringify(value), { status: 200 })
@@ -305,6 +305,28 @@ test('special portrait candidates preserve CDN then local order without cycles',
     if (handleImageFallback({ target: img }, options)) sequence.push(img.src)
   }
   assert.deepEqual(sequence, ['/images/portrait.webp', candidate, '/images/portrait_alt.webp', '/ui/visibility-off.svg'])
+})
+
+// `/ui` 必须进版本表：网页端 `getImageUrl` 靠它给 /ui/ 资源补 `?v=` 做缓存失效。
+// 曾经 /ui/ 直接返回裸路径（为原生端"图标随热更包内置、最先可用"设计），但网页端走了同一条
+// 分支，于是换 /ui/ 素材后浏览器与 CDN 继续发旧图，得手动刷 EdgeOne 缓存才生效。
+// 这条断言就是为了防止 `/ui` 再被漏掉。
+test('image version map covers both /images and /ui, keyed by full directory path', () => {
+  const publicDir = fileURLToPath(new URL('../../public/', import.meta.url))
+  const versions = collectImageVersions(publicDir)
+  const buckets = Object.keys(versions)
+  assert.ok(buckets.includes('/ui'), '/ui 必须在版本表里，否则网页端换 /ui 素材没有缓存失效手段')
+  assert.ok(buckets.some(bucket => bucket.startsWith('/images/')), '/images 的子目录必须分组')
+  for (const [bucket, files] of Object.entries(versions)) {
+    assert.ok(bucket.startsWith('/images') || bucket === '/ui', `意外的分组键：${bucket}`)
+    for (const [file, short] of Object.entries(files)) {
+      assert.match(short, /^[0-9a-f]{8}$/, `${bucket}/${file} 的版本号形状不对：${short}`)
+      assert.ok(!file.includes('/'), `${bucket}/${file} 的文件名不应含斜杠（说明分组切错了）`)
+    }
+  }
+  // 抽查真实文件：键必须能拼回 public 下的真实路径
+  assert.ok(versions['/ui']?.['logo.webp'], '/ui/logo.webp 应在版本表里')
+  assert.ok(versions['/images/Common_ItemIcon']?.['item_00001.webp'], '/images/Common_ItemIcon/item_00001.webp 应在版本表里')
 })
 
 test('image and local resource helpers preserve existing API paths', () => {
