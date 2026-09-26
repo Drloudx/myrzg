@@ -19,7 +19,8 @@
  *   node scripts/dev/check-cdn-cache-headers.mjs --url https://xxx
  * 退出码：全部符合 0，任一不符合 1（可直接用于部署后复测）。
  */
-import { readFileSync } from 'node:fs'
+import { readFileSync, existsSync } from 'node:fs'
+import { createHash } from 'node:crypto'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
@@ -36,6 +37,19 @@ function cloudUrl() {
 }
 
 const base = String(values.url || cloudUrl()).replace(/\/$/, '')
+
+/**
+ * 字体 URL 的版本号（与 vite.config.js 的 fontUrlVersionPlugin 同一算法：内容哈希前 8 位）。
+ * 必须探"带版本号的那个 URL"——它才是 CSS 实际引用、浏览器真正会请求的地址。
+ * 裸 URL 已无人引用，边缘缓存里可能还留着改头之前的旧响应，探它会得到假失败。
+ */
+function fontVersion(fileName) {
+  const file = join(repoRoot, 'public/fonts', fileName)
+  if (!existsSync(file)) return ''
+  return createHash('sha256').update(readFileSync(file)).digest('hex').slice(0, 8)
+}
+const subsetFont = 'HarmonyOS_Sans_SC_Regular.subset.woff2'
+const subsetVersion = fontVersion(subsetFont)
 
 const request = async (path, method = 'HEAD') => {
   const response = await fetch(`${base}${path}`, { method, redirect: 'follow' })
@@ -77,7 +91,8 @@ const EXPECTATIONS = [
   { path: '/data/notice.json', expectType: 'application/json', note: '实时公告，不参与游戏表版本锁', ok: cc => /no-store/.test(cc) },
   { path: '/data/parsed/items.json', expectType: 'application/json', note: 'URL 带 ?v=<sha256>，可永久缓存', ok: cc => /immutable/.test(cc) && /max-age=31536000/.test(cc) },
   { path: assetPath, expectType: 'javascript', note: '文件名自带内容 hash，可永久缓存', ok: cc => /immutable/.test(cc) && /max-age=31536000/.test(cc) },
-  { path: '/fonts/HarmonyOS_Sans_SC_Regular.subset.woff2', expectType: 'font/woff2', note: 'URL 带内容哈希，_headers 给 1 年 immutable', ok: cc => /immutable/.test(cc) && /max-age=31536000/.test(cc) },
+  // 探带版本号的 URL（CSS 实际引用的那个）：字体 URL 由 fontUrlVersionPlugin 补内容哈希，故可 immutable
+  { path: `/fonts/${subsetFont}${subsetVersion ? `?v=${subsetVersion}` : ''}`, expectType: 'font/woff2', note: 'URL 带内容哈希，_headers 给 1 年 immutable', ok: cc => /immutable/.test(cc) && /max-age=31536000/.test(cc) },
   // 对照组：同前缀、非图片类型 —— 用来证明 `_headers` 的 /images/* 规则本身是生效的
   { path: '/images/gacha/asset-manifest.json', expectType: 'application/json', control: true, note: '对照组：/images/* 下的非图片文件应随 _headers 为 7 天', ok: cc => /max-age=604800/.test(cc) },
   { path: '/images/gacha/audio/card.mp4', expectType: 'video/mp4', control: true, note: '对照组：mp4 应随 _headers 为 7 天', ok: cc => /max-age=604800/.test(cc) },
