@@ -744,6 +744,7 @@ onBeforeUnmount(() => { loadOperation += 1 })
 
 @media (max-width: 1024px) and (max-height: 520px) {
   .filter-panel {
+    max-height: clamp(72px, 30vh, 132px);
     max-height: clamp(72px, 30dvh, 132px);
   }
 
