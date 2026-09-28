@@ -241,8 +241,7 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  height: 100dvh;
+  height: var(--vh100);
   padding: calc(16px + var(--safe-top, 0px)) calc(16px + env(safe-area-inset-right, 0px)) calc(16px + var(--safe-bottom, 0px)) calc(16px + env(safe-area-inset-left, 0px));
   overscroll-behavior: contain;
   z-index: 3000;
@@ -352,8 +351,7 @@ onBeforeUnmount(() => {
     position: relative;
     inset: auto;
     height: auto;
-    min-height: calc(100vh - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
-    min-height: calc(100dvh - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
+    min-height: calc(var(--vh100) - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
     overflow: visible;
   }
   .ui-modal-window:not(.is-teleported) {
@@ -454,8 +452,7 @@ onBeforeUnmount(() => {
 /* 页面级详情打开时把 .page-view-container 锁为视口高度（max-height + overflow:hidden）：
    内容被裁到视口内、页面不可滚到空白，短详情恰好填满中间区、左右栏固定。 */
 :global(.page-view-container:has(> .ui-modal-host.ui-modal-open)) {
-  max-height: calc(100vh - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
-  max-height: calc(100dvh - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
+  max-height: calc(var(--vh100) - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
   overflow: hidden;
 }
 
@@ -471,8 +468,7 @@ onBeforeUnmount(() => {
 /* 任意详情弹窗打开时把 app-main 锁为视口高度（max-height + overflow:hidden）。
    用后代选择器（.ui-modal-host）同时匹配页面内嵌详情的宿主（在 page-view-container 内）与全局物品详情的宿主（app-main 直接子级）。 */
 :global(.app-main:has(.ui-modal-host.ui-modal-open)) {
-  max-height: calc(100vh - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
-  max-height: calc(100dvh - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
+  max-height: calc(var(--vh100) - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
   overflow: hidden;
 }
 

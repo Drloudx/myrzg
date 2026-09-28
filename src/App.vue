@@ -538,8 +538,7 @@ onBeforeUnmount(() => { itemLoadOperation += 1 })
 .app-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  height: 100dvh;
+  height: var(--vh100);
   width: 100%;
   overflow: hidden;
   background-color: transparent;
@@ -861,8 +860,7 @@ onBeforeUnmount(() => { itemLoadOperation += 1 })
   .app-main {
     display: block;
     height: auto;
-    min-height: calc(100vh - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
-    min-height: calc(100dvh - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
+    min-height: calc(var(--vh100) - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
     overflow: visible;
   }
   .app-main :deep(.page-view-container) {
@@ -963,8 +961,7 @@ onBeforeUnmount(() => { itemLoadOperation += 1 })
     align-items: start;
     flex: none;
     /* 基线=视口高：内容不超一屏时页面无人工溢出（无滚动条）；切页/首屏保护由 is-route-pending/is-boot-loading 负责 */
-    min-height: calc(100vh - var(--safe-top, 0px));
-    min-height: calc(100dvh - var(--safe-top, 0px));
+    min-height: calc(var(--vh100) - var(--safe-top, 0px));
     padding-top: calc(33px + var(--header-height, 60px) + var(--safe-top, 0px));
     overflow: visible;
   }
@@ -972,17 +969,14 @@ onBeforeUnmount(() => { itemLoadOperation += 1 })
   .main-layout-row:has(.facilities-page) { padding-bottom: 0; }
   /* 切页瞬间临时顶住旧页高度：见 setRoutePending()，新页加载完成即撤销 */
   .main-layout-row.is-route-pending {
-    min-height: var(--route-pending-h, calc(100vh - var(--safe-top, 0px)));
-    min-height: var(--route-pending-h, calc(100dvh - var(--safe-top, 0px)));
+    min-height: var(--route-pending-h, calc(var(--vh100) - var(--safe-top, 0px)));
   }
   .desktop-sidebar-container,
   .desktop-right-container {
     position: sticky;
     top: calc(var(--header-height, 60px) + var(--safe-top, 0px) + 33px);
-    height: calc(100vh - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
-    height: calc(100dvh - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
-    max-height: calc(100vh - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
-    max-height: calc(100dvh - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
+    height: calc(var(--vh100) - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
+    max-height: calc(var(--vh100) - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
   }
 }
 
@@ -1018,15 +1012,13 @@ onBeforeUnmount(() => { itemLoadOperation += 1 })
 .app-container.is-mail-reader { overflow: hidden; }
 @media (min-width: 1025px) {
   .is-mail-reader .main-layout-row {
-    height: 100vh;
-    height: 100dvh;
+    height: var(--vh100);
     min-height: 0;
     overflow: hidden;
   }
   .is-mail-reader .app-main {
     display: flex;
-    height: calc(100vh - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
-    height: calc(100dvh - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
+    height: calc(var(--vh100) - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
     min-height: 0;
     overflow: hidden;
   }
@@ -1051,8 +1043,7 @@ onBeforeUnmount(() => { itemLoadOperation += 1 })
 .app-container.is-gacha-stage {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  height: 100dvh;
+  height: var(--vh100);
   overflow: hidden;
   /* 桌面端基础规则为页面滚动预留了 scrollbar-gutter: stable，
      整页游戏画面不需要它，否则右边缘会留出一条露出页面背景的槽宽 */
@@ -1074,8 +1065,7 @@ onBeforeUnmount(() => { itemLoadOperation += 1 })
   flex: 1 1 auto;
   width: 100%;
   max-width: none;
-  height: 100vh;
-  height: 100dvh;
+  height: var(--vh100);
   min-height: 0;
   margin: 0;
   /* 移动端媒体查询（≤1024px）给行容器加了 `padding: 8px + safe-area !important`

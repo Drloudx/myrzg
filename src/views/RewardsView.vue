@@ -1303,8 +1303,7 @@ const closePrevImg = () => {
 .prev-img-full {
   display: block;
   width: 100%;
-  max-height: calc(100vh - var(--safe-top, 0px) - var(--safe-bottom, 0px) - 128px);
-  max-height: calc(100dvh - var(--safe-top, 0px) - var(--safe-bottom, 0px) - 128px);
+  max-height: calc(var(--vh100) - var(--safe-top, 0px) - var(--safe-bottom, 0px) - 128px);
   object-fit: contain;
   border-radius: 4px;
 }

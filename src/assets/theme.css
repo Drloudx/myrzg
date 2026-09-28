@@ -256,19 +256,16 @@ html, body {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100vh;
-  height: 100dvh;
+  height: var(--vh100);
   overflow: hidden;
   background-color: #000;
   color: var(--text-main);
   /* 地图背景：像模板一样铺在 body，向下避开顶栏 */
   background-image: url('/ui/map_w1_bg.webp');
-  /* Keep the page and sticky masks on the exact same fixed crop. */
-  /* 默认用 vh：dvh 需要 Chromium 108+。自定义属性对未知单位**不做解析校验**，
-     所以不能像普通属性那样靠"写两遍"兜底——两份都会留下，到 var() 使用处才失效，
-     结果是 background-size 整条作废、地图背景退回平铺。改用下面的 @supports 覆盖。 */
-  --page-bg-width: max(100vw, calc(100vh * 2.2297619));
-  --page-bg-height: max(100vh, calc(100vw / 2.2297619));
+  /* Keep the page and sticky masks on the exact same fixed crop.
+     用 var(--vh100) 而不是字面量：旧内核拿 100vh、现代浏览器拿 100dvh（见下面 --vh100 的说明）。 */
+  --page-bg-width: max(100vw, calc(var(--vh100) * 2.2297619));
+  --page-bg-height: max(var(--vh100), calc(100vw / 2.2297619));
   background-size: var(--page-bg-width) var(--page-bg-height);
   background-position: center calc(var(--header-height, 60px) + var(--safe-top, 0px));
   background-attachment: fixed;
@@ -283,18 +280,23 @@ html, body {
   line-height: 1.6;
 }
 
-/* dvh 让地图背景按"动态视口"取尺寸（地址栏收起/展开时更贴合）。支持时才启用。 */
+/* 满视口高度（1 个视口高）。dvh 需要 Chromium 108+，旧 WebView 解析到未知单位会整条丢弃声明。
+   这里**用变量集中判定**，而不是"同属性写两遍"（height:100vh; height:100dvh）——
+   实测 CSS 压缩器会把后者当重复声明删掉前一条（cssMinify:false 时保留、打开时消失），
+   兜底根本到不了线上；而自定义属性放在 @supports 里覆盖则删不掉（已在产物中验证）。
+   注意：@supports 的条件里**不能**用 var()，所以这里必须保留字面量 100dvh。 */
+:root {
+  --vh100: 100vh;
+}
 @supports (height: 100dvh) {
-  html, body {
-    --page-bg-width: max(100vw, calc(100dvh * 2.2297619));
-    --page-bg-height: max(100dvh, calc(100vw / 2.2297619));
+  :root {
+    --vh100: 100dvh;
   }
 }
 
 #app {
   width: 100%;
-  height: 100vh;
-  height: 100dvh;
+  height: var(--vh100);
   display: flex;
   flex-direction: column;
 }
