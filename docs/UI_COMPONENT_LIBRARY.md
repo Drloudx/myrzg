@@ -71,6 +71,14 @@
 - **`--safe-top` 默认 `0px`，只在"页面真的占满屏幕、没有任何宿主 UI 遮住状态栏"时才取值**（`@media (display-mode: standalone|fullscreen|minimal-ui)`，以及 `html:has(.app-container.is-native-shell)` 为原生壳兜底）。判定必须做在**变量这一层**，因为它是全局布局变量（顶栏内边距、吸顶偏移、弹窗内边距与高度、body 背景位置等十余处共用）；只改顶栏的 `padding-top` 会让其余位置仍按 `header + safe-top` 计算，空隙只是从顶栏挪到弹窗/吸顶元素上。
 - **为什么默认 0**：`env(safe-area-inset-top)` 非零意味着"页面被铺到状态栏下、需要自己让开"，但**已经画了自己标题栏的宿主**（QQ / 微信等内置浏览器）同样会报非零 → 我们让一次、宿主也让一次 → 顶栏上方多出一条空带。2026-09-27 实测：QQ 里那条空带是 40px 木色（用 CDP 注入 `top: 40px` 完全复现，header 高 101 → 141px）；微信与 Chrome 报 0，没有这个问题。本项目各环境实测——**原生 APK 的 `MainActivity` 显式 `setDecorFitsSystemWindows(getWindow(), true)`（targetSdk 36 本会强制 edge-to-edge，这里主动贴合系统栏）→ inset 为 0**；普通浏览器 0；微信 0；只有 QQ 这类宿主非零。所以默认 0 对现有环境**零行为变化**，只是去掉 QQ 那条多余空带。
 
+### 1.6 视口单位 `dvh` 必须带 `vh` 兜底
+
+- **`dvh` 需要 Chromium 108+**。旧内核（安卓系统 WebView 常年不更新很常见）解析到未知单位会**整条丢弃**该声明，于是高度/尺寸约束消失。
+- **普通属性**：写成两条同名声明，`vh` 在前、`dvh` 在后（后者不被支持时被丢弃，前者生效）。例如
+  `height: 100vh; height: 100dvh;`、`min-height: calc(100vh - …); min-height: calc(100dvh - …);`。
+- **自定义属性（`--x`）不能靠"写两遍"兜底**：CSS 自定义属性对未知单位**不做解析校验**，两份值都会留下，直到 `var()` 使用处才整条失效（实测后果：`background-size` 作废 → **地图背景退回平铺**）。必须写成「默认给 `vh` 值 + `@supports (height: 100dvh) { … }` 里再给 `dvh` 值」。
+- 2026-09-27 已按此把全仓扫出的 17 条补齐（15 条普通属性加 `vh` 兜底 + 2 条自定义属性改 `@supports`），复测为 **0 条风险**；`scratch/_audit-dvh-fallbacks.mjs` 可随时重扫。
+
 ## 2. 组件库目录（src/components/ui/）
 
 统一从 `index.js` 导入：
