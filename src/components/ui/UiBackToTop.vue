@@ -20,7 +20,7 @@
  * scrollContainer: CSS 选择器（如 "#itemsGridScroll"）；桌面列表进入文档流后自动回退到 App 原生滚动根
  */
 import { ref, onMounted, onUnmounted } from 'vue'
-import { getScrollMetrics, resolveScrollTarget } from '../../utils/scrollTarget.js'
+import { getScrollTop, resolveScrollRootFromEvent, resolveScrollTarget } from '../../utils/scrollTarget.js'
 
 const props = defineProps({
   scrollContainer: { type: String, default: '' }
@@ -29,23 +29,31 @@ const props = defineProps({
 const isVisible = ref(false)
 let ticking = false
 
-const getScrollTarget = () => {
-  return resolveScrollTarget(props.scrollContainer)
-}
+/**
+ * 滚动处理是**热路径**（每帧都可能跑），所以这里只做两件零布局开销的事：
+ * ① 用事件的 target 判断这次滚动是不是本列表的滚动根；② 读 scrollTop。
+ *
+ * 不要改回 `resolveScrollTarget()` + `getScrollMetrics()`：前者读 scrollHeight 判断
+ * "哪个元素真的能滚"、后者会连 scrollHeight 一起读，两者都**强制同步布局**
+ * （2026-09-27 实测单次 12~14ms、最高 46ms；每次滚动事件造成 2 次布局、占主线程 13%）。
+ * 按钮只需要一个 scrollTop，不需要任何几何信息。
+ */
+const preferredRoot = () => (props.scrollContainer ? document.querySelector(props.scrollContainer) : null)
 
-const handleScroll = (e) => {
+const handleScroll = event => {
+  const root = resolveScrollRootFromEvent(event, preferredRoot())
+  if (!root) return
   if (ticking) return
   ticking = true
   window.requestAnimationFrame(() => {
-    const el = getScrollTarget()
-    const { scrollTop } = getScrollMetrics(el)
-    isVisible.value = scrollTop > 100
+    isVisible.value = getScrollTop(root) > 100
     ticking = false
   })
 }
 
 const scrollToTop = () => {
-  const el = getScrollTarget()
+  // 动作路径：一次点击一次，这里用会强制布局的 resolveScrollTarget 是可以的
+  const el = resolveScrollTarget(props.scrollContainer)
   if (el && el !== window) {
     el.scrollTo({ top: 0, behavior: 'smooth' })
   } else {
