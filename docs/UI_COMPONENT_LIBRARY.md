@@ -84,6 +84,20 @@
   > ⚠️ `@supports` 的**条件里不能用 `var()`**（非法，整块会被丢弃），所以那处必须保留字面量 `100dvh`。
 - 2026-09-27 已按此把全仓 21 处 `dvh` 全部改为 `var(--vh100)`：产物里字面量 `100dvh` 只剩 `@supports` 的条件与覆盖值两处，`var(--vh100)` 18 处；现代浏览器计算值仍是 `100dvh`（无回归），模拟旧内核（强制 `--vh100: 100vh`）布局高度与虚拟列表行为完全一致。
 
+### 1.7 滚动热路径不许读几何属性
+
+`utils/scrollTarget.js` 把两条路径分开，**不要混用**：
+
+| 路径 | 何时用 | 可用 | **禁用** |
+| --- | --- | --- | --- |
+| **热路径**（滚动/指针/resize 等每帧处理器） | 判断"这次滚动是不是我的容器"、读滚动位置 | `resolveScrollRootFromEvent(event, preferred)`、`getScrollTop(target)` | `resolveScrollTarget`、`getScrollMetrics`、`scrollHeight`/`clientHeight`/`offsetParent` |
+| **动作路径**（点击、切页、定位元素） | 点"回到顶部"、把元素滚到中间 | `resolveScrollTarget`、`getScrollMetrics`、`alignElementInScrollTarget` | — |
+
+- **为什么**：`resolveScrollTarget` 为判断"哪个元素真的能滚"要读 `scrollHeight`，**强制同步布局**（实测单次 12~14ms、最高 46ms）；而**滚动事件的 `target` 本身就是滚动元素**，比较一下即可，零布局开销。原实现里 `UiBackToTop` 与 `useLazyList` 都在每帧调它，`/items` 每次滚动事件造成 **2 次**强制布局、占主线程 **13%**。
+- **护栏**：`resolveScrollTarget` 在开发期统计调用频率，1 秒超 30 次就 `console.warn` 并指回这条规则；`tests/unit/scroll-target.test.mjs` 用"读了就抛错的几何 getter"把热路径钉死——谁在热路径读了几何属性，测试立刻失败。
+- **⚠️ 实测结论（别把它当性能优化）**：按此改完后强制布局确实从 13% 降到 **0%**，但**滚动长任务没有改善**（2277~2321ms → 2339~2358ms，帧 p95 83ms 不变）。原因是**强制布局是"把本来就要做的布局提前"，不是额外工作**——总工作量不变。所以这条规则的价值在**结构**（消除一个开销随实例数增长的陷阱、语义明确、有测试守住），**不是**已量到的提速。
+- **真正的大头在哪**（同次 CDP `Performance.getMetrics` 实测）：`TaskDuration` 3899ms 里 **JS 只有 86ms（2.2%）**、布局 484ms（12.4%）、样式重算 487ms（12.5%），**其余约 73% 是绘制/合成/光栅化/图片解码**；同时 60 步滚动里 **DOM 节点净增 5780 个**。也就是说滚动卡顿的主因是**虚拟列表的 DOM 增删与随之而来的渲染量**，不是 JS 计算。要真正提速应从那里入手（overscan、卡片 DOM 体积、图片解码），而不是继续优化 JS。
+
 ## 2. 组件库目录（src/components/ui/）
 
 统一从 `index.js` 导入：
