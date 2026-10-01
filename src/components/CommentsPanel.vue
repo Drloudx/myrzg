@@ -366,17 +366,21 @@ watch(
   list-style: none;
   margin: 0 0 4px;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
+/* 每条评论做成卡片：与符石图鉴的 .rune-entry 同一套视觉
+   （--paper-soft 底 + 1px --border-soft 描边 + 6px 圆角），
+   让讨论区和物品详情的其它 UiSection 在观感上分开。 */
 .comment-item {
   display: flex;
   gap: 10px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border-faint);
-}
-
-.comment-item:last-child {
-  border-bottom: none;
+  padding: 10px 12px;
+  background: var(--paper-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
 }
 
 .comment-avatar {

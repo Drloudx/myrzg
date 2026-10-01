@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="page-view-container admin-comments-page">
     <!-- 是否需要访问凭据：由 onMounted 的无令牌探测决定，不能只看 adminToken 是否为空。
          服务端把管理端免验证打开时（本地 .dev.vars 的 ADMIN_AUTH_DISABLED=1），
@@ -23,12 +23,6 @@
     </div>
 
     <template v-else>
-      <!-- 本地免验证提示：让"当前不需要凭据"这件事显式可见，
-           避免误以为线上也没有验证（线上永远需要，未配令牌时接口直接 404） -->
-      <p v-if="!needsAuth && !adminToken" class="admin-dev-banner" role="status">
-        本地开发模式：管理端免验证，线上仍然需要访问凭据。
-      </p>
-
       <UiFilterPanel>
         <template #search>
           <div class="admin-toolbar">
@@ -335,15 +329,6 @@ function formatTime(unixSec) {
   width: 100%;
 }
 
-.admin-dev-banner {
-  margin: 10px 0 0;
-  padding: 8px 12px;
-  border: 1px dashed var(--gold);
-  border-radius: 4px;
-  color: var(--text-muted);
-  font-size: 13px;
-  line-height: 1.6;
-}
 
 .admin-toolbar-title {
   color: var(--text-main);
