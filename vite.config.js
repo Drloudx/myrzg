@@ -208,7 +208,28 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 5173,
-    allowedHosts: 'all' // 关键配置，关闭host校验
+    allowedHosts: 'all', // 关键配置，关闭host校验
+    /**
+     * 把 `/api/*` 代理到本地 Cloudflare Pages Functions。
+     *
+     * 为什么需要：`npm run dev`（Vite）**不认识 `functions/` 目录**，Pages Functions
+     * 只在 `wrangler pages dev` 里运行。没有这条代理时，Vite 会把 `/api/*` 当成未知路径
+     * 回退成 `index.html`（实测返回 200 + text/html），前端 `response.json()` 解析失败，
+     * 评论面板显示"评论服务返回了非预期内容"——看起来像评论坏了，其实只是 API 没在跑。
+     *
+     * 开发方式（**浏览器开 5173**，方向是单向的：Vite → wrangler）：
+     *   终端 1：npm run dev       # Vite，5173，前端与 HMR
+     *   终端 2：npm run dev:api   # wrangler pages dev，8788，只提供 /api
+     * 这样前端仍走 Vite（HMR 正常），API 由 wrangler 提供。
+     * 没开 dev:api 时代理返回 502，前端显示"网络异常"——比拿到一份 HTML 好排查得多。
+     * 只需要改前端、不碰评论时，不开 dev:api 也能正常开发其它页面。
+     */
+    proxy: {
+      '/api': {
+        target: process.env.MYRZG_API_ORIGIN || 'http://127.0.0.1:8788',
+        changeOrigin: true
+      }
+    }
   },
   build: {
     rollupOptions: {

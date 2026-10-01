@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:api": "wrangler pages dev functions --d1 DB=5f0d4c37-107f-4811-bc5e-768f73c51a3a --port 8788 --ip 127.0.0.1",
     "skins:export": "node scripts/dev/export-skin-models.mjs",
     "fonts:subset": "node scripts/dev/subset-fonts.mjs",
     "cdn:check": "node scripts/dev/check-cdn-cache-headers.mjs",

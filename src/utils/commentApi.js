@@ -65,7 +65,13 @@ async function request(path, { method = 'GET', body, adminToken } = {}) {
   try {
     data = await response.json()
   } catch {
-    // 走到这里通常意味着被 SPA 兜底返回了 HTML（见方案 6.1），提示比"解析失败"更有用
+    // 走到这里说明响应不是 JSON。两种常见情形，提示要能指向解决办法：
+    //   1. 本地开发跑了 `npm run dev`（Vite）但没开 `npm run dev:api`，
+    //      代理拿不到 API（502/504），或更早的配置里被 SPA 兜底返回了 HTML；
+    //   2. 线上 Functions 没生效，`/api/*` 被 `_redirects` 重写成了 index.html。
+    if (response.status === 502 || response.status === 503 || response.status === 504) {
+      throw new CommentApiError('连不上评论服务（本地开发请另开终端运行 npm run dev:api）', response.status)
+    }
     throw new CommentApiError('评论服务返回了非预期内容', response.status)
   }
 
@@ -82,11 +88,17 @@ export function fetchComments(pageKey, { cursor, limit = 20 } = {}) {
   return request(`/api/comments?${params.toString()}`)
 }
 
-/** 发表评论。返回体含 `deleteToken`，调用方需 `saveDeleteToken` 保存 */
-export function postComment({ pageKey, nick, email, body, token, hp }) {
+/**
+ * 发表评论。返回体含 `deleteToken`，调用方需 `saveDeleteToken` 保存。
+ *
+ * 昵称与头像来自本机身份（`utils/identity.js`），不在这里要求用户重填。
+ * 注意：`avatar` 是**头像 ID**（如 `avatar_pet_006`），服务端只做格式校验，
+ * 路径由客户端查 `avatarCatalog.json` 得到。
+ */
+export function postComment({ pageKey, nick, avatar, body, token, hp }) {
   return request('/api/comments', {
     method: 'POST',
-    body: { page: pageKey, nick, email, body, token, hp }
+    body: { page: pageKey, nick, avatar, body, token, hp }
   })
 }
 
