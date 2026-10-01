@@ -18,7 +18,8 @@
 ## 常用命令
 
 ```bash
-npm run dev            # 开发
+npm run dev            # 开发（Vite，入口 http://localhost:5173）
+npm run dev:api        # 评论 API 本地服务（wrangler pages dev，8788）——改评论时必须另开一个终端
 npm run data:build     # 仅数据预处理（遗留表 + 页面级预解析 → public/data/parsed/）
 npm run search:update  # 仅更新全局搜索索引（覆盖所有页面）
 npm run build          # data:build + 生产构建（生成产物，不自动发布）
@@ -26,6 +27,12 @@ npm run verify         # 一键验收：产物齐全 + 无旧脚本残留 + buil
 npm run preview        # 预览
 npx cap sync android   # 同步 Android 原生壳
 ```
+
+> **评论功能本地开发**：`npm run dev`（Vite）不认识 `functions/` 目录，Pages Functions 只在
+> `wrangler pages dev` 里跑。所以改评论时要开两个终端：`npm run dev` + `npm run dev:api`。
+> 浏览器始终开 **5173**（`vite.config.js` 把 `/api/*` 代理到 8788）。
+> 不开 `dev:api` 时评论面板会提示"连不上评论服务（本地开发请另开终端运行 npm run dev:api）"，
+> 其它页面不受影响。
 
 ## 构建前置与原表维护
 

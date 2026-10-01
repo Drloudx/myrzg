@@ -11,7 +11,7 @@
 
 name = "myrzg"
 pages_build_output_dir = "dist"
-compatibility_date = "2026-10-02"
+compatibility_date = "2026-09-01"
 
 [[d1_databases]]
 binding = "DB"                                    # 代码里通过 env.DB 访问

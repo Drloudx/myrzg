@@ -16,20 +16,60 @@
 | `src/config/commentBlocklist.js` | 审核词表（类别正则），命中 = 进待审而非拒收 |
 | `scripts/dev/sync-comment-blocklist.mjs` | 只读校验词表与游戏词库一致 + 误伤/漏检自检 |
 | `src/utils/commentApi.js` | 前端 API 客户端（含原生端绝对地址处理与自删令牌本地存储） |
+| `src/utils/identity.js` | **本机身份**（昵称 + 头像选择），非账号体系，见第〇·一节 |
+| `scripts/dev/sync-avatar-catalog.mjs` | 生成 `public/data/parsed/avatarCatalog.json`（头像 ID ↔ 图片路径） |
 | `src/components/CommentsPanel.vue` | 讨论区组件，业务组件不进通用 UI 出口 |
+| `src/components/AccountModal.vue` | 账号弹窗（本机身份设置），由顶栏账号按钮打开 |
 | `src/views/AdminCommentsView.vue` | 管理页 `/#/admin/comments` |
 | `wrangler.toml` / `schema.sql` / `public/_routes.json` | D1 绑定、表结构、Functions 调用范围 |
 
 D1 数据库：`myrzg-comments`，id `5f0d4c37-107f-4811-bc5e-768f73c51a3a`，region WNAM。
 
-**已实测**：本地 `wrangler pages dev` 下 API 22 项端到端测试全过（CRUD、鉴权、限流、分页、无字段泄漏、XSS 原文存储）；浏览器 18 项 UI 验证全过（三态、发表、自删、管理页、蜜罐不可见）；`npm run verify` 通过。
+**已实测**：本地 API **25 项**端到端测试全过（CRUD、鉴权、限流、分页、无字段泄漏、头像 ID 往返与非法 ID 丢弃、XSS 原文存储）；浏览器 **29 项** UI 验证全过（三态、账号弹窗设昵称与头像、未设昵称时的引导、发表、自删、管理页、蜜罐不可见、图标真实加载）；`npm run verify` 通过。
 
 ### 一期范围与不做的事
 
 - 评论只挂在**物品详情**（`ItemDetailModal`）。列表页不挂——首页就是物品图鉴，卡片点开极频繁，列表页挂载会产生大量无效请求。
-- **不做账号体系**。原因见第七节「为什么不做账号」。
+- **不做账号体系**，改做**本机身份**（见下节）。原因见第七节「为什么不做账号」。
 - **不做楼中楼**（表里保留 `parent_id` 备用）。
 - 用户自删走**浏览器令牌**（发表时自动下发、存 localStorage），不需要记任何东西；换设备/清浏览器数据后需联系管理员。
+
+## 〇·一、本机身份（昵称 + 头像）
+
+「账号」按钮（原深色模式按钮的位置）打开 `AccountModal`，里面设置**昵称**与**头像**，
+评论时自动带上，用户不必每次重填。
+
+**它是本机身份，不是账号**：只存浏览器 localStorage（键 `myrzg:identity`），不注册、不登录、
+无密码、不跨设备同步，**也不验证身份——任何人都能把昵称设成别人的名字**。这一点在弹窗里如实写明。
+真正的账号体系需要后端认证，切入点与迁移路径见第七节。
+
+流程约定（用户指定）：
+
+1. 评论框**不再有昵称/邮箱输入**，只显示身份行（头像 + 「以 X 的身份发表」+ 修改）。
+2. 未设昵称就点「发表」→ **自动弹出账号弹窗**并提示「请先设置昵称」，
+   保存后再点发表才真正提交。**不自动用"匿名"顶替**，否则用户会以为设置已生效。
+
+### 头像为什么用游戏素材、且存 ID
+
+- 头像候选来自 `public/images/HeadIconAtals/` 的 **`at*`（45 个玩家头像）+ `avatar_pet*`（41 个宠物头像）= 86 个**，
+  由 `npm run` 外的脚本生成清单：`node scripts/dev/sync-avatar-catalog.mjs --apply` → `public/data/parsed/avatarCatalog.json`（9.8 KB）。
+  `avatar_Mon*`（101 个怪物头像）**按用户要求不收录**。
+- **评论只存头像 ID（如 `avatar_pet_006`），不存图片路径**。路径由清单查。
+  好处：素材目录将来改名/迁移时只改清单，**库里的历史评论不会变成失效路径**；
+  服务端也能用同一份 ID 规则校验，客户端塞不进任意字符串。
+- 服务端只做**格式**校验（`^[A-Za-z0-9_]{1,40}$`），不校验是否在清单里——
+  Worker 读不到 `public/` 下的文件，硬编码白名单会与素材脱节。非法 ID 被丢弃为 `null`
+  （回退昵称首字占位），**不因此拒绝整条评论**。
+
+### 为什么删掉了「邮箱生成头像」（Gravatar）
+
+初版用邮箱哈希拼 `cn.gravatar.com` 取头像，**已移除**，两条硬伤：
+
+1. Gravatar 是 Automattic 的服务，**国内用户绝大部分没有账号**，拿到的是随机几何图案，不是本人头像。
+2. 它要求把邮箱标识发给第三方，与「只存哈希、不存明文邮箱」的隐私取向**自相矛盾**。
+
+现在头像用游戏素材自选；没选或 ID 无效时回退**昵称首字圆形占位**。
+`comments.email_hash` 列保留但不再使用（SQLite 删列代价高，留历史数据无害）。
 
 ## 一、结论
 
@@ -341,14 +381,43 @@ database_id = "<wrangler d1 create 输出的 id>"
 
 - `VITE_TURNSTILE_SITE_KEY`
 
-### 7.3 首次初始化命令
+### 7.3 本地开发（踩过的坑）
+
+**`npm run dev`（Vite）不认识 `functions/` 目录**，Pages Functions 只在 `wrangler pages dev` 里运行。
+没有代理时，Vite 把 `/api/*` 当未知路径回退成 `index.html`（实测返回 `200` + `text/html`），
+前端 `response.json()` 解析失败，评论面板显示「评论服务返回了非预期内容」——
+**看起来像评论坏了，其实只是 API 没在跑**。这个现象在开发时真的发生过一次。
+
+现在的开发方式（**浏览器始终开 5173**，方向是单向的 Vite → wrangler）：
+
+```bash
+# 终端 1：前端（HMR）
+npm run dev
+# 终端 2：评论 API（Functions + 本地 D1）
+npm run dev:api
+```
+
+- `vite.config.js` 的 `server.proxy` 把 `/api/*` 转发到 `http://127.0.0.1:8788`
+  （可用 `MYRZG_API_ORIGIN` 覆盖）。不开 `dev:api` 时代理返回 502，
+  前端提示「连不上评论服务（本地开发请另开终端运行 npm run dev:api）」，指向解决办法。
+- 只改前端、不碰评论时**不需要**开 `dev:api`，其它页面不受影响。
+- 本地变量放 `.dev.vars`（`wrangler pages dev` 自动读取，**已在 .gitignore 中**）：
+  `ADMIN_TOKEN`、`IP_HASH_SALT`，以及把限流阈值放大的 `RATE_LIMIT_PER_HOUR` / `RATE_LIMIT_PER_DAY`
+  （端到端测试的 POST 数量超过默认 5 条/小时，不放大会被 429 挡成假失败；**生产不要设这两项**）。
+- 本地 D1 是独立副本，**建表要单独跑一次**（`--local`，去掉 `--remote`）：
+  ```bash
+  npx wrangler d1 execute myrzg-comments --file=./schema.sql --local
+  ```
+  忘了跑的症状是所有查库请求都 500（`no such table: comments`）。
+
+### 7.4 首次初始化命令
 
 ```bash
 wrangler d1 create myrzg-comments
 wrangler d1 execute myrzg-comments --file=./schema.sql --remote
 ```
 
-### 7.4 失败模式
+### 7.5 失败模式
 
 Pages 的 **Fail open / closed**（Settings → Runtime）**必须设为 Fail open**：免费额度耗尽时静态站继续可用，只是评论接口报错。设成 Fail closed 会让整个图鉴站变成错误页——对本站是不可接受的降级。
 
