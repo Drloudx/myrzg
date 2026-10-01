@@ -112,10 +112,15 @@ export async function loadAvatarCatalog() {
 
 /** 头像 ID → 图片路径（清单未加载或 ID 未知时返回空串） */
 export function avatarPath(id) {
-  if (!id) return ''
+  return avatarEntry(id)?.path || ''
+}
+
+/** 头像 ID → 清单条目 `{id, path, name}`（含角色/魔物名，供选择器显示与提示） */
+export function avatarEntry(id) {
+  if (!id) return null
   for (const group of avatarGroups.value) {
     const hit = (group.items || []).find((it) => it.id === id)
-    if (hit) return hit.path
+    if (hit) return hit
   }
-  return ''
+  return null
 }

@@ -34,7 +34,7 @@
           {{ draft.nick.trim().slice(0, 1) || '?' }}
         </div>
         <div class="account-preview-text">
-          <span class="account-preview-title">{{ selectedPath ? '已选择头像' : '未选择头像' }}</span>
+          <span class="account-preview-title">{{ selectedName || '未选择头像' }}</span>
           <span class="account-hint">不选也行，评论时会用昵称首字代替</span>
         </div>
         <UiButton v-if="draft.avatar" variant="ghost" size="sm" @click="draft.avatar = ''">清除</UiButton>
@@ -54,10 +54,11 @@
               type="button"
               class="avatar-cell"
               :class="{ active: draft.avatar === item.id }"
-              :title="item.id"
+              :title="item.name || item.id"
+              :aria-label="item.name || item.id"
               @click="draft.avatar = item.id"
             >
-              <img :src="getImageUrl(item.path)" alt="" loading="lazy" decoding="async" />
+              <img :src="getImageUrl(item.path)" :alt="item.name || ''" loading="lazy" decoding="async" />
             </button>
           </div>
         </div>
@@ -84,6 +85,7 @@ import { UiModal, UiSection, UiButton, UiEmptyState } from './ui/index.js'
 import { getImageUrl } from '../utils/env.js'
 import {
   avatarCatalogState,
+  avatarEntry,
   avatarGroups,
   avatarPath,
   identity,
@@ -105,6 +107,8 @@ const router = useRouter()
 const draft = ref({ nick: '', avatar: '' })
 
 const selectedPath = computed(() => avatarPath(draft.value.avatar))
+/** 选中头像对应的角色/魔物名，用作预览区标题（比显示 at001b_0 这种内部编号友好） */
+const selectedName = computed(() => avatarEntry(draft.value.avatar)?.name || '')
 
 // 每次打开都从已保存的身份初始化，并确保头像清单已加载
 watch(

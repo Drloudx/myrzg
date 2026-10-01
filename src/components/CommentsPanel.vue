@@ -75,7 +75,7 @@
           class="comment-textarea"
           rows="3"
           maxlength="1000"
-          placeholder="说点什么…（支持换行）"
+          placeholder="说点什么…"
         ></textarea>
 
         <!-- 蜜罐：正常用户与屏幕阅读器都感知不到，但不静默移除（display:none 会被部分机器人跳过）。

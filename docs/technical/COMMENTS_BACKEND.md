@@ -51,9 +51,17 @@ D1 数据库：`myrzg-comments`，id `5f0d4c37-107f-4811-bc5e-768f73c51a3a`，re
 
 ### 头像为什么用游戏素材、且存 ID
 
-- 头像候选来自 `public/images/HeadIconAtals/` 的 **`at*`（45 个玩家头像）+ `avatar_pet*`（41 个宠物头像）= 86 个**，
-  由 `npm run` 外的脚本生成清单：`node scripts/dev/sync-avatar-catalog.mjs --apply` → `public/data/parsed/avatarCatalog.json`（9.8 KB）。
-  `avatar_Mon*`（101 个怪物头像）**按用户要求不收录**。
+- 头像候选来自 `public/images/HeadIconAtals/`，由脚本生成清单：
+  `node scripts/dev/sync-avatar-catalog.mjs --apply` → `public/data/parsed/avatarCatalog.json`。
+  **只收录能对应到角色图鉴 / 魔物图鉴的头像**（用户要求"只显示角色图鉴和魔物图鉴里有的"）：
+  - `at*` → 角色头像，按前三位数字对应 `hero_001` 形式；
+  - `avatar_pet_*` → 魔物头像，对应 `pet_006` 形式；
+  - `avatar_Mon*`（怪物头像）**完全不收录**。
+  实测从 86 个筛到 **76 个**（角色 36 + 魔物 40），隐藏 10 个对不上图鉴的
+  （`at002/003/010/022/028/047/057/059` 对应的角色未进图鉴，以及 `avatar_pet_098`）。
+  脚本会逐个报告被跳过项，不会静默丢弃。
+- 清单条目带**角色/魔物名**，选择器显示中文名而不是 `at001b_0` 这种内部编号；
+  同一角色多个立绘时自动补序号（如「希尔」「希尔（2）」）。
 - **评论只存头像 ID（如 `avatar_pet_006`），不存图片路径**。路径由清单查。
   好处：素材目录将来改名/迁移时只改清单，**库里的历史评论不会变成失效路径**；
   服务端也能用同一份 ID 规则校验，客户端塞不进任意字符串。

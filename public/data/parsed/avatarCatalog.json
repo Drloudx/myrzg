@@ -1,360 +1,401 @@
 {
   "source": "public/images/HeadIconAtals",
-  "note": "由 scripts/dev/sync-avatar-catalog.mjs 生成；只收录 at* 与 avatar_pet*，不含 avatar_Mon*",
+  "note": "由 scripts/dev/sync-avatar-catalog.mjs 生成；只收录能对应到角色图鉴/魔物图鉴的头像，不含 avatar_Mon*",
+  "matchedAgainst": {
+    "heroes": 34,
+    "pets": 32,
+    "skipped": 10
+  },
   "groups": [
     {
       "key": "player",
-      "label": "玩家头像",
+      "label": "角色头像",
       "items": [
         {
           "id": "at001_0",
-          "path": "/images/HeadIconAtals/at001_0.webp"
+          "path": "/images/HeadIconAtals/at001_0.webp",
+          "name": "希尔（2）"
         },
         {
           "id": "at001b_0",
-          "path": "/images/HeadIconAtals/at001b_0.webp"
-        },
-        {
-          "id": "at002_0",
-          "path": "/images/HeadIconAtals/at002_0.webp"
-        },
-        {
-          "id": "at002_1",
-          "path": "/images/HeadIconAtals/at002_1.webp"
-        },
-        {
-          "id": "at003_0",
-          "path": "/images/HeadIconAtals/at003_0.webp"
+          "path": "/images/HeadIconAtals/at001b_0.webp",
+          "name": "希尔"
         },
         {
           "id": "at005_0",
-          "path": "/images/HeadIconAtals/at005_0.webp"
+          "path": "/images/HeadIconAtals/at005_0.webp",
+          "name": "茜塔（2）"
         },
         {
           "id": "at005a",
-          "path": "/images/HeadIconAtals/at005a.webp"
+          "path": "/images/HeadIconAtals/at005a.webp",
+          "name": "茜塔"
         },
         {
           "id": "at007_0",
-          "path": "/images/HeadIconAtals/at007_0.webp"
+          "path": "/images/HeadIconAtals/at007_0.webp",
+          "name": "拉碧丝"
         },
         {
           "id": "at008_0",
-          "path": "/images/HeadIconAtals/at008_0.webp"
+          "path": "/images/HeadIconAtals/at008_0.webp",
+          "name": "夏库塔拉"
         },
         {
           "id": "at009_0",
-          "path": "/images/HeadIconAtals/at009_0.webp"
-        },
-        {
-          "id": "at010_0",
-          "path": "/images/HeadIconAtals/at010_0.webp"
+          "path": "/images/HeadIconAtals/at009_0.webp",
+          "name": "可可娜"
         },
         {
           "id": "at011_0",
-          "path": "/images/HeadIconAtals/at011_0.webp"
+          "path": "/images/HeadIconAtals/at011_0.webp",
+          "name": "缇莎"
         },
         {
           "id": "at012_0",
-          "path": "/images/HeadIconAtals/at012_0.webp"
+          "path": "/images/HeadIconAtals/at012_0.webp",
+          "name": "沃夫加"
         },
         {
           "id": "at014_0",
-          "path": "/images/HeadIconAtals/at014_0.webp"
+          "path": "/images/HeadIconAtals/at014_0.webp",
+          "name": "皮塔"
         },
         {
           "id": "at015_0",
-          "path": "/images/HeadIconAtals/at015_0.webp"
+          "path": "/images/HeadIconAtals/at015_0.webp",
+          "name": "芭杜尔"
         },
         {
           "id": "at019_0",
-          "path": "/images/HeadIconAtals/at019_0.webp"
-        },
-        {
-          "id": "at022_0",
-          "path": "/images/HeadIconAtals/at022_0.webp"
+          "path": "/images/HeadIconAtals/at019_0.webp",
+          "name": "奇瓦"
         },
         {
           "id": "at023_0",
-          "path": "/images/HeadIconAtals/at023_0.webp"
+          "path": "/images/HeadIconAtals/at023_0.webp",
+          "name": "卡夫"
         },
         {
           "id": "at025_0",
-          "path": "/images/HeadIconAtals/at025_0.webp"
+          "path": "/images/HeadIconAtals/at025_0.webp",
+          "name": "嘉莉缇"
         },
         {
           "id": "at026_0",
-          "path": "/images/HeadIconAtals/at026_0.webp"
+          "path": "/images/HeadIconAtals/at026_0.webp",
+          "name": "贝拉多娜"
         },
         {
           "id": "at027_0",
-          "path": "/images/HeadIconAtals/at027_0.webp"
-        },
-        {
-          "id": "at028_0",
-          "path": "/images/HeadIconAtals/at028_0.webp"
+          "path": "/images/HeadIconAtals/at027_0.webp",
+          "name": "梅莉莉"
         },
         {
           "id": "at029_0",
-          "path": "/images/HeadIconAtals/at029_0.webp"
+          "path": "/images/HeadIconAtals/at029_0.webp",
+          "name": "安娜"
         },
         {
           "id": "at031_0",
-          "path": "/images/HeadIconAtals/at031_0.webp"
+          "path": "/images/HeadIconAtals/at031_0.webp",
+          "name": "波特温"
         },
         {
           "id": "at033_0",
-          "path": "/images/HeadIconAtals/at033_0.webp"
+          "path": "/images/HeadIconAtals/at033_0.webp",
+          "name": "乌帕·萝特"
         },
         {
           "id": "at034_0",
-          "path": "/images/HeadIconAtals/at034_0.webp"
+          "path": "/images/HeadIconAtals/at034_0.webp",
+          "name": "露帕·萝特"
         },
         {
           "id": "at036_0",
-          "path": "/images/HeadIconAtals/at036_0.webp"
+          "path": "/images/HeadIconAtals/at036_0.webp",
+          "name": "贝尔卡（2）"
         },
         {
           "id": "at036a",
-          "path": "/images/HeadIconAtals/at036a.webp"
+          "path": "/images/HeadIconAtals/at036a.webp",
+          "name": "贝尔卡"
         },
         {
           "id": "at037_0",
-          "path": "/images/HeadIconAtals/at037_0.webp"
+          "path": "/images/HeadIconAtals/at037_0.webp",
+          "name": "剋"
         },
         {
           "id": "at041_0",
-          "path": "/images/HeadIconAtals/at041_0.webp"
+          "path": "/images/HeadIconAtals/at041_0.webp",
+          "name": "埃迪蒂"
         },
         {
           "id": "at043_0",
-          "path": "/images/HeadIconAtals/at043_0.webp"
+          "path": "/images/HeadIconAtals/at043_0.webp",
+          "name": "阿娜洛洁"
         },
         {
           "id": "at045_0",
-          "path": "/images/HeadIconAtals/at045_0.webp"
+          "path": "/images/HeadIconAtals/at045_0.webp",
+          "name": "艾尔菲帕"
         },
         {
           "id": "at046_0",
-          "path": "/images/HeadIconAtals/at046_0.webp"
-        },
-        {
-          "id": "at047_0",
-          "path": "/images/HeadIconAtals/at047_0.webp"
+          "path": "/images/HeadIconAtals/at046_0.webp",
+          "name": "迈妮娅"
         },
         {
           "id": "at049_0",
-          "path": "/images/HeadIconAtals/at049_0.webp"
+          "path": "/images/HeadIconAtals/at049_0.webp",
+          "name": "菲莉娜"
         },
         {
           "id": "at050_0",
-          "path": "/images/HeadIconAtals/at050_0.webp"
+          "path": "/images/HeadIconAtals/at050_0.webp",
+          "name": "米拉贝尔"
         },
         {
           "id": "at051_0",
-          "path": "/images/HeadIconAtals/at051_0.webp"
+          "path": "/images/HeadIconAtals/at051_0.webp",
+          "name": "阿莱克西娅"
         },
         {
           "id": "at053_0",
-          "path": "/images/HeadIconAtals/at053_0.webp"
+          "path": "/images/HeadIconAtals/at053_0.webp",
+          "name": "艾薇杜尔"
         },
         {
           "id": "at055_0",
-          "path": "/images/HeadIconAtals/at055_0.webp"
-        },
-        {
-          "id": "at057_0",
-          "path": "/images/HeadIconAtals/at057_0.webp"
-        },
-        {
-          "id": "at059_0",
-          "path": "/images/HeadIconAtals/at059_0.webp"
+          "path": "/images/HeadIconAtals/at055_0.webp",
+          "name": "迦南"
         },
         {
           "id": "at062_0",
-          "path": "/images/HeadIconAtals/at062_0.webp"
+          "path": "/images/HeadIconAtals/at062_0.webp",
+          "name": "露比特·鲁特"
         },
         {
           "id": "at064_0",
-          "path": "/images/HeadIconAtals/at064_0.webp"
+          "path": "/images/HeadIconAtals/at064_0.webp",
+          "name": "伽拉忒亚"
         },
         {
           "id": "at065_0",
-          "path": "/images/HeadIconAtals/at065_0.webp"
+          "path": "/images/HeadIconAtals/at065_0.webp",
+          "name": "乌尔勒"
         },
         {
           "id": "at066_0",
-          "path": "/images/HeadIconAtals/at066_0.webp"
+          "path": "/images/HeadIconAtals/at066_0.webp",
+          "name": "奥格"
         }
       ]
     },
     {
       "key": "pet",
-      "label": "宠物头像",
+      "label": "魔物头像",
       "items": [
         {
           "id": "avatar_pet_006",
-          "path": "/images/HeadIconAtals/avatar_pet_006.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_006.webp",
+          "name": "提灯妖精"
         },
         {
           "id": "avatar_pet_006_a",
-          "path": "/images/HeadIconAtals/avatar_pet_006_a.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_006_a.webp",
+          "name": "提灯妖精（2）"
         },
         {
           "id": "avatar_pet_007",
-          "path": "/images/HeadIconAtals/avatar_pet_007.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_007.webp",
+          "name": "角布林"
         },
         {
           "id": "avatar_pet_016",
-          "path": "/images/HeadIconAtals/avatar_pet_016.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_016.webp",
+          "name": "吵吵蕈"
         },
         {
           "id": "avatar_pet_017",
-          "path": "/images/HeadIconAtals/avatar_pet_017.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_017.webp",
+          "name": "臭臭蕈"
         },
         {
           "id": "avatar_pet_036",
-          "path": "/images/HeadIconAtals/avatar_pet_036.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_036.webp",
+          "name": "草原黏团"
         },
         {
           "id": "avatar_pet_037",
-          "path": "/images/HeadIconAtals/avatar_pet_037.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_037.webp",
+          "name": "掘地芙洛波"
         },
         {
           "id": "avatar_pet_038",
-          "path": "/images/HeadIconAtals/avatar_pet_038.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_038.webp",
+          "name": "扬沙芙洛波"
         },
         {
           "id": "avatar_pet_043",
-          "path": "/images/HeadIconAtals/avatar_pet_043.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_043.webp",
+          "name": "顽劣灯火"
         },
         {
           "id": "avatar_pet_044",
-          "path": "/images/HeadIconAtals/avatar_pet_044.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_044.webp",
+          "name": "游离灯火"
         },
         {
           "id": "avatar_pet_045",
-          "path": "/images/HeadIconAtals/avatar_pet_045.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_045.webp",
+          "name": "囊袋恐兽"
         },
         {
           "id": "avatar_pet_046",
-          "path": "/images/HeadIconAtals/avatar_pet_046.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_046.webp",
+          "name": "利齿恐兽"
         },
         {
           "id": "avatar_pet_046_a",
-          "path": "/images/HeadIconAtals/avatar_pet_046_a.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_046_a.webp",
+          "name": "利齿恐兽（2）"
         },
         {
           "id": "avatar_pet_058",
-          "path": "/images/HeadIconAtals/avatar_pet_058.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_058.webp",
+          "name": "魔水粘团"
         },
         {
           "id": "avatar_pet_062",
-          "path": "/images/HeadIconAtals/avatar_pet_062.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_062.webp",
+          "name": "射水杜吉芽"
         },
         {
           "id": "avatar_pet_063",
-          "path": "/images/HeadIconAtals/avatar_pet_063.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_063.webp",
+          "name": "繁茂杜吉芽"
         },
         {
           "id": "avatar_pet_065",
-          "path": "/images/HeadIconAtals/avatar_pet_065.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_065.webp",
+          "name": "鱼布林"
         },
         {
           "id": "avatar_pet_065_a",
-          "path": "/images/HeadIconAtals/avatar_pet_065_a.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_065_a.webp",
+          "name": "鱼布林（2）"
         },
         {
           "id": "avatar_pet_071",
-          "path": "/images/HeadIconAtals/avatar_pet_071.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_071.webp",
+          "name": "秋风妖精"
         },
         {
           "id": "avatar_pet_071_a",
-          "path": "/images/HeadIconAtals/avatar_pet_071_a.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_071_a.webp",
+          "name": "秋风妖精（2）"
         },
         {
           "id": "avatar_pet_072",
-          "path": "/images/HeadIconAtals/avatar_pet_072.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_072.webp",
+          "name": "绿色史莱姆"
         },
         {
           "id": "avatar_pet_072_a",
-          "path": "/images/HeadIconAtals/avatar_pet_072_a.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_072_a.webp",
+          "name": "绿色史莱姆（2）"
         },
         {
           "id": "avatar_pet_073",
-          "path": "/images/HeadIconAtals/avatar_pet_073.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_073.webp",
+          "name": "源泉猫"
         },
         {
           "id": "avatar_pet_073_a",
-          "path": "/images/HeadIconAtals/avatar_pet_073_a.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_073_a.webp",
+          "name": "源泉猫（2）"
         },
         {
           "id": "avatar_pet_074",
-          "path": "/images/HeadIconAtals/avatar_pet_074.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_074.webp",
+          "name": "宝石迷迷可"
         },
         {
           "id": "avatar_pet_074_a",
-          "path": "/images/HeadIconAtals/avatar_pet_074_a.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_074_a.webp",
+          "name": "宝石迷迷可（2）"
         },
         {
           "id": "avatar_pet_075",
-          "path": "/images/HeadIconAtals/avatar_pet_075.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_075.webp",
+          "name": "格莉姆"
         },
         {
           "id": "avatar_pet_075_a",
-          "path": "/images/HeadIconAtals/avatar_pet_075_a.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_075_a.webp",
+          "name": "格莉姆（2）"
         },
         {
           "id": "avatar_pet_076",
-          "path": "/images/HeadIconAtals/avatar_pet_076.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_076.webp",
+          "name": "雷素"
         },
         {
           "id": "avatar_pet_077",
-          "path": "/images/HeadIconAtals/avatar_pet_077.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_077.webp",
+          "name": "真护之黑龙"
         },
         {
           "id": "avatar_pet_078",
-          "path": "/images/HeadIconAtals/avatar_pet_078.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_078.webp",
+          "name": "星云史莱姆"
         },
         {
           "id": "avatar_pet_079",
-          "path": "/images/HeadIconAtals/avatar_pet_079.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_079.webp",
+          "name": "东天之青龙"
         },
         {
           "id": "avatar_pet_083",
-          "path": "/images/HeadIconAtals/avatar_pet_083.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_083.webp",
+          "name": "冰棱妖精"
         },
         {
           "id": "avatar_pet_086",
-          "path": "/images/HeadIconAtals/avatar_pet_086.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_086.webp",
+          "name": "抛雪芙洛波"
         },
         {
           "id": "avatar_pet_088",
-          "path": "/images/HeadIconAtals/avatar_pet_088.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_088.webp",
+          "name": "熔火喷炎者"
         },
         {
           "id": "avatar_pet_093",
-          "path": "/images/HeadIconAtals/avatar_pet_093.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_093.webp",
+          "name": "石像鬼"
         },
         {
           "id": "avatar_pet_094",
-          "path": "/images/HeadIconAtals/avatar_pet_094.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_094.webp",
+          "name": "布丁史莱姆"
         },
         {
           "id": "avatar_pet_095",
-          "path": "/images/HeadIconAtals/avatar_pet_095.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_095.webp",
+          "name": "蜂刺骑兵"
         },
         {
           "id": "avatar_pet_096",
-          "path": "/images/HeadIconAtals/avatar_pet_096.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_096.webp",
+          "name": "白银迷迷可"
         },
         {
           "id": "avatar_pet_097",
-          "path": "/images/HeadIconAtals/avatar_pet_097.webp"
-        },
-        {
-          "id": "avatar_pet_098",
-          "path": "/images/HeadIconAtals/avatar_pet_098.webp"
+          "path": "/images/HeadIconAtals/avatar_pet_097.webp",
+          "name": "格里芬"
         }
       ]
     }
