@@ -28,13 +28,29 @@
           />
 
           <div class="header-right">
-            <button class="icon-btn" @click="toggleDarkMode" :title="isDarkMode ? '切换浅色模式' : '切换暗色模式'">
+            <!--
+              深色模式切换：暂时隐藏，功能代码完整保留（useNativeShell 的 isDarkMode /
+              toggleDarkMode 与 html.dark-mode 样式都没删）。深色模式尚有未解决的问题，
+              等修好后再用 v-if 恢复这个按钮即可。localStorage 里已存的 theme=dark
+              仍会在启动时生效，不会因为按钮隐藏而失效。
+            -->
+            <button
+              v-if="showThemeToggle"
+              class="icon-btn"
+              @click="toggleDarkMode"
+              :title="isDarkMode ? '切换浅色模式' : '切换暗色模式'"
+            >
               <img
                 :src="isDarkMode ? getImageUrl('/ui/theme-light.svg') : getImageUrl('/ui/theme-dark.svg')"
                 class="theme-icon-img"
                 alt="主题切换"
                 loading="lazy"
               />
+            </button>
+
+            <!-- 账号：原先的深色模式位置，点击弹出账号面板 -->
+            <button class="icon-btn" @click.stop="isAccountOpen = true" title="账号">
+              <img :src="getImageUrl('/ui/account.svg')" alt="账号" class="theme-icon-img" />
             </button>
             <div class="settings-container">
               <button class="icon-btn" @click.stop="toggleSettings" title="设置">
@@ -166,6 +182,7 @@
     <NoticeModal v-model="showNoticeModal" />
     <VersionCheckModal v-model="showVersionCheckModal" @request-update="handleRequestUpdate" />
     <AboutModal v-model="showAboutModal" />
+    <AccountModal v-model="isAccountOpen" />
     <UiModal
       :visible="!!itemLoadError"
       title="物品详情加载失败"
@@ -216,6 +233,8 @@ import MenuModeModal from './components/MenuModeModal.vue'
 import NoticeModal from './components/NoticeModal.vue'
 import VersionCheckModal from './components/VersionCheckModal.vue'
 import AboutModal from './components/AboutModal.vue'
+import AccountModal from './components/AccountModal.vue'
+import { loadIdentity, registerAccountModal } from './utils/identity.js'
 import { UiButton, UiModal } from './components/ui/index.js'
 import ItemDetailModal from './components/ItemDetailModal.vue'
 import RewardProbabilityModal from './components/RewardProbabilityModal.vue'
@@ -278,6 +297,27 @@ const isGachaFullscreen = computed(() => route.path === '/gacha')
 const isNavOpen = ref(false)
 const { globalQuery, isSearchOpen, filteredSearchIndex, handleSearchFocus, handleSelectSearchResult } = useGlobalSearch(route, router)
 const { isDarkMode, toggleDarkMode } = useNativeShell()
+
+/**
+ * 深色模式切换按钮是否显示。
+ * 暂时关闭：按钮位置改成了账号入口，而深色模式自身还有问题待修。
+ * 代码与 `html.dark-mode` 样式、localStorage 持久化都完整保留，改回 true 即恢复。
+ */
+const showThemeToggle = false
+
+/** 账号弹窗可见性 */
+const isAccountOpen = ref(false)
+
+/**
+ * 本机身份（昵称 + 头像）与账号弹窗的接线：
+ *   - 启动时读一次 localStorage，评论面板与账号弹窗共用同一份响应式状态；
+ *   - 把"打开账号弹窗"注册给 identity 模块，评论面板在未设昵称时调用它，
+ *     从而不必让子组件各自维护一份弹窗开关（页面上只有一个账号弹窗）。
+ */
+loadIdentity()
+registerAccountModal(() => {
+  isAccountOpen.value = true
+})
 
 // 新增设置菜单和弹窗状态
 const isSettingsOpen = ref(false)

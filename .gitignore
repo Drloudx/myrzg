@@ -62,3 +62,6 @@ scratch/
 
 # 原始素材全部构建产物，不进repo/构建产物，请看 scripts/dev/sync-raw.mjs 从Config_decrypted读取
 /raw/
+
+# Wrangler 本地开发变量（含本地令牌），不进仓库
+.dev.vars

@@ -1,0 +1,362 @@
+{
+  "source": "public/images/HeadIconAtals",
+  "note": "由 scripts/dev/sync-avatar-catalog.mjs 生成；只收录 at* 与 avatar_pet*，不含 avatar_Mon*",
+  "groups": [
+    {
+      "key": "player",
+      "label": "玩家头像",
+      "items": [
+        {
+          "id": "at001_0",
+          "path": "/images/HeadIconAtals/at001_0.webp"
+        },
+        {
+          "id": "at001b_0",
+          "path": "/images/HeadIconAtals/at001b_0.webp"
+        },
+        {
+          "id": "at002_0",
+          "path": "/images/HeadIconAtals/at002_0.webp"
+        },
+        {
+          "id": "at002_1",
+          "path": "/images/HeadIconAtals/at002_1.webp"
+        },
+        {
+          "id": "at003_0",
+          "path": "/images/HeadIconAtals/at003_0.webp"
+        },
+        {
+          "id": "at005_0",
+          "path": "/images/HeadIconAtals/at005_0.webp"
+        },
+        {
+          "id": "at005a",
+          "path": "/images/HeadIconAtals/at005a.webp"
+        },
+        {
+          "id": "at007_0",
+          "path": "/images/HeadIconAtals/at007_0.webp"
+        },
+        {
+          "id": "at008_0",
+          "path": "/images/HeadIconAtals/at008_0.webp"
+        },
+        {
+          "id": "at009_0",
+          "path": "/images/HeadIconAtals/at009_0.webp"
+        },
+        {
+          "id": "at010_0",
+          "path": "/images/HeadIconAtals/at010_0.webp"
+        },
+        {
+          "id": "at011_0",
+          "path": "/images/HeadIconAtals/at011_0.webp"
+        },
+        {
+          "id": "at012_0",
+          "path": "/images/HeadIconAtals/at012_0.webp"
+        },
+        {
+          "id": "at014_0",
+          "path": "/images/HeadIconAtals/at014_0.webp"
+        },
+        {
+          "id": "at015_0",
+          "path": "/images/HeadIconAtals/at015_0.webp"
+        },
+        {
+          "id": "at019_0",
+          "path": "/images/HeadIconAtals/at019_0.webp"
+        },
+        {
+          "id": "at022_0",
+          "path": "/images/HeadIconAtals/at022_0.webp"
+        },
+        {
+          "id": "at023_0",
+          "path": "/images/HeadIconAtals/at023_0.webp"
+        },
+        {
+          "id": "at025_0",
+          "path": "/images/HeadIconAtals/at025_0.webp"
+        },
+        {
+          "id": "at026_0",
+          "path": "/images/HeadIconAtals/at026_0.webp"
+        },
+        {
+          "id": "at027_0",
+          "path": "/images/HeadIconAtals/at027_0.webp"
+        },
+        {
+          "id": "at028_0",
+          "path": "/images/HeadIconAtals/at028_0.webp"
+        },
+        {
+          "id": "at029_0",
+          "path": "/images/HeadIconAtals/at029_0.webp"
+        },
+        {
+          "id": "at031_0",
+          "path": "/images/HeadIconAtals/at031_0.webp"
+        },
+        {
+          "id": "at033_0",
+          "path": "/images/HeadIconAtals/at033_0.webp"
+        },
+        {
+          "id": "at034_0",
+          "path": "/images/HeadIconAtals/at034_0.webp"
+        },
+        {
+          "id": "at036_0",
+          "path": "/images/HeadIconAtals/at036_0.webp"
+        },
+        {
+          "id": "at036a",
+          "path": "/images/HeadIconAtals/at036a.webp"
+        },
+        {
+          "id": "at037_0",
+          "path": "/images/HeadIconAtals/at037_0.webp"
+        },
+        {
+          "id": "at041_0",
+          "path": "/images/HeadIconAtals/at041_0.webp"
+        },
+        {
+          "id": "at043_0",
+          "path": "/images/HeadIconAtals/at043_0.webp"
+        },
+        {
+          "id": "at045_0",
+          "path": "/images/HeadIconAtals/at045_0.webp"
+        },
+        {
+          "id": "at046_0",
+          "path": "/images/HeadIconAtals/at046_0.webp"
+        },
+        {
+          "id": "at047_0",
+          "path": "/images/HeadIconAtals/at047_0.webp"
+        },
+        {
+          "id": "at049_0",
+          "path": "/images/HeadIconAtals/at049_0.webp"
+        },
+        {
+          "id": "at050_0",
+          "path": "/images/HeadIconAtals/at050_0.webp"
+        },
+        {
+          "id": "at051_0",
+          "path": "/images/HeadIconAtals/at051_0.webp"
+        },
+        {
+          "id": "at053_0",
+          "path": "/images/HeadIconAtals/at053_0.webp"
+        },
+        {
+          "id": "at055_0",
+          "path": "/images/HeadIconAtals/at055_0.webp"
+        },
+        {
+          "id": "at057_0",
+          "path": "/images/HeadIconAtals/at057_0.webp"
+        },
+        {
+          "id": "at059_0",
+          "path": "/images/HeadIconAtals/at059_0.webp"
+        },
+        {
+          "id": "at062_0",
+          "path": "/images/HeadIconAtals/at062_0.webp"
+        },
+        {
+          "id": "at064_0",
+          "path": "/images/HeadIconAtals/at064_0.webp"
+        },
+        {
+          "id": "at065_0",
+          "path": "/images/HeadIconAtals/at065_0.webp"
+        },
+        {
+          "id": "at066_0",
+          "path": "/images/HeadIconAtals/at066_0.webp"
+        }
+      ]
+    },
+    {
+      "key": "pet",
+      "label": "宠物头像",
+      "items": [
+        {
+          "id": "avatar_pet_006",
+          "path": "/images/HeadIconAtals/avatar_pet_006.webp"
+        },
+        {
+          "id": "avatar_pet_006_a",
+          "path": "/images/HeadIconAtals/avatar_pet_006_a.webp"
+        },
+        {
+          "id": "avatar_pet_007",
+          "path": "/images/HeadIconAtals/avatar_pet_007.webp"
+        },
+        {
+          "id": "avatar_pet_016",
+          "path": "/images/HeadIconAtals/avatar_pet_016.webp"
+        },
+        {
+          "id": "avatar_pet_017",
+          "path": "/images/HeadIconAtals/avatar_pet_017.webp"
+        },
+        {
+          "id": "avatar_pet_036",
+          "path": "/images/HeadIconAtals/avatar_pet_036.webp"
+        },
+        {
+          "id": "avatar_pet_037",
+          "path": "/images/HeadIconAtals/avatar_pet_037.webp"
+        },
+        {
+          "id": "avatar_pet_038",
+          "path": "/images/HeadIconAtals/avatar_pet_038.webp"
+        },
+        {
+          "id": "avatar_pet_043",
+          "path": "/images/HeadIconAtals/avatar_pet_043.webp"
+        },
+        {
+          "id": "avatar_pet_044",
+          "path": "/images/HeadIconAtals/avatar_pet_044.webp"
+        },
+        {
+          "id": "avatar_pet_045",
+          "path": "/images/HeadIconAtals/avatar_pet_045.webp"
+        },
+        {
+          "id": "avatar_pet_046",
+          "path": "/images/HeadIconAtals/avatar_pet_046.webp"
+        },
+        {
+          "id": "avatar_pet_046_a",
+          "path": "/images/HeadIconAtals/avatar_pet_046_a.webp"
+        },
+        {
+          "id": "avatar_pet_058",
+          "path": "/images/HeadIconAtals/avatar_pet_058.webp"
+        },
+        {
+          "id": "avatar_pet_062",
+          "path": "/images/HeadIconAtals/avatar_pet_062.webp"
+        },
+        {
+          "id": "avatar_pet_063",
+          "path": "/images/HeadIconAtals/avatar_pet_063.webp"
+        },
+        {
+          "id": "avatar_pet_065",
+          "path": "/images/HeadIconAtals/avatar_pet_065.webp"
+        },
+        {
+          "id": "avatar_pet_065_a",
+          "path": "/images/HeadIconAtals/avatar_pet_065_a.webp"
+        },
+        {
+          "id": "avatar_pet_071",
+          "path": "/images/HeadIconAtals/avatar_pet_071.webp"
+        },
+        {
+          "id": "avatar_pet_071_a",
+          "path": "/images/HeadIconAtals/avatar_pet_071_a.webp"
+        },
+        {
+          "id": "avatar_pet_072",
+          "path": "/images/HeadIconAtals/avatar_pet_072.webp"
+        },
+        {
+          "id": "avatar_pet_072_a",
+          "path": "/images/HeadIconAtals/avatar_pet_072_a.webp"
+        },
+        {
+          "id": "avatar_pet_073",
+          "path": "/images/HeadIconAtals/avatar_pet_073.webp"
+        },
+        {
+          "id": "avatar_pet_073_a",
+          "path": "/images/HeadIconAtals/avatar_pet_073_a.webp"
+        },
+        {
+          "id": "avatar_pet_074",
+          "path": "/images/HeadIconAtals/avatar_pet_074.webp"
+        },
+        {
+          "id": "avatar_pet_074_a",
+          "path": "/images/HeadIconAtals/avatar_pet_074_a.webp"
+        },
+        {
+          "id": "avatar_pet_075",
+          "path": "/images/HeadIconAtals/avatar_pet_075.webp"
+        },
+        {
+          "id": "avatar_pet_075_a",
+          "path": "/images/HeadIconAtals/avatar_pet_075_a.webp"
+        },
+        {
+          "id": "avatar_pet_076",
+          "path": "/images/HeadIconAtals/avatar_pet_076.webp"
+        },
+        {
+          "id": "avatar_pet_077",
+          "path": "/images/HeadIconAtals/avatar_pet_077.webp"
+        },
+        {
+          "id": "avatar_pet_078",
+          "path": "/images/HeadIconAtals/avatar_pet_078.webp"
+        },
+        {
+          "id": "avatar_pet_079",
+          "path": "/images/HeadIconAtals/avatar_pet_079.webp"
+        },
+        {
+          "id": "avatar_pet_083",
+          "path": "/images/HeadIconAtals/avatar_pet_083.webp"
+        },
+        {
+          "id": "avatar_pet_086",
+          "path": "/images/HeadIconAtals/avatar_pet_086.webp"
+        },
+        {
+          "id": "avatar_pet_088",
+          "path": "/images/HeadIconAtals/avatar_pet_088.webp"
+        },
+        {
+          "id": "avatar_pet_093",
+          "path": "/images/HeadIconAtals/avatar_pet_093.webp"
+        },
+        {
+          "id": "avatar_pet_094",
+          "path": "/images/HeadIconAtals/avatar_pet_094.webp"
+        },
+        {
+          "id": "avatar_pet_095",
+          "path": "/images/HeadIconAtals/avatar_pet_095.webp"
+        },
+        {
+          "id": "avatar_pet_096",
+          "path": "/images/HeadIconAtals/avatar_pet_096.webp"
+        },
+        {
+          "id": "avatar_pet_097",
+          "path": "/images/HeadIconAtals/avatar_pet_097.webp"
+        },
+        {
+          "id": "avatar_pet_098",
+          "path": "/images/HeadIconAtals/avatar_pet_098.webp"
+        }
+      ]
+    }
+  ]
+}

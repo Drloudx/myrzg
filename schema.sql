@@ -19,13 +19,20 @@ CREATE TABLE IF NOT EXISTS comments (
   ip_hash    TEXT    NOT NULL,            -- SHA-256(ip + 服务端盐)，仅限流与追溯
   ua_hash    TEXT    DEFAULT NULL,
   token_hash TEXT    DEFAULT NULL,        -- 浏览器自删令牌的 SHA-256；明文只回给浏览器一次
-  review_reason TEXT DEFAULT NULL         -- 命中的审核词表类别（'外链'/'赌博'…），干净为 NULL
+  review_reason TEXT DEFAULT NULL,        -- 命中的审核词表类别（'外链'/'赌博'…），干净为 NULL
+  avatar     TEXT    DEFAULT NULL         -- 头像 ID（如 avatar_pet_006），路径由 avatarCatalog.json 查
 );
 
 -- 增量迁移（建库时已含上面字段则可忽略；D1 不支持 ADD COLUMN IF NOT EXISTS，
 -- 重复执行会报 "duplicate column name"，属预期，不影响已有数据）：
 --   ALTER TABLE comments ADD COLUMN token_hash TEXT DEFAULT NULL;
 --   ALTER TABLE comments ADD COLUMN review_reason TEXT DEFAULT NULL;
+--   ALTER TABLE comments ADD COLUMN avatar TEXT DEFAULT NULL;
+--
+-- 说明：`email_hash` 列保留但不再使用（2026-10-02 起头像改为选游戏头像，
+-- 不再用邮箱哈希拼 Gravatar——那需要把标识发给第三方，与"不存明文邮箱"自相矛盾，
+-- 且国内用户基本没有 Gravatar 账号，拿到的是随机几何图）。
+-- 保留列而不 DROP：SQLite 删列代价高，且历史数据留着无害。
 
 -- 列表查询：按 page_key + status 过滤、created_at 倒序
 CREATE INDEX IF NOT EXISTS idx_comments_page

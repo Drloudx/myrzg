@@ -32,13 +32,37 @@ import { matchReview } from '../../src/config/commentBlocklist.js'
 const MAX_BODY = 1000
 const MAX_NICK = 24
 const MAX_LIMIT = 50
-const RATE_PER_HOUR = 5
-const RATE_PER_DAY = 20
+
+/**
+ * 限流阈值的默认值。可用**环境变量**覆盖（`RATE_LIMIT_PER_HOUR` / `RATE_LIMIT_PER_DAY`），
+ * **生产环境不要设置**，用默认值即可。
+ *
+ * 为什么做成可注入：端到端测试套件的 POST 数量（约 13 个）必然超过 5 条/小时，
+ * 后半段会被 429 挡成假失败。本地用 `.dev.vars` 放大阈值就能稳定重复运行，
+ * 不必在生产代码里塞"测试专用旁路"。非法值一律回落到默认值。
+ */
+const RATE_DEFAULTS = { perHour: 5, perDay: 20 }
+
+function positiveInt(value, fallback) {
+  const n = Number.parseInt(value ?? '', 10)
+  return Number.isFinite(n) && n > 0 ? n : fallback
+}
 
 /**
  * page_key 白名单：必须是 `前缀:业务ID`，避免评论被挂到任意路径
  */
 const PAGE_KEY_RE = /^(item|furniture|hero|pet|monster|task|event|battle|stage|glossary):[A-Za-z0-9_\-.]{1,64}$/
+
+/**
+ * 头像 ID 白名单：只允许 `at001_0`、`avatar_pet_006` 这类标识符。
+ *
+ * 这里**只校验格式、不校验是否在清单里**——头像 ID 与图片路径刻意解耦：
+ * 客户端用 `public/data/avatarCatalog.json` 把 ID 换成路径。
+ * 好处是素材目录将来改名/迁移时，库里的历史评论仍存 ID、不会变成失效路径；
+ * 代价是客户端能存一个清单里没有的 ID，效果只是回退成昵称首字占位（无害）。
+ * 不硬编码清单的原因：Worker 读不到 `public/` 下的文件，硬编码会与素材脱节。
+ */
+const AVATAR_ID_RE = /^[A-Za-z0-9_]{1,40}$/
 
 const JSON_HEADERS = {
   'content-type': 'application/json; charset=utf-8',
@@ -119,11 +143,14 @@ async function bump(env, bucket) {
 
 /** 小时桶做闸门，日桶兜底。返回 null 表示放行 */
 async function checkRateLimit(env, ipHash, ts) {
+  const perHour = positiveInt(env.RATE_LIMIT_PER_HOUR, RATE_DEFAULTS.perHour)
+  const perDay = positiveInt(env.RATE_LIMIT_PER_DAY, RATE_DEFAULTS.perDay)
+
   const hourCount = await bump(env, `h:${ipHash}:${hourBucket(ts)}`)
-  if (hourCount > RATE_PER_HOUR) return { message: '发言太频繁，请稍后再试', status: 429 }
+  if (hourCount > perHour) return { message: '发言太频繁，请稍后再试', status: 429 }
 
   const dayCount = await bump(env, `d:${ipHash}:${dayBucket(ts)}`)
-  if (dayCount > RATE_PER_DAY) return { message: '今日发言次数已达上限', status: 429 }
+  if (dayCount > perDay) return { message: '今日发言次数已达上限', status: 429 }
 
   return null
 }
@@ -163,9 +190,10 @@ function toPublic(row) {
   return {
     id: row.id,
     nick: row.nick,
+    // 头像 ID（不是路径）。客户端用 avatarCatalog.json 换成图片；空值走昵称首字占位
+    avatar: row.avatar || null,
     body: row.body,
     createdAt: row.created_at,
-    emailHash: row.email_hash || null,
     status: row.status,
     pageKey: row.page_key,
     // 命中审核词表的原因（供管理页面判断是误伤还是真垃圾）；干净评论为 null
@@ -185,9 +213,9 @@ async function listComments(env, url) {
 
   // 多取 1 条判断 hasMore，避免 COUNT(*)（全表扫描，D1 按行计费）
   const sql = hasCursor
-    ? `SELECT id, nick, email_hash, body, created_at, status, page_key FROM comments
+    ? `SELECT id, nick, avatar, body, created_at, status, page_key FROM comments
        WHERE page_key = ?1 AND status = 1 AND id < ?2 ORDER BY id DESC LIMIT ?3`
-    : `SELECT id, nick, email_hash, body, created_at, status, page_key FROM comments
+    : `SELECT id, nick, avatar, body, created_at, status, page_key FROM comments
        WHERE page_key = ?1 AND status = 1 ORDER BY id DESC LIMIT ?2`
 
   const stmt = hasCursor
@@ -227,6 +255,10 @@ async function createComment(env, request) {
   if (!nick) return bad('请填写昵称')
   if (!body) return bad('评论内容不能为空')
 
+  // 头像 ID：格式不合法就当没设置（回退昵称首字），不因此拒绝整条评论
+  const rawAvatar = String(payload?.avatar || '')
+  const avatar = AVATAR_ID_RE.test(rawAvatar) ? rawAvatar : null
+
   const ip = clientIp(request)
   const salt = env.IP_HASH_SALT || 'myrzg-default-salt'
   const ipHash = await sha256Hex(`${ip}|${salt}`)
@@ -250,19 +282,17 @@ async function createComment(env, request) {
   const deleteToken = randomToken()
   const tokenHash = await sha256Hex(deleteToken)
 
-  const rawEmail = sanitize(payload?.email, 254).toLowerCase()
-  const emailHash = rawEmail ? await sha256Hex(rawEmail) : null
   const uaHash = await sha256Hex(String(request.headers.get('user-agent') || '').slice(0, 200))
 
   const inserted = await env.DB.prepare(
-    `INSERT INTO comments (page_key, nick, email_hash, body, status, created_at, ip_hash, ua_hash, token_hash, review_reason)
+    `INSERT INTO comments (page_key, nick, avatar, body, status, created_at, ip_hash, ua_hash, token_hash, review_reason)
      VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)
      RETURNING id, created_at`
   )
     .bind(
       pageKey,
       nick,
-      emailHash,
+      avatar,
       body,
       status,
       ts,
@@ -276,7 +306,7 @@ async function createComment(env, request) {
   return json(
     {
       ok: true,
-      comment: { id: inserted.id, nick, body, createdAt: inserted.created_at, status },
+      comment: { id: inserted.id, nick, avatar, body, createdAt: inserted.created_at, status },
       // 前端存 localStorage，用于"删除我的评论"。明文只出现这一次
       deleteToken,
       pending: status === 0,
@@ -332,7 +362,7 @@ async function adminList(env, url) {
   if (hasCursor) where.push(`id < ?${hasStatus ? 2 : 1}`)
   const limitIdx = 1 + (hasStatus ? 1 : 0) + (hasCursor ? 1 : 0)
 
-  const sql = `SELECT id, page_key, nick, email_hash, body, created_at, status, review_reason FROM comments
+  const sql = `SELECT id, page_key, nick, avatar, body, created_at, status, review_reason FROM comments
     ${where.length ? 'WHERE ' + where.join(' AND ') : ''}
     ORDER BY id DESC LIMIT ?${limitIdx}`
 

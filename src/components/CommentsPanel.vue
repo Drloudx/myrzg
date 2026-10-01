@@ -13,15 +13,16 @@
         <ul v-if="comments.length" class="comments-list">
           <li v-for="c in comments" :key="c.id" class="comment-item">
             <img
-              v-if="gravatarUrl(c.emailHash)"
+              v-if="avatarOf(c)"
               class="comment-avatar"
-              :src="gravatarUrl(c.emailHash)"
+              :src="avatarOf(c)"
               alt=""
               loading="lazy"
               decoding="async"
-              referrerpolicy="no-referrer"
             />
-            <div v-else class="comment-avatar comment-avatar-fallback" aria-hidden="true">{{ c.nick.slice(0, 1) }}</div>
+            <div v-else class="comment-avatar comment-avatar-fallback" aria-hidden="true">
+              {{ (c.nick || '?').slice(0, 1) }}
+            </div>
 
             <div class="comment-main">
               <div class="comment-head">
@@ -51,26 +52,24 @@
         </div>
       </template>
 
-      <!-- 发表区 -->
+      <!-- 发表区：昵称与头像来自「账号」弹窗，这里不再重复填写 -->
       <form class="comment-form" @submit.prevent="submit">
-        <div class="comment-form-row">
-          <input
-            v-model="form.nick"
-            class="comment-input"
-            type="text"
-            maxlength="24"
-            placeholder="昵称（必填）"
-            autocomplete="nickname"
-          />
-          <input
-            v-model="form.email"
-            class="comment-input"
-            type="email"
-            maxlength="254"
-            placeholder="邮箱（选填，用于头像，不会公开）"
-            autocomplete="email"
-          />
+        <div class="comment-identity">
+          <img v-if="myAvatarPath" class="comment-avatar" :src="myAvatarPath" alt="" />
+          <div v-else class="comment-avatar comment-avatar-fallback" aria-hidden="true">
+            {{ identity.nick.trim().slice(0, 1) || '?' }}
+          </div>
+          <span class="comment-identity-text">
+            <template v-if="identity.nick.trim()">
+              以 <strong>{{ identity.nick }}</strong> 的身份发表
+            </template>
+            <template v-else>还没设置昵称</template>
+          </span>
+          <button type="button" class="comment-identity-edit" @click="openAccountModal()">
+            {{ identity.nick.trim() ? '修改' : '去设置' }}
+          </button>
         </div>
+
         <textarea
           v-model="form.body"
           class="comment-textarea"
@@ -108,6 +107,7 @@
 <script setup>
 import { computed, reactive, ref, watch } from 'vue'
 import { UiButton, UiEmptyState, UiSection } from './ui/index.js'
+import { getImageUrl } from '../utils/env.js'
 import {
   deleteOwnComment,
   fetchComments,
@@ -116,6 +116,13 @@ import {
   removeDeleteToken,
   saveDeleteToken
 } from '../utils/commentApi.js'
+import {
+  avatarCatalogState,
+  avatarPath,
+  identity,
+  loadAvatarCatalog,
+  openAccountModal
+} from '../utils/identity.js'
 
 const props = defineProps({
   /**
@@ -133,20 +140,31 @@ const submitError = ref('')
 const submitNotice = ref('')
 const cursor = ref(null)
 const hasMore = ref(false)
-const nextCursor = ref(null)
 const deletingId = ref(null)
 
-const form = reactive({ nick: '', email: '', body: '', hp: '' })
+const form = reactive({ body: '', hp: '' })
 
 /** 本机发表过的评论 id，用于显示"删除"按钮 */
 const ownedIds = ref(new Set())
 
-const canSubmit = computed(() => form.nick.trim().length > 0 && form.body.trim().length > 0)
+const myAvatarPath = computed(() => {
+  const path = avatarPath(identity.value.avatar)
+  return path ? getImageUrl(path) : ''
+})
+
+const canSubmit = computed(() => form.body.trim().length > 0)
 
 function syncOwned() {
   const set = new Set()
   for (const c of comments.value) if (getDeleteToken(c.id)) set.add(c.id)
   ownedIds.value = set
+}
+
+/** 把评论的 avatar ID 换成图片地址；清单未加载或 ID 未知时返回空串，走昵称首字占位 */
+function avatarOf(comment) {
+  if (!comment?.avatar) return ''
+  const path = avatarPath(comment.avatar)
+  return path ? getImageUrl(path) : ''
 }
 
 async function load({ append = false } = {}) {
@@ -156,7 +174,6 @@ async function load({ append = false } = {}) {
     const data = await fetchComments(props.pageKey, { cursor: append ? cursor.value : undefined })
     comments.value = append ? [...comments.value, ...data.comments] : data.comments
     hasMore.value = !!data.hasMore
-    nextCursor.value = data.nextCursor ?? null
     cursor.value = data.nextCursor ?? null
     syncOwned()
   } catch (err) {
@@ -173,14 +190,24 @@ function loadMore() {
 
 async function submit() {
   if (submitting.value || !canSubmit.value) return
+
+  // 未设昵称：先把账号弹窗打开让用户设好，回来再点发表。
+  // 不自动用"匿名"顶替，否则用户会以为设置已生效。
+  if (!identity.value.nick.trim()) {
+    submitError.value = ''
+    submitNotice.value = '请先设置昵称，保存后再点「发表」'
+    openAccountModal()
+    return
+  }
+
   submitting.value = true
   submitError.value = ''
   submitNotice.value = ''
   try {
     const data = await postComment({
       pageKey: props.pageKey,
-      nick: form.nick.trim(),
-      email: form.email.trim(),
+      nick: identity.value.nick.trim(),
+      avatar: identity.value.avatar || '',
       body: form.body.trim(),
       hp: form.hp
     })
@@ -219,7 +246,7 @@ async function handleDelete(comment) {
   }
 }
 
-/** math 时间 → 相对时间（近 7 天）或日期 */
+/** 时间 → 相对时间（近 7 天）或日期 */
 function formatTime(unixSec) {
   const diff = Math.floor(Date.now() / 1000) - unixSec
   if (diff < 60) return '刚刚'
@@ -239,16 +266,7 @@ function onHoneypotFocus(event) {
   event?.target?.blur?.()
 }
 
-/**
- * 头像：服务端只回传邮箱的 SHA-256，前端拼 Gravatar。
- * 明文邮箱不落库、不回传；没有邮箱的评论用昵称首字占位。
- */
-function gravatarUrl(emailHash) {
-  if (!emailHash) return ''
-  return `https://cn.gravatar.com/avatar/${emailHash}?d=identicon&s=64`
-}
-
-// 换物品时重置并重新加载（详情弹窗会在同一实例上切 item）
+// 头像清单：用来把评论里的 avatar ID 换成图片，进面板就载入一次
 watch(
   () => props.pageKey,
   () => {
@@ -258,6 +276,15 @@ watch(
     submitError.value = ''
     submitNotice.value = ''
     if (props.pageKey) load()
+  },
+  { immediate: true }
+)
+
+// 有评论带头像时才需要清单
+watch(
+  comments,
+  (list) => {
+    if (list.some((c) => c.avatar) && avatarCatalogState.value === 'idle') loadAvatarCatalog()
   },
   { immediate: true }
 )
@@ -378,12 +405,36 @@ watch(
   gap: 8px;
 }
 
-.comment-form-row {
+.comment-identity {
   display: flex;
+  align-items: center;
   gap: 8px;
 }
 
-.comment-input,
+.comment-identity-text {
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.6;
+  min-width: 0;
+}
+
+.comment-identity-text strong {
+  color: var(--text-main);
+}
+
+.comment-identity-edit {
+  margin-left: auto;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--accent-ink);
+  font-family: inherit;
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
 .comment-textarea {
   width: 100%;
   box-sizing: border-box;
@@ -395,20 +446,15 @@ watch(
   font-family: inherit;
   font-size: 13.5px;
   line-height: 1.6;
-}
-
-.comment-textarea {
   resize: vertical;
   min-height: 72px;
 }
 
-.comment-input:focus,
 .comment-textarea:focus {
   outline: 2px solid var(--accent-bright);
   outline-offset: 1px;
 }
 
-.comment-input::placeholder,
 .comment-textarea::placeholder {
   color: var(--text-faint);
 }
@@ -453,12 +499,5 @@ watch(
   color: var(--accent-ink);
   font-size: 13px;
   line-height: 1.6;
-}
-
-/* 手机端：昵称/邮箱各占一行，避免输入框被挤到过窄 */
-@media (max-width: 600px) {
-  .comment-form-row {
-    flex-direction: column;
-  }
 }
 </style>
