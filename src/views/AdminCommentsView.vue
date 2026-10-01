@@ -1,12 +1,11 @@
 <template>
   <div class="page-view-container admin-comments-page">
-    <!-- 是否需要访问凭据：由 onMounted 的无令牌探测决定，不能只看 adminToken 是否为空。
-         服务端把管理端免验证打开时（本地 .dev.vars 的 ADMIN_AUTH_DISABLED=1），
-         此时令牌本来就是空的，若用 `!adminToken` 判断会一直停在登录框（踩过这个坑）。 -->
+    <!-- 是否需要访问凭据：没有本地凭据就显示登录框；有则直接载入列表。
+         本地与线上同一条路径（本地令牌在 .dev/vars 的 ADMIN_TOKEN），无免验证旁路。 -->
     <div v-if="needsAuth" class="admin-login paper-panel">
       <h2 class="admin-login-title">评论管理</h2>
       <p class="admin-login-tip">
-        这个页面用于管理评论：审核、隐藏与删除。需要访问凭据，凭据只保存在你本机浏览器。
+        这个页面用于管理评论：审核、隐藏与删除。
       </p>
       <input
         v-model="tokenInput"
@@ -17,7 +16,9 @@
         @keyup.enter="saveToken"
       />
       <div class="admin-login-actions">
-        <UiButton variant="primary" size="sm" :disabled="!tokenInput.trim()" @click="saveToken">进入</UiButton>
+        <UiButton variant="primary" size="sm" :disabled="!tokenInput.trim()" @click="saveToken">
+          进入
+        </UiButton>
       </div>
       <p v-if="loginError" class="admin-error" role="alert">{{ loginError }}</p>
     </div>
@@ -26,7 +27,12 @@
       <UiFilterPanel>
         <template #search>
           <div class="admin-toolbar">
-            <span class="admin-toolbar-title">评论管理</span>
+            <UiSearchInput
+              :model-value="searchInput"
+              placeholder="搜索评论内容、昵称或物品..."
+              class="admin-search"
+              @update:model-value="onSearchInput"
+            />
             <UiButton variant="ghost" size="sm" @click="logout">退出</UiButton>
           </div>
         </template>
@@ -79,7 +85,7 @@
             </div>
           </li>
         </ul>
-        <UiEmptyState v-else text="该状态下没有评论" />
+        <UiEmptyState v-else :text="searchQuery ? '没有匹配的评论' : '该状态下没有评论'" />
 
         <div v-if="hasMore" class="admin-more">
           <UiButton variant="secondary" size="sm" :disabled="loading" @click="loadMore()">
@@ -92,8 +98,16 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
-import { UiButton, UiEmptyState, UiFilterPanel, UiFilterPill, UiFilterRow, UiTag } from '../components/ui/index.js'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+import {
+  UiButton,
+  UiEmptyState,
+  UiFilterPanel,
+  UiFilterPill,
+  UiFilterRow,
+  UiSearchInput,
+  UiTag
+} from '../components/ui/index.js'
 import {
   CommentApiError,
   deleteCommentPermanently,
@@ -109,10 +123,11 @@ const loginError = ref('')
 
 /**
  * 是否需要输入访问凭据。
- * 初值 false：先假设不需要，由 onMounted 的无令牌探测来纠正——
- * 探测成功（本地免验证）就保持 false 直接进管理界面；401/404 才置 true 显示登录框。
+ * 有个本地保存的凭据就直接载入，否则显示登录框。
+ * 本地与线上走同一条路径（本地令牌是 .dev/vars 里的 `ADMIN_TOKEN`），
+ * 所以没有"免验证旁路"这一说，界面状态只由凭据是否存在决定。
  */
-const needsAuth = ref(false)
+const needsAuth = ref(true)
 
 const comments = ref([])
 const loading = ref(false)
@@ -122,6 +137,32 @@ const cursor = ref(null)
 const hasMore = ref(false)
 const pendingCount = ref(0)
 
+/** 搜索关键词：输入框的即时值 + 实际生效值（防抖后） */
+const searchInput = ref('')
+const searchQuery = ref('')
+let searchTimer = 0
+
+/**
+ * 搜索防抖 400ms：每敲一个字都请求会打满免费版额度（管理端也吃同一份 10 万/天）。
+ * 输入框保持即时响应，只有生效值变化才发请求。
+ */
+function onSearchInput(value) {
+  searchInput.value = value
+  if (searchTimer) clearTimeout(searchTimer)
+  searchTimer = setTimeout(() => {
+    searchTimer = 0
+    searchQuery.value = String(value || '').trim()
+    comments.value = []
+    cursor.value = null
+    hasMore.value = false
+    safeLoad()
+  }, 400)
+}
+
+onBeforeUnmount(() => {
+  if (searchTimer) clearTimeout(searchTimer)
+})
+
 onMounted(async () => {
   try {
     adminToken.value = localStorage.getItem(TOKEN_KEY) || ''
@@ -129,20 +170,16 @@ onMounted(async () => {
     adminToken.value = ''
   }
 
-  // 先试一次"不带令牌"的请求：本地把管理端免验证打开时（.dev.vars 的
-  // ADMIN_AUTH_DISABLED=1），这样就能直接进管理页、不用输令牌；
-  // 线上会返回 401（需要令牌）或 404（未配置令牌），于是正常显示登录框。
+  if (!adminToken.value) {
+    // 没有凭据就停在登录框，不发请求（避免无谓的 401）
+    needsAuth.value = true
+    return
+  }
+  needsAuth.value = false
   try {
     await load()
   } catch {
-    needsAuth.value = true
-    if (adminToken.value) {
-      try {
-        await load()
-      } catch {
-        /* load 内部已处理错误提示 */
-      }
-    }
+    // 凭据失效：load() 已切回登录态并给出提示
   }
 })
 
@@ -156,13 +193,27 @@ function saveToken() {
   } catch {
     /* 隐私模式下存不了，本次会话仍可用 */
   }
+  needsAuth.value = false
   safeLoad()
 }
 
+/**
+ * 退出：清凭据并**回到登录界面**。
+ *
+ * 关键是要显式把 `needsAuth` 置回 true：只清 `adminToken` 不够。
+ * 界面状态由 `needsAuth` 决定，不置回的话列表仍留在屏幕上，
+ * 看起来"点了退出没反应"（用户实际反馈过）。
+ */
 function logout() {
   adminToken.value = ''
   tokenInput.value = ''
   comments.value = []
+  cursor.value = null
+  hasMore.value = false
+  pendingCount.value = 0
+  errorMessage.value = ''
+  loginError.value = ''
+  needsAuth.value = true
   try {
     localStorage.removeItem(TOKEN_KEY)
   } catch {
@@ -180,16 +231,16 @@ function setFilter(value) {
 
 /**
  * 载入管理端列表。
- * @param {{append?: boolean, probe?: boolean}} options
- *   `probe` 为 true 时表示"探测是否需要令牌"（onMounted 里先试一次不带令牌的请求），
- *   这种调用不写登录错误提示，由调用方决定怎么展示，且会把错误抛出去。
+ * 401/404 表示凭据无效或服务端未配置令牌 → 清凭据并切回登录界面；
+ * 其余错误（网络、服务端故障）只在列表区显示提示，不把用户踢出登录态。
  */
-async function load({ append = false, probe = false } = {}) {
+async function load({ append = false } = {}) {
   loading.value = true
   errorMessage.value = ''
   try {
     const data = await fetchAdminComments(adminToken.value, {
       status: statusFilter.value,
+      q: searchQuery.value,
       cursor: append ? cursor.value : undefined
     })
     comments.value = append ? [...comments.value, ...data.comments] : data.comments
@@ -345,16 +396,17 @@ function formatTime(unixSec) {
   width: 100%;
 }
 
-
-.admin-toolbar-title {
-  color: var(--text-main);
-  font-size: 15px;
-  font-weight: 700;
+/* 搜索框占据标题原来的位置；退出按钮靠右 */
+.admin-search {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .admin-toolbar > :last-child {
   margin-left: auto;
+  flex: 0 0 auto;
 }
+
 
 .admin-list {
   list-style: none;

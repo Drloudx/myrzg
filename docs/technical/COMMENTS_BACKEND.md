@@ -250,8 +250,19 @@ CREATE TABLE rate_limits (
 "请求根本没到服务端"** 时用的兜底文案（`无法连接评论服务器` / `网络连接异常` /
 `网络连接超时，请稍后再试`）。API 测试逐条断言"文案在契约内且不含技术名词"。
 
-### 删除是幂等的
+### 管理端搜索在服务端做
 
+`GET /api/admin/comments?q=<关键词>` 在**服务端**匹配正文 / 昵称 / 页面标识。
+不放在前端过滤：评论会持续增长，管理端不该把全部数据拉到浏览器再筛。
+
+- 用 `LIKE` 而不是 FTS：D1 免费版读便宜（500 万行/天）、写贵（10 万行/天），
+  FTS 要额外索引（写入按行计费），而管理端查询低频，不值得增加写入成本。
+- `%` / `_` / `\` **用 `ESCAPE` 子句按字面量匹配**，不能简单删掉：
+  删了会变成空条件 → 静默返回全部，用户搜 `%` 却看到"全部"是最容易误判的行为。
+- 前端输入防抖 400ms（每敲一个字都请求会打满免费额度），空态文案在有关键词时
+  显示「没有匹配的评论」。
+
+### 删除是幂等的
 `DELETE /api/comments` 的目标状态是"这条评论不再可见"。**已经不可见（或从未存在）时返回成功**，
 不再报"评论不存在"。原因：重复点击、多个标签页、列表是旧快照都会走到这条路径，
 而"明明还在却说不存在"比直接消失更让用户困惑。前端同时把 404 当成功处理（容忍旧响应），
@@ -436,12 +447,14 @@ npm run dev:api
 - 本地变量放 `.dev.vars`（`wrangler pages dev` 自动读取，**已在 .gitignore 中**）：
   `ADMIN_TOKEN`、`IP_HASH_SALT`，以及把限流阈值放大的 `RATE_LIMIT_PER_HOUR` / `RATE_LIMIT_PER_DAY`
   （端到端测试的 POST 数量超过默认 5 条/小时，不放大会被 429 挡成假失败；**生产不要设这两项**）。
-- **站长页面免验证（仅本地）**：`.dev.vars` 里 `ADMIN_AUTH_DISABLED=1`，
-  之后打开 `/#/admin/comments` 不用输令牌。
-  ⚠️ **线上绝不能设这个变量**——Pages 项目里没有它，所以线上仍然强制令牌
-  （未配 `ADMIN_TOKEN` 时管理接口直接 404）。只认字符串 `'1'`，避免误判。
-  前端通过"先试一次不带令牌的请求"来探测：成功就直接进管理界面，
-  401/404 才显示登录框（**不能只看令牌是否为空**，免验证时令牌本来就是空的——踩过这个坑）。
+- **站长认证本地与线上走同一条路径，没有"免验证旁路"**：本地 `.dev.vars` 的
+  `ADMIN_TOKEN` 用短令牌 `yxzm` 方便敲，线上换成足够长的随机串。
+  这样本地验到的行为就是线上行为，不会出现"本地能进、线上进不去"的错觉。
+  访问 `/#/admin/comments` 需在登录框输入令牌；凭据存本机 localStorage，
+  点「退出」清凭据并回到登录框。
+  > 曾经做过 `ADMIN_AUTH_DISABLED=1` 的本地免验证开关，已按用户要求移除：
+  > 它会让"退出"失去效果（服务端永远放行，客户端无法判断已退出），
+  > 而且多一套只服务本地的分支，反而掩盖真实行为。
 - 本地 D1 是独立副本，**建表要单独跑一次**（`--local`，去掉 `--remote`）：
   ```bash
   npx wrangler d1 execute myrzg-comments --file=./schema.sql --local
@@ -536,7 +549,7 @@ Pages 的 **Fail open / closed**（Settings → Runtime）**必须设为 Fail op
 
 | # | 动作 | 说明 |
 | --- | --- | --- |
-| 1 | 配 `ADMIN_TOKEN` | Cloudflare Pages 项目 → Settings → Environment variables。**未配置时管理接口直接 404**，管理页会提示「服务端未配置 ADMIN_TOKEN」 |
+| 1 | 配 `ADMIN_TOKEN` | Cloudflare Pages 项目 → Settings → Environment variables。**未配置时管理接口直接 404**，管理页会提示「当前未开放评论管理」。⚠️ 必须用足够长的随机串；本地开发用的是短令牌 `yxzm`，**不要照搬上线** |
 | 2 | 配 `IP_HASH_SALT` | 同上。用于 IP/邮箱哈希加盐。⚠️ 换盐等于重置全部限流计数 |
 | 3 | 推送到 `main` | `origin` 是 `github.com/Drloudx/myrzg`，Pages 由 GitHub 自动部署，push 即上线 |
 | 4 | **实测 `/api/health` 返回 JSON** | `curl.exe -i https://myrzg.yxzmy.top/api/health`，断言 `Content-Type: application/json` 而**不是 `text/html`**。被 SPA 兜底吃掉就说明 Functions 没生效 |

@@ -150,9 +150,16 @@ export function removeDeleteToken(id) {
 
 // ── 管理端 ────────────────────────────────────────────────────────
 
-export function fetchAdminComments(adminToken, { status, cursor, limit = 50 } = {}) {
+/**
+ * 管理端列表。
+ * @param {string} adminToken 管理凭据
+ * @param {{status?: string|number, q?: string, cursor?: number, limit?: number}} options
+ *   `q` 是关键词，服务端在正文/昵称/页面标识里匹配（不在前端过滤，评论会持续增长）
+ */
+export function fetchAdminComments(adminToken, { status, q, cursor, limit = 50 } = {}) {
   const params = new URLSearchParams({ limit: String(limit) })
   if (status !== undefined && status !== null && status !== '') params.set('status', String(status))
+  if (q) params.set('q', String(q))
   if (cursor) params.set('cursor', String(cursor))
   return request(`/api/admin/comments?${params.toString()}`, { adminToken })
 }

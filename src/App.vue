@@ -283,6 +283,8 @@ const PAGE_TITLES = {
   '/exchange': '兑换',
   '/petseggs': '魔物收益',
   '/dungeons': '副本图鉴',
+  '/chapters': '关卡图鉴',
+  '/glossary': '词条',
   '/gacha': '模拟招募',
   '/admin/comments': '评论管理'
 }

@@ -205,20 +205,14 @@ async function verifyTurnstile(env, token, ip) {
 }
 
 /**
- * 管理端是否**免验证**（本地开发用）。
+ * 管理员令牌校验：只比对哈希，恒定时间比较。
  *
- * 设置 `ADMIN_AUTH_DISABLED=1` 后，管理端接口不再要求令牌，方便本地直接打开
- * `/#/admin/comments` 看效果。**生产环境绝不能设置**——线上 Pages 项目里没有这个变量，
- * 因此线上仍然强制令牌（未配 `ADMIN_TOKEN` 时管理接口直接 404）。
- * 只认字符串 `'1'`，避免把 `false`/`0` 之类的值误判为开启。
+ * 本地与线上走**同一条路径**（不存在"本地免验证"的旁路）：
+ * 本地用 `.dev.vars` 里的 `ADMIN_TOKEN`（短令牌便于开发），
+ * 线上用 Cloudflare Pages 环境变量里的长随机串。
+ * 这样本地验证到的行为就是线上行为，不会出现"本地能进、线上进不去"的错觉。
  */
-function isAdminAuthDisabled(env) {
-  return String(env.ADMIN_AUTH_DISABLED || '') === '1'
-}
-
-/** 管理员令牌校验：只比对哈希，恒定时间比较 */
 async function isAdmin(env, request) {
-  if (isAdminAuthDisabled(env)) return true
   if (!env.ADMIN_TOKEN) return false
   const token = request.headers.get('x-admin-token') || ''
   if (!token) return false
@@ -395,7 +389,14 @@ async function deleteOwnComment(env, request) {
   return json({ ok: true })
 }
 
-/** GET /api/admin/comments?status=&cursor=&limit= —— 管理端列表 */
+/**
+ * GET /api/admin/comments?status=&q=&cursor=&limit= —— 管理端列表
+ *
+ * `q` 为关键词搜索，匹配**正文 / 昵称 / 页面标识**（大小写不敏感）。
+ * 在服务端搜而不是前端过滤：评论会持续增长，管理端不该把全部数据拉到浏览器再筛。
+ * 用 LIKE 而非 FTS：D1 免费版读便宜（500 万行/天），而 FTS 要额外索引（写入按行计费），
+ * 管理端查询低频，没必要为它增加写入成本。
+ */
 async function adminList(env, url) {
   const rawLimit = Number.parseInt(url.searchParams.get('limit') || '50', 10)
   const limit = Math.min(Math.max(Number.isFinite(rawLimit) ? rawLimit : 50, 1), MAX_LIMIT)
@@ -406,19 +407,33 @@ async function adminList(env, url) {
   const hasStatus = statusParam === '0' || statusParam === '1' || statusParam === '2'
   const status = hasStatus ? Number.parseInt(statusParam, 10) : null
 
+  // 关键词：`%`/`_`/`\` 用 ESCAPE 子句按**字面量**匹配。
+  // 不能简单删掉这些字符：删了会变成空条件 → 静默返回全部评论，
+  // 用户搜 `%` 却看到"全部"是最容易误判的行为。转义后搜的是字面量本身。
+  const q = sanitize(url.searchParams.get('q') || '', 60)
+  const hasQ = q.length > 0
+  const likeParam = hasQ ? `%${q.replace(/[\\%_]/g, (ch) => `\\${ch}`)}%` : ''
+
   const where = []
-  if (hasStatus) where.push('status = ?1')
-  if (hasCursor) where.push(`id < ?${hasStatus ? 2 : 1}`)
-  const limitIdx = 1 + (hasStatus ? 1 : 0) + (hasCursor ? 1 : 0)
+  const binds = []
+  if (hasStatus) {
+    binds.push(status)
+    where.push(`status = ?${binds.length}`)
+  }
+  if (hasQ) {
+    binds.push(likeParam)
+    const i = binds.length
+    where.push(`(body LIKE ?${i} ESCAPE '\\' OR nick LIKE ?${i} ESCAPE '\\' OR page_key LIKE ?${i} ESCAPE '\\')`)
+  }
+  if (hasCursor) {
+    binds.push(cursor)
+    where.push(`id < ?${binds.length}`)
+  }
+  binds.push(limit + 1)
 
   const sql = `SELECT id, page_key, nick, avatar, body, created_at, status, review_reason FROM comments
     ${where.length ? 'WHERE ' + where.join(' AND ') : ''}
-    ORDER BY id DESC LIMIT ?${limitIdx}`
-
-  const binds = []
-  if (hasStatus) binds.push(status)
-  if (hasCursor) binds.push(cursor)
-  binds.push(limit + 1)
+    ORDER BY id DESC LIMIT ?${binds.length}`
 
   const { results } = await env.DB.prepare(sql)
     .bind(...binds)
@@ -427,7 +442,7 @@ async function adminList(env, url) {
   const hasMore = rows.length > limit
   const page = hasMore ? rows.slice(0, limit) : rows
 
-  // 待审总数：只在第一页算，且用索引扫描；管理端低频，成本可接受
+  // 待审总数：只在第一页算；管理端低频，COUNT(*) 的成本可接受
   let pendingCount = 0
   if (!hasCursor) {
     const c = await env.DB.prepare(`SELECT COUNT(*) AS n FROM comments WHERE status = 0`).first()
@@ -497,9 +512,9 @@ export async function onRequest(context) {
 
   if (!env.DB) return bad(ERR.server, 500)
 
-  // 管理端未配置令牌时，连路由都不暴露（本地显式开启免验证时例外）
+  // 管理端未配置令牌时，连路由都不暴露（对外表现为"接口不存在"）
   const isAdminPath = path === '/api/admin/comments'
-  if (isAdminPath && !env.ADMIN_TOKEN && !isAdminAuthDisabled(env)) return bad(ERR.fallback, 404)
+  if (isAdminPath && !env.ADMIN_TOKEN) return bad(ERR.fallback, 404)
 
   try {
     if (path === '/api/health') {
