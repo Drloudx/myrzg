@@ -177,7 +177,8 @@ async function load({ append = false } = {}) {
     cursor.value = data.nextCursor ?? null
     syncOwned()
   } catch (err) {
-    errorMessage.value = err?.message || '评论加载失败'
+    // 只展示面向用户的中文；技术原因由 commentApi 写进控制台
+    errorMessage.value = err?.message || '评论加载失败，请稍后重试'
   } finally {
     loading.value = false
   }
@@ -229,18 +230,48 @@ async function submit() {
   }
 }
 
+/**
+ * 删除自己的评论。
+ *
+ * 三条稳健性要求（都来自实际使用反馈）：
+ *   1. **没有令牌时必须给出提示**。原先直接 `return` 什么都不做，
+ *      表现就是"点删除只闪一下、没任何反应"——最难排查的一种失败。
+ *   2. **把 404 当成删除成功**。服务端的删除是幂等的：当评论已经不可见时返回成功。
+ *      但客户端仍要容忍旧的 404 响应（例如列表明明是旧快照），
+ *      否则用户会看到"评论明明还在，却说不存在"。
+ *   3. 无论服务端怎么回，删完都做一次列表刷新，让界面与真实状态对齐。
+ */
 async function handleDelete(comment) {
+  if (deletingId.value) return
   const token = getDeleteToken(comment.id)
-  if (!token) return
+  if (!token) {
+    submitError.value = '这条评论的删除凭据已失效，请联系站长处理'
+    return
+  }
+
   deletingId.value = comment.id
   submitError.value = ''
+  submitNotice.value = ''
   try {
     await deleteOwnComment(comment.id, token)
     removeDeleteToken(comment.id)
     comments.value = comments.value.filter((c) => c.id !== comment.id)
     syncOwned()
   } catch (err) {
-    submitError.value = err?.message || '删除失败，请稍后重试'
+    if (err?.status === 404) {
+      // 服务端认为它已经不在了：删除的目标状态已达成，按成功处理
+      removeDeleteToken(comment.id)
+      comments.value = comments.value.filter((c) => c.id !== comment.id)
+      syncOwned()
+    } else {
+      submitError.value = err?.message || '删除失败，请稍后重试'
+      // 失败时刷新一次列表，让用户看到真实状态（可能已在别处被删）
+      try {
+        await load()
+      } catch {
+        /* 刷新失败不再叠加提示，保留上面的错误文案 */
+      }
+    }
   } finally {
     deletingId.value = null
   }

@@ -16,6 +16,16 @@ import { CLOUD_URL, isNative } from './env.js'
 
 const TIMEOUT_MS = 15000
 
+/**
+ * 面向用户的兜底文案。**这里只放中文短句，不出现状态码、字段名或任何技术名词**（用户明确要求）。
+ * 正常情况下服务端会返回自己的中文文案（见 `functions/api/[[path]].js` 的 `ERR` 契约），
+ * 这几个只用于"请求根本没到服务端"的情形。
+ */
+const CONNECT_ERROR = '无法连接评论服务器'
+const NETWORK_ERROR = '网络连接异常'
+const TIMEOUT_ERROR = '网络连接超时，请稍后再试'
+const GENERIC_ERROR = '操作失败，请稍后再试'
+
 /** 自删令牌的本地存储键：`myrzg:comment-token:<id>` */
 const TOKEN_PREFIX = 'myrzg:comment-token:'
 
@@ -23,7 +33,7 @@ function apiBase() {
   if (isNative) {
     // 原生端：断网时访问云端无意义，直接给出可读错误
     if (typeof navigator !== 'undefined' && navigator.onLine === false) {
-      throw new CommentApiError('当前处于离线状态，评论功能需要网络连接', 0)
+      throw new CommentApiError(NETWORK_ERROR, 0)
     }
     return CLOUD_URL
   }
@@ -55,8 +65,8 @@ async function request(path, { method = 'GET', body, adminToken } = {}) {
     })
   } catch (err) {
     clearTimeout(timer)
-    if (err?.name === 'AbortError') throw new CommentApiError('请求超时，请检查网络后重试', 0)
-    throw new CommentApiError('网络异常，无法连接评论服务', 0)
+    if (err?.name === 'AbortError') throw new CommentApiError(TIMEOUT_ERROR, 0)
+    throw new CommentApiError(CONNECT_ERROR, 0)
   } finally {
     clearTimeout(timer)
   }
@@ -65,18 +75,21 @@ async function request(path, { method = 'GET', body, adminToken } = {}) {
   try {
     data = await response.json()
   } catch {
-    // 走到这里说明响应不是 JSON。两种常见情形，提示要能指向解决办法：
-    //   1. 本地开发跑了 `npm run dev`（Vite）但没开 `npm run dev:api`，
-    //      代理拿不到 API（502/504），或更早的配置里被 SPA 兜底返回了 HTML；
-    //   2. 线上 Functions 没生效，`/api/*` 被 `_redirects` 重写成了 index.html。
+    // 响应不是 JSON。两种常见情形：
+    //   1. 本地只跑了 `npm run dev` 没开 `npm run dev:api`，代理拿不到 API（502/504）；
+    //   2. 线上 Functions 没生效，/api/* 被 SPA 兜底重写成了 index.html。
+    // 对外只给用户能看懂的一句话，技术原因写控制台。
     if (response.status === 502 || response.status === 503 || response.status === 504) {
-      throw new CommentApiError('连不上评论服务（本地开发请另开终端运行 npm run dev:api）', response.status)
+      console.warn('[comments] API 不可达（本地请确认已运行 npm run dev:api）')
+    } else {
+      console.warn('[comments] 响应不是 JSON，可能被 SPA 兜底或边缘缓存改写')
     }
-    throw new CommentApiError('评论服务返回了非预期内容', response.status)
+    throw new CommentApiError(CONNECT_ERROR, response.status)
   }
 
   if (!response.ok) {
-    throw new CommentApiError(data?.error || `请求失败（${response.status}）`, response.status)
+    // 服务端已按"对外文案契约"返回可直接展示的中文；客户端不再拼技术细节。
+    throw new CommentApiError(data?.error || GENERIC_ERROR, response.status)
   }
   return data
 }

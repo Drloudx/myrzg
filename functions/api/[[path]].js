@@ -64,6 +64,36 @@ const PAGE_KEY_RE = /^(item|furniture|hero|pet|monster|task|event|battle|stage|g
  */
 const AVATAR_ID_RE = /^[A-Za-z0-9_]{1,40}$/
 
+/**
+ * 对外错误文案契约。**这里是给普通用户看的字，不是给开发者看的日志。**
+ *
+ * 规则（用户明确要求）：只在下面这张表里选，不要临时造新句子；
+ * 不出现技术名词、状态码、字段名、英文——例如「JSON」「page_key」「D1」「token」
+ * 这类字眼一律不出现在 `error` 里。技术细节写进 `console.error` 的服务端日志。
+ *
+ * | 对外文案 | 何时用 | 内部含义 |
+ * | --- | --- | --- |
+ * | 评论不存在 | 目标评论已被删除或从未存在 | 404 |
+ * | 无法连接评论服务器 | 服务端自身故障 | 500 |
+ * | 请求太频繁，请稍后再试 | 触发限流 | 429 |
+ * | 评论内容不能为空 | 正文为空 | 400 |
+ * | 请填写昵称 | 昵称为空 | 400 |
+ * | 评论内容有误，请检查后重试 | 请求体非法 / 标识格式不对 | 400 |
+ * | 提交失败，请刷新页面后重试 | 人机校验、蜜罐拦截、无删除权限 | 403 |
+ * | 操作失败，请稍后再试 | 没有更贴切的归类时兜底 | 4xx/5xx |
+ */
+const ERR = {
+  notFound: '评论不存在',
+  server: '无法连接评论服务器',
+  rateLimited: '请求太频繁，请稍后再试',
+  rateLimitedDay: '今天发言次数已达上限',
+  emptyBody: '评论内容不能为空',
+  needNick: '请填写昵称',
+  badRequest: '评论内容有误，请检查后重试',
+  rejected: '提交失败，请刷新页面后重试',
+  fallback: '操作失败，请稍后再试'
+}
+
 const JSON_HEADERS = {
   'content-type': 'application/json; charset=utf-8',
   'cache-control': 'no-store',
@@ -147,10 +177,10 @@ async function checkRateLimit(env, ipHash, ts) {
   const perDay = positiveInt(env.RATE_LIMIT_PER_DAY, RATE_DEFAULTS.perDay)
 
   const hourCount = await bump(env, `h:${ipHash}:${hourBucket(ts)}`)
-  if (hourCount > perHour) return { message: '发言太频繁，请稍后再试', status: 429 }
+  if (hourCount > perHour) return { message: ERR.rateLimited, status: 429 }
 
   const dayCount = await bump(env, `d:${ipHash}:${dayBucket(ts)}`)
-  if (dayCount > perDay) return { message: '今日发言次数已达上限', status: 429 }
+  if (dayCount > perDay) return { message: ERR.rateLimitedDay, status: 429 }
 
   return null
 }
@@ -174,8 +204,21 @@ async function verifyTurnstile(env, token, ip) {
   }
 }
 
+/**
+ * 管理端是否**免验证**（本地开发用）。
+ *
+ * 设置 `ADMIN_AUTH_DISABLED=1` 后，管理端接口不再要求令牌，方便本地直接打开
+ * `/#/admin/comments` 看效果。**生产环境绝不能设置**——线上 Pages 项目里没有这个变量，
+ * 因此线上仍然强制令牌（未配 `ADMIN_TOKEN` 时管理接口直接 404）。
+ * 只认字符串 `'1'`，避免把 `false`/`0` 之类的值误判为开启。
+ */
+function isAdminAuthDisabled(env) {
+  return String(env.ADMIN_AUTH_DISABLED || '') === '1'
+}
+
 /** 管理员令牌校验：只比对哈希，恒定时间比较 */
 async function isAdmin(env, request) {
+  if (isAdminAuthDisabled(env)) return true
   if (!env.ADMIN_TOKEN) return false
   const token = request.headers.get('x-admin-token') || ''
   if (!token) return false
@@ -204,7 +247,7 @@ function toPublic(row) {
 /** GET /api/comments?page=item:30047&cursor=<id>&limit=20 —— 只返回 status=1 */
 async function listComments(env, url) {
   const pageKey = url.searchParams.get('page') || ''
-  if (!PAGE_KEY_RE.test(pageKey)) return bad('page 参数不合法')
+  if (!PAGE_KEY_RE.test(pageKey)) return bad(ERR.badRequest)
 
   const rawLimit = Number.parseInt(url.searchParams.get('limit') || '20', 10)
   const limit = Math.min(Math.max(Number.isFinite(rawLimit) ? rawLimit : 20, 1), MAX_LIMIT)
@@ -241,19 +284,19 @@ async function createComment(env, request) {
   try {
     payload = await request.json()
   } catch {
-    return bad('请求体不是合法 JSON')
+    return bad(ERR.badRequest)
   }
 
   // 1) 蜜罐：正常用户看不到该字段，填了就是机器人。零成本
-  if (sanitize(payload?.hp, 8)) return bad('请求被拒绝', 403)
+  if (sanitize(payload?.hp, 8)) return bad(ERR.rejected, 403)
 
   const pageKey = String(payload?.page || '')
-  if (!PAGE_KEY_RE.test(pageKey)) return bad('page 参数不合法')
+  if (!PAGE_KEY_RE.test(pageKey)) return bad(ERR.badRequest)
 
   const nick = sanitize(payload?.nick, MAX_NICK)
   const body = sanitize(payload?.body, MAX_BODY)
-  if (!nick) return bad('请填写昵称')
-  if (!body) return bad('评论内容不能为空')
+  if (!nick) return bad(ERR.needNick)
+  if (!body) return bad(ERR.emptyBody)
 
   // 头像 ID：格式不合法就当没设置（回退昵称首字），不因此拒绝整条评论
   const rawAvatar = String(payload?.avatar || '')
@@ -270,7 +313,7 @@ async function createComment(env, request) {
 
   // 3) 人机校验
   if (!(await verifyTurnstile(env, payload?.token, ip))) {
-    return bad('人机校验未通过，请刷新页面重试', 403)
+    return bad(ERR.rejected, 403)
   }
 
   // 4) 审核词表命中 → 待审（不拒绝，避免误伤丢内容；管理员可一键放行）
@@ -322,22 +365,28 @@ async function deleteOwnComment(env, request) {
   try {
     payload = await request.json()
   } catch {
-    return bad('请求体不是合法 JSON')
+    return bad(ERR.badRequest)
   }
 
   const id = Number.parseInt(payload?.id, 10)
   const token = String(payload?.token || '')
-  if (!Number.isFinite(id) || !token) return bad('参数不合法')
+  if (!Number.isFinite(id) || !token) return bad(ERR.badRequest)
 
   const row = await env.DB.prepare(`SELECT id, token_hash, status FROM comments WHERE id = ?1`)
     .bind(id)
     .first()
-  if (!row) return bad('评论不存在', 404)
-  if (row.status === 2) return json({ ok: true, alreadyGone: true })
-  if (!row.token_hash) return bad('该评论未持有删除令牌', 403)
+
+  // 目标状态是"这条评论不可见"，已经达成就算成功——**幂等**。
+  // 否则重复点击、多个标签页、或列表是旧快照时会报"评论不存在"，
+  // 用户看到的是"明明还在却说不存在"，比直接消失更困惑。
+  if (!row || row.status === 2) return json({ ok: true, alreadyGone: true })
+
+  // status=0（待审）也允许作者删除：那是"别人看不到但作者自己发的"，
+  // 前端待审时不入列表，但令牌已发，用户可能通过其它入口进来删。
+  if (!row.token_hash) return bad(ERR.rejected, 403)
 
   const provided = await sha256Hex(token)
-  if (!safeEqual(provided, row.token_hash)) return bad('没有权限删除这条评论', 403)
+  if (!safeEqual(provided, row.token_hash)) return bad(ERR.rejected, 403)
 
   // 软删除：保留记录供追溯，但前端不再显示
   await env.DB.prepare(`UPDATE comments SET status = 2, token_hash = NULL WHERE id = ?1`)
@@ -400,16 +449,16 @@ async function adminPatch(env, request) {
   try {
     payload = await request.json()
   } catch {
-    return bad('请求体不是合法 JSON')
+    return bad(ERR.badRequest)
   }
   const id = Number.parseInt(payload?.id, 10)
   const status = Number.parseInt(payload?.status, 10)
-  if (!Number.isFinite(id) || ![0, 1, 2].includes(status)) return bad('参数不合法')
+  if (!Number.isFinite(id) || ![0, 1, 2].includes(status)) return bad(ERR.badRequest)
 
   const res = await env.DB.prepare(`UPDATE comments SET status = ?1 WHERE id = ?2`)
     .bind(status, id)
     .run()
-  if (!res.meta?.changes) return bad('评论不存在', 404)
+  if (!res.meta?.changes) return bad(ERR.notFound, 404)
   return json({ ok: true })
 }
 
@@ -419,13 +468,13 @@ async function adminDelete(env, request) {
   try {
     payload = await request.json()
   } catch {
-    return bad('请求体不是合法 JSON')
+    return bad(ERR.badRequest)
   }
   const id = Number.parseInt(payload?.id, 10)
-  if (!Number.isFinite(id)) return bad('参数不合法')
+  if (!Number.isFinite(id)) return bad(ERR.badRequest)
 
   const res = await env.DB.prepare(`DELETE FROM comments WHERE id = ?1`).bind(id).run()
-  if (!res.meta?.changes) return bad('评论不存在', 404)
+  if (!res.meta?.changes) return bad(ERR.notFound, 404)
   return json({ ok: true })
 }
 
@@ -446,11 +495,11 @@ export async function onRequest(context) {
     })
   }
 
-  if (!env.DB) return bad('服务端未配置 D1 绑定（env.DB 缺失）', 500)
+  if (!env.DB) return bad(ERR.server, 500)
 
-  // 管理端未配置令牌时，连路由都不暴露
+  // 管理端未配置令牌时，连路由都不暴露（本地显式开启免验证时例外）
   const isAdminPath = path === '/api/admin/comments'
-  if (isAdminPath && !env.ADMIN_TOKEN) return bad('接口不存在', 404)
+  if (isAdminPath && !env.ADMIN_TOKEN && !isAdminAuthDisabled(env)) return bad(ERR.fallback, 404)
 
   try {
     if (path === '/api/health') {
@@ -461,21 +510,21 @@ export async function onRequest(context) {
       if (request.method === 'GET') return await listComments(env, url)
       if (request.method === 'POST') return await createComment(env, request)
       if (request.method === 'DELETE') return await deleteOwnComment(env, request)
-      return bad('不支持的请求方法', 405)
+      return bad(ERR.fallback, 405)
     }
 
     if (isAdminPath) {
-      if (!(await isAdmin(env, request))) return bad('管理员令牌无效', 401)
+      if (!(await isAdmin(env, request))) return bad(ERR.rejected, 401)
       if (request.method === 'GET') return await adminList(env, url)
       if (request.method === 'PATCH') return await adminPatch(env, request)
       if (request.method === 'DELETE') return await adminDelete(env, request)
-      return bad('不支持的请求方法', 405)
+      return bad(ERR.fallback, 405)
     }
 
-    return bad('接口不存在', 404)
+    return bad(ERR.fallback, 404)
   } catch (err) {
     // 不把内部错误细节回给客户端
     console.error('comments api error:', err)
-    return bad('服务暂时不可用，请稍后再试', 500)
+    return bad(ERR.server, 500)
   }
 }

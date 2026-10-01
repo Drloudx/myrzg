@@ -1,11 +1,12 @@
 <template>
   <div class="page-view-container admin-comments-page">
-    <!-- 令牌未配置：只显示登录框，不请求任何数据 -->
-    <div v-if="!adminToken" class="admin-login paper-panel">
+    <!-- 是否需要访问凭据：由 onMounted 的无令牌探测决定，不能只看 adminToken 是否为空。
+         服务端把管理端免验证打开时（本地 .dev.vars 的 ADMIN_AUTH_DISABLED=1），
+         此时令牌本来就是空的，若用 `!adminToken` 判断会一直停在登录框（踩过这个坑）。 -->
+    <div v-if="needsAuth" class="admin-login paper-panel">
       <h2 class="admin-login-title">评论管理</h2>
       <p class="admin-login-tip">
-        需要管理员令牌。令牌在 Cloudflare Pages 项目的环境变量 <code>ADMIN_TOKEN</code> 中配置，
-        本页只保存在你本机浏览器，不会上传到除评论接口以外的任何地方。
+        这个页面用于管理评论：审核、隐藏与删除。需要访问凭据，凭据只保存在你本机浏览器。
       </p>
       <input
         v-model="tokenInput"
@@ -43,7 +44,7 @@
 
       <div v-else-if="errorMessage" class="admin-error-block" role="alert">
         <UiEmptyState type="error" :text="errorMessage" />
-        <UiButton variant="secondary" size="sm" @click="load()">重新加载</UiButton>
+        <UiButton variant="secondary" size="sm" @click="safeLoad()">重新加载</UiButton>
       </div>
 
       <template v-else>
@@ -99,6 +100,13 @@ const adminToken = ref('')
 const tokenInput = ref('')
 const loginError = ref('')
 
+/**
+ * 是否需要输入访问凭据。
+ * 初值 false：先假设不需要，由 onMounted 的无令牌探测来纠正——
+ * 探测成功（本地免验证）就保持 false 直接进管理界面；401/404 才置 true 显示登录框。
+ */
+const needsAuth = ref(false)
+
 const comments = ref([])
 const loading = ref(false)
 const errorMessage = ref('')
@@ -107,13 +115,28 @@ const cursor = ref(null)
 const hasMore = ref(false)
 const pendingCount = ref(0)
 
-onMounted(() => {
+onMounted(async () => {
   try {
     adminToken.value = localStorage.getItem(TOKEN_KEY) || ''
   } catch {
     adminToken.value = ''
   }
-  if (adminToken.value) load()
+
+  // 先试一次"不带令牌"的请求：本地把管理端免验证打开时（.dev.vars 的
+  // ADMIN_AUTH_DISABLED=1），这样就能直接进管理页、不用输令牌；
+  // 线上会返回 401（需要令牌）或 404（未配置令牌），于是正常显示登录框。
+  try {
+    await load()
+  } catch {
+    needsAuth.value = true
+    if (adminToken.value) {
+      try {
+        await load()
+      } catch {
+        /* load 内部已处理错误提示 */
+      }
+    }
+  }
 })
 
 function saveToken() {
@@ -126,7 +149,7 @@ function saveToken() {
   } catch {
     /* 隐私模式下存不了，本次会话仍可用 */
   }
-  load()
+  safeLoad()
 }
 
 function logout() {
@@ -145,10 +168,16 @@ function setFilter(value) {
   comments.value = []
   cursor.value = null
   hasMore.value = false
-  load()
+  safeLoad()
 }
 
-async function load({ append = false } = {}) {
+/**
+ * 载入管理端列表。
+ * @param {{append?: boolean, probe?: boolean}} options
+ *   `probe` 为 true 时表示"探测是否需要令牌"（onMounted 里先试一次不带令牌的请求），
+ *   这种调用不写登录错误提示，由调用方决定怎么展示，且会把错误抛出去。
+ */
+async function load({ append = false, probe = false } = {}) {
   loading.value = true
   errorMessage.value = ''
   try {
@@ -160,15 +189,28 @@ async function load({ append = false } = {}) {
     hasMore.value = !!data.hasMore
     cursor.value = data.nextCursor ?? null
     if (typeof data.pendingCount === 'number') pendingCount.value = data.pendingCount
-    // 会话过期或令牌错误：退回登录态，避免页面停在一个永远报错的列表上
     if (data.comments.length === 0) pendingCount.value = 0
+    loginError.value = ''
+    return data
   } catch (err) {
-    if (err instanceof CommentApiError && (err.status === 401 || err.status === 404)) {
-      logout()
-      loginError.value = err.status === 404 ? '服务端未配置 ADMIN_TOKEN' : '令牌无效，请重新输入'
+    const needsAuthError = err instanceof CommentApiError && (err.status === 401 || err.status === 404)
+    if (needsAuthError) {
+      // 需要令牌：退回登录态，避免页面停在一个永远报错的列表上
+      needsAuth.value = true
+      adminToken.value = ''
+      comments.value = []
+      if (!probe) {
+        try {
+          localStorage.removeItem(TOKEN_KEY)
+        } catch {
+          /* 忽略 */
+        }
+        loginError.value = err.status === 404 ? '当前未开放评论管理' : '访问凭据无效，请重新输入'
+      }
     } else {
-      errorMessage.value = err?.message || '加载失败'
+      errorMessage.value = err?.message || '加载失败，请稍后重试'
     }
+    throw err
   } finally {
     loading.value = false
   }
@@ -176,7 +218,12 @@ async function load({ append = false } = {}) {
 
 function loadMore() {
   if (!hasMore.value || loading.value) return
-  return load({ append: true })
+  return safeLoad({ append: true })
+}
+
+/** 供模板直接绑定的包装：错误已在 load() 里转成界面提示，这里只吞掉 promise */
+function safeLoad(options = {}) {
+  return load(options).catch(() => {})
 }
 
 async function changeStatus(comment, status) {

@@ -42,8 +42,7 @@
 
       <UiEmptyState v-if="avatarCatalogState === 'loading'" type="loading" text="头像加载中..." />
       <div v-else-if="avatarCatalogState === 'error'" class="account-hint">
-        头像清单加载失败（data/avatarCatalog.json 缺失？可运行
-        <code>node scripts/dev/sync-avatar-catalog.mjs --apply</code> 生成）
+        头像列表暂时加载不出来，可以先只设置昵称，稍后再试。
       </div>
       <template v-else>
         <div v-for="group in avatarGroups" :key="group.key" class="avatar-group">
