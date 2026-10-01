@@ -264,7 +264,8 @@ const PAGE_TITLES = {
   '/exchange': '兑换',
   '/petseggs': '魔物收益',
   '/dungeons': '副本图鉴',
-  '/gacha': '模拟招募'
+  '/gacha': '模拟招募',
+  '/admin/comments': '评论管理'
 }
 
 const pageTitle = computed(() => {

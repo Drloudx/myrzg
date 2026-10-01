@@ -20,6 +20,9 @@ android_backup/
 # Vite缓存
 .vite/
 
+# Wrangler 本地状态（本地 D1 副本、缓存、日志），不进仓库
+.wrangler/
+
 # Python相关
 # 所有__pycache__编译缓存文件夹（各个子目录包括测试工具里面的都忽略）
 __pycache__/

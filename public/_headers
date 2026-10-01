@@ -12,6 +12,16 @@
 # 边缘节点的缓存策略优先级更高，需在 CDN 侧确认「忽略查询串」为关闭状态，
 # 否则 ?v= 不参与缓存键，长缓存会读到旧数据。详见开发日志 2026-09-18。
 
+# ── 评论 API：绝不缓存 ──
+# 这是第二道防线。第一道是 EdgeOne 控制台给 /api/* 配的「不缓存」规则
+# （规则引擎优先级高于站点加速）；不过 2026-10-01 实测本站 EdgeOne 对 JSON
+# 本来就不回缓存——源站带 immutable 的线上 JSON 连打三次仍是 EO-Cache-Status: MISS。
+# 保留这段是防御性的：将来谁在 EdgeOne 加了 JSON 类型缓存规则，
+# 源站语义仍是「不许缓存」，不会静默变成可缓存。
+/api/*
+  Cache-Control: no-store
+  X-Content-Type-Options: nosniff
+
 # ── 应用壳：必须每次回源校验，否则用户拿不到新版本 ──
 /index.html
   Cache-Control: no-cache

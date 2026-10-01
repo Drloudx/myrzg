@@ -510,6 +510,9 @@
       </div>
     </UiSection>
 
+    <!-- 讨论区：只在物品详情里挂，key 绑定物品 ID，切换物品时重建组件（清空上一件的评论与表单） -->
+    <CommentsPanel v-if="commentPageKey" :key="commentPageKey" :page-key="commentPageKey" />
+
     <UiBackToTop scroll-container="#itemModalScroll" />
     </template>
   </UiModal>
@@ -529,6 +532,7 @@ import { formatHighlightedText, EQUIP_QUALITY_LABELS, translateStatName } from '
 import { compareExchangeSources } from '../utils/exchangeData.js'
 import { resolveItemRelations, resolveSimilarItems } from '../utils/relationData.js'
 import { UiModal, UiSection, UiTag, UiInfoRow, UiButton, UiFilterPill, UiStatGrid, UiRewardCard, UiAccordion, UiBackToTop } from './ui/index.js'
+import CommentsPanel from './CommentsPanel.vue'
 
 const props = defineProps({
   visible: {
@@ -553,6 +557,14 @@ let bodyScrollOperation = 0
 let bodyScrollFrame = 0
 
 const isEquipsPage = computed(() => route.path === '/equip')
+
+/**
+ * 评论归属键：用业务 ID（typeId）而不是页面路径，
+ * 这样从物品图鉴、装备图鉴、任务奖励等任意入口打开同一件物品，
+ * 讨论区都是同一处；也不会因为 URL 带不同筛选参数而分裂成多份。
+ * 装备与物品共用同一详情，因此同键，这是刻意的。
+ */
+const commentPageKey = computed(() => (props.item?.typeId ? `item:${props.item.typeId}` : ''))
 
 const cancelBodyScrollRestore = () => {
   bodyScrollOperation += 1

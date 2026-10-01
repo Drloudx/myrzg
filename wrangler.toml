@@ -1,0 +1,23 @@
+# Cloudflare Pages 项目配置（评论功能）
+# 设计依据：docs/technical/COMMENTS_BACKEND.md 第 7 节
+#
+# 这是 **Pages** 项目配置，不是 Worker：
+#   - pages_build_output_dir 指向 Vite 产物，wrangler pages deploy 时使用
+#   - 站点由 GitHub 自动部署（origin: Drloudx/myrzg），本文件的作用是提供 D1 绑定
+#
+# 密钥不写在这里，按项目在控制台/CLI 配置：
+#   wrangler pages secret put TURNSTILE_SECRET
+#   wrangler pages secret put IP_HASH_SALT
+
+name = "myrzg"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-10-02"
+
+[[d1_databases]]
+binding = "DB"                                    # 代码里通过 env.DB 访问
+database_name = "myrzg-comments"
+database_id = "5f0d4c37-107f-4811-bc5e-768f73c51a3a"
+
+# 说明：这里刻意不配 [vars] / build 命令。
+#   - TURNSTILE_SECRET、IP_HASH_SALT 属密钥，走 secret 或控制台环境变量
+#   - Pages 的构建命令已由控制台配置，覆盖它会让线上构建行为与本文件不一致

@@ -1,1 +1,5 @@
+# 评论 API 必须在 SPA 兜底之前放行，否则 /api/* 会被重写到 index.html，
+# 前端拿到 HTML 当 JSON 解析（2026-10-01 实测过这个现象：/api/health 返回 200 + text/html）。
+# 200 表示 rewrite（地址栏不变），不是 301/302。
+/api/* /api/:splat 200
 /* /index.html 200
