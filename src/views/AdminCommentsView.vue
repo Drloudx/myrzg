@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="page-view-container admin-comments-page">
     <!-- 是否需要访问凭据：由 onMounted 的无令牌探测决定，不能只看 adminToken 是否为空。
          服务端把管理端免验证打开时（本地 .dev.vars 的 ADMIN_AUTH_DISABLED=1），
@@ -48,7 +48,14 @@
       </div>
 
       <template v-else>
-        <ul v-if="comments.length" class="admin-list">
+        <!--
+          `data-main-scroll` 是关键：App.vue 的 updateStickyClipping() 会把每个页面里
+          带该属性的内容**裁剪到筛选面板底边**（clip-path: inset(--sticky-clip-top 0 0)），
+          专门用来防止内容从 sticky 面板上方那道缝里露出来。
+          物品/家具页由 UiCardGrid 自带这个属性，副本/兑换/魔物收益页各自标在自己的滚动容器上；
+          管理页原先漏了，所以评论卡片会从面板上方露出来（实测截图确认）。
+        -->
+        <ul v-if="comments.length" class="admin-list" data-main-scroll>
           <li v-for="c in comments" :key="c.id" class="admin-item paper-panel">
             <div class="admin-item-head">
               <UiTag :tone="statusTone(c.status)">{{ statusLabel(c.status) }}</UiTag>
@@ -269,6 +276,15 @@ function formatTime(unixSec) {
 </script>
 
 <style scoped>
+/*
+ * 说明：本页筛选面板的"卡片不从上方面板缝里露出来"是靠模板上的
+ * `data-main-scroll`（App.vue 的 updateStickyClipping 会据此裁剪内容）。
+ * 曾尝试用本文件覆盖面板背景/`z-index`，**实测无效也不需要**：
+ *   - scoped 选择器（含 `:deep()`）都编不出能命中 UiFilterPanel 根元素的规则；
+ *   - 真正的原因是内容没被裁剪，而不是面板挡不住，见模板注释。
+ * 故不在此重复声明面板样式，避免留下会误导后人的无效覆盖。
+ */
+
 .admin-login {
   max-width: 560px;
   margin: 24px auto;

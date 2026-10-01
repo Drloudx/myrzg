@@ -373,7 +373,10 @@ watch(
 
 /* 每条评论做成卡片：与符石图鉴的 .rune-entry 同一套视觉
    （--paper-soft 底 + 1px --border-soft 描边 + 6px 圆角），
-   让讨论区和物品详情的其它 UiSection 在观感上分开。 */
+   让讨论区和物品详情的其它 UiSection 在观感上分开。
+   注意：详情里"卡片不从上方面板缝里露出来"靠的是 App.vue 对
+   `[data-main-scroll]` 的裁剪（UiModal 的 .ui-modal-body 已按 header 底边裁剪），
+   与卡片自身的背景/层叠无关——不要为此加 z-index 或改背景。 */
 .comment-item {
   display: flex;
   gap: 10px;
