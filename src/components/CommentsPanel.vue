@@ -53,7 +53,7 @@
       </template>
 
       <!-- 发表区：昵称与头像来自「账号」弹窗，这里不再重复填写 -->
-      <form class="comment-form" @submit.prevent="submit">
+      <form ref="formRef" class="comment-form" @submit.prevent="submit">
         <div class="comment-identity">
           <img v-if="myAvatarPath" class="comment-avatar" :src="myAvatarPath" alt="" />
           <div v-else class="comment-avatar comment-avatar-fallback" aria-hidden="true">
@@ -105,7 +105,7 @@
 </template>
 
 <script setup>
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, nextTick, reactive, ref, watch } from 'vue'
 import { UiButton, UiEmptyState, UiSection } from './ui/index.js'
 import { getImageUrl } from '../utils/env.js'
 import {
@@ -143,6 +143,9 @@ const hasMore = ref(false)
 const deletingId = ref(null)
 
 const form = reactive({ body: '', hp: '' })
+
+/** 发表区 DOM，用于发完把滚动条带回底部（否则新评论把表单顶出视口） */
+const formRef = ref(null)
 
 /** 本机发表过的评论 id，用于显示"删除"按钮 */
 const ownedIds = ref(new Set())
@@ -223,6 +226,10 @@ async function submit() {
     }
     form.body = ''
     syncOwned()
+    // 新评论插在列表最前，会把发表区往下顶。发完把滚动带到底部，
+    // 让用户停在刚发的那条 + 输入框上，而不是盯着一片空白。
+    await nextTick()
+    scrollFormIntoView()
   } catch (err) {
     submitError.value = err?.message || '发表失败，请稍后重试'
   } finally {
@@ -295,6 +302,38 @@ function isoTime(unixSec) {
 /** 蜜罐被意外聚焦时立即移开焦点（例如密码管理器自动填充） */
 function onHoneypotFocus(event) {
   event?.target?.blur?.()
+}
+
+/**
+ * 把发表区滚到可视区底部。
+ *
+ * 为什么不用 `alignElementInScrollTarget`（食谱/成就页用的那个）：那是**居中**对齐，
+ * 会把表单怼到屏幕中间，而这里要的是"停在底部"。也不直接用 `scrollIntoView`——
+ * 它会连带滚动所有可滚祖先，在本站「详情弹窗内嵌滚动 + 页面滚动」的双层结构里
+ * 容易把外层页面一起滚走。
+ *
+ * 因此只操作**实际滚动根**：详情里是 `#itemModalScroll`，先找到它、直接置底。
+ * 优先临时给表单加 `scroll-margin-bottom` 也无必要——置底后表单本来就在最下方。
+ */
+function scrollFormIntoView() {
+  const form = formRef.value
+  if (!form) return
+  // 从表单向上找最接近的、真的能滚的祖先，找不到就退回详情弹窗的滚动区
+  let node = form.parentElement
+  let root = null
+  while (node && node !== document.body) {
+    if (node.scrollHeight > node.clientHeight + 4) {
+      const overflowY = getComputedStyle(node).overflowY
+      if (overflowY === 'auto' || overflowY === 'scroll') {
+        root = node
+        break
+      }
+    }
+    node = node.parentElement
+  }
+  if (!root) root = document.querySelector('#itemModalScroll')
+  if (!root) return
+  root.scrollTop = root.scrollHeight
 }
 
 // 头像清单：用来把评论里的 avatar ID 换成图片，进面板就载入一次
