@@ -65,6 +65,13 @@ const PAGE_KEY_RE = /^(item|furniture|hero|pet|monster|task|event|battle|stage|g
 const AVATAR_ID_RE = /^[A-Za-z0-9_]{1,40}$/
 
 /**
+ * 自删令牌的形状：`randomToken()` 生成的 32 字节十六进制。
+ * 用于 `/api/my-comments` 的入参预筛——不校验形状的话，
+ * 攻击者可以用超长/异常字符串批量试探（虽然最终仍要过哈希比对）。
+ */
+const DELETE_TOKEN_RE = /^[a-f0-9]{64}$/
+
+/**
  * 对外错误文案契约。**这里是给普通用户看的字，不是给开发者看的日志。**
  *
  * 规则（用户明确要求）：只在下面这张表里选，不要临时造新句子；
@@ -458,6 +465,68 @@ async function adminList(env, url) {
   })
 }
 
+/**
+ * GET /api/my-comments?ids=12,15,20 —— 「我在这台设备上发过的评论」
+ *
+ * 用途：账号弹窗里回看自己的评论与状态。
+ *
+ * 安全模型：**必须逐条提供该评论的删除令牌**，只返回令牌匹配的那些。
+ * 因此这不是"按 id 列举评论"的公开接口——不知道令牌就什么都拿不到，
+ * 也不会泄漏"某个 id 是否存在"（不匹配的条目直接不出现在结果里）。
+ *
+ * 为什么用 POST 而不是 GET：令牌要放在请求体里。
+ * 放 URL 会被浏览器历史、Referer、代理日志记录下来。
+ */
+async function listMyComments(env, request) {
+  let payload
+  try {
+    payload = await request.json()
+  } catch {
+    return bad(ERR.badRequest)
+  }
+
+  // items: [{ id: 12, token: '...' }, ...]，最多 50 条（与列表页上限一致）
+  const items = Array.isArray(payload?.items) ? payload.items.slice(0, 50) : []
+  if (!items.length) return json({ ok: true, comments: [] })
+
+  const wanted = []
+  for (const it of items) {
+    const id = Number.parseInt(it?.id, 10)
+    const token = String(it?.token || '')
+    if (Number.isFinite(id) && DELETE_TOKEN_RE.test(token)) wanted.push({ id, token })
+  }
+  if (!wanted.length) return json({ ok: true, comments: [] })
+
+  const placeholders = wanted.map((_, i) => `?${i + 1}`).join(', ')
+  const { results } = await env.DB.prepare(
+    `SELECT id, page_key, nick, avatar, body, created_at, status, token_hash
+     FROM comments WHERE id IN (${placeholders})`
+  )
+    .bind(...wanted.map((w) => w.id))
+    .all()
+
+  // 令牌校验：只回传令牌对得上的那些；hash 比对用恒定时间比较
+  const tokenById = new Map(wanted.map((w) => [w.id, w.token]))
+  const verified = []
+  for (const row of results || []) {
+    const token = tokenById.get(row.id)
+    if (!token || !row.token_hash) continue
+    const provided = await sha256Hex(token)
+    if (!safeEqual(provided, row.token_hash)) continue
+    verified.push({
+      id: row.id,
+      nick: row.nick,
+      avatar: row.avatar || null,
+      body: row.body,
+      createdAt: row.created_at,
+      status: row.status,
+      pageKey: row.page_key
+    })
+  }
+  verified.sort((a, b) => b.id - a.id)
+  return json({ ok: true, comments: verified })
+}
+
 /** PATCH /api/admin/comments —— 改状态（放行 / 隐藏 / 打回待审） */
 async function adminPatch(env, request) {
   let payload
@@ -526,6 +595,12 @@ export async function onRequest(context) {
       if (request.method === 'POST') return await createComment(env, request)
       if (request.method === 'DELETE') return await deleteOwnComment(env, request)
       return bad(ERR.fallback, 405)
+    }
+
+    // 「我发过的评论」：令牌放请求体（不放 URL，避免被历史/Referer/代理日志记录）
+    if (path === '/api/my-comments') {
+      if (request.method !== 'POST') return bad(ERR.fallback, 405)
+      return await listMyComments(env, request)
     }
 
     if (isAdminPath) {

@@ -54,6 +54,19 @@ const pets = JSON.parse(readFileSync(petsFile, 'utf8')).pets || []
 const heroById = new Map(heroes.map((h) => [h.id, h.name]))
 const petById = new Map(pets.map((p) => [p.id, p.name]))
 
+/**
+ * 皮肤头像 → `角色名-皮肤名`。
+ * 依据是皮肤自己的 `skins[].icon` 字段（如 hero_005 的皮肤「难得的休息日」
+ * 其 icon 为 `at005a`），不是靠文件名猜后缀——实测 `a` 后缀确实是皮肤
+ * （at005a / at036a 各对应一个皮肤），但这个对应关系由数据给出更可靠。
+ */
+const skinByIcon = new Map()
+for (const hero of heroes) {
+  for (const skin of hero.skins || []) {
+    if (skin.icon) skinByIcon.set(skin.icon, `${hero.name}-${skin.name}`)
+  }
+}
+
 /** `at001_0` / `at001b_0` / `at005a` → `hero_001`；取前三位数字，后缀差异视为同一角色的不同立绘 */
 function heroIdOf(base) {
   const m = base.match(/^at(\d{3})/i)
@@ -65,24 +78,44 @@ function petIdOf(base) {
   return m ? `pet_${m[1]}` : null
 }
 
+/**
+ * 角色立绘的显示名。
+ * 优先级：皮肤（`角色名-皮肤名`）→ 主角性别变体 → 同名立绘补序号。
+ *
+ * 主角性别依据：HeroesView.vue 注释引用的源码 `ExtentionMethod.SetSexHeroImg`
+ * ——「hero_001 的男版立绘为 chara001b_0」，即**同编号带 `b` 后缀的是男主**
+ * （`at001_0` 女主 / `at001b_0` 男主）。hero.json 里没有性别字段，
+ * 全局只有 `skeletonName: Npc_001_girl` 一处线索，这条源码依据才是可靠的。
+ */
+function heroAvatarName(base, heroName, entityId) {
+  const skinName = skinByIcon.get(base)
+  if (skinName) return skinName
+  if (entityId === 'hero_001') {
+    return /^at001b/i.test(base) ? `${heroName}（男主）` : `${heroName}（女主）`
+  }
+  return heroName
+}
+
 const files = readdirSync(sourceDir).filter((f) => statSync(join(sourceDir, f)).isFile())
 
-const build = (matcher, idOf, byId) => {
+const build = (matcher, idOf, byId, nameOf) => {
   const included = []
-  const skipped = []
   const skippedNoEntity = []
   for (const file of files.filter(matcher)) {
     const base = file.replace(/\.webp$/i, '')
     const entityId = idOf(base)
-    const name = entityId ? byId.get(entityId) : null
-    if (!entityId || !name) {
+    const baseName = entityId ? byId.get(entityId) : null
+    if (!entityId || !baseName) {
       skippedNoEntity.push(`${base}（无 ${entityId || '对应实体'}）`)
       continue
     }
-    included.push({ id: base, path: `/images/HeadIconAtals/${file}`, name })
-    void skipped
+    included.push({
+      id: base,
+      path: `/images/HeadIconAtals/${file}`,
+      name: nameOf ? nameOf(base, baseName, entityId) : baseName
+    })
   }
-  // 同一个角色/魔物的多个立绘：名字后补区别，避免选择器里出现两个同名项
+  // 同名立绘补序号，避免选择器里出现两个一模一样的标签
   const nameCount = new Map()
   for (const it of included) nameCount.set(it.name, (nameCount.get(it.name) || 0) + 1)
   const seen = new Map()
@@ -97,7 +130,7 @@ const build = (matcher, idOf, byId) => {
   return { included, skippedNoEntity }
 }
 
-const player = build((f) => /^at\d/i.test(f), heroIdOf, heroById)
+const player = build((f) => /^at\d/i.test(f), heroIdOf, heroById, heroAvatarName)
 const pet = build((f) => /^avatar_pet_\d/i.test(f), petIdOf, petById)
 
 const groups = [

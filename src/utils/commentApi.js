@@ -120,6 +120,36 @@ export function deleteOwnComment(id, token) {
   return request('/api/comments', { method: 'DELETE', body: { id, token } })
 }
 
+/**
+ * 取回本机发表过的评论（含待审/已隐藏的状态）。
+ *
+ * 令牌放**请求体**而不是 URL：放 URL 会被浏览器历史、Referer 与代理日志记录。
+ * 服务端逐条比对令牌，只返回对得上的那些——所以这等价于"用凭据取自己的评论"，
+ * 不是"按 id 列举评论"的公开读接口。
+ *
+ * @param {Array<{id: number, token: string}>} items
+ */
+export function fetchMyComments(items) {
+  if (!Array.isArray(items) || !items.length) return Promise.resolve({ ok: true, comments: [] })
+  return request('/api/my-comments', { method: 'POST', body: { items: items.slice(0, 50) } })
+}
+
+/** 列出本机保存过自删令牌的评论 id（按数值倒序，新的在前） */
+export function listOwnedCommentIds() {
+  const ids = []
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+      if (!key || !key.startsWith(TOKEN_PREFIX)) continue
+      const id = Number.parseInt(key.slice(TOKEN_PREFIX.length), 10)
+      if (Number.isFinite(id)) ids.push(id)
+    }
+  } catch {
+    return []
+  }
+  return ids.sort((a, b) => b - a)
+}
+
 // ── 自删令牌的本地存储 ──────────────────────────────────────────────
 // 令牌只发给发表者本人（明文仅一次），存 localStorage 是为了让用户
 // 无需记任何东西就能删自己的评论。换设备/清浏览器数据后删不了，需联系管理员。
