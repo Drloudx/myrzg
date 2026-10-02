@@ -54,12 +54,13 @@ function positiveInt(value, fallback) {
  * 与前端 `src/utils/commentApi.js` 的 `COMMENT_PAGE_PREFIX` **必须一致**，
  * 新增页面时两处一起改。
  *
+ * `site:general` 是**站内总讨论区**（网站自己的讨论，与各页面讨论分开）。
  * 注意：符石/菜谱的实体 ID 本身是 `item_xxxxx` 形式（item_19310、item_30022），
  * 但它们走的是全局物品详情，所以**没有**独立前缀——`item:` 已覆盖。
  * 刻意不开放 `rune:` / `recipe:` 前缀：那会让同一个东西出现两份讨论。
  */
 const PAGE_KEY_RE =
-  /^(item|hero|pet|monster|furniture|task|event|explore|battle|stage|glossary):[A-Za-z0-9_\-.]{1,64}$/
+  /^(item|hero|pet|monster|furniture|task|event|explore|battle|stage|glossary|site):[A-Za-z0-9_\-.]{1,64}$/
 
 /**
  * 头像 ID 白名单：只允许 `at001_0`、`avatar_pet_006` 这类标识符。
@@ -552,9 +553,12 @@ async function listMyComments(env, request) {
 }
 
 /**
- * GET /api/recent —— 全站最新讨论（右栏预览与讨论区首页用）
+ * GET /api/recent —— **站内讨论区**的最新讨论（右栏预览用）
  *
- * 只管"看看"不管"定位"，所以不需要 page 参数、也没有游标分页：固定返回最新若干条。
+ * 只取 `site:general`（站内总讨论区）的消息。刻意**不混入各图鉴页面的讨论**：
+ * 那是各自条目的讨论，与"站内讨论区"是分开的两套内容（用户明确要求）。
+ *
+ * 固定返回最新若干条，不做游标分页。
  *
  * **刻意带边缘缓存**（`s-maxage`）：右栏在每个页面都可见，若每次打开页面都回源查 D1，
  * 那是全站最大的一笔无意义开销。30 秒的共享缓存能让同一 POP 的众多访客共用一次查询，
@@ -563,13 +567,15 @@ async function listMyComments(env, request) {
  */
 const RECENT_LIMIT = 8
 const RECENT_CACHE_SECONDS = 30
+/** 站内总讨论区的归属键（与前端 SITE_PAGE_KEY 一致） */
+const SITE_PAGE_KEY = 'site:general'
 
 async function listRecent(env) {
   const { results } = await env.DB.prepare(
     `SELECT id, page_key, page_label, nick, avatar, body, created_at
-     FROM comments WHERE status = 1 ORDER BY id DESC LIMIT ?1`
+     FROM comments WHERE status = 1 AND page_key = ?1 ORDER BY id DESC LIMIT ?2`
   )
-    .bind(RECENT_LIMIT)
+    .bind(SITE_PAGE_KEY, RECENT_LIMIT)
     .all()
 
   const comments = (results || []).map((row) => ({

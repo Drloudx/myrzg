@@ -62,78 +62,35 @@
         </div>
       </template>
 
-      <!-- 发表区：只读形态不显示（右栏预览 / 讨论区首页的历史消息） -->
-      <form v-if="!readOnly" ref="formRef" class="comment-form" @submit.prevent="submit">
-        <div class="comment-identity">
-          <img v-if="myAvatarPath" class="comment-avatar" :src="myAvatarPath" alt="" />
-          <div v-else class="comment-avatar comment-avatar-fallback" aria-hidden="true">
-            {{ identity.nick.trim().slice(0, 1) || '?' }}
-          </div>
-          <span class="comment-identity-text">
-            <template v-if="identity.nick.trim()">
-              以 <strong>{{ identity.nick }}</strong> 的身份发表
-            </template>
-            <template v-else>还没设置昵称</template>
-          </span>
-          <button type="button" class="comment-identity-edit" @click="openAccountModal()">
-            {{ identity.nick.trim() ? '修改' : '去设置' }}
-          </button>
-        </div>
+      <!-- 删除等操作的失败提示：列表仍然可见，只提示这一次操作失败 -->
+      <p v-if="actionError" class="comment-submit-error" role="alert">{{ actionError }}</p>
 
-        <textarea
-          v-model="form.body"
-          class="comment-textarea"
-          rows="3"
-          maxlength="1000"
-          placeholder="说点什么…"
-        ></textarea>
-
-        <!-- 蜜罐：正常用户与屏幕阅读器都感知不到，但不静默移除（display:none 会被部分机器人跳过）。
-             用 visibility+opacity 而非仅移出视口，避免键盘 Tab 落在它上面。 -->
-        <input
-          v-model="form.hp"
-          class="comment-honeypot"
-          type="text"
-          tabindex="-1"
-          autocomplete="off"
-          aria-hidden="true"
-          @focus="onHoneypotFocus"
-        />
-
-        <div class="comment-form-foot">
-          <span class="comment-count">{{ form.body.length }}/1000</span>
-          <UiButton variant="primary" size="sm" :disabled="submitting || !canSubmit" @click="submit">
-            {{ submitting ? '提交中...' : '发表' }}
-          </UiButton>
-        </div>
-
-        <p v-if="submitError" class="comment-submit-error" role="alert">{{ submitError }}</p>
-        <p v-else-if="submitNotice" class="comment-submit-notice" role="status">{{ submitNotice }}</p>
-      </form>
+      <!-- 发表区：只读形态不显示（右栏预览）。
+           抽成 CommentComposer 是为了让讨论区页面能把它放到**滚动容器之外**
+           （用户要求"悬浮在底部"：留在容器里消息一多就被推出视野） -->
+      <CommentComposer
+        v-if="!readOnly"
+        :page-key="props.pageKey"
+        :page-label="props.pageLabel"
+        @posted="onPosted"
+      />
     </template>
   </UiSection>
 </template>
 
 <script setup>
-import { computed, nextTick, reactive, ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { UiButton, UiEmptyState, UiSection } from './ui/index.js'
+import CommentComposer from './CommentComposer.vue'
 import { getImageUrl } from '../utils/env.js'
 import {
   deleteOwnComment,
   fetchComments,
   fetchRecentComments,
   getDeleteToken,
-  postComment,
-  removeDeleteToken,
-  saveDeleteToken
+  removeDeleteToken
 } from '../utils/commentApi.js'
-import {
-  avatarCatalogState,
-  avatarPath,
-  identity,
-  loadAvatarCatalog,
-  openAccountModal
-} from '../utils/identity.js'
+import { avatarCatalogState, avatarPath, loadAvatarCatalog } from '../utils/identity.js'
 
 const props = defineProps({
   /**
@@ -172,28 +129,38 @@ const shownComments = computed(() =>
 
 const comments = ref([])
 const loading = ref(false)
-const submitting = ref(false)
 const errorMessage = ref('')
-const submitError = ref('')
-const submitNotice = ref('')
+/** 删除等操作的失败提示（与"加载失败"分开：列表仍可见，只提示这次操作失败） */
+const actionError = ref('')
 const cursor = ref(null)
 const hasMore = ref(false)
 const deletingId = ref(null)
 
-const form = reactive({ body: '', hp: '' })
-
-/** 发表区 DOM，用于发完把滚动条带回底部（否则新评论把表单顶出视口） */
-const formRef = ref(null)
-
 /** 本机发表过的评论 id，用于显示"删除"按钮 */
 const ownedIds = ref(new Set())
 
-const myAvatarPath = computed(() => {
-  const path = avatarPath(identity.value.avatar)
-  return path ? getImageUrl(path) : ''
-})
+/**
+ * 发表成功后的回调（由 CommentComposer 触发）。
+ *
+ * 重新拉一次列表：发表区已移到组件外（讨论区页面要把它固定在滚动容器之外），
+ * 不能再靠"本地往前插一条"同步——那样两处状态会不一致。
+ */
+async function onPosted() {
+  actionError.value = ''
+  await load()
+}
 
-const canSubmit = computed(() => form.body.trim().length > 0)
+/**
+ * 供父组件在"发表区在组件外"时刷新列表（讨论区页面就是这种结构）。
+ * 例如 DiscussionsView 把 CommentComposer 放在滚动容器之外，
+ * 发完由它调用本方法，让列表与发表区状态保持一致。
+ */
+function reload() {
+  actionError.value = ''
+  return load()
+}
+
+defineExpose({ reload })
 
 function syncOwned() {
   const set = new Set()
@@ -233,52 +200,6 @@ function loadMore() {
   return load({ append: true })
 }
 
-async function submit() {
-  if (submitting.value || !canSubmit.value) return
-
-  // 未设昵称：先把账号弹窗打开让用户设好，回来再点发表。
-  // 不自动用"匿名"顶替，否则用户会以为设置已生效。
-  if (!identity.value.nick.trim()) {
-    submitError.value = ''
-    submitNotice.value = '请先设置昵称，保存后再点「发表」'
-    openAccountModal()
-    return
-  }
-
-  submitting.value = true
-  submitError.value = ''
-  submitNotice.value = ''
-  try {
-    const data = await postComment({
-      pageKey: props.pageKey,
-      pageLabel: props.pageLabel,
-      nick: identity.value.nick.trim(),
-      avatar: identity.value.avatar || '',
-      body: form.body.trim(),
-      hp: form.hp
-    })
-    // 令牌只在这次响应里给一次，立刻落本地
-    if (data.deleteToken) saveDeleteToken(data.comment.id, data.deleteToken)
-
-    if (data.pending) {
-      // 进待审：不直接把内容插进列表，避免"看得见但别人看不见"的误导
-      submitNotice.value = data.notice || '评论已提交，将尽快审核后显示'
-    } else {
-      comments.value = [data.comment, ...comments.value]
-    }
-    form.body = ''
-    syncOwned()
-    // 新评论插在列表最前，会把发表区往下顶。发完把滚动带到底部，
-    // 让用户停在刚发的那条 + 输入框上，而不是盯着一片空白。
-    await nextTick()
-    scrollFormIntoView()
-  } catch (err) {
-    submitError.value = err?.message || '发表失败，请稍后重试'
-  } finally {
-    submitting.value = false
-  }
-}
-
 /**
  * 删除自己的评论。
  *
@@ -294,13 +215,13 @@ async function handleDelete(comment) {
   if (deletingId.value) return
   const token = getDeleteToken(comment.id)
   if (!token) {
-    submitError.value = '这条评论的删除凭据已失效，请联系站长处理'
+    actionError.value = '这条评论的删除凭据已失效，请联系站长处理'
     return
   }
 
   deletingId.value = comment.id
-  submitError.value = ''
-  submitNotice.value = ''
+  actionError.value = ''
+  actionError.value = ''
   try {
     await deleteOwnComment(comment.id, token)
     removeDeleteToken(comment.id)
@@ -313,7 +234,7 @@ async function handleDelete(comment) {
       comments.value = comments.value.filter((c) => c.id !== comment.id)
       syncOwned()
     } else {
-      submitError.value = err?.message || '删除失败，请稍后重试'
+      actionError.value = err?.message || '删除失败，请稍后重试'
       // 失败时刷新一次列表，让用户看到真实状态（可能已在别处被删）
       try {
         await load()
@@ -341,43 +262,6 @@ function isoTime(unixSec) {
   return new Date(unixSec * 1000).toISOString()
 }
 
-/** 蜜罐被意外聚焦时立即移开焦点（例如密码管理器自动填充） */
-function onHoneypotFocus(event) {
-  event?.target?.blur?.()
-}
-
-/**
- * 把发表区滚到可视区底部。
- *
- * 为什么不用 `alignElementInScrollTarget`（食谱/成就页用的那个）：那是**居中**对齐，
- * 会把表单怼到屏幕中间，而这里要的是"停在底部"。也不直接用 `scrollIntoView`——
- * 它会连带滚动所有可滚祖先，在本站「详情弹窗内嵌滚动 + 页面滚动」的双层结构里
- * 容易把外层页面一起滚走。
- *
- * 因此只操作**实际滚动根**：详情里是 `#itemModalScroll`，先找到它、直接置底。
- * 优先临时给表单加 `scroll-margin-bottom` 也无必要——置底后表单本来就在最下方。
- */
-function scrollFormIntoView() {
-  const form = formRef.value
-  if (!form) return
-  // 从表单向上找最接近的、真的能滚的祖先，找不到就退回详情弹窗的滚动区
-  let node = form.parentElement
-  let root = null
-  while (node && node !== document.body) {
-    if (node.scrollHeight > node.clientHeight + 4) {
-      const overflowY = getComputedStyle(node).overflowY
-      if (overflowY === 'auto' || overflowY === 'scroll') {
-        root = node
-        break
-      }
-    }
-    node = node.parentElement
-  }
-  if (!root) root = document.querySelector('#itemModalScroll')
-  if (!root) return
-  root.scrollTop = root.scrollHeight
-}
-
 /**
  * 数据加载时机。
  *
@@ -395,8 +279,8 @@ watch(
     comments.value = []
     cursor.value = null
     hasMore.value = false
-    submitError.value = ''
-    submitNotice.value = ''
+    actionError.value = ''
+    actionError.value = ''
     if (props.recent || props.pageKey) load()
   },
   { immediate: true }

@@ -1,84 +1,61 @@
 <template>
   <div class="page-view-container discussions-page">
     <!--
-      讨论区是**独立路由**（不是就地替换内容区）：链接可分享可刷新、
-      滚动隔离在这个容器里，也不必让各视图各自接入"聊天模式"状态。
+      这是**站内总讨论区**：归属键固定为 `site:general`，与各图鉴页面的讨论
+      （`item:xxx`、`hero:xxx`…）是**完全分开**的两套内容，不聚合、不互相搬运。
+      各页面的讨论在各自详情里，右栏只做"全站最新"的发现入口。
 
-      `?page=` 指定讨论归属（从详情进来时带上），缺省则是全站最新。
-      URL 同步遵循 SPEC 第四章：只实现真正支持的参数。
+      外层纸张面板：内容直接铺在地图背景上会看不清，与符石图鉴的内容区同一形态。
     -->
-    <!-- 外层不做 collapsible：UiSection 折叠时会把 title-end 渲染进 <button> 里，
-         而这里放的是"查看全站最新"按钮，会形成按钮嵌套（非法）。 -->
-    <UiSection :title="sectionTitle" class="discussion-main">
-      <template #title-end>
-        <button v-if="pageKey" type="button" class="discussion-switch" @click="showLatest">
-          查看全站最新
-        </button>
-      </template>
+    <section class="discussion-panel paper-panel">
+      <header class="discussion-head">
+        <h3 class="discussion-title">◆ 站内讨论区</h3>
+      </header>
 
       <!--
-        讨论正文：**滚动只在这个容器内**（用户明确要求"内容只在这个区域内滚动，不能超出"）。
-        `overflow-y: auto` + 受父级 flex 高度约束，因此消息再多也不会把整页撑长。
+        正文区：**只有列表在这里滚**。
+        `overflow-y: auto` + `min-height: 0` 让它受父级高度约束，消息再多也不会把整页撑长。
       -->
       <div class="discussion-scroll">
         <CommentsPanel
-          v-if="pageKey"
-          :key="pageKey"
-          :page-key="pageKey"
-          :page-label="pageLabel"
+          ref="listRef"
+          :page-key="SITE_PAGE_KEY"
+          :page-label="SITE_PAGE_LABEL"
           title=""
+          read-only
         />
-        <template v-else>
-          <!-- 全站最新是只读预览，发表区在下面单独给（需要先选定讨论归属） -->
-          <CommentsPanel title="" recent read-only :limit="50" show-page @open-page="goToPage" />
-          <p class="discussion-hint">
-            想发言请先打开对应的图鉴条目，在那里参与讨论——每条讨论都归属到具体的物品/角色/关卡。
-          </p>
-        </template>
       </div>
-    </UiSection>
+
+      <!--
+        发表区：**放在滚动容器之外**，因此始终固定在面板底部（用户要求"悬浮"）。
+        留在容器里就只能跟着列表滚，消息一多会被推出视野——那是"列表底部"不是"容器底部"。
+      -->
+      <CommentComposer
+        class="discussion-composer"
+        :page-key="SITE_PAGE_KEY"
+        :page-label="SITE_PAGE_LABEL"
+        @posted="onPosted"
+      />
+    </section>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { UiSection } from '../components/ui/index.js'
+import { ref } from 'vue'
 import CommentsPanel from '../components/CommentsPanel.vue'
+import CommentComposer from '../components/CommentComposer.vue'
+import { SITE_PAGE_KEY, SITE_PAGE_LABEL } from '../utils/commentApi.js'
 
-const route = useRoute()
-const router = useRouter()
+const listRef = ref(null)
 
-/** `?page=item:item_00001`；缺省为空 = 全站最新 */
-const pageKey = computed(() => String(route.query.page || ''))
-
-/** 归属页面的名字；从 query 带过来（详情页知道它，我们不必反查物品表） */
-const pageLabel = computed(() => String(route.query.label || ''))
-
-const sectionTitle = computed(() => (pageKey.value ? `讨论：${pageLabel.value || pageKey.value}` : '全站最新讨论'))
-
-/** 回到全站最新（清掉 page/label，保留其它无关参数的行为与其它页面一致：只清自己的） */
-function showLatest() {
-  const query = { ...route.query }
-  delete query.page
-  delete query.label
-  router.replace({ path: '/discussions', query })
-}
-
-/**
- * 点"来自某页面"的胶囊 → 切到那条讨论。
- * 不跳转到图鉴页（用户可能只想在这里接着看那条的讨论），只换 `page`。
- */
-function goToPage(comment) {
-  router.push({
-    path: '/discussions',
-    query: { page: comment.pageKey, label: comment.pageLabel || '' }
-  })
+/** 发表后刷新列表（发表区在列表组件之外，由这里把两者接起来） */
+function onPosted() {
+  listRef.value?.reload()
 }
 </script>
 
 <style scoped>
-/* 只保留业务布局；面板/按钮/章节样式一律来自 theme.css 与 Ui 组件 */
+/* 只保留业务布局；按钮/空态等样式仍来自 theme.css 与 Ui 组件 */
 .discussions-page {
   display: flex;
   flex-direction: column;
@@ -86,42 +63,72 @@ function goToPage(comment) {
   min-height: calc(var(--vh100) - var(--header-height, 60px) - var(--safe-top, 0px) - 53px);
 }
 
-.discussion-main {
+/*
+ * 内容区纸张底：与符石图鉴的 `.runes-content`（`background: var(--paper)` + 内边距）同一形态。
+ * 不加这层的话讨论直接铺在地图背景上，空态与提示文字几乎读不出来。
+ */
+.discussion-panel {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
   min-height: 0;
+  padding: 12px 14px calc(14px + var(--safe-bottom, 0px));
+  background: var(--paper);
+}
+
+.discussion-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-shrink: 0;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-faint);
+}
+
+.discussion-title {
+  margin: 0;
+  color: var(--text-main);
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 /*
  * 滚动容器：`min-height: 0` 是关键——flex 子项默认 min-height:auto 会被内容撑开，
  * 那样消息一多就会把整页撑长、滚动条跑到页面外层（正是用户要求避免的"超出区域"）。
+ * 发表区**不在这里面**，所以它始终固定在面板底部。
  */
 .discussion-scroll {
   flex: 1 1 auto;
   min-height: 0;
-  max-height: min(72vh, calc(var(--vh100) - 320px));
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
   padding-right: 2px;
 }
 
-.discussion-hint {
-  margin: 10px 0 0;
-  color: var(--text-muted);
-  font-size: 13px;
-  line-height: 1.6;
+/* 发表区：固定在滚动容器之外的下方，与列表之间加一条分隔线 */
+.discussion-composer {
+  flex: 0 0 auto;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-faint);
 }
 
-.discussion-switch {
-  padding: 0;
-  border: none;
-  background: none;
-  color: var(--accent-ink);
-  font-family: inherit;
-  font-size: 13px;
-  text-decoration: underline;
-  cursor: pointer;
+/*
+ * 桌面端给面板一个**明确高度**，让内部 flex 自己去分配：
+ * 列表区拿剩余空间（并内部滚动），发表区按内容高度固定在下沿。
+ *
+ * 为什么必须显式给高度：桌面端 App.vue 会把 `[data-main-scroll]` 的滚动整个禁用
+ * （`overflow-y: visible !important; max-height: none !important`），改由整页滚动。
+ * 若不在这里封顶，讨论列表会无限长，发表区被顶出屏幕、整页也会多出一条滚动条
+ * （实测：.app-container scrollHeight 950 > 900）。
+ *
+ * `- 190px` 覆盖：顶部 33px 吸附留白 + 面板内边距 + 标题栏 + 发表区。
+ */
+@media (min-width: 1025px) {
+  .discussion-panel {
+    height: calc(var(--vh100) - var(--header-height, 60px) - var(--safe-top, 0px) - 190px);
+  }
 }
 </style>

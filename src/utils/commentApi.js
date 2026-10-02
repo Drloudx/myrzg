@@ -53,6 +53,15 @@ export const COMMENT_PAGE_PREFIX = {
 }
 
 /**
+ * **站内总讨论区**的归属键。
+ *
+ * 它是网站自己的一个讨论（"站内讨论区"），与各图鉴页面的讨论（`item:xxx`、`hero:xxx`…）
+ * **完全分开**：不聚合、不互相搬运。右栏的"全站最新"只是发现入口，展示各页面的最新讨论。
+ */
+export const SITE_PAGE_KEY = 'site:general'
+export const SITE_PAGE_LABEL = '站内讨论区'
+
+/**
  * 生成评论归属键。
  *
  * @param {string} prefix COMMENT_PAGE_PREFIX 里的值

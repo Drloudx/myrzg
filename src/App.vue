@@ -143,6 +143,16 @@
             <button type="button" class="info-title-text info-title-link" @click="openDiscussions">
               最新讨论
             </button>
+            <!-- 进入讨论区：放在标题栏右侧（用户指定位置） -->
+            <button
+              type="button"
+              class="info-title-enter"
+              title="进入讨论区"
+              aria-label="进入讨论区"
+              @click="openDiscussions"
+            >
+              ▶
+            </button>
           </div>
           <div class="info-body">
             <!-- 最近几条（只读、不放输入框）：点开进入讨论区 -->
@@ -163,14 +173,11 @@
             </div>
 
             <div class="info-section recent-foot">
-              <UiButton variant="secondary" size="sm" block @click="openDiscussions">
-                进入讨论区
-              </UiButton>
-              <!-- 交流群链接：原信息面板的唯一入口，保留 -->
+              <!-- 交流群：原信息面板的唯一入口，保留。配色与「进入讨论区」按钮一致 -->
               <p class="info-note recent-group">
                 交流群
                 <a
-                  class="info-value--link"
+                  class="recent-group-link"
                   href="https://qm.qq.com/q/iolDkZyD2E"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -1235,10 +1242,11 @@ onBeforeUnmount(() => { itemLoadOperation += 1 })
   overflow: hidden;
 }
 .info-title-bar {
+  position: relative; /* 供右侧「进入讨论区」箭头绝对定位（标题保持居中不动） */
   background-color: var(--border-color, #8f7351);
   color: var(--on-wood-text);
   text-align: center;
-  padding: 10px 14px;
+  padding: 10px 34px 10px 14px; /* 右侧留出箭头宽度，长标题也不会压到箭头 */
   font-family: var(--font-ui);
   font-weight: 700;
   font-size: 17px;
@@ -1265,6 +1273,36 @@ onBeforeUnmount(() => { itemLoadOperation += 1 })
   cursor: pointer;
 }
 .info-title-link:hover {
+  text-decoration: underline;
+}
+
+/* 标题栏右侧的「进入讨论区」箭头：绝对定位在右侧，标题保持居中 */
+.info-title-enter {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  padding: 2px 4px;
+  border: 1px solid rgba(223, 206, 179, 0.5);
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.12);
+  color: var(--on-wood-text, #dfceb3);
+  font-family: inherit;
+  font-size: 11px;
+  line-height: 1;
+  cursor: pointer;
+}
+.info-title-enter:hover {
+  background: rgba(0, 0, 0, 0.28);
+  color: #fff;
+}
+
+/* 交流群链接配色与「进入讨论区」的强调色一致（用户要求） */
+.recent-group-link {
+  color: var(--accent-ink);
+  text-decoration: none;
+}
+.recent-group-link:hover {
   text-decoration: underline;
 }
 
