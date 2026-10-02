@@ -129,7 +129,13 @@ const props = defineProps({
    * 评论归属键，形如 `item:30047`。
    * 由调用方从业务 ID 推导，不使用 URL 参数（SPEC 第四章：仅已实现的参数做 URL 同步）。
    */
-  pageKey: { type: String, required: true }
+  pageKey: { type: String, required: true },
+  /**
+   * 该页面的人话名字（如「银币」），随评论一起存下来。
+   * 管理端与账号弹窗据此显示物品名，而不是让用户去看 `item:item_00001` 这种内部标识；
+   * 也不需要在打开评论列表时额外加载整份物品表（性能上更划算）。
+   */
+  pageLabel: { type: String, default: '' }
 })
 
 const comments = ref([])
@@ -210,6 +216,7 @@ async function submit() {
   try {
     const data = await postComment({
       pageKey: props.pageKey,
+      pageLabel: props.pageLabel,
       nick: identity.value.nick.trim(),
       avatar: identity.value.avatar || '',
       body: form.body.trim(),

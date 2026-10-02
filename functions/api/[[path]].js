@@ -240,6 +240,9 @@ function toPublic(row) {
     createdAt: row.created_at,
     status: row.status,
     pageKey: row.page_key,
+    // 评论所在页面的人话名字（如「银币」）。由发表方连同评论一起存下来，
+    // 这样管理端/账号弹窗不必为每条评论反查物品表，也不会因为缺产物而显示不出名字。
+    pageLabel: row.page_label || null,
     // 命中审核词表的原因（供管理页面判断是误伤还是真垃圾）；干净评论为 null
     reviewReason: row.review_reason || null
   }
@@ -257,9 +260,9 @@ async function listComments(env, url) {
 
   // 多取 1 条判断 hasMore，避免 COUNT(*)（全表扫描，D1 按行计费）
   const sql = hasCursor
-    ? `SELECT id, nick, avatar, body, created_at, status, page_key FROM comments
+    ? `SELECT id, nick, avatar, body, created_at, status, page_key, page_label FROM comments
        WHERE page_key = ?1 AND status = 1 AND id < ?2 ORDER BY id DESC LIMIT ?3`
-    : `SELECT id, nick, avatar, body, created_at, status, page_key FROM comments
+    : `SELECT id, nick, avatar, body, created_at, status, page_key, page_label FROM comments
        WHERE page_key = ?1 AND status = 1 ORDER BY id DESC LIMIT ?2`
 
   const stmt = hasCursor
@@ -303,6 +306,10 @@ async function createComment(env, request) {
   const rawAvatar = String(payload?.avatar || '')
   const avatar = AVATAR_ID_RE.test(rawAvatar) ? rawAvatar : null
 
+  // 评论所在页面的人话名字（如「银币」）。由前端用它手上已有的业务数据传上来——
+  // 服务端读不到物品表，事后反查还得依赖产物存在。只做长度与去控制字符处理。
+  const pageLabel = sanitize(payload?.pageLabel, 40)
+
   const ip = clientIp(request)
   const salt = env.IP_HASH_SALT || 'myrzg-default-salt'
   const ipHash = await sha256Hex(`${ip}|${salt}`)
@@ -329,8 +336,8 @@ async function createComment(env, request) {
   const uaHash = await sha256Hex(String(request.headers.get('user-agent') || '').slice(0, 200))
 
   const inserted = await env.DB.prepare(
-    `INSERT INTO comments (page_key, nick, avatar, body, status, created_at, ip_hash, ua_hash, token_hash, review_reason)
-     VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)
+    `INSERT INTO comments (page_key, nick, avatar, body, status, created_at, ip_hash, ua_hash, token_hash, review_reason, page_label)
+     VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11)
      RETURNING id, created_at`
   )
     .bind(
@@ -343,7 +350,8 @@ async function createComment(env, request) {
       ipHash,
       uaHash,
       tokenHash,
-      needsReview ? reviewHits.join(',') : null
+      needsReview ? reviewHits.join(',') : null,
+      pageLabel || null
     )
     .first()
 
@@ -438,7 +446,7 @@ async function adminList(env, url) {
   }
   binds.push(limit + 1)
 
-  const sql = `SELECT id, page_key, nick, avatar, body, created_at, status, review_reason FROM comments
+  const sql = `SELECT id, page_key, page_label, nick, avatar, body, created_at, status, review_reason FROM comments
     ${where.length ? 'WHERE ' + where.join(' AND ') : ''}
     ORDER BY id DESC LIMIT ?${binds.length}`
 
@@ -499,7 +507,7 @@ async function listMyComments(env, request) {
 
   const placeholders = wanted.map((_, i) => `?${i + 1}`).join(', ')
   const { results } = await env.DB.prepare(
-    `SELECT id, page_key, nick, avatar, body, created_at, status, token_hash
+    `SELECT id, page_key, page_label, nick, avatar, body, created_at, status, token_hash
      FROM comments WHERE id IN (${placeholders})`
   )
     .bind(...wanted.map((w) => w.id))
@@ -520,7 +528,8 @@ async function listMyComments(env, request) {
       body: row.body,
       createdAt: row.created_at,
       status: row.status,
-      pageKey: row.page_key
+      pageKey: row.page_key,
+      pageLabel: row.page_label || null
     })
   }
   verified.sort((a, b) => b.id - a.id)

@@ -107,11 +107,15 @@ export function fetchComments(pageKey, { cursor, limit = 20 } = {}) {
  * 昵称与头像来自本机身份（`utils/identity.js`），不在这里要求用户重填。
  * 注意：`avatar` 是**头像 ID**（如 `avatar_pet_006`），服务端只做格式校验，
  * 路径由客户端查 `avatarCatalog.json` 得到。
+ *
+ * `pageLabel` 是评论所在页面的人话名字（如「银币」）。由调用方用它手上已有的
+ * 业务数据传上来并存进这条评论——这样管理端与账号弹窗不必为每条评论反查物品表
+ * （那要多加载约 190 KB 的 items.json），而写入时多一列不增加 D1 的行数计费。
  */
-export function postComment({ pageKey, nick, avatar, body, token, hp }) {
+export function postComment({ pageKey, pageLabel, nick, avatar, body, token, hp }) {
   return request('/api/comments', {
     method: 'POST',
-    body: { page: pageKey, nick, avatar, body, token, hp }
+    body: { page: pageKey, pageLabel, nick, avatar, body, token, hp }
   })
 }
 

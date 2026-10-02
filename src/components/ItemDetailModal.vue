@@ -511,7 +511,12 @@
     </UiSection>
 
     <!-- 讨论区：只在物品详情里挂，key 绑定物品 ID，切换物品时重建组件（清空上一件的评论与表单） -->
-    <CommentsPanel v-if="commentPageKey" :key="commentPageKey" :page-key="commentPageKey" />
+    <CommentsPanel
+      v-if="commentPageKey"
+      :key="commentPageKey"
+      :page-key="commentPageKey"
+      :page-label="item?.name || ''"
+    />
 
     <UiBackToTop scroll-container="#itemModalScroll" />
     </template>

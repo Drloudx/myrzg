@@ -20,7 +20,8 @@ CREATE TABLE IF NOT EXISTS comments (
   ua_hash    TEXT    DEFAULT NULL,
   token_hash TEXT    DEFAULT NULL,        -- 浏览器自删令牌的 SHA-256；明文只回给浏览器一次
   review_reason TEXT DEFAULT NULL,        -- 命中的审核词表类别（'外链'/'赌博'…），干净为 NULL
-  avatar     TEXT    DEFAULT NULL         -- 头像 ID（如 avatar_pet_006），路径由 avatarCatalog.json 查
+  avatar     TEXT    DEFAULT NULL,        -- 头像 ID（如 avatar_pet_006），路径由 avatarCatalog.json 查
+  page_label TEXT    DEFAULT NULL         -- 评论所在页面的人话名字（如「银币」），发表时随评论存下
 );
 
 -- 增量迁移（建库时已含上面字段则可忽略；D1 不支持 ADD COLUMN IF NOT EXISTS，
@@ -28,6 +29,7 @@ CREATE TABLE IF NOT EXISTS comments (
 --   ALTER TABLE comments ADD COLUMN token_hash TEXT DEFAULT NULL;
 --   ALTER TABLE comments ADD COLUMN review_reason TEXT DEFAULT NULL;
 --   ALTER TABLE comments ADD COLUMN avatar TEXT DEFAULT NULL;
+--   ALTER TABLE comments ADD COLUMN page_label TEXT DEFAULT NULL;
 --
 -- 说明：`email_hash` 列保留但不再使用（2026-10-02 起头像改为选游戏头像，
 -- 不再用邮箱哈希拼 Gravatar——那需要把标识发给第三方，与"不存明文邮箱"自相矛盾，

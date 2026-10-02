@@ -45,8 +45,15 @@
         头像列表暂时加载不出来，可以先只设置昵称，稍后再试。
       </div>
       <template v-else>
-        <div v-for="group in avatarGroups" :key="group.key" class="avatar-group">
-          <div class="avatar-group-label">{{ group.label }}（{{ group.items.length }}）</div>
+        <!-- 分组默认收起：76 个头像全铺开会把弹窗撑得很长，而多数人只用其中一两个 -->
+        <UiAccordion
+          v-for="group in avatarGroups"
+          :key="group.key"
+          class="avatar-group"
+          :title="`${group.label}（${group.items.length}）`"
+          :model-value="expandedGroups.has(group.key)"
+          @update:model-value="(v) => toggleGroup(group.key, v)"
+        >
           <div class="avatar-grid">
             <button
               v-for="item in group.items"
@@ -61,7 +68,7 @@
               <img :src="getImageUrl(item.path)" :alt="item.name || ''" loading="lazy" decoding="async" />
             </button>
           </div>
-        </div>
+        </UiAccordion>
       </template>
     </UiSection>
 
@@ -81,15 +88,24 @@
         <li v-for="c in myComments" :key="c.id" class="my-item">
           <div class="my-head">
             <UiTag :tone="statusTone(c.status)">{{ statusLabel(c.status) }}</UiTag>
-            <span class="my-page">{{ c.pageKey }}</span>
+            <!-- 显示物品名而不是 item:item_00001；名字随评论一起存，不额外加载物品表 -->
+            <span class="my-page" :title="c.pageKey">{{ c.pageLabel || c.pageKey }}</span>
             <time class="my-time">{{ formatTime(c.createdAt) }}</time>
           </div>
           <p class="my-body">{{ c.body }}</p>
+          <div class="my-foot">
+            <button
+              type="button"
+              class="my-delete"
+              :disabled="deletingId === c.id"
+              @click="removeMine(c)"
+            >
+              {{ deletingId === c.id ? '删除中…' : '删除' }}
+            </button>
+          </div>
         </li>
       </ul>
-      <p v-if="myComments.length" class="account-hint">
-        删除请到对应物品的讨论区：列表里自己的评论旁有「删除」。
-      </p>
+      <p v-if="myError" class="my-error" role="alert">{{ myError }}</p>
     </UiSection>
 
     <template #footer>
@@ -101,7 +117,7 @@
 
 <script setup>
 import { computed, ref, watch } from 'vue'
-import { UiModal, UiSection, UiButton, UiEmptyState, UiTag } from './ui/index.js'
+import { UiModal, UiSection, UiButton, UiEmptyState, UiTag, UiAccordion } from './ui/index.js'
 import { getImageUrl } from '../utils/env.js'
 import {
   avatarCatalogState,
@@ -112,7 +128,7 @@ import {
   loadAvatarCatalog,
   saveIdentity
 } from '../utils/identity.js'
-import { fetchMyComments, getDeleteToken, listOwnedCommentIds } from '../utils/commentApi.js'
+import { fetchMyComments, getDeleteToken, listOwnedCommentIds, deleteOwnComment, removeDeleteToken } from '../utils/commentApi.js'
 
 const props = defineProps({
   modelValue: {
@@ -126,10 +142,24 @@ const emit = defineEmits(['update:modelValue'])
 /** 草稿：只有点「保存」才写入，取消不留痕 */
 const draft = ref({ nick: '', avatar: '' })
 
+/**
+ * 已展开的头像分组。**默认全收起**（用户在 76 个头像里通常只用一两个，
+ * 全铺开会把弹窗撑得很长）。用 Set 而不是逐组 ref，便于按 key 增删。
+ */
+const expandedGroups = ref(new Set())
+function toggleGroup(key, open) {
+  const next = new Set(expandedGroups.value)
+  if (open) next.add(key)
+  else next.delete(key)
+  expandedGroups.value = next
+}
+
 /** 「我发过的评论」：凭本机保存的自删令牌取回，含待审/已隐藏状态 */
 const myComments = ref([])
 const myLoading = ref(false)
 const myFailed = ref(false)
+const myError = ref('')
+const deletingId = ref(null)
 
 async function loadMyComments() {
   const ids = listOwnedCommentIds()
@@ -140,6 +170,7 @@ async function loadMyComments() {
   }
   myLoading.value = true
   myFailed.value = false
+  myError.value = ''
   try {
     const items = ids
       .map((id) => ({ id, token: getDeleteToken(id) }))
@@ -150,6 +181,39 @@ async function loadMyComments() {
     myFailed.value = true
   } finally {
     myLoading.value = false
+  }
+}
+
+/**
+ * 在这里直接删自己的评论。
+ * 复用已有的 DELETE /api/comments（凭本机令牌），不需要新接口、也不额外查库。
+ * 二次确认是因为删除不可撤销（软删除，用户侧看不到了）。
+ */
+async function removeMine(comment) {
+  if (deletingId.value) return
+  if (!window.confirm('删除这条评论？')) return
+  const token = getDeleteToken(comment.id)
+  if (!token) {
+    myError.value = '这条评论的删除凭据已失效'
+    return
+  }
+  deletingId.value = comment.id
+  myError.value = ''
+  try {
+    await deleteOwnComment(comment.id, token)
+    removeDeleteToken(comment.id)
+    myComments.value = myComments.value.filter((c) => c.id !== comment.id)
+    // 通知讨论区：如果它正开着，下次进入会重新拉取（这里只是同步本机列表）
+  } catch (err) {
+    // 服务端删除是幂等的：404 视为已删除
+    if (err?.status === 404) {
+      removeDeleteToken(comment.id)
+      myComments.value = myComments.value.filter((c) => c.id !== comment.id)
+    } else {
+      myError.value = err?.message || '删除失败，请稍后再试'
+    }
+  } finally {
+    deletingId.value = null
   }
 }
 
@@ -277,6 +341,38 @@ function confirm() {
   overflow-wrap: anywhere;
 }
 
+.my-foot {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+
+.my-delete {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--danger);
+  font-family: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.my-delete:hover:not(:disabled) {
+  text-decoration: underline;
+}
+
+.my-delete:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.my-error {
+  margin: 8px 0 0;
+  color: var(--danger);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
 .account-retry {
   padding: 0;
   border: none;
@@ -327,15 +423,9 @@ function confirm() {
   font-weight: 700;
 }
 
+/* 分组标题由 UiAccordion 渲染，这里只留组间距 */
 .avatar-group + .avatar-group {
-  margin-top: 10px;
-}
-
-.avatar-group-label {
-  margin-bottom: 6px;
-  color: var(--text-muted);
-  font-size: 12.5px;
-  font-weight: 700;
+  margin-top: 4px;
 }
 
 /* 头像数量较多，但**不再自己开滚动条**：
