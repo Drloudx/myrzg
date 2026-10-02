@@ -26,6 +26,44 @@ const NETWORK_ERROR = '网络连接异常'
 const TIMEOUT_ERROR = '网络连接超时，请稍后再试'
 const GENERIC_ERROR = '操作失败，请稍后再试'
 
+/**
+ * 各页面的评论归属前缀 → `page_key` = `<前缀>:<实体ID>`。
+ *
+ * **一处维护**，因为服务端的 `PAGE_KEY_RE` 白名单必须与此保持一致：
+ * 新增页面时改这里 + 服务端白名单两处即可，不要在各视图里手写字符串。
+ *
+ * 几个容易混的点：
+ * - **符石与菜谱的实体 ID 本身就是 `item_xxxxx` 形式**（`item_19310`、`item_30022`），
+ *   但它们点卡片走的是全局物品详情，所以**不单独挂讨论区**、也不需要前缀，
+ *   否则会和物品讨论串在一起或出现两个讨论区。
+ * - 关卡用 `stage:` 而不是 `chapter:`——讨论的对象是具体关卡（含难度），不是整章。
+ * - 副本用 `battle:`——详情是按 battle 打开的，同一副本下不同 battle 是不同页面。
+ */
+export const COMMENT_PAGE_PREFIX = {
+  item: 'item',
+  hero: 'hero',
+  pet: 'pet',
+  monster: 'monster',
+  furniture: 'furniture',
+  task: 'task',
+  event: 'event',
+  explore: 'explore',
+  battle: 'battle',
+  stage: 'stage'
+}
+
+/**
+ * 生成评论归属键。
+ *
+ * @param {string} prefix COMMENT_PAGE_PREFIX 里的值
+ * @param {string|number} entityId 业务 ID（不要传页面路径）
+ * @returns {string} 形如 `hero:hero_019`；参数不全时返回空串（调用方据此不渲染讨论区）
+ */
+export function buildPageKey(prefix, entityId) {
+  if (!prefix || entityId === undefined || entityId === null || entityId === '') return ''
+  return `${prefix}:${String(entityId)}`
+}
+
 /** 自删令牌的本地存储键：`myrzg:comment-token:<id>` */
 const TOKEN_PREFIX = 'myrzg:comment-token:'
 

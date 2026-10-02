@@ -494,6 +494,12 @@
         </div>
       </template>
 
+      <CommentsPanel
+        v-if="petCommentPageKey"
+        :page-key="petCommentPageKey"
+        :page-label="selectedPet?.name || ''"
+      />
+
       <UiBackToTop scroll-container="#petModalScroll" />
     </UiModal>
   </div>
@@ -522,6 +528,8 @@ import {
 import { isBlacklisted } from '../config/blacklist.js'
 import { ELEMENT_SLUGS, ELEMENT_NAMES, formatHighlightedText, BASE_REWARD_PATHS } from '../utils/gameMappings'
 import { useLazyList } from '../composables/useLazyList'
+import CommentsPanel from '../components/CommentsPanel.vue'
+import { buildPageKey, COMMENT_PAGE_PREFIX } from '../utils/commentApi.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -533,6 +541,9 @@ const playerLevelCap = ref(1)
 const isDataReady = ref(false)
 const detailVisible = ref(false)
 const selectedPet = ref(null)
+
+/** 讨论区归属键：`pet:pet_006` */
+const petCommentPageKey = computed(() => buildPageKey(COMMENT_PAGE_PREFIX.pet, selectedPet.value?.id))
 const errorMessage = ref('')
 
 const searchQuery = ref('')

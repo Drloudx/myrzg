@@ -716,6 +716,13 @@
         />
       </template>
 
+      <!-- 讨论区：归属键用角色 ID（刷新/复用同一详情时不必重建组件） -->
+      <CommentsPanel
+        v-if="heroCommentPageKey"
+        :page-key="heroCommentPageKey"
+        :page-label="selectedHero?.name || ''"
+      />
+
       <UiBackToTop scroll-container="#heroModalScroll" />
     </UiModal>
 
@@ -743,6 +750,8 @@ import {
 } from '../utils/gameMappings'
 import HeroStoryPanels from '../components/heroes/HeroStoryPanels.vue'
 import HeroSkinsPanel from '../components/heroes/HeroSkinsPanel.vue'
+import CommentsPanel from '../components/CommentsPanel.vue'
+import { buildPageKey, COMMENT_PAGE_PREFIX } from '../utils/commentApi.js'
 import { hasHeroModel as hasHeroModelFor, getHeroModelImage } from '../utils/heroModels.js'
 import {
   UiBackToTop,
@@ -795,6 +804,11 @@ const searchQuery = ref('')
 const selectedRarity = ref(null)
 const selectedJob = ref(null)
 const selectedElement = ref(null)
+
+/** 讨论区归属键：`hero:hero_019`（见 utils/commentApi.js 的前缀表） */
+const heroCommentPageKey = computed(() =>
+  buildPageKey(COMMENT_PAGE_PREFIX.hero, selectedHero.value?.id)
+)
 
 // Detail modal states
 const detailVisible = ref(false)

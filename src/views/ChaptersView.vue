@@ -232,6 +232,13 @@
           <RoomContentList :rooms="filteredRooms" @item-click="goToItem" />
         </UiSection>
 
+        <!-- 讨论区归属到具体关卡（`stage:<stageId>`），不是整章 -->
+        <CommentsPanel
+          v-if="stageCommentPageKey"
+          :page-key="stageCommentPageKey"
+          :page-label="stageDetail ? `${stageDetail.shortName || ''} ${stageDetail.name || ''}`.trim() : ''"
+        />
+
         <UiBackToTop scroll-container="#chapterStageScroll" />
       </template>
     </UiModal>
@@ -264,6 +271,8 @@ import { fetchWithFallback, prefetchResourceManifest } from '../utils/request.js
 import { getImageUrl, handleImageFallback } from '../utils/env.js'
 import { BASE_REWARD_PATHS } from '../utils/gameMappings.js'
 import { isBlacklisted } from '../config/blacklist.js'
+import CommentsPanel from '../components/CommentsPanel.vue'
+import { buildPageKey, COMMENT_PAGE_PREFIX } from '../utils/commentApi.js'
 
 const DIFFICULTY_LABELS = ['简单', '普通', '困难', '自由探索']
 
@@ -283,6 +292,9 @@ const searchQuery = ref(route.query.q || '')
 
 const detailVisible = ref(false)
 const stageDetail = ref(null)
+
+/** 讨论区归属键：`stage:<stageId>` */
+const stageCommentPageKey = computed(() => buildPageKey(COMMENT_PAGE_PREFIX.stage, stageDetail.value?.id))
 const detailLoading = ref(false)
 const detailError = ref('')
 const difficultyIndex = ref(0)

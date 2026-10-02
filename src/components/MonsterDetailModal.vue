@@ -222,6 +222,14 @@
 
       </div>
     </template>
+
+    <!-- 讨论区归属到「具体形态」：同一怪物的不同形态是不同页面 -->
+    <CommentsPanel
+      v-if="monsterCommentPageKey"
+      :page-key="monsterCommentPageKey"
+      :page-label="currentForm?.name || monster?.name || ''"
+    />
+
     <UiBackToTop scroll-container="#monsterModalScroll" />
   </UiModal>
 </template>
@@ -235,6 +243,8 @@ import { openRewardDetail } from '../utils/rewardModalState.js'
 import { getImageUrl, handleImageFallback } from '../utils/env'
 import { fetchMonsterData, fetchMonsterLevelStrength } from '../utils/monsterParser'
 import { formatHighlightedText, translateStatName } from '../utils/gameMappings'
+import CommentsPanel from './CommentsPanel.vue'
+import { buildPageKey, COMMENT_PAGE_PREFIX } from '../utils/commentApi.js'
 
 defineProps({ visible: Boolean })
 const emit = defineEmits(['update:visible'])
@@ -294,6 +304,11 @@ onBeforeUnmount(() => { loadOperation += 1 })
 
 const allForms = computed(() => monster.value ? [...(monster.value.forms || []), ...(monster.value.summons || [])] : [])
 const currentForm = computed(() => allForms.value[currentFormIndex.value] || null)
+
+/** 讨论区归属键：`monster:<形态ID>` */
+const monsterCommentPageKey = computed(() =>
+  buildPageKey(COMMENT_PAGE_PREFIX.monster, currentForm.value?.id || monster.value?.id)
+)
 
 // 怪物原型本身是否就是首领（如角布林头领、“魔爪”图洛德、碎岩统领等）
 const isBaseMonsterBoss = computed(() => {

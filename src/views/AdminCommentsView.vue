@@ -67,7 +67,10 @@
               <UiTag :tone="statusTone(c.status)">{{ statusLabel(c.status) }}</UiTag>
               <span class="admin-id">#{{ c.id }}</span>
               <span class="admin-nick">{{ c.nick }}</span>
-              <span class="admin-page" :title="c.pageKey">{{ c.pageKey }}</span>
+              <!-- 显示业务名（如「银币」「奇瓦」）而不是 item:item_00001 / hero:hero_019：
+                   page_label 由发表方随评论一起存下（见 docs/technical/COMMENTS_BACKEND.md），
+                   管理员不需要看懂内部标识。悬停 title 保留原始 page_key 便于排查。 -->
+              <span class="admin-page" :title="c.pageKey">{{ c.pageLabel || c.pageKey }}</span>
               <time class="admin-time">{{ formatTime(c.createdAt) }}</time>
             </div>
 

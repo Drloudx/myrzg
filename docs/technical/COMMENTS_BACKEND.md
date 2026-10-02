@@ -357,31 +357,41 @@ CREATE TABLE rate_limits (
 改成 `collapsible` + 默认收起，`@update:open` 首次展开时再 `load()`。
 已与用户确认：**等免费额度真的吃紧再做**。
 
-### 挂载范围（哪些页面适合挂讨论区）
+### 挂载范围（已挂全部主要图鉴）
 
-一期只挂**物品详情**（`ItemDetailModal`），这是首页入口、使用最频繁。
-后续按"玩家会不会就这个东西发问"排序，而不是按实体数量：
+按用户要求（2026-10-02）**已挂到全部主要图鉴详情**。归属键一律通过
+`src/utils/commentApi.js` 的 `buildPageKey(COMMENT_PAGE_PREFIX.x, id)` 生成，
+**不在各视图里手写字符串**；服务端 `PAGE_KEY_RE` 白名单必须与之保持一致。
 
-| 页面 | 实体数 | 是否建议挂 | 理由 |
-| --- | --- | --- | --- |
-| 物品 `/items` | 816 | ✅ **已挂** | 首页入口；掉率、用途、替代品讨论 |
-| 角色 `/heroes` | 34 | ✅ **建议优先** | 配装/阵容/培养问题最集中；实体少、请求量可控 |
-| 魔物 `/pets` | 32 | ✅ **建议优先** | 技能取舍、变异、蛋池问题多；同上 |
-| 菜谱 `/recipes` | 30 | ✅ 建议 | 食材配比与获取途径常被问 |
-| 符石 `/runes` | 114 | ⭕ 可选 | 合成/鉴定路线讨论 |
-| 副本 `/dungeons` | 10 | ⭕ 可选 | 关卡掉落与打法；但详情已是重型结构 |
-| 关卡 `/chapters` | 8 章 / 92 关 | ⭕ 可选 | 同上 |
-| 怪物 `/monsters` | 52 | ❌ 不建议 | 工具书性质，玩家很少就单个怪物讨论 |
-| 家具 `/furniture` | 141 | ❌ 不建议 | 收集向，讨论价值低 |
-| 任务 `/tasks` | 315 | ❌ 不建议 | 单向内容，讨论集中在攻略而非单任务 |
-| 事件 `/events` | 20 | ❌ 不建议 | 同上 |
+| 页面 | `page_key` 示例 | 状态 |
+| --- | --- | --- |
+| 物品 `/items`（含装备） | `item:item_00001` | ✅ |
+| 角色 `/heroes` | `hero:hero_019` | ✅ |
+| 魔物 `/pets` | `pet:pet_074` | ✅ |
+| 家具 `/furniture` | `furniture:sysBlacksmith` | ✅ |
+| 副本 `/dungeons` | `battle:yzdj_6_d` | ✅ |
+| 关卡 `/chapters` | `stage:c0_1` | ✅ |
+| 怪物 `/monsters` | `monster:010` | ✅ |
+| 任务 `/tasks` | `task:m_0_1` | ✅ |
+| 事件 `/events` | `event:e_1` / `explore:...` | ✅ |
 
-新增页面时要注意两件事：
-1. `page_key` 前缀要加进 `functions/api/[[path]].js` 的 `PAGE_KEY_RE`
-   （**`recipe` 目前不在白名单里**，挂菜谱前必须先加）；符石/菜谱的实体 ID 都是
-   `item_xxxxx` 形式，所以**必须靠前缀区分**，不能直接复用 `item:`。
-2. 把页面的人话名字通过 `pageLabel` 一起传（见上文 `page_label`），
-   否则管理端与账号弹窗只会显示内部标识。
+**三个刻意的设计决定**：
+
+1. **符石 `/runes` 与菜谱 `/recipes` 不单独挂**。它们的实体 ID 本身就是 `item_xxxxx`
+   形式（`item_19310`、`item_30022`），而点卡片走的是**全局物品详情**
+   （`RecipesView.handleRecipeClick` 就是 `router.push({ query: { itemId } })`），
+   那里已经有讨论区。再挂一份会让同一个东西出现两个讨论区。
+   服务端也**刻意不开放** `rune:` / `recipe:` 前缀。
+2. **关卡用 `stage:` 而不是 `chapter:`**——讨论对象是具体关卡（含难度），不是整章。
+3. **副本用 `battle:`**、**怪物用形态 ID**——详情都是按具体 battle / 形态打开的，
+   同一副本下不同 battle、同一怪物的不同形态是不同页面。
+
+新增页面时：① 在 `COMMENT_PAGE_PREFIX` 加前缀；② 同步服务端 `PAGE_KEY_RE`；
+③ 把页面人话名字通过 `pageLabel` 传进去（否则管理端与账号弹窗只显示内部标识）。
+
+验证脚本 `scripts/dev/scratch/verify-comment-mounts.mjs` 会逐页打开详情，
+断言讨论区存在、且发出的 `page` 参数**符合服务端白名单与预期前缀**
+（前缀写错会被服务端 400 拒绝，界面上只会显示笼统错误，很难查）。
 
 ### 删除是幂等的
 `DELETE /api/comments` 的目标状态是"这条评论不再可见"。**已经不可见（或从未存在）时返回成功**，

@@ -146,6 +146,13 @@
           <p v-else class="no-reward">无</p>
         </UiSection>
 
+        <!-- 讨论区：随机事件与探索点用不同前缀（两者是不同的实体） -->
+        <CommentsPanel
+          v-if="eventCommentPageKey"
+          :page-key="eventCommentPageKey"
+          :page-label="selectedItem?.name || ''"
+        />
+
         <UiBackToTop scroll-container="#eventModalScroll" />
       </template>
     </UiModal>
@@ -174,6 +181,8 @@ import { getImageUrl } from '../utils/env'
 import { isBlacklisted } from '../config/blacklist.js'
 import { getRarityName } from '../utils/gameMappings'
 import { useLazyList } from '../composables/useLazyList'
+import CommentsPanel from '../components/CommentsPanel.vue'
+import { buildPageKey, COMMENT_PAGE_PREFIX } from '../utils/commentApi.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -195,6 +204,18 @@ const searchQuery = ref(route.query.q || '')
 
 const detailVisible = ref(false)
 const selectedItem = ref(null)
+
+/**
+ * 讨论区归属键：`event:<id>` 或 `explore:<id>`。
+ * 随机事件与探索是两类实体，共用一个列表但前缀不同——
+ * 否则同一个 ID 会在两种页签下指到同一份讨论。
+ */
+const eventCommentPageKey = computed(() => {
+  if (!selectedItem.value?.id) return ''
+  const prefix =
+    activeTab.value === 'random' ? COMMENT_PAGE_PREFIX.event : COMMENT_PAGE_PREFIX.explore
+  return buildPageKey(prefix, selectedItem.value.id)
+})
 
 const handleImgError = (e) => {
   e.target.style.opacity = '0.25'

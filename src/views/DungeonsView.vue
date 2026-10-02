@@ -281,6 +281,13 @@
           <RewardPools :entries="selectedBattle.firstReward" @item-click="goToItem" />
         </UiSection>
 
+        <!-- 讨论区归属到具体 battle（同一副本下不同 battle 是不同页面） -->
+        <CommentsPanel
+          v-if="battleCommentPageKey"
+          :page-key="battleCommentPageKey"
+          :page-label="selectedBattle?.name || selectedDungeon?.name || ''"
+        />
+
         <UiBackToTop scroll-container="#dungeonDetailScroll" />
       </template>
     </UiModal>
@@ -311,6 +318,8 @@ import { getImageUrl, handleImageFallback } from '../utils/env.js'
 import { BASE_REWARD_PATHS, MAP_NAMES } from '../utils/gameMappings.js'
 import { resolveScrollTarget } from '../utils/scrollTarget.js'
 import { isBlacklisted } from '../config/blacklist.js'
+import CommentsPanel from '../components/CommentsPanel.vue'
+import { buildPageKey, COMMENT_PAGE_PREFIX } from '../utils/commentApi.js'
 import {
   chestTier,
   monsterWaveLines,
@@ -357,6 +366,9 @@ const detailVisible = ref(false)
 const detailSavedScrollTop = ref(0)
 const selectedDungeon = ref(null)
 const selectedBattle = shallowRef(null)
+
+/** 讨论区归属键：`battle:<battleId>`（详情是按 battle 打开的） */
+const battleCommentPageKey = computed(() => buildPageKey(COMMENT_PAGE_PREFIX.battle, selectedBattle.value?.id))
 const detailLoading = ref(false)
 const detailError = ref('')
 const selectedRouteIndex = ref(0)

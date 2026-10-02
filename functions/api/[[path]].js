@@ -49,9 +49,17 @@ function positiveInt(value, fallback) {
 }
 
 /**
- * page_key 白名单：必须是 `前缀:业务ID`，避免评论被挂到任意路径
+ * page_key 白名单：必须是 `前缀:业务ID`，避免评论被挂到任意路径。
+ *
+ * 与前端 `src/utils/commentApi.js` 的 `COMMENT_PAGE_PREFIX` **必须一致**，
+ * 新增页面时两处一起改。
+ *
+ * 注意：符石/菜谱的实体 ID 本身是 `item_xxxxx` 形式（item_19310、item_30022），
+ * 但它们走的是全局物品详情，所以**没有**独立前缀——`item:` 已覆盖。
+ * 刻意不开放 `rune:` / `recipe:` 前缀：那会让同一个东西出现两份讨论。
  */
-const PAGE_KEY_RE = /^(item|furniture|hero|pet|monster|task|event|battle|stage|glossary):[A-Za-z0-9_\-.]{1,64}$/
+const PAGE_KEY_RE =
+  /^(item|hero|pet|monster|furniture|task|event|explore|battle|stage|glossary):[A-Za-z0-9_\-.]{1,64}$/
 
 /**
  * 头像 ID 白名单：只允许 `at001_0`、`avatar_pet_006` 这类标识符。

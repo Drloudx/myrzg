@@ -30,7 +30,7 @@
       "source": "HarmonyOS_Sans_SC_Regular.woff2",
       "output": "HarmonyOS_Sans_SC_Regular.subset.woff2",
       "sourceBytes": 4279448,
-      "outputBytes": 486124,
+      "outputBytes": 486100,
       "sourceGlyphs": 29063,
       "glyphs": 3946,
       "charsetCount": 4199
@@ -39,7 +39,7 @@
       "source": "HarmonyOS_Sans_SC_Bold.woff2",
       "output": "HarmonyOS_Sans_SC_Bold.subset.woff2",
       "sourceBytes": 4403824,
-      "outputBytes": 492436,
+      "outputBytes": 492468,
       "sourceGlyphs": 29063,
       "glyphs": 3946,
       "charsetCount": 4199

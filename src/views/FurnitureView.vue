@@ -243,6 +243,12 @@
           <p v-else class="empty-detail-text">该家具没有对应的家具图纸</p>
         </UiSection>
 
+        <CommentsPanel
+          v-if="furnitureCommentPageKey"
+          :page-key="furnitureCommentPageKey"
+          :page-label="selectedFurniture?.name || ''"
+        />
+
         <UiBackToTop scroll-container="#furnitureModalScroll" />
       </template>
     </UiModal>
@@ -271,6 +277,8 @@ import { fetchFurnitureData, disguiseSourceText } from '../utils/furnitureData.j
 import { getImageUrl, handleImageFallback } from '../utils/env.js'
 import { getRarityName } from '../utils/gameMappings.js'
 import { isBlacklisted } from '../config/blacklist.js'
+import CommentsPanel from '../components/CommentsPanel.vue'
+import { buildPageKey, COMMENT_PAGE_PREFIX } from '../utils/commentApi.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -282,6 +290,11 @@ const errorMessage = ref('')
 const furnitureGrid = ref(null)
 const selectedFurniture = ref(null)
 const detailVisible = ref(false)
+
+/** 讨论区归属键：`furniture:<id>` */
+const furnitureCommentPageKey = computed(() =>
+  buildPageKey(COMMENT_PAGE_PREFIX.furniture, selectedFurniture.value?.id)
+)
 
 const searchQuery = ref('')
 const selectedMain = ref(null)

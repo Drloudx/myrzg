@@ -277,6 +277,12 @@
             </UiAccordion>
           </div>
         </UiSection>
+        <!-- 讨论区归属到具体任务 -->
+        <CommentsPanel
+          v-if="taskCommentPageKey"
+          :page-key="taskCommentPageKey"
+          :page-label="selectedTask?.name || ''"
+        />
       </template>
     </UiModal>
 
@@ -309,6 +315,8 @@ import { getImageUrl, handleImageFallback } from '../utils/env'
 import { fetchWithFallback, prefetchResourceManifest } from '../utils/request.js'
 import UiVirtualGrid from '../components/ui/UiVirtualGrid.vue'
 import { isBlacklisted } from '../config/blacklist.js'
+import CommentsPanel from '../components/CommentsPanel.vue'
+import { buildPageKey, COMMENT_PAGE_PREFIX } from '../utils/commentApi.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -330,6 +338,9 @@ const searchQuery = ref(route.query.q || '')
 
 const detailVisible = ref(false)
 const selectedTask = ref(null)
+
+/** 讨论区归属键：`task:<id>` */
+const taskCommentPageKey = computed(() => buildPageKey(COMMENT_PAGE_PREFIX.task, selectedTask.value?.id))
 const openSteps = ref({})
 const dialogOpen = ref({})
 const dialogContent = ref({})
