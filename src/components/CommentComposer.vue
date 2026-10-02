@@ -63,6 +63,7 @@ import { computed, reactive, ref } from 'vue'
 import { UiButton } from './ui/index.js'
 import { getImageUrl } from '../utils/env.js'
 import { postComment, saveDeleteToken } from '../utils/commentApi.js'
+import { notifyCommentPosted } from '../utils/commentEvents.js'
 import { avatarPath, identity, openAccountModal } from '../utils/identity.js'
 
 const props = defineProps({
@@ -123,7 +124,10 @@ async function submit() {
       notice.value = data.notice || '评论已提交，将尽快审核后显示'
     }
     form.body = ''
-    // 交给调用方刷新列表（发表成功时才需要，待审的不在列表里）
+    // 广播：右栏「最新讨论」等其他位置的评论列表据此刷新
+    // （它们与发表区互不相识，靠这个信号解耦，见 utils/commentEvents.js）
+    notifyCommentPosted()
+    // 交给调用方刷新列表（发表区在组件外时由父组件调 CommentsPanel.reload()）
     emit('posted', data)
   } catch (err) {
     error.value = err?.message || '发表失败，请稍后重试'

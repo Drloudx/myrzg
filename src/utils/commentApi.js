@@ -149,11 +149,18 @@ export function fetchComments(pageKey, { cursor, limit = 20 } = {}) {
 }
 
 /**
- * 读取**全站最新讨论**（右栏预览与讨论区首页的历史消息）。
- * 服务端对这条做了 30 秒边缘共享缓存，所以频繁打开页面不会反复查库。
+ * 读取**站内讨论区（site:general）的最新讨论**（右栏预览用）。
+ *
+ * 服务端对这条做了 30 秒边缘共享缓存（避免"每开一页查一次库"）。
+ *
+ * `fresh: true` 用于"必须立刻看到最新"的场合（刚发表完、从后台切回、定时轮询）：
+ * - 服务端会跳过共享缓存直接读库；
+ * - 客户端再加一个时间戳参数，穿透浏览器与任何中间层缓存
+ *   （CDN 默认忽略 query 的缓存策略不保证，显式不同 URL 才可靠）。
  */
-export function fetchRecentComments() {
-  return request('/api/recent')
+export function fetchRecentComments({ fresh = false } = {}) {
+  if (!fresh) return request('/api/recent')
+  return request(`/api/recent?fresh=1&t=${Date.now()}`)
 }
 
 /**

@@ -570,7 +570,7 @@ const RECENT_CACHE_SECONDS = 30
 /** 站内总讨论区的归属键（与前端 SITE_PAGE_KEY 一致） */
 const SITE_PAGE_KEY = 'site:general'
 
-async function listRecent(env) {
+async function listRecent(env, { fresh = false } = {}) {
   const { results } = await env.DB.prepare(
     `SELECT id, page_key, page_label, nick, avatar, body, created_at
      FROM comments WHERE status = 1 AND page_key = ?1 ORDER BY id DESC LIMIT ?2`
@@ -592,8 +592,14 @@ async function listRecent(env) {
     status: 200,
     headers: {
       ...JSON_HEADERS,
-      // 覆盖 JSON_HEADERS 里的 no-store：这一条允许边缘共享缓存
-      'cache-control': `public, max-age=0, s-maxage=${RECENT_CACHE_SECONDS}, stale-while-revalidate=60`
+      /*
+       * `?fresh=1` = 调用方刚发表完，必须看到自己的新评论：**跳过共享缓存**。
+       * 不加这个的话会撞上 30 秒缓存窗口，用户看到"发完右边没同步"（实际反馈过）。
+       * 只有用户主动操作后才走这条，正常浏览仍吃缓存，额度开销可忽略。
+       */
+      'cache-control': fresh
+        ? 'no-store'
+        : `public, max-age=0, s-maxage=${RECENT_CACHE_SECONDS}, stale-while-revalidate=60`
     }
   })
 }
@@ -674,10 +680,11 @@ export async function onRequest(context) {
       return await listMyComments(env, request)
     }
 
-    // 全站最新讨论（右栏预览/讨论区首页）：带边缘共享缓存，见 listRecent
+    // 站内讨论区最新（右栏预览）：带边缘共享缓存；?fresh=1 跳过缓存，见 listRecent
     if (path === '/api/recent') {
       if (request.method !== 'GET') return bad(ERR.fallback, 405)
-      return await listRecent(env)
+      const fresh = url.searchParams.get('fresh') === '1'
+      return await listRecent(env, { fresh })
     }
 
     if (isAdminPath) {

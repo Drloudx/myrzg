@@ -261,6 +261,7 @@ import AboutModal from './components/AboutModal.vue'
 import AccountModal from './components/AccountModal.vue'
 import { loadIdentity, registerAccountModal } from './utils/identity.js'
 import { fetchRecentComments } from './utils/commentApi.js'
+import { commentPostedAt } from './utils/commentEvents.js'
 import { UiButton, UiEmptyState, UiModal } from './components/ui/index.js'
 import ItemDetailModal from './components/ItemDetailModal.vue'
 import RewardProbabilityModal from './components/RewardProbabilityModal.vue'
@@ -367,10 +368,16 @@ function openDiscussionFor(comment) {
  * 右栏的最近讨论。**数据由服务端带 30 秒边缘共享缓存**（`GET /api/recent`），
  * 所以右栏在每个页面都可见，也不会变成"每打开一页查一次库"。
  *
- * 为什么不是"只在启动时拉一次"：本站是 **hash 路由**，站内切页不会重新加载应用，
- * 因此启动时拉一次的话，用户在本站发完评论后右栏会一直是旧的（实测踩过）。
- * 改为**每次路由变化都拉**——服务端 30 秒共享缓存让这几乎不产生额外成本
- * （同一 POP 的众多访客共用一次查询），客户端再加 15 秒节流避免极端频繁切换。
+ * 刷新时机有三个，缺一不可：
+ *   1. **路由变化**——覆盖站内切页，但**15 秒节流**（`allowThrottled` 可强制穿透）；
+ *   2. **本机发表评论后**（监听 commentEvents 广播，绕过缓存）——
+ *      实测踩到的坑：本站是 hash 路由，站内发帖**不改变路由也不重载应用**，
+ *      光靠时机 1 会看到"刚发的评论只在左边、右栏还是旧的"；
+ *   3. **30 秒定时 + 从后台切回时刷新**——让**别人发的**也能出现：
+ *      用户停在某页不动时，光靠前两个时机右栏会一直停在旧内容。
+ *
+ * 三个时机都走 `fresh`（跳服务端共享缓存 + 时间戳穿透中间层缓存），
+ * 否则会撞上 30 秒缓存窗口看到旧快照（实测：切页后新评论仍不出现）。
  */
 const recentComments = ref([])
 const recentLoading = ref(false)
@@ -378,13 +385,13 @@ const RECENT_CLIENT_THROTTLE_MS = 15000
 let recentFetchedAt = 0
 let recentInFlight = false
 
-async function loadRecentDiscussions({ force = false } = {}) {
+async function loadRecentDiscussions({ fresh = false, allowThrottled = false } = {}) {
   if (recentInFlight) return
-  if (!force && Date.now() - recentFetchedAt < RECENT_CLIENT_THROTTLE_MS) return
+  if (!allowThrottled && !fresh && Date.now() - recentFetchedAt < RECENT_CLIENT_THROTTLE_MS) return
   recentInFlight = true
   recentLoading.value = true
   try {
-    const data = await fetchRecentComments()
+    const data = await fetchRecentComments({ fresh })
     recentComments.value = (data?.comments || []).slice(0, 5)
     recentFetchedAt = Date.now()
   } catch {
@@ -396,8 +403,38 @@ async function loadRecentDiscussions({ force = false } = {}) {
   }
 }
 
-// 路由变化时刷新右栏（切页/发完评论回来都能看到最新）
-watch(() => route.fullPath, () => loadRecentDiscussions())
+// 站内切页时刷新右栏。**绕过节流**：用户切页是明确意图，且服务端共享缓存让开销可控
+watch(() => route.fullPath, () => loadRecentDiscussions({ fresh: true }))
+// 本机发表评论后立刻刷新
+watch(commentPostedAt, () => loadRecentDiscussions({ fresh: true }))
+
+/**
+ * 定时刷新右栏，让**别人发的**评论也能出现。
+ * 间隔与服务端共享缓存的窗口对齐，所以多数轮询会命中缓存、不落库。
+ * 页面隐藏时跳过（后台标签页不做无意义请求）。
+ */
+const RECENT_POLL_MS = 30000
+let recentTimer = 0
+
+function startRecentPolling() {
+  stopRecentPolling()
+  recentTimer = window.setInterval(() => {
+    if (document.visibilityState === 'hidden') return
+    loadRecentDiscussions({ fresh: true })
+  }, RECENT_POLL_MS)
+}
+
+function stopRecentPolling() {
+  if (recentTimer) {
+    window.clearInterval(recentTimer)
+    recentTimer = 0
+  }
+}
+
+/** 从后台切回前台时立即刷新一次（用户回来的第一眼应该是最新的） */
+function onVisibilityChange() {
+  if (document.visibilityState === 'visible') loadRecentDiscussions({ fresh: true })
+}
 
 /**
  * 本机身份（昵称 + 头像）与账号弹窗的接线：
@@ -580,11 +617,17 @@ onMounted(() => {
     }
     bootLoadingRaf = requestAnimationFrame(settle)
   }
+
+  // 右栏「最新讨论」定时刷新（见 startRecentPolling 的说明）
+  startRecentPolling()
+  document.addEventListener('visibilitychange', onVisibilityChange)
 })
 
 onBeforeUnmount(() => {
   document.removeEventListener('error', handleGlobalImageError, true)
   window.removeEventListener('resize', scheduleStickyClipping)
+  stopRecentPolling()
+  document.removeEventListener('visibilitychange', onVisibilityChange)
   if (stickyClipFrame) window.cancelAnimationFrame(stickyClipFrame)
   if (pendingClearRaf) cancelAnimationFrame(pendingClearRaf)
   if (bootLoadingRaf) cancelAnimationFrame(bootLoadingRaf)
