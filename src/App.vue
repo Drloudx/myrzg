@@ -143,16 +143,9 @@
             <button type="button" class="info-title-text info-title-link" @click="openDiscussions">
               最新讨论
             </button>
-            <!-- 进入讨论区：放在标题栏右侧（用户指定位置） -->
-            <button
-              type="button"
-              class="info-title-enter"
-              title="进入讨论区"
-              aria-label="进入讨论区"
-              @click="openDiscussions"
-            >
-              ▶
-            </button>
+            <!-- 进入讨论区：放在标题栏右侧（用户指定位置）。
+                 用文字「进入→」而不是箭头图形符号——后者在这套羊皮纸样式里显得突兀 -->
+            <button type="button" class="info-title-enter" @click="openDiscussions">进入→</button>
           </div>
           <div class="info-body">
             <!-- 最近几条（只读、不放输入框）：点开进入讨论区 -->
@@ -162,11 +155,24 @@
               <ul v-else class="recent-list">
                 <li v-for="c in recentComments" :key="c.id" class="recent-item">
                   <button type="button" class="recent-btn" @click="openDiscussionFor(c)">
-                    <span class="recent-head">
-                      <span class="recent-nick">{{ c.nick }}</span>
-                      <span v-if="c.pageLabel" class="recent-page">{{ c.pageLabel }}</span>
+                    <!-- 缩小的头像：与讨论区里一致，没有头像时用昵称首字占位 -->
+                    <img
+                      v-if="recentAvatarUrl(c.avatar)"
+                      class="recent-avatar"
+                      :src="recentAvatarUrl(c.avatar)"
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <span v-else class="recent-avatar recent-avatar-fallback" aria-hidden="true">
+                      {{ (c.nick || '?').slice(0, 1) }}
                     </span>
-                    <span class="recent-body">{{ c.body }}</span>
+                    <span class="recent-main">
+                      <!-- 不显示「站内讨论区」标签：这里本来就只放站内讨论区的内容，
+                           每条都标一遍是冗余（用户要求删掉） -->
+                      <span class="recent-nick">{{ c.nick }}</span>
+                      <span class="recent-body">{{ c.body }}</span>
+                    </span>
                   </button>
                 </li>
               </ul>
@@ -259,7 +265,7 @@ import NoticeModal from './components/NoticeModal.vue'
 import VersionCheckModal from './components/VersionCheckModal.vue'
 import AboutModal from './components/AboutModal.vue'
 import AccountModal from './components/AccountModal.vue'
-import { loadIdentity, registerAccountModal } from './utils/identity.js'
+import { loadIdentity, registerAccountModal, avatarPath, avatarCatalogState, loadAvatarCatalog } from './utils/identity.js'
 import { fetchRecentComments } from './utils/commentApi.js'
 import { commentPostedAt } from './utils/commentEvents.js'
 import { UiButton, UiEmptyState, UiModal } from './components/ui/index.js'
@@ -435,6 +441,25 @@ function stopRecentPolling() {
 function onVisibilityChange() {
   if (document.visibilityState === 'visible') loadRecentDiscussions({ fresh: true })
 }
+
+/**
+ * 右栏每条评论的缩小头像路径。
+ * 用与讨论区同一份头像清单（`avatarPath`），没有清单或 ID 未知时返回空串，
+ * 模板会退化用昵称首字占位。
+ */
+function recentAvatarUrl(id) {
+  const path = avatarPath(id)
+  return path ? getImageUrl(path) : ''
+}
+
+// 右栏有带头像的评论时才需要清单（与讨论区同样的按需加载）
+watch(
+  recentComments,
+  (list) => {
+    if (list.some((c) => c.avatar) && avatarCatalogState.value === 'idle') loadAvatarCatalog()
+  },
+  { immediate: true }
+)
 
 /**
  * 本机身份（昵称 + 头像）与账号弹窗的接线：
@@ -1319,20 +1344,22 @@ onBeforeUnmount(() => { itemLoadOperation += 1 })
   text-decoration: underline;
 }
 
-/* 标题栏右侧的「进入讨论区」箭头：绝对定位在右侧，标题保持居中 */
+/* 标题栏右侧的「进入→」：绝对定位在右侧，标题保持居中 */
 .info-title-enter {
   position: absolute;
   top: 50%;
   right: 10px;
   transform: translateY(-50%);
-  padding: 2px 4px;
+  padding: 1px 6px;
   border: 1px solid rgba(223, 206, 179, 0.5);
   border-radius: 3px;
   background: rgba(0, 0, 0, 0.12);
   color: var(--on-wood-text, #dfceb3);
   font-family: inherit;
-  font-size: 11px;
-  line-height: 1;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.5;
   cursor: pointer;
 }
 .info-title-enter:hover {
@@ -1369,8 +1396,8 @@ onBeforeUnmount(() => { itemLoadOperation += 1 })
 }
 .recent-btn {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  align-items: flex-start;
+  gap: 7px;
   width: 100%;
   padding: 6px 8px;
   border: 1px solid var(--border-soft);
@@ -1384,24 +1411,38 @@ onBeforeUnmount(() => { itemLoadOperation += 1 })
 .recent-btn:hover {
   border-color: var(--accent-bright);
 }
-.recent-head {
+
+/* 缩小的头像（24px）：与讨论区里的头像同源，没有头像时用昵称首字占位 */
+.recent-avatar {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--border-soft);
+  object-fit: cover;
+}
+.recent-avatar-fallback {
   display: flex;
-  align-items: baseline;
-  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper-solid);
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* 昵称 + 正文：竖排，占满头像右侧剩余宽度 */
+.recent-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   min-width: 0;
+  flex: 1 1 auto;
 }
 .recent-nick {
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 700;
-  flex: 0 1 auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.recent-page {
-  flex: 0 1 auto;
-  color: var(--text-faint);
-  font-size: 11.5px;
+  color: var(--text-main);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1425,11 +1466,18 @@ onBeforeUnmount(() => { itemLoadOperation += 1 })
   flex-direction: column;
   gap: 8px;
 }
+/* 交流群：字号/字重/颜色与上面聊天的昵称保持一致（用户要求） */
 .recent-group {
   display: flex;
   align-items: baseline;
   gap: 6px;
   margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+}
+.recent-group-link {
+  font-size: 13px;
+  font-weight: 700;
 }
 .info-cover-image {
   width: 100%;
