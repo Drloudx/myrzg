@@ -78,39 +78,70 @@
     </p>
 
     <UiSection title="我发过的评论">
-      <UiEmptyState v-if="myLoading" type="loading" text="加载中..." />
-      <UiEmptyState v-else-if="!myComments.length && !myFailed" text="这台设备上还没有发过评论" />
+      <!--
+        改成**点击才加载**（用户要求）：自动加载会在每次打开账号弹窗时都打一次接口，
+        属于"用户没操作也会产生的固定开销"。这里只在用户主动点击时才请求。
+      -->
+      <UiEmptyState v-if="!ownedCount" text="这台设备上还没有发过评论" />
+      <template v-else-if="!myLoaded">
+        <div class="my-load-row">
+          <span class="account-hint">这台设备上发过 {{ ownedCount }} 条</span>
+          <UiButton variant="secondary" size="sm" @click="loadMyComments()">查看</UiButton>
+        </div>
+      </template>
+      <UiEmptyState v-else-if="myLoading" type="loading" text="加载中..." />
       <div v-else-if="myFailed" class="account-hint">
         暂时取不到，可能是网络问题。
         <button type="button" class="account-retry" @click="loadMyComments()">重试</button>
       </div>
-      <ul v-else class="my-list">
-        <li v-for="c in myComments" :key="c.id" class="my-item">
-          <div class="my-head">
-            <UiTag :tone="statusTone(c.status)">{{ statusLabel(c.status) }}</UiTag>
-            <!-- 显示物品名而不是 item:item_00001；名字随评论一起存，不额外加载物品表 -->
-            <span class="my-page" :title="c.pageKey">{{ c.pageLabel || c.pageKey }}</span>
-            <time class="my-time">{{ formatTime(c.createdAt) }}</time>
-          </div>
-          <p class="my-body">{{ c.body }}</p>
-          <div class="my-foot">
-            <button
-              type="button"
-              class="my-delete"
-              :disabled="deletingId === c.id"
-              @click="removeMine(c)"
-            >
-              {{ deletingId === c.id ? '删除中…' : '删除' }}
-            </button>
-          </div>
-        </li>
-      </ul>
+      <template v-else>
+        <p v-if="!myComments.length" class="account-hint">这些评论已经被删除了。</p>
+        <ul v-else class="my-list">
+          <li v-for="c in myComments" :key="c.id" class="my-item">
+            <div class="my-head">
+              <UiTag :tone="statusTone(c.status)">{{ statusLabel(c.status) }}</UiTag>
+              <!-- 显示物品名而不是 item:item_00001；名字随评论一起存，不额外加载物品表 -->
+              <span class="my-page" :title="c.pageKey">{{ c.pageLabel || c.pageKey }}</span>
+              <time class="my-time">{{ formatTime(c.createdAt) }}</time>
+            </div>
+            <p class="my-body">{{ c.body }}</p>
+            <div class="my-foot">
+              <button type="button" class="my-delete" :disabled="deleting" @click="askDelete(c)">删除</button>
+            </div>
+          </li>
+        </ul>
+      </template>
       <p v-if="myError" class="my-error" role="alert">{{ myError }}</p>
     </UiSection>
 
     <template #footer>
       <UiButton variant="ghost" @click="close()">取消</UiButton>
       <UiButton variant="primary" :disabled="!draft.nick.trim()" @click="confirm">保存</UiButton>
+    </template>
+  </UiModal>
+
+  <!--
+    删除确认：**不用 window.confirm**——那是浏览器原生样式，与本项目的羊皮纸设计系统完全不搭，
+    也绕过了共享覆盖层体系（overlayStack / globalModalLock）。
+    用同一个 UiModal 并 teleport 到 body，z-index 取 14000：
+    高于全局弹窗的下限 12000 与业务弹窗的 13000，才能盖在账号弹窗之上。
+  -->
+  <UiModal
+    :visible="pendingDelete !== null"
+    title="删除评论"
+    max-width="420px"
+    teleport-to="body"
+    :z-index="14000"
+    @update:visible="(v) => { if (!v) pendingDelete = null }"
+  >
+    <p class="account-note">这条评论会从讨论区移除，且无法恢复。</p>
+    <p v-if="pendingDelete" class="confirm-quote">{{ pendingDelete.body }}</p>
+    <p v-if="myError" class="my-error" role="alert">{{ myError }}</p>
+    <template #footer>
+      <UiButton variant="ghost" @click="pendingDelete = null">取消</UiButton>
+      <UiButton variant="danger" :disabled="deleting" @click="deleteConfirmed">
+        {{ deleting ? '删除中…' : '确认删除' }}
+      </UiButton>
     </template>
   </UiModal>
 </template>
@@ -159,13 +190,26 @@ const myComments = ref([])
 const myLoading = ref(false)
 const myFailed = ref(false)
 const myError = ref('')
-const deletingId = ref(null)
+/** 待确认删除的那条评论（null 表示确认框关闭） */
+const pendingDelete = ref(null)
+const deleting = ref(false)
+/** 是否已请求过「我发过的评论」——改成点击才加载，避免每次打开弹窗都打接口 */
+const myLoaded = ref(false)
+
+const ownedCount = ref(0)
+
+/** 只算本机有多少条可回看，不请求接口 */
+function refreshOwnedCount() {
+  ownedCount.value = listOwnedCommentIds().length
+}
 
 async function loadMyComments() {
   const ids = listOwnedCommentIds()
+  ownedCount.value = ids.length
   if (!ids.length) {
     myComments.value = []
     myFailed.value = false
+    myLoaded.value = true
     return
   }
   myLoading.value = true
@@ -177,6 +221,7 @@ async function loadMyComments() {
       .filter((it) => it.token)
     const data = await fetchMyComments(items)
     myComments.value = data?.comments || []
+    myLoaded.value = true
   } catch {
     myFailed.value = true
   } finally {
@@ -185,35 +230,43 @@ async function loadMyComments() {
 }
 
 /**
- * 在这里直接删自己的评论。
- * 复用已有的 DELETE /api/comments（凭本机令牌），不需要新接口、也不额外查库。
- * 二次确认是因为删除不可撤销（软删除，用户侧看不到了）。
+ * 删除自己的评论。
+ * 复用已有的 DELETE /api/comments（凭本机令牌），**不新增接口、不额外查库**。
+ * 确认走 UiModal（见模板），不用 window.confirm。
  */
-async function removeMine(comment) {
-  if (deletingId.value) return
-  if (!window.confirm('删除这条评论？')) return
+function askDelete(comment) {
+  if (deleting.value) return
+  myError.value = ''
+  pendingDelete.value = comment
+}
+
+async function deleteConfirmed() {
+  const comment = pendingDelete.value
+  if (!comment || deleting.value) return
   const token = getDeleteToken(comment.id)
   if (!token) {
     myError.value = '这条评论的删除凭据已失效'
+    pendingDelete.value = null
     return
   }
-  deletingId.value = comment.id
+  deleting.value = true
   myError.value = ''
   try {
     await deleteOwnComment(comment.id, token)
     removeDeleteToken(comment.id)
     myComments.value = myComments.value.filter((c) => c.id !== comment.id)
-    // 通知讨论区：如果它正开着，下次进入会重新拉取（这里只是同步本机列表）
+    pendingDelete.value = null
   } catch (err) {
     // 服务端删除是幂等的：404 视为已删除
     if (err?.status === 404) {
       removeDeleteToken(comment.id)
       myComments.value = myComments.value.filter((c) => c.id !== comment.id)
+      pendingDelete.value = null
     } else {
       myError.value = err?.message || '删除失败，请稍后再试'
     }
   } finally {
-    deletingId.value = null
+    deleting.value = false
   }
 }
 
@@ -235,14 +288,20 @@ const selectedPath = computed(() => avatarPath(draft.value.avatar))
 /** 选中头像对应的角色/魔物名，用作预览区标题（比显示 at001b_0 这种内部编号友好） */
 const selectedName = computed(() => avatarEntry(draft.value.avatar)?.name || '')
 
-// 每次打开都从已保存的身份初始化，并确保头像清单与"我发过的评论"都是最新的
+// 每次打开都从已保存的身份初始化；头像清单按需加载。
+// **「我发过的评论」不在这里请求**——只统计本机有多少条，等用户点「查看」才打接口。
 watch(
   () => props.modelValue,
   (open) => {
     if (!open) return
     draft.value = { nick: identity.value.nick, avatar: identity.value.avatar }
     loadAvatarCatalog()
-    loadMyComments()
+    refreshOwnedCount()
+    // 重置上一次的展开状态：每次打开都是"未加载"，用户点才请求
+    myLoaded.value = false
+    myComments.value = []
+    myError.value = ''
+    pendingDelete.value = null
   },
   { immediate: true }
 )
@@ -297,6 +356,37 @@ function confirm() {
 }
 
 /* 「我发过的评论」列表 */
+.my-load-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.my-load-row .account-hint {
+  margin: 0;
+}
+
+.my-load-row > :last-child {
+  margin-left: auto;
+}
+
+/* 确认框里引用的待删评论正文 */
+.confirm-quote {
+  margin: 8px 0 0;
+  padding: 8px 10px;
+  border-left: 3px solid var(--border-color);
+  background: var(--paper-soft);
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
 .my-list {
   list-style: none;
   margin: 0;
