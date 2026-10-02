@@ -20,7 +20,7 @@
 | `scripts/dev/sync-avatar-catalog.mjs` | 生成 `public/data/parsed/avatarCatalog.json`（头像 ID ↔ 图片路径） |
 | `src/components/CommentsPanel.vue` | 讨论区组件，业务组件不进通用 UI 出口 |
 | `src/components/AccountModal.vue` | 账号弹窗（本机身份设置），由顶栏账号按钮打开 |
-| `src/views/AdminCommentsView.vue` | 管理页 `/#/admin/comments` |
+| `src/views/AdminCommentsView.vue` | 管理页 `/#/admin` |
 | `wrangler.toml` / `schema.sql` / `public/_routes.json` | D1 绑定、表结构、Functions 调用范围 |
 
 D1 数据库：`myrzg-comments`，id `5f0d4c37-107f-4811-bc5e-768f73c51a3a`，region WNAM。
@@ -348,6 +348,41 @@ CREATE TABLE rate_limits (
 客户端同时会**清掉查不到的残留令牌**，数量不会虚高。
 （用户遇到的"发过 37 条"就是残留令牌造成的。）
 
+### 讨论区默认展开 vs 按需加载（当前：默认展开）
+
+物品图鉴是首页，点开物品很频繁，因此"每次打开详情拉一次评论"**是评论功能最大的一项固定开销**。
+按用户要求（2026-10-02）**当前保持默认展开**，让用户一打开详情就能看到讨论。
+
+真要省额度时的做法（组件已预留，改动只需几行）：把 `CommentsPanel.vue` 的 `UiSection`
+改成 `collapsible` + 默认收起，`@update:open` 首次展开时再 `load()`。
+已与用户确认：**等免费额度真的吃紧再做**。
+
+### 挂载范围（哪些页面适合挂讨论区）
+
+一期只挂**物品详情**（`ItemDetailModal`），这是首页入口、使用最频繁。
+后续按"玩家会不会就这个东西发问"排序，而不是按实体数量：
+
+| 页面 | 实体数 | 是否建议挂 | 理由 |
+| --- | --- | --- | --- |
+| 物品 `/items` | 816 | ✅ **已挂** | 首页入口；掉率、用途、替代品讨论 |
+| 角色 `/heroes` | 34 | ✅ **建议优先** | 配装/阵容/培养问题最集中；实体少、请求量可控 |
+| 魔物 `/pets` | 32 | ✅ **建议优先** | 技能取舍、变异、蛋池问题多；同上 |
+| 菜谱 `/recipes` | 30 | ✅ 建议 | 食材配比与获取途径常被问 |
+| 符石 `/runes` | 114 | ⭕ 可选 | 合成/鉴定路线讨论 |
+| 副本 `/dungeons` | 10 | ⭕ 可选 | 关卡掉落与打法；但详情已是重型结构 |
+| 关卡 `/chapters` | 8 章 / 92 关 | ⭕ 可选 | 同上 |
+| 怪物 `/monsters` | 52 | ❌ 不建议 | 工具书性质，玩家很少就单个怪物讨论 |
+| 家具 `/furniture` | 141 | ❌ 不建议 | 收集向，讨论价值低 |
+| 任务 `/tasks` | 315 | ❌ 不建议 | 单向内容，讨论集中在攻略而非单任务 |
+| 事件 `/events` | 20 | ❌ 不建议 | 同上 |
+
+新增页面时要注意两件事：
+1. `page_key` 前缀要加进 `functions/api/[[path]].js` 的 `PAGE_KEY_RE`
+   （**`recipe` 目前不在白名单里**，挂菜谱前必须先加）；符石/菜谱的实体 ID 都是
+   `item_xxxxx` 形式，所以**必须靠前缀区分**，不能直接复用 `item:`。
+2. 把页面的人话名字通过 `pageLabel` 一起传（见上文 `page_label`），
+   否则管理端与账号弹窗只会显示内部标识。
+
 ### 删除是幂等的
 `DELETE /api/comments` 的目标状态是"这条评论不再可见"。**已经不可见（或从未存在）时返回成功**，
 不再报"评论不存在"。原因：重复点击、多个标签页、列表是旧快照都会走到这条路径，
@@ -536,7 +571,7 @@ npm run dev:api
 - **站长认证本地与线上走同一条路径，没有"免验证旁路"**：本地 `.dev.vars` 的
   `ADMIN_TOKEN` 用短令牌 `yxzm` 方便敲，线上换成足够长的随机串。
   这样本地验到的行为就是线上行为，不会出现"本地能进、线上进不去"的错觉。
-  访问 `/#/admin/comments` 需在登录框输入令牌；凭据存本机 localStorage，
+  访问 `/#/admin` 需在登录框输入令牌；凭据存本机 localStorage，
   点「退出」清凭据并回到登录框。
   > 曾经做过 `ADMIN_AUTH_DISABLED=1` 的本地免验证开关，已按用户要求移除：
   > 它会让"退出"失去效果（服务端永远放行，客户端无法判断已退出），

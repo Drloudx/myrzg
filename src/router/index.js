@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+﻿import { createRouter, createWebHashHistory } from 'vue-router'
 import { closeItemDetail } from '../utils/itemModalState'
 
 const routes = [
@@ -111,9 +111,9 @@ const routes = [
     /**
      * 评论管理。刻意不放进导航面板：它不是给访客的页面，
      * 靠管理员令牌保护（服务端未配置 ADMIN_TOKEN 时接口直接 404）。
-     * meta.title 供 App.vue 顶栏显示，因为 PAGE_TITLES 里没有这条。
+     * 路径取短的 `/admin` 便于手动切进去；meta.title 供 App.vue 顶栏显示。
      */
-    path: '/admin/comments',
+    path: '/admin',
     name: 'admin-comments',
     component: () => import('../views/AdminCommentsView.vue'),
     meta: { title: '评论管理' }
@@ -150,9 +150,9 @@ const ROUTE_LOADERS = routes
 /**
  * 首屏空闲预取时跳过的包。
  *   `/gacha`（244 KB，占总视图 chunk 近一半）留给导航意图触发；
- *   `/admin/comments` 是管理页，普通访客永远不会打开，不该占首屏空闲带宽。
+ *   `/admin` 是管理页，普通访客永远不会打开，不该占首屏空闲带宽。
  */
-const DEFERRED_PREFETCH_PATHS = new Set(['/gacha', '/admin/comments'])
+const DEFERRED_PREFETCH_PATHS = new Set(['/gacha', '/admin'])
 
 /** 两次预取之间的间隔：既让首屏资源先落稳，也避免主线程被连续解析占满。 */
 const PREFETCH_STEP_MS = 220

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div
     ref="appScrollRoot"
     class="app-container"
@@ -286,7 +286,7 @@ const PAGE_TITLES = {
   '/chapters': '关卡图鉴',
   '/glossary': '词条',
   '/gacha': '模拟招募',
-  '/admin/comments': '评论管理'
+  '/admin': '评论管理'
 }
 
 const pageTitle = computed(() => {
