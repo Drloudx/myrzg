@@ -81,35 +81,39 @@
       <!--
         改成**点击才加载**（用户要求）：自动加载会在每次打开账号弹窗时都打一次接口，
         属于"用户没操作也会产生的固定开销"。这里只在用户主动点击时才请求。
+
+        默认**不显示具体条数**：本机令牌里可能残留已在别处删掉的评论
+        （用户就见过"发过 37 条"却一条都查不到）。数量以服务端返回为准，点开后才显示。
       -->
-      <UiEmptyState v-if="!ownedCount" text="这台设备上还没有发过评论" />
-      <template v-else-if="!myLoaded">
-        <div class="my-load-row">
-          <span class="account-hint">这台设备上发过 {{ ownedCount }} 条</span>
-          <UiButton variant="secondary" size="sm" @click="loadMyComments()">查看</UiButton>
-        </div>
-      </template>
+      <UiEmptyState v-if="!storedCount" text="这台设备上还没有发过评论" />
+      <div v-else-if="!myLoaded" class="my-load-row">
+        <span class="account-hint">查看这台设备上发过的评论</span>
+        <UiButton variant="secondary" size="sm" @click="loadMyComments()">查看</UiButton>
+      </div>
       <UiEmptyState v-else-if="myLoading" type="loading" text="加载中..." />
       <div v-else-if="myFailed" class="account-hint">
         暂时取不到，可能是网络问题。
         <button type="button" class="account-retry" @click="loadMyComments()">重试</button>
       </div>
       <template v-else>
-        <p v-if="!myComments.length" class="account-hint">这些评论已经被删除了。</p>
-        <ul v-else class="my-list">
-          <li v-for="c in myComments" :key="c.id" class="my-item">
-            <div class="my-head">
-              <UiTag :tone="statusTone(c.status)">{{ statusLabel(c.status) }}</UiTag>
-              <!-- 显示物品名而不是 item:item_00001；名字随评论一起存，不额外加载物品表 -->
-              <span class="my-page" :title="c.pageKey">{{ c.pageLabel || c.pageKey }}</span>
-              <time class="my-time">{{ formatTime(c.createdAt) }}</time>
-            </div>
-            <p class="my-body">{{ c.body }}</p>
-            <div class="my-foot">
-              <button type="button" class="my-delete" :disabled="deleting" @click="askDelete(c)">删除</button>
-            </div>
-          </li>
-        </ul>
+        <p v-if="!myComments.length" class="account-hint">这些评论都已经删除了。</p>
+        <template v-else>
+          <p class="account-hint">共 {{ myComments.length }} 条</p>
+          <ul class="my-list">
+            <li v-for="c in myComments" :key="c.id" class="my-item">
+              <div class="my-head">
+                <UiTag :tone="statusTone(c.status)">{{ statusLabel(c.status) }}</UiTag>
+                <!-- 显示物品名而不是 item:item_00001；名字随评论一起存，不额外加载物品表 -->
+                <span class="my-page" :title="c.pageKey">{{ c.pageLabel || c.pageKey }}</span>
+                <time class="my-time">{{ formatTime(c.createdAt) }}</time>
+              </div>
+              <p class="my-body">{{ c.body }}</p>
+              <div class="my-foot">
+                <button type="button" class="my-delete" :disabled="deleting" @click="askDelete(c)">删除</button>
+              </div>
+            </li>
+          </ul>
+        </template>
       </template>
       <p v-if="myError" class="my-error" role="alert">{{ myError }}</p>
     </UiSection>
@@ -196,18 +200,24 @@ const deleting = ref(false)
 /** 是否已请求过「我发过的评论」——改成点击才加载，避免每次打开弹窗都打接口 */
 const myLoaded = ref(false)
 
-const ownedCount = ref(0)
+/**
+ * 本机存有令牌的评论数（**仅本地计数，不代表这些评论还在库里**）。
+ * 只用于决定是否显示「查看」入口——不显示具体数字，
+ * 因为那个数字会包含已在别处删掉的残留令牌（用户见过"37 条"却查不到的情况）。
+ */
+const storedCount = ref(0)
 
 /** 只算本机有多少条可回看，不请求接口 */
 function refreshOwnedCount() {
-  ownedCount.value = listOwnedCommentIds().length
+  storedCount.value = listOwnedCommentIds().length
+  myLoaded.value = false
 }
 
 async function loadMyComments() {
   const ids = listOwnedCommentIds()
-  ownedCount.value = ids.length
   if (!ids.length) {
     myComments.value = []
+    storedCount.value = 0
     myFailed.value = false
     myLoaded.value = true
     return
@@ -221,6 +231,11 @@ async function loadMyComments() {
       .filter((it) => it.token)
     const data = await fetchMyComments(items)
     myComments.value = data?.comments || []
+    // 以**服务端实际返回的条数**为准：本机可能残留已在别处删除的评论令牌。
+    // 顺手清掉那些失效令牌，避免数量越攒越多（用户遇到的"37 条"就是这么来的）。
+    const alive = new Set(myComments.value.map((c) => c.id))
+    for (const id of ids) if (!alive.has(id)) removeDeleteToken(id)
+    storedCount.value = myComments.value.length
     myLoaded.value = true
   } catch {
     myFailed.value = true

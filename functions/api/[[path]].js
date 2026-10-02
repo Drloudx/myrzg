@@ -385,10 +385,9 @@ async function deleteOwnComment(env, request) {
     .bind(id)
     .first()
 
-  // 目标状态是"这条评论不可见"，已经达成就算成功——**幂等**。
-  // 否则重复点击、多个标签页、或列表是旧快照时会报"评论不存在"，
-  // 用户看到的是"明明还在却说不存在"，比直接消失更困惑。
-  if (!row || row.status === 2) return json({ ok: true, alreadyGone: true })
+  // 已经不在库里就算成功——**幂等**。否则重复点击、多个标签页、或列表是旧快照时
+  // 会报"评论不存在"，用户看到"明明还在却说不存在"，比直接消失更困惑。
+  if (!row) return json({ ok: true, alreadyGone: true })
 
   // status=0（待审）也允许作者删除：那是"别人看不到但作者自己发的"，
   // 前端待审时不入列表，但令牌已发，用户可能通过其它入口进来删。
@@ -397,10 +396,18 @@ async function deleteOwnComment(env, request) {
   const provided = await sha256Hex(token)
   if (!safeEqual(provided, row.token_hash)) return bad(ERR.rejected, 403)
 
-  // 软删除：保留记录供追溯，但前端不再显示
-  await env.DB.prepare(`UPDATE comments SET status = 2, token_hash = NULL WHERE id = ?1`)
-    .bind(id)
-    .run()
+  /*
+   * **真删除，不是软删除**（用户明确要求："删评论都要彻底删了，别留记录"）。
+   *
+   * 原先写的是 `UPDATE ... SET status = 2`（软删除）。后果是库里持续堆积
+   * status=2 的用户记录——用户本机令牌也一直累积（实测攒到 37 条），
+   * 而管理页默认只看待审，所以他"在管理页也看不到、却一直有记录"。
+   *
+   * 代价说明：软删除能保留证据供追溯、也便于误删恢复。改成硬删除后这两点没有了，
+   * 但"用户要求删除"在隐私意义上本就该是真删除。管理端的「隐藏」（status=2）
+   * 仍是软删除，用于审核下架，两者职责不同。
+   */
+  await env.DB.prepare(`DELETE FROM comments WHERE id = ?1`).bind(id).run()
   return json({ ok: true })
 }
 
