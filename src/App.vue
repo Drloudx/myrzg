@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div
     ref="appScrollRoot"
     class="app-container"
@@ -48,7 +48,18 @@
               />
             </button>
 
-            <!-- 账号：原先的深色模式位置，点击弹出账号面板 -->
+            <!-- 讨论区入口：进入独立路由 /#/discussions（不在当前页就地替换，
+                 这样链接可分享可刷新、滚动天然隔离，也不用 11 个视图各自接入聊天状态） -->
+            <button
+              class="icon-btn"
+              :class="{ 'is-active': route.path === '/discussions' }"
+              @click.stop="openDiscussions"
+              :title="route.path === '/discussions' ? '返回上一页' : '讨论区'"
+            >
+              <img :src="getImageUrl('/ui/chat-bubble.svg')" alt="讨论区" class="theme-icon-img" />
+            </button>
+
+            <!-- 账号：点击弹出账号面板 -->
             <button class="icon-btn" @click.stop="isAccountOpen = true" title="账号">
               <img :src="getImageUrl('/ui/account.svg')" alt="账号" class="theme-icon-img" />
             </button>
@@ -121,45 +132,52 @@
         <router-view />
       </main>
 
-      <!-- 右侧页面信息面板（模板 infobox 风格）：放页面标题 + 概况 + 备注区。
-           卡池页是固定设计分辨率的游戏画面，隐藏右栏把宽度让给设计画布。 -->
+      <!-- 右栏：讨论区预览（用户要求把原「页面信息面板」换成讨论）。
+           原面板放的是当前模块/网站版本/游戏版本/交流群/备注；
+           按用户决定替换为讨论预览。**交流群链接保留在底部**（拉新入口）；
+           版本号原是硬编码 v1.0.0、仓库内仅此一处，随面板一并移除。
+           卡池页是固定设计分辨率画面，隐藏右栏把宽度让给设计画布。 -->
       <div v-if="!isNative && route.path !== '/gacha'" class="desktop-right-container desktop-only">
         <aside class="page-info-panel paper-panel corner-nails">
           <div class="info-title-bar">
-            <span class="info-title-text">{{ pageTitle }}</span>
+            <button type="button" class="info-title-text info-title-link" @click="openDiscussions">
+              最新讨论
+            </button>
           </div>
-          <div class="info-cover-image"></div>
           <div class="info-body">
-            <div class="info-meta-rows">
-              <div class="info-row">
-                <span class="info-label">当前模块</span>
-                <span class="info-value">{{ pageTitle }}</span>
-              </div>
-              <div class="info-row">
-                <span class="info-label">网站版本</span>
-                <span class="info-value">v1.0.0</span>
-              </div>
-              <div class="info-row">
-                <span class="info-label">游戏版本</span>
-                <span class="info-value">v1.0.0</span>
-              </div>
-              <!-- 交流群：字号与配色沿用 .info-value（与「网站版本」一致），点击跳转加群链接 -->
-              <div class="info-row">
-                <span class="info-label">交流群</span>
+            <!-- 最近几条（只读、不放输入框）：点开进入讨论区 -->
+            <div class="recent-discussions">
+              <UiEmptyState v-if="recentLoading" type="loading" text="加载中..." />
+              <p v-else-if="!recentComments.length" class="info-note">还没有讨论。</p>
+              <ul v-else class="recent-list">
+                <li v-for="c in recentComments" :key="c.id" class="recent-item">
+                  <button type="button" class="recent-btn" @click="openDiscussionFor(c)">
+                    <span class="recent-head">
+                      <span class="recent-nick">{{ c.nick }}</span>
+                      <span v-if="c.pageLabel" class="recent-page">{{ c.pageLabel }}</span>
+                    </span>
+                    <span class="recent-body">{{ c.body }}</span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <div class="info-section recent-foot">
+              <UiButton variant="secondary" size="sm" block @click="openDiscussions">
+                进入讨论区
+              </UiButton>
+              <!-- 交流群链接：原信息面板的唯一入口，保留 -->
+              <p class="info-note recent-group">
+                交流群
                 <a
-                  class="info-value info-value--link"
+                  class="info-value--link"
                   href="https://qm.qq.com/q/iolDkZyD2E"
                   target="_blank"
                   rel="noopener noreferrer"
                 >963318625</a>
-              </div>
-            </div>
-            <div class="info-section">
-              <h3 class="info-section-title">备注与说明</h3>
-              <p class="info-note">
-                点击卡片可查看详细属性、词条与来源关系。
               </p>
             </div>
+
             <SidebarMascot v-if="mascotDesktop" />
           </div>
         </aside>
@@ -235,7 +253,8 @@ import VersionCheckModal from './components/VersionCheckModal.vue'
 import AboutModal from './components/AboutModal.vue'
 import AccountModal from './components/AccountModal.vue'
 import { loadIdentity, registerAccountModal } from './utils/identity.js'
-import { UiButton, UiModal } from './components/ui/index.js'
+import { fetchRecentComments } from './utils/commentApi.js'
+import { UiButton, UiEmptyState, UiModal } from './components/ui/index.js'
 import ItemDetailModal from './components/ItemDetailModal.vue'
 import RewardProbabilityModal from './components/RewardProbabilityModal.vue'
 import { itemModalState, openItemDetail } from './utils/itemModalState'
@@ -286,7 +305,8 @@ const PAGE_TITLES = {
   '/chapters': '关卡图鉴',
   '/glossary': '词条',
   '/gacha': '模拟招募',
-  '/admin': '评论管理'
+  '/admin': '评论管理',
+  '/discussions': '讨论区'
 }
 
 const pageTitle = computed(() => {
@@ -311,6 +331,68 @@ const showThemeToggle = false
 const isAccountOpen = ref(false)
 
 /**
+ * 打开/离开讨论区。
+ *
+ * 讨论区是独立路由（不在当前页就地替换内容区）：链接可分享可刷新、
+ * 滚动天然隔离在内容区里，也不必让 11 个视图各自接入"聊天模式"状态。
+ * 在讨论区内再点一次 = 返回上一页。
+ */
+function openDiscussions() {
+  if (route.path === '/discussions') {
+    router.back()
+    return
+  }
+  // 从物品详情进入时带上当前物品，讨论区默认定位到它（见 DiscussionsView）
+  const query = {}
+  if (route.query.itemId) query.page = `item:${route.query.itemId}`
+  router.push({ path: '/discussions', query })
+}
+
+/** 右栏"最新讨论"：跳到那条讨论所属页面的讨论 */
+function openDiscussionFor(comment) {
+  router.push({
+    path: '/discussions',
+    query: { page: comment.pageKey, label: comment.pageLabel || '' }
+  })
+}
+
+/**
+ * 右栏的最近讨论。**数据由服务端带 30 秒边缘共享缓存**（`GET /api/recent`），
+ * 所以右栏在每个页面都可见，也不会变成"每打开一页查一次库"。
+ *
+ * 为什么不是"只在启动时拉一次"：本站是 **hash 路由**，站内切页不会重新加载应用，
+ * 因此启动时拉一次的话，用户在本站发完评论后右栏会一直是旧的（实测踩过）。
+ * 改为**每次路由变化都拉**——服务端 30 秒共享缓存让这几乎不产生额外成本
+ * （同一 POP 的众多访客共用一次查询），客户端再加 15 秒节流避免极端频繁切换。
+ */
+const recentComments = ref([])
+const recentLoading = ref(false)
+const RECENT_CLIENT_THROTTLE_MS = 15000
+let recentFetchedAt = 0
+let recentInFlight = false
+
+async function loadRecentDiscussions({ force = false } = {}) {
+  if (recentInFlight) return
+  if (!force && Date.now() - recentFetchedAt < RECENT_CLIENT_THROTTLE_MS) return
+  recentInFlight = true
+  recentLoading.value = true
+  try {
+    const data = await fetchRecentComments()
+    recentComments.value = (data?.comments || []).slice(0, 5)
+    recentFetchedAt = Date.now()
+  } catch {
+    // 右栏是辅助信息：失败静默留空，不打扰主内容（完整错误态由讨论区页自己展示）
+    recentComments.value = []
+  } finally {
+    recentInFlight = false
+    recentLoading.value = false
+  }
+}
+
+// 路由变化时刷新右栏（切页/发完评论回来都能看到最新）
+watch(() => route.fullPath, () => loadRecentDiscussions())
+
+/**
  * 本机身份（昵称 + 头像）与账号弹窗的接线：
  *   - 启动时读一次 localStorage，评论面板与账号弹窗共用同一份响应式状态；
  *   - 把"打开账号弹窗"注册给 identity 模块，评论面板在未设昵称时调用它，
@@ -320,6 +402,8 @@ loadIdentity()
 registerAccountModal(() => {
   isAccountOpen.value = true
 })
+// 右栏的"最新讨论"：首屏就绪后拉一次（服务端有 30 秒边缘缓存，成本可控）
+loadRecentDiscussions()
 
 // 新增设置菜单和弹窗状态
 const isSettingsOpen = ref(false)
@@ -774,6 +858,13 @@ onBeforeUnmount(() => { itemLoadOperation += 1 })
   border-color: var(--accent-bright, #7a9a99);
 }
 
+/* 当前正停留在这个入口对应的页面时（如讨论区）：给出选中态，
+   否则用户看不出"我已经在讨论区里" */
+.icon-btn.is-active {
+  background: rgba(85, 117, 116, 0.7);
+  border-color: var(--accent-bright, #7a9a99);
+}
+
 .theme-icon-img,
 .setting-icon-img {
   width: 19px;
@@ -1160,6 +1251,104 @@ onBeforeUnmount(() => { itemLoadOperation += 1 })
   text-overflow: ellipsis;
   white-space: nowrap;
   display: block;
+}
+
+/* 右栏标题做成可点入口（进讨论区），沿用原标题的字号与颜色 */
+.info-title-link {
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.info-title-link:hover {
+  text-decoration: underline;
+}
+
+/* 右栏「最新讨论」列表：紧凑、只读、不放输入框（点开进讨论区发言） */
+.recent-discussions {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.recent-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.recent-item {
+  min-width: 0;
+}
+.recent-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--border-soft);
+  border-radius: 4px;
+  background: var(--paper-soft);
+  color: var(--text-main);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.recent-btn:hover {
+  border-color: var(--accent-bright);
+}
+.recent-head {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+}
+.recent-nick {
+  font-size: 12.5px;
+  font-weight: 700;
+  flex: 0 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.recent-page {
+  flex: 0 1 auto;
+  color: var(--text-faint);
+  font-size: 11.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* 正文最多两行：右栏很窄，长评论会把其余消息挤下去 */
+.recent-body {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+.recent-foot {
+  flex-shrink: 0;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.recent-group {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 0;
 }
 .info-cover-image {
   width: 100%;

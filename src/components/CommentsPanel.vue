@@ -1,5 +1,5 @@
 <template>
-  <UiSection title="讨论" class="comments-panel">
+  <UiSection :title="title" class="comments-panel">
     <!-- 加载 / 错误 / 空 三态：统一用 UiEmptyState -->
     <UiEmptyState v-if="loading && !comments.length" type="loading" text="评论加载中..." />
 
@@ -10,8 +10,8 @@
       </div>
 
       <template v-else>
-        <ul v-if="comments.length" class="comments-list">
-          <li v-for="c in comments" :key="c.id" class="comment-item">
+        <ul v-if="shownComments.length" class="comments-list">
+          <li v-for="c in shownComments" :key="c.id" class="comment-item">
             <img
               v-if="avatarOf(c)"
               class="comment-avatar"
@@ -29,7 +29,7 @@
                 <span class="comment-nick">{{ c.nick }}</span>
                 <time class="comment-time" :datetime="isoTime(c.createdAt)">{{ formatTime(c.createdAt) }}</time>
                 <button
-                  v-if="ownedIds.has(c.id)"
+                  v-if="!readOnly && ownedIds.has(c.id)"
                   type="button"
                   class="comment-delete"
                   :disabled="deletingId === c.id"
@@ -40,20 +40,30 @@
               </div>
               <!-- 纯文本渲染：不解析 HTML，评论里的标签按原文显示 -->
               <p class="comment-body">{{ c.body }}</p>
+              <!-- 右栏预览里要标明"这条来自哪个页面"，否则一串消息没有上下文 -->
+              <button
+                v-if="showPage && (c.pageLabel || c.pageKey)"
+                type="button"
+                class="comment-page-link"
+                :title="c.pageKey"
+                @click="emit('open-page', c)"
+              >
+                {{ c.pageLabel || c.pageKey }}
+              </button>
             </div>
           </li>
         </ul>
-        <UiEmptyState v-else text="还没有人讨论，来说两句吧" />
+        <UiEmptyState v-else :text="readOnly ? '还没有讨论' : '还没有人讨论，来说两句吧'" />
 
-        <div v-if="hasMore" class="comments-more">
+        <div v-if="!limit && hasMore" class="comments-more">
           <UiButton variant="secondary" size="sm" :disabled="loading" @click="loadMore()">
             {{ loading ? '加载中...' : '加载更多' }}
           </UiButton>
         </div>
       </template>
 
-      <!-- 发表区：昵称与头像来自「账号」弹窗，这里不再重复填写 -->
-      <form ref="formRef" class="comment-form" @submit.prevent="submit">
+      <!-- 发表区：只读形态不显示（右栏预览 / 讨论区首页的历史消息） -->
+      <form v-if="!readOnly" ref="formRef" class="comment-form" @submit.prevent="submit">
         <div class="comment-identity">
           <img v-if="myAvatarPath" class="comment-avatar" :src="myAvatarPath" alt="" />
           <div v-else class="comment-avatar comment-avatar-fallback" aria-hidden="true">
@@ -111,6 +121,7 @@ import { getImageUrl } from '../utils/env.js'
 import {
   deleteOwnComment,
   fetchComments,
+  fetchRecentComments,
   getDeleteToken,
   postComment,
   removeDeleteToken,
@@ -128,15 +139,36 @@ const props = defineProps({
   /**
    * 评论归属键，形如 `item:30047`。
    * 由调用方从业务 ID 推导，不使用 URL 参数（SPEC 第四章：仅已实现的参数做 URL 同步）。
+   * 只读预览形态（`recent`）下不需要，所以非必填。
    */
-  pageKey: { type: String, required: true },
+  pageKey: { type: String, default: '' },
   /**
    * 该页面的人话名字（如「银币」），随评论一起存下来。
    * 管理端与账号弹窗据此显示物品名，而不是让用户去看 `item:item_00001` 这种内部标识；
    * 也不需要在打开评论列表时额外加载整份物品表（性能上更划算）。
    */
-  pageLabel: { type: String, default: '' }
+  pageLabel: { type: String, default: '' },
+  /** 区块标题（右栏预览等处可改） */
+  title: { type: String, default: '讨论' },
+  /** 只读：不显示发表区与删除按钮（右栏预览用） */
+  readOnly: { type: Boolean, default: false },
+  /** 最多显示几条（0 = 不限，走分页的"加载更多"） */
+  limit: { type: Number, default: 0 },
+  /** 每条下方显示它来自哪个页面（全站最新列表用） */
+  showPage: { type: Boolean, default: false },
+  /**
+   * 数据源换成"全站最新讨论"（`GET /api/recent`）而不是某个页面的评论。
+   * 右栏预览与讨论区首页的历史消息用它。
+   */
+  recent: { type: Boolean, default: false }
 })
+
+const emit = defineEmits(['open-page'])
+
+/** 实际上列表里显示的条目（`limit` 只是截断展示，不改变分页状态） */
+const shownComments = computed(() =>
+  props.limit > 0 ? comments.value.slice(0, props.limit) : comments.value
+)
 
 const comments = ref([])
 const loading = ref(false)
@@ -180,7 +212,10 @@ async function load({ append = false } = {}) {
   loading.value = true
   errorMessage.value = ''
   try {
-    const data = await fetchComments(props.pageKey, { cursor: append ? cursor.value : undefined })
+    // 两种数据源：某个页面的评论（可分页）／全站最新（固定条数、服务端有边缘缓存）
+    const data = props.recent
+      ? await fetchRecentComments()
+      : await fetchComments(props.pageKey, { cursor: append ? cursor.value : undefined })
     comments.value = append ? [...comments.value, ...data.comments] : data.comments
     hasMore.value = !!data.hasMore
     cursor.value = data.nextCursor ?? null
@@ -344,25 +379,25 @@ function scrollFormIntoView() {
 }
 
 /**
- * 换物品时重置并重新加载。
+ * 数据加载时机。
  *
- * 现状：讨论区**默认展开、挂载即拉评论**（按用户要求保持"直接看见讨论"的体验）。
- *
- * 额度提醒（2026-10-02 记录，用户明确要求暂不优化）：
- * 物品图鉴是首页，点开物品很频繁，因此"每次打开详情一次评论请求"是本站评论功能
- * 最大的一项固定开销。真要省额度时，最省事的做法是把本节的 `UiSection` 改成
- * `collapsible` + 默认收起、展开时才 `load()`（组件已支持，改动只需几行）——
- * 已与用户确认：**等免费额度真的吃紧再做**，现在保持默认展开。
+ * - **普通形态**（详情里的讨论区）：换 pageKey 时重置并重新加载；
+ *   默认展开、挂载即拉评论（按用户要求保持"直接看见讨论"的体验）。
+ *   额度提醒（2026-10-02 记录，用户明确要求暂不优化）：物品图鉴是首页、点开很频繁，
+ *   因此"每次打开详情一次评论请求"是评论功能最大的一项固定开销。要省额度时把本节的
+ *   `UiSection` 改成 `collapsible` + 默认收起、展开时才 `load()` 即可（改动只需几行）。
+ * - **最新形态**（右栏预览 / 讨论区首页的历史消息）：只在挂载时拉一次；
+ *   服务端那条带 30 秒边缘共享缓存，所以频繁打开页面也不会反复查库。
  */
 watch(
-  () => props.pageKey,
+  () => [props.pageKey, props.recent],
   () => {
     comments.value = []
     cursor.value = null
     hasMore.value = false
     submitError.value = ''
     submitNotice.value = ''
-    if (props.pageKey) load()
+    if (props.recent || props.pageKey) load()
   },
   { immediate: true }
 )
@@ -480,6 +515,29 @@ watch(
   display: flex;
   justify-content: center;
   padding: 8px 0 4px;
+}
+
+/* 全站最新列表里标注「这条来自哪个页面」：做成可点的小胶囊 */
+.comment-page-link {
+  margin-top: 6px;
+  padding: 1px 7px;
+  border: 1px solid var(--border-soft);
+  border-radius: 3px;
+  background: var(--paper-solid);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.6;
+  cursor: pointer;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.comment-page-link:hover {
+  border-color: var(--accent-bright);
+  color: var(--accent-ink);
 }
 
 .comments-error {

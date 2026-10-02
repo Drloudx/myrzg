@@ -1,4 +1,4 @@
-﻿import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import { closeItemDetail } from '../utils/itemModalState'
 
 const routes = [
@@ -106,6 +106,17 @@ const routes = [
     path: '/gacha',
     name: 'gacha',
     component: () => import('../views/GachaView.vue')
+  },
+  {
+    /**
+     * 讨论区。独立路由而不是"就地把内容区换成聊天"：链接可分享可刷新、
+     * 滚动天然隔离在容器内，也不必让各视图各自接入聊天模式状态。
+     * `?page=<page_key>` 指定讨论归属（从详情进来时带上），缺省为全站最新。
+     */
+    path: '/discussions',
+    name: 'discussions',
+    component: () => import('../views/DiscussionsView.vue'),
+    meta: { title: '讨论区' }
   },
   {
     /**

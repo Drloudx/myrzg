@@ -551,6 +551,47 @@ async function listMyComments(env, request) {
   return json({ ok: true, comments: verified })
 }
 
+/**
+ * GET /api/recent —— 全站最新讨论（右栏预览与讨论区首页用）
+ *
+ * 只管"看看"不管"定位"，所以不需要 page 参数、也没有游标分页：固定返回最新若干条。
+ *
+ * **刻意带边缘缓存**（`s-maxage`）：右栏在每个页面都可见，若每次打开页面都回源查 D1，
+ * 那是全站最大的一笔无意义开销。30 秒的共享缓存能让同一 POP 的众多访客共用一次查询，
+ * 而 30 秒对"最新讨论"完全够新。
+ * 缓存是**共享**的，所以这里只回公开字段、绝不带任何用户私有数据。
+ */
+const RECENT_LIMIT = 8
+const RECENT_CACHE_SECONDS = 30
+
+async function listRecent(env) {
+  const { results } = await env.DB.prepare(
+    `SELECT id, page_key, page_label, nick, avatar, body, created_at
+     FROM comments WHERE status = 1 ORDER BY id DESC LIMIT ?1`
+  )
+    .bind(RECENT_LIMIT)
+    .all()
+
+  const comments = (results || []).map((row) => ({
+    id: row.id,
+    nick: row.nick,
+    avatar: row.avatar || null,
+    body: row.body,
+    createdAt: row.created_at,
+    pageKey: row.page_key,
+    pageLabel: row.page_label || null
+  }))
+
+  return new Response(JSON.stringify({ ok: true, comments }), {
+    status: 200,
+    headers: {
+      ...JSON_HEADERS,
+      // 覆盖 JSON_HEADERS 里的 no-store：这一条允许边缘共享缓存
+      'cache-control': `public, max-age=0, s-maxage=${RECENT_CACHE_SECONDS}, stale-while-revalidate=60`
+    }
+  })
+}
+
 /** PATCH /api/admin/comments —— 改状态（放行 / 隐藏 / 打回待审） */
 async function adminPatch(env, request) {
   let payload
@@ -625,6 +666,12 @@ export async function onRequest(context) {
     if (path === '/api/my-comments') {
       if (request.method !== 'POST') return bad(ERR.fallback, 405)
       return await listMyComments(env, request)
+    }
+
+    // 全站最新讨论（右栏预览/讨论区首页）：带边缘共享缓存，见 listRecent
+    if (path === '/api/recent') {
+      if (request.method !== 'GET') return bad(ERR.fallback, 405)
+      return await listRecent(env)
     }
 
     if (isAdminPath) {

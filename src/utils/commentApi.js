@@ -140,6 +140,14 @@ export function fetchComments(pageKey, { cursor, limit = 20 } = {}) {
 }
 
 /**
+ * 读取**全站最新讨论**（右栏预览与讨论区首页的历史消息）。
+ * 服务端对这条做了 30 秒边缘共享缓存，所以频繁打开页面不会反复查库。
+ */
+export function fetchRecentComments() {
+  return request('/api/recent')
+}
+
+/**
  * 发表评论。返回体含 `deleteToken`，调用方需 `saveDeleteToken` 保存。
  *
  * 昵称与头像来自本机身份（`utils/identity.js`），不在这里要求用户重填。
