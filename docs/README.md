@@ -27,7 +27,8 @@
 | 文档 | 保留用途 |
 | --- | --- |
 | [统一奖励规则](technical/ACQUISITION_RULES.md) | 多页面共用的数据结构、概率/数量语义与兼容接口 |
-| [评论后端方案](technical/COMMENTS_BACKEND.md) | Cloudflare 免费版（Pages Functions + D1 + Turnstile）评论功能的设计、CDN 缓存风险与验收；**方案，未实施** |
+| [评论后端方案](technical/COMMENTS_BACKEND.md) | Cloudflare 免费版（Pages Functions + D1 + Turnstile）评论功能：设计、实现落点、CDN 缓存风险、错误文案契约与验收；**已实施** |
+| [账号体系方案](technical/ACCOUNT_SYSTEM_EVALUATION.md) | 邮箱账号 + 改密码的成本评估（10ms CPU 坎、发信方案与已核实的云厂商额度）、迁移路径与待确认项；**评估，未实施** |
 | [皮肤模型导出](technical/SKIN_MODEL_EXPORT.md) | 仍在使用的导出命令、输入/输出和资源限制 |
 | [战斗机制与公式](technical/COMBAT_FORMULAS.md) | 源码及配置的完整通用伤害链、属性叠加、上限、Buff、护盾/回复、模式差异与尚未闭合的赋值问题 |
 
