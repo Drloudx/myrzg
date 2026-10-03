@@ -1378,7 +1378,13 @@ onBeforeUnmount(() => { itemLoadOperation += 1 })
 
 /* 右栏「最新讨论」列表：紧凑、只读、不放输入框（点开进讨论区发言） */
 .recent-discussions {
-  flex: 1 1 auto;
+  /*
+   * **按内容高度**（`flex: 0 1 auto`），不能是 `flex: 1 1 auto`：
+   * 后者会把 info-body 的剩余高度全吃掉，评论只有几条时会在列表下方留一大块空白
+   * （用户反馈"这里为什么空这么多空白"）。仍需能收缩（`0 1` 的第二个 1）
+   * 以便评论多时在内部滚动。
+   */
+  flex: 0 1 auto;
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -1461,6 +1467,12 @@ onBeforeUnmount(() => { itemLoadOperation += 1 })
 }
 .recent-foot {
   flex-shrink: 0;
+  /*
+   * 用普通间距，**不要 `margin-top: auto`**：吉祥物（SidebarMascot）自己就带
+   * `margin-top: auto` 且高约 240px，两边都抢剩余空间的话，空白会被"摊"成
+   * 列表→交流群之间的一大段（用户反馈"为什么空这么多空白"）。
+   * 这里让列表与交流群紧跟标题，剩余空白统一留在最下方。
+   */
   margin-top: 12px;
   display: flex;
   flex-direction: column;
