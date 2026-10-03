@@ -7,7 +7,7 @@
 
       外层纸张面板：内容直接铺在地图背景上会看不清，与符石图鉴的内容区同一形态。
     -->
-    <section ref="panelRoot" class="discussion-panel paper-panel">
+    <section class="discussion-panel paper-panel">
       <header class="discussion-head">
         <h3 class="discussion-title">◆ 站内讨论区</h3>
       </header>
@@ -45,7 +45,7 @@
 </template>
 
 <script setup>
-import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { nextTick, ref, watch } from 'vue'
 import CommentsPanel from '../components/CommentsPanel.vue'
 import CommentComposer from '../components/CommentComposer.vue'
 import { SITE_PAGE_KEY, SITE_PAGE_LABEL } from '../utils/commentApi.js'
@@ -53,7 +53,6 @@ import { SITE_PAGE_KEY, SITE_PAGE_LABEL } from '../utils/commentApi.js'
 const listRef = ref(null)
 /** 滚动容器 DOM（`ref` 在 setup 期间为 null，所以必须 watch 而不是直接调用） */
 const scrollRoot = ref(null)
-const panelRoot = ref(null)
 
 function scrollToLatest() {
   const el = scrollRoot.value
@@ -118,47 +117,6 @@ watch(
     scrollToLatestAfterLayout()
   }
 )
-
-/**
- * 把面板高度**量出来**，不再用 `--vh100`（100dvh）推算。
- *
- * 为什么必须量：用 dvh 推算的高度与实际可用空间有偏差（移动端尤其明显，
- * 桌面端还有缩放/通知条等变量）。偏差会让滚动区的裁切边界落在"差几个像素"的位置，
- * 发表新消息时内容恰好越过边界，于是底部露出输入框的一角、
- * 滚动条也来回变长变短（用户反馈"闪一下"）。量出真实空间就稳定了。
- *
- * 预留 8px 余量，避免正好卡在边界上导致 `scrollHeight > clientHeight` 反复翻转。
- */
-let panelObserver = null
-
-function applyPanelHeight() {
-  const el = panelRoot.value
-  if (!el) return
-  if (window.innerWidth < 1025) {
-    // 窄屏走 CSS 的 min-height（纵向可自然增长）
-    el.style.height = ''
-    return
-  }
-  const top = el.getBoundingClientRect().top
-  const usable = window.innerHeight - top - 8
-  el.style.height = usable > 320 ? `${Math.round(usable)}px` : ''
-}
-
-onMounted(() => {
-  nextTick(applyPanelHeight)
-  window.addEventListener('resize', applyPanelHeight)
-  if ('ResizeObserver' in window && panelRoot.value) {
-    // 观察外层容器（矮了/高了都跟着调），而不是观察自己——否则会自我触发循环
-    panelObserver = new ResizeObserver(() => applyPanelHeight())
-    panelObserver.observe(document.querySelector('.app-main') || document.body)
-  }
-})
-
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', applyPanelHeight)
-  panelObserver?.disconnect()
-  panelObserver = null
-})
 </script>
 
 <style scoped>
@@ -231,20 +189,23 @@ onBeforeUnmount(() => {
 }
 
 /*
- * 面板高度**由脚本量出来**（见 `applyPanelHeight`），这里只给一个兜底值。
+ * 面板高度用 CSS 固定值（**不要改成脚本量高度**，见下）。
  *
- * 为什么不在 CSS 里用 `calc(var(--vh100) - …)` 推算：推算值与真实可用空间有偏差
- * （移动端明显，桌面端也受缩放/窗口装饰影响），偏差会让滚动区裁切边界卡在
- * "差几像素"的位置；发表新消息时内容一越过边界，底部就露出输入框一角、
- * 滚动条来回变长变短（用户反馈"闪一下"）。
- *
- * 为什么必须给高度：桌面端 App.vue 会把 `[data-main-scroll]` 的滚动整个禁用
+ * 桌面端 App.vue 会把 `[data-main-scroll]` 的滚动整个禁用
  * （`overflow-y: visible !important; max-height: none !important`），改由整页滚动。
  * 不封顶的话讨论列表会无限长、发表区被顶出屏幕、整页多出一条滚动条
  * （实测：.app-container scrollHeight 950 > 900）。
+ *
+ * `- 190px` 覆盖：顶部 33px 吸附留白 + 面板内边距 + 标题栏 + 发表区。
+ *
+ * ⚠️ 曾经改成"用 JS 量出真实高度"（`innerHeight - top - 8`）想消除闪烁，
+ * 结果**高度不对**（用户反馈），已回退到这个 CSS 固定值。
+ * 若要再动高度，务必先在 1025 / 1161 / 1440 三种视口下核对
+ * 「输入区底边 ≤ 视口高」且「.app-container 无纵向溢出」。
  */
-.discussion-panel {
-  /* JS 未就绪时的兜底（窄屏也可以靠 min-height 自然增长） */
-  max-height: calc(var(--vh100) - var(--header-height, 60px) - var(--safe-top, 0px) - 96px);
+@media (min-width: 1025px) {
+  .discussion-panel {
+    height: calc(var(--vh100) - var(--header-height, 60px) - var(--safe-top, 0px) - 190px);
+  }
 }
 </style>
