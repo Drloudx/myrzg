@@ -14,8 +14,10 @@
 
 ### 0.1 一句话状态
 
-**功能完整可用、本地全部验证通过，但尚未推送上线**（本地 `main` 领先 `origin/main` **28 个提交**）。
-交接时挂着的**闪烁问题已解决**（见 0.5，2026-10-03），评论/讨论这块可交付。
+**已上线**（2026-10-03 首次推送 `main`，Pages 自动部署成功；线上接口全部实测通过，见 0.8）。
+功能完整、本地与线上验证均通过，闪烁问题已解决（见 0.5）。
+**下一步是仓库/域名改名与账号体系**，两者都已写成落地文档：
+[改名落地文档](rename-myrzg-to-syzg.md)、[账号体系落地方案](technical/ACCOUNT_SYSTEM.md)。
 
 ### 0.2 这块是什么：全站唯一需要后端的部分
 
@@ -122,20 +124,43 @@ npm run dev:api
 npx wrangler d1 execute myrzg-comments --local --command "DELETE FROM rate_limits; DELETE FROM comments;"
 ```
 
-### 0.8 上线清单（尚未执行）
+### 0.8 上线清单（**2026-10-03 已执行并实测通过**）
 
-1. Cloudflare Pages 项目 → Settings → Environment variables：配 `ADMIN_TOKEN`（长随机串）、`IP_HASH_SALT`。
-2. 推送 `main`（Pages 走 GitHub 自动部署）。
-3. **实测线上 `/api/health` 返回 JSON 而非 HTML**（Functions 没部署时会返回 SPA 兜底 HTML）。
-4. 复测缓存头；EdgeOne 对 JSON 不做缓存，必要时加「不缓存」规则。
-5. Turnstile 可延后（未配 `TURNSTILE_SECRET` 时自动跳过人机校验，功能不受影响）。
-6. **Fail open 必须保持**：Pages 的 Fail open/closed 要选 Fail open，
+1. ✅ Cloudflare Pages 项目 → Settings → Environment variables：`ADMIN_TOKEN`、`IP_HASH_SALT` 已配。
+2. ✅ **已推送 `main`**（29 个提交，首个从 `952e06b6` 推到 `b67f6e07`），Pages 自动部署成功。
+3. ✅ **实测线上 `/api/health` 返回 JSON**：推送后 **40 秒**即生效
+   （此前是 `200 + text/html`，被 SPA 兜底吃掉）。同时确认 `_redirects` 的
+   `/api/*` 放行已上线：不存在的路径 → `200 text/html`（SPA 兜底正常），
+   不存在的 `/api/*` → `404`（不再被兜底吃掉）。
+4. ✅ 缓存头复测：`/api/health`、`/api/comments` 均为 `cache-control: no-store`（不会被 EdgeOne 缓存）；
+   `/data/parsed/items.json` 为 `public, immutable, max-age=31536000`；
+   `/ui/logo.webp` 仍是 `max-age=3600`（EdgeOne 按文件类型改写，已知且接受，见架构 4.7）。
+5. ⬜ Turnstile 仍未配（不影响功能，未配 `TURNSTILE_SECRET` 时自动跳过人机校验）。
+6. ⬜ **Fail open 必须保持**：Pages 的 Fail open/closed 要选 Fail open，
    否则免费额度耗尽会让整个图鉴站变成错误页。
 
-### 0.9 账号体系（只做了评估，未实施）
+**线上接口验收（2026-10-03 实测）**
 
-用户提过"邮箱注册 + 改密码"。评估结论与**已核实的云厂商邮件额度**见
-[账号体系方案（评估）](technical/ACCOUNT_SYSTEM_EVALUATION.md)。要点：
+| 接口 | 结果 |
+| --- | --- |
+| `GET /api/health` | `200` + JSON |
+| `GET /api/comments?page=site:general` | `200` + JSON，公开列表 **0 条**（生产库为空，属正常） |
+| `GET /api/recent` | `200` + JSON |
+| `POST /api/comments` 非法 `page_key` | `400`（白名单生效） |
+| `POST /api/comments` 空内容 | `400` |
+| `GET /api/admin/comments` 无令牌 | `401` |
+| `POST /api/comments` 正常写入（探测用、已自删） | `201`，`status=0` 进待审（命中「外链」规则），自删 `200` |
+| 远程 D1 建表 | ✅ 写入/查询/删除全通，说明 `schema.sql` 已在远程执行过 |
+
+> 线上评论列表目前是空的：本地那 5 条演示数据只在**本地** D1，生产库没有。
+> 想造演示数据可对远程执行 `wrangler d1 execute myrzg-comments --remote --file=...`，
+> 或直接在线上发几条。
+
+### 0.9 账号体系（方案已落地成文档，未实施）
+
+用户提过"邮箱注册 + 改密码"。**落地版方案见 [账号体系落地方案](technical/ACCOUNT_SYSTEM.md)**
+（早期评估稿 [ACCOUNT_SYSTEM_EVALUATION.md](technical/ACCOUNT_SYSTEM_EVALUATION.md) 已被取代，
+只保留"不要自己存密码"的实测证据与邮件额度核实记录）。要点：
 
 - Workers 免费版 **10ms CPU 硬限**，PBKDF2 600k 轮实测 104ms → 自己存密码必然要做安全妥协。
 - Workers **封禁 25 端口**；且国内邮箱对"异地登录"会反复拦截（出口 IP 每次都可能不同）→
