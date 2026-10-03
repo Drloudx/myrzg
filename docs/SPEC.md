@@ -68,7 +68,7 @@ Vue 3 + Vite 8 + Vue Router 4（Hash）+ Pinia 4，Android 使用 Capacitor 8 �
 | 家具、设施、符石 | `furnitureData`、`facilityData/campFacilityData`、`runeData`，构建期关联后由页面消费 |
 | 隐藏策略 | `config/blacklist.js` 的 `isBlacklisted`，维护精确/模糊名单，新增项不重复；按地区名匹配的条目必须传 `mapName`（`黑森林`）而不是 `chapter` 代号（`c4`）——代号匹配不到，会出现「筛选按钮隐藏了、来源或卡片还在」 |
 | 图片与静态 JSON | `utils/env.js` 的 `getImageUrl`、`utils/request.js` 的 `fetchWithFallback` |
-| 页面与详情滚动 | `scrollTarget`、`modalScrollCoordinator`，统一识别实际滚动根与嵌套恢复 |
+| 页面与详情滚动 | `scrollTarget`、`modalScrollCoordinator`，统一识别实际滚动根与嵌套恢复；聊天式列表（讨论区）的"停在最新/发表跟随"归 `DiscussionsView` 的单个 `flush:'post'` watcher，**只在插入前就贴着底部时才跟随**，用户往上翻历史时不动，见 [排障记录](KNOWN_BUGS_AND_FIXES.md#10-聊天式列表发表后被瞬移到底部讨论区发表时闪一下) |
 | 覆盖层与原生返回 | `globalModalLock`、`overlayStack/useOverlay`、`nativeBackHandler`，按最上层顺序处理 |
 | 本地收集标记 | `stores/appState.js`：成就与隐藏物品 |
 | 招募规则、状态与舞台 | `gachaSim`、`gachaState`、`gachaLayout`、`gachaCurrency`、`gachaSpinePlayer`、`gachaAudio` |

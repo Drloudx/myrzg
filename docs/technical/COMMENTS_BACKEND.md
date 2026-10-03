@@ -482,20 +482,78 @@ DOM 闪一下）。改为只 push/unshift 一条：
 
 只有**进了待审**（`pending`，不在公开列表里）才需要重拉一次。
 
-### 闪烁（"滚动条变高变短 / 底部露出输入框一角"）的三个成因与修法
+### 闪烁（"发表时闪一下"）——真实成因是滚动跟随，2026-10-03 已修
 
-1. **重拉整页** → 列表 DOM 全部重建。→ 改成只插一条（见上）。
-2. **浏览器的滚动锚定**会在追加内容时自行调整滚动位置，与"滚到最新"互相打架。
-   → 滚动容器加 `overflow-anchor: none`；再用 `scrollbar-gutter: stable`
-   让滚动条出现/消失不改变内容宽度。
-3. **面板高度用 `--vh100`（100dvh）推算**，与实际可用空间有偏差，
-   偏差让滚动区裁切边界卡在"差几像素"处，内容一越过就抖动。
-   → 改为**用脚本量出高度**（`DiscussionsView.applyPanelHeight`：
-   `window.innerHeight - 面板 top - 8`，并按 resize / ResizeObserver 更新）。
+> 这一节原先写的"三个成因"里，**第三个（面板高度用 `--vh100` 推算有偏差）经实测不成立**；
+> 真正让用户看到闪烁的是**滚动跟随的时机与位移方式**。下面是复核数据与最终约定。
 
-验证手段（`scripts/dev/scratch/verify-no-flicker.mjs`）：发表前后**逐帧采样 130 帧**，
-断言 `scrollHeight` 无回落、**输入区高度 / 滚动区可视高度 / 输入框高度全程零变化**
-（实测 174~174 / 487~487 / 83~83）。
+**先被实测排除的假设**（6 种视口：1025×780 / 1161×661 / 1280×800 / 1440×900 / 1731×927 / 1920×1080）
+
+| 假设 | 实测 |
+| --- | --- |
+| 面板高度用 `--vh100` 推算有偏差，滚动区裁切边界卡在"差几像素"处 | **不成立**。面板底边恒在视口下 20px、输入区底边最小余量 36px、`.app-container` 纵向溢出 **0px** |
+| 发表区高度 / 滚动区可视高度 / 滚动条宽度抖动 | **不成立**。逐帧全程零变化（174 / 530 / 15px） |
+| 列表被整体重建 | **不成立**。列表 subtree 的 MutationObserver 只记录到 `+1/-0` 一次 |
+| 滚动锚定与"滚到最新"打架 | 已由 `overflow-anchor: none` + `scrollbar-gutter: stable` 处理，无需再改 |
+
+> 测量本身的坑：扫描脚本若把**首帧**取在"页面还没落定"时，会报出 29px 的假变化
+> （1920×1080 上复现过）。起采样前必须先等固定帧数，否则会去追一个不存在的 bug。
+
+**真实成因（逐帧数据）**
+
+| 缺陷 | 现象 |
+| --- | --- |
+| **滚动晚两帧** | `scrollToLatestAfterLayout()` 用双 `requestAnimationFrame` 等布局，于是先绘制"新消息已插进视野、列表还没跟下去"的中间态，紧接下一帧整块再动。帧序实测：`#24 items 20→21` → `#25 scrollTop 仍 1040` → `#26` 才变 |
+| **一次瞬移** | `el.scrollTop = el.scrollHeight` 是瞬间跳变。用户往上翻着历史时点发表，实测 `scrollTop 577 → 1196`，**619px 在一帧内甩过去** |
+
+**修法：滚动位置收敛为唯一决策点**（`src/views/DiscussionsView.vue`）
+
+- `watch(commentsLength, { flush: 'post' })` —— 在 **DOM 更新之后、浏览器绘制之前**决定滚动，
+  让"插入"和"滚动"落在同一帧（`flush: 'pre'`/默认都太早，DOM 还没更新）；
+- **首次载入直接落到底**（打开就该停在最新，不要动画）；**之后的增量走 260ms 动画曲线**
+  （easeOutCubic）。**目标每帧重取** `scrollHeight - clientHeight`——新评论高度要等布局，
+  写死起始目标会在收尾时对不齐、又得补跳一下；
+- 动画**首帧同步推进**（`step(performance.now())`），不要用 `requestAnimationFrame(step)` 启动，
+  否则第一次位移又会被推到下一帧；
+- **只在"插入前就贴着底部"时才自动跟随**（阈值 `NEAR_BOTTOM_PX = 120`，约一行半消息）。
+  用户往上翻着历史时**原地不动**——他的阅读位置比"跳到最新"更重要；
+- 用户自己滚动（容器的 `scroll` 事件）立刻放弃动画，不与用户抢滚动位置；
+- 上滑加载更早消息仍走 `suppressAutoScroll`，位置由 `CommentsPanel` 的锚点补偿负责。
+
+**A/B 对照（证明断言有效，不只是"跑绿了"）**
+
+| 断言 | 旧实现 | 修复后 |
+| --- | --- | --- |
+| 滚动逐帧推进（单帧位移 < 总位移 75%） | ❌ 单帧 **78px** = 总位移 | ✅ 单帧最大 **14px** / 总 78px |
+| 翻历史时发表，列表原地不动 | ❌ 漂移 **619px** | ✅ 漂移 **0.0px** |
+| `scrollTop` 单调增加无回落 / 最终精确停在底部 | ✅ | ✅ |
+| 发表区高 / 滚动区可视高 / 滚动条宽零变化 | ✅ | ✅ |
+
+回归入口：`node scripts/dev/scratch/verify-post-scroll.mjs [宽] [高]`
+（桌面 1440×900 与手机 390×844 各 **12/12**）。既有的 5 套专项（`verify-no-flicker` 9 项、
+`verify-chat-order` 11 项、`verify-autoscroll` 6 项、`verify-discussions` 36 项、
+`verify-discussions-order` 9 项）全部复跑通过。
+
+**遗留**：面板高度仍是 `calc(var(--vh100) - var(--header-height) - var(--safe-top) - 190px)` 的
+**推算魔数**（1025 宽时与其它视口差 12px）。本轮刻意不动它——上次改成脚本量高度被用户实测
+"高度不对"而回退。要动必须先按上文三视口核对「输入区底边 ≤ 视口高」且「`.app-container` 无纵向溢出」
+（`scripts/dev/scratch/diagnose-discussion-layout.mjs` 可直接打出这条链上的每一级）。
+
+### 列表与发表区之间的间距：**卡片底边 = 滚动条底端**，且保留 10px 呼吸间距
+
+这一条是用户看着截图逐轮校出来的，三个约束互相牵制，改的时候要一起满足：
+
+| 约束 | 为什么 |
+| --- | --- |
+| 滚动区里**不能有尾部外边距** | `UiSection` 自带 `margin-bottom: 18px`，而讨论区的 `.comments-panel` 正是滚动区最后一个区块；不清零就会变成滚动容器底部的空白尾巴，表现是**滚动条比最后一张卡片长出一截**（用户截图指出）。`DiscussionView` 用 `:deep(.comments-panel)` / `:deep(.comments-list)` 就地清零，**不动全局 `UiSection`**（其他页面仍需要章节间距） |
+| 滚动区与署名行之间**留 10px** | 完全贴死会显得挤（用户："挨得太近"）。用 `.discussion-composer { padding-top: 10px }` |
+| 面板底部内边距**同步收小到 6px** | 只加间距会把发表区往下推、挤出面板。收小底部内边距让**"最后一张卡片＋滚动条"这一整块整体上移**，而不是把下面的内容顶出去 |
+
+最终几何（1440×900 实测）：`panelBottom 880`、`scrollBottom 699`、`composerTop 699`、
+`lastCardBottom 699`、`gapCardToIdentity 11`、`composerBottom 872`、`.app-container` 溢出 0。
+
+> 另有一条保证：滚动动画**只增不减**（`rendered = want > rendered ? want : rendered`）。
+> 浏览器在收尾时会再微调一次 `scrollHeight`（新评论换行/图片解码），直接写目标值会出现 1px 回落。
 
 ### 往上翻历史自动加载（聊天式不设按钮）
 
@@ -745,7 +803,7 @@ Pages 的 **Fail open / closed**（Settings → Runtime）**必须设为 Fail op
 ### 8.3 与现有约定的一致性
 
 - **不新增 URL query 参数**：评论归属由当前详情业务 ID 推导，评论面板自身的展开/收起是本地状态。SPEC 第四章「仅已实现的参数做 URL 同步」在此适用——不要发明 `?comment=` 之类的协议。
-- 提交成功后**乐观插入**或重新拉取首页，不整页刷新，避免破坏详情滚动位置（[KNOWN_BUGS](KNOWN_BUGS_AND_FIXES.md) 第 3 条）。
+- 提交成功后**乐观插入**或重新拉取首页，不整页刷新，避免破坏详情滚动位置（[KNOWN_BUGS](../KNOWN_BUGS_AND_FIXES.md) 第 3 条）。
 - 评论不影响收集标记、备份导入导出等 `appState` 字段。
 
 ## 九、实施步骤（建议顺序）
