@@ -7,7 +7,7 @@
 
       外层纸张面板：内容直接铺在地图背景上会看不清，与符石图鉴的内容区同一形态。
     -->
-    <section class="discussion-panel paper-panel">
+    <section ref="panelRoot" class="discussion-panel paper-panel">
       <header class="discussion-head">
         <h3 class="discussion-title">◆ 站内讨论区</h3>
       </header>
@@ -25,6 +25,8 @@
           title=""
           read-only
           reverse
+          load-more-on-scroll
+          @loading-earlier="(busy) => (suppressAutoScroll = busy)"
         />
       </div>
 
@@ -43,7 +45,7 @@
 </template>
 
 <script setup>
-import { nextTick, ref, watch } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import CommentsPanel from '../components/CommentsPanel.vue'
 import CommentComposer from '../components/CommentComposer.vue'
 import { SITE_PAGE_KEY, SITE_PAGE_LABEL } from '../utils/commentApi.js'
@@ -51,6 +53,7 @@ import { SITE_PAGE_KEY, SITE_PAGE_LABEL } from '../utils/commentApi.js'
 const listRef = ref(null)
 /** 滚动容器 DOM（`ref` 在 setup 期间为 null，所以必须 watch 而不是直接调用） */
 const scrollRoot = ref(null)
+const panelRoot = ref(null)
 
 function scrollToLatest() {
   const el = scrollRoot.value
@@ -69,11 +72,25 @@ function scrollToLatestAfterLayout() {
 }
 
 /**
- * 发表后刷新列表（发表区在列表组件之外，由这里把两者接起来），
- * 刷新完滚动到最新一条（刚发的内容在最下面）。
+ * 抑制"自动滚到最新"的标志。
+ *
+ * 往上翻历史（自动加载更早消息）时，`commentsLength` 会变化，
+ * 若不管就会把用户又拽回底部（同时也会覆盖 CommentsPanel 内部的锚点补偿）。
  */
-async function onPosted() {
-  await listRef.value?.reload()
+let suppressAutoScroll = false
+
+/**
+ * 发表后：
+ *   - 正常评论：**只把新那一条并进列表**（不重拉整页，避免列表重建导致滚动条闪烁）；
+ *   - 进了待审（`pending`）：它不在公开列表里，才需要重拉一次以保持与真实状态一致。
+ * 两种情况都滚到最新一条。
+ */
+async function onPosted(data) {
+  if (data?.pending) {
+    await listRef.value?.reload()
+  } else if (data?.comment) {
+    listRef.value?.addPostedComment(data.comment)
+  }
   await nextTick()
   scrollToLatestAfterLayout()
 }
@@ -92,15 +109,56 @@ watch(
   { immediate: true }
 )
 
-/** 列表条数变化（首次载入完成）后也滚到最新 */
+/** 列表条数变化（首次载入完成／发表追加）后滚到最新；往上翻历史时不滚 */
 watch(
   () => listRef.value?.commentsLength,
   async (n) => {
-    if (!n) return
+    if (!n || suppressAutoScroll) return
     await nextTick()
     scrollToLatestAfterLayout()
   }
 )
+
+/**
+ * 把面板高度**量出来**，不再用 `--vh100`（100dvh）推算。
+ *
+ * 为什么必须量：用 dvh 推算的高度与实际可用空间有偏差（移动端尤其明显，
+ * 桌面端还有缩放/通知条等变量）。偏差会让滚动区的裁切边界落在"差几个像素"的位置，
+ * 发表新消息时内容恰好越过边界，于是底部露出输入框的一角、
+ * 滚动条也来回变长变短（用户反馈"闪一下"）。量出真实空间就稳定了。
+ *
+ * 预留 8px 余量，避免正好卡在边界上导致 `scrollHeight > clientHeight` 反复翻转。
+ */
+let panelObserver = null
+
+function applyPanelHeight() {
+  const el = panelRoot.value
+  if (!el) return
+  if (window.innerWidth < 1025) {
+    // 窄屏走 CSS 的 min-height（纵向可自然增长）
+    el.style.height = ''
+    return
+  }
+  const top = el.getBoundingClientRect().top
+  const usable = window.innerHeight - top - 8
+  el.style.height = usable > 320 ? `${Math.round(usable)}px` : ''
+}
+
+onMounted(() => {
+  nextTick(applyPanelHeight)
+  window.addEventListener('resize', applyPanelHeight)
+  if ('ResizeObserver' in window && panelRoot.value) {
+    // 观察外层容器（矮了/高了都跟着调），而不是观察自己——否则会自我触发循环
+    panelObserver = new ResizeObserver(() => applyPanelHeight())
+    panelObserver.observe(document.querySelector('.app-main') || document.body)
+  }
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', applyPanelHeight)
+  panelObserver?.disconnect()
+  panelObserver = null
+})
 </script>
 
 <style scoped>
@@ -146,6 +204,12 @@ watch(
  * 滚动容器：`min-height: 0` 是关键——flex 子项默认 min-height:auto 会被内容撑开，
  * 那样消息一多就会把整页撑长、滚动条跑到页面外层（正是用户要求避免的"超出区域"）。
  * 发表区**不在这里面**，所以它始终固定在面板底部。
+ *
+ * `overflow-anchor: none`：关掉浏览器的**滚动锚定**。它在追加内容时会自行调整滚动位置，
+ * 与我们的"滚到最新"互相打架，表现为发表瞬间位置抖动、滚动条闪一下（用户反馈）。
+ *
+ * `scrollbar-gutter: stable`：滚动条出现/消失不再改变内容宽度，
+ * 避免"滚动条一变、列表重排一下"的连带闪烁。
  */
 .discussion-scroll {
   flex: 1 1 auto;
@@ -153,6 +217,8 @@ watch(
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
+  overflow-anchor: none;
+  scrollbar-gutter: stable;
   padding-right: 2px;
 }
 
@@ -165,19 +231,20 @@ watch(
 }
 
 /*
- * 桌面端给面板一个**明确高度**，让内部 flex 自己去分配：
- * 列表区拿剩余空间（并内部滚动），发表区按内容高度固定在下沿。
+ * 面板高度**由脚本量出来**（见 `applyPanelHeight`），这里只给一个兜底值。
  *
- * 为什么必须显式给高度：桌面端 App.vue 会把 `[data-main-scroll]` 的滚动整个禁用
+ * 为什么不在 CSS 里用 `calc(var(--vh100) - …)` 推算：推算值与真实可用空间有偏差
+ * （移动端明显，桌面端也受缩放/窗口装饰影响），偏差会让滚动区裁切边界卡在
+ * "差几像素"的位置；发表新消息时内容一越过边界，底部就露出输入框一角、
+ * 滚动条来回变长变短（用户反馈"闪一下"）。
+ *
+ * 为什么必须给高度：桌面端 App.vue 会把 `[data-main-scroll]` 的滚动整个禁用
  * （`overflow-y: visible !important; max-height: none !important`），改由整页滚动。
- * 若不在这里封顶，讨论列表会无限长，发表区被顶出屏幕、整页也会多出一条滚动条
+ * 不封顶的话讨论列表会无限长、发表区被顶出屏幕、整页多出一条滚动条
  * （实测：.app-container scrollHeight 950 > 900）。
- *
- * `- 190px` 覆盖：顶部 33px 吸附留白 + 面板内边距 + 标题栏 + 发表区。
  */
-@media (min-width: 1025px) {
-  .discussion-panel {
-    height: calc(var(--vh100) - var(--header-height, 60px) - var(--safe-top, 0px) - 190px);
-  }
+.discussion-panel {
+  /* JS 未就绪时的兜底（窄屏也可以靠 min-height 自然增长） */
+  max-height: calc(var(--vh100) - var(--header-height, 60px) - var(--safe-top, 0px) - 96px);
 }
 </style>

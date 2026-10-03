@@ -267,7 +267,7 @@ import AboutModal from './components/AboutModal.vue'
 import AccountModal from './components/AccountModal.vue'
 import { loadIdentity, registerAccountModal, avatarPath, avatarCatalogState, loadAvatarCatalog } from './utils/identity.js'
 import { fetchRecentComments } from './utils/commentApi.js'
-import { commentPostedAt } from './utils/commentEvents.js'
+import { lastPostedComment, commentPostedAt } from './utils/commentEvents.js'
 import { UiButton, UiEmptyState, UiModal } from './components/ui/index.js'
 import ItemDetailModal from './components/ItemDetailModal.vue'
 import RewardProbabilityModal from './components/RewardProbabilityModal.vue'
@@ -387,6 +387,8 @@ function openDiscussionFor(comment) {
  */
 const recentComments = ref([])
 const recentLoading = ref(false)
+/** 是否已经成功载入过——用来避免"重拉时先把列表抹成加载态"的闪烁 */
+const recentLoaded = ref(false)
 const RECENT_CLIENT_THROTTLE_MS = 15000
 let recentFetchedAt = 0
 let recentInFlight = false
@@ -395,24 +397,48 @@ async function loadRecentDiscussions({ fresh = false, allowThrottled = false } =
   if (recentInFlight) return
   if (!allowThrottled && !fresh && Date.now() - recentFetchedAt < RECENT_CLIENT_THROTTLE_MS) return
   recentInFlight = true
-  recentLoading.value = true
+  // 只在**首次**载入时显示加载态：已有内容时静默替换，否则列表会先被抹掉再重建（闪一下）
+  if (!recentLoaded.value) recentLoading.value = true
   try {
     const data = await fetchRecentComments({ fresh })
-    recentComments.value = (data?.comments || []).slice(0, 5)
+    /*
+     * 接口按"最新在前"返回。右栏要与站内讨论区**同一种阅读顺序**（最新在下），
+     * 所以先取最新 5 条、再整体反转成"时间正序"——否则用户会觉得
+     * "左边最新在下面、右边最新在上面"，两处对不上（实测被指出过）。
+     */
+    recentComments.value = (data?.comments || []).slice(0, 5).reverse()
+    recentLoaded.value = true
     recentFetchedAt = Date.now()
   } catch {
-    // 右栏是辅助信息：失败静默留空，不打扰主内容（完整错误态由讨论区页自己展示）
-    recentComments.value = []
+    // 右栏是辅助信息：失败**保留已有内容**（清空会让它闪一下变成空态），首次失败才留空
+    if (!recentLoaded.value) recentComments.value = []
   } finally {
     recentInFlight = false
     recentLoading.value = false
   }
 }
 
+/**
+ * 本机发表成功后**直接把新评论插进右栏**，不重新拉取。
+ *
+ * 重新拉取会把整个列表替换掉（即使内容一样，DOM 也会被销毁重建），
+ * 用户看到的就是"右栏闪一下"（实测反馈）。站内讨论区在本站是唯一评论入口，
+ * 所以新评论一定属于 `site:general`，直接插入即可。
+ */
+function addRecentComment(comment) {
+  if (!comment?.id) return
+  if (recentComments.value.some((c) => c.id === comment.id)) return
+  // 最新在下：追加到末尾；超过 5 条时丢掉最旧的一条
+  const next = [...recentComments.value, comment]
+  recentComments.value = next.slice(-5)
+  recentLoaded.value = true
+}
+
+
 // 站内切页时刷新右栏。**绕过节流**：用户切页是明确意图，且服务端共享缓存让开销可控
 watch(() => route.fullPath, () => loadRecentDiscussions({ fresh: true }))
-// 本机发表评论后立刻刷新
-watch(commentPostedAt, () => loadRecentDiscussions({ fresh: true }))
+// 本机发表评论后**直接把那一条插进右栏**（不重新拉取，列表不重建、不闪）
+watch(commentPostedAt, () => addRecentComment(lastPostedComment.value))
 
 /**
  * 定时刷新右栏，让**别人发的**评论也能出现。

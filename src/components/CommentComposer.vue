@@ -131,10 +131,9 @@ async function submit() {
       notice.value = data.notice || '评论已提交，将尽快审核后显示'
     }
     form.body = ''
-    // 广播：右栏「最新讨论」等其他位置的评论列表据此刷新
-    // （它们与发表区互不相识，靠这个信号解耦，见 utils/commentEvents.js）
-    notifyCommentPosted()
-    // 交给调用方刷新列表（发表区在组件外时由父组件调 CommentsPanel.reload()）
+    // 广播：右栏「最新讨论」等据此**直接插入这一条**（不重新拉取，避免列表重建闪一下）
+    notifyCommentPosted(data.comment || null)
+    // 交给调用方刷新列表（发表区在组件外时由父组件调 CommentsPanel.addPostedComment）
     emit('posted', data)
   } catch (err) {
     error.value = err?.message || '发表失败，请稍后重试'
