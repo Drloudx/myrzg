@@ -51,6 +51,7 @@ import CommentsPanel from '../components/CommentsPanel.vue'
 import CommentComposer from '../components/CommentComposer.vue'
 import { SITE_PAGE_KEY, SITE_PAGE_LABEL } from '../utils/commentApi.js'
 import { useVisibilityPolling } from '../composables/useVisibilityPolling.js'
+import { DISCUSSION_POLL_MS } from '../config/discussions.js'
 
 const listRef = ref(null)
 /** 滚动容器 DOM（`ref` 在 setup 期间为 null，所以必须 watch 而不是直接调用） */
@@ -230,21 +231,16 @@ watch(
  * 而 `commentEvents` 广播只在同一个标签页内传、不跨设备 ——
  * 所以别的设备发的评论在右栏出现了、中间区域却一直没有，必须重开一次聊天。
  *
- * 这里补上 20 秒的前台轮询（用户指定间隔）：
+ * 这里补上前台轮询，间隔见 `config/discussions.js`（与右栏共用同一个值）：
  *   - 只在前台可见时跑，切走/后台完全停，切回立刻补一次（`useVisibilityPolling`）；
  *   - 刷新走 `mergeNewComments`：**只并新增**，不替换列表，
  *     所以"上滑加载过的更早消息"一条不丢，也不会重置滚动位置；
  *   - 并入后 `commentsLength` 变化会触发上面的 watcher，
  *     于是"贴着底部就跟随、翻着历史就原地不动"的规则照旧生效。
- *
- * 为什么右栏也要一起改：它在大部分页面是唯一的讨论入口，
- * 原本 30 秒一轮，用户希望在 20 秒内看到别人发的内容。
  */
-const POLL_INTERVAL_MS = 20000
-
 useVisibilityPolling(
   () => listRef.value?.mergeNewComments?.(),
-  { intervalMs: POLL_INTERVAL_MS }
+  { intervalMs: DISCUSSION_POLL_MS }
 )
 
 onMounted(() => {

@@ -358,7 +358,9 @@ watch(() => route.query.itemId, async (newId) => {
 - 页面隐藏期间 **0 次** `/api/` 请求；切回前台立即产生请求。
 
 节奏核对：`scripts/dev/scratch/measure-poll-cadence.mjs` 实测 `comments` 间隔
-**20033ms / 20033ms**，隐藏 25 秒 0 请求。
+**60024ms**（等于 `config/discussions.js` 的 `DISCUSSION_POLL_MS = 60000`），
+隐藏 25 秒 0 请求。间隔**一处维护**：中间与右栏共用同一个常量，
+两处填不同数字会出现"右边出现了、中间还没有"的错位。
 
 **适用范围**：任何"多人共享的列表要靠轮询保持新鲜"的实现。
 **轮询周期只在讨论区这类"用户正盯着看"的页面可以短**；

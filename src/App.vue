@@ -283,6 +283,7 @@ import { useGlobalSearch } from './composables/app/useGlobalSearch.js'
 import { useNativeShell } from './composables/app/useNativeShell.js'
 import { useOverlay } from './composables/useOverlay.js'
 import { useVisibilityPolling } from './composables/useVisibilityPolling.js'
+import { DISCUSSION_POLL_MS } from './config/discussions.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -442,20 +443,19 @@ watch(() => route.fullPath, () => loadRecentDiscussions({ fresh: true }))
 watch(commentPostedAt, () => addRecentComment(lastPostedComment.value))
 
 /**
- * 定时刷新右栏，让**别人发的**评论也能出现（用户要求 20 秒内出现，不必重开页面）。
+ * 定时刷新右栏，让**别人发的**评论也能出现（不必重开页面）。
  *
  * 这里原来是自己写的 `setInterval` + `visibilitychange`，改成共享的
  * `useVisibilityPolling`：同一套边界（后台停跑、切回立即补一次、预渲染不跑、
  * 用 `setTimeout` 递归避免请求慢时堆积）现在只维护一处，讨论区也用它。
  *
- * 右栏在大部分页面是唯一的讨论入口，所以间隔与讨论区保持一致（20 秒）；
+ * 间隔与讨论区**共用** `config/discussions.js` 的 `DISCUSSION_POLL_MS`
+ * （两处填不同数字的话，用户会看到"右边出现了、中间还没有"的错位）。
  * 轮询走 `fresh`（跳服务端 30 秒共享缓存 + 时间戳穿透中间层），
  * 否则会撞上那个缓存窗口、看到的是旧快照。
  */
-const RECENT_POLL_MS = 20000
-
 useVisibilityPolling(() => loadRecentDiscussions({ fresh: true }), {
-  intervalMs: RECENT_POLL_MS
+  intervalMs: DISCUSSION_POLL_MS
 })
 
 /**
