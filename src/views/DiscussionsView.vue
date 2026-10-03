@@ -15,14 +15,16 @@
       <!--
         正文区：**只有列表在这里滚**。
         `overflow-y: auto` + `min-height: 0` 让它受父级高度约束，消息再多也不会把整页撑长。
+        `reverse` = 聊天式排序（最新在最后，紧挨下方输入框）；组件内部会自动滚到底。
       -->
-      <div class="discussion-scroll">
+      <div ref="scrollRoot" class="discussion-scroll">
         <CommentsPanel
           ref="listRef"
           :page-key="SITE_PAGE_KEY"
           :page-label="SITE_PAGE_LABEL"
           title=""
           read-only
+          reverse
         />
       </div>
 
@@ -41,17 +43,64 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { nextTick, ref, watch } from 'vue'
 import CommentsPanel from '../components/CommentsPanel.vue'
 import CommentComposer from '../components/CommentComposer.vue'
 import { SITE_PAGE_KEY, SITE_PAGE_LABEL } from '../utils/commentApi.js'
 
 const listRef = ref(null)
+/** 滚动容器 DOM（`ref` 在 setup 期间为 null，所以必须 watch 而不是直接调用） */
+const scrollRoot = ref(null)
 
-/** 发表后刷新列表（发表区在列表组件之外，由这里把两者接起来） */
-function onPosted() {
-  listRef.value?.reload()
+function scrollToLatest() {
+  const el = scrollRoot.value
+  if (el) el.scrollTop = el.scrollHeight
 }
+
+/**
+ * 等布局真正落定后再滚。
+ *
+ * 只 `await nextTick()` 不够：实测"刚打开页面"时 `scrollTop` 仍是 0
+ * （范围却有 1040px）——那时列表项刚插入但还没完成布局，`scrollHeight` 还是旧值。
+ * 双 rAF 等到下一帧绘制后，高度才是最终值。
+ */
+function scrollToLatestAfterLayout() {
+  requestAnimationFrame(() => requestAnimationFrame(scrollToLatest))
+}
+
+/**
+ * 发表后刷新列表（发表区在列表组件之外，由这里把两者接起来），
+ * 刷新完滚动到最新一条（刚发的内容在最下面）。
+ */
+async function onPosted() {
+  await listRef.value?.reload()
+  await nextTick()
+  scrollToLatestAfterLayout()
+}
+
+/**
+ * 聊天式视图应停在最新一条：列表首次载入后滚到底部。
+ * watch `scrollRoot` 而不是在 setup 里直接滚动——setup 执行时 `ref` 还没绑定。
+ */
+watch(
+  scrollRoot,
+  async (el) => {
+    if (!el) return
+    await nextTick()
+    scrollToLatestAfterLayout()
+  },
+  { immediate: true }
+)
+
+/** 列表条数变化（首次载入完成）后也滚到最新 */
+watch(
+  () => listRef.value?.commentsLength,
+  async (n) => {
+    if (!n) return
+    await nextTick()
+    scrollToLatestAfterLayout()
+  }
+)
 </script>
 
 <style scoped>

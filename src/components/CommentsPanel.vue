@@ -56,6 +56,10 @@
         <UiEmptyState v-else :text="readOnly ? '还没有讨论' : '还没有人讨论，来说两句吧'" />
 
         <div v-if="!limit && hasMore" class="comments-more">
+          <!--
+            「加载更多」= 往前补更早的历史。`reverse`（聊天式）下新页会接在**列表最前面**，
+            所以按钮放在列表上方更符合方向；两种模式共用一个按钮，位置差异不影响功能。
+          -->
           <UiButton variant="secondary" size="sm" :disabled="loading" @click="loadMore()">
             {{ loading ? '加载中...' : '加载更多' }}
           </UiButton>
@@ -117,7 +121,15 @@ const props = defineProps({
    * 数据源换成"全站最新讨论"（`GET /api/recent`）而不是某个页面的评论。
    * 右栏预览与讨论区首页的历史消息用它。
    */
-  recent: { type: Boolean, default: false }
+  recent: { type: Boolean, default: false },
+  /**
+   * 聊天式排序：**最新在最后**（站内讨论区用）。
+   *
+   * 服务端一律按"最新在前"返回，这里整体反转。默认关闭，
+   * 因为图鉴详情里的讨论区是"列表"形态（最新的在最上面更符合翻阅习惯），
+   * 而站内讨论区是"聊天"形态（最新在底部、输入框就在下面）。
+   */
+  reverse: { type: Boolean, default: false }
 })
 
 const emit = defineEmits(['open-page'])
@@ -126,6 +138,12 @@ const emit = defineEmits(['open-page'])
 const shownComments = computed(() =>
   props.limit > 0 ? comments.value.slice(0, props.limit) : comments.value
 )
+
+/**
+ * 已载入的条数。供父组件判断"列表是否已经来了数据"
+ * （讨论区页面用它决定何时滚到最新一条）。
+ */
+const commentsLength = computed(() => comments.value.length)
 
 const comments = ref([])
 const loading = ref(false)
@@ -154,13 +172,14 @@ async function onPosted() {
  * 供父组件在"发表区在组件外"时刷新列表（讨论区页面就是这种结构）。
  * 例如 DiscussionsView 把 CommentComposer 放在滚动容器之外，
  * 发完由它调用本方法，让列表与发表区状态保持一致。
+ * 返回 Promise，调用方可以 `await` 后再滚到最新一条。
  */
 function reload() {
   actionError.value = ''
   return load()
 }
 
-defineExpose({ reload })
+defineExpose({ reload, commentsLength })
 
 function syncOwned() {
   const set = new Set()
@@ -179,11 +198,25 @@ async function load({ append = false } = {}) {
   loading.value = true
   errorMessage.value = ''
   try {
-    // 两种数据源：某个页面的评论（可分页）／全站最新（固定条数、服务端有边缘缓存）
+    // 两种数据源：某个页面的评论（可分页）／讨论区最新（固定条数、服务端有边缘缓存）
     const data = props.recent
       ? await fetchRecentComments()
       : await fetchComments(props.pageKey, { cursor: append ? cursor.value : undefined })
-    comments.value = append ? [...comments.value, ...data.comments] : data.comments
+
+    /*
+     * 排序：服务端一律按 **id 倒序**（最新在前）。
+     *
+     * `reverse` 模式（站内讨论区，聊天式）下改为**最新在最后**：
+     * 接口是"最新在前"，所以整体反转即可；而"加载更早的"这一页同样是"最新在前"，
+     * 反转后应**接在列表最前面**（`append` 时用 prepend 而不是 push）。
+     */
+    if (props.reverse) {
+      const page = [...data.comments].reverse()
+      comments.value = append ? [...page, ...comments.value] : page
+    } else {
+      comments.value = append ? [...comments.value, ...data.comments] : data.comments
+    }
+
     hasMore.value = !!data.hasMore
     cursor.value = data.nextCursor ?? null
     syncOwned()

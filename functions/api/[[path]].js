@@ -29,7 +29,16 @@
 
 import { matchReview } from '../../src/config/commentBlocklist.js'
 
-const MAX_BODY = 1000
+/**
+ * 正文长度上限。
+ *
+ * 200 是用户明确要求的（原为 1000）。对游戏讨论来说足够——
+ * 这条限制的意义是防刷屏与防止单条评论撑爆列表高度，
+ * 而不是"允许写多长"；真要长内容应另开帖子类功能。
+ *
+ * 前端 `CommentComposer.vue` 的 `maxlength` 与字数计数器必须与此一致。
+ */
+const MAX_BODY = 200
 const MAX_NICK = 24
 const MAX_LIMIT = 50
 
@@ -310,6 +319,16 @@ async function createComment(env, request) {
   const body = sanitize(payload?.body, MAX_BODY)
   if (!nick) return bad(ERR.needNick)
   if (!body) return bad(ERR.emptyBody)
+
+  /*
+   * 显式拒绝超长正文，**不要依赖 sanitize 的截断**：
+   * `sanitize()` 结尾是 `.slice(0, maxLen)`，超长会被**静默砍掉**，
+   * 用户看到的是"我明明写了 300 字，发出去只剩 200 字"，且毫无提示。
+   * 这里按**原始输入**判断并给出明确上限，前端 maxlength 只是第一道防线。
+   */
+  if (String(payload?.body ?? '').trim().length > MAX_BODY) {
+    return bad(`评论最多 ${MAX_BODY} 字，请精简后再发`)
+  }
 
   // 头像 ID：格式不合法就当没设置（回退昵称首字），不因此拒绝整条评论
   const rawAvatar = String(payload?.avatar || '')

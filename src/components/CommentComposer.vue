@@ -20,7 +20,7 @@
       v-model="form.body"
       class="comment-textarea"
       rows="3"
-      maxlength="1000"
+      :maxlength="MAX_BODY"
       placeholder="说点什么…"
     ></textarea>
 
@@ -37,7 +37,7 @@
     />
 
     <div class="comment-form-foot">
-      <span class="comment-count">{{ form.body.length }}/1000</span>
+      <span class="comment-count">{{ form.body.length }}/{{ MAX_BODY }}</span>
       <UiButton variant="primary" size="sm" :disabled="submitting || !canSubmit" @click="submit">
         {{ submitting ? '提交中...' : '发表' }}
       </UiButton>
@@ -74,6 +74,13 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['posted'])
+
+/**
+ * 正文字数上限。**必须与服务端 `MAX_BODY` 保持一致**
+ * （`functions/api/[[path]].js`，超出会被服务端明确拒绝）。
+ * 前端 maxlength 只是第一道防线：绕过它（改 DOM / 直接调接口）也不会被接受。
+ */
+const MAX_BODY = 200
 
 const form = reactive({ body: '', hp: '' })
 const submitting = ref(false)
