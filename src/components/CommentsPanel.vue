@@ -215,7 +215,15 @@ function addPostedComment(comment) {
   syncOwned()
 }
 
-defineExpose({ reload, addPostedComment, commentsLength, hasMore, loading })
+defineExpose({
+  reload,
+  addPostedComment,
+  /** 轮询刷新：只并新增，不替换列表、不动滚动位置、不显示加载态 */
+  mergeNewComments,
+  commentsLength,
+  hasMore,
+  loading
+})
 
 function syncOwned() {
   const set = new Set()
@@ -261,6 +269,47 @@ async function load({ append = false } = {}) {
     errorMessage.value = err?.message || '评论加载失败，请稍后重试'
   } finally {
     loading.value = false
+  }
+}
+
+/**
+ * 真正实现"只并新增"的刷新（轮询用）。
+ *
+ * 为什么不能直接复用 `load()`：`load()` 会拿服务端那一页**整体替换** `comments`，
+ * 而用户可能已经"上滑加载更早消息"拉进来好几页——替换等于把那些历史丢掉。
+ * 这里按 id 只挑本地没有的新条目并进对应端（聊天式接在末尾、列表式接在开头）。
+ *
+ * 另外两条也是必须的：
+ *   - **不显示加载态也不弹错**：轮询周期比人眼快，闪加载态比不刷新更烦；
+ *     失败就静默保留已有内容，下个周期还会再试（用户没在操作，不该被打扰）；
+ *   - **不动滚动位置**：合并后 `commentsLength` 变化会走 `DiscussionsView` 的 watcher，
+ *     而那个 watcher 只在"插入前就贴着底部"时才滚动——用户翻着历史时原地不动。
+ *
+ * @returns {Promise<number>} 实际并入的新条目数（0 表示没有新内容或失败）
+ */
+async function mergeNewComments() {
+  try {
+    const data = props.recent
+      ? await fetchRecentComments()
+      : await fetchComments(props.pageKey)
+    const incoming = data?.comments || []
+    if (!incoming.length) return 0
+
+    const known = new Set(comments.value.map((c) => c.id))
+    const fresh = incoming.filter((c) => !known.has(c.id))
+    if (!fresh.length) return 0
+
+    if (props.reverse) {
+      // 聊天式：最新在末尾，新的接在后面（服务端是倒序，所以先翻正）
+      comments.value = [...comments.value, ...[...fresh].reverse()]
+    } else {
+      // 列表式：最新在开头
+      comments.value = [...fresh, ...comments.value]
+    }
+    syncOwned()
+    return fresh.length
+  } catch {
+    return 0
   }
 }
 

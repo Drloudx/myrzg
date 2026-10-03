@@ -282,6 +282,7 @@ import { useBackupData } from './composables/app/useBackupData.js'
 import { useGlobalSearch } from './composables/app/useGlobalSearch.js'
 import { useNativeShell } from './composables/app/useNativeShell.js'
 import { useOverlay } from './composables/useOverlay.js'
+import { useVisibilityPolling } from './composables/useVisibilityPolling.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -441,32 +442,21 @@ watch(() => route.fullPath, () => loadRecentDiscussions({ fresh: true }))
 watch(commentPostedAt, () => addRecentComment(lastPostedComment.value))
 
 /**
- * 定时刷新右栏，让**别人发的**评论也能出现。
- * 间隔与服务端共享缓存的窗口对齐，所以多数轮询会命中缓存、不落库。
- * 页面隐藏时跳过（后台标签页不做无意义请求）。
+ * 定时刷新右栏，让**别人发的**评论也能出现（用户要求 20 秒内出现，不必重开页面）。
+ *
+ * 这里原来是自己写的 `setInterval` + `visibilitychange`，改成共享的
+ * `useVisibilityPolling`：同一套边界（后台停跑、切回立即补一次、预渲染不跑、
+ * 用 `setTimeout` 递归避免请求慢时堆积）现在只维护一处，讨论区也用它。
+ *
+ * 右栏在大部分页面是唯一的讨论入口，所以间隔与讨论区保持一致（20 秒）；
+ * 轮询走 `fresh`（跳服务端 30 秒共享缓存 + 时间戳穿透中间层），
+ * 否则会撞上那个缓存窗口、看到的是旧快照。
  */
-const RECENT_POLL_MS = 30000
-let recentTimer = 0
+const RECENT_POLL_MS = 20000
 
-function startRecentPolling() {
-  stopRecentPolling()
-  recentTimer = window.setInterval(() => {
-    if (document.visibilityState === 'hidden') return
-    loadRecentDiscussions({ fresh: true })
-  }, RECENT_POLL_MS)
-}
-
-function stopRecentPolling() {
-  if (recentTimer) {
-    window.clearInterval(recentTimer)
-    recentTimer = 0
-  }
-}
-
-/** 从后台切回前台时立即刷新一次（用户回来的第一眼应该是最新的） */
-function onVisibilityChange() {
-  if (document.visibilityState === 'visible') loadRecentDiscussions({ fresh: true })
-}
+useVisibilityPolling(() => loadRecentDiscussions({ fresh: true }), {
+  intervalMs: RECENT_POLL_MS
+})
 
 /**
  * 右栏每条评论的缩小头像路径。
@@ -669,16 +659,12 @@ onMounted(() => {
     bootLoadingRaf = requestAnimationFrame(settle)
   }
 
-  // 右栏「最新讨论」定时刷新（见 startRecentPolling 的说明）
-  startRecentPolling()
-  document.addEventListener('visibilitychange', onVisibilityChange)
+  // 右栏「最新讨论」的前台轮询由 useVisibilityPolling 自动接管（见其定义处的说明）
 })
 
 onBeforeUnmount(() => {
   document.removeEventListener('error', handleGlobalImageError, true)
   window.removeEventListener('resize', scheduleStickyClipping)
-  stopRecentPolling()
-  document.removeEventListener('visibilitychange', onVisibilityChange)
   if (stickyClipFrame) window.cancelAnimationFrame(stickyClipFrame)
   if (pendingClearRaf) cancelAnimationFrame(pendingClearRaf)
   if (bootLoadingRaf) cancelAnimationFrame(bootLoadingRaf)
