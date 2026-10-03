@@ -1,21 +1,145 @@
 # 项目交接说明文档 (HANDOFF)
 
-> 更新时间：2026-09-24
+> 更新时间：2026-10-02（最近一次：新增「评论 / 讨论系统」；下面〇节是最新状态，建议先读）
 > 项目路径：`E:\Desktop\html\myrzg\vue-myrzg`（Vue 3 + Vite 8 + Pinia + Capacitor Android）
 > 适用对象：后续接手开发对话/工程师
+
+---
+
+## 〇、最新状态（2026-10-02）：评论与讨论系统
+
+> 这一节是给接手者的**入口**，覆盖本日新增的后端与讨论区。
+> 完整设计见 [评论后端方案](technical/COMMENTS_BACKEND.md)，
+> 当日过程/踩坑见 [开发日志 2026-10-02](dev-logs/2026-10/2026-10-02.md)。
+
+### 0.1 一句话状态
+
+**功能完整可用、本地全部验证通过，但尚未推送上线**（本地 `main` 领先 `origin/main` **26 个提交**）。
+有一处**闪烁问题未彻底解决**（见 0.5），其余可交付。
+
+### 0.2 这块是什么：全站唯一需要后端的部分
+
+整站其余部分都是**纯静态**（游戏文件在构建期生成 JSON，用户只读）。
+只有评论/讨论需要"一个用户写、所有人读"，所以必须有存储与服务端：
+
+| 组件 | 位置 |
+| --- | --- |
+| 存储 | Cloudflare **D1**（SQLite），库名 `myrzg-comments`，id `5f0d4c37-107f-4811-bc5e-768f73c51a3a` |
+| 服务端 | Cloudflare **Pages Functions**，单文件 `functions/api/[[path]].js` |
+| 前端 | `src/components/CommentsPanel.vue`（列表）+ `CommentComposer.vue`（发表区） |
+| 客户端 | `src/utils/commentApi.js`（接口 + `page_key` 前缀表）、`identity.js`（本机身份/头像）、`commentEvents.js`（跨组件广播） |
+| 管理端 | `/#/admin`（评论管理；本地令牌 `yxzm`，线上换随机串） |
+
+费用为 0：Functions 10 万次/天、D1 读 500 万行/天、写 10 万行/天，当前用量远低于此；
+**静态图鉴不限量不计费**，只有评论那点 JSON 走 API。
+
+### 0.3 讨论区怎么用
+
+- **顶栏聊天图标** → `/#/discussions`：站内讨论区（归属键 `site:general`），
+  与各图鉴页面的讨论 `item:xxx` / `hero:xxx` …**完全分开**，不聚合。
+- **各图鉴详情里的「讨论」**：物品 / 角色 / 魔物 / 家具 / 副本 / 关卡 / 怪物 / 任务 / 事件，共 9 处。
+  符石与菜谱**刻意不单独挂**（它们点卡片走全局物品详情，那里已有讨论区）。
+- **右栏「最新讨论」**：只显示站内讨论区的最新 5 条，只读、不放输入框。
+
+### 0.4 三个必须知道的开发约定（不然一定踩）
+
+1. **改了 `functions/` 必须重启 API**：`npm run dev:api` 起的 wrangler **不热加载**。
+   本日在此踩了两次（改 `MAX_BODY`、加 `site:` 白名单后没生效，误以为代码错）。
+2. **新增页面挂讨论区要改两处**：`src/utils/commentApi.js` 的 `COMMENT_PAGE_PREFIX`
+   **和** `functions/api/[[path]].js` 的 `PAGE_KEY_RE`；并记得把页面人话名字用 `pageLabel` 传上去
+   （否则管理端只显示 `item:item_00001` 这种内部标识）。
+3. **本站是 hash 路由**：站内切页**不重载应用**。所以"只在启动时拉一次"的写法
+   （右栏最初就是这样）会导致用户发完评论后数据一直是旧的。改数据要显式触发刷新。
+
+### 0.5 ⚠️ 已知未解决：发表时的闪烁
+
+用户反馈"发表时闪一下 / 滚动条变高变短 / 底部露出输入框一角"。定位到三个成因，处理了前两个：
+
+| 成因 | 状态 |
+| --- | --- |
+| 发表后重拉整页 → 列表 DOM 全部重建 | ✅ 已修：只追加一条（仅"待审"才重拉） |
+| 浏览器**滚动锚定**与"滚到最新"打架 | ✅ 已修：`overflow-anchor: none` + `scrollbar-gutter: stable` |
+| 面板高度用 `--vh100` 推算，与真实空间有偏差 | ❌ **改法已回退**：曾改成脚本量高度，用户实测"高度不对"，故 `git revert` 回 CSS 固定值 |
+
+**所以"底部露出输入框一角"这类闪烁是否彻底消失尚未确认。**
+若仍能复现，从 `docs/technical/COMMENTS_BACKEND.md` 的「闪烁的三个成因与修法」一节继续。
+改动高度前务必在 **1025 / 1161 / 1440 三种视口**下核对「输入区底边 ≤ 视口高」
+且「`.app-container` 无纵向溢出」（`scripts/dev/scratch/measure-discussion-geometry.mjs` 可直接用）。
+
+### 0.6 本地怎么跑起来（两个服务，缺一不可）
+
+```powershell
+# 1) 前端（5173）
+npm run dev
+
+# 2) 评论 API（8788）——不启动则页面上评论/讨论会报"无法连接评论服务器"
+npm run dev:api
+```
+
+- Vite 已配 `/api` 代理到 `127.0.0.1:8788`（否则 `npm run dev` 下评论不可用，早期踩过）。
+- 本地环境变量在 `.dev.vars`（gitignored）：`ADMIN_TOKEN=yxzm`、`IP_HASH_SALT=local-dev-salt`、
+  放宽的限流阈值。**线上必须换成足够长的随机 `ADMIN_TOKEN`**，且不存在免密旁路。
+- 本地 D1 里**留了 30 条演示数据**（站内讨论，含带头像/无头像两种），便于直接看效果。
+  清库：`npx wrangler d1 execute myrzg-comments --local --command "DELETE FROM comments; DELETE FROM rate_limits;"`
+
+### 0.7 测试脚本（都在 `scripts/dev/scratch/`，gitignored）
+
+| 脚本 | 覆盖 |
+| --- | --- |
+| `test-comments-api.py` | 43 项：接口契约、错误文案、限流、幂等删除、超长拒绝 |
+| `verify-comments-ui.mjs` | 67 项：详情里评论全流程（发帖/自删/账号弹窗/管理页/顶栏标题） |
+| `verify-discussions.mjs` | 36 项：站内讨论区、发表区固定、右栏归属与样式 |
+| `verify-chat-order.mjs` | 11 项：最新在下、上滑自动加载 |
+| `verify-no-flicker.mjs` | 9 项：**逐帧采样 130 帧**证明布局不抖动 |
+| `verify-comment-mounts.mjs` | 27 项：9 个页面逐个验证挂载与 `page_key` 合法性 |
+| `verify-discussions-order.mjs` | 9 项：排序与 200 字上限 |
+| `verify-autoscroll.mjs` | 6 项：打开/发表后停在最新一条 |
+| `verify-hero-comment-e2e.mjs` | 4 项：非物品页面发帖 → 管理页可见 |
+
+**跑测试前先清限流**，否则会因限流误判失败：
+
+```powershell
+npx wrangler d1 execute myrzg-comments --local --command "DELETE FROM rate_limits; DELETE FROM comments;"
+```
+
+### 0.8 上线清单（尚未执行）
+
+1. Cloudflare Pages 项目 → Settings → Environment variables：配 `ADMIN_TOKEN`（长随机串）、`IP_HASH_SALT`。
+2. 推送 `main`（Pages 走 GitHub 自动部署）。
+3. **实测线上 `/api/health` 返回 JSON 而非 HTML**（Functions 没部署时会返回 SPA 兜底 HTML）。
+4. 复测缓存头；EdgeOne 对 JSON 不做缓存，必要时加「不缓存」规则。
+5. Turnstile 可延后（未配 `TURNSTILE_SECRET` 时自动跳过人机校验，功能不受影响）。
+6. **Fail open 必须保持**：Pages 的 Fail open/closed 要选 Fail open，
+   否则免费额度耗尽会让整个图鉴站变成错误页。
+
+### 0.9 账号体系（只做了评估，未实施）
+
+用户提过"邮箱注册 + 改密码"。评估结论与**已核实的云厂商邮件额度**见
+[账号体系方案（评估）](technical/ACCOUNT_SYSTEM_EVALUATION.md)。要点：
+
+- Workers 免费版 **10ms CPU 硬限**，PBKDF2 600k 轮实测 104ms → 自己存密码必然要做安全妥协。
+- Workers **封禁 25 端口**；且国内邮箱对"异地登录"会反复拦截（出口 IP 每次都可能不同）→
+  **不要走"个人邮箱 SMTP 直连"**。
+- 推荐路线：**邮箱验证码（无密码）** > 托管认证 > 自己实现。
+- 发信必须走云厂商邮件推送（腾讯云 SES / 阿里云 DirectMail），需为域名加 SPF/DKIM 解析记录。
 
 ---
 
 ## 一、当前项目状态概览
 
 1. **分支状态**：
-   - 处于 `main` 分支。
-   - 本地根据用户需求持续迭代，未推送到远端（用户环境网络存在代理限制，需要推送时需由用户在本地终端执行或提供对应代理）。
-2. **开发服务器**：
-   - 当前在端口 `5173`（或后台配置端口）运行：`npm run dev`。
+   - 处于 `main` 分支，**领先 `origin/main` 26 个提交，尚未推送**（用户要求先把页面做好再推）。
+   - 推送动作请由用户在本地终端执行（其环境网络存在代理限制）。
+2. **开发服务器（两个都要起）**：
+   - 前端 `npm run dev` → `5173`；
+   - **评论 API `npm run dev:api` → `8788`**（不起这个，评论/讨论会报"无法连接评论服务器"）。
+   - 详见上文〇·0.6。
 3. **构建与健康状态**：
-   - 运行 `npm run verify`（包含 `data:build` + `vite build` + 产物完整性与残留校验）已**全部通过（All Green）**。
-   - 代码整洁度：探索性的词条/Buff 实验模块已彻底清理，未留存任何多余文件或无用依赖。
+   - `npm run verify`（`data:build` + `vite build` + 产物完整性与残留校验）已**全部通过**。
+   - 评论/讨论相关的 9 个专项脚本全部通过（数字见〇·0.7）。
+4. **代码整洁度**：
+   - 探索性的词条/Buff 实验模块已彻底清理，未留存多余文件或无用依赖。
+   - 评论/讨论的后端只有**一个文件**：`functions/api/[[path]].js`。
 
 ---
 
@@ -182,9 +306,11 @@ const SPECIAL_TRANSFORM_CONFIGS = {
 | 目标 | 执行命令 | 说明 |
 | --- | --- | --- |
 | 本地开发 | `cmd.exe /c npm run dev` | 启动 Vite 开发服务器（支持热重载） |
+| **评论 API（本地必需）** | `cmd.exe /c npm run dev:api` | 启动 wrangler Pages Functions（8788）；**改了 `functions/` 必须重启** |
 | 数据预构建 | `cmd.exe /c npm run data:build` | 重新生成所有 `parsed/*.json` 数据 |
 | 全量校验 | `cmd.exe /c npm run verify` | 执行完整预解析检查与生产构建打包 |
 | UI 自动化测试 | `cmd.exe /c npm run test:ui` | 运行 Playwright UI 交互与回归测试 |
+| 清本地评论/限流 | 见上文 0.7 | 跑评论测试前必须先清，否则被限流误判 |
 
 > **提示**：修改了 `monsterParser.js`、`items.mjs` 等预解析逻辑或原始配置表后，必须执行 `data:build` 重新生成 JSON 文件。交付前必须确保 `verify` 命令退出码为 0（全部 ✅）。
 
@@ -192,6 +318,8 @@ const SPECIAL_TRANSFORM_CONFIGS = {
 
 ## 七、后续可关注优化方向
 
+0. **[最优先] 评论/讨论系统的闪烁问题**（见〇·0.5）——高度那条修法被回退，
+   需接手者确认能否复现并继续排查；以及**推送上线**（〇·0.8 清单）。
 1. 关卡图鉴中更多特殊关卡（如隐藏探索点位、支线任务交互）的视觉高亮与过滤增强；
 2. 移动端在极端小屏（< 360px）下复杂概率文本的字号与排版微调；
 3. 为更多拥有特殊战斗机制的 Boss 配置 `SPECIAL_TRANSFORM_CONFIGS`，丰富阶段展示；
